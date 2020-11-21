@@ -15,11 +15,11 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Ktt-Development/simplehttpserver/actions?query=workflow%3ADeploy"><img title="Deploy" src="https://github.com/Ktt-Development/simplehttpserver/workflows/Deploy/badge.svg"></a>
-    <a href="https://github.com/Ktt-Development/simplehttpserver/actions?query=workflow%3A%22Java+CI%22"><img title="Java CI" src="https://github.com/Ktt-Development/simplehttpserver/workflows/Java%20CI/badge.svg"></a>
-    <a href="https://mvnrepository.com/artifact/com.kttdevelopment/simplehttpserver"><img title="Maven Central" src="https://img.shields.io/maven-central/v/com.kttdevelopment/simplehttpserver"></a>
-    <a href="https://github.com/Ktt-Development/simplehttpserver/releases"><img title="version" src="https://img.shields.io/github/v/release/ktt-development/simplehttpserver"></a>
-    <a href="https://github.com/Ktt-Development/simplehttpserver/blob/main/LICENSE"><img title="license" src="https://img.shields.io/github/license/Ktt-Development/simplehttpserver"></a>
+    <a href="https://github.com/Ktt-Development/MyAnimeList-Java-API/actions?query=workflow%3ADeploy"><img title="Deploy" src="https://github.com/Ktt-Development/MyAnimeList-Java-API/workflows/Deploy/badge.svg"></a>
+    <a href="https://github.com/Ktt-Development/MyAnimeList-Java-API/actions?query=workflow%3A%22Java+CI%22"><img title="Java CI" src="https://github.com/Ktt-Development/MyAnimeList-Java-API/workflows/Java%20CI/badge.svg"></a>
+    <a href="https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist"><img title="Maven Central" src="https://img.shields.io/maven-central/v/com.kttdevelopment/MyAnimeList-Java-API"></a>
+    <a href="https://github.com/Ktt-Development/MyAnimeList-Java-API/releases"><img title="version" src="https://img.shields.io/github/v/release/ktt-development/MyAnimeList-Java-API"></a>
+    <a href="https://github.com/Ktt-Development/MyAnimeList-Java-API/blob/main/LICENSE"><img title="license" src="https://img.shields.io/github/license/Ktt-Development/MyAnimeList-Java-API"></a>
 </p>
 
 ---
