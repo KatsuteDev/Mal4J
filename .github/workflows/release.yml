@@ -1,0 +1,38 @@
+name: Deploy
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Prepate Git Repo
+        uses: actions/checkout@v2
+
+      - name: 🔐 Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: ☕ Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: '11'
+          architecture: x64
+
+      - name: 🚀 Deploy to Maven
+        run: mvn -B deploy -f pom.xml -s settings.xml
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+
+      - name: 🚀 Deploy to Releases
+        uses: AButler/upload-release-assets@v2.0
+        with:
+          files: 'target/*.jar'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

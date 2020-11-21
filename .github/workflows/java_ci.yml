@@ -1,0 +1,22 @@
+name: Java CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Prepate Git Repo
+        uses: actions/checkout@v2
+
+      - name: ☕ Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: '11'
+          architecture: x64
+
+      - name: ✔ Test with Maven
+        run: mvn test -fae

@@ -1,0 +1,30 @@
+name-template: "$NEXT_MINOR_VERSION"
+tag-template: "$NEXT_MINOR_VERSION"
+categories:
+  - title: "⭐ New Features"
+    labels:
+      - "experimental"
+      - "feature request"
+  - title: "🔧 Optimizations"
+    labels:
+      - "optimization"
+      - "refactor"
+  - title: "📄 Documentation"
+    labels:
+      - "documentation"
+      - "website"
+  - title: "❌ Removed"
+    labels:
+      - "depreciated"
+  - title: "🐞 Bug Fixes"
+    labels:
+      - "bug"
+      - "error"
+  - title: "📘 Dependencies"
+    label: "dependencies"
+no-changes-template: "*No changes*"
+change-template: "- $TITLE #$NUMBER (@$AUTHOR)"
+template: |
+  # 📘 $NEXT_MINOR_VERSION
+
+  $CHANGES
