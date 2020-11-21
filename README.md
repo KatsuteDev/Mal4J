@@ -6,8 +6,6 @@
     <p align="center">
         📘 Java wrapper for the official MyAnimeList API
         <br />
-        This library simplifies complex operations for both the server, exchange, and handlers.
-        <br />
         <a href="https://docs.kttdevelopment.com/myanimelist/">Docs</a>
         •
         <a href="https://wiki.kttdevelopment.com/myanimelist/">Wiki</a>
