@@ -1,23 +1,13 @@
 package com.kttdevelopment.myanimelist.anime;
 
-import com.kttdevelopment.myanimelist.manga.Manga;
-import com.kttdevelopment.myanimelist.manga.MangaStatus;
+import com.kttdevelopment.myanimelist.anime.property.AnimeListStatus;
+import com.kttdevelopment.myanimelist.property.Listing;
 
-public abstract class AnimeListing {
+@SuppressWarnings("SpellCheckingInspection")
+public abstract class AnimeListing implements AnimeListStatus, Listing {
 
-    public abstract Anime getManga();
+    public abstract int getTimesRewatched();
 
-    public abstract AnimeStatus getStatus();
-
-    public abstract boolean isRereading();
-
-    public abstract int getVolumesRead();
-
-    public abstract int getChaptersRead();
-
-    public abstract int getScore();
-
-    // todo: convert string date to millis
-    public abstract long getUpdatedAt();
+    public abstract int getRewatchValue();
 
 }

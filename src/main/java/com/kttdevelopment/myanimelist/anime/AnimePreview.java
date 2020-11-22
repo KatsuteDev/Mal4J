@@ -1,7 +1,7 @@
 package com.kttdevelopment.myanimelist.anime;
 
-public abstract class AnimePreview {
+import com.kttdevelopment.myanimelist.property.Preview;
 
-
+public abstract class AnimePreview implements Preview {
 
 }
