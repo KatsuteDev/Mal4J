@@ -20,11 +20,11 @@ public abstract class MyAnimeList {
     public abstract List<Anime> getAnime(final String search, final int limit, final int offset);
 
     // https://myanimelist.net/apiconfig/references/api/v2#operation/anime_ranking_get
-    public abstract List<Anime> getAnime(final String search, final AnimeRanking ranking);
+    public abstract List<Anime> getAnime(final String search, final AnimeRankingEnum ranking);
 
-    public abstract List<Anime> getAnime(final String search, final AnimeRanking ranking, final int limit);
+    public abstract List<Anime> getAnime(final String search, final AnimeRankingEnum ranking, final int limit);
 
-    public abstract List<Anime> getAnime(final String search, final AnimeRanking ranking, final int limit, final int offset);
+    public abstract List<Anime> getAnime(final String search, final AnimeRankingEnum ranking, final int limit, final int offset);
 
     // https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_get
     public abstract Anime getAnime(final int anime_id);
@@ -108,5 +108,9 @@ public abstract class MyAnimeList {
     public abstract User getMyself();
 
 // mal
+
+    public static MyAnimeList create(final String client_id, final int auth_port){
+        return new MyAnimeListImpl(client_id, auth_port);
+    }
 
 }

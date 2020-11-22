@@ -1,4 +1,7 @@
 package com.kttdevelopment.myanimelist.anime;
 
-public abstract class AnimeRanking {
+public abstract class AnimePreview {
+
+
+
 }
