@@ -53,7 +53,7 @@ public interface MyAnimeListService {
     );
 
     @GET("anime/season/{year}/{season}")
-    Call<AnimeSeason> getAnimeSeason(
+    Call<List<AnimePreview>> getAnimeSeason(
         @Header("Authorization")                final String token,
         @Path(value = "year", encoded = true)   final int year,
         @Path(value = "season", encoded = true) final String season,

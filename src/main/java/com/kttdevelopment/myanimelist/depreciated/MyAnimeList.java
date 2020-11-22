@@ -1,16 +1,7 @@
 package com.kttdevelopment.myanimelist.depreciated;
 
-import com.kttdevelopment.myanimelist.anime.*;
-import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
-import com.kttdevelopment.myanimelist.forum.ForumCategory;
-import com.kttdevelopment.myanimelist.manga.*;
-import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
-import com.kttdevelopment.myanimelist.anime.property.time.Season;
-import com.kttdevelopment.myanimelist.user.User;
-
-import java.util.List;
-
 // interface for clients
+@Deprecated
 public abstract class MyAnimeList {
 
 // anime

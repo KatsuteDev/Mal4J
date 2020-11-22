@@ -3,7 +3,6 @@ package com.kttdevelopment.myanimelist.anime;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.manga.property.MangaType;
 import com.kttdevelopment.myanimelist.property.ExtendedPreview;
-import com.kttdevelopment.myanimelist.anime.property.Studio;
 
 /**
  * Represents the full details of an Anime.
