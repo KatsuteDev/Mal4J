@@ -1,29 +1,82 @@
 package com.kttdevelopment.myanimelist;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.*;
-import java.util.Map;
-import java.util.Scanner;
+import com.kttdevelopment.myanimelist.anime.*;
+import retrofit2.Call;
+import retrofit2.http.*;
 
-// handles http requests to MAL endpoint
-final class MyAnimeListClient {
+import java.util.List;
 
+public interface MyAnimeListClient {
 
+    @GET("anime")
+    Call<AnimePreview> getAnime(
+        @Header("Authorization")    final String token,
+        @Field("q")                 final String search,
+        @Field("limit")             final int limit,
+        @Field("offset")            final int offset
+    );
 
-    public final void request(final String url, final String token) throws IOException{
-        final URLConnection connection = new URL(url).openConnection();
-        connection.setRequestProperty("Accept-Charset", "UTF-8");
-        connection.setRequestProperty("Authorization", "Bearer " + token);
-        try(final InputStream response = connection.getInputStream()){
-            try(final Scanner scanner = new Scanner(response)){
-                final String json = scanner.useDelimiter("\\A").next();
+    @GET("anime/{anime_id}")
+    Call<Anime> getAnime(
+        @Header("Authorization")                    final String token,
+        @Path(value = "anime_id", encoded = true)   final int anime_id
+    );
 
-            }
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+    @GET("anime/ranking")
+    Call<List<AnimeRanking>> getAnimeRanking(
+        @Header("Authorization")    final String token,
+        @Field("ranking_type")      final String ranking_type,
+        @Field("limit")             final int limit,
+        @Field("offset")            final int offset
+    );
 
-    }
+    @GET("anime/season/{year}/{season}")
+    Call<List<AnimePreview>> getAnimeSeason(
+        @Header("Authorization")                final String token,
+        @Path(value = "year", encoded = true)   final int year,
+        @Path(value = "season", encoded = true) final String season,
+        @Field("sort")                          final String ranking_type,
+        @Field("limit")                         final int limit,
+        @Field("offset")                        final int offset
+    );
+
+    @GET("anime/season")
+    Call<List<AnimePreview>> getAnimeSuggestions(
+        @Header("Authorization")    final String token,
+        @Field("limit")             final int limit,
+        @Field("offset")            final int offset
+    );
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @PATCH("anime/{anime_id}/my_list_status")
+    Call<AnimeListing> updateAnimeListing(
+        @Header("Authorization")                    final String token,
+        @Path(value = "anime_id", encoded = true)   final int anime_id,
+        @Field("status")                            final String status,
+        @Field("is_rewatching")                     final boolean rewatching,
+        @Field("score")                             final int score,
+        @Field("num_watched_episodes")              final int episodes_watched,
+        @Field("priority")                          final int priority,
+        @Field("num_times_rewatched")               final int times_rewatched,
+        @Field("rewatch_value")                     final int rewatch_value,
+        @Field("tags")                              final String tags,
+        @Field("comments")                          final String comments
+    );
+
+    @DELETE("anime/{anime_id}/my_list_status")
+    Call<Void> deleteAnimeListing(
+        @Header("Authorization")                    final String token,
+        @Path(value="anime_id", encoded = true)     final int anime_id
+    );
+
+    @GET("anime/{user_name}/animelist")
+    Call<List<AnimeList>> getAnimeListing(
+        @Header("Authorization")                    final String token,
+        @Path(value="user_name", encoded = true)    final String username,
+        @Field("status")                            final String status,
+        @Field("sort")                              final String sort,
+        @Field("limit")                             final int limit,
+        @Field("offset")                            final int offset
+    );
 
 }
