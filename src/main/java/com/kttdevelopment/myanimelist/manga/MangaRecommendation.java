@@ -1,10 +1,15 @@
 package com.kttdevelopment.myanimelist.manga;
 
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
+import com.kttdevelopment.myanimelist.manga.property.MangaPreviewable;
 import com.kttdevelopment.myanimelist.property.Recommendation;
 
-public abstract class MangaRecommendation extends Recommendation {
-
-    public abstract MangaPreview getAnimePreview();
+/**
+ * Represents a Manga recommendation.
+ *
+ * @see MangaPreview
+ * @since 1.0.0
+ * @author Ktt Development
+ */
+public abstract class MangaRecommendation extends Recommendation implements MangaPreviewable {
 
 }

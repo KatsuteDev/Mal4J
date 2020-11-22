@@ -6,8 +6,10 @@ module myanimelist {
     requires retrofit2.converter.gson;
 
     exports com.kttdevelopment.myanimelist;
+    exports com.kttdevelopment.myanimelist.property;
     exports com.kttdevelopment.myanimelist.anime;
     exports com.kttdevelopment.myanimelist.anime.property;
+    exports com.kttdevelopment.myanimelist.anime.property.time;
     exports com.kttdevelopment.myanimelist.forum;
     exports com.kttdevelopment.myanimelist.manga;
     exports com.kttdevelopment.myanimelist.manga.property;

@@ -1,6 +1,6 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
-import com.kttdevelopment.myanimelist.property.Season;
+import com.kttdevelopment.myanimelist.anime.property.time.Season;
 
 public abstract class StartSeason {
 

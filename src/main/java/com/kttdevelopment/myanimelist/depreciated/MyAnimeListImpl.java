@@ -2,21 +2,20 @@ package com.kttdevelopment.myanimelist.depreciated;
 
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
-import com.kttdevelopment.myanimelist.depreciated.*;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 import com.kttdevelopment.myanimelist.depreciated.net.HttpRequestMethod;
-import com.kttdevelopment.myanimelist.property.Season;
-import com.kttdevelopment.myanimelist.property.Sort;
+import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.user.User;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
 final class MyAnimeListImpl extends MyAnimeList {
+
+    /*
 
     private transient final String oauth;
 
@@ -224,5 +223,8 @@ final class MyAnimeListImpl extends MyAnimeList {
     public final User getMyself(){
         return null;
     }
+
+
+     */
 
 }

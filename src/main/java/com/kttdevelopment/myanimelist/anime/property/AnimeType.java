@@ -1,5 +1,12 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
+/**
+ * Represents Anime types.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum AnimeType {
 
     TV("tv"),
@@ -13,6 +20,13 @@ public enum AnimeType {
         this.type = type;
     }
 
+    /**
+     * Returns the type field name
+     *
+     * @return field name
+     *
+     * @since 1.0.0
+     */
     public final String getType(){
         return type;
     }

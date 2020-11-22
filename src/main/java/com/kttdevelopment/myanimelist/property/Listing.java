@@ -1,15 +1,41 @@
 package com.kttdevelopment.myanimelist.property;
 
-public interface Listing {
+/**
+ * Represents a listing.
+ *
+ * @see com.kttdevelopment.myanimelist.anime.AnimeListing
+ * @see com.kttdevelopment.myanimelist.manga.MangaListing
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
+public abstract class Listing implements ListStatus{
 
-    int getScore();
+    /**
+     * Returns the listing priority.
+     *
+     * @return priority
+     *
+     * @since 1.0.0
+     */
+    public abstract int getPriority();
 
-    long getUpdatedAt();
+    /**
+     * Returns the listing tags.
+     *
+     * @return tags
+     *
+     * @since 1.0.0
+     */
+    public abstract String[] getTags();
 
-    int getPriority();
-
-    String[] getTags();
-
-    String getComments();
+    /**
+     * Returns the listing comments.
+     *
+     * @return comments
+     *
+     * @since 1.0.0
+     */
+    public abstract String getComments();
 
 }

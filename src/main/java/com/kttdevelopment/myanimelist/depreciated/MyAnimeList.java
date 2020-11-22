@@ -1,13 +1,11 @@
 package com.kttdevelopment.myanimelist.depreciated;
 
-import com.kttdevelopment.myanimelist.MyAnimeListImpl;
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
-import com.kttdevelopment.myanimelist.property.Season;
-import com.kttdevelopment.myanimelist.property.Sort;
+import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.user.User;
 
 import java.util.List;
@@ -16,7 +14,7 @@ import java.util.List;
 public abstract class MyAnimeList {
 
 // anime
-
+    /*
     // https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get
     public abstract List<Anime> getAnime(final String search);
 
@@ -117,5 +115,7 @@ public abstract class MyAnimeList {
     public static MyAnimeList create(final String client_id, final int auth_port){
         return new MyAnimeListImpl(client_id, auth_port);
     }
+
+    */
 
 }

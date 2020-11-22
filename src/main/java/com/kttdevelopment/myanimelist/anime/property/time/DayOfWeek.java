@@ -1,5 +1,12 @@
-package com.kttdevelopment.myanimelist.property;
+package com.kttdevelopment.myanimelist.anime.property.time;
 
+/**
+ * Represents a day of the week.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum DayOfWeek {
 
     Sunday("sunday"),
@@ -16,6 +23,13 @@ public enum DayOfWeek {
         this.dayOfWeek = dayOfWeek;
     }
 
+    /**
+     * Returns the type field name
+     *
+     * @return field name
+     *
+     * @since 1.0.0
+     */
     public final String getDayOfWeek(){
         return dayOfWeek;
     }
