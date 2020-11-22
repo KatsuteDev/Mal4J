@@ -1,8 +1,7 @@
 package com.kttdevelopment.myanimelist.property;
 
-import com.kttdevelopment.myanimelist.anime.AlternativeTitles;
+import com.kttdevelopment.myanimelist.anime.property.AlternativeTitles;
 import com.kttdevelopment.myanimelist.anime.AnimeRelation;
-import com.kttdevelopment.myanimelist.anime.property.Genre;
 import com.kttdevelopment.myanimelist.manga.MangaRelation;
 
 public interface ExtendedPreview extends Preview {

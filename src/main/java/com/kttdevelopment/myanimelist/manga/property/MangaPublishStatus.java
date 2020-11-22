@@ -1,23 +1,21 @@
-package com.kttdevelopment.myanimelist.anime.property;
+package com.kttdevelopment.myanimelist.manga.property;
 
 /**
- * Represents an Anime status.
+ * Represents a Manga publish status.
  *
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public enum AnimeStatus {
+public enum MangaPublishStatus {
 
-    Watching("watching"),
-    Completed("completed"),
-    OnHold("on_hold"),
-    Dropped("dropped"),
-    PlanToWatch("plan_to_watch");
+    Publishing("publishing"),
+    Published("not_yet_published"),
+    Finished("finished_publishing");
 
     private final String status;
 
-    AnimeStatus(final String status){
+    MangaPublishStatus(final String status){
         this.status = status;
     }
 

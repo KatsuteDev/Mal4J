@@ -1,25 +1,26 @@
-package com.kttdevelopment.myanimelist.anime.property;
+package com.kttdevelopment.myanimelist.manga.property;
 
 import com.kttdevelopment.myanimelist.property.RankingType;
 
 /**
- * Represents Anime ranking types.
+ * Represents Manga ranking types.
  *
- * @see AnimeType
+ * @see MangaType
  * @see RankingType
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public enum AnimeRankingType {
+@SuppressWarnings("SpellCheckingInspection")
+public enum MangaRankingType {
 
-    Airing("airing"),
-    Upcoming("upcoming"),
 
-    TV(AnimeType.TV.getType()),
-    OVA(AnimeType.OVA.getType()),
-    Movie(AnimeType.Movie.getType()),
-    Special(AnimeType.Special.getType()),
+    Manga(MangaType.Manga.getType()),
+    Novels(MangaType.Novels.getType()),
+    OneShots(MangaType.OneShots.getType()),
+    Doujin(MangaType.Doujin.getType()),
+    Manhwa(MangaType.Manhwa.getType()),
+    Manhua(MangaType.Manhua.getType()),
 
     All(RankingType.All.getType()),
     ByPopularity(RankingType.ByPopularity.getType()),
@@ -27,7 +28,7 @@ public enum AnimeRankingType {
 
     private final String type;
 
-    AnimeRankingType(final String type){
+    MangaRankingType(final String type){
         this.type = type;
     }
 

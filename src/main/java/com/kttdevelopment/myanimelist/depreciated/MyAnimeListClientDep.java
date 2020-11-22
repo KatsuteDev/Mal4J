@@ -2,7 +2,6 @@ package com.kttdevelopment.myanimelist.depreciated;
 
 import com.kttdevelopment.myanimelist.depreciated.net.*;
 import com.kttdevelopment.myanimelist.depreciated.net.exception.*;
-import org.json.JSONObject;
 
 import java.util.Map;
 
@@ -23,6 +22,8 @@ final class MyAnimeListClientDep extends HttpRequestClient {
             "Authorization", "Bearer " + oauth
         );
     }
+
+    /*
 
     public final JSONObject request(final String path, final String method){
         final Response response = request(url + path, method, headers);
@@ -45,6 +46,5 @@ final class MyAnimeListClientDep extends HttpRequestClient {
 
     // new stuff
 
-
-
+     */
 }

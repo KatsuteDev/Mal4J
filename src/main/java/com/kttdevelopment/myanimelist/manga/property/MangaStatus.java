@@ -1,5 +1,12 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
+/**
+ * Represents a Manga status.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum MangaStatus {
 
     Reading("reading"),
@@ -14,6 +21,13 @@ public enum MangaStatus {
         this.status = status;
     }
 
+    /**
+     * Returns the status field name
+     *
+     * @return field name
+     *
+     * @since 1.0.0
+     */
     public final String getStatus(){
         return status;
     }

@@ -1,7 +1,14 @@
-package com.kttdevelopment.myanimelist.property;
+package com.kttdevelopment.myanimelist.anime.property.time;
 
 import java.util.Arrays;
 
+/**
+ * Represents a season.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum Season {
 
     Winter("winter", new String[]{"January", "February", "March"}),
@@ -17,10 +24,24 @@ public enum Season {
         this.months = months;
     }
 
+    /**
+     * Returns season field name.
+     *
+     * @return field name
+     *
+     * @since 1.0.0
+     */
     public final String getSeason(){
         return season;
     }
 
+    /**
+     * Returns season months.
+     *
+     * @return season months
+     *
+     * @since 1.0.0
+     */
     public final String[] getMonths(){
         return months;
     }

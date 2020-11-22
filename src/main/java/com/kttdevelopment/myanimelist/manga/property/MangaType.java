@@ -1,5 +1,12 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
+/**
+ * Represents Manga types.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 @SuppressWarnings("SpellCheckingInspection")
 public enum MangaType {
 
@@ -16,6 +23,13 @@ public enum MangaType {
         this.type = type;
     }
 
+    /**
+     * Returns the type field name
+     *
+     * @return field name
+     *
+     * @since 1.0.0
+     */
     public final String getType(){
         return type;
     }

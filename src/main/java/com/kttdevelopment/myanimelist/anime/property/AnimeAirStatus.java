@@ -1,23 +1,21 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
 /**
- * Represents an Anime status.
+ * Represents an Anime air status.
  *
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public enum AnimeStatus {
+public enum AnimeAirStatus {
 
-    Watching("watching"),
-    Completed("completed"),
-    OnHold("on_hold"),
-    Dropped("dropped"),
-    PlanToWatch("plan_to_watch");
+    Airing("airing"),
+    NotYetAired("not_yet_aired"),
+    Finished("finished_airing");
 
     private final String status;
 
-    AnimeStatus(final String status){
+    AnimeAirStatus(final String status){
         this.status = status;
     }
 

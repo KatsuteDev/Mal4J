@@ -1,4 +1,12 @@
-package com.kttdevelopment.myanimelist.anime.property;
+package com.kttdevelopment.myanimelist.property;
+
+/**
+ * Represents a genre.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 @SuppressWarnings("SpellCheckingInspection")
 public enum Genre {
 
@@ -51,10 +59,24 @@ public enum Genre {
         this.name = name;
     }
 
+    /**
+     * Returns the genre id.
+     *
+     * @return genre id
+     *
+     * @since 1.0.0
+     */
     public final int getId(){
         return id;
     }
 
+    /**
+     * Returns the genre name
+     *
+     * @return genre name
+     *
+     * @since 1.0.0
+     */
     public final String getName(){
         return name;
     }
