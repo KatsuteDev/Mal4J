@@ -1,20 +1,11 @@
 package com.kttdevelopment.myanimelist.manga;
 
-public abstract class MangaListing {
+import com.kttdevelopment.myanimelist.manga.property.MangaListStatus;
+import com.kttdevelopment.myanimelist.property.Listing;
 
-    public abstract Manga getManga();
+public abstract class MangaListing implements MangaListStatus, Listing {
 
-    public abstract MangaStatus getStatus();
+   public abstract int getTimesReread();
 
-    public abstract boolean isRereading();
-
-    public abstract int getVolumesRead();
-
-    public abstract int getChaptersRead();
-
-    public abstract int getScore();
-
-    // todo: convert string date to millis
-    public abstract long getUpdatedAt();
-
+    public abstract int getRereadValue();
 }
