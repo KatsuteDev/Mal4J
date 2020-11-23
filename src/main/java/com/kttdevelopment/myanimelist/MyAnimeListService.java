@@ -1,18 +1,12 @@
 package com.kttdevelopment.myanimelist;
 
-import com.kttdevelopment.myanimelist.anime.*;
-import com.kttdevelopment.myanimelist.anime.property.UserAnimeListing;
-import com.kttdevelopment.myanimelist.forum.ForumCategory;
-import com.kttdevelopment.myanimelist.forum.ForumTopic;
-import com.kttdevelopment.myanimelist.manga.*;
-import com.kttdevelopment.myanimelist.manga.property.UserMangaListing;
 import com.kttdevelopment.myanimelist.user.User;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.*;
 
-import java.util.List;
+import static com.kttdevelopment.myanimelist.MyAnimeListSchema.*;
 
 public interface MyAnimeListService {
 
@@ -28,7 +22,7 @@ public interface MyAnimeListService {
     // anime
 
     @GET("anime")
-    Call<AnimePreview> getAnime(
+    Call<NodePaging> getAnime(
         @Header("Authorization")    final String token,
         @Query("q")                 final String search,
         @Query("limit")             final int limit,
@@ -37,14 +31,14 @@ public interface MyAnimeListService {
     );
 
     @GET("anime/{anime_id}")
-    Call<Anime> getAnime(
+    Call<_Anime_ID> getAnime(
         @Header("Authorization")                    final String token,
         @Path(value = "anime_id", encoded = true)   final int anime_id,
-        @Query("fields")                            final String fields
+        @Query(value = "fields", encoded = true)   final String fields
     );
 
     @GET("anime/ranking")
-    Call<List<AnimeRanking>> getAnimeRanking(
+    Call<NodeRanking> getAnimeRanking(
         @Header("Authorization")    final String token,
         @Query("ranking_type")      final String ranking_type,
         @Query("limit")             final int limit,
@@ -53,7 +47,7 @@ public interface MyAnimeListService {
     );
 
     @GET("anime/season/{year}/{season}")
-    Call<List<AnimePreview>> getAnimeSeason(
+    Call<_Anime_Season_Search> getAnimeSeason(
         @Header("Authorization")                final String token,
         @Path(value = "year", encoded = true)   final int year,
         @Path(value = "season", encoded = true) final String season,
@@ -63,8 +57,8 @@ public interface MyAnimeListService {
         @Query("fields")                        final String fields
     );
 
-    @GET("anime/season")
-    Call<List<AnimePreview>> getAnimeSuggestions(
+    @GET("anime/suggestions")
+    Call<NodePaging> getAnimeSuggestions(
         @Header("Authorization")    final String token,
         @Query("limit")             final int limit,
         @Query("offset")            final int offset,
@@ -76,7 +70,7 @@ public interface MyAnimeListService {
     @SuppressWarnings("SpellCheckingInspection")
     @FormUrlEncoded
     @PATCH("anime/{anime_id}/my_list_status")
-    Call<AnimeListing> updateAnimeListing(
+    Call<_Anime_MyListStatus> updateAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "anime_id", encoded = true)   final int anime_id,
         @Field("status")                            final String status,
@@ -98,7 +92,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("anime/{user_name}/animelist")
-    Call<List<UserAnimeListing>> getAnimeListing(
+    Call<_Anime_AnimeList> getAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
@@ -110,12 +104,12 @@ public interface MyAnimeListService {
     // forum
 
     @GET("forum/board")
-    Call<List<ForumCategory>> getForumBoards(
+    Call<_Forum> getForumBoards(
         @Header("Authorization")        final String token
     );
 
     @GET("forum/topic/{topic_id}")
-    Call<ForumCategory> getForumBoard(
+    Call<_Forum_Topic_ID> getForumBoard(
         @Header("Authorization")                    final String token,
         @Path(value = "topic_id", encoded = true)   final int topic_id,
         @Query("limit")                             final int limit,
@@ -124,7 +118,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("forum/topics")
-    Call<List<ForumTopic>> getForumTopics(
+    Call<_Forum_Topics> getForumTopics(
         @Header("Authorizations")   final String token,
         @Query("board_id")          final int board_id,
         @Query("subboard_id")       final int subboard_id,
@@ -139,7 +133,7 @@ public interface MyAnimeListService {
     // manga
 
     @GET("manga")
-    Call<List<MangaPreview>> getManga(
+    Call<NodePaging> getManga(
         @Header("Authorization")    final String token,
         @Query("q")                 final String search,
         @Query("limit")             final int limit,
@@ -148,14 +142,14 @@ public interface MyAnimeListService {
     );
 
     @GET("manga/{manga_id}")
-    Call<Manga> getManga(
+    Call<_Manga_ID> getManga(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id", encoded = true)   final int manga_id,
         @Query("fields")                            final String fields
     );
 
     @GET("manga/ranking")
-    Call<List<MangaRanking>> getMangaRanking(
+    Call<NodeRanking> getMangaRanking(
         @Header("Authorization")    final String token,
         @Query("ranking_type")      final String ranking_type,
         @Query("limit")             final int limit,
@@ -167,7 +161,7 @@ public interface MyAnimeListService {
 
     @FormUrlEncoded
     @PATCH("manga/{manga_id}/my_list_status")
-    Call<MangaListing> updateMangaListing(
+    Call<_Manga_MyListStatus> updateMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id", encoded = true)   final int manga_id,
         @Field("status")                            final String status,
@@ -190,7 +184,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("manga/{user_name}/mangalist")
-    Call<List<UserMangaListing>> getMangaListing(
+    Call<_Manga_Manga_List> getMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,

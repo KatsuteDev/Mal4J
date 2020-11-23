@@ -2,6 +2,7 @@ package com.kttdevelopment.myanimelist.auth;
 
 import com.kttdevelopment.myanimelist.MyAnimeListAuthenticationService;
 import com.sun.net.httpserver.HttpServer;
+import retrofit2.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class MyAnimeListAuthenticator {
     private transient AccessToken token;
 
     public MyAnimeListAuthenticator(final String client_id, final int port) throws IOException{
-        final Authorization auth = getAuthorization(client_id, port);
+        final Authorization auth = getAuthorization(client_id, Math.min(Math.max(0, port), 65535));
 
         token = authService
             .getToken(
@@ -34,6 +35,25 @@ public class MyAnimeListAuthenticator {
                 auth.getVerifier())
             .execute()
             .body();
+
+        authService
+            .getToken(
+                client_id,
+                "authorization_code",
+                auth.getAuthorization(),
+                auth.getVerifier())
+            .enqueue(new Callback<AccessToken>() {
+                @Override
+                public void onResponse(final Call<AccessToken> call, final Response<AccessToken> response){
+                    System.out.println(response);
+                }
+
+                @Override
+                public void onFailure(final Call<AccessToken> call, final Throwable t){
+                    System.out.println(t);
+                }
+            });
+
     }
 
     public final AccessToken getToken(){
