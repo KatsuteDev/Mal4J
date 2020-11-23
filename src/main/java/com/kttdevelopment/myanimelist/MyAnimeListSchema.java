@@ -1,414 +1,1038 @@
 package com.kttdevelopment.myanimelist;
 
+import java.util.Arrays;
+
 final class MyAnimeListSchema {
 
-    // applicable to anime, anime suggested, manga
-    static class NodePaging {
+    static class schema {
 
-        node[] data;
-        paging paging;
+        static class node {
+
+            long            id;
+            String          title;
+            main_picture    main_picture;
+
+            static class picture{
+
+                String  medium,
+                        large;
+
+                @Override
+                public String toString(){
+                    return "picture{" +
+                           "medium='" + medium + '\'' +
+                           ", large='" + large + '\'' +
+                           '}';
+                }
+
+            }
+
+            static class main_picture extends picture {
+
+                @Override
+                public String toString(){
+                    return "main_picture{" +
+                           "medium='" + medium + '\'' +
+                           ", large='" + large + '\'' +
+                           '}';
+                }
+
+            }
+
+            @Override
+            public String toString(){
+                return "node{" +
+                       "id=" + id +
+                       ", title='" + title + '\'' +
+                       ", main_picture=" + main_picture +
+                       '}';
+            }
+
+        }
+
+        static class paging {
+
+            String next;
+
+            @Override
+            public String toString(){
+                return "paging{" +
+                       "next='" + next + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class alternative_titles {
+
+            String[]    synonyms;
+            String      en,
+                        ja;
+
+            @Override
+            public String toString(){
+                return "alternative_titles{" +
+                       "synonyms=" + Arrays.toString(synonyms) +
+                       ", en='" + en + '\'' +
+                       ", ja='" + ja + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class genre extends IDN {
+
+            @Override
+            public String toString(){
+                return "genre{" +
+                       "id=" + id +
+                       ", name='" + name + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class related {
+
+            node[]  node;
+            String  relation_type,
+                    relation_type_formatted;
+
+            @Override
+            public String toString(){
+                return "related{" +
+                       "node=" + Arrays.toString(node) +
+                       ", relation_type='" + relation_type + '\'' +
+                       ", relation_type_formatted='" + relation_type_formatted + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class recommendation {
+
+            node[]  node;
+            int     num_recommendations;
+
+            @Override
+            public String toString(){
+                return "recommendation{" +
+                       "node=" + Arrays.toString(node) +
+                       ", num_recommendations=" + num_recommendations +
+                       '}';
+            }
+
+        }
+
+        static class ranking {
+
+            ranking_node[]  data;
+            schema.paging   paging;
+
+            @Override
+            public String toString(){
+                return "ranking{" +
+                       "data=" + Arrays.toString(data) +
+                       ", paging=" + paging +
+                       '}';
+            }
+
+            static class ranking_node {
+
+                schema.node node;
+                ranking_scm ranking;
+
+                @Override
+                public String toString(){
+                    return "ranking_node{" +
+                           "node=" + node +
+                           ", ranking=" + ranking +
+                           '}';
+                }
+
+                static class ranking_scm {
+
+                    int rank;
+
+                    @Override
+                    public String toString(){
+                        return "ranking{" +
+                               "rank=" + rank +
+                               '}';
+                    }
+
+                }
+
+            }
+        }
+
+        static class season {
+
+            int     year;
+            String  season;
+
+            @Override
+            public String toString(){
+                return "season{" +
+                       "year=" + year +
+                       ", season='" + season + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class IDN {
+
+            long    id;
+            String  name;
+
+            @Override
+            public String toString(){
+                return "genre{" +
+                       "id=" + id +
+                       ", name='" + name + '\'' +
+                       '}';
+            }
+
+        }
 
     }
 
-    static class node {
+    static class AnimeList {
 
-        long id;
-        String title;
-        main_picture main_picture;
+        schema.node[] data;
+        schema.paging paging;
 
-    }
-
-    static class main_picture {
-
-        String medium, large;
-
-    }
-
-    static class paging {
-
-        String next;
+        @Override
+        public String toString(){
+            return "AnimeList{" +
+                   "data=" + Arrays.toString(data) +
+                   ", paging=" + paging +
+                   '}';
+        }
 
     }
 
-    //
+    static class AnimeDetails extends schema.node {
 
-    static class _Anime_ID {
+        schema.alternative_titles   alternative_titles;
+        String                      start_data,
+                                    end_date,
+                                    synopsis;
+        double                      mean;
+        int                         rank,
+                                    popularity,
+                                    num_list_users,
+                                    num_scoring_users;
+        String                      nsfw,
+                                    created_at,
+                                    updated_at,
+                                    media_type,
+                                    status;
+        schema.genre[]              genres;
+        my_list_status              my_list_status;
+        int                         num_episodes;
+        start_season                start_season;
+        broadcast                   broadcast;
+        String                      source;
+        double                      average_episode_duration;
+        String                      rating;
+        schema.node.picture[]       pictures;
+        String                      background;
+        schema.related              related_anime,
+                                    related_manga;
+        schema.recommendation[]     recommendations;
+        studio[]                    studios;
+        statistics                  statistics;
 
-        long id;
-        String title;
-        main_picture main_picture;
-        alternative_titles alternative_titles;
-        String start_date, end_date, synopsis;
-        double mean;
-        int rank, popularity, num_list_users, num_scoring_users;
-        String nsfw, created_at, updated_at, media_type, status;
-        IDN[] genres;
-        anime_list_status my_list_status;
-        int num_episodes;
-        start_season start_season;
-        broadcast broadcast;
-        String source;
-        int average_episode_duration;
-        String rating;
-        main_picture[] pictures;
-        String background;
-        related[] related_anime, related_manga;
-        recommendation[] recommendations;
-        IDN[] studios;
-        MyAnimeListSchema.statistics statistics;
+        @Override
+        public String toString(){
+            return "AnimeDetails{" +
+                   "id=" + id +
+                   ", title='" + title + '\'' +
+                   ", main_picture=" + main_picture +
+                   ", alternative_titles=" + alternative_titles +
+                   ", start_data='" + start_data + '\'' +
+                   ", end_date='" + end_date + '\'' +
+                   ", synopsis='" + synopsis + '\'' +
+                   ", mean=" + mean +
+                   ", rank=" + rank +
+                   ", popularity=" + popularity +
+                   ", num_list_users=" + num_list_users +
+                   ", num_scoring_users=" + num_scoring_users +
+                   ", nsfw='" + nsfw + '\'' +
+                   ", created_at='" + created_at + '\'' +
+                   ", updated_at='" + updated_at + '\'' +
+                   ", media_type='" + media_type + '\'' +
+                   ", status='" + status + '\'' +
+                   ", genres=" + Arrays.toString(genres) +
+                   ", my_list_status=" + my_list_status +
+                   ", num_episodes=" + num_episodes +
+                   ", start_season=" + start_season +
+                   ", broadcast=" + broadcast +
+                   ", source='" + source + '\'' +
+                   ", average_episode_duration=" + average_episode_duration +
+                   ", rating='" + rating + '\'' +
+                   ", pictures=" + Arrays.toString(pictures) +
+                   ", background='" + background + '\'' +
+                   ", related_anime=" + related_anime +
+                   ", related_manga=" + related_manga +
+                   ", recommendations=" + Arrays.toString(recommendations) +
+                   ", studios=" + Arrays.toString(studios) +
+                   ", statistics=" + statistics +
+                   '}';
+        }
 
-    }
-
-    static class alternative_titles {
-
-        String[] synonyms;
-        String en, ja;
-
-    }
-
-    // applicable to genres/studios
-    static class IDN {
-
-        long id;
-        String name;
-
-    }
-
-    static class anime_list_status {
-
-        String status;
-        int score, num_episodes_watched;
         @SuppressWarnings("SpellCheckingInspection")
-        boolean is_rewatching;
-        String updated_at;
+        static class my_list_status {
+
+            String  status;
+            int     score,
+                    num_episodes_watched;
+            boolean is_rewatching;
+            String  updated_at;
+
+            @Override
+            public String toString(){
+                return "my_list_status{" +
+                       "status='" + status + '\'' +
+                       ", score=" + score +
+                       ", num_episodes_watched=" + num_episodes_watched +
+                       ", is_rewatching=" + is_rewatching +
+                       ", updated_at='" + updated_at + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class start_season extends schema.season {
+
+            @Override
+            public String toString(){
+                return "start_season{" +
+                       "year=" + year +
+                       ", season='" + season + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class broadcast {
+
+            String  day_of_week,
+                    start_time;
+
+            @Override
+            public String toString(){
+                return "broadcast{" +
+                       "day_of_week='" + day_of_week + '\'' +
+                       ", start_time='" + start_time + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class studio extends schema.IDN {
+
+            @Override
+            public String toString(){
+                return "studio{" +
+                       "id=" + id +
+                       ", name='" + name + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class statistics {
+
+            status  status;
+            int     num_list_users;
+
+            @Override
+            public String toString(){
+                return "statistics{" +
+                       "status=" + status +
+                       ", num_list_users=" + num_list_users +
+                       '}';
+            }
+
+            static class status {
+
+                String  watching,
+                        completed,
+                        on_hold,
+                        dropped,
+                        plan_to_watch;
+
+                @Override
+                public String toString(){
+                    return "status{" +
+                           "watching='" + watching + '\'' +
+                           ", completed='" + completed + '\'' +
+                           ", on_hold='" + on_hold + '\'' +
+                           ", dropped='" + dropped + '\'' +
+                           ", plan_to_watch='" + plan_to_watch + '\'' +
+                           '}';
+                }
+
+            }
+
+        }
 
     }
 
-    static class start_season {
+    static class AnimeRanking extends schema.ranking {
 
-        int year;
-        String season;
-
-    }
-
-    static class broadcast {
-
-        String day_of_the_week, start_time;
-
-    }
-
-    // applicable to related_anime & related_manga
-    static class related {
-
-        node node;
-        String relation_type, relation_type_formatted;
+        @Override
+        public String toString(){
+            return "AnimeRanking{" +
+                   "data=" + Arrays.toString(data) +
+                   ", paging=" + paging +
+                   '}';
+        }
 
     }
 
-    static class recommendation {
+    static class SeasonalAnime {
 
-        node node;
-        int num_recommendations;
+        schema.node[]   data;
+        schema.paging   paging;
+        schema.season   season;
 
-    }
-
-    static class statistics {
-
-        status_anime status;
-        int num_list_users;
-
-    }
-    
-    static class status_anime {
-
-        String watching, completed, on_hold, dropped, plan_to_watch;
+        @Override
+        public String toString(){
+            return "SeasonalAnime{" +
+                   "data=" + Arrays.toString(data) +
+                   ", paging=" + paging +
+                   ", season=" + season +
+                   '}';
+        }
 
     }
 
-    //
+    static class SuggestedAnime extends AnimeList {
 
-    static class _Anime_Ranking_Search {
-
-        NodeRanking[] data;
-        paging paging;
-
-    }
-
-    // applicable to anime ranking and manga ranking
-    static class NodeRanking{
-
-        node node;
-        ranking ranking;
-
-    }
-
-    static class ranking {
-
-        int rank;
-
-    }
-
-    //
-
-    static class _Anime_Season_Search {
-
-        node[] data;
-        paging paging;
-        season season;
-
-    }
-
-    static class season {
-
-        int year;
-        String season;
-
-    }
-
-
-    static class AnimeListStatusExtended {
-
-        String status;
-        int score, num_episodes_watched;
-        @SuppressWarnings("SpellCheckingInspection")
-        boolean is_rewatching;
-        String updated_at;
-        @SuppressWarnings("SpellCheckingInspection")
-        int priority, num_times_rewatched, rewatch_value;
-        String[] tags;
-        String comments;
-
-    }
-
-    //
-
-    static class _Anime_MyListStatus {
-
-        String status;
-        int score, num_watched_episodes;
-        @SuppressWarnings("SpellCheckingInspection")
-        boolean is_rewatching;
-        String updated_at;
-        @SuppressWarnings("SpellCheckingInspection")
-        int priority, num_times_rewatched, rewatch_value;
-        String[] tags;
-        String comments;
-
-    }
-
-    //
-
-    static class _Anime_AnimeList {
-
-        AnimeNodeListing[] data;
-        paging paging;
-
-    }
-
-    static class AnimeNodeListing {
-
-        node node;
-        anime_list_status list_status;
-
-    }
-
-    //
-
-    static class _Forum {
-
-        category[] categories;
-
-    }
-
-    static class category {
-
-        String title;
-        board[] boards;
-
-    }
-
-    static class board {
-
-        long id;
-        String title, description;
-        @SuppressWarnings("SpellCheckingInspection")
-        subboard[] subboards;
+        @Override
+        public String toString(){
+            return "SuggestedAnime{" +
+                   "data=" + Arrays.toString(data) +
+                   ", paging=" + paging +
+                   '}';
+        }
 
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    static class subboard{
+    static class UpdateAnimeList {
+
+        String      status;
+        int         score,
+                    num_watched_episodes;
+        boolean     is_rewatching;
+        String      updated_at;
+        int         priority,
+                    num_times_rewatched,
+                    rewatch_value;
+        String[]    tags;
+        String      comments;
+
+        @Override
+        public String toString(){
+            return "UpdateAnimeList{" +
+                   "status='" + status + '\'' +
+                   ", score=" + score +
+                   ", num_watched_episodes=" + num_watched_episodes +
+                   ", is_rewatching=" + is_rewatching +
+                   ", updated_at='" + updated_at + '\'' +
+                   ", priority=" + priority +
+                   ", num_times_rewatched=" + num_times_rewatched +
+                   ", rewatch_value=" + rewatch_value +
+                   ", tags=" + Arrays.toString(tags) +
+                   ", comments='" + comments + '\'' +
+                   '}';
+        }
 
     }
 
-    //
+    static class UserAnimeList {
 
-    static class _Forum_Topic_ID {
+        list_node[]     data;
+        schema.paging   paging;
 
-        forum_data[] data;
-        paging paging;
+        @Override
+        public String toString(){
+            return "UserAnimeList{" +
+                   "data=" + Arrays.toString(data) +
+                   ", paging=" + paging +
+                   '}';
+        }
 
-    }
+        static class list_node {
 
-    static class forum_data{
+            schema.node                 node;
+            AnimeDetails.my_list_status list_status;
 
-        String title;
-        post[] posts;
-        poll poll;
+            @Override
+            public String toString(){
+                return "list_node{" +
+                       "node=" + node +
+                       ", list_status=" + list_status +
+                       '}';
+            }
 
-    }
-
-    static class post{
-
-        String id;
-        int number;
-        String created_at;
-        created_by created_by;
-
-    }
-
-    static class created_by {
-
-        String id;
-        String name;
-        String form_avator; // fixme: API typo!
+        }
 
     }
 
-    static class poll {
+    static class ForumBoards {
 
-        String id, question, closed;
-        option[] options;
-        paging paging;
+        category_node[] categories;
 
-    }
+        @Override
+        public String toString(){
+            return "ForumBoards{" +
+                   "categories=" + Arrays.toString(categories) +
+                   '}';
+        }
 
-    static class option {
+        static class category_node {
 
-        String id, text, votes;
+            String  title;
+            board[] boards;
 
-    }
+            @Override
+            public String toString(){
+                return "category_node{" +
+                       "title='" + title + '\'' +
+                       ", boards=" + Arrays.toString(boards) +
+                       '}';
+            }
 
-    //
+            @SuppressWarnings("SpellCheckingInspection")
+            static class board {
 
-    static class _Forum_Topics {
+                long    id;
+                String  title,
+                        description;
+                board[] subboards;
 
-        topic[] data;
-        paging paging;
+                @Override
+                public String toString(){
+                    return "board{" +
+                           "id=" + id +
+                           ", title='" + title + '\'' +
+                           ", description='" + description + '\'' +
+                           ", subboards=" + Arrays.toString(subboards) +
+                           '}';
+                }
 
-    }
+            }
 
-    static class topic {
-
-        long id;
-        String title, created_at;
-        IDN created_by;
-        int number_of_posts;
-        String last_post_created_at;
-        IDN last_post_created_by;
-        int is_locked;
-
-    }
-
-    //
-
-    static class _Manga_ID {
-
-        long id;
-        String title;
-        main_picture main_picture;
-        alternative_titles alternative_titles;
-        String start_data, synopsis;
-        double mean;
-        int rank, popularity, num_list_users, num_scoring_users;
-        String nsfw, created_at, updated_at, media_type, status;
-        IDN[] genres;
-        manga_list_status my_list_status;
-        int num_volumes, num_chapters;
-        author[] authors;
-        main_picture[] pictures;
-        String background;
-        related[] related_anime;
-        related[] related_manga;
-        recommendation[] recommendations;
-        serialization[] node;
+        }
 
     }
 
-    static class manga_list_status {
+    static class ForumTopicDetail {
 
-        String status;
-        boolean is_rereading;
-        int num_volumes_read, num_chapters_read, score;
-        String updated_at;
+        data_node       data;
+        schema.paging   paging;
+
+        @Override
+        public String toString(){
+            return "ForumTopicDetail{" +
+                   "data=" + data +
+                   ", paging=" + paging +
+                   '}';
+        }
+
+        static class data_node {
+
+            String  title;
+            post[]  posts;
+            poll    poll;
+
+            @Override
+            public String toString(){
+                return "data_node{" +
+                       "title='" + title + '\'' +
+                       ", posts=" + Arrays.toString(posts) +
+                       ", poll=" + poll +
+                       '}';
+            }
+
+            static class post {
+
+                String  id;
+                int     number;
+                String  created_at;
+                author  created_by;
+                String  body,
+                        signature;
+
+                @Override
+                public String toString(){
+                    return "post{" +
+                           "id='" + id + '\'' +
+                           ", number=" + number +
+                           ", created_at='" + created_at + '\'' +
+                           ", created_by=" + created_by +
+                           ", body='" + body + '\'' +
+                           ", signature='" + signature + '\'' +
+                           '}';
+                }
+
+                static class author {
+
+                    String  id,
+                            name,
+                            forum_avator; // fixme: API typo
+
+                    @Override
+                    public String toString(){
+                        return "author{" +
+                               "id='" + id + '\'' +
+                               ", name='" + name + '\'' +
+                               ", forum_avator='" + forum_avator + '\'' +
+                               '}';
+                    }
+
+                }
+
+            }
+
+            static class poll {
+
+                String      id,
+                            question,
+                            closed;
+                option[]    options;
+
+                @Override
+                public String toString(){
+                    return "poll{" +
+                           "id='" + id + '\'' +
+                           ", question='" + question + '\'' +
+                           ", closed='" + closed + '\'' +
+                           ", options=" + Arrays.toString(options) +
+                           '}';
+                }
+
+                static class option {
+
+                    String  id,
+                            text,
+                            votes;
+
+                    @Override
+                    public String toString(){
+                        return "options{" +
+                               "id='" + id + '\'' +
+                               ", text='" + text + '\'' +
+                               ", votes='" + votes + '\'' +
+                               '}';
+                    }
+
+                }
+
+            }
+
+        }
 
     }
 
-    static class author {
+    static class ForumTopic {
 
-        author_node node;
-        String role;
+        data_node[]     data;
+        schema.paging   paging;
 
-    }
+        static class data_node {
 
-    static class author_node{
+            long    id;
+            String  title,
+                    created_at;
+            creator created_by;
+            int     num_of_posts;
+            String  last_post_created_at;
+            creator last_post_created_by;
+            int     is_locked;
 
-        long id;
-        String first_name, last_name;
+            @Override
+            public String toString(){
+                return "data_node{" +
+                       "id=" + id +
+                       ", title='" + title + '\'' +
+                       ", created_at='" + created_at + '\'' +
+                       ", created_by=" + created_by +
+                       ", num_of_posts=" + num_of_posts +
+                       ", last_post_created_at='" + last_post_created_at + '\'' +
+                       ", last_post_created_by=" + last_post_created_by +
+                       ", is_locked=" + is_locked +
+                       '}';
+            }
 
-    }
+            static class creator {
 
-    static class serialization{
+                long    id;
+                String  name;
 
-        node node;
+                @Override
+                public String toString(){
+                    return "creator{" +
+                           "id=" + id +
+                           ", name='" + name + '\'' +
+                           '}';
+                }
 
-    }
+            }
 
-    //
-
-    static class _Manga_MyListStatus {
-
-        String status;
-        boolean is_rereading;
-        int num_volumes_read, num_chapters_read, score;
-        String updated_at;
-        int priority, num_times_reread, reread_value;
-        String[] tags;
-        String comments;
-
-    }
-
-    //
-
-    static class _Manga_Manga_List {
-
-        MangaNodeListing[] data;
-        paging paging;
-
-    }
-
-    static class MangaNodeListing {
-
-        node node;
-        manga_list_status list_status;
-
-    }
-
-    //
-
-    static class user
-    {
-
-        long id;
-        String name, location, joined_at;
-        anime_statistics anime_statistics;
+        }
 
     }
 
-    static class anime_statistics
-    {
+    static class MangaList {
+
+        schema.node[] data;
+        schema.paging paging;
+
+        @Override
+        public String toString(){
+            return "MangaList{" +
+                   "data=" + Arrays.toString(data) +
+                   ", paging=" + paging +
+                   '}';
+        }
+
+    }
+
+    static class MangaDetails extends schema.node {
+
+        schema.alternative_titles   alternative_titles;
+        String                      start_data,
+                                    end_date,
+                                    synopsis;
+        double                      mean;
+        int                         rank,
+                                    popularity,
+                                    num_list_users,
+                                    num_scoring_users;
+        String                      nsfw,
+                                    created_at,
+                                    updated_at,
+                                    media_type,
+                                    status;
+        schema.genre[]              genres;
+        my_list_status              my_list_status;
+        int                         num_volumes,
+                                    num_chapters;
+        author[]                    authors;
+        schema.node.picture[]       pictures;
+        String                      background;
+        schema.related              related_anime,
+                                    related_manga;
+        schema.recommendation[]     recommendations;
+        statistics                  statistics;
+
+        @Override
+        public String toString(){
+            return "MangaDetails{" +
+                   "id=" + id +
+                   ", title='" + title + '\'' +
+                   ", main_picture=" + main_picture +
+                   "alternative_titles=" + alternative_titles +
+                   ", start_data='" + start_data + '\'' +
+                   ", end_date='" + end_date + '\'' +
+                   ", synopsis='" + synopsis + '\'' +
+                   ", mean=" + mean +
+                   ", rank=" + rank +
+                   ", popularity=" + popularity +
+                   ", num_list_users=" + num_list_users +
+                   ", num_scoring_users=" + num_scoring_users +
+                   ", nsfw='" + nsfw + '\'' +
+                   ", created_at='" + created_at + '\'' +
+                   ", updated_at='" + updated_at + '\'' +
+                   ", media_type='" + media_type + '\'' +
+                   ", status='" + status + '\'' +
+                   ", genres=" + Arrays.toString(genres) +
+                   ", my_list_status=" + my_list_status +
+                   ", num_volumes=" + num_volumes +
+                   ", num_chapters=" + num_chapters +
+                   ", authors=" + Arrays.toString(authors) +
+                   ", pictures=" + Arrays.toString(pictures) +
+                   ", background='" + background + '\'' +
+                   ", related_anime=" + related_anime +
+                   ", related_manga=" + related_manga +
+                   ", recommendations=" + Arrays.toString(recommendations) +
+                   ", statistics=" + statistics +
+                   '}';
+        }
+
+        static class my_list_status {
+
+            String  status;
+            boolean is_rereading;
+            int     num_volumes_read,
+                    num_chapters_read,
+                    score;
+            String updated_at;
+
+            @Override
+            public String toString(){
+                return "my_list_status{" +
+                       "status='" + status + '\'' +
+                       ", is_rereading=" + is_rereading +
+                       ", num_volumes_read=" + num_volumes_read +
+                       ", num_chapters_read=" + num_chapters_read +
+                       ", score=" + score +
+                       ", updated_at='" + updated_at + '\'' +
+                       '}';
+            }
+
+        }
+
+        static class author {
+
+            node    node;
+            String  role;
+
+            @Override
+            public String toString(){
+                return "author{" +
+                       "node=" + node +
+                       ", role='" + role + '\'' +
+                       '}';
+            }
+
+            static class node {
+
+                long    id;
+                String  first_name,
+                        last_name;
+
+                @Override
+                public String toString(){
+                    return "node{" +
+                           "id=" + id +
+                           ", first_name='" + first_name + '\'' +
+                           ", last_name='" + last_name + '\'' +
+                           '}';
+                }
+
+            }
+
+        }
+
+        static class statistics {
+
+            status status;
+            int     num_list_users;
+
+            @Override
+            public String toString(){
+                return "statistics{" +
+                       "status=" + status +
+                       ", num_list_users=" + num_list_users +
+                       '}';
+            }
+
+            static class status {
+
+                String  reading,
+                        completed,
+                        on_hold,
+                        dropped,
+                        plan_to_read;
+
+                @Override
+                public String toString(){
+                    return "status{" +
+                           "reading='" + reading + '\'' +
+                           ", completed='" + completed + '\'' +
+                           ", on_hold='" + on_hold + '\'' +
+                           ", dropped='" + dropped + '\'' +
+                           ", plan_to_read='" + plan_to_read + '\'' +
+                           '}';
+                }
+
+            }
+
+        }
+
+    }
+
+    static class MangaRanking extends schema.ranking {
+
+        @Override
+        public String toString(){
+            return "MangaRanking{" +
+                   "data=" + Arrays.toString(data) +
+                   ", paging=" + paging +
+                   '}';
+        }
+
+    }
+
+    static class UpdateMangaList {
+
+        String      status;
+        int         num_volumes_read,
+                    num_chapters_read,
+                    score;
+        String      updated_at;
+        int         priority,
+                    num_times_reread,
+                    reread_value;
+        String[]    tags;
+        String      comments;
+
+        @Override
+        public String toString(){
+            return "UpdateMangaList{" +
+                   "status='" + status + '\'' +
+                   ", num_volumes_read=" + num_volumes_read +
+                   ", num_chapters_read=" + num_chapters_read +
+                   ", score=" + score +
+                   ", updated_at='" + updated_at + '\'' +
+                   ", priority=" + priority +
+                   ", num_times_reread=" + num_times_reread +
+                   ", reread_value=" + reread_value +
+                   ", tags=" + Arrays.toString(tags) +
+                   ", comments='" + comments + '\'' +
+                   '}';
+        }
+
+    }
+
+    static class UserMangaList {
+
+        list_node[]     data;
+        schema.paging   paging;
+
+        @Override
+        public String toString(){
+            return "UserMangaList{" +
+                   "data=" + Arrays.toString(data) +
+                   ", paging=" + paging +
+                   '}';
+        }
+
+        static class list_node {
+
+            schema.node                 node;
+            MangaDetails.my_list_status list_status;
+
+            @Override
+            public String toString(){
+                return "list_node{" +
+                       "node=" + node +
+                       ", list_status=" + list_status +
+                       '}';
+            }
+
+        }
+
+    }
+
+    static class UserInformation {
+
+        long                id;
+        String              name,
+                            location,
+                            joined_at;
+        anime_statistics    anime_statistics;
+        manga_statistics    manga_statistics;
+
+        @Override
+        public String toString(){
+            return "UserInformation{" +
+                   "id=" + id +
+                   ", name='" + name + '\'' +
+                   ", location='" + location + '\'' +
+                   ", joined_at='" + joined_at + '\'' +
+                   ", anime_statistics=" + anime_statistics +
+                   ", manga_statistics=" + manga_statistics +
+                   '}';
+        }
+
         @SuppressWarnings("SpellCheckingInspection")
-        int num_items_watching, num_items_completed, num_items_on_hold, num_items_dropped, num_items_plan_to_watch, num_items, num_days_watched, num_days_watching, num_days_completed, num_days_on_hold, num_days_dropped, num_days, num_episodes, num_times_rewatched, num_mean_score;
+        static class anime_statistics {
+
+            int     num_items_watching,
+                    num_items_completed,
+                    num_items_on_hold,
+                    num_items_plan_to_watch,
+                    num_items;
+            double  num_days_watched,
+                    num_days_watching,
+                    num_days_completed,
+                    num_days_on_hold,
+                    num_days_dropped,
+                    num_days;
+            int     num_episodes,
+                    num_times_rewatched;
+            double  mean_score;
+
+            @Override
+            public String toString(){
+                return "anime_statistics{" +
+                       "num_items_watching=" + num_items_watching +
+                       ", num_items_completed=" + num_items_completed +
+                       ", num_items_on_hold=" + num_items_on_hold +
+                       ", num_items_plan_to_watch=" + num_items_plan_to_watch +
+                       ", num_items=" + num_items +
+                       ", num_days_watched=" + num_days_watched +
+                       ", num_days_watching=" + num_days_watching +
+                       ", num_days_completed=" + num_days_completed +
+                       ", num_days_on_hold=" + num_days_on_hold +
+                       ", num_days_dropped=" + num_days_dropped +
+                       ", num_days=" + num_days +
+                       ", num_episodes=" + num_episodes +
+                       ", num_times_rewatched=" + num_times_rewatched +
+                       ", mean_score=" + mean_score +
+                       '}';
+            }
+
+        }
+
+        static class manga_statistics {
+
+            int     num_items_reading,
+                    num_items_completed,
+                    num_items_on_hold,
+                    num_items_plan_to_read,
+                    num_items;
+            double  num_days_reading,
+                    num_days_watching,
+                    num_days_completed,
+                    num_days_on_hold,
+                    num_days_dropped,
+                    num_days;
+            int     num_episodes,
+                    num_times_reread;
+            double  mean_score;
+
+            @Override
+            public String toString(){
+                return "manga_statistics{" +
+                       "num_items_reading=" + num_items_reading +
+                       ", num_items_completed=" + num_items_completed +
+                       ", num_items_on_hold=" + num_items_on_hold +
+                       ", num_items_plan_to_read=" + num_items_plan_to_read +
+                       ", num_items=" + num_items +
+                       ", num_days_reading=" + num_days_reading +
+                       ", num_days_watching=" + num_days_watching +
+                       ", num_days_completed=" + num_days_completed +
+                       ", num_days_on_hold=" + num_days_on_hold +
+                       ", num_days_dropped=" + num_days_dropped +
+                       ", num_days=" + num_days +
+                       ", num_episodes=" + num_episodes +
+                       ", num_times_reread=" + num_times_reread +
+                       ", mean_score=" + mean_score +
+                       '}';
+            }
+
+        }
+
     }
 
 }
