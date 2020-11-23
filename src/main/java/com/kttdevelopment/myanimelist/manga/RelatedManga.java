@@ -10,6 +10,6 @@ import com.kttdevelopment.myanimelist.property.RelationType;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaRelation extends RelationType implements MangaPreviewable {
+public abstract class RelatedManga extends RelationType implements MangaPreviewable {
 
 }

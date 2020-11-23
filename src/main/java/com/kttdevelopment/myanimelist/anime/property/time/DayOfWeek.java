@@ -9,35 +9,50 @@ package com.kttdevelopment.myanimelist.anime.property.time;
  */
 public enum DayOfWeek {
 
-    Sunday("sunday"),
-    Monday("monday"),
-    Tuesday("tuesday"),
-    Wednesday("wednesday"),
-    Thursday("thursday"),
-    Friday("friday"),
-    Saturday("saturday");
+    Sunday      ("sunday"),
+    Monday      ("monday"),
+    Tuesday     ("tuesday"),
+    Wednesday   ("wednesday"),
+    Thursday    ("thursday"),
+    Friday      ("friday"),
+    Saturday    ("saturday");
 
-    private final String dayOfWeek;
+    private final String field;
 
-    DayOfWeek(final String dayOfWeek){
-        this.dayOfWeek = dayOfWeek;
+    DayOfWeek(final String field){
+        this.field = field;
     }
 
     /**
-     * Returns the type field name
+     * Returns the field name.
      *
      * @return field name
      *
      * @since 1.0.0
      */
-    public final String getDayOfWeek(){
-        return dayOfWeek;
+    public final String field(){
+        return field;
+    }
+
+    /**
+     * Returns the field as an enum.
+     *
+     * @param string string
+     * @return enum
+     *
+     * @since 1.0.0
+     */
+    public static DayOfWeek asEnum(final String string){
+        for(final DayOfWeek value : values())
+            if(value.field.equalsIgnoreCase(string))
+                return value;
+        return null;
     }
 
     @Override
     public String toString(){
         return "DayOfWeek{" +
-               "dayOfWeek='" + dayOfWeek + '\'' +
+               "field='" + field + '\'' +
                '}';
     }
 }

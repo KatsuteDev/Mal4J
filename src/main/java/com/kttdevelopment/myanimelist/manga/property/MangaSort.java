@@ -1,23 +1,26 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
-import com.kttdevelopment.myanimelist.anime.property.AnimeAirStatus;
+import com.kttdevelopment.myanimelist.property.Sort;
 
 /**
- * Represents a Manga publish status.
+ * Represents the sort order.
  *
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public enum MangaPublishStatus {
+public enum MangaSort {
 
-    Publishing  ("publishing"),
-    Published   ("not_yet_published"),
-    Finished    ("finished_publishing");
+    Score       (Sort.Score.field()),
+    UpdatedAt   (Sort.UpdatedAt.field()),
+
+    Title       ("manga_title"),
+    StartDate   ("manga_start_date"),
+    ID          ("manga_id");
 
     private final String field;
 
-    MangaPublishStatus(final String field){
+    MangaSort(final String field){
         this.field = field;
     }
 
@@ -40,8 +43,8 @@ public enum MangaPublishStatus {
      *
      * @since 1.0.0
      */
-    public static MangaPublishStatus asEnum(final String string){
-        for(final MangaPublishStatus value : values())
+    public static MangaSort asEnum(final String string){
+        for(final MangaSort value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
         return null;
@@ -49,7 +52,7 @@ public enum MangaPublishStatus {
 
     @Override
     public String toString(){
-        return "MangaPublishStatus{" +
+        return "MangaSort{" +
                "field='" + field + '\'' +
                '}';
     }

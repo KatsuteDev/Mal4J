@@ -1,8 +1,8 @@
 package com.kttdevelopment.myanimelist.property;
 
 import com.kttdevelopment.myanimelist.anime.property.AlternativeTitles;
-import com.kttdevelopment.myanimelist.anime.AnimeRelation;
-import com.kttdevelopment.myanimelist.manga.MangaRelation;
+import com.kttdevelopment.myanimelist.anime.RelatedAnime;
+import com.kttdevelopment.myanimelist.manga.RelatedManga;
 
 public interface ExtendedPreview extends Preview {
 
@@ -36,8 +36,8 @@ public interface ExtendedPreview extends Preview {
 
     String getBackground();
 
-    AnimeRelation[] getRelatedAnime();
+    RelatedAnime[] getRelatedAnime();
 
-    MangaRelation[] getRelatedManga();
+    RelatedManga[] getRelatedManga();
 
 }

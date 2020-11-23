@@ -9,32 +9,47 @@ package com.kttdevelopment.myanimelist.anime.property;
  */
 public enum AnimeType {
 
-    TV("tv"),
-    OVA("ova"),
-    Movie("movie"),
-    Special("special");
+    TV      ("tv"),
+    OVA     ("ova"),
+    Movie   ("movie"),
+    Special ("special");
 
-    private final String type;
+    private final String field;
 
-    AnimeType(final String type){
-        this.type = type;
+    AnimeType(final String field){
+        this.field = field;
     }
 
     /**
-     * Returns the type field name
+     * Returns the field name.
      *
      * @return field name
      *
      * @since 1.0.0
      */
-    public final String getType(){
-        return type;
+    public final String field(){
+        return field;
+    }
+
+    /**
+     * Returns the field as an enum.
+     *
+     * @param string string
+     * @return enum
+     *
+     * @since 1.0.0
+     */
+    public static AnimeType asEnum(final String string){
+        for(final AnimeType value : values())
+            if(value.field.equalsIgnoreCase(string))
+                return value;
+        return null;
     }
 
     @Override
     public String toString(){
         return "AnimeType{" +
-               "type='" + type + '\'' +
+               "field='" + field + '\'' +
                '}';
     }
 

@@ -1,5 +1,7 @@
 package com.kttdevelopment.myanimelist.property;
 
+import com.kttdevelopment.myanimelist.anime.property.AnimeAirStatus;
+
 /**
  * Represents general ranking types.
  *
@@ -9,32 +11,47 @@ package com.kttdevelopment.myanimelist.property;
  */
 public enum RankingType {
 
-    All("all"),
+    All         ("all"),
     @SuppressWarnings("SpellCheckingInspection")
     ByPopularity("bypopularity"),
-    Favorite("favorite");
+    Favorite    ("favorite");
 
-    private final String type;
+    private final String field;
 
-    RankingType(final String type){
-        this.type = type;
+    RankingType(final String field){
+        this.field = field;
     }
 
     /**
-     * Returns the type field name
+     * Returns the field name.
      *
      * @return field name
      *
      * @since 1.0.0
      */
-    public final String getType(){
-        return type;
+    public final String field(){
+        return field;
+    }
+
+    /**
+     * Returns the field as an enum.
+     *
+     * @param string string
+     * @return enum
+     *
+     * @since 1.0.0
+     */
+    public static RankingType asEnum(final String string){
+        for(final RankingType value : values())
+            if(value.field.equalsIgnoreCase(string))
+                return value;
+        return null;
     }
 
     @Override
     public String toString(){
         return "RankingType{" +
-               "type='" + type + '\'' +
+               "field='" + field + '\'' +
                '}';
     }
 }

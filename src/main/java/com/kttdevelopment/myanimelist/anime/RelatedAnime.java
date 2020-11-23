@@ -10,6 +10,6 @@ import com.kttdevelopment.myanimelist.property.RelationType;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeRelation extends RelationType implements AnimePreviewable {
+public abstract class RelatedAnime extends RelationType implements AnimePreviewable {
 
 }

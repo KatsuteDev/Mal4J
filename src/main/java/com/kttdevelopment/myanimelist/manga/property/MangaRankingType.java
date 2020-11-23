@@ -15,38 +15,53 @@ import com.kttdevelopment.myanimelist.property.RankingType;
 public enum MangaRankingType {
 
 
-    Manga(MangaType.Manga.getType()),
-    Novels(MangaType.Novels.getType()),
-    OneShots(MangaType.OneShots.getType()),
-    Doujin(MangaType.Doujin.getType()),
-    Manhwa(MangaType.Manhwa.getType()),
-    Manhua(MangaType.Manhua.getType()),
+    Manga   (MangaType.Manga.field()),
+    Novels  (MangaType.Novels.field()),
+    OneShots(MangaType.OneShots.field()),
+    Doujin  (MangaType.Doujin.field()),
+    Manhwa  (MangaType.Manhwa.field()),
+    Manhua  (MangaType.Manhua.field()),
 
-    All(RankingType.All.getType()),
-    ByPopularity(RankingType.ByPopularity.getType()),
-    Favorite(RankingType.Favorite.getType());
+    All         (RankingType.All.field()),
+    ByPopularity(RankingType.ByPopularity.field()),
+    Favorite    (RankingType.Favorite.field());
 
-    private final String type;
+    private final String field;
 
-    MangaRankingType(final String type){
-        this.type = type;
+    MangaRankingType(final String field){
+        this.field = field;
     }
 
     /**
-     * Returns the type field name
+     * Returns the field name.
      *
      * @return field name
      *
      * @since 1.0.0
      */
-    public final String getType(){
-        return type;
+    public final String field(){
+        return field;
+    }
+
+    /**
+     * Returns the field as an enum.
+     *
+     * @param string string
+     * @return enum
+     *
+     * @since 1.0.0
+     */
+    public static MangaRankingType asEnum(final String string){
+        for(final MangaRankingType value : values())
+            if(value.field.equalsIgnoreCase(string))
+                return value;
+        return null;
     }
 
     @Override
     public String toString(){
-        return "AnimeRankingType{" +
-               "type='" + type + '\'' +
+        return "MangaRankingType{" +
+               "field='" + field + '\'' +
                '}';
     }
 }

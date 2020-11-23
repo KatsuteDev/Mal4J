@@ -1,5 +1,7 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
+import com.kttdevelopment.myanimelist.anime.property.AnimeAirStatus;
+
 /**
  * Represents Manga types.
  *
@@ -10,34 +12,49 @@ package com.kttdevelopment.myanimelist.manga.property;
 @SuppressWarnings("SpellCheckingInspection")
 public enum MangaType {
 
-    Manga("manga"),
-    Novels("novels"),
+    Manga   ("manga"),
+    Novels  ("novels"),
     OneShots("oneshots"),
-    Doujin("doujin"),
-    Manhwa("manhwa"),
-    Manhua("manhua");
+    Doujin  ("doujin"),
+    Manhwa  ("manhwa"),
+    Manhua  ("manhua");
 
-    private final String type;
+    private final String field;
 
-    MangaType(final String type){
-        this.type = type;
+    MangaType(final String field){
+        this.field = field;
     }
 
     /**
-     * Returns the type field name
+     * Returns the field name.
      *
      * @return field name
      *
      * @since 1.0.0
      */
-    public final String getType(){
-        return type;
+    public final String field(){
+        return field;
+    }
+
+    /**
+     * Returns the field as an enum.
+     *
+     * @param string string
+     * @return enum
+     *
+     * @since 1.0.0
+     */
+    public static MangaType asEnum(final String string){
+        for(final MangaType value : values())
+            if(value.field.equalsIgnoreCase(string))
+                return value;
+        return null;
     }
 
     @Override
     public String toString(){
         return "MangaType{" +
-               "type='" + type + '\'' +
+               "field='" + field + '\'' +
                '}';
     }
 }

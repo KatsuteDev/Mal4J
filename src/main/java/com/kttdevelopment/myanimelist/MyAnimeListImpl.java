@@ -7,12 +7,9 @@ import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
-import com.kttdevelopment.myanimelist.property.MangaSort;
+import com.kttdevelopment.myanimelist.manga.property.MangaSort;
 import com.kttdevelopment.myanimelist.user.User;
-import retrofit2.*;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.util.List;
 
 public final class MyAnimeListImpl extends MyAnimeList{
@@ -64,20 +61,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final Anime getAnime(final int id, final String[] fields){
-        try{
-            final MyAnimeListSchema._Anime_ID anime = service
-                .getAnime(
-                    auth,
-                    id,
-                    parseFields(fields)
-                )
-                .execute()
-                .body();
-
-            return null; // todo
-        }catch(final IOException e){
-            throw new UncheckedIOException(e);
-        }
+        return null;
     }
 
     @Override

@@ -11,34 +11,49 @@ import com.kttdevelopment.myanimelist.property.Sort;
  */
 public enum AnimeSort {
 
-    Score(Sort.Score.getSort()),
-    UpdatedAt(Sort.UpdatedAt.getSort()),
+    Score       (Sort.Score.field()),
+    UpdatedAt   (Sort.UpdatedAt.field()),
 
-    Title("anime_title"),
-    StartDate("anime_start_date"),
-    ID("anime_id");
+    Title       ("anime_title"),
+    StartDate   ("anime_start_date"),
+    ID          ("anime_id");
 
-    private final String sort;
+    private final String field;
 
-    AnimeSort(final String sort){
-        this.sort = sort;
+    AnimeSort(final String field){
+        this.field = field;
     }
 
     /**
-     * Returns the type field name
+     * Returns the field name.
      *
      * @return field name
      *
      * @since 1.0.0
      */
-    public final String getSort(){
-        return sort;
+    public final String field(){
+        return field;
+    }
+
+    /**
+     * Returns the field as an enum.
+     *
+     * @param string string
+     * @return enum
+     *
+     * @since 1.0.0
+     */
+    public static AnimeSort asEnum(final String string){
+        for(final AnimeSort value : values())
+            if(value.field.equalsIgnoreCase(string))
+                return value;
+        return null;
     }
 
     @Override
     public String toString(){
         return "AnimeSort{" +
-               "sort='" + sort + '\'' +
+               "field='" + field + '\'' +
                '}';
     }
 

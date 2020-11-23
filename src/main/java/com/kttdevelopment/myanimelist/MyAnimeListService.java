@@ -1,6 +1,5 @@
 package com.kttdevelopment.myanimelist;
 
-import com.kttdevelopment.myanimelist.user.User;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -22,7 +21,7 @@ public interface MyAnimeListService {
     // anime
 
     @GET("anime")
-    Call<NodePaging> getAnime(
+    Call<AnimeList> getAnime(
         @Header("Authorization")    final String token,
         @Query("q")                 final String search,
         @Query("limit")             final int limit,
@@ -31,14 +30,14 @@ public interface MyAnimeListService {
     );
 
     @GET("anime/{anime_id}")
-    Call<_Anime_ID> getAnime(
+    Call<AnimeDetails> getAnime(
         @Header("Authorization")                    final String token,
         @Path(value = "anime_id", encoded = true)   final int anime_id,
         @Query(value = "fields", encoded = true)   final String fields
     );
 
     @GET("anime/ranking")
-    Call<NodeRanking> getAnimeRanking(
+    Call<AnimeRanking> getAnimeRanking(
         @Header("Authorization")    final String token,
         @Query("ranking_type")      final String ranking_type,
         @Query("limit")             final int limit,
@@ -47,7 +46,7 @@ public interface MyAnimeListService {
     );
 
     @GET("anime/season/{year}/{season}")
-    Call<_Anime_Season_Search> getAnimeSeason(
+    Call<SeasonalAnime> getAnimeSeason(
         @Header("Authorization")                final String token,
         @Path(value = "year", encoded = true)   final int year,
         @Path(value = "season", encoded = true) final String season,
@@ -58,7 +57,7 @@ public interface MyAnimeListService {
     );
 
     @GET("anime/suggestions")
-    Call<NodePaging> getAnimeSuggestions(
+    Call<SuggestedAnime> getAnimeSuggestions(
         @Header("Authorization")    final String token,
         @Query("limit")             final int limit,
         @Query("offset")            final int offset,
@@ -70,7 +69,7 @@ public interface MyAnimeListService {
     @SuppressWarnings("SpellCheckingInspection")
     @FormUrlEncoded
     @PATCH("anime/{anime_id}/my_list_status")
-    Call<_Anime_MyListStatus> updateAnimeListing(
+    Call<UpdateAnimeList> updateAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "anime_id", encoded = true)   final int anime_id,
         @Field("status")                            final String status,
@@ -92,7 +91,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("anime/{user_name}/animelist")
-    Call<_Anime_AnimeList> getAnimeListing(
+    Call<UserAnimeList> getAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
@@ -104,12 +103,12 @@ public interface MyAnimeListService {
     // forum
 
     @GET("forum/board")
-    Call<_Forum> getForumBoards(
+    Call<ForumBoards> getForumBoards(
         @Header("Authorization")        final String token
     );
 
     @GET("forum/topic/{topic_id}")
-    Call<_Forum_Topic_ID> getForumBoard(
+    Call<ForumTopicDetail> getForumBoard(
         @Header("Authorization")                    final String token,
         @Path(value = "topic_id", encoded = true)   final int topic_id,
         @Query("limit")                             final int limit,
@@ -118,7 +117,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("forum/topics")
-    Call<_Forum_Topics> getForumTopics(
+    Call<ForumTopic> getForumTopics(
         @Header("Authorizations")   final String token,
         @Query("board_id")          final int board_id,
         @Query("subboard_id")       final int subboard_id,
@@ -133,7 +132,7 @@ public interface MyAnimeListService {
     // manga
 
     @GET("manga")
-    Call<NodePaging> getManga(
+    Call<MangaList> getManga(
         @Header("Authorization")    final String token,
         @Query("q")                 final String search,
         @Query("limit")             final int limit,
@@ -142,14 +141,14 @@ public interface MyAnimeListService {
     );
 
     @GET("manga/{manga_id}")
-    Call<_Manga_ID> getManga(
+    Call<MangaDetails> getManga(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id", encoded = true)   final int manga_id,
         @Query("fields")                            final String fields
     );
 
     @GET("manga/ranking")
-    Call<NodeRanking> getMangaRanking(
+    Call<MangaRanking> getMangaRanking(
         @Header("Authorization")    final String token,
         @Query("ranking_type")      final String ranking_type,
         @Query("limit")             final int limit,
@@ -161,7 +160,7 @@ public interface MyAnimeListService {
 
     @FormUrlEncoded
     @PATCH("manga/{manga_id}/my_list_status")
-    Call<_Manga_MyListStatus> updateMangaListing(
+    Call<UpdateMangaList> updateMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id", encoded = true)   final int manga_id,
         @Field("status")                            final String status,
@@ -184,7 +183,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("manga/{user_name}/mangalist")
-    Call<_Manga_Manga_List> getMangaListing(
+    Call<UserMangaList> getMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
@@ -196,7 +195,7 @@ public interface MyAnimeListService {
     // user
 
     @GET("users/{user_name}")
-    Call<User> getUser(
+    Call<UserInformation> getUser(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name")                  final String username,
         @Query("fields")                            final String fields
