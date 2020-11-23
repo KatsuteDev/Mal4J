@@ -13,39 +13,54 @@ import com.kttdevelopment.myanimelist.property.RankingType;
  */
 public enum AnimeRankingType {
 
-    Airing("airing"),
+    Airing  ("airing"),
     Upcoming("upcoming"),
 
-    TV(AnimeType.TV.getType()),
-    OVA(AnimeType.OVA.getType()),
-    Movie(AnimeType.Movie.getType()),
-    Special(AnimeType.Special.getType()),
+    TV      (AnimeType.TV.field()),
+    OVA     (AnimeType.OVA.field()),
+    Movie   (AnimeType.Movie.field()),
+    Special (AnimeType.Special.field()),
 
-    All(RankingType.All.getType()),
-    ByPopularity(RankingType.ByPopularity.getType()),
-    Favorite(RankingType.Favorite.getType());
+    All         (RankingType.All.field()),
+    ByPopularity(RankingType.ByPopularity.field()),
+    Favorite    (RankingType.Favorite.field());
 
-    private final String type;
+    private final String field;
 
     AnimeRankingType(final String type){
-        this.type = type;
+        this.field = type;
     }
 
     /**
-     * Returns the type field name
+     * Returns the field name.
      *
      * @return field name
      *
      * @since 1.0.0
      */
-    public final String getType(){
-        return type;
+    public final String field(){
+        return field;
+    }
+
+    /**
+     * Returns the field as an enum.
+     *
+     * @param string string
+     * @return enum
+     *
+     * @since 1.0.0
+     */
+    public static AnimeRankingType asEnum(final String string){
+        for(final AnimeRankingType value : values())
+            if(value.field.equalsIgnoreCase(string))
+                return value;
+        return null;
     }
 
     @Override
     public String toString(){
         return "AnimeRankingType{" +
-               "type='" + type + '\'' +
+               "field='" + field + '\'' +
                '}';
     }
 }

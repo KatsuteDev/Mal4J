@@ -24,6 +24,8 @@
 
 ---
 
-This project is currently in very early stages of development. Please help contribute to this project. ❤
+This project is currently in development. Please help contribute to this project. ❤
 
 View our progress [here](https://github.com/Ktt-Development/MyAnimeList-Java-API/projects/1).
+
+# Setup

@@ -2,7 +2,7 @@ package com.kttdevelopment.myanimelist;
 
 import java.util.Arrays;
 
-final class MyAnimeListSchema {
+abstract class MyAnimeListSchema {
 
     static class schema {
 
@@ -94,14 +94,14 @@ final class MyAnimeListSchema {
 
         static class related {
 
-            node[]  node;
+            node  node;
             String  relation_type,
                     relation_type_formatted;
 
             @Override
             public String toString(){
                 return "related{" +
-                       "node=" + Arrays.toString(node) +
+                       "node=" + node +
                        ", relation_type='" + relation_type + '\'' +
                        ", relation_type_formatted='" + relation_type_formatted + '\'' +
                        '}';
@@ -111,13 +111,13 @@ final class MyAnimeListSchema {
 
         static class recommendation {
 
-            node[]  node;
+            node  node;
             int     num_recommendations;
 
             @Override
             public String toString(){
                 return "recommendation{" +
-                       "node=" + Arrays.toString(node) +
+                       "node=" + node +
                        ", num_recommendations=" + num_recommendations +
                        '}';
             }
@@ -235,11 +235,11 @@ final class MyAnimeListSchema {
         start_season                start_season;
         broadcast                   broadcast;
         String                      source;
-        double                      average_episode_duration;
+        int                         average_episode_duration;
         String                      rating;
         schema.node.picture[]       pictures;
         String                      background;
-        schema.related              related_anime,
+        schema.related[]            related_anime,
                                     related_manga;
         schema.recommendation[]     recommendations;
         studio[]                    studios;
@@ -728,7 +728,7 @@ final class MyAnimeListSchema {
         author[]                    authors;
         schema.node.picture[]       pictures;
         String                      background;
-        schema.related              related_anime,
+        schema.related[]            related_anime,
                                     related_manga;
         schema.recommendation[]     recommendations;
         statistics                  statistics;

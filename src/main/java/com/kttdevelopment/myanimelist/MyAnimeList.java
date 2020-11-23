@@ -8,7 +8,7 @@ import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
-import com.kttdevelopment.myanimelist.property.MangaSort;
+import com.kttdevelopment.myanimelist.manga.property.MangaSort;
 import com.kttdevelopment.myanimelist.user.User;
 
 import java.io.IOException;
@@ -45,9 +45,9 @@ public abstract class MyAnimeList {
 
     public abstract List<AnimePreview> getAnime(final String search, final int limit, final int offset, final String[] fields);
 
-    public abstract Anime getAnime(final int id);
+    public abstract Anime getAnime(final long id);
 
-    public abstract Anime getAnime(final int id, final String[] fields);
+    public abstract Anime getAnime(final long id, final String[] fields);
 
     // anime ranking
 
@@ -91,7 +91,7 @@ public abstract class MyAnimeList {
 
     public abstract AnimeListing updateAnimeListing(); // todo
 
-    public abstract void deleteAnimeListing(final int id);
+    public abstract void deleteAnimeListing(final long id);
 
     public abstract List<UserAnimeListing> getUserAnimeListing(final String username);
 
@@ -123,11 +123,11 @@ public abstract class MyAnimeList {
 
     // forum board
 
-    public abstract ForumCategory getForumBoard(final int id);
+    public abstract ForumCategory getForumBoard(final long id);
 
-    public abstract ForumCategory getForumBoard(final int id, final int limit);
+    public abstract ForumCategory getForumBoard(final long id, final int limit);
 
-    public abstract ForumCategory getForumBoard(final int id, final int limit, final int offset);
+    public abstract ForumCategory getForumBoard(final long id, final int limit, final int offset);
 
     // forum topics
 
@@ -147,9 +147,9 @@ public abstract class MyAnimeList {
 
     public abstract List<MangaPreview> getManga(final String search, final int limit, final int offset, final String[] fields);
 
-    public abstract MangaPreview getManga(final int id);
+    public abstract Manga getManga(final long id);
 
-    public abstract MangaPreview getManga(final int id, final String[] fields);
+    public abstract Manga getManga(final long id, final String[] fields);
 
     // manga ranking
 
@@ -167,7 +167,7 @@ public abstract class MyAnimeList {
 
     public abstract MangaListing updateMangaListing(); // todo
 
-    public abstract void deleteMangaListing(final int id);
+    public abstract void deleteMangaListing(final long id);
 
     public abstract List<UserMangaListing> getUserMangaListing(final String username);
 
