@@ -3,13 +3,15 @@ package com.kttdevelopment.myanimelist;
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
+import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
-import com.kttdevelopment.myanimelist.property.RankingType;
+import com.kttdevelopment.myanimelist.property.MangaSort;
 import com.kttdevelopment.myanimelist.user.User;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -21,9 +23,17 @@ import java.util.List;
  */
 public abstract class MyAnimeList {
 
+    public static MyAnimeList withOAuthToken(final String token){
+        return new MyAnimeListImpl(token);
+    }
+
+    public static MyAnimeList withClientId(final String client_id, final int server_port) throws IOException{
+        return new MyAnimeListImpl(new MyAnimeListAuthenticator(client_id, server_port).getToken().getToken());
+    }
+
     // anime
 
-    public abstract AnimePreview getAnime();
+    public abstract List<AnimePreview> getAnime();
 
     public abstract List<AnimePreview> getAnime(final String search);
 
@@ -91,11 +101,21 @@ public abstract class MyAnimeList {
 
     public abstract List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status);
 
-    // todo: with sort status
-
     public abstract List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status, final int limit);
 
     public abstract List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status, final int limit, final int offset);
+
+    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort);
+
+    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final int limit);
+
+    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final int limit, final int offset);
+
+    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status);
+
+    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status, final int limit);
+
+    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status, final int limit, final int offset);
 
     // forum
 
@@ -157,11 +177,21 @@ public abstract class MyAnimeList {
 
     public abstract List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status);
 
-    // todo: with sort status
-
     public abstract List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status, final int limit);
 
     public abstract List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status, final int limit, final int offset);
+
+    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort);
+
+    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final int limit);
+
+    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final int limit, final int offset);
+
+    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status);
+
+    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status, final int limit);
+
+    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status, final int limit, final int offset);
 
     // user
 
