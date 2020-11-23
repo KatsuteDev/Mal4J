@@ -74,26 +74,6 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 .execute()
                 .body();
 
-            service
-                .getAnime(
-                    auth,
-                    id,
-                    parseFields(fields)
-                )
-                .enqueue(new Callback<MyAnimeListSchema._Anime_ID>() {
-                    @Override
-                    public void onResponse(final Call<MyAnimeListSchema._Anime_ID> call, final Response<MyAnimeListSchema._Anime_ID> response){
-                        System.out.println(call);
-                        System.out.println(response);
-                    }
-
-                    @Override
-                    public void onFailure(final Call<MyAnimeListSchema._Anime_ID> call, final Throwable t){
-                        System.out.println(call);
-                        System.out.println(t);
-                    }
-                });
-
             return null; // todo
         }catch(final IOException e){
             throw new UncheckedIOException(e);
