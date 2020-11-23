@@ -1,7 +1,5 @@
 package com.kttdevelopment.myanimelist.auth;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Represents an access token.
  *
@@ -10,14 +8,15 @@ import com.google.gson.annotations.SerializedName;
  * @author Ktt Development
  */
 public final class AccessToken {
+    // do not label variables as transient, it will cause retrofit to fail
 
     String token_type;
 
     long expires_in;
 
-    transient String access_token;
+    String access_token;
 
-    transient String refresh_token;
+    String refresh_token;
 
     /**
      * Returns the access token.
@@ -53,17 +52,14 @@ public final class AccessToken {
         return refresh_token;
     }
 
-    /**
-     * Refreshes the token.
-     *
-     * @return new access token
-     *
-     * @since 1.0.0
-     */
-    public synchronized final AccessToken refreshToken(){
-        return null;
+    @Override
+    public String toString(){
+        return "AccessToken{" +
+               "token_type='" + token_type + '\'' +
+               ", expires_in=" + expires_in +
+               ", access_token='" + access_token + '\'' +
+               ", refresh_token='" + refresh_token + '\'' +
+               '}';
     }
-
-
 
 }

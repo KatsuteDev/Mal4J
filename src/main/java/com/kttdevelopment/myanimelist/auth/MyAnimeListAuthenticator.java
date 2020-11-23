@@ -2,7 +2,6 @@ package com.kttdevelopment.myanimelist.auth;
 
 import com.kttdevelopment.myanimelist.MyAnimeListAuthenticationService;
 import com.sun.net.httpserver.HttpServer;
-import retrofit2.*;
 
 import java.awt.*;
 import java.io.IOException;
@@ -26,7 +25,6 @@ public class MyAnimeListAuthenticator {
 
     public MyAnimeListAuthenticator(final String client_id, final int port) throws IOException{
         final Authorization auth = getAuthorization(client_id, Math.min(Math.max(0, port), 65535));
-
         token = authService
             .getToken(
                 client_id,
@@ -35,25 +33,6 @@ public class MyAnimeListAuthenticator {
                 auth.getVerifier())
             .execute()
             .body();
-
-        authService
-            .getToken(
-                client_id,
-                "authorization_code",
-                auth.getAuthorization(),
-                auth.getVerifier())
-            .enqueue(new Callback<AccessToken>() {
-                @Override
-                public void onResponse(final Call<AccessToken> call, final Response<AccessToken> response){
-                    System.out.println(response);
-                }
-
-                @Override
-                public void onFailure(final Call<AccessToken> call, final Throwable t){
-                    System.out.println(t);
-                }
-            });
-
     }
 
     public final AccessToken getToken(){
@@ -67,7 +46,7 @@ public class MyAnimeListAuthenticator {
         if(!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
             throw new UnsupportedOperationException("Failed to authorize client (unable to open browser link.");
 
-        // get auth from local server
+        // get auth call back from local server
         final ExecutorService exec = Executors.newSingleThreadExecutor();
         final CountDownLatch latch = new CountDownLatch(1);
 
@@ -75,8 +54,8 @@ public class MyAnimeListAuthenticator {
         server.setExecutor(exec);
         final AuthHandler handler = new AuthHandler(
             latch,
-            "<!DOCTYPE html><html><head><style>html,body{width:100%;height:100%}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication Completed</h1><p>You may now close this window.</p></div></body></html>",
-            "<!DOCTYPE html><html><head><style>html,body{width:100%;height:100%}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication Failed</h1><p>You may now close this window.</p></div></body></html>");
+            "<!DOCTYPE html><html><head><style>html,body{width:100%;height:100%}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication Completed &#10004;&#65039;</h1><p>You may now close this window.</p></div></body></html>",
+            "<!DOCTYPE html><html><head><style>html,body{width:100%;height:100%}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication Failed &#10060;</h1><p>You may now close this window.</p></div></body></html>");
         server.createContext("/", handler);
         server.start();
 
