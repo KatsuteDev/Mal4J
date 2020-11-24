@@ -1,6 +1,7 @@
-package com.kttdevelopment.myanimelist.user;
+package com.kttdevelopment.myanimelist.forum.property;
 
 import com.kttdevelopment.myanimelist.property.ID;
+import com.kttdevelopment.myanimelist.user.User;
 
 /**
  * Represents a user preview.
@@ -9,7 +10,7 @@ import com.kttdevelopment.myanimelist.property.ID;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class UserPreview implements ID {
+public abstract class PostAuthor implements ID {
 
     /**
      * Returns the user's name.

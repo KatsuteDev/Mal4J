@@ -1,5 +1,7 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
+import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
+
 /**
  * Represents a user Anime listing.
  *

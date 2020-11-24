@@ -1,7 +1,7 @@
 package com.kttdevelopment.myanimelist.forum;
 
 import com.kttdevelopment.myanimelist.property.ID;
-import com.kttdevelopment.myanimelist.user.UserPreview;
+import com.kttdevelopment.myanimelist.forum.property.PostAuthor;
 
 /**
  * Represents a forum post.
@@ -35,10 +35,10 @@ public abstract class ForumPost implements ID {
      *
      * @return post author
      *
-     * @see UserPreview
+     * @see PostAuthor
      * @since 1.0.0
      */
-    public abstract UserPreview getAuthor();
+    public abstract PostAuthor getAuthor();
 
     /**
      * Returns the post body.

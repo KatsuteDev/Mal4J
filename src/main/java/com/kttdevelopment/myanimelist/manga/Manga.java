@@ -1,6 +1,7 @@
 package com.kttdevelopment.myanimelist.manga;
 
 import com.kttdevelopment.myanimelist.manga.property.*;
+import com.kttdevelopment.myanimelist.property.ExtendedPreview;
 
 /**
  * Represents the full details of a Manga.
@@ -9,7 +10,7 @@ import com.kttdevelopment.myanimelist.manga.property.*;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class Manga extends MangaPreview {
+public abstract class Manga implements ExtendedPreview {
 
     /**
      * Returns the Manga type.
@@ -19,7 +20,7 @@ public abstract class Manga extends MangaPreview {
      * @see MangaType
      * @since 1.0.0
      */
-    public abstract MangaType getMangaTYpe();
+    public abstract MangaType getMangaType();
 
     /**
      * Returns the Manga publishing status.
@@ -62,6 +63,15 @@ public abstract class Manga extends MangaPreview {
     public abstract int getChapters();
 
     /**
+     * Returns the authors.
+     *
+     * @return authors
+     *
+     * @since 1.0.0
+     */
+    public abstract Author[] getAuthors();
+
+    /**
      * Returns a list of Manga recommendations.
      *
      * @return recommendations
@@ -81,5 +91,14 @@ public abstract class Manga extends MangaPreview {
      */
     public abstract Publisher[] getSerialization();
 
+    /**
+     * Returns the statistics for the Manga.
+     *
+     * @return statistics
+     *
+     * @see MangaStatistics
+     * @since 1.0.0
+     */
+    public abstract MangaStatistics getStatistics();
 
 }

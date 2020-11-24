@@ -14,7 +14,7 @@ public interface ExtendedPreview extends Preview {
 
     String getSynopsis();
 
-    int getMeanRating();
+    double getMeanRating();
 
     int getRank();
 

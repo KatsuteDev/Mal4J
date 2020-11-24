@@ -15,17 +15,6 @@ package com.kttdevelopment.myanimelist.property;
 public abstract class Statistics<E extends Enum> {
 
     /**
-     * Returns the count for a particular statistic.
-     *
-     * @param type statistic type
-     *
-     * @return total count
-     *
-     * @since 1.0.0
-     */
-    public abstract int getCount(final E type);
-
-    /**
      * Returns the amount of users contributing to this statistic.
      *
      * @return total users

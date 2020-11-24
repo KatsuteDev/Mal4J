@@ -1,6 +1,5 @@
 package com.kttdevelopment.myanimelist.manga;
 
-import com.kttdevelopment.myanimelist.manga.property.MangaListStatus;
 import com.kttdevelopment.myanimelist.property.Listing;
 
 /**

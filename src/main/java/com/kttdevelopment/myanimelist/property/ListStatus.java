@@ -1,10 +1,13 @@
 package com.kttdevelopment.myanimelist.property;
 
+import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
+import com.kttdevelopment.myanimelist.manga.MangaListStatus;
+
 /**
  * Represents a limited list status.
  *
- * @see com.kttdevelopment.myanimelist.anime.property.AnimeListStatus
- * @see com.kttdevelopment.myanimelist.manga.property.MangaListStatus
+ * @see AnimeListStatus
+ * @see MangaListStatus
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
