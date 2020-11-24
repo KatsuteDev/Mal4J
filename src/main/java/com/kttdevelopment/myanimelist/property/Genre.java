@@ -1,7 +1,5 @@
 package com.kttdevelopment.myanimelist.property;
 
-import com.kttdevelopment.myanimelist.anime.property.AnimeAirStatus;
-
 /**
  * Represents a genre.
  *

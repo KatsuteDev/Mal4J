@@ -75,27 +75,27 @@ abstract class MyAnimeListSchemaMapping {
                 final List<Picture> pictures = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.node.picture pic : Objects.requireNonNullElse(obj.pictures, new MyAnimeListSchema.schema.node.picture[0]))
                     pictures.add(asPicture(mal, pic));
-                this.pictures = pictures.toArray(new Picture[Objects.requireNonNullElse(obj.pictures.length, 0)]);
+                this.pictures = pictures.toArray(new Picture[0]);
 
                 final List<RelatedAnime> relatedAnime = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.related related : Objects.requireNonNullElse(obj.related_anime, new MyAnimeListSchema.schema.related[0]))
                     relatedAnime.add(asRelatedAnime(mal, related));
-                this.relatedAnime = relatedAnime.toArray(new RelatedAnime[Objects.requireNonNullElse(obj.related_anime.length, 0)]);
+                this.relatedAnime = relatedAnime.toArray(new RelatedAnime[0]);
 
                 final List<RelatedManga> relatedManga = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.related related : Objects.requireNonNullElse(obj.related_manga, new MyAnimeListSchema.schema.related[0]))
                     relatedManga.add(asRelatedManga(mal, related));
-                this.relatedManga = relatedManga.toArray(new RelatedManga[Objects.requireNonNullElse(obj.related_manga.length, 0)]);
+                this.relatedManga = relatedManga.toArray(new RelatedManga[0]);
 
                 final List<AnimeRecommendation> animeRecommendations = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.recommendation recommendation : Objects.requireNonNullElse(obj.recommendations, new MyAnimeListSchema.schema.recommendation[0]))
                     animeRecommendations.add(asAnimeRecommendation(mal, recommendation));
-                this.animeRecommendations = animeRecommendations.toArray(new AnimeRecommendation[Objects.requireNonNullElse(obj.recommendations.length, 0)]);
+                this.animeRecommendations = animeRecommendations.toArray(new AnimeRecommendation[0]);
         
                 final List<Studio> studios = new ArrayList<>();
                 for(final AnimeDetails.studio studio : Objects.requireNonNullElse(obj.studios, new AnimeDetails.studio[0]))
                     studios.add(asStudio(mal, studio));
-                this.studios = studios.toArray(new Studio[Objects.requireNonNullElse(obj.studios.length, 0)]);
+                this.studios = studios.toArray(new Studio[0]);
             }
 
             // API methods
@@ -817,32 +817,32 @@ abstract class MyAnimeListSchemaMapping {
                 final List<Picture> pictures = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.node.picture pic : Objects.requireNonNullElse(obj.pictures, new MyAnimeListSchema.schema.node.picture[0]))
                     pictures.add(asPicture(mal, pic));
-                this.pictures = pictures.toArray(new Picture[Objects.requireNonNullElse(obj.pictures.length, 0)]);
+                this.pictures = pictures.toArray(new Picture[0]);
 
                 final List<Author> authors = new ArrayList<>();
                 for(final MangaDetails.author author : Objects.requireNonNullElse(obj.authors, new MangaDetails.author[0]))
                     authors.add(asAuthor(mal, author));
-                this.authors = authors.toArray(new Author[Objects.requireNonNullElse(obj.serialization.length, 0)]);
+                this.authors = authors.toArray(new Author[0]);
                 
                 final List<RelatedAnime> relatedAnime = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.related related : Objects.requireNonNullElse(obj.related_anime, new MyAnimeListSchema.schema.related[0]))
                     relatedAnime.add(asRelatedAnime(mal, related));
-                this.relatedAnime = relatedAnime.toArray(new RelatedAnime[Objects.requireNonNullElse(obj.related_anime.length, 0)]);
+                this.relatedAnime = relatedAnime.toArray(new RelatedAnime[0]);
 
                 final List<RelatedManga> relatedManga = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.related related : Objects.requireNonNullElse(obj.related_manga, new MyAnimeListSchema.schema.related[0]))
                     relatedManga.add(asRelatedManga(mal, related));
-                this.relatedManga = relatedManga.toArray(new RelatedManga[Objects.requireNonNullElse(obj.related_manga.length, 0)]);
+                this.relatedManga = relatedManga.toArray(new RelatedManga[0]);
 
                 final List<MangaRecommendation> mangaRecommendations = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.recommendation recommendation : Objects.requireNonNullElse(obj.recommendations, new MyAnimeListSchema.schema.recommendation[0]))
                     mangaRecommendations.add(asMangaRecommendation(mal, recommendation));
-                this.mangaRecommendations = mangaRecommendations.toArray(new MangaRecommendation[Objects.requireNonNullElse(obj.recommendations.length, 0)]);
+                this.mangaRecommendations = mangaRecommendations.toArray(new MangaRecommendation[0]);
                 
                 final List<Publisher> serialization = new ArrayList<>();
                 for(final MangaDetails.serialization serialization1 : Objects.requireNonNullElse(obj.serialization, new MangaDetails.serialization[0]))
                     serialization.add(asPublisher(mal, serialization1));
-                this.serialization = serialization.toArray(new Publisher[Objects.requireNonNullElse(obj.serialization.length, 0)]);
+                this.serialization = serialization.toArray(new Publisher[0]);
             }
 
             // API methods
@@ -1646,38 +1646,372 @@ abstract class MyAnimeListSchemaMapping {
         }
     }
 
-    // Forum todo
+    // Forum
 
-    static ForumBoard asForumBoard(final MyAnimeList myAnimeList, final ForumBoards.category_node schema){
-        return null;
+    static ForumCategory asForumCategory(final MyAnimeList myAnimeList, final ForumBoards.category_node schema){
+        return new ForumCategory() {
+
+            private final MyAnimeList mal = myAnimeList;
+            private final ForumBoards.category_node obj = schema;
+
+            private final String title = obj.title;
+            private final ForumBoard[] boards;
+
+            {
+                final List<ForumBoard> boards = new ArrayList<>();
+                for(final ForumBoards.category_node.board board : Objects.requireNonNullElse(obj.boards, new ForumBoards.category_node.board[0]))
+                    boards.add(asForumBoard(mal, board));
+                this.boards = boards.toArray(new ForumBoard[0]);
+            }
+
+            // API methods
+
+            @Override
+            public final String getTitle(){
+                return title;
+            }
+
+            @Override
+            public final ForumBoard[] getForumBoards(){
+                return boards;
+            }
+
+            // additional methods
+
+            @Override
+            public String toString(){
+                return "ForumCategory{" +
+                       "title='" + title + '\'' +
+                       ", boards=" + Arrays.toString(boards) +
+                       '}';
+            }
+
+        };
     }
 
-    static ForumCategory asForumCategory(final MyAnimeList myAnimeList, final ForumBoards.category_node.board schema){
-        return null;
-    }
+    static ForumBoard asForumBoard(final MyAnimeList myAnimeList, final ForumBoards.category_node.board schema){
+        return new ForumBoard() {
 
-    static ForumPost asForumPost(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.post schema){
-        return null;
+            private final MyAnimeList mal = myAnimeList;
+            private final ForumBoards.category_node.board obj = schema;
+
+            private final long id = obj.id;
+            private final String title = obj.title;
+            private final String description = obj.description;
+            private final ForumSubBoard[] subBoards;
+
+            {
+                final List<ForumSubBoard> subBoards = new ArrayList<>();
+                for(final ForumBoards.category_node.board.subboard subboard : Objects.requireNonNullElse(obj.subboards, new ForumBoards.category_node.board.subboard[0]))
+                    subBoards.add(asForumSubBoard(mal, subboard));
+                this.subBoards = subBoards.toArray(new ForumSubBoard[0]);
+            }
+
+            // API methods
+
+            @Override
+            public final long getID(){
+                return id;
+            }
+
+            @Override
+            public final String getTitle(){
+                return title;
+            }
+
+            @Override
+            public final String getDescription(){
+                return description;
+            }
+
+            @Override
+            public final ForumSubBoard[] getSubBoards(){
+                return subBoards;
+            }
+
+            // additional methods
+
+            @Override
+            public String toString(){
+                return "ForumBoard{" +
+                       "id=" + id +
+                       ", title='" + title + '\'' +
+                       ", description='" + description + '\'' +
+                       ", subBoards=" + Arrays.toString(subBoards) +
+                       '}';
+            }
+
+        };
     }
 
     static ForumSubBoard asForumSubBoard(final MyAnimeList myAnimeList, final ForumBoards.category_node.board.subboard schema){
-        return null;
+        return new ForumSubBoard() {
+
+            private final MyAnimeList mal = myAnimeList;
+            private final ForumBoards.category_node.board.subboard obj = schema;
+
+            // API methods
+
+            // additional methods
+
+            @Override
+            public String toString(){
+                return "ForumSubBoard{}";
+            }
+
+        };
     }
 
     static ForumTopic asForumTopic(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node schema){
-        return null;
+        return new ForumTopic() {
+
+            private final MyAnimeList mal = myAnimeList;
+            private final ForumTopicDetail.data_node obj = schema;
+
+            private final String title = obj.title;
+            private final ForumPost[] posts;
+            private final Poll poll = asForumPoll(mal, obj.poll);
+
+            {
+                final List<ForumPost> posts = new ArrayList<>();
+                for(final ForumTopicDetail.data_node.post post : Objects.requireNonNullElse(obj.posts, new ForumTopicDetail.data_node.post[0]))
+                    posts.add(asForumPost(mal, post));
+                this.posts = posts.toArray(new ForumPost[0]);
+            }
+
+            // API methods
+
+            @Override
+            public final String getTitle(){
+                return title;
+            }
+
+            @Override
+            public final ForumPost[] getPosts(){
+                return posts;
+            }
+
+            @Override
+            public final Poll getPoll(){
+                return poll;
+            }
+
+            // additional methods
+
+            @Override
+            public String toString(){
+                return "ForumTopic{" +
+                       "title='" + title + '\'' +
+                       ", posts=" + Arrays.toString(posts) +
+                       ", poll=" + poll +
+                       '}';
+            }
+
+        };
+    }
+
+    static ForumPost asForumPost(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.post schema){
+        return new ForumPost() {
+
+            private final MyAnimeList mal = myAnimeList;
+            private final ForumTopicDetail.data_node.post obj = schema;
+
+            private final long id = Long.parseLong(obj.id);
+            private final int number = obj.number;
+            private final long createdAt = parseISO8601(obj.created_at);
+            private final PostAuthor author = asForumPostAuthor(mal, obj.created_by);
+            private final String body = obj.body;
+            private final String signature = obj.signature;
+
+            // API methods
+
+            @Override
+            public final long getID(){
+                return id;
+            }
+
+            @Override
+            public final int getNumber(){
+                return number;
+            }
+
+            @Override
+            public final long getCreatedAt(){
+                return createdAt;
+            }
+
+            @Override
+            public final PostAuthor getAuthor(){
+                return author;
+            }
+
+            @Override
+            public final String getBody(){
+                return body;
+            }
+
+            @Override
+            public final String getSignature(){
+                return signature;
+            }
+
+            // additional methods
+
+            @Override
+            public String toString(){
+                return "ForumPost{" +
+                       "id=" + id +
+                       ", number=" + number +
+                       ", createdAt=" + createdAt +
+                       ", author=" + author +
+                       ", body='" + body + '\'' +
+                       ", signature='" + signature + '\'' +
+                       '}';
+            }
+
+        };
     }
 
     static PostAuthor asForumPostAuthor(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.post.author schema){
-        return null;
+        return new PostAuthor() {
+
+            private final MyAnimeList mal = myAnimeList;
+            private final ForumTopicDetail.data_node.post.author obj = schema;
+
+            private final long id = Long.parseLong(obj.id);
+            private final String name = obj.name;
+            private final String forumAvatarURL = obj.forum_avator;
+
+            // API methods
+
+            @Override
+            public final long getID(){
+                return id;
+            }
+
+            @Override
+            public final String getName(){
+                return name;
+            }
+
+            @Override
+            public final String getForumAvatarURL(){
+                return forumAvatarURL;
+            }
+
+            // additional methods
+
+            @Override
+            public final User getUser(){
+                return mal.getUser(name);
+            }
+
+            @Override
+            public String toString(){
+                return "PostAuthor{" +
+                       "id=" + id +
+                       ", name='" + name + '\'' +
+                       ", forumAvatarURL='" + forumAvatarURL + '\'' +
+                       '}';
+            }
+
+        };
     }
 
     static Poll asForumPoll(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.poll schema){
-        return null;
+        return new Poll() {
+
+            private final MyAnimeList mal = myAnimeList;
+            private final ForumTopicDetail.data_node.poll obj = schema;
+
+            private final long id = Long.parseLong(obj.id);
+            private final String question = obj.question;
+            private final int closed = Integer.parseInt(obj.closed);
+            private final PollOption[] options;
+
+            {
+                final List<PollOption> options = new ArrayList<>();
+                for(final ForumTopicDetail.data_node.poll.option option : obj.options)
+                    options.add(asForumPollOption(mal, option));
+                this.options = options.toArray(new PollOption[obj.options.length]);
+            }
+
+            // API methods
+
+            @Override
+            public final long getID(){
+                return id;
+            }
+
+            @Override
+            public final String getQuestion(){
+                return question;
+            }
+
+            @Override
+            public final int getClosed(){
+                return closed;
+            }
+
+            @Override
+            public final PollOption[] getOptions(){
+                return options;
+            }
+
+            // additional methods
+
+            @Override
+            public String toString(){
+                return "Poll{" +
+                       "id=" + id +
+                       ", question='" + question + '\'' +
+                       ", closed=" + closed +
+                       ", options=" + Arrays.toString(options) +
+                       '}';
+            }
+
+        };
     }
 
     static PollOption asForumPollOption(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.poll.option schema){
-        return null;
+        return new PollOption() {
+
+            private final MyAnimeList mal = myAnimeList;
+            private final ForumTopicDetail.data_node.poll.option obj = schema;
+
+            private final long id = Long.parseLong(obj.id);
+            private final String text = obj.text;
+            private final int votes = Integer.parseInt(obj.votes);
+
+            // API methods
+
+            @Override
+            public final long getID(){
+                return id;
+            }
+
+            @Override
+            public final String text(){
+                return text;
+            }
+
+            @Override
+            public final int votes(){
+                return votes;
+            }
+
+            // additional methods
+
+            @Override
+            public String toString(){
+                return "PollOption{" +
+                       "id=" + id +
+                       ", text='" + text + '\'' +
+                       ", votes=" + votes +
+                       '}';
+            }
+
+        };
     }
 
     // User

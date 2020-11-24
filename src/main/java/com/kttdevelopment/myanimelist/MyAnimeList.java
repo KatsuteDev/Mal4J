@@ -8,7 +8,6 @@ import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
-import com.kttdevelopment.myanimelist.manga.property.MangaSort;
 import com.kttdevelopment.myanimelist.user.User;
 
 import java.io.IOException;
