@@ -3,7 +3,7 @@ package com.kttdevelopment.myanimelist.manga;
 import com.kttdevelopment.myanimelist.property.Preview;
 
 /**
- * Represents an Manga preview. The full Manga details can be obtained using {@link #getManga)}
+ * Represents an Manga preview. The full Manga details can be obtained using {@link #getManga()}.
  *
  * @see Manga
  * @since 1.0.0
