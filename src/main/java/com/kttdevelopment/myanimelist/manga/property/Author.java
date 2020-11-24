@@ -24,7 +24,7 @@ public abstract class Author implements ID {
     /**
      * Returns the author's last name.
      *
-     * @ return last name
+     * @return last name
      *
      * @see #getFirstName()
      * @since 1.0.0
