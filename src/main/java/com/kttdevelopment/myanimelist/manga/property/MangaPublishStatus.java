@@ -1,7 +1,5 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
-import com.kttdevelopment.myanimelist.anime.property.AnimeAirStatus;
-
 /**
  * Represents a Manga publish status.
  *

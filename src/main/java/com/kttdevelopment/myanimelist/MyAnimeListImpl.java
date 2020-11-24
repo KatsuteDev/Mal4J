@@ -7,7 +7,6 @@ import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
-import com.kttdevelopment.myanimelist.manga.property.MangaSort;
 import com.kttdevelopment.myanimelist.user.User;
 
 import java.util.List;
@@ -55,12 +54,12 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final Anime getAnime(final int id){
+    public final Anime getAnime(final long id){
         return getAnime(id, null);
     }
 
     @Override
-    public final Anime getAnime(final int id, final String[] fields){
+    public final Anime getAnime(final long id, final String[] fields){
         return null;
     }
 
@@ -155,7 +154,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final void deleteAnimeListing(final int id){
+    public final void deleteAnimeListing(final long id){
 
     }
 
@@ -225,17 +224,17 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final ForumCategory getForumBoard(final int id){
+    public final ForumCategory getForumBoard(final long id){
         return null;
     }
 
     @Override
-    public final ForumCategory getForumBoard(final int id, final int limit){
+    public final ForumCategory getForumBoard(final long id, final int limit){
         return null;
     }
 
     @Override
-    public final ForumCategory getForumBoard(final int id, final int limit, final int offset){
+    public final ForumCategory getForumBoard(final long id, final int limit, final int offset){
         return null;
     }
 
@@ -275,12 +274,12 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final MangaPreview getManga(final int id){
+    public final Manga getManga(final long id){
         return null;
     }
 
     @Override
-    public final MangaPreview getManga(final int id, final String[] fields){
+    public final Manga getManga(final long id, final String[] fields){
         return null;
     }
 
@@ -315,7 +314,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final void deleteMangaListing(final int id){
+    public final void deleteMangaListing(final long id){
 
     }
 
