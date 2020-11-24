@@ -1,5 +1,7 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
+import com.kttdevelopment.myanimelist.manga.MangaListStatus;
+
 /**
  * Represents a user Manga listing.
  *

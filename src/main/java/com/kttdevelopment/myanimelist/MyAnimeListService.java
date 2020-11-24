@@ -7,6 +7,11 @@ import retrofit2.http.*;
 
 import static com.kttdevelopment.myanimelist.MyAnimeListSchema.*;
 
+/**
+ * Interface class. Handles HTTP request parameters.
+ *
+ * @see MyAnimeListSchema
+ */
 public interface MyAnimeListService {
 
     static MyAnimeListService create(){

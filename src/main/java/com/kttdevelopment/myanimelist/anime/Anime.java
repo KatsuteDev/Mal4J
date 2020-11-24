@@ -11,7 +11,7 @@ import com.kttdevelopment.myanimelist.property.ExtendedPreview;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class Anime extends AnimePreview implements ExtendedPreview {
+public abstract class Anime implements ExtendedPreview {
 
     /**
      * Returns the Anime type.
@@ -62,6 +62,17 @@ public abstract class Anime extends AnimePreview implements ExtendedPreview {
      */
     public abstract StartSeason getStartSeason();
 
+
+    /**
+     * Returns the when the Anime broadcasts.
+     *
+     * @return broadcast
+     *
+     * @see Broadcast
+     * @since 1.0.0
+     */
+    public abstract Broadcast getBroadcast();
+
     /**
      * Returns the Anime source material.
      *
@@ -109,5 +120,15 @@ public abstract class Anime extends AnimePreview implements ExtendedPreview {
      * @since 1.0.0
      */
     public abstract Studio[] getStudios();
+
+    /**
+     * Returns the statistics for the Anime.
+     *
+     * @return statistics
+     *
+     * @see AnimeStatistics
+     * @since 1.0.0
+     */
+    public abstract AnimeStatistics getStatistics();
 
 }

@@ -2,6 +2,12 @@ package com.kttdevelopment.myanimelist;
 
 import java.util.Arrays;
 
+/**
+ * Mapping for {@link MyAnimeListService}. Used for objects in {@link MyAnimeListSchemaMapping}.
+ *
+ * @see MyAnimeListService
+ * @see MyAnimeListSchemaMapping
+ */
 abstract class MyAnimeListSchema {
 
     static class schema {
@@ -216,7 +222,7 @@ abstract class MyAnimeListSchema {
     static class AnimeDetails extends schema.node {
 
         schema.alternative_titles   alternative_titles;
-        String                      start_data,
+        String                      start_date,
                                     end_date,
                                     synopsis;
         double                      mean;
@@ -252,7 +258,7 @@ abstract class MyAnimeListSchema {
                    ", title='" + title + '\'' +
                    ", main_picture=" + main_picture +
                    ", alternative_titles=" + alternative_titles +
-                   ", start_data='" + start_data + '\'' +
+                   ", start_date='" + start_date + '\'' +
                    ", end_date='" + end_date + '\'' +
                    ", synopsis='" + synopsis + '\'' +
                    ", mean=" + mean +
@@ -275,8 +281,8 @@ abstract class MyAnimeListSchema {
                    ", rating='" + rating + '\'' +
                    ", pictures=" + Arrays.toString(pictures) +
                    ", background='" + background + '\'' +
-                   ", related_anime=" + related_anime +
-                   ", related_manga=" + related_manga +
+                   ", related_anime=" + Arrays.toString(related_anime) +
+                   ", related_manga=" + Arrays.toString(related_manga) +
                    ", recommendations=" + Arrays.toString(recommendations) +
                    ", studios=" + Arrays.toString(studios) +
                    ", statistics=" + statistics +
@@ -515,7 +521,7 @@ abstract class MyAnimeListSchema {
                 long    id;
                 String  title,
                         description;
-                board[] subboards;
+                subboard[] subboards;
 
                 @Override
                 public String toString(){
@@ -525,6 +531,15 @@ abstract class MyAnimeListSchema {
                            ", description='" + description + '\'' +
                            ", subboards=" + Arrays.toString(subboards) +
                            '}';
+                }
+
+                static class subboard {
+
+                    @Override
+                    public String toString(){
+                        return "subboard{}";
+                    }
+
                 }
 
             }
@@ -708,7 +723,7 @@ abstract class MyAnimeListSchema {
     static class MangaDetails extends schema.node {
 
         schema.alternative_titles   alternative_titles;
-        String                      start_data,
+        String                      start_date,
                                     end_date,
                                     synopsis;
         double                      mean;
@@ -731,6 +746,7 @@ abstract class MyAnimeListSchema {
         schema.related[]            related_anime,
                                     related_manga;
         schema.recommendation[]     recommendations;
+        serialization[]             serialization;
         statistics                  statistics;
 
         @Override
@@ -739,8 +755,8 @@ abstract class MyAnimeListSchema {
                    "id=" + id +
                    ", title='" + title + '\'' +
                    ", main_picture=" + main_picture +
-                   "alternative_titles=" + alternative_titles +
-                   ", start_data='" + start_data + '\'' +
+                   ", alternative_titles=" + alternative_titles +
+                   ", start_date='" + start_date + '\'' +
                    ", end_date='" + end_date + '\'' +
                    ", synopsis='" + synopsis + '\'' +
                    ", mean=" + mean +
@@ -760,9 +776,10 @@ abstract class MyAnimeListSchema {
                    ", authors=" + Arrays.toString(authors) +
                    ", pictures=" + Arrays.toString(pictures) +
                    ", background='" + background + '\'' +
-                   ", related_anime=" + related_anime +
-                   ", related_manga=" + related_manga +
+                   ", related_anime=" + Arrays.toString(related_anime) +
+                   ", related_manga=" + Arrays.toString(related_manga) +
                    ", recommendations=" + Arrays.toString(recommendations) +
+                   ", serialization=" + Arrays.toString(serialization) +
                    ", statistics=" + statistics +
                    '}';
         }
@@ -815,6 +832,36 @@ abstract class MyAnimeListSchema {
                            "id=" + id +
                            ", first_name='" + first_name + '\'' +
                            ", last_name='" + last_name + '\'' +
+                           '}';
+                }
+
+            }
+
+        }
+
+        static class serialization {
+
+            node    node;
+            String  role;
+
+            @Override
+            public String toString(){
+                return "serialization{" +
+                       "node=" + node +
+                       ", role='" + role + '\'' +
+                       '}';
+            }
+
+            static class node {
+
+                long    id;
+                String  name;
+
+                @Override
+                public String toString(){
+                    return "node{" +
+                           "id=" + id +
+                           ", name='" + name + '\'' +
                            '}';
                 }
 
@@ -875,6 +922,7 @@ abstract class MyAnimeListSchema {
     static class UpdateMangaList {
 
         String      status;
+        boolean     is_rereading;
         int         num_volumes_read,
                     num_chapters_read,
                     score;
@@ -889,6 +937,7 @@ abstract class MyAnimeListSchema {
         public String toString(){
             return "UpdateMangaList{" +
                    "status='" + status + '\'' +
+                   "is_rereading=" + is_rereading +
                    ", num_volumes_read=" + num_volumes_read +
                    ", num_chapters_read=" + num_chapters_read +
                    ", score=" + score +
@@ -961,9 +1010,9 @@ abstract class MyAnimeListSchema {
                     num_items_completed,
                     num_items_on_hold,
                     num_items_plan_to_watch,
+                    num_items_dropped,
                     num_items;
-            double  num_days_watched,
-                    num_days_watching,
+            double  num_days_watching,
                     num_days_completed,
                     num_days_on_hold,
                     num_days_dropped,
@@ -979,8 +1028,8 @@ abstract class MyAnimeListSchema {
                        ", num_items_completed=" + num_items_completed +
                        ", num_items_on_hold=" + num_items_on_hold +
                        ", num_items_plan_to_watch=" + num_items_plan_to_watch +
+                       ", num_items_dropped=" + num_items_dropped +
                        ", num_items=" + num_items +
-                       ", num_days_watched=" + num_days_watched +
                        ", num_days_watching=" + num_days_watching +
                        ", num_days_completed=" + num_days_completed +
                        ", num_days_on_hold=" + num_days_on_hold +
@@ -1000,14 +1049,15 @@ abstract class MyAnimeListSchema {
                     num_items_completed,
                     num_items_on_hold,
                     num_items_plan_to_read,
+                    num_items_dropped,
                     num_items;
             double  num_days_reading,
-                    num_days_watching,
                     num_days_completed,
                     num_days_on_hold,
                     num_days_dropped,
                     num_days;
-            int     num_episodes,
+            int     num_volumes,
+                    num_chapters,
                     num_times_reread;
             double  mean_score;
 
@@ -1018,14 +1068,15 @@ abstract class MyAnimeListSchema {
                        ", num_items_completed=" + num_items_completed +
                        ", num_items_on_hold=" + num_items_on_hold +
                        ", num_items_plan_to_read=" + num_items_plan_to_read +
+                       ", num_items_dropped=" + num_items_dropped +
                        ", num_items=" + num_items +
                        ", num_days_reading=" + num_days_reading +
-                       ", num_days_watching=" + num_days_watching +
                        ", num_days_completed=" + num_days_completed +
                        ", num_days_on_hold=" + num_days_on_hold +
                        ", num_days_dropped=" + num_days_dropped +
                        ", num_days=" + num_days +
-                       ", num_episodes=" + num_episodes +
+                       ", num_volumes=" + num_volumes +
+                       ", num_chapters=" + num_chapters +
                        ", num_times_reread=" + num_times_reread +
                        ", mean_score=" + mean_score +
                        '}';
