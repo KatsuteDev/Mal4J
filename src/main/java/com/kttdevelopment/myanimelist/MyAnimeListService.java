@@ -36,8 +36,8 @@ public interface MyAnimeListService {
 
     @GET("anime/{anime_id}")
     Call<AnimeDetails> getAnime(
-        @Header("Authorization")                    final String token,
-        @Path(value = "anime_id", encoded = true)   final int anime_id,
+        @Header("Authorization")                   final String token,
+        @Path(value = "anime_id", encoded = true)  final long anime_id,
         @Query(value = "fields", encoded = true)   final String fields
     );
 
@@ -76,7 +76,7 @@ public interface MyAnimeListService {
     @PATCH("anime/{anime_id}/my_list_status")
     Call<UpdateAnimeList> updateAnimeListing(
         @Header("Authorization")                    final String token,
-        @Path(value = "anime_id", encoded = true)   final int anime_id,
+        @Path(value = "anime_id", encoded = true)   final long anime_id,
         @Field("status")                            final String status,
         @Field("is_rewatching")                     final boolean rewatching,
         @Field("score")                             final int score,
@@ -115,7 +115,7 @@ public interface MyAnimeListService {
     @GET("forum/topic/{topic_id}")
     Call<ForumTopicDetail> getForumBoard(
         @Header("Authorization")                    final String token,
-        @Path(value = "topic_id", encoded = true)   final int topic_id,
+        @Path(value = "topic_id", encoded = true)   final long topic_id,
         @Query("limit")                             final int limit,
         @Query("offset")                            final int offset
     );
@@ -124,8 +124,8 @@ public interface MyAnimeListService {
     @GET("forum/topics")
     Call<ForumTopic> getForumTopics(
         @Header("Authorizations")   final String token,
-        @Query("board_id")          final int board_id,
-        @Query("subboard_id")       final int subboard_id,
+        @Query("board_id")          final long board_id,
+        @Query("subboard_id")       final long subboard_id,
         @Query("limit")             final int limit,
         @Query("offset")            final int offset,
         @Query("sort")              final String sort,
@@ -148,7 +148,7 @@ public interface MyAnimeListService {
     @GET("manga/{manga_id}")
     Call<MangaDetails> getManga(
         @Header("Authorization")                    final String token,
-        @Path(value = "manga_id", encoded = true)   final int manga_id,
+        @Path(value = "manga_id", encoded = true)   final long manga_id,
         @Query("fields")                            final String fields
     );
 
@@ -167,7 +167,7 @@ public interface MyAnimeListService {
     @PATCH("manga/{manga_id}/my_list_status")
     Call<UpdateMangaList> updateMangaListing(
         @Header("Authorization")                    final String token,
-        @Path(value = "manga_id", encoded = true)   final int manga_id,
+        @Path(value = "manga_id", encoded = true)   final long manga_id,
         @Field("status")                            final String status,
         @Field("is_rereading")                      final boolean rereading,
         @Field("score")                             final int score,
@@ -183,7 +183,7 @@ public interface MyAnimeListService {
     @DELETE("manga/{manga_id}/my_list_status")
     Call<Void> deleteMangaListing(
         @Header("Authorization")                    final String token,
-        @Path(value = "manga_id", encoded = true)   final int manga_id
+        @Path(value = "manga_id", encoded = true)   final long manga_id
     );
 
     @SuppressWarnings("SpellCheckingInspection")

@@ -14,6 +14,7 @@ import com.kttdevelopment.myanimelist.property.Genre;
 import com.kttdevelopment.myanimelist.property.Picture;
 import com.kttdevelopment.myanimelist.user.*;
 
+import java.lang.reflect.Field;
 import java.text.*;
 import java.util.*;
 
@@ -34,42 +35,42 @@ abstract class MyAnimeListSchemaMapping {
     static Anime asAnime(final MyAnimeList myAnimeList, final AnimeDetails schema){
         return new Anime() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final AnimeDetails obj = schema;
+            private final MyAnimeList mal   = myAnimeList;
+            private final AnimeDetails obj  = schema;
 
-            private final long id = obj.id;
-            private final String title = obj.title;
-            private final Picture picture = asPicture(mal, obj.main_picture);
+            private final long id           = obj == null ? -1 : obj.id;
+            private final String title      = obj == null ? null : obj.title;
+            private final Picture picture   = asPicture(mal, obj == null ? null : obj.main_picture);
 
-            private final AlternativeTitles alternativeTitles = asAlternativeTitles(mal, obj.alternative_titles);
-            private final long startDate = parseDate(obj.start_date);
-            private final long endDate = parseDate(obj.end_date);
-            private final String synopsis = obj.synopsis;
-            private final double mean = obj.mean;
-            private final int   rank = obj.rank,
-                                popularity = obj.popularity,
-                                listUsers = obj.num_list_users,
-                                scoringUsers = obj.num_scoring_users;
-            private final String nsfw = obj.nsfw;
-            private final long createdAt = parseISO8601(obj.created_at);
-            private final long updatedAt = parseISO8601(obj.updated_at);
-            private final AnimeType mediaType = AnimeType.asEnum(obj.media_type);
-            private final AnimeAirStatus status = AnimeAirStatus.asEnum(obj.status);
-            private final Genre[] genres = asGenres(obj.genres);
-            private final AnimeListStatus listStatus = asAnimeListStatus(mal, obj.my_list_status);
-            private final int episodes = obj.num_episodes;
-            private final StartSeason startSeason = asStartSeason(mal, obj.start_season);
-            private final Broadcast broadcast = asBroadcast(mal, obj.broadcast);
-            private final MangaType source = MangaType.asEnum(obj.source);
-            private final int duration = obj.average_episode_duration;
-            private final String rating = obj.rating;
+            private final AlternativeTitles alternativeTitles = asAlternativeTitles(mal, obj == null ? null : obj.alternative_titles);
+            private final long startDate                = parseDate(obj == null ? null : obj.start_date);
+            private final long endDate                  = parseDate(obj == null ? null : obj.end_date);
+            private final String synopsis               = obj == null ? null : obj.synopsis;
+            private final double mean                   = obj == null ? -1 : obj.mean;
+            private final int rank                      = obj == null ? -1 : obj.rank,
+                    popularity                          = obj == null ? -1 : obj.popularity,
+                    listUsers                           = obj == null ? -1 : obj.num_list_users,
+                    scoringUsers                        = obj == null ? -1 : obj.num_scoring_users;
+            private final String nsfw                   = obj == null ? null : obj.nsfw;
+            private final long createdAt                = parseISO8601(obj == null ? null : obj.created_at);
+            private final long updatedAt                = parseISO8601(obj == null ? null : obj.updated_at);
+            private final AnimeType mediaType           = AnimeType.asEnum(obj == null ? null : obj.media_type);
+            private final AnimeAirStatus status         = AnimeAirStatus.asEnum(obj == null ? null : obj.status);
+            private final Genre[] genres                = asGenres(obj == null ? null : obj.genres);
+            private final AnimeListStatus listStatus    = asAnimeListStatus(mal, obj == null ? null : obj.my_list_status);
+            private final int episodes                  = obj == null ? -1 : obj.num_episodes;
+            private final StartSeason startSeason       = asStartSeason(mal, obj == null ? null : obj.start_season);
+            private final Broadcast broadcast           = asBroadcast(mal, obj == null ? null : obj.broadcast);
+            private final MangaType source              = MangaType.asEnum(obj == null ? null : obj.source);
+            private final int duration                  = obj == null ? -1 : obj.average_episode_duration;
+            private final String rating                 = obj == null ? null : obj.rating;
             private final Picture[] pictures;
-            private final String background = obj.background;
+            private final String background             = obj == null ? null : obj.background;
             private final RelatedAnime[] relatedAnime;
             private final RelatedManga[] relatedManga;
             private final AnimeRecommendation[] animeRecommendations;
             private final Studio[] studios;
-            private final AnimeStatistics statistics = asAnimeStatistics(mal, obj.statistics);
+            private final AnimeStatistics statistics    = asAnimeStatistics(mal, obj == null ? null : obj.statistics);
 
             {
                 final List<Picture> pictures = new ArrayList<>();
@@ -91,7 +92,7 @@ abstract class MyAnimeListSchemaMapping {
                 for(final MyAnimeListSchema.schema.recommendation recommendation : Objects.requireNonNullElse(obj.recommendations, new MyAnimeListSchema.schema.recommendation[0]))
                     animeRecommendations.add(asAnimeRecommendation(mal, recommendation));
                 this.animeRecommendations = animeRecommendations.toArray(new AnimeRecommendation[0]);
-        
+
                 final List<Studio> studios = new ArrayList<>();
                 for(final AnimeDetails.studio studio : Objects.requireNonNullElse(obj.studios, new AnimeDetails.studio[0]))
                     studios.add(asStudio(mal, studio));
@@ -99,7 +100,7 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             // API methods
-            
+
             @Override
             public final long getID(){
                 return id;
@@ -187,7 +188,7 @@ abstract class MyAnimeListSchemaMapping {
 
             @Override
             public final Genre[] getGenres(){
-                return  genres;
+                return genres;
             }
 
             @Override
@@ -237,7 +238,7 @@ abstract class MyAnimeListSchemaMapping {
 
             @Override
             public final RelatedAnime[] getRelatedAnime(){
-                return new RelatedAnime[0];
+                return relatedAnime;
             }
 
             @Override
@@ -263,65 +264,32 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "Anime{" +
-                       "id=" + id +
-                       ", title='" + title + '\'' +
-                       ", picture=" + picture +
-                       ", alternativeTitles=" + alternativeTitles +
-                       ", startDate=" + startDate +
-                       ", endDate=" + endDate +
-                       ", synopsis='" + synopsis + '\'' +
-                       ", mean=" + mean +
-                       ", rank=" + rank +
-                       ", popularity=" + popularity +
-                       ", listUsers=" + listUsers +
-                       ", scoringUsers=" + scoringUsers +
-                       ", nsfw='" + nsfw + '\'' +
-                       ", createdAt=" + createdAt +
-                       ", updatedAt=" + updatedAt +
-                       ", mediaType=" + mediaType +
-                       ", status=" + status +
-                       ", genres=" + Arrays.toString(genres) +
-                       ", listStatus=" + listStatus +
-                       ", episodes=" + episodes +
-                       ", startSeason=" + startSeason +
-                       ", broadcast=" + broadcast +
-                       ", source=" + source +
-                       ", duration=" + duration +
-                       ", rating='" + rating + '\'' +
-                       ", pictures=" + Arrays.toString(pictures) +
-                       ", background='" + background + '\'' +
-                       ", relatedAnime=" + Arrays.toString(relatedAnime) +
-                       ", relatedManga=" + Arrays.toString(relatedManga) +
-                       ", animeRecommendations=" + Arrays.toString(animeRecommendations) +
-                       ", studios=" + Arrays.toString(studios) +
-                       ", statistics=" + statistics +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
-            
+
         };
     }
 
     static AnimeListing asAnimeListing(final MyAnimeList myAnimeList, final UpdateAnimeList schema){
         return new AnimeListing() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final UpdateAnimeList obj = schema;
+            private final MyAnimeList mal       = myAnimeList;
+            private final UpdateAnimeList obj   = schema;
 
-            private final AnimeStatus status = AnimeStatus.asEnum(obj.status);
-            private final int score = obj.score;
-            private final int episodes_watched = obj.num_watched_episodes;
+            private final AnimeStatus status    = AnimeStatus.asEnum(obj == null ? null : obj.status);
+            private final int score             = obj == null ? -1 : obj.score;
+            private final int episodes_watched  = obj == null ? -1 : obj.num_watched_episodes;
             @SuppressWarnings("SpellCheckingInspection")
-            private final boolean isRewatching = obj.is_rewatching;
-            private final long updatedAt = parseISO8601(obj.updated_at);
-            private final int priority = obj.priority;
+            private final boolean isRewatching  = obj != null && obj.is_rewatching;
+            private final long updatedAt        = parseISO8601(obj == null ? null : obj.updated_at);
+            private final int priority          = obj == null ? -1 : obj.priority;
             @SuppressWarnings("SpellCheckingInspection")
-            private final int rewatched = obj.num_times_rewatched;
+            private final int rewatched         = obj == null ? -1 : obj.num_times_rewatched;
             @SuppressWarnings("SpellCheckingInspection")
-            private final int rewatchValue = obj.rewatch_value;
-            private final String[] tags = obj.tags;
-            private final String comments = obj.comments;
+            private final int rewatchValue      = obj == null ? -1 : obj.rewatch_value;
+            private final String[] tags         = obj == null ? null : obj.tags;
+            private final String comments       = obj == null ? null : obj.comments;
 
             // API methods
 
@@ -380,21 +348,9 @@ abstract class MyAnimeListSchemaMapping {
 
             // additional methods
 
-            @SuppressWarnings("SpellCheckingInspection")
             @Override
-            public String toString(){
-                return "AnimeListing{" +
-                       "status=" + status +
-                       ", score=" + score +
-                       ", episodes_watched=" + episodes_watched +
-                       ", isRewatching=" + isRewatching +
-                       ", updatedAt=" + updatedAt +
-                       ", priority=" + priority +
-                       ", rewatched=" + rewatched +
-                       ", rewatchValue=" + rewatchValue +
-                       ", tags=" + Arrays.toString(tags) +
-                       ", comments='" + comments + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -403,15 +359,15 @@ abstract class MyAnimeListSchemaMapping {
     static AnimeListStatus asAnimeListStatus(final MyAnimeList myAnimeList, final AnimeDetails.my_list_status schema){
         return new AnimeListStatus() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final AnimeDetails.my_list_status obj = schema;
+            private final MyAnimeList mal                   = myAnimeList;
+            private final AnimeDetails.my_list_status obj   = schema;
 
-            private final AnimeStatus status = AnimeStatus.asEnum(obj.status);
-            private final int score = obj.score;
-            private final int episodes_watched = obj.num_episodes_watched;
+            private final AnimeStatus status    = AnimeStatus.asEnum(obj == null ? null : obj.status);
+            private final int score             = obj == null ? -1 : obj.score;
+            private final int episodes_watched  = obj == null ? -1 : obj.num_episodes_watched;
             @SuppressWarnings("SpellCheckingInspection")
-            private final boolean isRewatching = obj.is_rewatching;
-            private final long updatedAt = parseISO8601(obj.updated_at);
+            private final boolean isRewatching  = obj != null && obj.is_rewatching;
+            private final long updatedAt        = parseISO8601(obj == null ? null : obj.updated_at);
 
             // API methods
 
@@ -443,16 +399,9 @@ abstract class MyAnimeListSchemaMapping {
 
             // additional methods
 
-            @SuppressWarnings("SpellCheckingInspection")
             @Override
-            public String toString(){
-                return "AnimeListStatus{" +
-                       "status=" + status +
-                       ", score=" + score +
-                       ", episodes_watched=" + episodes_watched +
-                       ", isRewatching=" + isRewatching +
-                       ", updatedAt=" + updatedAt +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -464,9 +413,9 @@ abstract class MyAnimeListSchemaMapping {
             private final MyAnimeList mal = myAnimeList;
             private final schema.node obj = schema;
 
-            private final long id = obj.id;
-            private final String title = obj.title;
-            private final Picture mainPicture = asPicture(mal, obj.main_picture);
+            private final long id               = obj == null ? -1 : obj.id;
+            private final String title          = obj == null ? null : obj.title;
+            private final Picture mainPicture   = asPicture(mal, obj == null ? null : obj.main_picture);
 
             // API methods
 
@@ -493,24 +442,21 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public String toString(){
-                return "AnimePreview{" +
-                       "id=" + id +
-                       ", title='" + title + '\'' +
-                       ", mainPicture=" + mainPicture +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
+
         };
     }
 
     static AnimeRanking asAnimeRanking(final MyAnimeList myAnimeList, final schema.ranking.ranking_node schema){
         return new AnimeRanking() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final schema.ranking.ranking_node obj = schema;
+            private final MyAnimeList mal                   = myAnimeList;
+            private final schema.ranking.ranking_node obj   = schema;
 
-            private final AnimePreview anime = asAnimePreview(mal, obj.node);
-            private final int ranking = obj.ranking.rank;
+            private final AnimePreview anime    = asAnimePreview(mal, obj == null ? null : obj.node);
+            private final int ranking           = obj == null ? -1 : obj.ranking.rank;
 
             // API methods
 
@@ -527,11 +473,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "AnimeRanking{" +
-                       "anime=" + anime +
-                       ", ranking=" + ranking +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -540,11 +483,11 @@ abstract class MyAnimeListSchemaMapping {
     static AnimeRecommendation asAnimeRecommendation(final MyAnimeList myAnimeList, final schema.recommendation schema){
         return new AnimeRecommendation() {
 
-            private final MyAnimeList mal = myAnimeList;
+            private final MyAnimeList mal           = myAnimeList;
             private final schema.recommendation obj = schema;
 
-            private final AnimePreview anime = asAnimePreview(mal, obj.node);
-            private final int recommendations = obj.num_recommendations;
+            private final AnimePreview anime    = asAnimePreview(mal, obj == null ? null : obj.node);
+            private final int recommendations   = obj == null ? -1 : obj.num_recommendations;
 
             // API methods
 
@@ -561,11 +504,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "AnimeRecommendation{" +
-                       "anime=" + anime +
-                       ", recommendations=" + recommendations +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -574,12 +514,12 @@ abstract class MyAnimeListSchemaMapping {
     static RelatedAnime asRelatedAnime(final MyAnimeList myAnimeList, final schema.related schema){
         return new RelatedAnime() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final schema.related obj = schema;
+            private final MyAnimeList mal       = myAnimeList;
+            private final schema.related obj    = schema;
 
-            private final AnimePreview anime = asAnimePreview(mal, obj.node);
-            private final String relationType = obj.relation_type;
-            private final String relationTypeFormat = obj.relation_type_formatted;
+            private final AnimePreview anime        = asAnimePreview(mal, obj == null ? null : obj.node);
+            private final String relationType       = obj == null ? null : obj.relation_type;
+            private final String relationTypeFormat = obj == null ? null : obj.relation_type_formatted;
 
             // API methods
 
@@ -601,31 +541,28 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "RelatedAnime{" +
-                       "anime=" + anime +
-                       ", relationType='" + relationType + '\'' +
-                       ", relationTypeFormat='" + relationTypeFormat + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
+
         };
     }
 
     static AnimeStatistics asAnimeStatistics(final MyAnimeList myAnimeList, final AnimeDetails.statistics schema){
         return new AnimeStatistics() {
-            
-            private final MyAnimeList mal = myAnimeList;
-            private final AnimeDetails.statistics obj = schema;
-            
-            private final int   watching = Integer.parseInt(obj.status.watching),
-                                completed = Integer.parseInt(obj.status.completed),
-                                onHold = Integer.parseInt(obj.status.on_hold),
-                                dropped = Integer.parseInt(obj.status.dropped),
-                                planToWatch = Integer.parseInt(obj.status.plan_to_watch),
-                                listUsers = obj.num_list_users;
-                                
+
+            private final MyAnimeList mal               = myAnimeList;
+            private final AnimeDetails.statistics obj   = schema;
+
+            private final int   watching    = Integer.parseInt(obj == null ? "-1" : obj.status.watching),
+                                completed   = Integer.parseInt(obj == null ? "-1" : obj.status.completed),
+                                onHold      = Integer.parseInt(obj == null ? "-1" : obj.status.on_hold),
+                                dropped     = Integer.parseInt(obj == null ? "-1" : obj.status.dropped),
+                                planToWatch = Integer.parseInt(obj == null ? "-1" : obj.status.plan_to_watch),
+                                listUsers   = obj == null ? -1 : obj.num_list_users;
+
             // API methods
-            
+
             @Override
             public final int getWatching(){
                 return watching;
@@ -650,37 +587,30 @@ abstract class MyAnimeListSchemaMapping {
             public final int getPlanToWatch(){
                 return planToWatch;
             }
-            
+
             @Override
             public final int getUserCount(){
                 return listUsers;
             }
-          
+
             // additional methods
-            
+
             @Override
-            public String toString(){
-                return "AnimeStatistics{" +
-                       "watching=" + watching +
-                       ", completed=" + completed +
-                       ", onHold=" + onHold +
-                       ", dropped=" + dropped +
-                       ", planToWatch=" + planToWatch +
-                       ", listUsers=" + listUsers +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
-            
+
         };
     }
-    
+
     static StartSeason asStartSeason(final MyAnimeList myAnimeList, final AnimeDetails.start_season schema){
         return new StartSeason() {
 
-            private final MyAnimeList mal = myAnimeList;
+            private final MyAnimeList mal               = myAnimeList;
             private final AnimeDetails.start_season obj = schema;
 
-            private final int year = obj.year;
-            private final Season season = Season.asEnum(obj.season);
+            private final int year      = obj == null ? -1 : obj.year;
+            private final Season season = Season.asEnum(obj == null ? null : obj.season);
 
             // API methods
 
@@ -697,11 +627,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "StartSeason{" +
-                       "year=" + year +
-                       ", season=" + season +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -710,11 +637,11 @@ abstract class MyAnimeListSchemaMapping {
     static Broadcast asBroadcast(final MyAnimeList myAnimeList, final AnimeDetails.broadcast schema){
         return new Broadcast() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final AnimeDetails.broadcast obj = schema;
+            private final MyAnimeList mal               = myAnimeList;
+            private final AnimeDetails.broadcast obj    = schema;
 
-            private final DayOfWeek dayOfWeek = DayOfWeek.asEnum(obj.day_of_week);
-            private final Time time = parseTime(obj.start_time);
+            private final DayOfWeek dayOfWeek   = DayOfWeek.asEnum(obj == null ? null : obj.day_of_week);
+            private final Time time             = parseTime(obj == null ? "00:00" : obj.start_time);
 
             // API methods
 
@@ -731,11 +658,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "Broadcast{" +
-                       "dayOfWeek=" + dayOfWeek +
-                       ", time=" + time +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -744,11 +668,11 @@ abstract class MyAnimeListSchemaMapping {
     static Studio asStudio(final MyAnimeList myAnimeList, final AnimeDetails.studio schema){
         return new Studio() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final AnimeDetails.studio obj = schema;
+            private final MyAnimeList mal           = myAnimeList;
+            private final AnimeDetails.studio obj   = schema;
 
-            private final long id = obj.id;
-            private final String name = obj.name;
+            private final long id       = obj == null ? -1 : obj.id;
+            private final String name   = obj == null ? null : obj.name;
 
             // API methods
 
@@ -765,53 +689,50 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "Studio{" +
-                       "id=" + id +
-                       ", name='" + name + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
     }
-        
+
     // Manga
 
     static Manga asManga(final MyAnimeList myAnimeList, final MangaDetails schema){
         return new Manga() {
-            
-            private final MyAnimeList mal = myAnimeList;
-            private final MangaDetails obj = schema;
 
-            private final long id = obj.id;
-            private final String title = obj.title;
-            private final Picture mainPicture = asPicture(mal, obj.main_picture);
-            private final AlternativeTitles alternativeTitles = asAlternativeTitles(mal, obj.alternative_titles);
-            private final long startDate = parseDate(obj.start_date);
-            private final long endDate = parseDate(obj.end_date);
-            private final String synopsis = obj.synopsis;
-            private final double mean = obj.mean;
-            private final int   rank = obj.rank,
-                                popularity = obj.popularity,
-                                listUsers = obj.num_list_users,
-                                scoringUsers = obj.num_scoring_users;
-            private final String nsfw = obj.nsfw;
-            private final long createdAt = parseISO8601(obj.created_at);
-            private final long updateAt = parseDate(obj.updated_at);
-            private final MangaType type = MangaType.asEnum(obj.media_type);
-            private final MangaPublishStatus status = MangaPublishStatus.asEnum(obj.status);
-            private final Genre[] genres = asGenres(obj.genres);
-            private final MangaListStatus listStatus = asMangaListStatus(mal, obj.my_list_status);
-            private final int volumes = obj.num_volumes;
-            private final int chapters = obj.num_chapters;
+            private final MyAnimeList mal   = myAnimeList;
+            private final MangaDetails obj  = schema;
+
+            private final long id                   = obj == null ? -1 : obj.id;
+            private final String title              = obj == null ? null : obj.title;
+            private final Picture mainPicture       = asPicture(mal, obj == null ? null : obj.main_picture);
+            private final AlternativeTitles alternativeTitles = asAlternativeTitles(mal, obj == null ? null : obj.alternative_titles);
+            private final long startDate            = parseDate(obj == null ? null : obj.start_date);
+            private final long endDate              = parseDate(obj == null ? null : obj.end_date);
+            private final String synopsis           = obj == null ? null : obj.synopsis;
+            private final double mean               = obj == null ? -1 : obj.mean;
+            private final int rank                  = obj == null ? -1 : obj.rank,
+                    popularity                      = obj == null ? -1 : obj.popularity,
+                    listUsers                       = obj == null ? -1 : obj.num_list_users,
+                    scoringUsers                    = obj == null ? -1 : obj.num_scoring_users;
+            private final String nsfw               = obj == null ? null : obj.nsfw;
+            private final long createdAt            = parseISO8601(obj == null ? null : obj.created_at);
+            private final long updateAt             = parseDate(obj == null ? null : obj.updated_at);
+            private final MangaType type            = MangaType.asEnum(obj == null ? null : obj.media_type);
+            private final MangaPublishStatus status = MangaPublishStatus.asEnum(obj == null ? null : obj.status);
+            private final Genre[] genres            = obj == null ? new Genre[0] : asGenres(obj.genres);
+            private final MangaListStatus listStatus = asMangaListStatus(mal, obj == null ? null : obj.my_list_status);
+            private final int volumes               = obj == null ? -1 : obj.num_volumes;
+            private final int chapters              = obj == null ? -1 : obj.num_chapters;
             private final Author[] authors;
             private final Picture[] pictures;
-            private final String background = obj.background;
+            private final String background         = obj == null ? null : obj.background;
             private final RelatedAnime[] relatedAnime;
             private final RelatedManga[] relatedManga;
             private final MangaRecommendation[] mangaRecommendations;
             private final Publisher[] serialization;
-            private final MangaStatistics statistics = asMangaStatistics(mal, obj.statistics);
+            private final MangaStatistics statistics = asMangaStatistics(mal, obj == null ? null : obj.statistics);
 
             {
                 final List<Picture> pictures = new ArrayList<>();
@@ -823,7 +744,7 @@ abstract class MyAnimeListSchemaMapping {
                 for(final MangaDetails.author author : Objects.requireNonNullElse(obj.authors, new MangaDetails.author[0]))
                     authors.add(asAuthor(mal, author));
                 this.authors = authors.toArray(new Author[0]);
-                
+
                 final List<RelatedAnime> relatedAnime = new ArrayList<>();
                 for(final MyAnimeListSchema.schema.related related : Objects.requireNonNullElse(obj.related_anime, new MyAnimeListSchema.schema.related[0]))
                     relatedAnime.add(asRelatedAnime(mal, related));
@@ -838,7 +759,7 @@ abstract class MyAnimeListSchemaMapping {
                 for(final MyAnimeListSchema.schema.recommendation recommendation : Objects.requireNonNullElse(obj.recommendations, new MyAnimeListSchema.schema.recommendation[0]))
                     mangaRecommendations.add(asMangaRecommendation(mal, recommendation));
                 this.mangaRecommendations = mangaRecommendations.toArray(new MangaRecommendation[0]);
-                
+
                 final List<Publisher> serialization = new ArrayList<>();
                 for(final MangaDetails.serialization serialization1 : Objects.requireNonNullElse(obj.serialization, new MangaDetails.serialization[0]))
                     serialization.add(asPublisher(mal, serialization1));
@@ -921,7 +842,7 @@ abstract class MyAnimeListSchemaMapping {
             public final long getUpdatedAt(){
                 return updateAt;
             }
-            
+
             @Override
             public final MangaType getMangaType(){
                 return type;
@@ -995,38 +916,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "Manga{" +
-                       "id=" + id +
-                       ", title='" + title + '\'' +
-                       ", mainPicture=" + mainPicture +
-                       ", alternativeTitles=" + alternativeTitles +
-                       ", startDate=" + startDate +
-                       ", endDate=" + endDate +
-                       ", synopsis='" + synopsis + '\'' +
-                       ", mean=" + mean +
-                       ", rank=" + rank +
-                       ", popularity=" + popularity +
-                       ", listUsers=" + listUsers +
-                       ", scoringUsers=" + scoringUsers +
-                       ", nsfw='" + nsfw + '\'' +
-                       ", createdAt=" + createdAt +
-                       ", updateAt=" + updateAt +
-                       ", type=" + type +
-                       ", status=" + status +
-                       ", genres=" + Arrays.toString(genres) +
-                       ", listStatus=" + listStatus +
-                       ", volumes=" + volumes +
-                       ", chapters=" + chapters +
-                       ", authors=" + Arrays.toString(authors) +
-                       ", pictures=" + Arrays.toString(pictures) +
-                       ", background='" + background + '\'' +
-                       ", relatedAnime=" + Arrays.toString(relatedAnime) +
-                       ", relatedManga=" + Arrays.toString(relatedManga) +
-                       ", mangaRecommendations=" + Arrays.toString(mangaRecommendations) +
-                       ", serialization=" + Arrays.toString(serialization) +
-                       ", statistics=" + statistics +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1035,20 +926,20 @@ abstract class MyAnimeListSchemaMapping {
     static MangaListing asMangaListing(final MyAnimeList myAnimeList, final UpdateMangaList schema){
         return new MangaListing() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final UpdateMangaList obj = schema;
+            private final MyAnimeList mal       = myAnimeList;
+            private final UpdateMangaList obj   = schema;
 
-            private final MangaStatus status = MangaStatus.asEnum(obj.status);
-            private final int score = obj.score;
-            private final int volumesRead = obj.num_volumes_read;
-            private final int chaptersRead = obj.num_chapters_read;
-            private final boolean isRereading = obj.is_rereading;
-            private final long updatedAt = parseISO8601(obj.updated_at);
-            private final int priority = obj.priority;
-            private final int reread = obj.num_times_reread;
-            private final int rereadValue = obj.reread_value;
-            private final String[] tags = obj.tags;
-            private final String comments = obj.comments;
+            private final MangaStatus status    = MangaStatus.asEnum(obj == null ? null : obj.status);
+            private final int score             = obj == null ? -1 : obj.score;
+            private final int volumesRead       = obj == null ? -1 : obj.num_volumes_read;
+            private final int chaptersRead      = obj == null ? -1 : obj.num_chapters_read;
+            private final boolean isRereading   = obj != null && obj.is_rereading;
+            private final long updatedAt        = parseISO8601(obj == null ? null : obj.updated_at);
+            private final int priority          = obj == null ? -1 : obj.priority;
+            private final int reread            = obj == null ? -1 : obj.num_times_reread;
+            private final int rereadValue       = obj == null ? -1 : obj.reread_value;
+            private final String[] tags         = obj == null ? null : obj.tags;
+            private final String comments       = obj == null ? null : obj.comments;
 
             // API methods
 
@@ -1109,38 +1000,26 @@ abstract class MyAnimeListSchemaMapping {
 
             // additional methods
 
-
             @Override
-            public String toString(){
-                return "MangaListing{" +
-                       ", status=" + status +
-                       ", score=" + score +
-                       ", volumesRead=" + volumesRead +
-                       ", chaptersRead=" + chaptersRead +
-                       ", isRereading=" + isRereading +
-                       ", updatedAt=" + updatedAt +
-                       ", priority=" + priority +
-                       ", reread=" + reread +
-                       ", rereadValue=" + rereadValue +
-                       ", tags=" + Arrays.toString(tags) +
-                       ", comments='" + comments + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
+
         };
     }
 
     static MangaListStatus asMangaListStatus(final MyAnimeList myAnimeList, final MangaDetails.my_list_status schema){
-        return new MangaListStatus(){
+        return new MangaListStatus() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final MangaDetails.my_list_status obj = schema;
+            private final MyAnimeList mal                   = myAnimeList;
+            private final MangaDetails.my_list_status obj   = schema;
 
-            private final MangaStatus status = MangaStatus.asEnum(obj.status);
-            private final boolean isRereading = obj.is_rereading;
-            private final int volumesRead = obj.num_volumes_read;
-            private final int chaptersRead = obj.num_chapters_read;
-            private final int score = obj.score;
-            private final long updatedAt = parseISO8601(obj.updated_at);
+            private final MangaStatus status    = MangaStatus.asEnum(obj == null ? null : obj.status);
+            private final boolean isRereading   = obj != null && obj.is_rereading;
+            private final int volumesRead       = obj == null ? -1 : obj.num_volumes_read;
+            private final int chaptersRead      = obj == null ? -1 : obj.num_chapters_read;
+            private final int score             = obj == null ? -1 : obj.score;
+            private final long updatedAt        = parseISO8601(obj == null ? null : obj.updated_at);
 
             // API methods
 
@@ -1177,30 +1056,23 @@ abstract class MyAnimeListSchemaMapping {
 
             // additional methods
 
-
             @Override
-            public String toString(){
-                return "MangaListStatus{" +
-                       "status=" + status +
-                       ", isRereading=" + isRereading +
-                       ", volumesRead=" + volumesRead +
-                       ", chaptersRead=" + chaptersRead +
-                       ", score=" + score +
-                       ", updatedAt=" + updatedAt +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
+
         };
-}
+    }
 
     static MangaPreview asMangaPreview(final MyAnimeList myAnimeList, final schema.node schema){
-        return new MangaPreview(){
+        return new MangaPreview() {
 
             private final MyAnimeList mal = myAnimeList;
             private final schema.node obj = schema;
 
-            private final long id = obj.id;
-            private final String title = obj.title;
-            private final Picture mainPicture = asPicture(mal, obj.main_picture);
+            private final long id               = obj == null ? -1 : obj.id;
+            private final String title          = obj == null ? null : obj.title;
+            private final Picture mainPicture   = asPicture(mal, obj == null ? null : obj.main_picture);
 
             // API methods
 
@@ -1227,25 +1099,21 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public String toString(){
-                return "MangaPreview{" +
-                       "id=" + id +
-                       ", title='" + title + '\'' +
-                       ", mainPicture=" + mainPicture +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
     }
 
     static MangaRanking asMangaRanking(final MyAnimeList myAnimeList, final schema.ranking.ranking_node schema){
-        return new MangaRanking(){
+        return new MangaRanking() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final schema.ranking.ranking_node obj = schema;
+            private final MyAnimeList mal                   = myAnimeList;
+            private final schema.ranking.ranking_node obj   = schema;
 
-            private final MangaPreview manga = asMangaPreview(mal, obj.node);
-            private final int ranking = obj.ranking.rank;
+            private final MangaPreview manga    = asMangaPreview(mal, obj == null ? null : obj.node);
+            private final int ranking           = obj == null ? -1 : obj.ranking.rank;
 
             // API methods
 
@@ -1262,11 +1130,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "MangaRanking{" +
-                       "manga=" + manga +
-                       ", ranking=" + ranking +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1275,11 +1140,11 @@ abstract class MyAnimeListSchemaMapping {
     static MangaRecommendation asMangaRecommendation(final MyAnimeList myAnimeList, final schema.recommendation schema){
         return new MangaRecommendation() {
 
-            private final MyAnimeList mal = myAnimeList;
+            private final MyAnimeList mal           = myAnimeList;
             private final schema.recommendation obj = schema;
 
-            private final MangaPreview manga = asMangaPreview(mal, obj.node);
-            private final int recommendations = obj.num_recommendations;
+            private final MangaPreview manga    = asMangaPreview(mal, obj == null ? null : obj.node);
+            private final int recommendations   = obj == null ? -1 : obj.num_recommendations;
 
             // API methods
 
@@ -1296,25 +1161,22 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "MangaRecommendation{" +
-                       "manga=" + manga +
-                       ", recommendations=" + recommendations +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
     }
 
     static RelatedManga asRelatedManga(final MyAnimeList myAnimeList, final schema.related schema){
-        return new RelatedManga(){
+        return new RelatedManga() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final schema.related obj = schema;
+            private final MyAnimeList mal       = myAnimeList;
+            private final schema.related obj    = schema;
 
-            private final MangaPreview manga = asMangaPreview(mal, obj.node);
-            private final String relationType = obj.relation_type;
-            private final String relationTypeFormat = obj.relation_type_formatted;
+            private final MangaPreview manga        = asMangaPreview(mal, obj == null ? null : obj.node);
+            private final String relationType       = obj == null ? null : obj.relation_type;
+            private final String relationTypeFormat = obj == null ? null : obj.relation_type_formatted;
 
             // API methods
 
@@ -1336,31 +1198,28 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "RelatedManga{" +
-                       "manga=" + manga +
-                       ", relationType='" + relationType + '\'' +
-                       ", relationTypeFormat='" + relationTypeFormat + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
+
         };
     }
-    
+
     static MangaStatistics asMangaStatistics(final MyAnimeList myAnimeList, final MangaDetails.statistics schema){
-        return new MangaStatistics(){
-            
-            private final MyAnimeList mal = myAnimeList;
-            private final MangaDetails.statistics obj = schema;
-            
-            private final int   reading = Integer.parseInt(obj.status.reading),
-                                completed = Integer.parseInt(obj.status.completed),
-                                onHold = Integer.parseInt(obj.status.on_hold),
-                                dropped = Integer.parseInt(obj.status.dropped),
-                                planToRead = Integer.parseInt(obj.status.plan_to_read),
-                                listUsers = obj.num_list_users;
-                                
+        return new MangaStatistics() {
+
+            private final MyAnimeList mal               = myAnimeList;
+            private final MangaDetails.statistics obj   = schema;
+
+            private final int   reading     = Integer.parseInt(obj == null ? "-1" : obj.status.reading),
+                                completed   = Integer.parseInt(obj == null ? "-1" : obj.status.completed),
+                                onHold      = Integer.parseInt(obj == null ? "-1" : obj.status.on_hold),
+                                dropped     = Integer.parseInt(obj == null ? "-1" : obj.status.dropped),
+                                planToRead  = Integer.parseInt(obj == null ? "-1" : obj.status.plan_to_read),
+                                listUsers   = obj == null ? -1 : obj.num_list_users;
+
             // API methods
-            
+
             @Override
             public final int getReading(){
                 return reading;
@@ -1385,46 +1244,40 @@ abstract class MyAnimeListSchemaMapping {
             public final int getPlanToRead(){
                 return planToRead;
             }
-            
+
             @Override
             public final int getUserCount(){
                 return listUsers;
             }
-          
+
             // additional methods
-            
+
             @Override
-            public String toString(){
-                return "MangaStatistics{" +
-                       ", reading=" + reading +
-                       ", completed=" + completed +
-                       ", onHold=" + onHold +
-                       ", dropped=" + dropped +
-                       ", planToRead=" + planToRead +
-                       ", listUsers=" + listUsers +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
+
         };
     }
-    
+
     static Author asAuthor(final MyAnimeList myAnimeList, final MangaDetails.author schema){
         return new Author() {
-            
-            private final MyAnimeList mal = myAnimeList;
-            private final MangaDetails.author obj = schema;
-            
-            private final long id = obj.node.id;
-            private final String    first = obj.node.first_name,
-                                    last = obj.node.last_name,
-                                    role = obj.role;
-           
+
+            private final MyAnimeList mal           = myAnimeList;
+            private final MangaDetails.author obj   = schema;
+
+            private final long id           = obj == null ? -1 : obj.node.id;
+            private final String    first   = obj == null ? null : obj.node.first_name,
+                                    last    = obj == null ? null : obj.node.last_name,
+                                    role    = obj == null ? null : obj.role;
+
             // API methods
-            
+
             @Override
             public final long getID(){
                 return id;
             }
-            
+
             @Override
             public final String getFirstName(){
                 return first;
@@ -1439,66 +1292,58 @@ abstract class MyAnimeListSchemaMapping {
             public final String getRole(){
                 return role;
             }
-            
+
             // additional methods
-            
+
             @Override
-            public String toString(){
-                return "Author{" +
-                       "id=" + id +
-                       ", first='" + first + '\'' +
-                       ", last='" + last + '\'' +
-                       ", role='" + role + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
-            
+
         };
     }
 
     static Publisher asPublisher(final MyAnimeList myAnimeList, final MangaDetails.serialization schema){
         return new Publisher() {
-            
-            private final MyAnimeList mal = myAnimeList;
-            private final MangaDetails.serialization obj = schema;
-            
-            private final long id = obj.node.id;
-            private final String name = obj.node.name;
-            
+
+            private final MyAnimeList mal                   = myAnimeList;
+            private final MangaDetails.serialization obj    = schema;
+
+            private final long id       = obj == null ? -1 : obj.node.id;
+            private final String name   = obj == null ? null : obj.node.name;
+
             // API methods
-            
+
             @Override
             public final long getID(){
                 return id;
             }
-            
+
             @Override
             public final String getName(){
                 return name;
             }
-            
+
             // additional methods
-            
+
             @Override
-            public String toString(){
-                return "Publisher{" +
-                       "id=" + id +
-                       ", name='" + name + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
-            
+
         };
     }
-    
+
     // Components
 
     static Picture asPicture(final MyAnimeList myAnimeList, final schema.node.picture schema){
         return new Picture() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final schema.node.picture obj = schema;
+            private final MyAnimeList mal           = myAnimeList;
+            private final schema.node.picture obj   = schema;
 
-            private final String mediumURL = obj.medium;
-            private final String largeURL = obj.large;
+            private final String mediumURL  = obj == null ? null : obj.medium;
+            private final String largeURL   = obj == null ? null : obj.large;
 
             // API methods
 
@@ -1515,11 +1360,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "Picture{" +
-                       "mediumURL='" + mediumURL + '\'' +
-                       ", largeURL='" + largeURL + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1528,12 +1370,12 @@ abstract class MyAnimeListSchemaMapping {
     static AlternativeTitles asAlternativeTitles(final MyAnimeList myAnimeList, final schema.alternative_titles schema){
         return new AlternativeTitles() {
 
-            private final MyAnimeList mal = myAnimeList;
+            private final MyAnimeList mal               = myAnimeList;
             private final schema.alternative_titles obj = schema;
 
-            private final String[] synonyms = obj.synonyms;
-            private final String english = obj.en;
-            private final String japanese = obj.ja;
+            private final String[] synonyms = obj == null ? null : obj.synonyms;
+            private final String english    = obj == null ? null : obj.en;
+            private final String japanese   = obj == null ? null : obj.ja;
 
             // API methods
 
@@ -1555,17 +1397,16 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "AlternativeTitles{" +
-                       "synonyms=" + Arrays.toString(synonyms) +
-                       ", english='" + english + '\'' +
-                       ", japanese='" + japanese + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
+
         };
     }
 
     static Genre[] asGenres(final schema.genre[] schema){
+        if(schema == null) return new Genre[0];
+
         final List<Genre> list = new ArrayList<>();
         for(final MyAnimeListSchema.schema.genre genre : schema)
             list.add(Genre.asEnum(genre.name));
@@ -1575,8 +1416,8 @@ abstract class MyAnimeListSchemaMapping {
     private static Time parseTime(final String time){
         return new Time() {
 
-            private final int hour = Integer.parseInt(time.substring(0, 2));
-            private final int hour12 = hour > 12 ? hour - 12 : hour;
+            private final int hour   = Integer.parseInt(time.substring(0, 2));
+            private final int hour12 = hour > 12 ? hour - 12 : hour == 0 ? 12 : hour;
             private final boolean am = hour <= 12;
             private final int minute = Integer.parseInt(time.substring(3));
 
@@ -1606,22 +1447,18 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public String toString(){
-                return "Time{" +
-                       "hour=" + hour +
-                       ", hour12=" + hour12 +
-                       ", am=" + am +
-                       ", minute=" + minute +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
+
         };
     }
 
     private static long parseDate(final String date){
         if(date == null) return -1;
 
-        final TimeZone tz     = TimeZone.getTimeZone("UTC");
-        final DateFormat df   = new SimpleDateFormat("yyyy-MM-dd");
+        final TimeZone   tz = TimeZone.getTimeZone("UTC");
+        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         df.setTimeZone(tz);
 
         try{
@@ -1635,8 +1472,8 @@ abstract class MyAnimeListSchemaMapping {
     private static long parseISO8601(final String timestamp){
         if(timestamp == null) return -1;
 
-        final TimeZone tz     = TimeZone.getTimeZone("UTC");
-        final DateFormat df   = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
+        final TimeZone   tz = TimeZone.getTimeZone("UTC");
+        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
         df.setTimeZone(tz);
 
         try{
@@ -1651,10 +1488,10 @@ abstract class MyAnimeListSchemaMapping {
     static ForumCategory asForumCategory(final MyAnimeList myAnimeList, final ForumBoards.category_node schema){
         return new ForumCategory() {
 
-            private final MyAnimeList mal = myAnimeList;
+            private final MyAnimeList mal               = myAnimeList;
             private final ForumBoards.category_node obj = schema;
 
-            private final String title = obj.title;
+            private final String title = obj == null ? null : obj.title;
             private final ForumBoard[] boards;
 
             {
@@ -1679,11 +1516,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "ForumCategory{" +
-                       "title='" + title + '\'' +
-                       ", boards=" + Arrays.toString(boards) +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1692,12 +1526,12 @@ abstract class MyAnimeListSchemaMapping {
     static ForumBoard asForumBoard(final MyAnimeList myAnimeList, final ForumBoards.category_node.board schema){
         return new ForumBoard() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final ForumBoards.category_node.board obj = schema;
+            private final MyAnimeList mal                       = myAnimeList;
+            private final ForumBoards.category_node.board obj   = schema;
 
-            private final long id = obj.id;
-            private final String title = obj.title;
-            private final String description = obj.description;
+            private final long id               = obj == null ? -1 : obj.id;
+            private final String title          = obj == null ? null : obj.title;
+            private final String description    = obj == null ? null : obj.description;
             private final ForumSubBoard[] subBoards;
 
             {
@@ -1732,13 +1566,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "ForumBoard{" +
-                       "id=" + id +
-                       ", title='" + title + '\'' +
-                       ", description='" + description + '\'' +
-                       ", subBoards=" + Arrays.toString(subBoards) +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1747,16 +1576,16 @@ abstract class MyAnimeListSchemaMapping {
     static ForumSubBoard asForumSubBoard(final MyAnimeList myAnimeList, final ForumBoards.category_node.board.subboard schema){
         return new ForumSubBoard() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final ForumBoards.category_node.board.subboard obj = schema;
+            private final MyAnimeList mal                               = myAnimeList;
+            private final ForumBoards.category_node.board.subboard obj  = schema;
 
             // API methods
 
             // additional methods
 
             @Override
-            public String toString(){
-                return "ForumSubBoard{}";
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1765,12 +1594,12 @@ abstract class MyAnimeListSchemaMapping {
     static ForumTopic asForumTopic(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node schema){
         return new ForumTopic() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final ForumTopicDetail.data_node obj = schema;
+            private final MyAnimeList mal                   = myAnimeList;
+            private final ForumTopicDetail.data_node obj    = schema;
 
-            private final String title = obj.title;
+            private final String title  = obj == null ? null : obj.title;
             private final ForumPost[] posts;
-            private final Poll poll = asForumPoll(mal, obj.poll);
+            private final Poll poll     = asForumPoll(mal, obj == null ? null : obj.poll);
 
             {
                 final List<ForumPost> posts = new ArrayList<>();
@@ -1799,12 +1628,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "ForumTopic{" +
-                       "title='" + title + '\'' +
-                       ", posts=" + Arrays.toString(posts) +
-                       ", poll=" + poll +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1813,15 +1638,15 @@ abstract class MyAnimeListSchemaMapping {
     static ForumPost asForumPost(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.post schema){
         return new ForumPost() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final ForumTopicDetail.data_node.post obj = schema;
+            private final MyAnimeList mal                       = myAnimeList;
+            private final ForumTopicDetail.data_node.post obj   = schema;
 
-            private final long id = Long.parseLong(obj.id);
-            private final int number = obj.number;
-            private final long createdAt = parseISO8601(obj.created_at);
-            private final PostAuthor author = asForumPostAuthor(mal, obj.created_by);
-            private final String body = obj.body;
-            private final String signature = obj.signature;
+            private final long id           = Long.parseLong(obj == null ? "-1" : obj.id);
+            private final int number        = obj == null ? -1 : obj.number;
+            private final long createdAt    = parseISO8601(obj == null ? null : obj.created_at);
+            private final PostAuthor author = asForumPostAuthor(mal, obj == null ? null : obj.created_by);
+            private final String body       = obj == null ? null : obj.body;
+            private final String signature  = obj == null ? null : obj.signature;
 
             // API methods
 
@@ -1858,15 +1683,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "ForumPost{" +
-                       "id=" + id +
-                       ", number=" + number +
-                       ", createdAt=" + createdAt +
-                       ", author=" + author +
-                       ", body='" + body + '\'' +
-                       ", signature='" + signature + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1875,12 +1693,12 @@ abstract class MyAnimeListSchemaMapping {
     static PostAuthor asForumPostAuthor(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.post.author schema){
         return new PostAuthor() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final ForumTopicDetail.data_node.post.author obj = schema;
+            private final MyAnimeList mal                               = myAnimeList;
+            private final ForumTopicDetail.data_node.post.author obj    = schema;
 
-            private final long id = Long.parseLong(obj.id);
-            private final String name = obj.name;
-            private final String forumAvatarURL = obj.forum_avator;
+            private final long id               = Long.parseLong(obj == null ? "-1" : obj.id);
+            private final String name           = obj == null ? null : obj.name;
+            private final String forumAvatarURL = obj == null ? null : obj.forum_avator;
 
             // API methods
 
@@ -1907,12 +1725,8 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public String toString(){
-                return "PostAuthor{" +
-                       "id=" + id +
-                       ", name='" + name + '\'' +
-                       ", forumAvatarURL='" + forumAvatarURL + '\'' +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1921,19 +1735,19 @@ abstract class MyAnimeListSchemaMapping {
     static Poll asForumPoll(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.poll schema){
         return new Poll() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final ForumTopicDetail.data_node.poll obj = schema;
+            private final MyAnimeList mal                       = myAnimeList;
+            private final ForumTopicDetail.data_node.poll obj   = schema;
 
-            private final long id = Long.parseLong(obj.id);
-            private final String question = obj.question;
-            private final int closed = Integer.parseInt(obj.closed);
+            private final long id           = Long.parseLong(obj == null ? "-1" : obj.id);
+            private final String question   = obj == null ? null : obj.question;
+            private final int closed        = Integer.parseInt(obj == null ? "-1" : obj.closed);
             private final PollOption[] options;
 
             {
                 final List<PollOption> options = new ArrayList<>();
-                for(final ForumTopicDetail.data_node.poll.option option : obj.options)
+                for(final ForumTopicDetail.data_node.poll.option option : Objects.requireNonNullElse(obj.options, new ForumTopicDetail.data_node.poll.option[0]))
                     options.add(asForumPollOption(mal, option));
-                this.options = options.toArray(new PollOption[obj.options.length]);
+                this.options = options.toArray(new PollOption[0]);
             }
 
             // API methods
@@ -1961,13 +1775,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "Poll{" +
-                       "id=" + id +
-                       ", question='" + question + '\'' +
-                       ", closed=" + closed +
-                       ", options=" + Arrays.toString(options) +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -1976,12 +1785,12 @@ abstract class MyAnimeListSchemaMapping {
     static PollOption asForumPollOption(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.poll.option schema){
         return new PollOption() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final ForumTopicDetail.data_node.poll.option obj = schema;
+            private final MyAnimeList mal                               = myAnimeList;
+            private final ForumTopicDetail.data_node.poll.option obj    = schema;
 
-            private final long id = Long.parseLong(obj.id);
-            private final String text = obj.text;
-            private final int votes = Integer.parseInt(obj.votes);
+            private final long id       = Long.parseLong(obj == null ? "-1" : obj.id);
+            private final String text   = obj == null ? null : obj.text;
+            private final int votes     = Integer.parseInt(obj == null ? "-1" : obj.votes);
 
             // API methods
 
@@ -2003,12 +1812,8 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "PollOption{" +
-                       "id=" + id +
-                       ", text='" + text + '\'' +
-                       ", votes=" + votes +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -2019,15 +1824,15 @@ abstract class MyAnimeListSchemaMapping {
     static User asUser(final MyAnimeList myAnimeList, final UserInformation schema){
         return new User() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final UserInformation obj = schema;
+            private final MyAnimeList mal       = myAnimeList;
+            private final UserInformation obj   = schema;
 
-            private final long id = obj.id;
-            private final String username = obj.name;
-            private final String location = obj.location;
-            private final long joinedAt = parseISO8601(obj.joined_at);
-            private final UserAnimeStatistics animeStatistics = asUserAnimeStatistics(mal, obj.anime_statistics);
-            private final UserMangaStatistics mangaStatistics = asUserMangaStatistics(mal, obj.manga_statistics);
+            private final long id                               = obj == null ? -1 : obj.id;
+            private final String username                       = obj == null ? null : obj.name;
+            private final String location                       = obj == null ? null : obj.location;
+            private final long joinedAt                         = parseISO8601(obj == null ? null : obj.joined_at);
+            private final UserAnimeStatistics animeStatistics   = asUserAnimeStatistics(mal, obj == null ? null : obj.anime_statistics);
+            private final UserMangaStatistics mangaStatistics   = asUserMangaStatistics(mal, obj == null ? null : obj.manga_statistics);
 
             // API methods
 
@@ -2063,17 +1868,9 @@ abstract class MyAnimeListSchemaMapping {
 
             // additional methods
 
-
             @Override
-            public String toString(){
-                return "User{" +
-                       "id=" + id +
-                       ", username='" + username + '\'' +
-                       ", location='" + location + '\'' +
-                       ", joinedAt=" + joinedAt +
-                       ", animeStatistics=" + animeStatistics +
-                       ", mangaStatistics=" + mangaStatistics +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
@@ -2082,23 +1879,24 @@ abstract class MyAnimeListSchemaMapping {
     static UserAnimeStatistics asUserAnimeStatistics(final MyAnimeList myAnimeList, final UserInformation.anime_statistics schema){
         return new UserAnimeStatistics() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final UserInformation.anime_statistics obj = schema;
-            private final int   itemsWatching = obj.num_items_watching,
-                                itemsCompleted = obj.num_items_completed,
-                                itemsOnHold = obj.num_items_on_hold,
-                                itemsPlanToWatch = obj.num_items_plan_to_watch,
-                                itemsDropped = obj.num_items_dropped,
-                                items = obj.num_items;
-            private final double    daysWatching = obj.num_days_watching,
-                                    daysCompleted = obj.num_days_completed,
-                                    daysOnHold = obj.num_days_on_hold,
-                                    daysDropped = obj.num_days_dropped,
-                                    days = obj.num_days;
+            private final MyAnimeList mal                       = myAnimeList;
+            private final UserInformation.anime_statistics obj  = schema;
+
+            private final int   itemsWatching       = obj == null ? -1 : obj.num_items_watching,
+                                itemsCompleted      = obj == null ? -1 : obj.num_items_completed,
+                                itemsOnHold         = obj == null ? -1 : obj.num_items_on_hold,
+                                itemsPlanToWatch    = obj == null ? -1 : obj.num_items_plan_to_watch,
+                                itemsDropped        = obj == null ? -1 : obj.num_items_dropped,
+                                items               = obj == null ? -1 : obj.num_items;
+            private final double daysWatching       = obj == null ? -1 : obj.num_days_watching,
+                                daysCompleted       = obj == null ? -1 : obj.num_days_completed,
+                                daysOnHold          = obj == null ? -1 : obj.num_days_on_hold,
+                                daysDropped         = obj == null ? -1 : obj.num_days_dropped,
+                                days                = obj == null ? -1 : obj.num_days;
             @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
-            private final int   episodes = obj.num_episodes,
-                                timesRewatched = obj.num_times_rewatched;
-            private final double meanScore = obj.mean_score;
+            private final int   episodes            = obj == null ? -1 : obj.num_episodes,
+                                timesRewatched      = obj == null ? -1 : obj.num_times_rewatched;
+            private final double meanScore          = obj == null ? -1 : obj.mean_score;
 
             @Override
             public final int getWatching(){
@@ -2178,50 +1976,35 @@ abstract class MyAnimeListSchemaMapping {
 
             // additional methods
 
-            @SuppressWarnings("SpellCheckingInspection")
             @Override
-            public String toString(){
-                return "AnimeStatistics{" +
-                       "itemsWatching=" + itemsWatching +
-                       ", itemsCompleted=" + itemsCompleted +
-                       ", itemsOnHold=" + itemsOnHold +
-                       ", itemsPlanToWatch=" + itemsPlanToWatch +
-                       ", itemsDropped=" + itemsDropped +
-                       ", items=" + items +
-                       ", daysWatching=" + daysWatching +
-                       ", daysCompleted=" + daysCompleted +
-                       ", daysOnHold=" + daysOnHold +
-                       ", daysDropped=" + daysDropped +
-                       ", days=" + days +
-                       ", episodes=" + episodes +
-                       ", timesRewatched=" + timesRewatched +
-                       ", meanScore=" + meanScore +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
     }
 
     static UserMangaStatistics asUserMangaStatistics(final MyAnimeList myAnimeList, final UserInformation.manga_statistics schema){
-        return new UserMangaStatistics(){
+        return new UserMangaStatistics() {
 
-            private final MyAnimeList mal = myAnimeList;
-            private final UserInformation.manga_statistics obj = schema;
-            private final int   itemsReading = obj.num_items_reading,
-                                itemsCompleted = obj.num_items_completed,
-                                itemsOnHold = obj.num_items_on_hold,
-                                itemsPlanToRead = obj.num_items_plan_to_read,
-                                itemsDropped = obj.num_items_dropped,
-                                items = obj.num_items;
-            private final double    daysReading = obj.num_days_reading,
-                                    daysCompleted = obj.num_days_completed,
-                                    daysOnHold = obj.num_days_on_hold,
-                                    daysDropped = obj.num_days_dropped,
-                                    days = obj.num_days;
-            private final int   volumes = obj.num_volumes,
-                                chapters = obj.num_chapters,
-                                timesReread = obj.num_times_reread;
-            private final double meanScore = obj.mean_score;
+            private final MyAnimeList mal                       = myAnimeList;
+            private final UserInformation.manga_statistics obj  = schema;
+
+            private final int   itemsReading        = obj == null ? -1 : obj.num_items_reading,
+                                itemsCompleted      = obj == null ? -1 : obj.num_items_completed,
+                                itemsOnHold         = obj == null ? -1 : obj.num_items_on_hold,
+                                itemsPlanToRead     = obj == null ? -1 : obj.num_items_plan_to_read,
+                                itemsDropped        = obj == null ? -1 : obj.num_items_dropped,
+                                items               = obj == null ? -1 : obj.num_items;
+            private final double    daysReading     = obj == null ? -1 : obj.num_days_reading,
+                                    daysCompleted   = obj == null ? -1 : obj.num_days_completed,
+                                    daysOnHold      = obj == null ? -1 : obj.num_days_on_hold,
+                                    daysDropped     = obj == null ? -1 : obj.num_days_dropped,
+                                    days            = obj == null ? -1 : obj.num_days;
+            private final int volumes               = obj == null ? -1 : obj.num_volumes,
+                    chapters                        = obj == null ? -1 : obj.num_chapters,
+                    timesReread                     = obj == null ? -1 : obj.num_times_reread;
+            private final double meanScore          = obj == null ? -1 : obj.mean_score;
 
             @Override
             public final int getReading(){
@@ -2306,29 +2089,50 @@ abstract class MyAnimeListSchemaMapping {
             // additional methods
 
             @Override
-            public String toString(){
-                return "MangaStatistics{" +
-                       "itemsReading=" + itemsReading +
-                       ", itemsCompleted=" + itemsCompleted +
-                       ", itemsOnHold=" + itemsOnHold +
-                       ", itemsPlanToRead=" + itemsPlanToRead +
-                       ", itemsDropped=" + itemsDropped +
-                       ", items=" + items +
-                       ", daysReading=" + daysReading +
-                       ", daysCompleted=" + daysCompleted +
-                       ", daysOnHold=" + daysOnHold +
-                       ", daysDropped=" + daysDropped +
-                       ", days=" + days +
-                       ", volumes=" + volumes +
-                       ", chapters=" + chapters +
-                       ", timesReread=" + timesReread +
-                       ", meanScore=" + meanScore +
-                       '}';
+            public final String toString(){
+                return AutomatedToString(this);
             }
 
         };
     }
 
-    // todo: user preview
+    // toString
+
+    public static String AutomatedToString(final Object obj){
+        final Class<?> _class = obj.getClass();
+
+        final List<Field[]> fieldSets = new ArrayList<>();
+        fieldSets.add(_class.getDeclaredFields());
+
+        Class<?> _super = _class; // add inherited fields
+        while((_super = _super.getSuperclass()) != null)
+            fieldSets.add(_super.getDeclaredFields());
+
+        Collections.reverse(fieldSets);
+
+        final StringBuilder OUT = new StringBuilder();
+        OUT.append(_class.getSimpleName()).append('{');
+        for(final Field[] set : fieldSets){ // print all fields
+            for(final Field field : set){
+                if(!field.getName().equals("mal") && !field.getName().equals("obj") && !field.getName().contains("$"))
+                    try{
+                        final Object value = field.get(obj);
+                        OUT.append(field.getName()).append('=');
+                        if(value instanceof String)
+                            OUT.append('\'').append(value).append('\'');
+                        else if(value instanceof Object[])
+                            OUT.append(Arrays.toString((Object[]) value));
+                        else
+                            OUT.append(value);
+                        OUT.append(", ");
+                    }catch(final IllegalAccessException ignored){ }
+            }
+        }
+
+        if(OUT.toString().contains(", "))
+            OUT.delete(OUT.lastIndexOf(", "), OUT.length());
+        OUT.append('}');
+        return OUT.toString();
+    }
 
 }

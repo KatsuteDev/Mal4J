@@ -1,6 +1,7 @@
 package com.kttdevelopment.myanimelist;
 
-import java.util.Arrays;
+import java.lang.reflect.Field;
+import java.util.*;
 
 /**
  * Mapping for {@link MyAnimeListService}. Used for objects in {@link MyAnimeListSchemaMapping}.
@@ -8,214 +9,97 @@ import java.util.Arrays;
  * @see MyAnimeListService
  * @see MyAnimeListSchemaMapping
  */
+@SuppressWarnings("unused")
 abstract class MyAnimeListSchema {
 
     static class schema {
 
-        static class node {
+        static class node extends AutomatedToString {
 
             long            id;
             String          title;
             main_picture    main_picture;
 
-            static class picture{
+            static class picture extends AutomatedToString{
 
                 String  medium,
                         large;
 
-                @Override
-                public String toString(){
-                    return "picture{" +
-                           "medium='" + medium + '\'' +
-                           ", large='" + large + '\'' +
-                           '}';
-                }
-
             }
 
-            static class main_picture extends picture {
-
-                @Override
-                public String toString(){
-                    return "main_picture{" +
-                           "medium='" + medium + '\'' +
-                           ", large='" + large + '\'' +
-                           '}';
-                }
-
-            }
-
-            @Override
-            public String toString(){
-                return "node{" +
-                       "id=" + id +
-                       ", title='" + title + '\'' +
-                       ", main_picture=" + main_picture +
-                       '}';
-            }
+            static class main_picture extends picture { }
 
         }
 
-        static class paging {
+        static class paging extends AutomatedToString {
 
             String next;
 
-            @Override
-            public String toString(){
-                return "paging{" +
-                       "next='" + next + '\'' +
-                       '}';
-            }
-
         }
 
-        static class alternative_titles {
+        static class alternative_titles extends AutomatedToString{
 
             String[]    synonyms;
             String      en,
                         ja;
 
-            @Override
-            public String toString(){
-                return "alternative_titles{" +
-                       "synonyms=" + Arrays.toString(synonyms) +
-                       ", en='" + en + '\'' +
-                       ", ja='" + ja + '\'' +
-                       '}';
-            }
-
         }
 
-        static class genre extends IDN {
+        static class genre extends IDN { }
 
-            @Override
-            public String toString(){
-                return "genre{" +
-                       "id=" + id +
-                       ", name='" + name + '\'' +
-                       '}';
-            }
-
-        }
-
-        static class related {
+        static class related extends AutomatedToString {
 
             node  node;
             String  relation_type,
                     relation_type_formatted;
 
-            @Override
-            public String toString(){
-                return "related{" +
-                       "node=" + node +
-                       ", relation_type='" + relation_type + '\'' +
-                       ", relation_type_formatted='" + relation_type_formatted + '\'' +
-                       '}';
-            }
-
         }
 
-        static class recommendation {
+        static class recommendation extends AutomatedToString {
 
             node  node;
             int     num_recommendations;
 
-            @Override
-            public String toString(){
-                return "recommendation{" +
-                       "node=" + node +
-                       ", num_recommendations=" + num_recommendations +
-                       '}';
-            }
-
         }
 
-        static class ranking {
+        static class ranking extends AutomatedToString {
 
             ranking_node[]  data;
             schema.paging   paging;
 
-            @Override
-            public String toString(){
-                return "ranking{" +
-                       "data=" + Arrays.toString(data) +
-                       ", paging=" + paging +
-                       '}';
-            }
-
-            static class ranking_node {
+            static class ranking_node extends AutomatedToString {
 
                 schema.node node;
                 ranking_scm ranking;
 
-                @Override
-                public String toString(){
-                    return "ranking_node{" +
-                           "node=" + node +
-                           ", ranking=" + ranking +
-                           '}';
-                }
-
-                static class ranking_scm {
+                static class ranking_scm extends AutomatedToString {
 
                     int rank;
 
-                    @Override
-                    public String toString(){
-                        return "ranking{" +
-                               "rank=" + rank +
-                               '}';
-                    }
-
                 }
 
             }
         }
 
-        static class season {
+        static class season extends AutomatedToString {
 
             int     year;
             String  season;
-
-            @Override
-            public String toString(){
-                return "season{" +
-                       "year=" + year +
-                       ", season='" + season + '\'' +
-                       '}';
-            }
-
         }
 
-        static class IDN {
+        static class IDN extends AutomatedToString {
 
             long    id;
             String  name;
-
-            @Override
-            public String toString(){
-                return "genre{" +
-                       "id=" + id +
-                       ", name='" + name + '\'' +
-                       '}';
-            }
 
         }
 
     }
 
-    static class AnimeList {
+    static class AnimeList extends AutomatedToString {
 
         schema.node[] data;
         schema.paging paging;
-
-        @Override
-        public String toString(){
-            return "AnimeList{" +
-                   "data=" + Arrays.toString(data) +
-                   ", paging=" + paging +
-                   '}';
-        }
 
     }
 
@@ -251,46 +135,7 @@ abstract class MyAnimeListSchema {
         studio[]                    studios;
         statistics                  statistics;
 
-        @Override
-        public String toString(){
-            return "AnimeDetails{" +
-                   "id=" + id +
-                   ", title='" + title + '\'' +
-                   ", main_picture=" + main_picture +
-                   ", alternative_titles=" + alternative_titles +
-                   ", start_date='" + start_date + '\'' +
-                   ", end_date='" + end_date + '\'' +
-                   ", synopsis='" + synopsis + '\'' +
-                   ", mean=" + mean +
-                   ", rank=" + rank +
-                   ", popularity=" + popularity +
-                   ", num_list_users=" + num_list_users +
-                   ", num_scoring_users=" + num_scoring_users +
-                   ", nsfw='" + nsfw + '\'' +
-                   ", created_at='" + created_at + '\'' +
-                   ", updated_at='" + updated_at + '\'' +
-                   ", media_type='" + media_type + '\'' +
-                   ", status='" + status + '\'' +
-                   ", genres=" + Arrays.toString(genres) +
-                   ", my_list_status=" + my_list_status +
-                   ", num_episodes=" + num_episodes +
-                   ", start_season=" + start_season +
-                   ", broadcast=" + broadcast +
-                   ", source='" + source + '\'' +
-                   ", average_episode_duration=" + average_episode_duration +
-                   ", rating='" + rating + '\'' +
-                   ", pictures=" + Arrays.toString(pictures) +
-                   ", background='" + background + '\'' +
-                   ", related_anime=" + Arrays.toString(related_anime) +
-                   ", related_manga=" + Arrays.toString(related_manga) +
-                   ", recommendations=" + Arrays.toString(recommendations) +
-                   ", studios=" + Arrays.toString(studios) +
-                   ", statistics=" + statistics +
-                   '}';
-        }
-
-        @SuppressWarnings("SpellCheckingInspection")
-        static class my_list_status {
+        static class my_list_status extends AutomatedToString {
 
             String  status;
             int     score,
@@ -298,72 +143,25 @@ abstract class MyAnimeListSchema {
             boolean is_rewatching;
             String  updated_at;
 
-            @Override
-            public String toString(){
-                return "my_list_status{" +
-                       "status='" + status + '\'' +
-                       ", score=" + score +
-                       ", num_episodes_watched=" + num_episodes_watched +
-                       ", is_rewatching=" + is_rewatching +
-                       ", updated_at='" + updated_at + '\'' +
-                       '}';
-            }
-
         }
 
-        static class start_season extends schema.season {
+        static class start_season extends schema.season { }
 
-            @Override
-            public String toString(){
-                return "start_season{" +
-                       "year=" + year +
-                       ", season='" + season + '\'' +
-                       '}';
-            }
-
-        }
-
-        static class broadcast {
+        static class broadcast extends AutomatedToString {
 
             String  day_of_week,
                     start_time;
 
-            @Override
-            public String toString(){
-                return "broadcast{" +
-                       "day_of_week='" + day_of_week + '\'' +
-                       ", start_time='" + start_time + '\'' +
-                       '}';
-            }
-
         }
 
-        static class studio extends schema.IDN {
+        static class studio extends schema.IDN { }
 
-            @Override
-            public String toString(){
-                return "studio{" +
-                       "id=" + id +
-                       ", name='" + name + '\'' +
-                       '}';
-            }
-
-        }
-
-        static class statistics {
+        static class statistics extends AutomatedToString {
 
             status  status;
             int     num_list_users;
 
-            @Override
-            public String toString(){
-                return "statistics{" +
-                       "status=" + status +
-                       ", num_list_users=" + num_list_users +
-                       '}';
-            }
-
-            static class status {
+            static class status extends AutomatedToString {
 
                 String  watching,
                         completed,
@@ -371,66 +169,26 @@ abstract class MyAnimeListSchema {
                         dropped,
                         plan_to_watch;
 
-                @Override
-                public String toString(){
-                    return "status{" +
-                           "watching='" + watching + '\'' +
-                           ", completed='" + completed + '\'' +
-                           ", on_hold='" + on_hold + '\'' +
-                           ", dropped='" + dropped + '\'' +
-                           ", plan_to_watch='" + plan_to_watch + '\'' +
-                           '}';
-                }
-
             }
 
         }
 
     }
 
-    static class AnimeRanking extends schema.ranking {
+    static class AnimeRanking extends schema.ranking { }
 
-        @Override
-        public String toString(){
-            return "AnimeRanking{" +
-                   "data=" + Arrays.toString(data) +
-                   ", paging=" + paging +
-                   '}';
-        }
-
-    }
-
-    static class SeasonalAnime {
+    static class SeasonalAnime extends AutomatedToString {
 
         schema.node[]   data;
         schema.paging   paging;
         schema.season   season;
 
-        @Override
-        public String toString(){
-            return "SeasonalAnime{" +
-                   "data=" + Arrays.toString(data) +
-                   ", paging=" + paging +
-                   ", season=" + season +
-                   '}';
-        }
-
     }
 
-    static class SuggestedAnime extends AnimeList {
-
-        @Override
-        public String toString(){
-            return "SuggestedAnime{" +
-                   "data=" + Arrays.toString(data) +
-                   ", paging=" + paging +
-                   '}';
-        }
-
-    }
+    static class SuggestedAnime extends AnimeList { }
 
     @SuppressWarnings("SpellCheckingInspection")
-    static class UpdateAnimeList {
+    static class UpdateAnimeList extends AutomatedToString {
 
         String      status;
         int         score,
@@ -443,104 +201,40 @@ abstract class MyAnimeListSchema {
         String[]    tags;
         String      comments;
 
-        @Override
-        public String toString(){
-            return "UpdateAnimeList{" +
-                   "status='" + status + '\'' +
-                   ", score=" + score +
-                   ", num_watched_episodes=" + num_watched_episodes +
-                   ", is_rewatching=" + is_rewatching +
-                   ", updated_at='" + updated_at + '\'' +
-                   ", priority=" + priority +
-                   ", num_times_rewatched=" + num_times_rewatched +
-                   ", rewatch_value=" + rewatch_value +
-                   ", tags=" + Arrays.toString(tags) +
-                   ", comments='" + comments + '\'' +
-                   '}';
-        }
-
     }
 
-    static class UserAnimeList {
+    static class UserAnimeList extends AutomatedToString {
 
         list_node[]     data;
         schema.paging   paging;
 
-        @Override
-        public String toString(){
-            return "UserAnimeList{" +
-                   "data=" + Arrays.toString(data) +
-                   ", paging=" + paging +
-                   '}';
-        }
-
-        static class list_node {
+        static class list_node extends AutomatedToString {
 
             schema.node                 node;
             AnimeDetails.my_list_status list_status;
-
-            @Override
-            public String toString(){
-                return "list_node{" +
-                       "node=" + node +
-                       ", list_status=" + list_status +
-                       '}';
-            }
 
         }
 
     }
 
-    static class ForumBoards {
+    static class ForumBoards extends AutomatedToString {
 
         category_node[] categories;
 
-        @Override
-        public String toString(){
-            return "ForumBoards{" +
-                   "categories=" + Arrays.toString(categories) +
-                   '}';
-        }
-
-        static class category_node {
+        static class category_node extends AutomatedToString {
 
             String  title;
             board[] boards;
 
-            @Override
-            public String toString(){
-                return "category_node{" +
-                       "title='" + title + '\'' +
-                       ", boards=" + Arrays.toString(boards) +
-                       '}';
-            }
-
             @SuppressWarnings("SpellCheckingInspection")
-            static class board {
+            static class board extends AutomatedToString {
 
                 long    id;
                 String  title,
                         description;
                 subboard[] subboards;
 
-                @Override
-                public String toString(){
-                    return "board{" +
-                           "id=" + id +
-                           ", title='" + title + '\'' +
-                           ", description='" + description + '\'' +
-                           ", subboards=" + Arrays.toString(subboards) +
-                           '}';
-                }
-
-                static class subboard {
-
-                    @Override
-                    public String toString(){
-                        return "subboard{}";
-                    }
-
-                }
+                static class subboard extends AutomatedToString{ }
 
             }
 
@@ -548,35 +242,18 @@ abstract class MyAnimeListSchema {
 
     }
 
-    static class ForumTopicDetail {
+    static class ForumTopicDetail extends AutomatedToString {
 
         data_node       data;
         schema.paging   paging;
 
-        @Override
-        public String toString(){
-            return "ForumTopicDetail{" +
-                   "data=" + data +
-                   ", paging=" + paging +
-                   '}';
-        }
-
-        static class data_node {
+        static class data_node extends AutomatedToString {
 
             String  title;
             post[]  posts;
             poll    poll;
 
-            @Override
-            public String toString(){
-                return "data_node{" +
-                       "title='" + title + '\'' +
-                       ", posts=" + Arrays.toString(posts) +
-                       ", poll=" + poll +
-                       '}';
-            }
-
-            static class post {
+            static class post extends AutomatedToString {
 
                 String  id;
                 int     number;
@@ -585,68 +262,28 @@ abstract class MyAnimeListSchema {
                 String  body,
                         signature;
 
-                @Override
-                public String toString(){
-                    return "post{" +
-                           "id='" + id + '\'' +
-                           ", number=" + number +
-                           ", created_at='" + created_at + '\'' +
-                           ", created_by=" + created_by +
-                           ", body='" + body + '\'' +
-                           ", signature='" + signature + '\'' +
-                           '}';
-                }
-
-                static class author {
+                static class author extends AutomatedToString {
 
                     String  id,
                             name,
                             forum_avator; // fixme: API typo
 
-                    @Override
-                    public String toString(){
-                        return "author{" +
-                               "id='" + id + '\'' +
-                               ", name='" + name + '\'' +
-                               ", forum_avator='" + forum_avator + '\'' +
-                               '}';
-                    }
-
                 }
 
             }
 
-            static class poll {
+            static class poll extends AutomatedToString {
 
                 String      id,
                             question,
                             closed;
                 option[]    options;
 
-                @Override
-                public String toString(){
-                    return "poll{" +
-                           "id='" + id + '\'' +
-                           ", question='" + question + '\'' +
-                           ", closed='" + closed + '\'' +
-                           ", options=" + Arrays.toString(options) +
-                           '}';
-                }
-
-                static class option {
+                static class option extends AutomatedToString {
 
                     String  id,
                             text,
                             votes;
-
-                    @Override
-                    public String toString(){
-                        return "options{" +
-                               "id='" + id + '\'' +
-                               ", text='" + text + '\'' +
-                               ", votes='" + votes + '\'' +
-                               '}';
-                    }
 
                 }
 
@@ -656,12 +293,12 @@ abstract class MyAnimeListSchema {
 
     }
 
-    static class ForumTopic {
+    static class ForumTopic extends AutomatedToString {
 
         data_node[]     data;
         schema.paging   paging;
 
-        static class data_node {
+        static class data_node extends AutomatedToString {
 
             long    id;
             String  title,
@@ -672,32 +309,10 @@ abstract class MyAnimeListSchema {
             creator last_post_created_by;
             int     is_locked;
 
-            @Override
-            public String toString(){
-                return "data_node{" +
-                       "id=" + id +
-                       ", title='" + title + '\'' +
-                       ", created_at='" + created_at + '\'' +
-                       ", created_by=" + created_by +
-                       ", num_of_posts=" + num_of_posts +
-                       ", last_post_created_at='" + last_post_created_at + '\'' +
-                       ", last_post_created_by=" + last_post_created_by +
-                       ", is_locked=" + is_locked +
-                       '}';
-            }
-
-            static class creator {
+            static class creator extends AutomatedToString{
 
                 long    id;
                 String  name;
-
-                @Override
-                public String toString(){
-                    return "creator{" +
-                           "id=" + id +
-                           ", name='" + name + '\'' +
-                           '}';
-                }
 
             }
 
@@ -705,18 +320,10 @@ abstract class MyAnimeListSchema {
 
     }
 
-    static class MangaList {
+    static class MangaList extends AutomatedToString {
 
         schema.node[] data;
         schema.paging paging;
-
-        @Override
-        public String toString(){
-            return "MangaList{" +
-                   "data=" + Arrays.toString(data) +
-                   ", paging=" + paging +
-                   '}';
-        }
 
     }
 
@@ -749,42 +356,7 @@ abstract class MyAnimeListSchema {
         serialization[]             serialization;
         statistics                  statistics;
 
-        @Override
-        public String toString(){
-            return "MangaDetails{" +
-                   "id=" + id +
-                   ", title='" + title + '\'' +
-                   ", main_picture=" + main_picture +
-                   ", alternative_titles=" + alternative_titles +
-                   ", start_date='" + start_date + '\'' +
-                   ", end_date='" + end_date + '\'' +
-                   ", synopsis='" + synopsis + '\'' +
-                   ", mean=" + mean +
-                   ", rank=" + rank +
-                   ", popularity=" + popularity +
-                   ", num_list_users=" + num_list_users +
-                   ", num_scoring_users=" + num_scoring_users +
-                   ", nsfw='" + nsfw + '\'' +
-                   ", created_at='" + created_at + '\'' +
-                   ", updated_at='" + updated_at + '\'' +
-                   ", media_type='" + media_type + '\'' +
-                   ", status='" + status + '\'' +
-                   ", genres=" + Arrays.toString(genres) +
-                   ", my_list_status=" + my_list_status +
-                   ", num_volumes=" + num_volumes +
-                   ", num_chapters=" + num_chapters +
-                   ", authors=" + Arrays.toString(authors) +
-                   ", pictures=" + Arrays.toString(pictures) +
-                   ", background='" + background + '\'' +
-                   ", related_anime=" + Arrays.toString(related_anime) +
-                   ", related_manga=" + Arrays.toString(related_manga) +
-                   ", recommendations=" + Arrays.toString(recommendations) +
-                   ", serialization=" + Arrays.toString(serialization) +
-                   ", statistics=" + statistics +
-                   '}';
-        }
-
-        static class my_list_status {
+        static class my_list_status extends AutomatedToString {
 
             String  status;
             boolean is_rereading;
@@ -793,96 +365,43 @@ abstract class MyAnimeListSchema {
                     score;
             String updated_at;
 
-            @Override
-            public String toString(){
-                return "my_list_status{" +
-                       "status='" + status + '\'' +
-                       ", is_rereading=" + is_rereading +
-                       ", num_volumes_read=" + num_volumes_read +
-                       ", num_chapters_read=" + num_chapters_read +
-                       ", score=" + score +
-                       ", updated_at='" + updated_at + '\'' +
-                       '}';
-            }
-
         }
 
-        static class author {
+        static class author extends AutomatedToString {
 
             node    node;
             String  role;
 
-            @Override
-            public String toString(){
-                return "author{" +
-                       "node=" + node +
-                       ", role='" + role + '\'' +
-                       '}';
-            }
-
-            static class node {
+            static class node extends AutomatedToString {
 
                 long    id;
                 String  first_name,
                         last_name;
 
-                @Override
-                public String toString(){
-                    return "node{" +
-                           "id=" + id +
-                           ", first_name='" + first_name + '\'' +
-                           ", last_name='" + last_name + '\'' +
-                           '}';
-                }
-
             }
 
         }
 
-        static class serialization {
+        static class serialization extends AutomatedToString {
 
             node    node;
             String  role;
 
-            @Override
-            public String toString(){
-                return "serialization{" +
-                       "node=" + node +
-                       ", role='" + role + '\'' +
-                       '}';
-            }
-
-            static class node {
+            static class node extends AutomatedToString {
 
                 long    id;
                 String  name;
-
-                @Override
-                public String toString(){
-                    return "node{" +
-                           "id=" + id +
-                           ", name='" + name + '\'' +
-                           '}';
-                }
 
             }
 
         }
 
-        static class statistics {
+        static class statistics extends AutomatedToString {
 
             status status;
             int     num_list_users;
 
-            @Override
-            public String toString(){
-                return "statistics{" +
-                       "status=" + status +
-                       ", num_list_users=" + num_list_users +
-                       '}';
-            }
-
-            static class status {
+            static class status extends AutomatedToString {
 
                 String  reading,
                         completed,
@@ -890,36 +409,15 @@ abstract class MyAnimeListSchema {
                         dropped,
                         plan_to_read;
 
-                @Override
-                public String toString(){
-                    return "status{" +
-                           "reading='" + reading + '\'' +
-                           ", completed='" + completed + '\'' +
-                           ", on_hold='" + on_hold + '\'' +
-                           ", dropped='" + dropped + '\'' +
-                           ", plan_to_read='" + plan_to_read + '\'' +
-                           '}';
-                }
-
             }
 
         }
 
     }
 
-    static class MangaRanking extends schema.ranking {
+    static class MangaRanking extends schema.ranking { }
 
-        @Override
-        public String toString(){
-            return "MangaRanking{" +
-                   "data=" + Arrays.toString(data) +
-                   ", paging=" + paging +
-                   '}';
-        }
-
-    }
-
-    static class UpdateMangaList {
+    static class UpdateMangaList extends AutomatedToString {
 
         String      status;
         boolean     is_rereading;
@@ -933,56 +431,23 @@ abstract class MyAnimeListSchema {
         String[]    tags;
         String      comments;
 
-        @Override
-        public String toString(){
-            return "UpdateMangaList{" +
-                   "status='" + status + '\'' +
-                   "is_rereading=" + is_rereading +
-                   ", num_volumes_read=" + num_volumes_read +
-                   ", num_chapters_read=" + num_chapters_read +
-                   ", score=" + score +
-                   ", updated_at='" + updated_at + '\'' +
-                   ", priority=" + priority +
-                   ", num_times_reread=" + num_times_reread +
-                   ", reread_value=" + reread_value +
-                   ", tags=" + Arrays.toString(tags) +
-                   ", comments='" + comments + '\'' +
-                   '}';
-        }
-
     }
 
-    static class UserMangaList {
+    static class UserMangaList extends AutomatedToString {
 
         list_node[]     data;
         schema.paging   paging;
 
-        @Override
-        public String toString(){
-            return "UserMangaList{" +
-                   "data=" + Arrays.toString(data) +
-                   ", paging=" + paging +
-                   '}';
-        }
-
-        static class list_node {
+        static class list_node extends AutomatedToString {
 
             schema.node                 node;
             MangaDetails.my_list_status list_status;
-
-            @Override
-            public String toString(){
-                return "list_node{" +
-                       "node=" + node +
-                       ", list_status=" + list_status +
-                       '}';
-            }
 
         }
 
     }
 
-    static class UserInformation {
+    static class UserInformation extends AutomatedToString {
 
         long                id;
         String              name,
@@ -991,20 +456,8 @@ abstract class MyAnimeListSchema {
         anime_statistics    anime_statistics;
         manga_statistics    manga_statistics;
 
-        @Override
-        public String toString(){
-            return "UserInformation{" +
-                   "id=" + id +
-                   ", name='" + name + '\'' +
-                   ", location='" + location + '\'' +
-                   ", joined_at='" + joined_at + '\'' +
-                   ", anime_statistics=" + anime_statistics +
-                   ", manga_statistics=" + manga_statistics +
-                   '}';
-        }
-
         @SuppressWarnings("SpellCheckingInspection")
-        static class anime_statistics {
+        static class anime_statistics extends AutomatedToString {
 
             int     num_items_watching,
                     num_items_completed,
@@ -1021,29 +474,9 @@ abstract class MyAnimeListSchema {
                     num_times_rewatched;
             double  mean_score;
 
-            @Override
-            public String toString(){
-                return "anime_statistics{" +
-                       "num_items_watching=" + num_items_watching +
-                       ", num_items_completed=" + num_items_completed +
-                       ", num_items_on_hold=" + num_items_on_hold +
-                       ", num_items_plan_to_watch=" + num_items_plan_to_watch +
-                       ", num_items_dropped=" + num_items_dropped +
-                       ", num_items=" + num_items +
-                       ", num_days_watching=" + num_days_watching +
-                       ", num_days_completed=" + num_days_completed +
-                       ", num_days_on_hold=" + num_days_on_hold +
-                       ", num_days_dropped=" + num_days_dropped +
-                       ", num_days=" + num_days +
-                       ", num_episodes=" + num_episodes +
-                       ", num_times_rewatched=" + num_times_rewatched +
-                       ", mean_score=" + mean_score +
-                       '}';
-            }
-
         }
 
-        static class manga_statistics {
+        static class manga_statistics extends AutomatedToString {
 
             int     num_items_reading,
                     num_items_completed,
@@ -1061,27 +494,49 @@ abstract class MyAnimeListSchema {
                     num_times_reread;
             double  mean_score;
 
-            @Override
-            public String toString(){
-                return "manga_statistics{" +
-                       "num_items_reading=" + num_items_reading +
-                       ", num_items_completed=" + num_items_completed +
-                       ", num_items_on_hold=" + num_items_on_hold +
-                       ", num_items_plan_to_read=" + num_items_plan_to_read +
-                       ", num_items_dropped=" + num_items_dropped +
-                       ", num_items=" + num_items +
-                       ", num_days_reading=" + num_days_reading +
-                       ", num_days_completed=" + num_days_completed +
-                       ", num_days_on_hold=" + num_days_on_hold +
-                       ", num_days_dropped=" + num_days_dropped +
-                       ", num_days=" + num_days +
-                       ", num_volumes=" + num_volumes +
-                       ", num_chapters=" + num_chapters +
-                       ", num_times_reread=" + num_times_reread +
-                       ", mean_score=" + mean_score +
-                       '}';
+        }
+
+    }
+
+    //
+
+    private static class AutomatedToString {
+
+        @Override
+        public final String toString(){
+            final Class<?> _class = this.getClass();
+
+            final List<Field[]> fieldSets = new ArrayList<>();
+            fieldSets.add(_class.getDeclaredFields());
+
+            Class<?> _super = _class; // add all inherited fields
+            while((_super = _super.getSuperclass()) != null)
+                fieldSets.add(_super.getDeclaredFields());
+
+            Collections.reverse(fieldSets);
+
+            final StringBuilder OUT = new StringBuilder();
+            OUT.append(_class.getSimpleName()).append('{');
+            for(final Field[] set : fieldSets){ // print all fields
+                for(final Field field : set){
+                    try{
+                        final Object value = field.get(this);
+                        OUT.append(field.getName()).append('=');
+                        if(value instanceof String)
+                            OUT.append('\'').append(value).append('\'');
+                        else if(value instanceof Object[])
+                            OUT.append(Arrays.toString((Object[]) value));
+                        else
+                            OUT.append(value);
+                        OUT.append(", ");
+                    }catch(final IllegalAccessException ignored){ }
+                }
             }
 
+            if(OUT.toString().contains(", "))
+                OUT.delete(OUT.lastIndexOf(", "), OUT.length());
+            OUT.append('}');
+            return OUT.toString();
         }
 
     }
