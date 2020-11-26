@@ -10,6 +10,7 @@ import java.util.*;
  * @see MyAnimeListSchemaMapping
  */
 @SuppressWarnings("unused")
+@Deprecated
 abstract class MyAnimeListSchema {
 
     static class schema {
