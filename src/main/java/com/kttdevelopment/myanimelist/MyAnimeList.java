@@ -1,6 +1,7 @@
 package com.kttdevelopment.myanimelist;
 
 import com.kttdevelopment.myanimelist.anime.*;
+import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;

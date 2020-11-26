@@ -1,12 +1,15 @@
 package com.kttdevelopment.myanimelist.property;
 
-import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
-import com.kttdevelopment.myanimelist.manga.MangaListStatus;
+public interface ListStatus<Status extends Enum<?>> {
 
-public interface ListStatus {
+    Status getStatus();
 
     int getScore();
 
-    long getUpdatedAt();
+    int getPriority();
+
+    String[] getTags();
+
+    String getComments();
 
 }

@@ -10,9 +10,17 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Common.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.SubLevelObject.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.TopLevelObject.*;
 
+/**
+ * Represents the MyAnimeList API response schema.
+ *
+ * @see Call
+ * @since 1.0.0
+ * @version 1.0.0
+ */
 @SuppressWarnings({"SpellCheckingInspection","unused"})
-class MyAnimeListAPIResponse {
+abstract class MyAnimeListAPIResponse {
 
+    // commonly used formats
     static abstract class Common {
 
         static class Pagination<T> extends AutomatedToString {
@@ -44,6 +52,7 @@ class MyAnimeListAPIResponse {
 
     }
 
+    // api calls
     static abstract class Call {
 
         static class GetAnimeList extends Pagination<Node<Anime>> {
@@ -187,6 +196,7 @@ class MyAnimeListAPIResponse {
 
     }
 
+    // shared formats
     static abstract class SubLevelObject {
 
         static class Recommendation<T> extends Node<T> {
@@ -425,10 +435,11 @@ class MyAnimeListAPIResponse {
 
     //
 
+    // automate toString creation
     private static class AutomatedToString {
 
         @Override
-        public String toString(){
+        public final String toString(){
             Class<?> _class = this.getClass();
 
             List<Field[]> fieldSets = new ArrayList<>();

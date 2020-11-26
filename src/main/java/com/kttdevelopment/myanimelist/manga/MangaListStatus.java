@@ -4,14 +4,16 @@ package com.kttdevelopment.myanimelist.manga;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 import com.kttdevelopment.myanimelist.property.ListStatus;
 
-public interface MangaListStatus extends ListStatus {
+public abstract class MangaListStatus implements ListStatus<MangaStatus> {
 
-    MangaStatus getStatus();
+    public abstract int getVolumesRead();
 
-    int getVolumesRead();
+    public abstract int getChaptersRead();
 
-    int getChaptersRead();
+    public abstract boolean isRereading();
 
-    boolean isRereading();
+    public abstract int getTimesReread();
+
+    public abstract int getRereadValue();
 
 }

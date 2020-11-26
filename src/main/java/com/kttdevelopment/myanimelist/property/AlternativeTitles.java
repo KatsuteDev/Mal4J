@@ -1,4 +1,4 @@
-package com.kttdevelopment.myanimelist.anime.property;
+package com.kttdevelopment.myanimelist.property;
 
 public abstract class AlternativeTitles {
 

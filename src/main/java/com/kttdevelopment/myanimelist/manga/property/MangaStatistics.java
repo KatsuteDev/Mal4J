@@ -2,7 +2,7 @@ package com.kttdevelopment.myanimelist.manga.property;
 
 import com.kttdevelopment.myanimelist.property.Statistics;
 
-public abstract class MangaStatistics extends Statistics<MangaStatus> {
+public abstract class MangaStatistics extends Statistics {
 
     public abstract int getReading();
 

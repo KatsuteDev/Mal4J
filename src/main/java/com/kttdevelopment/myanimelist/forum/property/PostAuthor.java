@@ -1,13 +1,15 @@
 package com.kttdevelopment.myanimelist.forum.property;
 
-import com.kttdevelopment.myanimelist.property.ID;
+import com.kttdevelopment.myanimelist.property.IDN;
 import com.kttdevelopment.myanimelist.user.User;
 
-public abstract class PostAuthor implements ID {
+public abstract class PostAuthor implements IDN {
 
-    public abstract String getName();
+    // API methods
 
     public abstract String getForumAvatarURL();
+
+    // additional methods
 
     public abstract User getUser();
 

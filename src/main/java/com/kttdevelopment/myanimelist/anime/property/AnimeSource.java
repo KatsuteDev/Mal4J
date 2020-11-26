@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
-import com.kttdevelopment.myanimelist.manga.property.MangaType;
-
+@SuppressWarnings("SpellCheckingInspection")
 public enum AnimeSource {
 
     Other           ("other"),

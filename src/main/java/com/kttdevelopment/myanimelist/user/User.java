@@ -1,10 +1,14 @@
 package com.kttdevelopment.myanimelist.user;
 
-import com.kttdevelopment.myanimelist.property.ID;
+import com.kttdevelopment.myanimelist.property.IDN;
 
-public abstract class User implements ID {
+public abstract class User implements IDN {
 
-    public abstract String getUsername();
+    public abstract String getPictureURL();
+
+    public abstract String getGender();
+
+    public abstract long getBirthday();
 
     public abstract String getLocation();
 
@@ -12,6 +16,8 @@ public abstract class User implements ID {
 
     public abstract UserAnimeStatistics getAnimeStatistics();
 
-    public abstract UserMangaStatistics getMangaStatistics();
+    public abstract String getTimeZone();
+
+    public abstract boolean isSupported();
 
 }
