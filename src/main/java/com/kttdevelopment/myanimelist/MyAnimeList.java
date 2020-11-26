@@ -13,13 +13,6 @@ import com.kttdevelopment.myanimelist.user.User;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * MyAnimeList API.
- *
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
 public abstract class MyAnimeList {
 
     public static MyAnimeList withOAuthToken(final String token){

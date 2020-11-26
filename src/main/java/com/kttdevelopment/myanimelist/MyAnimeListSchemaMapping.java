@@ -22,14 +22,6 @@ import java.util.*;
 
 import static com.kttdevelopment.myanimelist.MyAnimeListSchema.*;
 
-/**
- * This is the master class for the MyAnimeList API, it converts the JSON mapping
- * to a more convenient interface.
- * <br><br>
- * DEVS: Parse values in instantiation and not in functions (this will improve performance).
- *
- * @see MyAnimeListSchema
- */
 abstract class MyAnimeListSchemaMapping {
 
     // Anime

@@ -2,15 +2,6 @@ package com.kttdevelopment.myanimelist.anime.property;
 
 import com.kttdevelopment.myanimelist.property.RankingType;
 
-/**
- * Represents Anime ranking types.
- *
- * @see AnimeType
- * @see RankingType
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
 public enum AnimeRankingType {
 
     Airing  ("airing"),
@@ -31,25 +22,10 @@ public enum AnimeRankingType {
         this.field = type;
     }
 
-    /**
-     * Returns the field name.
-     *
-     * @return field name
-     *
-     * @since 1.0.0
-     */
     public final String field(){
         return field;
     }
 
-    /**
-     * Returns the field as an enum.
-     *
-     * @param string string
-     * @return enum
-     *
-     * @since 1.0.0
-     */
     public static AnimeRankingType asEnum(final String string){
         for(final AnimeRankingType value : values())
             if(value.field.equalsIgnoreCase(string))
