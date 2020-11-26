@@ -102,19 +102,14 @@ abstract class MyAnimeListAPIResponse {
             String status;
             int score, num_watched_episodes;
             boolean is_rewatching;
+            String start_date, end_date;
             int priority, num_times_rewatched, rewatch_value;
             String[] tags;
             String comments, updated_at;
 
         }
 
-        static class GetUserAnimeList extends Pagination<ListEdge<Anime, GetUserAnimeList.UserAnimeListStatus>> {
-
-            static class UserAnimeListStatus extends UpdateUserAnimeList {
-
-                String start_date, end_date, updated_at;
-
-            }
+        static class GetUserAnimeList extends Pagination<ListEdge<Anime,UpdateUserAnimeList>> {
 
         }
 
@@ -161,19 +156,14 @@ abstract class MyAnimeListAPIResponse {
 
             String status;
             boolean is_rereading;
+            String start_date, end_date;
             int score, num_volumes_read, num_chapters_read, priority, num_times_reread, reread_value;
             String[] tags;
-            String comments;
+            String comments, updated_at;
 
         }
 
-        static class GetUserMangaList extends Pagination<ListEdge<Manga,GetUserMangaList.UserMangaListStatus>> {
-
-            static class UserMangaListStatus extends UpdateUserMangaList {
-
-                String start_date, end_date, updated_at;
-
-            }
+        static class GetUserMangaList extends Pagination<ListEdge<Manga,UpdateUserMangaList>> {
 
         }
 
