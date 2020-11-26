@@ -1,21 +1,17 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
-/**
- * Represents an Anime air status.
- *
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
-public enum AnimeAirStatus {
+public enum AnimeRating {
 
-    Airing      ("currently_airing"),
-    NotYetAired ("not_yet_aired"),
-    Finished    ("finished_airing");
+    G   ("g"),
+    PG  ("pg"),
+    PG13("pg_13"),
+    R   ("r"),
+    RP  ("r+"),
+    RX  ("rx");
 
     private final String field;
 
-    AnimeAirStatus(final String field){
+    AnimeRating(String field) {
         this.field = field;
     }
 
@@ -38,18 +34,17 @@ public enum AnimeAirStatus {
      *
      * @since 1.0.0
      */
-    public static AnimeAirStatus asEnum(final String string){
-        for(final AnimeAirStatus value : values())
+    public static AnimeRating asEnum(final String string){
+        for(final AnimeRating value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
         return null;
     }
 
     @Override
-    public String toString(){
-        return "AnimeAirStatus{" +
-               "field='" + field + '\'' +
-               '}';
+    public String toString() {
+        return "AnimeRating{" +
+                "field='" + field + '\'' +
+                '}';
     }
-
 }

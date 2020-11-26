@@ -1,7 +1,7 @@
 package com.kttdevelopment.myanimelist.anime;
 
 import com.kttdevelopment.myanimelist.anime.property.AnimePreviewable;
-import com.kttdevelopment.myanimelist.property.RelationType;
+import com.kttdevelopment.myanimelist.property.RelatedMedia;
 
 /**
  * Represents a related Anime.
@@ -10,6 +10,6 @@ import com.kttdevelopment.myanimelist.property.RelationType;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class RelatedAnime extends RelationType implements AnimePreviewable {
+public abstract class RelatedAnime extends RelatedMedia implements AnimePreviewable {
 
 }

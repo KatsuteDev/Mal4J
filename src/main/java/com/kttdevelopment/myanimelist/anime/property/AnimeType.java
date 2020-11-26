@@ -9,10 +9,13 @@ package com.kttdevelopment.myanimelist.anime.property;
  */
 public enum AnimeType {
 
+    Unknown ("unknown"),
     TV      ("tv"),
     OVA     ("ova"),
     Movie   ("movie"),
-    Special ("special");
+    Special ("special"),
+    ONA     ("ona"),
+    Music   ("music");
 
     private final String field;
 
