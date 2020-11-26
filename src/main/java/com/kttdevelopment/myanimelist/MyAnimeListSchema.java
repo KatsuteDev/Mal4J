@@ -3,12 +3,6 @@ package com.kttdevelopment.myanimelist;
 import java.lang.reflect.Field;
 import java.util.*;
 
-/**
- * Mapping for {@link MyAnimeListService}. Used for objects in {@link MyAnimeListSchemaMapping}.
- *
- * @see MyAnimeListService
- * @see MyAnimeListSchemaMapping
- */
 @SuppressWarnings("unused")
 @Deprecated
 abstract class MyAnimeListSchema {
