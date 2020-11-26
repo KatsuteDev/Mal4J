@@ -40,6 +40,8 @@ public abstract class MyAnimeList {
 
     public abstract List<AnimePreview> getAnime(final String search, final int limit, final int offset);
 
+    public abstract List<AnimePreview> getAnime(final String search, final int limit, final String[] fields);
+
     public abstract List<AnimePreview> getAnime(final String search, final String[] fields);
 
     public abstract List<AnimePreview> getAnime(final String search, final int limit, final int offset, final String[] fields);
@@ -57,6 +59,8 @@ public abstract class MyAnimeList {
     public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final int limit);
 
     public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final int limit, final int offset);
+
+    public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final int limit, final String[] fields);
 
     public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final int limit, final int offset, final String[] fields);
 
@@ -142,6 +146,8 @@ public abstract class MyAnimeList {
 
     public abstract List<MangaPreview> getManga(final String search, final int limit, final int offset);
 
+    public abstract List<MangaPreview> getManga(final String search, final int limit, final String[] fields);
+
     public abstract List<MangaPreview> getManga(final String search, final String[] fields);
 
     public abstract List<MangaPreview> getManga(final String search, final int limit, final int offset, final String[] fields);
@@ -160,11 +166,13 @@ public abstract class MyAnimeList {
 
     public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType, final int limit, final int offset);
 
+    public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType, final int limit, final String[] fields);
+
     public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType, final int limit, final int offset, final String[] fields);
 
     // manga list
 
-    public abstract MangaListing updateMangaListing(); // todo
+    public abstract MangaListing updateMangaListing();
 
     public abstract void deleteMangaListing(final long id);
 
