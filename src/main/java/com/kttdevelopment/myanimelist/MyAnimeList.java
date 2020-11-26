@@ -21,7 +21,7 @@ public abstract class MyAnimeList {
     }
 
     public static MyAnimeList withClientId(final String client_id, final int server_port) throws IOException{
-        return new MyAnimeListImpl(new MyAnimeListAuthenticator(client_id, server_port).getToken().getToken());
+        return new MyAnimeListImpl(new MyAnimeListAuthenticator(client_id, server_port).getAccessToken().getToken());
     }
 
     // anime
@@ -86,33 +86,33 @@ public abstract class MyAnimeList {
 
     // anime list
 
-    public abstract AnimeListing updateAnimeListing(); // todo
+    public abstract AnimeListStatus updateAnimeListing(); // todo
 
     public abstract void deleteAnimeListing(final long id);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, final int limit);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final int limit);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, final int limit, final int offset);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final int limit, final int offset);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status, final int limit);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status, final int limit);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status, final int limit, final int offset);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status, final int limit, final int offset);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final int limit);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final int limit);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final int limit, final int offset);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final int limit, final int offset);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status, final int limit);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status, final int limit);
 
-    public abstract List<UserAnimeListing> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status, final int limit, final int offset);
+    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status, final int limit, final int offset);
 
     // forum
 
@@ -166,33 +166,33 @@ public abstract class MyAnimeList {
 
     // manga list
 
-    public abstract MangaListing updateMangaListing();
+    public abstract MangaListStatus updateMangaListing();
 
     public abstract void deleteMangaListing(final long id);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, final int limit);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final int limit);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, final int limit, final int offset);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final int limit, final int offset);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status, final int limit);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status, final int limit);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status, final int limit, final int offset);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status, final int limit, final int offset);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final int limit);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final int limit);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final int limit, final int offset);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final int limit, final int offset);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status, final int limit);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status, final int limit);
 
-    public abstract List<UserMangaListing> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status, final int limit, final int offset);
+    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status, final int limit, final int offset);
 
     // user
 

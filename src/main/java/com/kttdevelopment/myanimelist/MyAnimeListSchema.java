@@ -6,6 +6,7 @@ import java.util.*;
 @SuppressWarnings("unused")
 @Deprecated
 abstract class MyAnimeListSchema {
+/*
 
     static class schema {
 
@@ -535,5 +536,6 @@ abstract class MyAnimeListSchema {
         }
 
     }
+*/
 
 }

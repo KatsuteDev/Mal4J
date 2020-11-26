@@ -13,9 +13,11 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.TopLevelObje
 /**
  * Represents the MyAnimeList API response schema.
  *
+ * @see MyAnimeListService
  * @see Call
  * @since 1.0.0
  * @version 1.0.0
+ * @author Ktt Development
  */
 @SuppressWarnings({"SpellCheckingInspection","unused"})
 abstract class MyAnimeListAPIResponse {

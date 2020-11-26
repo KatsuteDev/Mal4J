@@ -21,7 +21,7 @@ public class TestClass {
 
 
         // MAL = MyAnimeList.withClientId(clientId, 5050);
-        System.out.println(new MyAnimeListAuthenticator(clientId, 5050).getToken().getToken());
+        System.out.println(new MyAnimeListAuthenticator(clientId, 5050).getAccessToken().getToken());
         Assumptions.assumeTrue(MAL != null);
     }
 
