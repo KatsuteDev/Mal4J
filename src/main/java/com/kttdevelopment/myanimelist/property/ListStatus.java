@@ -6,10 +6,16 @@ public interface ListStatus<Status extends Enum<?>> {
 
     int getScore();
 
+    long getStartDate();
+
+    long getFinishDate();
+
     int getPriority();
 
     String[] getTags();
 
     String getComments();
+
+    long getUpdatedAt();
 
 }

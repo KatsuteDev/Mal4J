@@ -8,7 +8,8 @@ public enum DayOfWeek {
     Wednesday   ("wednesday"),
     Thursday    ("thursday"),
     Friday      ("friday"),
-    Saturday    ("saturday");
+    Saturday    ("saturday"),
+    Other       ("other");
 
     private final String field;
 

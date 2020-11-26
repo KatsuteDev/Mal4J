@@ -6,9 +6,9 @@ public abstract class PollOption implements ID {
 
     // API methods
 
-    public abstract String text();
+    public abstract String getText();
 
-    public abstract int votes();
+    public abstract int getVotes();
 
     // additional methods
 
