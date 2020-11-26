@@ -2,35 +2,35 @@ package com.kttdevelopment.myanimelist.user;
 
 public abstract class UserAnimeStatistics {
 
-    public abstract int getWatching();
+    public abstract int getItemsWatching();
 
-    public abstract int getCompleted();
+    public abstract int getItemsCompleted();
 
-    public abstract int getOnHold();
+    public abstract int getItemsOnHold();
 
-    public abstract int getDropped();
+    public abstract int getItemsDropped();
 
-    public abstract int getPlanToWatch();
+    public abstract int getItemsPlanToWatch();
 
-    public abstract int getTotal();
+    public abstract int getItems();
 
-    public abstract double getDaysWatching();
+    public abstract float getDaysWatched();
 
-    public abstract double getDaysCompleted();
+    public abstract float getDaysWatching();
 
-    public abstract double getDaysOnHold();
+    public abstract float getDaysCompleted();
 
-    public abstract double getDaysDropped();
+    public abstract float getDaysOnHold();
 
-    public abstract double getDaysPlanToWatch();
+    public abstract float getDaysDropped();
 
-    public abstract double getTotalDays();
+    public abstract float getDays();
 
-    public abstract int getTotalEpisodes();
+    public abstract int getEpisodes();
 
     @SuppressWarnings("SpellCheckingInspection")
-    public abstract int getTotalRewatched();
+    public abstract int getTimesRewatched();
 
-    public abstract double getMeanScore();
+    public abstract float getMeanScore();
 
 }

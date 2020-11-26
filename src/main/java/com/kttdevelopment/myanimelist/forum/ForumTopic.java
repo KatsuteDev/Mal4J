@@ -6,8 +6,8 @@ public abstract class ForumTopic {
 
     public abstract String getTitle();
 
-    public abstract ForumPost[] getPosts();
+    public abstract Post[] getPosts();
 
-    public abstract Poll getPoll();
+    public abstract Poll[] getPolls();
 
 }

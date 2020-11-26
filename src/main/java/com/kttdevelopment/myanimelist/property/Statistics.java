@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist.property;
 
-@SuppressWarnings("rawtypes")
-public abstract class Statistics<E extends Enum> {
+public abstract class Statistics {
 
     public abstract int getUserCount();
 

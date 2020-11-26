@@ -7,10 +7,10 @@ public enum AnimeRankingType {
     Airing  ("airing"),
     Upcoming("upcoming"),
 
-    TV      (AnimeType.TV.field()),
-    OVA     (AnimeType.OVA.field()),
-    Movie   (AnimeType.Movie.field()),
-    Special (AnimeType.Special.field()),
+    TV      ("tv"),
+    OVA     ("ova"),
+    Movie   ("movie"),
+    Special ("special"),
 
     All         (RankingType.All.field()),
     ByPopularity(RankingType.ByPopularity.field()),

@@ -3,12 +3,14 @@ package com.kttdevelopment.myanimelist.manga.property;
 @SuppressWarnings("SpellCheckingInspection")
 public enum MangaType {
 
+    Unknown ("unknown"),
     Manga   ("manga"),
-    Novels  ("novels"),
-    OneShots("oneshots"),
-    Doujin  ("doujin"),
+    Novel   ("novel"),
+    OneShot ("one_shot"),
+    Doujin  ("doujinshi"),
     Manhwa  ("manhwa"),
-    Manhua  ("manhua");
+    Manhua  ("manhua"),
+    OEL     ("oel");
 
     private final String field;
 

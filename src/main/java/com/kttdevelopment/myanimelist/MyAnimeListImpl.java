@@ -1,6 +1,7 @@
 package com.kttdevelopment.myanimelist;
 
 import com.kttdevelopment.myanimelist.anime.*;
+import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
@@ -8,9 +9,7 @@ import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.user.User;
-import retrofit2.Response;
 
-import java.io.IOException;
 import java.util.List;
 
 public final class MyAnimeListImpl extends MyAnimeList{

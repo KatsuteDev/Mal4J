@@ -2,9 +2,9 @@ package com.kttdevelopment.myanimelist.manga.property;
 
 public enum MangaPublishStatus {
 
-    Publishing  ("publishing"),
-    Published   ("not_yet_published"),
-    Finished    ("finished_publishing");
+    Publishing  ("currently_publishing"),
+    NotYetPublished   ("not_yet_published"),
+    Finished    ("finished");
 
     private final String field;
 

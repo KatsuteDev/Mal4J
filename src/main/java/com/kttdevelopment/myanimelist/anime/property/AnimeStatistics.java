@@ -2,7 +2,7 @@ package com.kttdevelopment.myanimelist.anime.property;
 
 import com.kttdevelopment.myanimelist.property.Statistics;
 
-public abstract class AnimeStatistics extends Statistics<AnimeStatus> {
+public abstract class AnimeStatistics extends Statistics {
 
     public abstract int getWatching();
 

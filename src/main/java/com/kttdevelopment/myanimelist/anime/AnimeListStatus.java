@@ -5,12 +5,14 @@ import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 import com.kttdevelopment.myanimelist.property.ListStatus;
 
 @SuppressWarnings("SpellCheckingInspection")
-public interface AnimeListStatus extends ListStatus {
+public abstract class AnimeListStatus implements ListStatus<AnimeStatus> {
 
-    AnimeStatus getStatus();
+    public abstract int getWatchedEpisodes();
 
-    int getEpisodesWatched();
+    public abstract boolean isRewatching();
 
-    boolean isRewatching();
+    public abstract int getTimesRewatched();
+
+    public abstract int getRewatchValue();
 
 }

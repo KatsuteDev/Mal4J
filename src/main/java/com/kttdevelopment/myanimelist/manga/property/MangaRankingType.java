@@ -6,12 +6,12 @@ import com.kttdevelopment.myanimelist.property.RankingType;
 public enum MangaRankingType {
 
 
-    Manga   (MangaType.Manga.field()),
-    Novels  (MangaType.Novels.field()),
-    OneShots(MangaType.OneShots.field()),
-    Doujin  (MangaType.Doujin.field()),
-    Manhwa  (MangaType.Manhwa.field()),
-    Manhua  (MangaType.Manhua.field()),
+    Manga   ("manga"),
+    Novels  ("novels"),
+    OneShots("oneshots"),
+    Doujin  ("doujin"),
+    Manhwa  ("manhwa"),
+    Manhua  ("manhua"),
 
     All         (RankingType.All.field()),
     ByPopularity(RankingType.ByPopularity.field()),

@@ -1,6 +1,7 @@
 package com.kttdevelopment.myanimelist;
 
 import com.kttdevelopment.myanimelist.anime.*;
+import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import com.kttdevelopment.myanimelist.anime.AnimeRanking;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.anime.property.time.*;
@@ -10,10 +11,7 @@ import com.kttdevelopment.myanimelist.forum.property.*;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.MangaRanking;
 import com.kttdevelopment.myanimelist.manga.property.*;
-import com.kttdevelopment.myanimelist.property.Genre;
-import com.kttdevelopment.myanimelist.property.NSFW;
-import com.kttdevelopment.myanimelist.property.Picture;
-import com.kttdevelopment.myanimelist.property.RelationType;
+import com.kttdevelopment.myanimelist.property.*;
 import com.kttdevelopment.myanimelist.user.*;
 
 import java.lang.reflect.Field;
@@ -22,6 +20,7 @@ import java.util.*;
 
 import static com.kttdevelopment.myanimelist.MyAnimeListSchema.*;
 
+@Deprecated
 abstract class MyAnimeListSchemaMapping {
 
     // Anime
@@ -1592,14 +1591,14 @@ abstract class MyAnimeListSchemaMapping {
             private final ForumTopicDetail.data_node obj    = schema;
 
             private final String title  = obj == null ? null : obj.title;
-            private final ForumPost[] posts;
+            private final Post[] posts;
             private final Poll poll     = asForumPoll(mal, obj == null ? null : obj.poll);
 
             {
-                final List<ForumPost> posts = new ArrayList<>();
+                final List<Post> posts = new ArrayList<>();
                 for(final ForumTopicDetail.data_node.post post : Objects.requireNonNullElse(obj.posts, new ForumTopicDetail.data_node.post[0]))
                     posts.add(asForumPost(mal, post));
-                this.posts = posts.toArray(new ForumPost[0]);
+                this.posts = posts.toArray(new Post[0]);
             }
 
             // API methods
@@ -1610,7 +1609,7 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public final ForumPost[] getPosts(){
+            public final Post[] getPosts(){
                 return posts;
             }
 
@@ -1629,8 +1628,8 @@ abstract class MyAnimeListSchemaMapping {
         };
     }
 
-    static ForumPost asForumPost(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.post schema){
-        return new ForumPost() {
+    static Post asForumPost(final MyAnimeList myAnimeList, final ForumTopicDetail.data_node.post schema){
+        return new Post() {
 
             private final MyAnimeList mal                       = myAnimeList;
             private final ForumTopicDetail.data_node.post obj   = schema;
