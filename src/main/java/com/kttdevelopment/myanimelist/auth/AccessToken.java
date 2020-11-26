@@ -10,13 +10,13 @@ package com.kttdevelopment.myanimelist.auth;
 public final class AccessToken {
     // do not label variables as transient, it will cause retrofit to fail
 
-    String token_type;
+    private String token_type;
 
-    long expires_in;
+    private long expires_in;
 
-    String access_token;
+    private String access_token;
 
-    String refresh_token;
+    private String refresh_token;
 
     /**
      * Returns the access token.

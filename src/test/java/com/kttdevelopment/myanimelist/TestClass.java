@@ -1,5 +1,6 @@
 package com.kttdevelopment.myanimelist;
 
+import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,9 @@ public class TestClass {
         final String clientId = Files.readString(file.toPath());
 
 
-        MAL = MyAnimeList.withClientId(clientId, 5050);
+        // MAL = MyAnimeList.withClientId(clientId, 5050);
+        System.out.println(new MyAnimeListAuthenticator(clientId, 5050).getToken().getToken());
+        Assumptions.assumeTrue(MAL != null);
     }
 
     @Test
