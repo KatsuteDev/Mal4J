@@ -22,6 +22,7 @@ import static com.kttdevelopment.myanimelist.MyAnimeListSchema.*;
 
 @Deprecated
 abstract class MyAnimeListSchemaMapping {
+/*
 
     // Anime
 
@@ -2127,5 +2128,6 @@ abstract class MyAnimeListSchemaMapping {
         OUT.append('}');
         return OUT.toString();
     }
+*/
 
 }
