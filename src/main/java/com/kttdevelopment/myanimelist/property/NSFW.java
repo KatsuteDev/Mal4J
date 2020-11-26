@@ -1,32 +1,27 @@
 package com.kttdevelopment.myanimelist.property;
 
-import com.kttdevelopment.myanimelist.anime.property.AnimeType;
+import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 
 /**
- * Represents a related type.
+ * Represents the NSFW type.
  *
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public enum RelationType {
+public enum NSFW {
 
-    Sequel              ("sequel"),
-    Prequel             ("prequel"),
-    AlternativeSetting  ("alternative_setting"),
-    AlternativeVersion  ("alternative_version"),
-    SideStory           ("side_story"),
-    ParentStory         ("parent_story"),
-    Summary             ("summary"),
-    FullStory           ("full_story");
+    White   ("white"),
+    Gray    ("gray"),
+    Black   ("black");
 
     private final String field;
 
-    RelationType(String field) {
+    NSFW(String field) {
         this.field = field;
     }
 
-        /**
+    /**
      * Returns the field name.
      *
      * @return field name
@@ -45,8 +40,8 @@ public enum RelationType {
      *
      * @since 1.0.0
      */
-    public static RelationType asEnum(final String string){
-        for(final RelationType value : values())
+    public static NSFW asEnum(final String string){
+        for(final NSFW value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
         return null;
@@ -54,7 +49,7 @@ public enum RelationType {
 
     @Override
     public String toString() {
-        return "RelationType{" +
+        return "NSFW{" +
                 "field='" + field + '\'' +
                 '}';
     }

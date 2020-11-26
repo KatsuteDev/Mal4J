@@ -24,7 +24,7 @@ public interface ExtendedPreview extends Preview {
 
     int getUserScoringCount();
 
-    String getNSFW();
+    NSFW getNSFW();
 
     long getCreatedAt();
 

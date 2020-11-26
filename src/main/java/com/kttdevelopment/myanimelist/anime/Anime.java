@@ -78,10 +78,10 @@ public abstract class Anime implements ExtendedPreview {
      *
      * @return source
      *
-     * @see MangaType
+     * @see AnimeSource
      * @since 1.0.0
      */
-    public abstract MangaType getSource();
+    public abstract AnimeSource getSource();
 
     /**
      * Returns the average episode length in seconds.
@@ -99,7 +99,7 @@ public abstract class Anime implements ExtendedPreview {
      *
      * @since 1.0.0
      */
-    public abstract String getRating();
+    public abstract AnimeRating getRating();
 
     /**
      * Returns a list of Anime recommendations.

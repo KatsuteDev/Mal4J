@@ -8,7 +8,9 @@ import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.user.User;
+import retrofit2.Response;
 
+import java.io.IOException;
 import java.util.List;
 
 public final class MyAnimeListImpl extends MyAnimeList{
@@ -420,7 +422,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    private String parseFields(final String[] fields){
+    private static String parseFields(final String[] fields){
         if(fields != null && fields.length > 0){
             final StringBuilder SB = new StringBuilder();
             for(final String field : fields)

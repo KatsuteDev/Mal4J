@@ -11,7 +11,9 @@ import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.MangaRanking;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.Genre;
+import com.kttdevelopment.myanimelist.property.NSFW;
 import com.kttdevelopment.myanimelist.property.Picture;
+import com.kttdevelopment.myanimelist.property.RelationType;
 import com.kttdevelopment.myanimelist.user.*;
 
 import java.lang.reflect.Field;
@@ -51,7 +53,7 @@ abstract class MyAnimeListSchemaMapping {
                     popularity                          = obj == null ? -1 : obj.popularity,
                     listUsers                           = obj == null ? -1 : obj.num_list_users,
                     scoringUsers                        = obj == null ? -1 : obj.num_scoring_users;
-            private final String nsfw                   = obj == null ? null : obj.nsfw;
+            private final NSFW nsfw                     = NSFW.asEnum(obj == null ? null : obj.nsfw);
             private final long createdAt                = parseISO8601(obj == null ? null : obj.created_at);
             private final long updatedAt                = parseISO8601(obj == null ? null : obj.updated_at);
             private final AnimeType mediaType           = AnimeType.asEnum(obj == null ? null : obj.media_type);
@@ -61,9 +63,9 @@ abstract class MyAnimeListSchemaMapping {
             private final int episodes                  = obj == null ? -1 : obj.num_episodes;
             private final StartSeason startSeason       = asStartSeason(mal, obj == null ? null : obj.start_season);
             private final Broadcast broadcast           = asBroadcast(mal, obj == null ? null : obj.broadcast);
-            private final MangaType source              = MangaType.asEnum(obj == null ? null : obj.source);
+            private final AnimeSource source            = AnimeSource.asEnum(obj == null ? null : obj.source);
             private final int duration                  = obj == null ? -1 : obj.average_episode_duration;
-            private final String rating                 = obj == null ? null : obj.rating;
+            private final AnimeRating rating            = AnimeRating.asEnum(obj == null ? null : obj.rating);
             private final Picture[] pictures;
             private final String background             = obj == null ? null : obj.background;
             private final RelatedAnime[] relatedAnime;
@@ -162,7 +164,7 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public final String getNSFW(){
+            public final NSFW getNSFW(){
                 return nsfw;
             }
 
@@ -212,7 +214,7 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public final MangaType getSource(){
+            public final AnimeSource getSource(){
                 return source;
             }
 
@@ -222,7 +224,7 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public final String getRating(){
+            public final AnimeRating getRating(){
                 return rating;
             }
 
@@ -518,7 +520,7 @@ abstract class MyAnimeListSchemaMapping {
             private final schema.related obj    = schema;
 
             private final AnimePreview anime        = asAnimePreview(mal, obj == null ? null : obj.node);
-            private final String relationType       = obj == null ? null : obj.relation_type;
+            private final RelationType relationType = RelationType.asEnum(obj == null ? null : obj.relation_type);
             private final String relationTypeFormat = obj == null ? null : obj.relation_type_formatted;
 
             // API methods
@@ -529,7 +531,7 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public final String getRelationType(){
+            public final RelationType getRelationType(){
                 return relationType;
             }
 
@@ -716,7 +718,7 @@ abstract class MyAnimeListSchemaMapping {
                     popularity                      = obj == null ? -1 : obj.popularity,
                     listUsers                       = obj == null ? -1 : obj.num_list_users,
                     scoringUsers                    = obj == null ? -1 : obj.num_scoring_users;
-            private final String nsfw               = obj == null ? null : obj.nsfw;
+            private final NSFW nsfw                 = NSFW.asEnum(obj == null ? null : obj.nsfw);
             private final long createdAt            = parseISO8601(obj == null ? null : obj.created_at);
             private final long updateAt             = parseDate(obj == null ? null : obj.updated_at);
             private final MangaType type            = MangaType.asEnum(obj == null ? null : obj.media_type);
@@ -829,7 +831,7 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public final String getNSFW(){
+            public final NSFW getNSFW(){
                 return nsfw;
             }
 
@@ -1175,7 +1177,7 @@ abstract class MyAnimeListSchemaMapping {
             private final schema.related obj    = schema;
 
             private final MangaPreview manga        = asMangaPreview(mal, obj == null ? null : obj.node);
-            private final String relationType       = obj == null ? null : obj.relation_type;
+            private final RelationType relationType = RelationType.asEnum(obj == null ? null : obj.relation_type);
             private final String relationTypeFormat = obj == null ? null : obj.relation_type_formatted;
 
             // API methods
@@ -1186,7 +1188,7 @@ abstract class MyAnimeListSchemaMapping {
             }
 
             @Override
-            public final String getRelationType(){
+            public final RelationType getRelationType(){
                 return relationType;
             }
 
