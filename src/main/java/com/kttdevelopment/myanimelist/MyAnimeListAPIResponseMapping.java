@@ -15,7 +15,7 @@ import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.*;
 import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
 import com.kttdevelopment.myanimelist.query.MangaListUpdate;
-import com.kttdevelopment.myanimelist.user.User;
+import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -1077,7 +1077,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final User getUser() {
+                public final com.kttdevelopment.myanimelist.user.User getUser() {
                     return mal.getUser(name);
                 }
 
@@ -2020,6 +2020,193 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
+    }
+    
+    static abstract class User {
+        
+        static com.kttdevelopment.myanimelist.user.User asUser(final MyAnimeList mal, final Call.GetUserInformation schema){
+            return new com.kttdevelopment.myanimelist.user.User() {
+
+                private final long id           = requireNonNullElse(() -> schema.id, -1L);
+                private final String name       = requireNonNull(() -> schema.name);
+                private final String picture    = requireNonNull(() -> schema.picture);
+                private final String gender     = requireNonNull(() -> schema.gender);
+                private final long birthday     = requireNonNullElse(() -> parseDate(schema.birthday), -1L);
+                private final String location   = requireNonNull(() -> schema.location);
+                private final long joinedAt     = requireNonNullElse(() -> parseISO8601(schema.joined_at), -1L);
+                private final UserAnimeStatistics animeStatistics = requireNonNull(() -> asUserAnimeStatistics(mal, schema.animeStatistics));
+                private final String timezone   = requireNonNull(() -> schema.time_zone);
+                private final boolean supporter = requireNonNullElse(() -> schema.is_supporter, false);
+                
+                // API methods
+                
+                @Override
+                public final long getID(){
+                    return id;
+                }
+                
+                @Override
+                public final String getName(){
+                    return name;
+                }
+                
+                @Override
+                public final String getPictureURL(){
+                    return picture;
+                }
+
+                @Override
+                public final String getGender(){
+                    return gender;
+                }
+
+                @Override
+                public final long getBirthday(){
+                    return birthday;
+                }
+
+                @Override
+                public final String getLocation(){
+                    return location;
+                }
+
+                @Override
+                public final long getJoinedAt(){
+                    return joinedAt;
+                }
+
+                @Override
+                public final UserAnimeStatistics getAnimeStatistics(){
+                    return animeStatistics;
+                }
+
+                @Override
+                public final String getTimeZone(){
+                    return timezone;
+                }
+
+                @Override
+                public final boolean isSupporter(){
+                    return supporter;
+                }
+                
+                // additional methods
+                
+                @Override
+                public final String toString(){
+                    return AutomatedToString(this);
+                }
+                
+            };
+        }
+
+        static UserAnimeStatistics asUserAnimeStatistics(final MyAnimeList mal, final Call.GetUserInformation.AnimeStatistics schema){
+            return new UserAnimeStatistics() {
+                
+                private final int watching          = requireNonNullElse(() -> schema.num_items_watching, 0);
+                private final int completed         = requireNonNullElse(() -> schema.num_items_completed, 0);
+                private final int onHold            = requireNonNullElse(() -> schema.num_items_on_hold, 0);
+                private final int dropped           = requireNonNullElse(() -> schema.num_items_dropped, 0);
+                private final int planToWatch       = requireNonNullElse(() -> schema.num_items_plan_to_watch, 0);
+                private final int items             = requireNonNullElse(() -> schema.num_items, 0);
+                private final float daysWatching    = requireNonNullElse(() -> schema.num_days_watching, 0f);
+                private final float daysCompleted   = requireNonNullElse(() -> schema.num_days_completed, 0f);
+                private final float daysOnHold      = requireNonNullElse(() -> schema.num_days_on_hold, 0f);
+                private final float daysDropped     = requireNonNullElse(() -> schema.num_days_dropped, 0f);
+                private final float days            = requireNonNullElse(() -> schema.num_days, 0f);
+                private final int episodesWatched   = requireNonNullElse(() -> schema.num_episodes, 0);
+                @SuppressWarnings("SpellCheckingInspection")
+                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, 0);
+                private final float meanScore       = requireNonNullElse(() -> schema.mean_score, 0f);
+
+                // API methods
+
+                @Override
+                public final int getItemsWatching(){
+                    return watching;
+                }
+
+                @Override
+                public final int getItemsCompleted(){
+                    return completed;
+                }
+
+                @Override
+                public final int getItemsOnHold(){
+                    return onHold;
+                }
+
+                @Override
+                public final int getItemsDropped(){
+                    return dropped;
+                }
+
+                @Override
+                public final int getItemsPlanToWatch(){
+                    return planToWatch;
+                }
+
+                @Override
+                public final int getItems(){
+                    return items;
+                }
+
+                @Override
+                public final float getDaysWatched(){
+                    return days;
+                }
+
+                @Override
+                public final float getDaysWatching(){
+                    return daysWatching;
+                }
+
+                @Override
+                public final float getDaysCompleted(){
+                    return daysCompleted;
+                }
+
+                @Override
+                public final float getDaysOnHold(){
+                    return daysOnHold;
+                }
+
+                @Override
+                public final float getDaysDropped(){
+                    return daysDropped;
+                }
+
+                @Override
+                public final float getDays(){
+                    return days;
+                }
+
+                @Override
+                public final int getEpisodes(){
+                    return episodesWatched;
+                }
+
+                @SuppressWarnings("SpellCheckingInspection")
+                @Override
+                public final int getTimesRewatched(){
+                    return timesRewatched;
+                }
+
+                @Override
+                public final float getMeanScore(){
+                    return meanScore;
+                }
+                
+                // additional methods
+
+                @Override
+                public final String toString(){
+                    return AutomatedToString(this);
+                }
+
+            };
+        }
+        
     }
 
     static abstract class Common {

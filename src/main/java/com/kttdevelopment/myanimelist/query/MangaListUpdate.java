@@ -2,6 +2,7 @@ package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
+import com.kttdevelopment.myanimelist.manga.MangaListStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 
 import java.util.Arrays;
@@ -14,7 +15,7 @@ public abstract class MangaListUpdate {
 
     protected MangaStatus status;
     protected boolean rereading;
-    protected int score, volumesRead, chaptersRead, priority, rereadValue;
+    protected int score, volumesRead, chaptersRead, priority, timesReread, rereadValue;
     protected List<String> tags;
     protected String comments;
 
@@ -53,6 +54,11 @@ public abstract class MangaListUpdate {
         return this;
     }
 
+    public final MangaListUpdate timesReread(final int timesReread){
+        this.timesReread = timesReread;
+        return this;
+    }
+
     public final MangaListUpdate rereadValue(final int rereadValue){
         this.rereadValue = rereadValue;
         return this;
@@ -68,6 +74,6 @@ public abstract class MangaListUpdate {
         return this;
     }
 
-    public abstract AnimeListStatus update();
+    public abstract MangaListStatus update();
 
 }
