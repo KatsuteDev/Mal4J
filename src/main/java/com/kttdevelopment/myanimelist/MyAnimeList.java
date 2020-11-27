@@ -6,6 +6,7 @@ import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
+import com.kttdevelopment.myanimelist.forum.property.ForumTopicDetail;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.query.*;
@@ -30,7 +31,7 @@ public abstract class MyAnimeList {
 
     public abstract Anime getAnime(final long id);
 
-    public abstract Anime getAnime(final long id, final String[] fields);
+    public abstract Anime getAnime(final long id, final String... fields);
 
     // anime ranking
 
@@ -52,17 +53,17 @@ public abstract class MyAnimeList {
 
     public abstract List<ForumCategory> getForumBoards();
 
-    // forum board
+    //
 
-    public abstract ForumCategory getForumBoard(final long id);
+    public abstract List<ForumTopic> getForumTopicDetails(final long id);
 
-    public abstract ForumCategory getForumBoard(final long id, final int limit);
+    public abstract List<ForumTopic> getForumTopicDetails(final long id, final int limit);
 
-    public abstract ForumCategory getForumBoard(final long id, final int limit, final int offset);
+    public abstract List<ForumTopic> getForumTopicDetails(final long id, final int limit, final int offset);
 
-    // forum topics
+    //
 
-    public abstract List<ForumTopic> getForumTopics(); // todo
+    public abstract ForumSearchQuery getForumTopics();
 
     // manga
 
@@ -70,7 +71,7 @@ public abstract class MyAnimeList {
 
     public abstract Manga getManga(final long id);
 
-    public abstract Manga getManga(final long id, final String[] fields);
+    public abstract Manga getManga(final long id, final String... fields);
 
     // manga ranking
 
@@ -92,6 +93,6 @@ public abstract class MyAnimeList {
 
     public abstract User getUser(final String username);
 
-    public abstract User getUser(final String username, final String[] fields);
+    public abstract User getUser(final String username, final String... fields);
 
 }

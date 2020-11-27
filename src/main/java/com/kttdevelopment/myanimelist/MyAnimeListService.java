@@ -96,7 +96,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("anime/{user_name}/animelist")
-    Call<GetUserAnimeList> getAnimeListing(
+    Call<GetUserAnimeList> getUserAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
@@ -110,8 +110,7 @@ public interface MyAnimeListService {
 
     @GET("forum/board")
     Call<GetForumBoards> getForumBoards(
-        @Header("Authorization")        final String token,
-        @Query("nsfw")                  final boolean nsfw
+        @Header("Authorization")        final String token
     );
 
     @GET("forum/topic/{topic_id}")
@@ -119,8 +118,7 @@ public interface MyAnimeListService {
         @Header("Authorization")                    final String token,
         @Path(value = "topic_id", encoded = true)   final long topic_id,
         @Query("limit")                             final int limit,
-        @Query("offset")                            final int offset,
-        @Query("nsfw")                              final boolean nsfw
+        @Query("offset")                            final int offset
     );
 
     @SuppressWarnings("SpellCheckingInspection")
@@ -134,8 +132,7 @@ public interface MyAnimeListService {
         @Query("sort")              final String sort,
         @Query("q")                 final String search,
         @Query("topic_user_name")   final String topic_username,
-        @Query("user_name")         final String username,
-        @Query("nsfw")              final boolean nsfw
+        @Query("user_name")         final String username
     );
 
     // manga
@@ -195,7 +192,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("manga/{user_name}/mangalist")
-    Call<GetUserMangaList> getMangaListing(
+    Call<GetUserMangaList> getUserMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,

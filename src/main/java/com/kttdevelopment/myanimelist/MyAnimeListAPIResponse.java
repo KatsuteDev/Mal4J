@@ -173,9 +173,11 @@ abstract class MyAnimeListAPIResponse {
 
         static class GetUserInformation extends AutomatedToString {
 
+            public static final String fields = fields(GetUserInformation.class);
+
             long id;
             String name, picture, gender, birthday, location, joined_at;
-
+            AnimeStatistics animeStatistics;
             String time_zone;
             boolean is_supporter;
 

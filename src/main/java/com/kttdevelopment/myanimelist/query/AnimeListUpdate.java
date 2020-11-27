@@ -14,7 +14,7 @@ public abstract class AnimeListUpdate {
 
     protected AnimeStatus status;
     protected boolean rewatching;
-    protected int score, watchedEpisodes, priority, rewatchValue;
+    protected int score, watchedEpisodes, priority, timesRewatched, rewatchValue;
     protected List<String> tags;
     protected String comments;
 
@@ -45,6 +45,11 @@ public abstract class AnimeListUpdate {
 
     public final AnimeListUpdate priority(final int priority){
         this.priority = priority;
+        return this;
+    }
+
+    public final AnimeListUpdate timesRewatched(final int timesRewatched){
+        this.timesRewatched = timesRewatched;
         return this;
     }
 

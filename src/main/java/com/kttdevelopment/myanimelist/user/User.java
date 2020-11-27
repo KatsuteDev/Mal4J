@@ -18,6 +18,6 @@ public abstract class User implements IDN {
 
     public abstract String getTimeZone();
 
-    public abstract boolean isSupported();
+    public abstract boolean isSupporter();
 
 }
