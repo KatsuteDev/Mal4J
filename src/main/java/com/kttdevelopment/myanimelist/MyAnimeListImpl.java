@@ -1,6 +1,7 @@
 package com.kttdevelopment.myanimelist;
 
 import com.kttdevelopment.myanimelist.anime.*;
+import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
@@ -8,9 +9,7 @@ import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.user.User;
-import retrofit2.Response;
 
-import java.io.IOException;
 import java.util.List;
 
 public final class MyAnimeListImpl extends MyAnimeList{
@@ -161,7 +160,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override // todo
-    public final AnimeListing updateAnimeListing(){
+    public final AnimeListStatus updateAnimeListing(){
         return null;
     }
 
@@ -171,62 +170,62 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username){
         return getUserAnimeListing(username, null, null, -1, 0);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final int limit){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final int limit){
         return getUserAnimeListing(username, null, null, limit, 0);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final int limit, final int offset){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final int limit, final int offset){
         return getUserAnimeListing(username, null, null, limit, offset);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status){
         return getUserAnimeListing(username, null, status, -1, 0);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status, final int limit){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status, final int limit){
         return getUserAnimeListing(username, null, status, limit, 0);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeStatus status, final int limit, final int offset){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status, final int limit, final int offset){
         return getUserAnimeListing(username, null, status, limit, offset);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeSort sort){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeSort sort){
         return getUserAnimeListing(username, sort, null, -1, 0);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeSort sort, final int limit){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeSort sort, final int limit){
         return getUserAnimeListing(username, sort, null, limit, 0);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeSort sort, final int limit, final int offset){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeSort sort, final int limit, final int offset){
         return getUserAnimeListing(username, sort, null, limit, offset);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeSort sort, final AnimeStatus status){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeSort sort, final AnimeStatus status){
         return getUserAnimeListing(username, sort, status, -1, 0);
     }
 
     @Override
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeSort sort, final AnimeStatus status, final int limit){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeSort sort, final AnimeStatus status, final int limit){
         return getUserAnimeListing(username, sort, status, limit, 0);
     }
 
     @Override // todo
-    public final List<UserAnimeListing> getUserAnimeListing(final String username, final AnimeSort sort, final AnimeStatus status, final int limit, final int offset){
+    public final List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeSort sort, final AnimeStatus status, final int limit, final int offset){
         return null;
     }
 
@@ -331,7 +330,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override // todo
-    public final MangaListing updateMangaListing(){
+    public final MangaListStatus updateMangaListing(){
         return null;
     }
 
@@ -341,62 +340,62 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username){
         return getUserMangaListing(username, null, null, -1, -1);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final int limit){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final int limit){
         return getUserMangaListing(username, null, null, limit, -1);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final int limit, final int offset){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final int limit, final int offset){
         return getUserMangaListing(username, null, null, limit, offset);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status){
         return getUserMangaListing(username, null, status, -1, -1);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status, final int limit){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status, final int limit){
         return getUserMangaListing(username, null, status, limit, -1);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaStatus status, final int limit, final int offset){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status, final int limit, final int offset){
         return getUserMangaListing(username, null, status, limit, offset);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaSort sort){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaSort sort){
         return getUserMangaListing(username, sort, null, -1, -1);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaSort sort, final int limit){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaSort sort, final int limit){
         return getUserMangaListing(username, sort, null, limit, -1);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaSort sort, final int limit, final int offset){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaSort sort, final int limit, final int offset){
         return getUserMangaListing(username, sort, null, limit, offset);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaSort sort, final MangaStatus status){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaSort sort, final MangaStatus status){
         return getUserMangaListing(username, sort, status, -1, -1);
     }
 
     @Override
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaSort sort, final MangaStatus status, final int limit){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaSort sort, final MangaStatus status, final int limit){
         return getUserMangaListing(username, sort, status, limit, -1);
     }
 
     @Override // todo
-    public final List<UserMangaListing> getUserMangaListing(final String username, final MangaSort sort, final MangaStatus status, final int limit, final int offset){
+    public final List<UserMangaListStatus> getUserMangaListing(final String username, final MangaSort sort, final MangaStatus status, final int limit, final int offset){
         return null;
     }
 

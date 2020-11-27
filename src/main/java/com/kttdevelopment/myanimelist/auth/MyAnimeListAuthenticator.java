@@ -1,6 +1,5 @@
 package com.kttdevelopment.myanimelist.auth;
 
-import com.kttdevelopment.myanimelist.MyAnimeListAuthenticationService;
 import com.sun.net.httpserver.HttpServer;
 
 import java.awt.*;
@@ -21,9 +20,11 @@ public class MyAnimeListAuthenticator {
 
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
 
+    private transient final String client_id;
     private transient AccessToken token;
 
     public MyAnimeListAuthenticator(final String client_id, final int port) throws IOException{
+        this.client_id = client_id;
         final Authorization auth = getAuthorization(client_id, Math.min(Math.max(0, port), 65535));
         token = authService
             .getToken(
@@ -35,8 +36,17 @@ public class MyAnimeListAuthenticator {
             .body();
     }
 
-    public final AccessToken getToken(){
+    public final AccessToken getAccessToken(){
         return token;
+    }
+
+    public final AccessToken refreshAccessToken() throws IOException {
+        return token = authService
+            .refreshToken(
+                client_id,
+                "refresh_token")
+            .execute()
+            .body();
     }
 
     private static Authorization getAuthorization(final String client_id, final int port) throws IOException{

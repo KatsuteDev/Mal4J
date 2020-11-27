@@ -1,14 +1,6 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
-import com.kttdevelopment.myanimelist.manga.property.MangaType;
-
-/**
- * Represents a Anime source.
- *
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
+@SuppressWarnings("SpellCheckingInspection")
 public enum AnimeSource {
 
     Other           ("other"),
@@ -34,25 +26,10 @@ public enum AnimeSource {
         this.field = field;
     }
 
-    /**
-     * Returns the field name.
-     *
-     * @return field name
-     *
-     * @since 1.0.0
-     */
     public final String field(){
         return field;
     }
 
-    /**
-     * Returns the field as an enum.
-     *
-     * @param string string
-     * @return enum
-     *
-     * @since 1.0.0
-     */
     public static AnimeSource asEnum(final String string){
         for(final AnimeSource value : values())
             if(value.field.equalsIgnoreCase(string))

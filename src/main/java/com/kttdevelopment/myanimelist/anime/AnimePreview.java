@@ -1,25 +1,24 @@
 package com.kttdevelopment.myanimelist.anime;
 
-import com.kttdevelopment.myanimelist.property.Preview;
+import com.kttdevelopment.myanimelist.anime.property.*;
+import com.kttdevelopment.myanimelist.property.MediaItem;
 
-/**
- * Represents an Anime preview. The full Anime details can be obtained using {@link #getAnime()}
- *
- * @see Anime
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
-public abstract class AnimePreview implements Preview {
+public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeType,AnimeAirStatus,AnimeListStatus> {
 
-    /**
-     * Returns the full Anime details.
-     *
-     * @return Anime details
-     *
-     * @since 1.0.0
-     * @see Anime
-     */
-    public abstract Anime getAnime();
+    // API methods
+
+    public abstract int getEpisodes();
+
+    public abstract StartSeason getStartSeason();
+
+    public abstract Broadcast getBroadcast();
+
+    public abstract AnimeSource getSource();
+
+    public abstract int getAverageEpisodeLength();
+
+    public abstract AnimeRating getRating();
+
+    public abstract Studio[] getStudios();
 
 }

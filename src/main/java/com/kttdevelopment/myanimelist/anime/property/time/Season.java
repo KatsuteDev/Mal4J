@@ -2,13 +2,6 @@ package com.kttdevelopment.myanimelist.anime.property.time;
 
 import java.util.Arrays;
 
-/**
- * Represents a season.
- *
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
 public enum Season {
 
     Winter  ("winter"   , new String[]{"January", "February", "March"}),
@@ -23,25 +16,11 @@ public enum Season {
         this.field = field;
         this.months = months;
     }
-    /**
-     * Returns season months.
-     *
-     * @return season months
-     *
-     * @since 1.0.0
-     */
+
     public final String[] getMonths(){
         return months;
     }
 
-    /**
-     * Returns a season given a month.
-     *
-     * @param month month
-     * @return season
-     *
-     * @since 1.0.0
-     */
     public static Season fromMonth(final String month){
         for(final Season value : values())
             for(final String m :value.getMonths())
@@ -50,25 +29,10 @@ public enum Season {
         return null;
     }
 
-    /**
-     * Returns the field name.
-     *
-     * @return field name
-     *
-     * @since 1.0.0
-     */
     public final String field(){
         return field;
     }
 
-    /**
-     * Returns the field as an enum.
-     *
-     * @param string string
-     * @return enum
-     *
-     * @since 1.0.0
-     */
     public static Season asEnum(final String string){
         for(final Season value : values())
             if(value.field.equalsIgnoreCase(string))

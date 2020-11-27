@@ -1,25 +1,17 @@
 package com.kttdevelopment.myanimelist.manga;
 
-import com.kttdevelopment.myanimelist.property.Preview;
+import com.kttdevelopment.myanimelist.manga.property.Author;
+import com.kttdevelopment.myanimelist.manga.property.MangaPublishStatus;
+import com.kttdevelopment.myanimelist.manga.property.MangaRetrievable;
+import com.kttdevelopment.myanimelist.manga.property.MangaType;
+import com.kttdevelopment.myanimelist.property.MediaItem;
 
-/**
- * Represents an Manga preview. The full Manga details can be obtained using {@link #getManga()}.
- *
- * @see Manga
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
-public abstract class MangaPreview implements Preview {
+public abstract class MangaPreview implements MangaRetrievable,MediaItem<MangaType,MangaPublishStatus,MangaListStatus> {
 
-    /**
-     * Returns the full Manga details.
-     *
-     * @return Manga details
-     *
-     * @since 1.0.0
-     * @see Manga
-     */
-    public abstract Manga getManga();
+    public abstract int getVolumes();
+
+    public abstract int getChapters();
+
+    public abstract Author[] getAuthors();
 
 }

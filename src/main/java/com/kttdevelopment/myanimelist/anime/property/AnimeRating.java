@@ -15,25 +15,10 @@ public enum AnimeRating {
         this.field = field;
     }
 
-    /**
-     * Returns the field name.
-     *
-     * @return field name
-     *
-     * @since 1.0.0
-     */
     public final String field(){
         return field;
     }
 
-    /**
-     * Returns the field as an enum.
-     *
-     * @param string string
-     * @return enum
-     *
-     * @since 1.0.0
-     */
     public static AnimeRating asEnum(final String string){
         for(final AnimeRating value : values())
             if(value.field.equalsIgnoreCase(string))
