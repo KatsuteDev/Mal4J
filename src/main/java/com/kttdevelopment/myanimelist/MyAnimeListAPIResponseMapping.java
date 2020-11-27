@@ -11,9 +11,7 @@ import com.kttdevelopment.myanimelist.anime.property.time.Time;
 import com.kttdevelopment.myanimelist.forum.*;
 import com.kttdevelopment.myanimelist.forum.property.*;
 import com.kttdevelopment.myanimelist.manga.*;
-import com.kttdevelopment.myanimelist.manga.property.Author;
-import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
-import com.kttdevelopment.myanimelist.manga.property.Publisher;
+import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.*;
 import com.kttdevelopment.myanimelist.user.User;
 
@@ -176,9 +174,212 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        // todo
-        static Anime asAnime(final MyAnimeList mal, final Call.GetAnime schema){
-            return null;
+        static com.kttdevelopment.myanimelist.anime.Anime asAnime(final MyAnimeList mal, final Call.GetAnime schema){
+            return new com.kttdevelopment.myanimelist.anime.Anime() {
+
+                private final long id               = requireNonNullElse(() -> schema.id, -1L);
+                private final String title          = requireNonNull(() -> schema.title);
+                private final Picture mainPicture   = requireNonNull(() -> Common.asPicture(mal, schema.main_picture));
+                private final AlternativeTitles alternativeTitles = requireNonNull(() -> Common.asAlternativeTitles(mal, schema.alternative_titles));
+                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
+                private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
+                private final String synopsis       = requireNonNull(() -> schema.synopsis);
+                private final float meanRating      = requireNonNullElse(() -> schema.mean, 0f);
+                private final int rank              = requireNonNullElse(() -> schema.rank, 0);
+                private final int popularity        = requireNonNullElse(() -> schema.popularity, 0);
+                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, 0);
+                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, 0);
+                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
+                private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id)));
+                private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
+                private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.media_type));
+                private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum(schema.status));
+                private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status));
+                private final int episodes          = requireNonNullElse(() -> schema.num_episodes, 0);
+                private final StartSeason startSeason = requireNonNull(() -> asStartSeason(mal, schema.start_season));
+                private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.broadcast));
+                private final AnimeSource source    = requireNonNull(() -> AnimeSource.asEnum(schema.source));
+                private final int episodeLength     = requireNonNullElse(() -> schema.average_episode_duration, 0);
+                private final AnimeRating rating    = requireNonNull(() -> AnimeRating.asEnum(schema.rating));
+                private final Studio[] studios      = requireNonNull(() -> adaptArray(schema.studios, s -> asStudio(mal, s)));
+                private final Picture[] pictures    = requireNonNull(() -> adaptArray(schema.pictures, p -> Common.asPicture(mal, p)));
+                private final String background     = requireNonNull(() -> schema.background);
+                private final RelatedAnime[] relatedAnime = requireNonNull(() -> adaptArray(schema.related_anime, a -> asRelatedAnime(mal, a)));
+                private final RelatedManga[] relatedManga = requireNonNull(() -> adaptArray(schema.related_manga, m -> Manga.asRelatedManga(mal, m)));
+                private final AnimeRecommendation[] recommendations = requireNonNull(() -> adaptArray(schema.recommendations, r -> asAnimeRecommendation(mal, r)));
+                private final AnimeStatistics statistics = requireNonNull(() -> asAnimeStatistics(mal, schema.statistics));
+
+                // API methods
+
+                @Override
+                public final long getID() {
+                    return id;
+                }
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                @Override
+                public final Picture getMainPicture() {
+                    return mainPicture;
+                }
+
+                @Override
+                public final AlternativeTitles AlternativeTitles() {
+                    return alternativeTitles;
+                }
+
+                @Override
+                public final long getStartDate() {
+                    return startDate;
+                }
+
+                @Override
+                public final long getEndDate() {
+                    return endDate;
+                }
+
+                @Override
+                public final String getSynopsis() {
+                    return synopsis;
+                }
+
+                @Override
+                public final float getMeanRating() {
+                    return meanRating;
+                }
+
+                @Override
+                public final int getRank() {
+                    return rank;
+                }
+
+                @Override
+                public final int getPopularity() {
+                    return popularity;
+                }
+
+                @Override
+                public final int getUserListingCount() {
+                    return usersListing;
+                }
+
+                @Override
+                public final int getUserScoringCount() {
+                    return usersScoring;
+                }
+
+                @Override
+                public final NSFW getNSFW() {
+                    return nsfw;
+                }
+
+                @Override
+                public final Genre[] getGenres() {
+                    return genres;
+                }
+
+                @Override
+                public final long getCreatedAt() {
+                    return createdAt;
+                }
+
+                @Override
+                public final long getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                @Override
+                public final AnimeType getType() {
+                    return type;
+                }
+
+                @Override
+                public final AnimeAirStatus getStatus() {
+                    return status;
+                }
+
+                @Override
+                public final AnimeListStatus getListStatus() {
+                    return listStatus;
+                }
+
+                @Override
+                public final int getEpisodes() {
+                    return episodes;
+                }
+
+                @Override
+                public final StartSeason getStartSeason() {
+                    return startSeason;
+                }
+
+                @Override
+                public final Broadcast getBroadcast() {
+                    return broadcast;
+                }
+
+                @Override
+                public final AnimeSource getSource() {
+                    return source;
+                }
+
+                @Override
+                public final int getAverageEpisodeLength() {
+                    return episodeLength;
+                }
+
+                @Override
+                public final AnimeRating getRating() {
+                    return rating;
+                }
+
+                @Override
+                public final Studio[] getStudios() {
+                    return studios;
+                }
+
+                @Override
+                public final Picture[] getPictures() {
+                    return pictures;
+                }
+
+                @Override
+                public final String getBackground() {
+                    return background;
+                }
+
+                @Override
+                public final RelatedAnime[] getRelatedAnime() {
+                    return relatedAnime;
+                }
+
+                @Override
+                public final RelatedManga[] getRelatedManga() {
+                    return relatedManga;
+                }
+
+                @Override
+                public final AnimeRecommendation[] getRecommendations() {
+                    return recommendations;
+                }
+
+                @Override
+                public final AnimeStatistics getStatistics() {
+                    return statistics;
+                }
+
+                // additional methods
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
         @SuppressWarnings("SpellCheckingInspection")
@@ -270,7 +471,6 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        // todo
         static AnimePreview asAnimePreview(final MyAnimeList mal, final TopLevelObject.Anime schema){
             return new AnimePreview() {
 
@@ -1151,9 +1351,188 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        // todo
-        static Manga asManga(final MyAnimeList mal, final Call.GetManga schema){
-            return null;
+        static com.kttdevelopment.myanimelist.manga.Manga asManga(final MyAnimeList mal, final Call.GetManga schema){
+            return new com.kttdevelopment.myanimelist.manga.Manga() {
+
+                private final long id               = requireNonNullElse(() -> schema.id, -1L);
+                private final String title          = requireNonNull(() -> schema.title);
+                private final Picture mainPicture   = requireNonNull(() -> Common.asPicture(mal, schema.main_picture));
+                private final AlternativeTitles alternativeTitles = requireNonNull(() -> Common.asAlternativeTitles(mal, schema.alternative_titles));
+                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
+                private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
+                private final String synopsis       = requireNonNull(() -> schema.synopsis);
+                private final float meanRating      = requireNonNullElse(() -> schema.mean, 0F);
+                private final int rank              = requireNonNullElse(() -> schema.rank, 0);
+                private final int popularity        = requireNonNullElse(() -> schema.popularity, 0);
+                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, 0);
+                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, 0);
+                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
+                private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id)));
+                private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
+                private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.media_type));
+                private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum(schema.status));
+                private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status));
+                private final int volumes           = requireNonNullElse(() -> schema.num_volumes, 0);
+                private final int chapters          = requireNonNullElse(() -> schema.num_chapters, 0);
+                private final Author[] authors      = requireNonNull(() -> adaptArray(schema.authors, a -> asAuthor(mal, a)));
+                private final Picture[] pictures    = requireNonNull(() -> adaptArray(schema.pictures, p -> Common.asPicture(mal, p)));
+                private final String background     = requireNonNull(() -> schema.background);
+                private final RelatedAnime[] relatedAnime = requireNonNull(() -> adaptArray(schema.related_anime, a -> Anime.asRelatedAnime(mal, a)));
+                private final RelatedManga[] relatedManga = requireNonNull(() -> adaptArray(schema.related_manga, m -> asRelatedManga(mal, m)));
+                private final MangaRecommendation[] recommendations = requireNonNull(() -> adaptArray(schema.recommendations, r -> asMangaRecommendation(mal, r)));
+                private final Publisher[] serialization   = requireNonNull(() -> adaptArray(schema.serialization, s -> asPublisher(mal, s)));
+                
+                // API methods
+
+                @Override
+                public final long getID() {
+                    return id;
+                }
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                @Override
+                public final Picture getMainPicture() {
+                    return mainPicture;
+                }
+
+                @Override
+                public final AlternativeTitles AlternativeTitles() {
+                    return alternativeTitles;
+                }
+
+                @Override
+                public final long getStartDate() {
+                    return startDate;
+                }
+
+                @Override
+                public final long getEndDate() {
+                    return endDate;
+                }
+
+                @Override
+                public final String getSynopsis() {
+                    return synopsis;
+                }
+
+                @Override
+                public final float getMeanRating() {
+                    return meanRating;
+                }
+
+                @Override
+                public final int getRank() {
+                    return rank;
+                }
+
+                @Override
+                public final int getPopularity() {
+                    return popularity;
+                }
+
+                @Override
+                public final int getUserListingCount() {
+                    return usersListing;
+                }
+
+                @Override
+                public final int getUserScoringCount() {
+                    return usersScoring;
+                }
+
+                @Override
+                public final NSFW getNSFW() {
+                    return nsfw;
+                }
+
+                @Override
+                public final Genre[] getGenres() {
+                    return genres;
+                }
+
+                @Override
+                public final long getCreatedAt() {
+                    return createdAt;
+                }
+
+                @Override
+                public final long getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                @Override
+                public final MangaType getType() {
+                    return type;
+                }
+
+                @Override
+                public final MangaPublishStatus getStatus() {
+                    return status;
+                }
+
+                @Override
+                public final MangaListStatus getListStatus() {
+                    return listStatus;
+                }
+
+                @Override
+                public final int getVolumes() {
+                    return volumes;
+                }
+
+                @Override
+                public final int getChapters() {
+                    return chapters;
+                }
+
+                @Override
+                public final Author[] getAuthors() {
+                    return authors;
+                }
+
+                @Override
+                public final Picture[] getPictures() {
+                    return pictures;
+                }
+
+                @Override
+                public final String getBackground() {
+                    return background;
+                }
+
+                @Override
+                public final RelatedAnime[] getRelatedAnime() {
+                    return relatedAnime;
+                }
+
+                @Override
+                public final RelatedManga[] getRelatedManga() {
+                    return relatedManga;
+                }
+
+                @Override
+                public final MangaRecommendation[] getRecommendations() {
+                    return recommendations;
+                }
+
+                @Override
+                public final Publisher[] getSerialization() {
+                    return serialization;
+                }
+
+                // additional methods
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
         static MangaListStatus asMangaListStatus(final MyAnimeList mal, final TopLevelObject.Manga.MyListStatus schema){
@@ -1250,9 +1629,157 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        // todo
         static MangaPreview asMangaPreview(final MyAnimeList mal, final TopLevelObject.Manga schema){
-            return null;
+            return new MangaPreview() {
+
+                private final long id               = requireNonNullElse(() -> schema.id, -1L);
+                private final String title          = requireNonNull(() -> schema.title);
+                private final Picture mainPicture   = requireNonNull(() -> Common.asPicture(mal, schema.main_picture));
+                private final AlternativeTitles alternativeTitles = requireNonNull(() -> Common.asAlternativeTitles(mal, schema.alternative_titles));
+                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
+                private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
+                private final String synopsis       = requireNonNull(() -> schema.synopsis);
+                private final float meanRating      = requireNonNullElse(() -> schema.mean, 0F);
+                private final int rank              = requireNonNullElse(() -> schema.rank, 0);
+                private final int popularity        = requireNonNullElse(() -> schema.popularity, 0);
+                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, 0);
+                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, 0);
+                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
+                private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id)));
+                private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
+                private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.media_type));
+                private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum(schema.status));
+                private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status));
+                private final int volumes           = requireNonNullElse(() -> schema.num_volumes, 0);
+                private final int chapters          = requireNonNullElse(() -> schema.num_chapters, 0);
+                private final Author[] authors      = requireNonNull(() -> adaptArray(schema.authors, a -> asAuthor(mal, a)));
+
+                // API methods
+
+                @Override
+                public final long getID() {
+                    return id;
+                }
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                @Override
+                public final Picture getMainPicture() {
+                    return mainPicture;
+                }
+
+                @Override
+                public final AlternativeTitles AlternativeTitles() {
+                    return alternativeTitles;
+                }
+
+                @Override
+                public final long getStartDate() {
+                    return startDate;
+                }
+
+                @Override
+                public final long getEndDate() {
+                    return endDate;
+                }
+
+                @Override
+                public final String getSynopsis() {
+                    return synopsis;
+                }
+
+                @Override
+                public final float getMeanRating() {
+                    return meanRating;
+                }
+
+                @Override
+                public final int getRank() {
+                    return rank;
+                }
+
+                @Override
+                public final int getPopularity() {
+                    return popularity;
+                }
+
+                @Override
+                public final int getUserListingCount() {
+                    return usersListing;
+                }
+
+                @Override
+                public final int getUserScoringCount() {
+                    return usersScoring;
+                }
+
+                @Override
+                public final NSFW getNSFW() {
+                    return nsfw;
+                }
+
+                @Override
+                public final Genre[] getGenres() {
+                    return genres;
+                }
+
+                @Override
+                public final long getCreatedAt() {
+                    return createdAt;
+                }
+
+                @Override
+                public final long getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                @Override
+                public final MangaType getType() {
+                    return type;
+                }
+
+                @Override
+                public final MangaPublishStatus getStatus() {
+                    return status;
+                }
+
+                @Override
+                public final MangaListStatus getListStatus() {
+                    return listStatus;
+                }
+
+                @Override
+                public final int getVolumes() {
+                    return volumes;
+                }
+
+                @Override
+                public final int getChapters() {
+                    return chapters;
+                }
+
+                @Override
+                public final Author[] getAuthors() {
+                    return authors;
+                }
+
+                // additional methods
+
+                @Override
+                public final com.kttdevelopment.myanimelist.manga.Manga getManga() {
+                    return mal.getManga(id);
+                }
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
         static MangaRanking asMangaRanking(final MyAnimeList mal, final SubLevelObject.Ranking<TopLevelObject.Manga> schema){

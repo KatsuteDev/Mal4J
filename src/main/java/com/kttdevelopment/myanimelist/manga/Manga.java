@@ -8,6 +8,12 @@ public abstract class Manga extends MangaPreview implements FullMediaItem<MangaT
 
     // API methods
 
+    // API doesn't return this
+    @Override @Deprecated
+    public final MangaStatistics getStatistics() {
+        return null;
+    }
+
     public abstract Publisher[] getSerialization();
 
     // additional methods
