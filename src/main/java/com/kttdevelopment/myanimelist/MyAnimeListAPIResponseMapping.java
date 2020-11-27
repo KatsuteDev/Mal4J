@@ -12,20 +12,20 @@ import com.kttdevelopment.myanimelist.forum.*;
 import com.kttdevelopment.myanimelist.forum.property.*;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.Author;
-import com.kttdevelopment.myanimelist.manga.property.MangaStatistics;
+import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 import com.kttdevelopment.myanimelist.manga.property.Publisher;
-import com.kttdevelopment.myanimelist.property.AlternativeTitles;
-import com.kttdevelopment.myanimelist.property.Picture;
-import com.kttdevelopment.myanimelist.property.RelationType;
+import com.kttdevelopment.myanimelist.property.*;
+import com.kttdevelopment.myanimelist.user.User;
 
 import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Common.*;
+import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Common.IDN;
 
 /**
  * Represents the MyAnimeList API response as an object.
@@ -35,6 +35,7 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Common.*;
  * @version 1.0.0
  * @author Ktt Development
  */
+@SuppressWarnings("unused")
 abstract class MyAnimeListAPIResponseMapping {
 
     static abstract class Anime {
@@ -180,14 +181,271 @@ abstract class MyAnimeListAPIResponseMapping {
             return null;
         }
 
-        // todo
-        static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final Call.UpdateUserAnimeList schema) {
-            return null;
+        @SuppressWarnings("SpellCheckingInspection")
+        static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final TopLevelObject.Anime.MyListStatus schema) {
+            return new AnimeListStatus() {
+
+                private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum(schema.status));
+                private final int score             = requireNonNullElse(() -> schema.score, 0);
+                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
+                private final long finishDate       = requireNonNullElse(() -> parseDate(schema.finish_date), -1L);
+                private final int priority          = requireNonNullElse(() -> schema.priority, 0);
+                private final String[] tags         = requireNonNull(() -> schema.tags);
+                private final String comments       = requireNonNull(() -> schema.comments);
+                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
+                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_watched_episodes, 0);
+                private final boolean rewatching    = requireNonNullElse(() -> schema.is_rewatching, false);
+                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, 0);
+                private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, 0);
+
+                // API methods
+
+                @Override
+                public final AnimeStatus getStatus() {
+                    return status;
+                }
+
+                @Override
+                public final int getScore() {
+                    return score;
+                }
+
+                @Override
+                public final long getStartDate() {
+                    return startDate;
+                }
+
+                @Override
+                public final long getFinishDate() {
+                    return finishDate;
+                }
+
+                @Override
+                public final int getPriority() {
+                    return priority;
+                }
+
+                @Override
+                public final String[] getTags() {
+                    return tags;
+                }
+
+                @Override
+                public final String getComments() {
+                    return comments;
+                }
+
+                @Override
+                public final long getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                @Override
+                public final int getWatchedEpisodes() {
+                    return watchedEpisodes;
+                }
+
+                @Override
+                public final boolean isRewatching() {
+                    return rewatching;
+                }
+
+                @Override
+                public final int getTimesRewatched() {
+                    return timesRewatched;
+                }
+
+                @Override
+                public final int getRewatchValue() {
+                    return rewatchValue;
+                }
+
+                // additional methods
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
         // todo
         static AnimePreview asAnimePreview(final MyAnimeList mal, final TopLevelObject.Anime schema){
-            return null;
+            return new AnimePreview() {
+
+                private final long id               = requireNonNullElse(() -> schema.id, -1L);
+                private final String title          = requireNonNull(() -> schema.title);
+                private final Picture mainPicture   = requireNonNull(() -> Common.asPicture(mal, schema.main_picture));
+                private final AlternativeTitles alternativeTitles = requireNonNull(() -> Common.asAlternativeTitles(mal, schema.alternative_titles));
+                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
+                private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
+                private final String synopsis       = requireNonNull(() -> schema.synopsis);
+                private final float meanRating      = requireNonNullElse(() -> schema.mean, 0f);
+                private final int rank              = requireNonNullElse(() -> schema.rank, 0);
+                private final int popularity        = requireNonNullElse(() -> schema.popularity, 0);
+                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, 0);
+                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, 0);
+                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
+                private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id)));
+                private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
+                private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.media_type));
+                private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum(schema.status));
+                private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status));
+                private final int episodes          = requireNonNullElse(() -> schema.num_episodes, 0);
+                private final StartSeason startSeason = requireNonNull(() -> asStartSeason(mal, schema.start_season));
+                private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.broadcast));
+                private final AnimeSource source    = requireNonNull(() -> AnimeSource.asEnum(schema.source));
+                private final int episodeLength     = requireNonNullElse(() -> schema.average_episode_duration, 0);
+                private final AnimeRating rating    = requireNonNull(() -> AnimeRating.asEnum(schema.rating));
+                private final Studio[] studios      = requireNonNull(() -> adaptArray(schema.studios, s -> asStudio(mal, s)));
+
+                // API methods
+
+                @Override
+                public final long getID() {
+                    return id;
+                }
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                @Override
+                public final Picture getMainPicture() {
+                    return mainPicture;
+                }
+
+                @Override
+                public final AlternativeTitles AlternativeTitles() {
+                    return alternativeTitles;
+                }
+
+                @Override
+                public final long getStartDate() {
+                    return startDate;
+                }
+
+                @Override
+                public final long getEndDate() {
+                    return endDate;
+                }
+
+                @Override
+                public final String getSynopsis() {
+                    return synopsis;
+                }
+
+                @Override
+                public final float getMeanRating() {
+                    return meanRating;
+                }
+
+                @Override
+                public final int getRank() {
+                    return rank;
+                }
+
+                @Override
+                public final int getPopularity() {
+                    return popularity;
+                }
+
+                @Override
+                public final int getUserListingCount() {
+                    return usersListing;
+                }
+
+                @Override
+                public final int getUserScoringCount() {
+                    return usersScoring;
+                }
+
+                @Override
+                public final NSFW getNSFW() {
+                    return nsfw;
+                }
+
+                @Override
+                public final Genre[] getGenres() {
+                    return genres;
+                }
+
+                @Override
+                public final long getCreatedAt() {
+                    return createdAt;
+                }
+
+                @Override
+                public final long getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                @Override
+                public final AnimeType getType() {
+                    return type;
+                }
+
+                @Override
+                public final AnimeAirStatus getStatus() {
+                    return status;
+                }
+
+                @Override
+                public final AnimeListStatus getListStatus() {
+                    return listStatus;
+                }
+
+                @Override
+                public final int getEpisodes() {
+                    return episodes;
+                }
+
+                @Override
+                public final StartSeason getStartSeason() {
+                    return startSeason;
+                }
+
+                @Override
+                public final Broadcast getBroadcast() {
+                    return broadcast;
+                }
+
+                @Override
+                public final AnimeSource getSource() {
+                    return source;
+                }
+
+                @Override
+                public final int getAverageEpisodeLength() {
+                    return episodeLength;
+                }
+
+                @Override
+                public final AnimeRating getRating() {
+                    return rating;
+                }
+
+                @Override
+                public final Studio[] getStudios() {
+                    return studios;
+                }
+
+                // additional methods
+
+                @Override
+                public final com.kttdevelopment.myanimelist.anime.Anime getAnime() {
+                    return mal.getAnime(id);
+                }
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
         static AnimeRanking asAnimeRanking(final MyAnimeList mal, final SubLevelObject.Ranking<TopLevelObject.Anime> schema){
@@ -300,9 +558,103 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        // todo
-        static UserAnimeListStatus asUserAnimeListStatus(final MyAnimeList mal, final Call.UpdateUserAnimeList schema){
-            return null;
+        @SuppressWarnings("SpellCheckingInspection")
+        static UserAnimeListStatus asUserAnimeListStatus(final MyAnimeList mal, final Call.UpdateUserAnimeList schema, final AnimePreview anime){
+            return new UserAnimeListStatus() {
+
+                private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum(schema.status));
+                private final int score             = requireNonNullElse(() -> schema.score, 0);
+                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
+                private final long finishDate       = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
+                private final int priority          = requireNonNullElse(() -> schema.priority, 0);
+                private final String[] tags         = requireNonNull(() -> schema.tags);
+                private final String comments       = requireNonNull(() -> schema.comments);
+                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
+                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_watched_episodes, 0);
+                private final boolean rewatching    = requireNonNullElse(() -> schema.is_rewatching, false);
+                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, 0);
+                private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, 0);
+
+                // API methods
+
+                @Override
+                public final AnimeStatus getStatus() {
+                    return status;
+                }
+
+                @Override
+                public final int getScore() {
+                    return score;
+                }
+
+                @Override
+                public final long getStartDate() {
+                    return startDate;
+                }
+
+                @Override
+                public final long getFinishDate() {
+                    return finishDate;
+                }
+
+                @Override
+                public final int getPriority() {
+                    return priority;
+                }
+
+                @Override
+                public final String[] getTags() {
+                    return tags;
+                }
+
+                @Override
+                public final String getComments() {
+                    return comments;
+                }
+
+                @Override
+                public final long getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                @Override
+                public final int getWatchedEpisodes() {
+                    return watchedEpisodes;
+                }
+
+                @Override
+                public final boolean isRewatching() {
+                    return rewatching;
+                }
+
+                @Override
+                public final int getTimesRewatched() {
+                    return timesRewatched;
+                }
+
+                @Override
+                public final int getRewatchValue() {
+                    return rewatchValue;
+                }
+
+                // additional methods
+
+                @Override
+                public final com.kttdevelopment.myanimelist.anime.Anime getAnime() {
+                    return mal.getAnime(anime.getID());
+                }
+
+                @Override
+                public final AnimePreview getAnimePreview() {
+                    return anime;
+                }
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
     }
@@ -337,9 +689,68 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        // todo
-        static ForumTopicDetail asForumTopicDetail(final MyAnimeList mal, final Call.GetForumTopicDetail schema){
-            return null;
+        static ForumTopicDetail asForumTopicDetail(final MyAnimeList mal, final TopLevelObject.ForumTopicsData schema){
+            return new ForumTopicDetail() {
+
+                private final long id                       = requireNonNullElse(() -> schema.id, -1L);
+                private final String title                  = requireNonNull(() -> schema.title);
+                private final long createdAt                = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
+                private final ForumTopicCreator createdBy   = requireNonNull(() -> asForumTopicCreator(mal, schema.created_by));
+                private final int posts                     = requireNonNullElse(() -> schema.number_of_posts, 0);
+                private final long lastPostedAt             = requireNonNullElse(() -> parseISO8601(schema.last_post_created_at), -1L);
+                private final ForumTopicCreator lastPostedBy = requireNonNull(() -> asForumTopicCreator(mal, schema.last_post_created_by));
+                private final boolean locked                = requireNonNullElse(() -> schema.is_locked, false);
+
+                // APi methods
+
+                @Override
+                public final long getID() {
+                    return id;
+                }
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                @Override
+                public final long getCreatedAt() {
+                    return createdAt;
+                }
+
+                @Override
+                public final ForumTopicCreator getCreatedBy() {
+                    return createdBy;
+                }
+
+                @Override
+                public final int getPostsCount() {
+                    return posts;
+                }
+
+                @Override
+                public final long getLastPostCreatedAt() {
+                    return lastPostedAt;
+                }
+
+                @Override
+                public final ForumTopicCreator getLastPostCreatedBy() {
+                    return lastPostedBy;
+                }
+
+                @Override
+                public final boolean isLocked() {
+                    return locked;
+                }
+
+                // additional methods
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
         static Poll asPoll(final MyAnimeList mal, final TopLevelObject.ForumTopicData.Poll schema, final ForumTopic forumTopic){
@@ -347,13 +758,8 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 private final long id = requireNonNullElse(() -> schema.id, -1L);
                 private final String question = requireNonNull(() -> schema.question);
-                private final boolean isClosed = requireNonNull(() -> schema.close);
-                private final PollOption[] options = requireNonNull(() -> {
-                    final List<PollOption> options = new ArrayList<>();
-                    for (TopLevelObject.ForumTopicData.Poll.PollOption option : schema.options)
-                        options.add(asPollOption(mal, option, this));
-                    return options.toArray(new PollOption[0]);
-                });
+                private final boolean isClosed = requireNonNullElse(() -> schema.close, false);
+                private final PollOption[] options = requireNonNull(() -> adaptArray(schema.options, o -> asPollOption(mal, o, this)));
 
                 // API methods
 
@@ -431,29 +837,183 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        // todo
         static PostAuthor asPostAuthor(final MyAnimeList mal, final TopLevelObject.ForumTopicData.Post.PostCreator schema){
-            return null;
+            return new PostAuthor() {
+
+                private final long id               = requireNonNullElse(() -> schema.id, -1L);
+                private final String name           = requireNonNull(() -> schema.name);
+                private final String forumAvatarURL = requireNonNull(() -> schema.forum_avator);
+
+                // API methods
+
+                @Override
+                public final long getID() {
+                    return id;
+                }
+
+                @Override
+                public final String getName() {
+                    return name;
+                }
+
+                @Override
+                public final String getForumAvatarURL() {
+                    return forumAvatarURL;
+                }
+
+                // additional methods
+
+                @Override
+                public final User getUser() {
+                    return mal.getUser(name);
+                }
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
-        // todo
         static ForumBoard asForumBoard(final MyAnimeList mal, final TopLevelObject.ForumCategory.ForumBoard schema, final ForumCategory forumCategory){
-            return null;
+            return new ForumBoard() {
+
+                private final long id                   = requireNonNullElse(() -> schema.id, -1L);
+                private final String title              = requireNonNull(() -> schema.title);
+                private final String description        = requireNonNull(() -> schema.description);
+                private final ForumSubBoard[] subBoards = adaptArray(schema.subboards, b -> asForumSubBoard(mal, b, this));
+
+                // API methods
+
+                @Override
+                public final long getID() {
+                    return id;
+                }
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                @Override
+                public final String getDescription() {
+                    return description;
+                }
+
+                @Override
+                public final ForumSubBoard[] getSubBoards() {
+                    return subBoards;
+                }
+
+                // additional methods
+
+                @Override
+                public final ForumCategory getCategory() {
+                    return forumCategory;
+                }
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
-        // todo
         static ForumCategory asForumCategory(final MyAnimeList mal, final TopLevelObject.ForumCategory schema){
-            return null;
+            return new ForumCategory() {
+
+                private final String title              = requireNonNull(() -> schema.title);
+                private final ForumBoard[] forumBoards  = adaptArray(schema.boards, b -> asForumBoard(mal, b, this));
+
+                // API methods
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                @Override
+                public final ForumBoard[] getForumBoards() {
+                    return forumBoards;
+                }
+
+                // additional methods
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
-        // todo
-        static ForumSubBoard asForumSubBoard(final MyAnimeList mal, final TopLevelObject.ForumCategory.ForumBoard.SubBoard schema, final TopLevelObject.ForumCategory.ForumBoard forumBoard){
-            return null;
+        static ForumSubBoard asForumSubBoard(final MyAnimeList mal, final TopLevelObject.ForumCategory.ForumBoard.SubBoard schema, final ForumBoard forumBoard){
+            return new ForumSubBoard() {
+
+                private final long id       = requireNonNullElse(() -> schema.id, -1L);
+                private final String title  = requireNonNull(() -> schema.title);
+
+                // API methods
+
+                @Override
+                public final long getID() {
+                    return id;
+                }
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                // additional methods
+
+                @Override
+                public final ForumBoard getBoard() {
+                    return forumBoard;
+                }
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
-        // todo
         static ForumTopic asForumTopic(final MyAnimeList mal, final TopLevelObject.ForumTopicData schema){
-            return null;
+            return new ForumTopic() {
+
+                private final String title = requireNonNull(() -> schema.title);
+                private final Post[] posts = requireNonNull(() -> adaptArray(schema.posts, p -> asPost(mal, p, this)));
+                private final Poll[] polls = requireNonNull(() -> adaptArray(schema.poll, p -> asPoll(mal, p, this)));
+
+                // API methods
+
+                @Override
+                public final String getTitle() {
+                    return title;
+                }
+
+                @Override
+                public final Post[] getPosts() {
+                    return posts;
+                }
+
+                @Override
+                public final Poll[] getPolls() {
+                    return polls;
+                }
+
+                // additional methods
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
         static Post asPost(final MyAnimeList mal, final TopLevelObject.ForumTopicData.Post schema, final ForumTopic forumTopic){
@@ -596,9 +1156,98 @@ abstract class MyAnimeListAPIResponseMapping {
             return null;
         }
 
-        // todo
-        static MangaListStatus asMangaListStatus(final MyAnimeList mal, final Call.UpdateUserMangaList schema){
-            return null;
+        static MangaListStatus asMangaListStatus(final MyAnimeList mal, final TopLevelObject.Manga.MyListStatus schema){
+            return new MangaListStatus() {
+
+                private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum(schema.status));
+                private final int score             = requireNonNullElse(() -> schema.score, 0);
+                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
+                private final long finishDate       = requireNonNullElse(() -> parseDate(schema.finish_date), -1L);
+                private final int priority          = requireNonNullElse(() -> schema.priority, 0);
+                private final String[] tags         = requireNonNull(() -> schema.tags);
+                private final String comments       = requireNonNull(() -> schema.comments);
+                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
+                private final int volumesRead       = requireNonNullElse(() -> schema.num_volumes_read, 0);
+                private final int chaptersRead      = requireNonNullElse(() -> schema.num_chapters_read, 0);
+                private final boolean rereading     = requireNonNullElse(() -> schema.is_rereading, false);
+                private final int timesReread       = requireNonNullElse(() -> schema.num_times_reread, 0);
+                private final int rereadValue       = requireNonNullElse(() -> schema.reread_value, 0);
+
+                // API methods
+
+                @Override
+                public final MangaStatus getStatus() {
+                    return status;
+                }
+
+                @Override
+                public final int getScore() {
+                    return score;
+                }
+
+                @Override
+                public final long getStartDate() {
+                    return startDate;
+                }
+
+                @Override
+                public final long getFinishDate() {
+                    return finishDate;
+                }
+
+                @Override
+                public final int getPriority() {
+                    return priority;
+                }
+
+                @Override
+                public final String[] getTags() {
+                    return tags;
+                }
+
+                @Override
+                public final String getComments() {
+                    return comments;
+                }
+
+                @Override
+                public final long getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                @Override
+                public final int getVolumesRead() {
+                    return volumesRead;
+                }
+
+                @Override
+                public final int getChaptersRead() {
+                    return chaptersRead;
+                }
+
+                @Override
+                public final boolean isRereading() {
+                    return rereading;
+                }
+
+                @Override
+                public final int getTimesReread() {
+                    return timesReread;
+                }
+
+                @Override
+                public final int getRereadValue() {
+                    return rereadValue;
+                }
+
+                // additional methods
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
         // todo
@@ -717,9 +1366,108 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        // todo
-        static UserMangaListStatus asUserMangaListStatus(final MyAnimeList mal, final Call.UpdateUserMangaList schema){
-            return null;
+        static UserMangaListStatus asUserMangaListStatus(final MyAnimeList mal, final Call.UpdateUserMangaList schema, final MangaPreview manga){
+            return new UserMangaListStatus() {
+
+                private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum(schema.status));
+                private final int score             = requireNonNullElse(() -> schema.score, 0);
+                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
+                private final long finishDate       = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
+                private final int priority          = requireNonNullElse(() -> schema.priority, 0);
+                private final String[] tags         = requireNonNull(() -> schema.tags);
+                private final String comments       = requireNonNull(() -> schema.comments);
+                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
+                private final int volumesRead       = requireNonNullElse(() -> schema.num_volumes_read, 0);
+                private final int chaptersRead      = requireNonNullElse(() -> schema.num_chapters_read, 0);
+                private final boolean rereading     = requireNonNullElse(() -> schema.is_rereading, false);
+                private final int timesReread       = requireNonNullElse(() -> schema.num_times_reread, 0);
+                private final int rereadValue       = requireNonNullElse(() -> schema.reread_value, 0);
+
+                // API methods
+
+                @Override
+                public final MangaStatus getStatus() {
+                    return status;
+                }
+
+                @Override
+                public final int getScore() {
+                    return score;
+                }
+
+                @Override
+                public final long getStartDate() {
+                    return startDate;
+                }
+
+                @Override
+                public final long getFinishDate() {
+                    return finishDate;
+                }
+
+                @Override
+                public final int getPriority() {
+                    return priority;
+                }
+
+                @Override
+                public final String[] getTags() {
+                    return tags;
+                }
+
+                @Override
+                public final String getComments() {
+                    return comments;
+                }
+
+                @Override
+                public final long getUpdatedAt() {
+                    return updatedAt;
+                }
+
+                @Override
+                public final int getVolumesRead() {
+                    return volumesRead;
+                }
+
+                @Override
+                public final int getChaptersRead() {
+                    return chaptersRead;
+                }
+
+                @Override
+                public final boolean isRereading() {
+                    return rereading;
+                }
+
+                @Override
+                public final int getTimesReread() {
+                    return timesReread;
+                }
+
+                @Override
+                public final int getRereadValue() {
+                    return rereadValue;
+                }
+
+                // additional methods
+
+                @Override
+                public final com.kttdevelopment.myanimelist.manga.Manga getManga() {
+                    return mal.getManga(manga.getID());
+                }
+
+                @Override
+                public final MangaPreview getMangaPreview() {
+                    return manga;
+                }
+
+                @Override
+                public final String toString() {
+                    return AutomatedToString(this);
+                }
+
+            };
         }
 
     }
@@ -792,6 +1540,14 @@ abstract class MyAnimeListAPIResponseMapping {
 
     //
 
+    @SuppressWarnings("unchecked")
+    private static <T,R> R[] adaptArray(final T[] arr, final Function<T,R> adapter){
+        final List<R> list = new ArrayList<>();
+        for(final T obj : arr)
+            list.add(adapter.apply(obj));
+        return (R[]) list.toArray();
+    }
+
     private static long parseDate(final String date){
         if(date == null) return -1;
 
@@ -822,7 +1578,7 @@ abstract class MyAnimeListAPIResponseMapping {
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    static Time asTime(final String time){
+    private static Time asTime(final String time){
         final String[] hhmm = time.split(":");
         final int h         = Integer.parseInt(hhmm[0]);
         final int m         = Integer.parseInt(hhmm[1]);
