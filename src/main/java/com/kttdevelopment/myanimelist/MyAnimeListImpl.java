@@ -10,6 +10,7 @@ import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 import com.kttdevelopment.myanimelist.query.*;
 import com.kttdevelopment.myanimelist.user.User;
 
+import java.io.IOException;
 import java.util.List;
 
 public final class MyAnimeListImpl extends MyAnimeList{
@@ -31,11 +32,16 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public Anime getAnime(final long id){
-        return null;
+        return getAnime(id, null);
     }
 
     @Override
     public Anime getAnime(final long id, final String[] fields){
+        try{
+            return MyAnimeListAPIResponseMapping.Anime.asAnime(this, service.getAnime(auth, id, MyAnimeListAPIResponse.Call.GetAnime.fields, true).execute().body());
+        }catch(IOException e){
+            e.printStackTrace();
+        }
         return null;
     }
 
