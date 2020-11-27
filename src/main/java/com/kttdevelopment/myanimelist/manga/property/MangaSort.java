@@ -1,11 +1,9 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
-import com.kttdevelopment.myanimelist.property.Sort;
-
 public enum MangaSort {
 
-    Score       (Sort.Score.field()),
-    UpdatedAt   (Sort.UpdatedAt.field()),
+    Score       ("list_score"),
+    UpdatedAt   ("list_updated_at"),
 
     Title       ("manga_title"),
     StartDate   ("manga_start_date"),
