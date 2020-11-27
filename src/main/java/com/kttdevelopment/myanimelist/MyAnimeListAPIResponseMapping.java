@@ -13,6 +13,8 @@ import com.kttdevelopment.myanimelist.forum.property.*;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.*;
+import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
+import com.kttdevelopment.myanimelist.query.MangaListUpdate;
 import com.kttdevelopment.myanimelist.user.User;
 
 import java.lang.reflect.Field;
@@ -195,7 +197,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
                 private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.media_type));
                 private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum(schema.status));
-                private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status));
+                private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status, this));
                 private final int episodes          = requireNonNullElse(() -> schema.num_episodes, 0);
                 private final StartSeason startSeason = requireNonNull(() -> asStartSeason(mal, schema.start_season));
                 private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.broadcast));
@@ -383,7 +385,7 @@ abstract class MyAnimeListAPIResponseMapping {
         }
 
         @SuppressWarnings("SpellCheckingInspection")
-        static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final TopLevelObject.Anime.MyListStatus schema) {
+        static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final TopLevelObject.Anime.MyListStatus schema, final AnimePreview anime) {
             return new AnimeListStatus() {
 
                 private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum(schema.status));
@@ -464,6 +466,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
+                public final AnimeListUpdate edit(){
+                    return mal.updateAnimeListing(anime.getID());
+                }
+
+                @Override
                 public final String toString() {
                     return AutomatedToString(this);
                 }
@@ -492,7 +499,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
                 private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.media_type));
                 private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum(schema.status));
-                private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status));
+                private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status, this));
                 private final int episodes          = requireNonNullElse(() -> schema.num_episodes, 0);
                 private final StartSeason startSeason = requireNonNull(() -> asStartSeason(mal, schema.start_season));
                 private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.broadcast));
@@ -838,6 +845,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 // additional methods
+
+                @Override
+                public final AnimeListUpdate edit(){
+                    return mal.updateAnimeListing(anime.getID());
+                }
 
                 @Override
                 public final com.kttdevelopment.myanimelist.anime.Anime getAnime() {
@@ -1372,7 +1384,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
                 private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.media_type));
                 private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum(schema.status));
-                private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status));
+                private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status, this));
                 private final int volumes           = requireNonNullElse(() -> schema.num_volumes, 0);
                 private final int chapters          = requireNonNullElse(() -> schema.num_chapters, 0);
                 private final Author[] authors      = requireNonNull(() -> adaptArray(schema.authors, a -> asAuthor(mal, a)));
@@ -1535,7 +1547,7 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static MangaListStatus asMangaListStatus(final MyAnimeList mal, final TopLevelObject.Manga.MyListStatus schema){
+        static MangaListStatus asMangaListStatus(final MyAnimeList mal, final TopLevelObject.Manga.MyListStatus schema, final MangaPreview manga){
             return new MangaListStatus() {
 
                 private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum(schema.status));
@@ -1622,6 +1634,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
+                public final MangaListUpdate edit(){
+                    return mal.updateMangaListing(manga.getID());
+                }
+
+                @Override
                 public final String toString() {
                     return AutomatedToString(this);
                 }
@@ -1650,7 +1667,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
                 private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.media_type));
                 private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum(schema.status));
-                private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status));
+                private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status, this));
                 private final int volumes           = requireNonNullElse(() -> schema.num_volumes, 0);
                 private final int chapters          = requireNonNullElse(() -> schema.num_chapters, 0);
                 private final Author[] authors      = requireNonNull(() -> adaptArray(schema.authors, a -> asAuthor(mal, a)));
@@ -1978,6 +1995,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 // additional methods
+                
+                @Override
+                public final MangaListUpdate edit(){
+                    return mal.updateMangaListing(manga.getID());
+                }
 
                 @Override
                 public final com.kttdevelopment.myanimelist.manga.Manga getManga() {
