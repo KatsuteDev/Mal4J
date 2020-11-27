@@ -66,9 +66,9 @@ abstract class MyAnimeListAPIResponse {
             Picture[] pictures;
             String background;
             RelatedAnimeEdge[] related_anime;
-            RelatedMangaEdge[] related_manga;
-            Recommendation<Anime>[] recommendation;
-            Statistics statistics;
+            RelatedMangaEdge[]      related_manga;
+            Recommendation<Anime>[] recommendations;
+            Statistics              statistics;
 
             static class Statistics extends AutomatedToString {
 
