@@ -63,6 +63,8 @@ abstract class MyAnimeListAPIResponse {
 
         static class GetAnime extends Anime{
 
+            public static final String fields = fields(GetAnime.class);
+
             Picture[] pictures;
             String background;
             RelatedAnimeEdge[] related_anime;
@@ -132,6 +134,8 @@ abstract class MyAnimeListAPIResponse {
         }
 
         static class GetManga extends Manga {
+
+            public static final String fields = fields(GetManga.class);
 
             Picture[] pictures;
             String background;
@@ -427,14 +431,13 @@ abstract class MyAnimeListAPIResponse {
 
     //
 
-    // automate toString creation
     private static class AutomatedToString {
 
         @Override
         public final String toString(){
-            Class<?> _class = this.getClass();
+            final Class<?> _class = this.getClass();
 
-            List<Field[]> fieldSets = new ArrayList<>();
+            final List<Field[]> fieldSets = new ArrayList<>();
             fieldSets.add(_class.getDeclaredFields());
 
             Class<?> _super = _class; // add all inherited fields
@@ -443,12 +446,12 @@ abstract class MyAnimeListAPIResponse {
 
             Collections.reverse(fieldSets);
 
-            StringBuilder OUT = new StringBuilder();
+            final StringBuilder OUT = new StringBuilder();
             OUT.append(_class.getSimpleName()).append('{');
-            for(Field[] set : fieldSets){ // print all fields
-                for(Field field : set){
+            for(final Field[] set : fieldSets){ // print all fields
+                for(final Field field : set){
                     try{
-                        Object value = field.get(this);
+                        final Object value = field.get(this);
                         OUT.append(field.getName()).append('=');
                         if(value instanceof String)
                             OUT.append('\'').append(value).append('\'');
@@ -457,7 +460,7 @@ abstract class MyAnimeListAPIResponse {
                         else
                             OUT.append(value);
                         OUT.append(", ");
-                    }catch(IllegalAccessException ignored){ }
+                    }catch(final IllegalAccessException ignored){ }
                 }
             }
 
@@ -467,6 +470,33 @@ abstract class MyAnimeListAPIResponse {
             return OUT.toString();
         }
 
+    }
+
+    private static String fields(final Class<?> _class){
+        final StringBuilder OUT = new StringBuilder();
+
+        final List<Field[]> fieldSets = new ArrayList<>();
+        fieldSets.add(_class.getDeclaredFields());
+
+        Class<?> _super = _class; // add all inherited fields
+        while((_super = _super.getSuperclass()) != null)
+            fieldSets.add(_super.getDeclaredFields());
+
+        for(final Field[] set : fieldSets){ // print all fields
+            for(final Field field : set){
+                final String name = field.getName();
+                if(name.equals("fields"))
+                    continue;
+                OUT.append(name);
+                final Class<?> sub = field.getDeclaringClass();
+                if(sub.isInstance(AutomatedToString.class) && sub.getDeclaredFields().length > 0) // print inner fields
+                    OUT.append('{').append(fields(sub)).append('}');
+                OUT.append(',');
+            }
+        }
+        if(OUT.toString().contains(","))
+            OUT.deleteCharAt(OUT.length() - 1);
+        return OUT.toString();
     }
 
 }
