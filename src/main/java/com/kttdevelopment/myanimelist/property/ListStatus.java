@@ -1,35 +1,21 @@
 package com.kttdevelopment.myanimelist.property;
 
-import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
-import com.kttdevelopment.myanimelist.manga.MangaListStatus;
+public interface ListStatus<Status extends Enum<?>> {
 
-/**
- * Represents a limited list status.
- *
- * @see AnimeListStatus
- * @see MangaListStatus
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
-public interface ListStatus {
+    Status getStatus();
 
-    /**
-     * Returns the score of the listing.
-     *
-     * @return score
-     *
-     * @since 1.0.0
-     */
     int getScore();
 
-    /**
-     * Returns when the listing was last updated in milliseconds.
-     *
-     * @return last updated
-     *
-     * @since 1.0.0
-     */
+    long getStartDate();
+
+    long getFinishDate();
+
+    int getPriority();
+
+    String[] getTags();
+
+    String getComments();
+
     long getUpdatedAt();
 
 }

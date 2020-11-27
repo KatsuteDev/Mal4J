@@ -1,14 +1,5 @@
 package com.kttdevelopment.myanimelist.property;
 
-import com.kttdevelopment.myanimelist.anime.property.AnimeType;
-
-/**
- * Represents a related type.
- *
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
 public enum RelationType {
 
     Sequel              ("sequel"),
@@ -26,25 +17,10 @@ public enum RelationType {
         this.field = field;
     }
 
-        /**
-     * Returns the field name.
-     *
-     * @return field name
-     *
-     * @since 1.0.0
-     */
     public final String field(){
         return field;
     }
 
-    /**
-     * Returns the field as an enum.
-     *
-     * @param string string
-     * @return enum
-     *
-     * @since 1.0.0
-     */
     public static RelationType asEnum(final String string){
         for(final RelationType value : values())
             if(value.field.equalsIgnoreCase(string))

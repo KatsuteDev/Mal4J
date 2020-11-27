@@ -5,13 +5,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.*;
 
-import static com.kttdevelopment.myanimelist.MyAnimeListSchema.*;
+import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Call.*;
 
-/**
- * Interface class. Handles HTTP request parameters.
- *
- * @see MyAnimeListSchema
- */
 public interface MyAnimeListService {
 
     static MyAnimeListService create(){
@@ -26,47 +21,52 @@ public interface MyAnimeListService {
     // anime
 
     @GET("anime")
-    Call<AnimeList> getAnime(
+    Call<GetAnimeList> getAnime(
         @Header("Authorization")    final String token,
         @Query("q")                 final String search,
         @Query("limit")             final int limit,
         @Query("offset")            final int offset,
-        @Query("fields")            final String fields
+        @Query("fields")            final String fields,
+        @Query("nsfw")              final boolean nsfw
     );
 
     @GET("anime/{anime_id}")
-    Call<AnimeDetails> getAnime(
+    Call<GetAnime> getAnime(
         @Header("Authorization")                   final String token,
         @Path(value = "anime_id", encoded = true)  final long anime_id,
-        @Query(value = "fields", encoded = true)   final String fields
+        @Query(value = "fields", encoded = true)   final String fields,
+        @Query("nsfw")                             final boolean nsfw
     );
 
     @GET("anime/ranking")
-    Call<AnimeRanking> getAnimeRanking(
+    Call<GetAnimeRanking> getAnimeRanking(
         @Header("Authorization")    final String token,
         @Query("ranking_type")      final String ranking_type,
         @Query("limit")             final int limit,
         @Query("offset")            final int offset,
-        @Query("fields")            final String fields
+        @Query("fields")            final String fields,
+        @Query("nsfw")              final boolean nsfw
     );
 
     @GET("anime/season/{year}/{season}")
-    Call<SeasonalAnime> getAnimeSeason(
+    Call<GetSeasonalAnime> getAnimeSeason(
         @Header("Authorization")                final String token,
         @Path(value = "year", encoded = true)   final int year,
         @Path(value = "season", encoded = true) final String season,
         @Query("sort")                          final String ranking_type,
         @Query("limit")                         final int limit,
         @Query("offset")                        final int offset,
-        @Query("fields")                        final String fields
+        @Query("fields")                        final String fields,
+        @Query("nsfw")                          final boolean nsfw
     );
 
     @GET("anime/suggestions")
-    Call<SuggestedAnime> getAnimeSuggestions(
+    Call<GetSuggestedAnime> getAnimeSuggestions(
         @Header("Authorization")    final String token,
         @Query("limit")             final int limit,
         @Query("offset")            final int offset,
-        @Query("fields")            final String fields
+        @Query("fields")            final String fields,
+        @Query("nsfw")              final boolean nsfw
     );
 
     // anime list
@@ -74,7 +74,7 @@ public interface MyAnimeListService {
     @SuppressWarnings("SpellCheckingInspection")
     @FormUrlEncoded
     @PATCH("anime/{anime_id}/my_list_status")
-    Call<UpdateAnimeList> updateAnimeListing(
+    Call<UpdateUserAnimeList> updateAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "anime_id", encoded = true)   final long anime_id,
         @Field("status")                            final String status,
@@ -96,33 +96,36 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("anime/{user_name}/animelist")
-    Call<UserAnimeList> getAnimeListing(
+    Call<GetUserAnimeList> getAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
         @Query("limit")                             final int limit,
-        @Query("offset")                            final int offset
+        @Query("offset")                            final int offset,
+        @Query("nsfw")                              final boolean nsfw
     );
 
     // forum
 
     @GET("forum/board")
-    Call<ForumBoards> getForumBoards(
-        @Header("Authorization")        final String token
+    Call<GetForumBoards> getForumBoards(
+        @Header("Authorization")        final String token,
+        @Query("nsfw")                  final boolean nsfw
     );
 
     @GET("forum/topic/{topic_id}")
-    Call<ForumTopicDetail> getForumBoard(
+    Call<GetForumTopicDetail> getForumBoard(
         @Header("Authorization")                    final String token,
         @Path(value = "topic_id", encoded = true)   final long topic_id,
         @Query("limit")                             final int limit,
-        @Query("offset")                            final int offset
+        @Query("offset")                            final int offset,
+        @Query("nsfw")                              final boolean nsfw
     );
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("forum/topics")
-    Call<ForumTopic> getForumTopics(
+    Call<GetForumTopics> getForumTopics(
         @Header("Authorizations")   final String token,
         @Query("board_id")          final long board_id,
         @Query("subboard_id")       final long subboard_id,
@@ -131,41 +134,45 @@ public interface MyAnimeListService {
         @Query("sort")              final String sort,
         @Query("q")                 final String search,
         @Query("topic_user_name")   final String topic_username,
-        @Query("user_name")         final String username
+        @Query("user_name")         final String username,
+        @Query("nsfw")              final boolean nsfw
     );
 
     // manga
 
     @GET("manga")
-    Call<MangaList> getManga(
+    Call<GetMangaList> getManga(
         @Header("Authorization")    final String token,
         @Query("q")                 final String search,
         @Query("limit")             final int limit,
         @Query("offset")            final int offset,
-        @Query("fields")            final String fields
+        @Query("fields")            final String fields,
+        @Query("nsfw")              final boolean nsfw
     );
 
     @GET("manga/{manga_id}")
-    Call<MangaDetails> getManga(
+    Call<GetManga> getManga(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id", encoded = true)   final long manga_id,
-        @Query("fields")                            final String fields
+        @Query("fields")                            final String fields,
+        @Query("nsfw")                              final boolean nsfw
     );
 
     @GET("manga/ranking")
-    Call<MangaRanking> getMangaRanking(
+    Call<GetMangaRanking> getMangaRanking(
         @Header("Authorization")    final String token,
         @Query("ranking_type")      final String ranking_type,
         @Query("limit")             final int limit,
         @Query("offset")            final int offset,
-        @Query("fields")            final String fields
+        @Query("fields")            final String fields,
+        @Query("nsfw")              final boolean nsfw
     );
 
     // manga list
 
     @FormUrlEncoded
     @PATCH("manga/{manga_id}/my_list_status")
-    Call<UpdateMangaList> updateMangaListing(
+    Call<UpdateUserMangaList> updateMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id", encoded = true)   final long manga_id,
         @Field("status")                            final String status,
@@ -188,22 +195,24 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @GET("manga/{user_name}/mangalist")
-    Call<UserMangaList> getMangaListing(
+    Call<GetUserMangaList> getMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
         @Query("limit")                             final int limit,
-        @Query("offset")                            final int offset
+        @Query("offset")                            final int offset,
+        @Query("nsfw")                              final boolean nsfw
     );
 
     // user
 
     @GET("users/{user_name}")
-    Call<UserInformation> getUser(
+    Call<GetUserInformation> getUser(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name")                  final String username,
-        @Query("fields")                            final String fields
+        @Query("fields")                            final String fields,
+        @Query("nsfw")                              final boolean nsfw
     );
 
 }

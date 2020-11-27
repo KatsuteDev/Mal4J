@@ -1,6 +1,5 @@
-package com.kttdevelopment.myanimelist;
+package com.kttdevelopment.myanimelist.auth;
 
-import com.kttdevelopment.myanimelist.auth.AccessToken;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;

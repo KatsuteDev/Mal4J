@@ -1,12 +1,5 @@
 package com.kttdevelopment.myanimelist.property;
 
-/**
- * Represents a genre.
- *
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
 @SuppressWarnings("SpellCheckingInspection")
 public enum Genre {
 
@@ -59,37 +52,14 @@ public enum Genre {
         this.name = name;
     }
 
-    /**
-     * Returns the genre id.
-     *
-     * @return genre id
-     *
-     * @since 1.0.0
-     */
     public final int getId(){
         return id;
     }
 
-    /**
-     * Returns the genre name
-     *
-     * @return genre name
-     *
-     * @since 1.0.0
-     */
     public final String getName(){
         return name;
     }
 
-
-    /**
-     * Returns the field as an enum.
-     *
-     * @param id id
-     * @return enum
-     *
-     * @since 1.0.0
-     */
     public static Genre asEnum(final int id){
         for(final Genre value : values())
             if(value.id == id)
@@ -97,14 +67,6 @@ public enum Genre {
         return null;
     }
 
-    /**
-     * Returns the field as an enum.
-     *
-     * @param string string
-     * @return enum
-     *
-     * @since 1.0.0
-     */
     public static Genre asEnum(final String string){
         for(final Genre value : values())
             if(value.name.equalsIgnoreCase(string))

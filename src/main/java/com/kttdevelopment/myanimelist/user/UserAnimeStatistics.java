@@ -1,148 +1,36 @@
 package com.kttdevelopment.myanimelist.user;
 
-/**
- * Represents a user's Anime statistics.
- *
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
- */
 public abstract class UserAnimeStatistics {
 
-    /**
-     * Returns total watching.
-     *
-     * @return Anime watching
-     *
-     * @since 1.0.0
-     */
-    public abstract int getWatching();
+    public abstract int getItemsWatching();
 
-    /**
-     * Returns total completed.
-     *
-     * @return Anime completed
-     *
-     * @since 1.0.0
-     */
-    public abstract int getCompleted();
+    public abstract int getItemsCompleted();
 
-    /**
-     * Returns total on hold.
-     *
-     * @return Anime on hold
-     *
-     * @since 1.0.0
-     */
-    public abstract int getOnHold();
+    public abstract int getItemsOnHold();
 
-    /**
-     * Returns total dropped.
-     *
-     * @return Anime watching
-     *
-     * @since 1.0.0
-     */
-    public abstract int getDropped();
+    public abstract int getItemsDropped();
 
-    /**
-     * Returns total planned.
-     *
-     * @return Anime planned
-     *
-     * @since 1.0.0
-     */
-    public abstract int getPlanToWatch();
+    public abstract int getItemsPlanToWatch();
 
-    /**
-     * Returns total Anime listed.
-     *
-     * @return Anime total
-     *
-     * @since 1.0.0
-     */
-    public abstract int getTotal();
+    public abstract int getItems();
 
-    /**
-     * Returns total days watched.
-     *
-     * @return days watched
-     *
-     * @since 1.0.0
-     */
-    public abstract double getDaysWatching();
+    public abstract float getDaysWatched();
 
-    /**
-     * Returns total days completed.
-     *
-     * @return total completed
-     *
-     * @since 1.0.0
-     */
-    public abstract double getDaysCompleted();
+    public abstract float getDaysWatching();
 
-    /**
-     * Returns total days on hold.
-     *
-     * @return days on hold
-     *
-     * @since 1.0.0
-     */
-    public abstract double getDaysOnHold();
+    public abstract float getDaysCompleted();
 
-    /**
-     * Returns total days dropped.
-     *
-     * @return days dropped
-     *
-     * @since 1.0.0
-     */
-    public abstract double getDaysDropped();
+    public abstract float getDaysOnHold();
 
-    /**
-     * Returns total days planned to watch.
-     *
-     * @return days planned
-     *
-     * @since 1.0.0
-     */
-    public abstract double getDaysPlanToWatch();
+    public abstract float getDaysDropped();
 
-    /**
-     * Returns total days.
-     *
-     * @return total days
-     *
-     * @since 1.0.0
-     */
-    public abstract double getTotalDays();
+    public abstract float getDays();
 
-    /**
-     * Returns total episodes listed.
-     *
-     * @return total episodes
-     *
-     * @since 1.0.0
-     */
-    public abstract int getTotalEpisodes();
+    public abstract int getEpisodes();
 
-    /**
-     * Returns total Anime rewatched.
-     *
-     * @return total rewatched
-     *
-     * @since 1.0.0
-     */
     @SuppressWarnings("SpellCheckingInspection")
-    public abstract int getTotalRewatched();
+    public abstract int getTimesRewatched();
 
-    /**
-     * Returns average score.
-     *
-     * @return average score
-     *
-     * @since 1.0.0
-     */
-    public abstract double getMeanScore();
+    public abstract float getMeanScore();
 
 }
