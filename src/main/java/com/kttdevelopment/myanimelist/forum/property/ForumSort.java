@@ -1,13 +1,12 @@
-package com.kttdevelopment.myanimelist.property;
+package com.kttdevelopment.myanimelist.forum.property;
 
-public enum Sort {
+public enum ForumSort {
 
-    Score       ("list_score"),
-    UpdatedAt   ("updated_at");
+    Recent("recent");
 
     private final String field;
 
-    Sort(final String field){
+    ForumSort(final String field){
         this.field = field;
     }
 
@@ -15,8 +14,8 @@ public enum Sort {
         return field;
     }
 
-    public static Sort asEnum(final String string){
-        for(final Sort value : values())
+    public static ForumSort asEnum(final String string){
+        for(final ForumSort value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
         return null;
@@ -24,7 +23,7 @@ public enum Sort {
 
     @Override
     public String toString(){
-        return "Sort{" +
+        return "ForumSort{" +
                "field='" + field + '\'' +
                '}';
     }

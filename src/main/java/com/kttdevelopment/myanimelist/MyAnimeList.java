@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist;
 
 import com.kttdevelopment.myanimelist.anime.*;
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;
@@ -9,6 +8,7 @@ import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
+import com.kttdevelopment.myanimelist.query.*;
 import com.kttdevelopment.myanimelist.user.User;
 
 import java.io.IOException;
@@ -26,19 +26,7 @@ public abstract class MyAnimeList {
 
     // anime
 
-    public abstract List<AnimePreview> getAnime();
-
-    public abstract List<AnimePreview> getAnime(final String search);
-
-    public abstract List<AnimePreview> getAnime(final String search, final int limit);
-
-    public abstract List<AnimePreview> getAnime(final String search, final int limit, final int offset);
-
-    public abstract List<AnimePreview> getAnime(final String search, final int limit, final String[] fields);
-
-    public abstract List<AnimePreview> getAnime(final String search, final String[] fields);
-
-    public abstract List<AnimePreview> getAnime(final String search, final int limit, final int offset, final String[] fields);
+    public abstract AnimeSearchQuery getAnime();
 
     public abstract Anime getAnime(final long id);
 
@@ -46,73 +34,19 @@ public abstract class MyAnimeList {
 
     // anime ranking
 
-    public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType);
-
-    public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final String[] fields);
-
-    public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final int limit);
-
-    public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final int limit, final int offset);
-
-    public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final int limit, final String[] fields);
-
-    public abstract List<AnimeRanking> getAnimeRanking(final AnimeRankingType rankingType, final int limit, final int offset, final String[] fields);
+    public abstract AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType);
 
     // anime season
 
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final String[] fields);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final int limit);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final int limit, final String[] fields);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final int limit, final int offset);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final int limit, final int offset, final String[] fields);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final AnimeRankingType sort);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final AnimeRankingType sort, final String[] fields);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final AnimeRankingType sort, final int limit);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final AnimeRankingType sort, final int limit, final String[] fields);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final AnimeRankingType sort, final int limit, final int offset);
-
-    public abstract List<AnimePreview> getAnimeSeason(final int year, final Season season, final AnimeRankingType sort, final int limit, final int offset, final String[] fields);
+    public abstract AnimeSeasonQuery getAnimeSeason(final int year, final Season season);
 
     // anime list
 
-    public abstract AnimeListStatus updateAnimeListing(); // todo
+    public abstract AnimeListUpdate updateAnimeListing(final long id);
 
     public abstract void deleteAnimeListing(final long id);
 
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final int limit);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final int limit, final int offset);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status, final int limit);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, final AnimeStatus status, final int limit, final int offset);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final int limit);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final int limit, final int offset);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status, final int limit);
-
-    public abstract List<UserAnimeListStatus> getUserAnimeListing(final String username, AnimeSort sort, final AnimeStatus status, final int limit, final int offset);
+    public abstract UserAnimeListQuery getUserAnimeListing(final String username);
 
     // forum
 
@@ -132,19 +66,7 @@ public abstract class MyAnimeList {
 
     // manga
 
-    public abstract List<MangaPreview> getManga();
-
-    public abstract List<MangaPreview> getManga(final String search);
-
-    public abstract List<MangaPreview> getManga(final String search, final int limit);
-
-    public abstract List<MangaPreview> getManga(final String search, final int limit, final int offset);
-
-    public abstract List<MangaPreview> getManga(final String search, final int limit, final String[] fields);
-
-    public abstract List<MangaPreview> getManga(final String search, final String[] fields);
-
-    public abstract List<MangaPreview> getManga(final String search, final int limit, final int offset, final String[] fields);
+    public abstract MangaSearchQuery getManga();
 
     public abstract Manga getManga(final long id);
 
@@ -152,47 +74,15 @@ public abstract class MyAnimeList {
 
     // manga ranking
 
-    public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType);
-
-    public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType, final String[] fields);
-
-    public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType, final int limit);
-
-    public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType, final int limit, final int offset);
-
-    public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType, final int limit, final String[] fields);
-
-    public abstract List<MangaRanking> getMangaRanking(final MangaRankingType rankingType, final int limit, final int offset, final String[] fields);
+    public abstract MangaRankingQuery getMangaRanking(final MangaRankingType rankingType);
 
     // manga list
 
-    public abstract MangaListStatus updateMangaListing();
+    public abstract MangaListUpdate updateMangaListing(final long id);
 
     public abstract void deleteMangaListing(final long id);
 
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final int limit);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final int limit, final int offset);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status, final int limit);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, final MangaStatus status, final int limit, final int offset);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final int limit);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final int limit, final int offset);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status, final int limit);
-
-    public abstract List<UserMangaListStatus> getUserMangaListing(final String username, MangaSort sort, final MangaStatus status, final int limit, final int offset);
+    public abstract UserMangaListQuery getUserMangaListing(final String username);
 
     // user
 

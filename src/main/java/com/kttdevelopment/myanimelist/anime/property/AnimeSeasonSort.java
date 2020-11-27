@@ -1,16 +1,13 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
-public enum AnimeSort {
+public enum AnimeSeasonSort {
 
-    Score       ("List_score"),
-    UpdatedAt   ("list_updated_at"),
-    Title       ("anime_title"),
-    StartDate   ("anime_start_date"),
-    ID          ("anime_id");
+    Score   ("anime_score"),
+    Users   ("anime_num_list_users");
 
     private final String field;
 
-    AnimeSort(final String field){
+    AnimeSeasonSort(final String field){
         this.field = field;
     }
 
@@ -18,8 +15,8 @@ public enum AnimeSort {
         return field;
     }
 
-    public static AnimeSort asEnum(final String string){
-        for(final AnimeSort value : values())
+    public static AnimeSeasonSort asEnum(final String string){
+        for(final AnimeSeasonSort value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
         return null;
@@ -27,7 +24,7 @@ public enum AnimeSort {
 
     @Override
     public String toString(){
-        return "AnimeSort{" +
+        return "AnimeSeasonSort{" +
                "field='" + field + '\'' +
                '}';
     }
