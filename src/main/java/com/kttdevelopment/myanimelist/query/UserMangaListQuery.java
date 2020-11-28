@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class UserMangaListQuery extends SearchQuery<UserMangaListQuery,List<UserMangaListStatus>> {
 
     protected final String username;
-    protected MangaSort   sort;
+    protected MangaSort sort;
     protected MangaStatus status;
 
     public UserMangaListQuery(final MyAnimeListService service, final String username) {

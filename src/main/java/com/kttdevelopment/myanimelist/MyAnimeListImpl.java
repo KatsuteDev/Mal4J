@@ -14,6 +14,8 @@ import retrofit2.Response;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +49,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         limit,
                         offset,
-                        fields == null ? Call.GetAnime.fields : asString(fields),
+                        fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
                         false)
                     .execute()
                 );
@@ -74,7 +76,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getAnime(
                 auth,
                 id,
-                fields == null ? Call.GetAnime.fields : asString(fields),
+                fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
                 false)
             .execute()
         ));
@@ -92,7 +94,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         rankingType.field(),
                         limit,
                         offset,
-                        fields == null ? Call.GetAnime.fields : asString(fields),
+                        fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
                         false)
                     .execute()
                 );
@@ -121,7 +123,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         sort.field(),
                         limit,
                         offset,
-                        fields == null ? Call.GetAnime.fields : asString(fields),
+                        fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
                         false)
                     .execute()
                 );
@@ -144,17 +146,17 @@ public final class MyAnimeListImpl extends MyAnimeList{
             public synchronized final AnimeListStatus update(){
                 final Call.UpdateUserAnimeList response = handleResponse(
                     () -> service.updateAnimeListing(
-                        auth,
-                        id,
-                        status.field(),
-                        rewatching,
-                        score,
-                        watchedEpisodes,
-                        priority,
-                        timesRewatched,
-                        rewatchValue,
-                        asString(tags),
-                        comments)
+                            auth,
+                            id,
+                            status.field(),
+                            rewatching,
+                            score,
+                            watchedEpisodes,
+                            priority,
+                            timesRewatched,
+                            rewatchValue,
+                            asStringListEncoded(tags),
+                            comments)
                     .execute()
                 );
                 if(response == null) return null;
@@ -255,8 +257,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 final Call.GetForumTopics response = handleResponse(
                     () -> service.getForumTopics(
                         auth,
-                        boardId,
-                        subboardId,
+                        (long) boardId,
+                        (long) subboardId,
                         limit,
                         offset,
                         sort,
@@ -288,7 +290,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         limit,
                         offset,
-                        fields == null ? Call.GetManga.fields : asString(fields),
+                        fields == null ? Call.GetManga.fields : asStringListEncoded(fields),
                         false)
                     .execute()
                 );
@@ -315,7 +317,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getManga(
                 auth,
                 id,
-                fields == null ? Call.GetManga.fields : asString(fields),
+                fields == null ? Call.GetManga.fields : asStringListEncoded(fields),
                 false)
             .execute()
         ));
@@ -333,7 +335,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         rankingType.field(),
                         limit,
                         offset,
-                        fields == null ? Call.GetAnime.fields : asString(fields),
+                        fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
                         false)
                     .execute()
                 );
@@ -356,18 +358,18 @@ public final class MyAnimeListImpl extends MyAnimeList{
             public synchronized final MangaListStatus update(){
                 final Call.UpdateUserMangaList response = handleResponse(
                     () -> service.updateMangaListing(
-                        auth,
-                        id,
-                        status.field(),
-                        rereading,
-                        score,
-                        volumesRead,
-                        chaptersRead,
-                        priority,
-                        timesReread,
-                        rereadValue,
-                        asString(tags),
-                        comments)
+                            auth,
+                            id,
+                            status.field(),
+                            rereading,
+                            score,
+                            volumesRead,
+                            chaptersRead,
+                            priority,
+                            timesReread,
+                            rereadValue,
+                            asStringListEncoded(tags),
+                            comments)
                     .execute()
                 );
                 if(response == null) return null;
@@ -383,7 +385,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
         handleResponse(
             () -> service.deleteMangaListing(
                 auth,
-                (int) id)
+                id)
             .execute()
         );
     }
@@ -438,7 +440,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getUser(
                 auth,
                 username,
-                fields == null ? Call.GetUserInformation.fields : asString(fields),
+                fields == null ? Call.GetUserInformation.fields : asStringListEncoded(fields),
                 false)
             .execute()
         ));
@@ -449,6 +451,10 @@ public final class MyAnimeListImpl extends MyAnimeList{
     private <R> R handleResponse(final ExceptionSupplier<Response<R>, IOException> supplier){
         try{
             final Response<R> response = supplier.get();
+            if(response.code() != HttpURLConnection.HTTP_OK){
+                 System.out.println(response.code());
+                System.out.println(response.toString());
+            }
             switch(response.code()){
                 case HttpURLConnection.HTTP_OK:
                     return response.body();
@@ -473,17 +479,17 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    private static String asString(final List<String> fields){
-        return asString(fields.toArray(new String[0]));
+    private static String asStringListEncoded(final List<String> fields){
+        return asStringListEncoded(fields.toArray(new String[0]));
     }
 
-    private static String asString(final String[] fields){
+    private static String asStringListEncoded(final String[] fields){
         if(fields != null && fields.length > 0){
             final StringBuilder SB = new StringBuilder();
             for(final String field : fields)
                 if(!field.isBlank())
                     SB
-                        .append(field)
+                        .append(URLEncoder.encode(field, StandardCharsets.UTF_8))
                         .append(',');
 
             final String str = SB.toString();
