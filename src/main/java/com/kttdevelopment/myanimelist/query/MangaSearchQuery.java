@@ -8,6 +8,7 @@ import java.util.List;
 public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery,List<MangaPreview>>{
 
     protected String query;
+    protected Boolean nsfw;
 
     public MangaSearchQuery(final MyAnimeListService service) {
         super(service);
@@ -15,6 +16,11 @@ public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery
 
     public final MangaSearchQuery withQuery(final String query){
         this.query = query;
+        return this;
+    }
+
+    public final MangaSearchQuery includeNSFW(final boolean nsfw){
+        this.nsfw = nsfw;
         return this;
     }
 

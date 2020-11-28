@@ -34,8 +34,7 @@ public interface MyAnimeListService {
     Call<GetAnime> getAnime(
         @Header("Authorization")                   final String token,
         @Path(value = "anime_id")                  final Long anime_id,
-        @Query(value = "fields", encoded = true)   final String fields,
-        @Query("nsfw")                             final Boolean nsfw
+        @Query(value = "fields", encoded = true)   final String fields
     );
 
     @GET("anime/ranking")
@@ -102,8 +101,7 @@ public interface MyAnimeListService {
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
         @Query("limit")                             final Integer limit,
-        @Query("offset")                            final Integer offset,
-        @Query("nsfw")                              final Boolean nsfw
+        @Query("offset")                            final Integer offset
     );
 
     // forum
@@ -151,8 +149,7 @@ public interface MyAnimeListService {
     Call<GetManga> getManga(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id")                   final Long manga_id,
-        @Query(value = "fields", encoded = true)    final String fields,
-        @Query("nsfw")                              final Boolean nsfw
+        @Query(value = "fields", encoded = true)    final String fields
     );
 
     @GET("manga/ranking")
@@ -198,8 +195,7 @@ public interface MyAnimeListService {
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
         @Query("limit")                             final Integer limit,
-        @Query("offset")                            final Integer offset,
-        @Query("nsfw")                              final Boolean nsfw
+        @Query("offset")                            final Integer offset
     );
 
     // user
@@ -207,9 +203,8 @@ public interface MyAnimeListService {
     @GET("users/{user_name}")
     Call<GetUserInformation> getUser(
         @Header("Authorization")                    final String token,
-        @Path(value = "user_name")                  final String username,
-        @Query(value = "fields", encoded = true)    final String fields,
-        @Query("nsfw")                              final Boolean nsfw
+        @Path(value = "user_name", encoded = true)  final String username,
+        @Query(value = "fields", encoded = true)    final String fields
     );
 
 }

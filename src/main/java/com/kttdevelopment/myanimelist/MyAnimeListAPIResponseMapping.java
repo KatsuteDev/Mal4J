@@ -2034,7 +2034,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long birthday     = requireNonNullElse(() -> parseDate(schema.birthday), -1L);
                 private final String location   = requireNonNull(() -> schema.location);
                 private final long joinedAt     = requireNonNullElse(() -> parseISO8601(schema.joined_at), -1L);
-                private final UserAnimeStatistics animeStatistics = requireNonNull(() -> asUserAnimeStatistics(mal, schema.animeStatistics));
+                private final UserAnimeStatistics animeStatistics = requireNonNull(() -> asUserAnimeStatistics(mal, schema.anime_statistics));
                 private final String timezone   = requireNonNull(() -> schema.time_zone);
                 private final boolean supporter = requireNonNullElse(() -> schema.is_supporter, false);
                 

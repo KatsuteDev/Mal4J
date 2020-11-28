@@ -37,6 +37,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
+    private static final String animeFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics";
+
     @Override
     public final AnimeSearchQuery getAnime(){
         return new AnimeSearchQuery(service) {
@@ -49,8 +51,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         limit,
                         offset,
-                        fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
-                        false)
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw)
                     .execute()
                 );
                 if(response == null) return null;
@@ -76,8 +78,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getAnime(
                 auth,
                 id,
-                fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
-                false)
+                fields == null ? animeFields : asStringList(fields))
             .execute()
         ));
     }
@@ -94,8 +95,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         rankingType != null ? rankingType.field() : null,
                         limit,
                         offset,
-                        fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
-                        false)
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw)
                     .execute()
                 );
                 if(response == null) return null;
@@ -123,8 +124,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
-                        false)
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw)
                     .execute()
                 );
                 if(response == null) return null;
@@ -146,17 +147,17 @@ public final class MyAnimeListImpl extends MyAnimeList{
             public synchronized final AnimeListStatus update(){
                 final Call.UpdateUserAnimeList response = handleResponse(
                     () -> service.updateAnimeListing(
-                            auth,
-                            id,
-                            status != null ? status.field() : null,
-                            rewatching,
-                            score,
-                            watchedEpisodes,
-                            priority,
-                            timesRewatched,
-                            rewatchValue,
-                            asStringListEncoded(tags),
-                            comments)
+                        auth,
+                        id,
+                        status != null ? status.field() : null,
+                        rewatching,
+                        score,
+                        watchedEpisodes,
+                        priority,
+                        timesRewatched,
+                        rewatchValue,
+                        asStringList(tags),
+                        comments)
                     .execute()
                 );
                 if(response == null) return null;
@@ -190,8 +191,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
-                        offset,
-                        false)
+                        offset)
                     .execute()
                 );
                 if(response == null) return null;
@@ -257,8 +257,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 final Call.GetForumTopics response = handleResponse(
                     () -> service.getForumTopics(
                         auth,
-                        (long) boardId,
-                        (long) subboardId,
+                        boardId,
+                        subboardId,
                         limit,
                         offset,
                         sort,
@@ -277,6 +277,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
         };
     }
+    
+    private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role}";
 
     @Override
     public final MangaSearchQuery getManga(){
@@ -290,8 +292,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         limit,
                         offset,
-                        fields == null ? Call.GetManga.fields : asStringListEncoded(fields),
-                        false)
+                        fields == null ? mangaFields : asStringList(fields),
+                        nsfw)
                     .execute()
                 );
                 if(response == null) return null;
@@ -317,8 +319,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getManga(
                 auth,
                 id,
-                fields == null ? Call.GetManga.fields : asStringListEncoded(fields),
-                false)
+                fields == null ? mangaFields : asStringList(fields))
             .execute()
         ));
     }
@@ -335,8 +336,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         rankingType != null ? rankingType.field() : null,
                         limit,
                         offset,
-                        fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
-                        false)
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw)
                     .execute()
                 );
                 if(response == null) return null;
@@ -368,7 +369,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                             priority,
                             timesReread,
                             rereadValue,
-                            asStringListEncoded(tags),
+                            asStringList(tags),
                             comments)
                     .execute()
                 );
@@ -403,8 +404,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
-                        offset,
-                        false)
+                        offset)
                     .execute()
                 );
                 if(response == null) return null;
@@ -417,6 +417,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
         };
     }
+
+    private static final String userFields = "birthday,time_zone,anime_statistics";
 
     @Override
     public final User getMyself(){
@@ -439,9 +441,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
         handleResponse(
             () -> service.getUser(
                 auth,
-                username,
-                fields == null ? Call.GetUserInformation.fields : asStringListEncoded(fields),
-                false)
+                username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                fields == null ? userFields : asStringList(fields))
             .execute()
         ));
     }
@@ -473,18 +474,16 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    private static String asStringListEncoded(final List<String> fields){
-        return asStringListEncoded(fields.toArray(new String[0]));
+    private static String asStringList(final List<String> fields){
+        return asStringList(fields.toArray(new String[0]));
     }
 
-    private static String asStringListEncoded(final String[] fields){
+    private static String asStringList(final String... fields){
         if(fields != null && fields.length > 0){
             final StringBuilder SB = new StringBuilder();
             for(final String field : fields)
                 if(!field.isBlank())
-                    SB
-                        .append(URLEncoder.encode(field, StandardCharsets.UTF_8))
-                        .append(',');
+                    SB.append(field).append(',');
 
             final String str = SB.toString();
             if(!str.isBlank())
