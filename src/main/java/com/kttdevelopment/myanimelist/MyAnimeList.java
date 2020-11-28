@@ -1,14 +1,13 @@
 package com.kttdevelopment.myanimelist;
 
-import com.kttdevelopment.myanimelist.anime.*;
-import com.kttdevelopment.myanimelist.anime.property.*;
+import com.kttdevelopment.myanimelist.anime.Anime;
+import com.kttdevelopment.myanimelist.anime.property.AnimeRankingType;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
-import com.kttdevelopment.myanimelist.forum.property.ForumTopicDetail;
-import com.kttdevelopment.myanimelist.manga.*;
-import com.kttdevelopment.myanimelist.manga.property.*;
+import com.kttdevelopment.myanimelist.manga.Manga;
+import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 import com.kttdevelopment.myanimelist.query.*;
 import com.kttdevelopment.myanimelist.user.User;
 

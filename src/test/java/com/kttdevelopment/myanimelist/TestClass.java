@@ -6,7 +6,9 @@ import org.junit.jupiter.api.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.List;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class TestClass {
 
     private static MyAnimeList mal;
@@ -24,6 +26,15 @@ public class TestClass {
 
     @Test
     public void testAnimeSearch(){
+        // test standard
+        {
+            final List<AnimePreview> search =
+                mal.getAnime()
+                    .withQuery("さくら荘のペットな彼女")
+                    .search();
+            Assertions.assertEquals("Sakura-sou no Pet na Kanojo", search.get(0).getTitle());
+        }
+
 
     }
 

@@ -13,8 +13,8 @@ public abstract class AnimeListUpdate {
     protected final long id;
 
     protected AnimeStatus status;
-    protected boolean rewatching;
-    protected int score, watchedEpisodes, priority, timesRewatched, rewatchValue;
+    protected Boolean rewatching;
+    protected Integer score, watchedEpisodes, priority, timesRewatched, rewatchValue;
     protected List<String> tags;
     protected String comments;
 
@@ -28,7 +28,7 @@ public abstract class AnimeListUpdate {
         return this;
     }
 
-    public final AnimeListUpdate rewatching(final boolean rewatching){
+    public final AnimeListUpdate rewatching(final Boolean rewatching){
         this.rewatching = rewatching;
         return this;
     }

@@ -14,8 +14,8 @@ public abstract class MangaListUpdate {
     protected final long id;
 
     protected MangaStatus status;
-    protected boolean rereading;
-    protected int score, volumesRead, chaptersRead, priority, timesReread, rereadValue;
+    protected Boolean rereading;
+    protected Integer score, volumesRead, chaptersRead, priority, timesReread, rereadValue;
     protected List<String> tags;
     protected String comments;
 

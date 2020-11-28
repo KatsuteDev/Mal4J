@@ -9,7 +9,7 @@ public abstract class ForumSearchQuery extends SearchQuery<ForumSearchQuery,List
 
     protected String query;
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
-    protected int boardId, subboardId;
+    protected Long boardId, subboardId;
     protected final String sort = "recent";
     protected String topicUsername, username;
     
@@ -22,13 +22,13 @@ public abstract class ForumSearchQuery extends SearchQuery<ForumSearchQuery,List
         return this;
     }
 
-    public final ForumSearchQuery withBoardId(final int boardId){
+    public final ForumSearchQuery withBoardId(final long boardId){
         this.boardId = boardId;
         return this;
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    public final ForumSearchQuery withSubboardId(final int subboardId){
+    public final ForumSearchQuery withSubboardId(final long subboardId){
         this.subboardId = subboardId;
         return this;
     }

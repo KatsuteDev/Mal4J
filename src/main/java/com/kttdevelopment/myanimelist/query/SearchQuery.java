@@ -7,8 +7,8 @@ abstract class SearchQuery<T extends SearchQuery,B> {
 
     protected final MyAnimeListService service;
 
-    protected int          limit;
-    protected int          offset;
+    protected Integer limit;
+    protected Integer offset;
 
     SearchQuery(final MyAnimeListService service) {
         this.service = service;
