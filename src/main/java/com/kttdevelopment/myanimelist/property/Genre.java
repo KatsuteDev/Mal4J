@@ -75,10 +75,8 @@ public enum Genre {
     }
 
     @Override
-    public String toString(){
-        return "Genre{" +
-               "id=" + id +
-               ", name='" + name + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
+
 }

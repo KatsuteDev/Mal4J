@@ -26,10 +26,8 @@ public enum MangaStatus {
     }
 
     @Override
-    public String toString(){
-        return "MangaStatus{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
 
 }

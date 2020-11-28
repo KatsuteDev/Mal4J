@@ -30,9 +30,8 @@ public enum MangaType {
     }
 
     @Override
-    public String toString(){
-        return "MangaType{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
+
 }

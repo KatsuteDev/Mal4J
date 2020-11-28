@@ -22,10 +22,8 @@ public enum ForumSort {
     }
 
     @Override
-    public String toString(){
-        return "ForumSort{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
 
 }

@@ -27,9 +27,8 @@ public enum AnimeRating {
     }
 
     @Override
-    public String toString() {
-        return "AnimeRating{" +
-                "field='" + field + '\'' +
-                '}';
+    public final String toString(){
+        return name();
     }
+
 }

@@ -29,9 +29,7 @@ public enum DayOfWeek {
     }
 
     @Override
-    public String toString(){
-        return "DayOfWeek{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
 }

@@ -38,9 +38,8 @@ public enum AnimeSource {
     }
 
     @Override
-    public String toString() {
-        return "AnimeSource{" +
-                "field='" + field + '\'' +
-                '}';
+    public final String toString(){
+        return name();
     }
+
 }

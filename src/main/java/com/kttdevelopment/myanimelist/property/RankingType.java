@@ -25,9 +25,8 @@ public enum RankingType {
     }
 
     @Override
-    public String toString(){
-        return "RankingType{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
+
 }

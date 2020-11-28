@@ -231,7 +231,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final AlternativeTitles AlternativeTitles() {
+                public final AlternativeTitles getAlternativeTitles() {
                     return alternativeTitles;
                 }
 
@@ -527,7 +527,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final AlternativeTitles AlternativeTitles() {
+                public final AlternativeTitles getAlternativeTitles() {
                     return alternativeTitles;
                 }
 
@@ -1414,7 +1414,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final AlternativeTitles AlternativeTitles() {
+                public final AlternativeTitles getAlternativeTitles() {
                     return alternativeTitles;
                 }
 
@@ -1691,7 +1691,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final AlternativeTitles AlternativeTitles() {
+                public final AlternativeTitles getAlternativeTitles() {
                     return alternativeTitles;
                 }
 
@@ -2310,9 +2310,7 @@ abstract class MyAnimeListAPIResponseMapping {
     private static long parseISO8601(final String timestamp){
         if(timestamp == null) return -1;
 
-        final TimeZone   tz = TimeZone.getTimeZone("UTC");
-        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'");
-        df.setTimeZone(tz);
+        final DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
 
         try{
             return df.parse(timestamp).getTime();

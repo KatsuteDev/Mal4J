@@ -26,9 +26,8 @@ public enum NSFW {
     }
 
     @Override
-    public String toString() {
-        return "NSFW{" +
-                "field='" + field + '\'' +
-                '}';
+    public final String toString(){
+        return name();
     }
+
 }
