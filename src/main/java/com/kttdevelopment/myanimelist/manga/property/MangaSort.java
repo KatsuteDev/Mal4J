@@ -27,10 +27,8 @@ public enum MangaSort {
     }
 
     @Override
-    public String toString(){
-        return "MangaSort{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
 
 }

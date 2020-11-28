@@ -6,7 +6,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
 
     Picture getMainPicture();
 
-    AlternativeTitles AlternativeTitles();
+    AlternativeTitles getAlternativeTitles();
 
     long getStartDate();
 

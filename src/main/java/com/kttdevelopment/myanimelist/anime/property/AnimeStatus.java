@@ -26,10 +26,8 @@ public enum AnimeStatus {
     }
 
     @Override
-    public String toString(){
-        return "AnimeStatus{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
 
 }

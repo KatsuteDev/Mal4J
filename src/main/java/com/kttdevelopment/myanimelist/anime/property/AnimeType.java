@@ -28,10 +28,8 @@ public enum AnimeType {
     }
 
     @Override
-    public String toString(){
-        return "AnimeType{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
 
 }

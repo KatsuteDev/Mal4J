@@ -34,9 +34,8 @@ public enum AnimeRankingType {
     }
 
     @Override
-    public String toString(){
-        return "AnimeRankingType{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
+
 }

@@ -91,7 +91,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 final Call.GetAnimeRanking response = handleResponse(
                     () -> service.getAnimeRanking(
                         auth,
-                        rankingType.field(),
+                        rankingType != null ? rankingType.field() : null,
                         limit,
                         offset,
                         fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
@@ -119,8 +119,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getAnimeSeason(
                         auth,
                         year,
-                        season.field(),
-                        sort.field(),
+                        season != null ? season.field() : null,
+                        sort != null ? sort.field() : null,
                         limit,
                         offset,
                         fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
@@ -148,7 +148,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.updateAnimeListing(
                             auth,
                             id,
-                            status.field(),
+                            status != null ? status.field() : null,
                             rewatching,
                             score,
                             watchedEpisodes,
@@ -187,8 +187,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getUserAnimeListing(
                         auth,
                         username,
-                        status.field(),
-                        sort.field(),
+                        status != null ? status.field() : null,
+                        sort != null ? sort.field() : null,
                         limit,
                         offset,
                         false)
@@ -332,7 +332,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 final Call.GetMangaRanking response = handleResponse(
                     () -> service.getMangaRanking(
                         auth,
-                        rankingType.field(),
+                        rankingType != null ? rankingType.field() : null,
                         limit,
                         offset,
                         fields == null ? Call.GetAnime.fields : asStringListEncoded(fields),
@@ -360,7 +360,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.updateMangaListing(
                             auth,
                             id,
-                            status.field(),
+                            status != null ? status.field() : null,
                             rereading,
                             score,
                             volumesRead,
@@ -400,8 +400,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getUserMangaListing(
                         auth,
                         username,
-                        status.field(),
-                        sort.field(),
+                        status != null ? status.field() : null,
+                        sort != null ? sort.field() : null,
                         limit,
                         offset,
                         false)
@@ -452,19 +452,13 @@ public final class MyAnimeListImpl extends MyAnimeList{
         try{
             final Response<R> response = supplier.get();
             if(response.code() != HttpURLConnection.HTTP_OK){
-                 System.out.println(response.code());
+                System.out.println(response.code());
                 System.out.println(response.toString());
             }
-            switch(response.code()){
-                case HttpURLConnection.HTTP_OK:
-                    return response.body();
-                case HttpURLConnection.HTTP_BAD_REQUEST:
-                    return null; // todo
-                case HttpURLConnection.HTTP_FORBIDDEN:
-                    return null; // todo
-                case HttpURLConnection.HTTP_NOT_FOUND:
-                    return null;
-            }
+            if(response.code() == HttpURLConnection.HTTP_OK)
+                return response.body();
+            else
+                return null; // todo
         }catch(final IOException e){ // client side failure
             e.printStackTrace();
         }

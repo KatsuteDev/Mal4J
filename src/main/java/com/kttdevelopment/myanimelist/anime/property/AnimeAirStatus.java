@@ -24,10 +24,8 @@ public enum AnimeAirStatus {
     }
 
     @Override
-    public String toString(){
-        return "AnimeAirStatus{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
 
 }

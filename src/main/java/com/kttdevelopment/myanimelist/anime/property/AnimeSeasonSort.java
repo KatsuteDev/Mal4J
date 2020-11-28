@@ -23,10 +23,8 @@ public enum AnimeSeasonSort {
     }
 
     @Override
-    public String toString(){
-        return "AnimeSeasonSort{" +
-               "field='" + field + '\'' +
-               '}';
+    public final String toString(){
+        return name();
     }
 
 }
