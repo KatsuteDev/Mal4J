@@ -12,6 +12,7 @@ public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery
     protected final int year;
     protected final Season season;
     protected AnimeSeasonSort sort;
+    protected Boolean nsfw;
 
     public AnimeSeasonQuery(final MyAnimeListService service, final int year, final Season season) {
         super(service);
@@ -21,6 +22,11 @@ public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery
 
     public final AnimeSeasonQuery sortBy(final AnimeSeasonSort sort){
         this.sort = sort;
+        return this;
+    }
+
+    public final AnimeSeasonQuery includeNSFW(final boolean nsfw){
+        this.nsfw = nsfw;
         return this;
     }
 

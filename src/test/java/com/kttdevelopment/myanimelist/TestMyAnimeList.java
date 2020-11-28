@@ -6,6 +6,8 @@ import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 import com.kttdevelopment.myanimelist.manga.property.MangaType;
+import com.kttdevelopment.myanimelist.user.User;
+import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -32,14 +34,12 @@ public class TestMyAnimeList {
     @Test
     public void testAnimeSearch(){
         // test standard
-        final long second;
         {
             final List<AnimePreview> search =
                 mal.getAnime()
                     .withQuery("さくら荘のペットな彼女")
                     .search();
             Assertions.assertEquals(13759, search.get(0).getID());
-            second = search.get(1).getID();
             Assertions.assertNotEquals(1, search.size());
         }
         // test offset & limit
@@ -50,7 +50,7 @@ public class TestMyAnimeList {
                     .withLimit(1)
                     .withOffset(1)
                     .search();
-            Assertions.assertEquals(second, search.get(0).getID());
+            Assertions.assertNotEquals(13759, search.get(0).getID());
             Assertions.assertEquals(1, search.size());
         }
         // test limit bounds todo
@@ -67,9 +67,25 @@ public class TestMyAnimeList {
                     .search();
             Assertions.assertNull(search.get(0).getType());
         }
-        // test NSFW todo
+        // test NSFW
         {
-
+            {
+                final List<AnimePreview> search =
+                    mal.getAnime()
+                        .withQuery("いただきっセーエキ")
+                        .withLimit(1)
+                        .search();
+                Assertions.assertEquals(0, search.size());
+            }
+            {
+                final List<AnimePreview> search =
+                    mal.getAnime()
+                       .withQuery("いただきっセーエキ")
+                       .withLimit(1)
+                       .includeNSFW(true)
+                       .search();
+                Assertions.assertEquals(22429, search.get(0).getID());
+            }
         }
     }
 
@@ -195,7 +211,6 @@ public class TestMyAnimeList {
     @Test
     public void testMangaSearch(){
         // test standard
-        final long second;
         {
             final List<MangaPreview> search =
                 mal.getManga()
@@ -203,7 +218,6 @@ public class TestMyAnimeList {
                     .search();
 
             Assertions.assertEquals(21479, search.get(0).getID());
-            second = search.get(1).getID();
             Assertions.assertNotEquals(1, search.size());
         }
         // test offset & limit
@@ -214,8 +228,8 @@ public class TestMyAnimeList {
                     .withLimit(1)
                     .withOffset(1)
                     .search();
-            Assertions.assertEquals(second, search.get(0).getID());
-            Assertions.assertEquals(2, search.size());
+            Assertions.assertNotEquals(21479, search.get(0).getID());
+            Assertions.assertEquals(1, search.size());
         }
         // test limit bounds todo
         {
@@ -225,11 +239,31 @@ public class TestMyAnimeList {
         {
             final List<MangaPreview> search =
                 mal.getManga()
-                    .withQuery("ソードアートオンライン")
+                    .withQuery("さくら荘のペットな彼女")
                     .withLimit(1)
                     .withFields(new String[0])
                     .search();
             Assertions.assertNull(search.get(0).getType());
+        }
+        // test NSFW
+        {
+            {
+                final List<MangaPreview> search =
+                    mal.getManga()
+                        .withQuery("いただきっセーエキ")
+                        .withLimit(1)
+                        .search();
+                Assertions.assertEquals(0, search.size());
+            }
+            {
+                final List<MangaPreview> search =
+                    mal.getManga()
+                       .withQuery("いただきっセーエキ")
+                       .withLimit(1)
+                       .includeNSFW(true)
+                       .search();
+                Assertions.assertEquals(49697, search.get(0).getID());
+            }
         }
     }
 
@@ -282,7 +316,7 @@ public class TestMyAnimeList {
         }
         Assertions.assertNotEquals(-1, manga.getSerialization()[0].getID());
         Assertions.assertNotNull(manga.getSerialization()[0].getName());
-        Assertions.assertNotNull(manga.getSerialization()[0].getRole());
+        Assertions.assertNotNull(manga.getSerialization()[0].getRole(), "API issue, disregard failure"); // seems to be an API issue
     }
 
     @Test
@@ -311,9 +345,39 @@ public class TestMyAnimeList {
 
     // User
 
-    @Test @Disabled
+    @Test
     public void testUser(){
-        // todo
+        final User user = mal.getMyself();
+        // Assertions.assertEquals(user.getID(), mal.getUser("_Katsute_").getID()); // according to API only @me can be used
+
+        Assertions.assertNotEquals(-1, user.getID());
+        Assertions.assertNotNull(user.getName());
+        Assertions.assertNotNull(user.getPictureURL());
+        Assertions.assertNotNull(user.getGender());
+        Assertions.assertNotNull(user.getLocation());
+        Assertions.assertNotEquals(-1, user.getJoinedAt());
+        // anime statistics
+        {
+            final UserAnimeStatistics statistics = user.getAnimeStatistics();
+            Assertions.assertNotEquals(-1, statistics.getItemsWatching());
+            Assertions.assertNotEquals(-1, statistics.getItemsCompleted());
+            Assertions.assertNotEquals(-1, statistics.getDaysOnHold());
+            Assertions.assertNotEquals(-1, statistics.getItemsPlanToWatch());
+            Assertions.assertNotEquals(-1, statistics.getItems());
+            Assertions.assertNotEquals(-1, statistics.getDaysWatched());
+            Assertions.assertNotEquals(-1, statistics.getDaysWatching());
+            Assertions.assertNotEquals(-1, statistics.getDaysCompleted());
+            Assertions.assertNotEquals(-1, statistics.getDaysOnHold());
+            Assertions.assertNotEquals(-1, statistics.getDaysDropped());
+            Assertions.assertNotEquals(-1, statistics.getDays());
+            Assertions.assertNotEquals(-1, statistics.getEpisodes());
+            Assertions.assertNotEquals(-1, statistics.getTimesRewatched());
+            Assertions.assertNotEquals(-1, statistics.getMeanScore());
+        }
+        Assertions.assertNotNull(user.getTimeZone());
+        Assertions.assertFalse(user.isSupporter());
+
+        Assertions.assertNotEquals(-1, user.getBirthday(), "API or privacy issue, disregard failure"); // unknown issue
     }
 
 }
