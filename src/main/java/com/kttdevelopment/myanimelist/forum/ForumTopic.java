@@ -8,6 +8,6 @@ public abstract class ForumTopic {
 
     public abstract Post[] getPosts();
 
-    public abstract Poll[] getPolls();
+    public abstract Poll getPoll();
 
 }

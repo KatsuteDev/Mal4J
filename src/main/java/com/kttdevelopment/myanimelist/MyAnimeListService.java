@@ -10,8 +10,12 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Call.*;
 public interface MyAnimeListService {
 
     static MyAnimeListService create(){
+        // final okhttp3.logging.HttpLoggingInterceptor interceptor = new okhttp3.logging.HttpLoggingInterceptor();
+        // interceptor.setLevel(okhttp3.logging.HttpLoggingInterceptor.Level.BODY);
         return new Retrofit
             .Builder()
+            // .client(new okhttp3.OkHttpClient.Builder()
+            //     .addInterceptor(interceptor).build())
             .baseUrl("https://api.myanimelist.net/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -101,12 +105,13 @@ public interface MyAnimeListService {
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
         @Query("limit")                             final Integer limit,
-        @Query("offset")                            final Integer offset
+        @Query("offset")                            final Integer offset,
+        @Query(value = "fields", encoded = true)    final String fields
     );
 
     // forum
 
-    @GET("forum/board")
+    @GET("forum/boards")
     Call<GetForumBoards> getForumBoards(
         @Header("Authorization") final String token
     );
@@ -195,7 +200,8 @@ public interface MyAnimeListService {
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
         @Query("limit")                             final Integer limit,
-        @Query("offset")                            final Integer offset
+        @Query("offset")                            final Integer offset,
+        @Query(value = "fields", encoded = true)    final String fields
     );
 
     // user

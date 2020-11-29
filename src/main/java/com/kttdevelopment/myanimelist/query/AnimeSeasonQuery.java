@@ -7,7 +7,7 @@ import com.kttdevelopment.myanimelist.anime.property.time.Season;
 
 import java.util.List;
 
-public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery,List<AnimePreview>>{
+public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery,List<AnimePreview>> {
 
     protected final int year;
     protected final Season season;

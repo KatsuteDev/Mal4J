@@ -6,7 +6,7 @@ import com.kttdevelopment.myanimelist.anime.property.*;
 
 import java.util.List;
 
-public abstract class UserAnimeListQuery extends SearchQuery<UserAnimeListQuery, List<UserAnimeListStatus>> {
+public abstract class UserAnimeListQuery extends FieldSearchQuery<UserAnimeListQuery, List<UserAnimeListStatus>> {
 
     protected final String username;
     protected AnimeSort sort;

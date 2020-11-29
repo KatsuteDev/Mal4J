@@ -1,5 +1,8 @@
 package com.kttdevelopment.myanimelist;
 
+import com.kttdevelopment.myanimelist.forum.ForumTopic;
+import com.kttdevelopment.myanimelist.forum.property.ForumTopicDetail;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -119,7 +122,10 @@ abstract class MyAnimeListAPIResponse {
 
         }
 
-        static class GetForumTopicDetail extends Pagination<ForumTopicData> {
+        static class GetForumTopicDetail /* extends Pagination<ForumTopicData> */ { // API has conflicting schemas
+
+            ForumTopicData data;
+            Pagination.Paging paging;
 
         }
 
@@ -346,7 +352,7 @@ abstract class MyAnimeListAPIResponse {
 
             }
 
-            Poll[] poll;
+            Poll poll; // API has conflicting schemas
 
             static class Poll extends AutomatedToString {
 

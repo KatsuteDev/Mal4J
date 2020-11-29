@@ -5,7 +5,7 @@ import com.kttdevelopment.myanimelist.anime.AnimePreview;
 
 import java.util.List;
 
-public abstract class AnimeSearchQuery extends FieldSearchQuery<AnimeSearchQuery,List<AnimePreview>>{
+public abstract class AnimeSearchQuery extends FieldSearchQuery<AnimeSearchQuery,List<AnimePreview>> {
 
     protected String query;
     protected Boolean nsfw;

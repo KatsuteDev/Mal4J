@@ -7,7 +7,7 @@ import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 
 import java.util.List;
 
-public abstract class UserMangaListQuery extends SearchQuery<UserMangaListQuery,List<UserMangaListStatus>> {
+public abstract class UserMangaListQuery extends FieldSearchQuery<UserMangaListQuery,List<UserMangaListStatus>> {
 
     protected final String username;
     protected MangaSort sort;
