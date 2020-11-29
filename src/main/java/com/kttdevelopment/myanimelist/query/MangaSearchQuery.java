@@ -5,7 +5,7 @@ import com.kttdevelopment.myanimelist.manga.MangaPreview;
 
 import java.util.List;
 
-public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery,List<MangaPreview>>{
+public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery,List<MangaPreview>> {
 
     protected String query;
     protected Boolean nsfw;

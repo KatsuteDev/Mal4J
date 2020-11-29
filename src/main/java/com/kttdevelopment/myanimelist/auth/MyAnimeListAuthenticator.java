@@ -8,7 +8,7 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
 
-public class MyAnimeListAuthenticator {
+public final class MyAnimeListAuthenticator {
 
     private static final String authUrl =
         "https://myanimelist.net/v1/oauth2/authorize" +
@@ -20,19 +20,29 @@ public class MyAnimeListAuthenticator {
 
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
 
-    private transient final String client_id;
     private transient AccessToken token;
 
-    public MyAnimeListAuthenticator(final String client_id, final int port) throws IOException{
-        this.client_id = client_id;
-        final Authorization auth = getAuthorization(client_id, Math.min(Math.max(0, port), 65535));
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port) throws IOException{
+        final Authorization auth = authenticateWithLocalServer(client_id, Math.min(Math.max(0, port), 65535));
         token = authService
             .getToken(
                 client_id,
-                null,
+                client_secret,
                 "authorization_code",
                 auth.getAuthorization(),
                 auth.getVerifier())
+            .execute()
+            .body();
+    }
+
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge) throws IOException{
+        token = authService
+            .getToken(
+                client_id,
+                client_secret,
+                "authorization_code",
+                authorization_code,
+                PKCE_code_challenge)
             .execute()
             .body();
     }
@@ -44,15 +54,19 @@ public class MyAnimeListAuthenticator {
     public final AccessToken refreshAccessToken() throws IOException {
         return token = authService
             .refreshToken(
-                client_id,
-                "refresh_token")
+                "refresh_token",
+                token.getRefreshToken())
             .execute()
             .body();
     }
 
-    private static Authorization getAuthorization(final String client_id, final int port) throws IOException{
+    public static String getAuthorizationURL(final String client_id, final String PKCE_code_challenge){
+        return String.format(authUrl, URLEncoder.encode(client_id, StandardCharsets.UTF_8), PKCE_code_challenge);
+    }
+
+    private static Authorization authenticateWithLocalServer(final String client_id, final int port) throws IOException{
         final String verify = PKCE.generateCodeVerifier();
-        final String url = String.format(authUrl, URLEncoder.encode(client_id, StandardCharsets.UTF_8), verify);
+        final String url = getAuthorizationURL(client_id, verify);
 
         if(!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
             throw new UnsupportedOperationException("Failed to authorize client (unable to open browser link.");
@@ -70,12 +84,8 @@ public class MyAnimeListAuthenticator {
         server.createContext("/", handler);
         server.start();
 
-        try{
-            Desktop.getDesktop().browse(new URI(url));
-        }catch(final URISyntaxException e){
-            // should only occur if failed to open browser
-            throw new RuntimeException(e);
-        }
+        try{ Desktop.getDesktop().browse(new URI(url));
+        }catch(final URISyntaxException ignored){ } // URL is guaranteed to be valid
 
         try{
             latch.await();

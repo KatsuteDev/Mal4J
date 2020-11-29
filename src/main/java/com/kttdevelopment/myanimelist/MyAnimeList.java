@@ -20,9 +20,11 @@ public abstract class MyAnimeList {
         return new MyAnimeListImpl(token);
     }
 
-    public static MyAnimeList withClientId(final String client_id, final int server_port) throws IOException{
-        return new MyAnimeListImpl(new MyAnimeListAuthenticator(client_id, server_port).getAccessToken().getToken());
+    public static MyAnimeList withAuthorization(final MyAnimeListAuthenticator authenticator){
+        return new MyAnimeListImpl(authenticator);
     }
+
+    public abstract void refreshOAuthToken() throws IOException;
 
     // anime
 
@@ -60,11 +62,13 @@ public abstract class MyAnimeList {
 
     //
 
-    public abstract List<ForumTopic> getForumTopicDetails(final long id);
+    public abstract ForumTopic getForumTopicDetails(final long id);
 
-    public abstract List<ForumTopic> getForumTopicDetails(final long id, final int limit);
+    @Deprecated
+    public abstract ForumTopic getForumTopicDetails(final long id, final int limit);
 
-    public abstract List<ForumTopic> getForumTopicDetails(final long id, final int limit, final int offset);
+    @Deprecated
+    public abstract ForumTopic getForumTopicDetails(final long id, final int limit, final int offset);
 
     //
 

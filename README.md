@@ -28,4 +28,22 @@ This project is currently in development. Please help contribute to this project
 
 View our progress [here](https://github.com/Ktt-Development/MyAnimeList-Java-API/projects/1).
 
-# Setup
+# Setup (wip)
+
+## API setup
+
+### Create new API key
+
+Create a new API key at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
+
+![Create ID](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_1.png)
+
+### Register API key
+
+Fill in all required fields and App Redirect URL.
+
+![Create ID](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_2.png)
+
+### Retrieve Client ID
+
+Copy client ID and client secret (if the application has a client secret).

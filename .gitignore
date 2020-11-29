@@ -2,4 +2,4 @@
 target
 *.iml
 
-/src/test/java/com/kttdevelopment/myanimelist/client.txt
+/src/test/java/com/kttdevelopment/myanimelist/*.txt

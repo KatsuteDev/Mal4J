@@ -5,7 +5,7 @@ import com.kttdevelopment.myanimelist.forum.property.ForumTopicDetail;
 
 import java.util.List;
 
-public abstract class ForumSearchQuery extends SearchQuery<ForumSearchQuery,List<ForumTopicDetail>> {
+public abstract class ForumSearchQuery extends FieldSearchQuery<ForumSearchQuery,List<ForumTopicDetail>> {
 
     protected String query;
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})

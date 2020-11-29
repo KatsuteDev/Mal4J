@@ -3,6 +3,9 @@ package com.kttdevelopment.myanimelist;
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
+import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;
+import com.kttdevelopment.myanimelist.forum.*;
+import com.kttdevelopment.myanimelist.forum.property.*;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.NSFW;
@@ -12,7 +15,9 @@ import org.junit.jupiter.api.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -20,13 +25,20 @@ public class TestMyAnimeList {
 
     private static MyAnimeList mal;
 
+    private static final Path client = new File("src/test/java/com/kttdevelopment/myanimelist/client.txt").toPath();
+    private static final Path oauth = new File("src/test/java/com/kttdevelopment/myanimelist/oauth.txt").toPath();
+
     @BeforeAll
     public static void beforeAll() throws IOException{
-        final File file = new File("src/test/java/com/kttdevelopment/myanimelist/client.txt");
-        Assumptions.assumeTrue(file.exists(), "Skipping tests (requires user authentication)");
-        final String clientId = Files.readString(file.toPath());
-
-        mal = MyAnimeList.withClientId(clientId, 5050);
+        if(oauth.toFile().exists()){
+            mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
+        }else{
+            Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (requires user authentication)");
+            final String clientId = Files.readString(client);
+            final MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator(clientId, null, 5050);
+            mal = MyAnimeList.withAuthorization(authenticator);
+            Files.write(oauth, authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
+        }
     }
 
     // Anime
@@ -241,7 +253,11 @@ public class TestMyAnimeList {
 
     @Test @Disabled
     public void testUpdateAndDeleteAnimeListing(){
-        // todo
+        // todo: get
+
+        // todo: delete
+
+        // todo: update
     }
 
     @Test
@@ -258,12 +274,12 @@ public class TestMyAnimeList {
         {
             final List<UserAnimeListStatus> list =
                 mal.getUserAnimeListing()
-                   .sortBy(AnimeSort.StartDate)
+                   .sortBy(AnimeSort.UpdatedAt)
                    .search();
-            Assertions.assertTrue(list.get(0).getStartDate() < list.get(1).getStartDate());
+            Assertions.assertTrue(list.get(0).getUpdatedAt() > list.get(1).getUpdatedAt());
         }
         // test standard
-        {
+        { // todo: move this to update?
             final UserAnimeListStatus status =
                 mal.getUserAnimeListing()
                     .search()
@@ -284,7 +300,99 @@ public class TestMyAnimeList {
         }
     }
 
-    // Forum todo
+    // Forum
+
+    @Test // test may fail if forum has no subboards
+    public void testForumCategories(){
+        // test standard
+        {
+            final ForumCategory category =
+                mal.getForumBoards().get(0);
+
+            Assertions.assertNotNull(category.getTitle());
+            // board
+            {
+                final ForumBoard board = category.getForumBoards()[2];
+                Assertions.assertNotEquals(-1, board.getID());
+                Assertions.assertNotNull(board.getTitle());
+                Assertions.assertNotNull(board.getDescription());
+                // subboard
+                {
+                    final ForumSubBoard subBoard = board.getSubBoards()[0];
+                    Assertions.assertNotEquals(-1, subBoard.getID());
+                    Assertions.assertNotNull(subBoard.getTitle());
+                }
+            }
+        }
+    }
+
+    @Test
+    public void testForumTopicDetail(){
+        // test standard
+        {
+            final ForumTopic topic = mal.getForumTopicDetails(481);
+            Assertions.assertNotNull(topic.getTitle());
+            // posts
+            {
+                final Post post = topic.getPosts()[0];
+                Assertions.assertNotEquals(-1, post.getID());
+                Assertions.assertNotEquals(-1, post.getNumber());
+                Assertions.assertNotEquals(-1, post.getCreatedAt());
+                Assertions.assertNotNull(post.getBody());
+                Assertions.assertNotNull(post.getSignature());
+                Assertions.assertSame(topic, post.getForumTopic());
+            }
+            // poll
+            {
+                final Poll poll = topic.getPoll();
+                Assertions.assertNotEquals(-1, poll.getID());
+                Assertions.assertNotNull(poll.getQuestion());
+                Assertions.assertFalse(poll.isClosed()); // weak test
+                // options
+                {
+                    final PollOption option = poll.getOptions()[0];
+                    Assertions.assertNotEquals(-1, option.getID());
+                    Assertions.assertNotNull(option.getText());
+                    Assertions.assertNotEquals(-1, option.getVotes());
+                    Assertions.assertSame(poll, option.getPoll());
+                }
+                Assertions.assertSame(topic, poll.getForumTopic());
+            }
+        }
+    }
+
+    @Test // todo
+    public void testForumTopics(){
+        // test standard
+        {
+
+        }
+        // test limit & offset
+        {
+            final List<ForumTopicDetail> topics =
+                mal.getForumTopics()
+                    .withLimit(1)
+                    .withOffset(1)
+                    .search();
+            Assertions.assertEquals(1, topics.size());
+        }
+        // id
+        {
+
+        }
+        // test search
+        {
+
+        }
+        // test topic name
+        {
+
+        }
+        // test username
+        {
+
+        }
+    }
 
     // Manga
 
@@ -444,7 +552,11 @@ public class TestMyAnimeList {
 
     @Test @Disabled
     public void testUpdateAndDeleteMangaListing(){
-        // todo
+        // todo: get
+
+        // todo: delete
+
+        // todo: update
     }
 
     @Test
@@ -454,6 +566,7 @@ public class TestMyAnimeList {
             final List<UserMangaListStatus> list =
                 mal.getUserMangaListing()
                    .withStatus(MangaStatus.PlanToRead)
+                   .withLimit(1)
                    .search();
             Assertions.assertEquals(MangaStatus.PlanToRead, list.get(0).getStatus());
         }
@@ -461,12 +574,13 @@ public class TestMyAnimeList {
         {
             final List<UserMangaListStatus> list =
                 mal.getUserMangaListing()
-                   .sortBy(MangaSort.StartDate)
+                   .sortBy(MangaSort.UpdatedAt)
+                   .withLimit(2)
                    .search();
-            Assertions.assertTrue(list.get(0).getStartDate() < list.get(1).getStartDate());
+            Assertions.assertTrue(list.get(0).getUpdatedAt() > list.get(1).getUpdatedAt());
         }
         // test standard
-        {
+        { // todo: move this to update?
             final UserMangaListStatus status =
                 mal.getUserMangaListing()
                     .search()

@@ -1200,7 +1200,8 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 private final String title = requireNonNull(() -> schema.title);
                 private final Post[] posts = requireNonNull(() -> adaptArray(schema.posts, p -> asPost(mal, p, this), Post.class));
-                private final Poll[] polls = requireNonNull(() -> adaptArray(schema.poll, p -> asPoll(mal, p, this), Poll.class));
+                // private final Poll[] polls = requireNonNull(() -> adaptArray(schema.poll, p -> asPoll(mal, p, this), Poll.class));
+                private final Poll poll = requireNonNull(() -> asPoll(mal, schema.poll, this));
 
                 // API methods
 
@@ -1215,8 +1216,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Poll[] getPolls() {
-                    return polls;
+                public final Poll getPoll() {
+                    return poll;
                 }
 
                 // additional methods

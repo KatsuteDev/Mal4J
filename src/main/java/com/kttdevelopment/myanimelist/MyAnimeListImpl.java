@@ -3,6 +3,8 @@ package com.kttdevelopment.myanimelist;
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.AnimeRankingType;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
+import com.kttdevelopment.myanimelist.auth.AccessToken;
+import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.forum.property.ForumTopicDetail;
@@ -27,12 +29,25 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.User.
 
 public final class MyAnimeListImpl extends MyAnimeList{
 
-    private transient final String auth;
+    private transient String auth;
+    private MyAnimeListAuthenticator authenticator;
 
     private final MyAnimeListService service = MyAnimeListService.create();
 
-    public MyAnimeListImpl(final String auth){
+    MyAnimeListImpl(final String auth){
         this.auth = auth;
+    }
+
+    public MyAnimeListImpl(final MyAnimeListAuthenticator authenticator){
+        this.authenticator = authenticator;
+        this.auth = authenticator.getAccessToken().getToken();
+    }
+
+    @Override
+    public synchronized final void refreshOAuthToken() throws IOException{
+        if(authenticator == null)
+            throw new UnsupportedOperationException("OAuth token refresh can only be used with authorization");
+        this.auth = authenticator.refreshAccessToken().getToken();
     }
 
     //
@@ -220,7 +235,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         between(0, limit, 1000),
-                        between(0, offset, null))
+                        between(0, offset, null),
+                        fields == null ? animeFields : asStringList(fields))
                     .execute()
                 );
                 if(response == null) return null;
@@ -250,31 +266,32 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final List<ForumTopic> getForumTopicDetails(final long id){
+    public final ForumTopic getForumTopicDetails(final long id){
         return getForumTopicDetails(id, -1, -1);
     }
 
     @Override
-    public final List<ForumTopic> getForumTopicDetails(final long id, final int limit){
+    public final ForumTopic getForumTopicDetails(final long id, final int limit){
         return getForumTopicDetails(id, limit, -1);
     }
 
     @Override
-    public final List<ForumTopic> getForumTopicDetails(final long id, final int limit, final int offset){
+    public final ForumTopic getForumTopicDetails(final long id, final int limit, final int offset){
         final Call.GetForumTopicDetail response = handleResponse(
             () -> service.getForumBoard(
                 auth,
                 id,
-                between(0, limit, 100),
-                between(0, offset, null))
+                limit == -1 ? null : between(0, limit, 100),
+                offset == -1 ? null : between(0, offset, null))
             .execute()
         );
         if(response == null) return null;
 
-        final List<ForumTopic> topics = new ArrayList<>();
-        for(final TopLevelObject.ForumTopicData iterator : response.data)
-            topics.add(asForumTopic(MyAnimeListImpl.this, iterator));
-        return topics;
+        // final List<ForumTopic> topics = new ArrayList<>();
+        // for(final TopLevelObject.ForumTopicData iterator : response.data)
+        //     topics.add(asForumTopic(MyAnimeListImpl.this, iterator));
+        // return topics;
+        return asForumTopic(MyAnimeListImpl.this, response.data);
     }
 
     @Override
@@ -438,7 +455,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         between(0, limit, 1000),
-                        between(0, offset, null))
+                        between(0, offset, null),
+                        fields == null ? animeFields : asStringList(fields))
                     .execute()
                 );
                 if(response == null) return null;
@@ -486,16 +504,18 @@ public final class MyAnimeListImpl extends MyAnimeList{
     private <R> R handleResponse(final ExceptionSupplier<Response<R>, IOException> supplier){
         try{
             final Response<R> response = supplier.get();
-            if(response.code() != HttpURLConnection.HTTP_OK){
-                System.out.println(response.code());
-                System.out.println(response.toString());
+            switch(response.code()){
+                case HttpURLConnection.HTTP_OK:
+                    return response.body();
+                case HttpURLConnection.HTTP_BAD_REQUEST:
+                    throw new InvalidParametersException(response.toString());
+                case HttpURLConnection.HTTP_UNAUTHORIZED:
+                    throw new InvalidAuthException(response.toString());
+                case HttpURLConnection.HTTP_FORBIDDEN:
+                    throw new ConnectionForbiddenException(response.toString());
             }
-            if(response.code() == HttpURLConnection.HTTP_OK)
-                return response.body();
-            else
-                return null; // todo
         }catch(final IOException e){ // client side failure
-            e.printStackTrace();
+            throw new FailedRequestException(e);
         }
         return null;
     }
