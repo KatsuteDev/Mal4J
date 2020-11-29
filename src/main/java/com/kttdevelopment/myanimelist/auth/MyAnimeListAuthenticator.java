@@ -20,22 +20,34 @@ public final class MyAnimeListAuthenticator {
 
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
 
-    private transient AccessToken token;
+    private final String client_id, client_secret, authorizationCode, pkce;
+    private AccessToken token;
 
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port) throws IOException{
         final Authorization auth = authenticateWithLocalServer(client_id, Math.min(Math.max(0, port), 65535));
+
+        this.client_id          = client_id;
+        this.client_secret      = client_secret;
+        this.authorizationCode  = auth.getAuthorization();
+        this.pkce               = auth.getVerifier();
+
         token = authService
             .getToken(
                 client_id,
                 client_secret,
                 "authorization_code",
-                auth.getAuthorization(),
-                auth.getVerifier())
+                this.authorizationCode,
+                this.pkce)
             .execute()
             .body();
     }
 
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge) throws IOException{
+        this.client_id          = client_id;
+        this.client_secret      = client_secret;
+        this.authorizationCode  = authorization_code;
+        this.pkce               = PKCE_code_challenge;
+
         token = authService
             .getToken(
                 client_id,
@@ -54,7 +66,11 @@ public final class MyAnimeListAuthenticator {
     public final AccessToken refreshAccessToken() throws IOException {
         return token = authService
             .refreshToken(
+                client_id,
+                client_secret,
                 "refresh_token",
+                authorizationCode,
+                pkce,
                 token.getRefreshToken())
             .execute()
             .body();

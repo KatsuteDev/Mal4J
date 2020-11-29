@@ -28,6 +28,8 @@ public class TestMyAnimeList {
     private static final Path client = new File("src/test/java/com/kttdevelopment/myanimelist/client.txt").toPath();
     private static final Path oauth = new File("src/test/java/com/kttdevelopment/myanimelist/oauth.txt").toPath();
 
+    private static MyAnimeListAuthenticator authenticator;
+
     @BeforeAll
     public static void beforeAll() throws IOException{
         if(oauth.toFile().exists()){
@@ -35,10 +37,20 @@ public class TestMyAnimeList {
         }else{
             Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (requires user authentication)");
             final String clientId = Files.readString(client);
-            final MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator(clientId, null, 5050);
+            authenticator = new MyAnimeListAuthenticator(clientId, null, 5050);
             mal = MyAnimeList.withAuthorization(authenticator);
             Files.write(oauth, authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
+
+            Assertions.assertNotNull(mal.getAnime().withQuery("さくら荘のペットな彼女").search());
+            mal.refreshOAuthToken();
         }
+
+    }
+
+    @AfterAll
+    public static void afterAll() throws IOException{
+        if(authenticator != null)
+            Files.write(oauth, authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
     }
 
     // Anime
@@ -97,8 +109,12 @@ public class TestMyAnimeList {
         }
         // test limit bounds
         { // seems to be an API issue
-            Assumptions.assumeTrue(mal.getAnime().withLimit(200).search() != null, "API issue, disregard failure");
-            Assumptions.assumeTrue(mal.getAnime().withOffset(-1).search() != null, "API issue, disregard failure");
+            try{
+                Assumptions.assumeTrue(mal.getAnime().withLimit(200).search() != null, "API issue, disregard failure");
+                Assumptions.assumeTrue(mal.getAnime().withOffset(-1).search() != null, "API issue, disregard failure");
+            }catch(final InvalidParametersException e){
+                e.printStackTrace();
+            }
         }
     }
 
@@ -451,8 +467,12 @@ public class TestMyAnimeList {
         }
         // test limit bounds
         { // seems to be an API issue
-            Assumptions.assumeTrue(mal.getManga().withLimit(200).search() != null, "API issue, disregard failure");
-            Assumptions.assumeTrue(mal.getManga().withOffset(-1).search() != null, "API issue, disregard failure");
+            try{
+                Assumptions.assumeTrue(mal.getManga().withLimit(200).search() != null, "API issue, disregard failure");
+                Assumptions.assumeTrue(mal.getManga().withOffset(-1).search() != null, "API issue, disregard failure");
+            }catch(final InvalidParametersException e){
+                e.printStackTrace();
+            }
         }
     }
 
