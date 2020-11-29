@@ -4,8 +4,8 @@ import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.manga.*;
-import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
-import com.kttdevelopment.myanimelist.manga.property.MangaType;
+import com.kttdevelopment.myanimelist.manga.property.*;
+import com.kttdevelopment.myanimelist.property.NSFW;
 import com.kttdevelopment.myanimelist.user.User;
 import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
 import org.junit.jupiter.api.*;
@@ -53,10 +53,6 @@ public class TestMyAnimeList {
             Assertions.assertNotEquals(13759, search.get(0).getID());
             Assertions.assertEquals(1, search.size());
         }
-        // test limit bounds todo
-        {
-
-        }
         // test fields
         {
             final List<AnimePreview> search =
@@ -87,14 +83,19 @@ public class TestMyAnimeList {
                 Assertions.assertEquals(22429, search.get(0).getID());
             }
         }
+        // test limit bounds
+        { // seems to be an API issue
+            Assumptions.assumeTrue(mal.getAnime().withLimit(200).search() != null, "API issue, disregard failure");
+            Assumptions.assumeTrue(mal.getAnime().withOffset(-1).search() != null, "API issue, disregard failure");
+        }
     }
 
     @Test
     public void testAnime(){
-        final Anime anime = mal.getAnime(13759);
+        final Anime anime = mal.getAnime(11757);
         Assertions.assertEquals(anime, anime.getAnime());
 
-        Assertions.assertEquals(13759, anime.getID());
+        Assertions.assertEquals(11757, anime.getID());
         Assertions.assertNotNull(anime.getTitle());
         Assertions.assertNotNull(anime.getMainPicture().getMediumURL());
         Assertions.assertNotNull(anime.getMainPicture().getLargeURL());
@@ -104,21 +105,17 @@ public class TestMyAnimeList {
         Assertions.assertNotEquals(-1, anime.getStartDate());
         Assertions.assertNotEquals(-1, anime.getEndDate());
         Assertions.assertNotNull(anime.getSynopsis());
-        Assertions.assertNotEquals(0, anime.getMeanRating());
-        Assertions.assertNotEquals(0, anime.getRank());
-        Assertions.assertNotEquals(0, anime.getPopularity());
-        Assertions.assertNotEquals(0, anime.getUserListingCount());
-        Assertions.assertNotEquals(0, anime.getUserScoringCount());
+        Assertions.assertNotEquals(-1, anime.getMeanRating());
+        Assertions.assertNotEquals(-1, anime.getRank());
+        Assertions.assertNotEquals(-1, anime.getPopularity());
+        Assertions.assertNotEquals(-1, anime.getUserListingCount());
+        Assertions.assertNotEquals(-1, anime.getUserScoringCount());
         Assertions.assertNotNull(anime.getNSFW());
         Assertions.assertNotNull(anime.getGenres());
         Assertions.assertNotEquals(-1, anime.getCreatedAt());
         Assertions.assertNotEquals(-1, anime.getUpdatedAt());
         Assertions.assertNotNull(anime.getType());
         Assertions.assertNotNull(anime.getStatus());
-        // todo: list status
-        {
-
-        }
         Assertions.assertNotNull(anime.getStartSeason().getSeason());
         Assertions.assertNotEquals(-1, anime.getStartSeason().getYear());
         Assertions.assertNotNull(anime.getBroadcast().getDayOfWeek());
@@ -131,23 +128,50 @@ public class TestMyAnimeList {
         Assertions.assertNotNull(anime.getPictures()[0].getMediumURL());
         Assertions.assertNotNull(anime.getPictures()[0].getLargeURL());
         Assertions.assertNotNull(anime.getBackground());
-        // todo: related
+        // related
         {
+            final RelatedAnime relatedAnime = anime.getRelatedAnime()[0];
+            Assertions.assertNotEquals(-1, relatedAnime.getAnimePreview().getID());
+            Assertions.assertNotNull(relatedAnime.getRelationType());
+            Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
 
+            // Anime is unlikely to have a related manga
+            // final RelatedManga relatedManga = anime.getRelatedManga()[0];
+            // Assertions.assertNotEquals(-1, relatedManga.getMangaPreview().getID());
+            // Assertions.assertNotNull(relatedManga.getRelationType());
+            // Assertions.assertNotNull(relatedManga.getRelationTypeFormat());
         }
-        // todo: recommendations
+        // recommendations
         {
-
+            final AnimeRecommendation recommendation = anime.getRecommendations()[0];
+            Assertions.assertNotEquals(-1, recommendation.getAnimePreview().getID());
+            Assertions.assertNotEquals(-1, recommendation.getRecommendations());
         }
         // statistics
         {
             final AnimeStatistics statistics = anime.getStatistics();
-            Assertions.assertNotEquals(0, statistics.getCompleted());
-            Assertions.assertNotEquals(0, statistics.getDropped());
-            Assertions.assertNotEquals(0, statistics.getOnHold());
-            Assertions.assertNotEquals(0, statistics.getPlanToWatch());
-            Assertions.assertNotEquals(0, statistics.getWatching());
-            Assertions.assertNotEquals(0, statistics.getUserCount());
+            Assertions.assertNotEquals(-1, statistics.getCompleted());
+            Assertions.assertNotEquals(-1, statistics.getDropped());
+            Assertions.assertNotEquals(-1, statistics.getOnHold());
+            Assertions.assertNotEquals(-1, statistics.getPlanToWatch());
+            Assertions.assertNotEquals(-1, statistics.getWatching());
+            Assertions.assertNotEquals(-1, statistics.getUserCount());
+        }
+        // list status
+        {
+            final AnimeListStatus listStatus = anime.getListStatus();
+            Assertions.assertNotNull(listStatus.getStatus());
+            Assertions.assertNotEquals(-1, listStatus.getScore());
+            Assertions.assertNotEquals(-1, listStatus.getWatchedEpisodes());
+            Assertions.assertFalse(listStatus.isRewatching()); // weak test
+            Assertions.assertNotEquals(-1, listStatus.getStartDate());
+            Assertions.assertNotEquals(-1, listStatus.getFinishDate());
+            Assertions.assertNotEquals(-1, listStatus.getPriority());
+            Assertions.assertNotEquals(-1, listStatus.getTimesRewatched());
+            Assertions.assertNotEquals(-1, listStatus.getRewatchValue());
+            Assertions.assertNotNull(listStatus.getTags());
+            Assertions.assertNotNull(listStatus.getComments());
+            Assertions.assertNotEquals(-1, listStatus.getUpdatedAt());
         }
     }
 
@@ -164,9 +188,9 @@ public class TestMyAnimeList {
             Assertions.assertTrue(first.getPreviousRank() < 1);
             Assertions.assertEquals(AnimeType.Movie, first.getAnimePreview().getType());
         }
-        // test NSFW todo
+        // test NSFW
         {
-
+            // NSFW is unlikely to be in the top ranking so tests will not work
         }
     }
 
@@ -193,15 +217,71 @@ public class TestMyAnimeList {
             final AnimePreview second = season.get(1);
             Assertions.assertTrue(first.getMeanRating() > second.getMeanRating());
         }
-        // test NSFW todo
+        // test NSFW
         {
-
+            final List<AnimePreview> season =
+                mal.getAnimeSeason(2014, Season.Winter)
+                    .search();
+            boolean hasNSFW = false;
+            for(final AnimePreview animePreview : season)
+                if(animePreview.getNSFW() != NSFW.White)
+                    hasNSFW = true;
+            Assumptions.assumeTrue(hasNSFW, "API issue, disregard failure");
         }
     }
 
+
+    @Test
+    public void testAnimeSuggestions(){
+        final List<AnimePreview> suggestions =
+            mal.getAnimeSuggestions()
+                .search();
+        Assertions.assertNotNull(suggestions);
+    }
+
     @Test @Disabled
-    public void testUserAnimeListing(){
+    public void testUpdateAndDeleteAnimeListing(){
         // todo
+    }
+
+    @Test
+    public void testUserAnimeListing(){
+        // test status
+        {
+            final List<UserAnimeListStatus> list =
+                mal.getUserAnimeListing()
+                   .withStatus(AnimeStatus.Dropped)
+                   .search();
+            Assertions.assertEquals(AnimeStatus.Dropped, list.get(0).getStatus());
+        }
+        // test sort
+        {
+            final List<UserAnimeListStatus> list =
+                mal.getUserAnimeListing()
+                   .sortBy(AnimeSort.StartDate)
+                   .search();
+            Assertions.assertTrue(list.get(0).getStartDate() < list.get(1).getStartDate());
+        }
+        // test standard
+        {
+            final UserAnimeListStatus status =
+                mal.getUserAnimeListing()
+                    .search()
+                    .get(0);
+            Assertions.assertNotEquals(-1, status.getAnimePreview().getID());
+            Assertions.assertNotNull(status.getStatus());
+            Assertions.assertNotEquals(-1, status.getScore());
+            Assertions.assertNotEquals(-1, status.getWatchedEpisodes());
+            Assertions.assertFalse(status.isRewatching()); // weak test
+            Assertions.assertNotEquals(-1, status.getStartDate());
+            Assertions.assertNotEquals(-1, status.getFinishDate());
+            Assertions.assertNotEquals(-1, status.getPriority());
+            Assertions.assertNotEquals(-1, status.getTimesRewatched());
+            Assertions.assertNotEquals(-1, status.getRewatchValue());
+            Assertions.assertNotNull(status.getTags());
+            Assertions.assertNotNull(status.getComments());
+            Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        }
     }
 
     // Forum todo
@@ -230,10 +310,6 @@ public class TestMyAnimeList {
                     .search();
             Assertions.assertNotEquals(21479, search.get(0).getID());
             Assertions.assertEquals(1, search.size());
-        }
-        // test limit bounds todo
-        {
-
         }
         // test fields
         {
@@ -265,14 +341,19 @@ public class TestMyAnimeList {
                 Assertions.assertEquals(49697, search.get(0).getID());
             }
         }
+        // test limit bounds
+        { // seems to be an API issue
+            Assumptions.assumeTrue(mal.getManga().withLimit(200).search() != null, "API issue, disregard failure");
+            Assumptions.assumeTrue(mal.getManga().withOffset(-1).search() != null, "API issue, disregard failure");
+        }
     }
 
     @Test
     public void testManga(){
-        final Manga manga = mal.getManga(28107);
+        final Manga manga = mal.getManga(21479);
         Assertions.assertEquals(manga, manga.getManga());
 
-        Assertions.assertEquals(28107, manga.getID());
+        Assertions.assertEquals(21479, manga.getID());
         Assertions.assertNotNull(manga.getTitle());
         Assertions.assertNotNull(manga.getMainPicture().getMediumURL());
         Assertions.assertNotNull(manga.getMainPicture().getLargeURL());
@@ -282,23 +363,19 @@ public class TestMyAnimeList {
         Assertions.assertNotEquals(-1, manga.getStartDate());
         Assertions.assertNotEquals(-1, manga.getEndDate());
         Assertions.assertNotNull(manga.getSynopsis());
-        Assertions.assertNotEquals(0, manga.getMeanRating());
-        Assertions.assertNotEquals(0, manga.getRank());
-        Assertions.assertNotEquals(0, manga.getPopularity());
-        Assertions.assertNotEquals(0, manga.getUserListingCount());
-        Assertions.assertNotEquals(0, manga.getUserScoringCount());
+        Assertions.assertNotEquals(-1, manga.getMeanRating());
+        Assertions.assertNotEquals(-1, manga.getRank());
+        Assertions.assertNotEquals(-1, manga.getPopularity());
+        Assertions.assertNotEquals(-1, manga.getUserListingCount());
+        Assertions.assertNotEquals(-1, manga.getUserScoringCount());
         Assertions.assertNotNull(manga.getNSFW());
         Assertions.assertNotNull(manga.getGenres());
         Assertions.assertNotEquals(-1, manga.getCreatedAt());
         Assertions.assertNotEquals(-1, manga.getUpdatedAt());
         Assertions.assertNotNull(manga.getType());
         Assertions.assertNotNull(manga.getStatus());
-        // todo: list status
-        {
-
-        }
-        Assertions.assertNotEquals(0, manga.getVolumes());
-        Assertions.assertNotEquals(0, manga.getChapters());
+        Assertions.assertNotEquals(-1, manga.getVolumes());
+        Assertions.assertNotEquals(-1, manga.getChapters());
         Assertions.assertNotEquals(-1, manga.getAuthors()[0].getID());
         Assertions.assertNotNull(manga.getAuthors()[0].getFirstName());
         Assertions.assertNotNull(manga.getAuthors()[0].getLastName());
@@ -306,17 +383,44 @@ public class TestMyAnimeList {
         Assertions.assertNotNull(manga.getPictures()[0].getMediumURL());
         Assertions.assertNotNull(manga.getPictures()[0].getLargeURL());
         Assertions.assertNotNull(manga.getBackground());
-        // todo: related
+        // related
         {
+            final RelatedAnime relatedAnime = manga.getRelatedAnime()[0];
+            Assertions.assertNotEquals(-1, relatedAnime.getAnimePreview().getID());
+            Assertions.assertNotNull(relatedAnime.getRelationType());
+            Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
 
+            final RelatedManga relatedManga = manga.getRelatedManga()[0];
+            Assertions.assertNotEquals(-1, relatedManga.getMangaPreview().getID());
+            Assertions.assertNotNull(relatedManga.getRelationType());
+            Assertions.assertNotNull(relatedManga.getRelationTypeFormat());
         }
-        // todo: recommendations
+        // recommendations
         {
-
+            final MangaRecommendation recommendation = manga.getRecommendations()[0];
+            Assertions.assertNotEquals(-1, recommendation.getMangaPreview().getID());
+            Assertions.assertNotEquals(-1, recommendation.getRecommendations());
         }
         Assertions.assertNotEquals(-1, manga.getSerialization()[0].getID());
         Assertions.assertNotNull(manga.getSerialization()[0].getName());
-        Assertions.assertNotNull(manga.getSerialization()[0].getRole(), "API issue, disregard failure"); // seems to be an API issue
+        // list status
+        {
+            final MangaListStatus listStatus = manga.getListStatus();
+            Assertions.assertNotNull(listStatus.getStatus());
+            Assertions.assertNotEquals(-1, listStatus.getScore());
+            Assertions.assertNotEquals(-1, listStatus.getVolumesRead());
+            Assertions.assertNotEquals(-1, listStatus.getChaptersRead());
+            Assertions.assertFalse(listStatus.isRereading()); // weak test
+            Assertions.assertNotEquals(-1, listStatus.getStartDate());
+            Assertions.assertNotEquals(-1, listStatus.getFinishDate());
+            Assertions.assertNotEquals(-1, listStatus.getPriority());
+            Assertions.assertNotEquals(-1, listStatus.getTimesReread());
+            Assertions.assertNotEquals(-1, listStatus.getRereadValue());
+            Assertions.assertNotNull(listStatus.getTags());
+            Assertions.assertNotNull(listStatus.getComments());
+            Assertions.assertNotEquals(-1, listStatus.getUpdatedAt());
+        }
+        Assumptions.assumeTrue(manga.getSerialization()[0].getRole() != null, "API issue, disregard failure"); // seems to be an API issue
     }
 
     @Test
@@ -332,15 +436,55 @@ public class TestMyAnimeList {
             Assertions.assertTrue(first.getPreviousRank() < 1);
             Assertions.assertEquals(MangaType.Manga, first.getMangaPreview().getType());
         }
-        // test NSFW todo
+        // test NSFW
         {
-
+            // NSFW is unlikely to be in top ranking so testing is not possible
         }
     }
 
     @Test @Disabled
-    public void testUserMangaListing(){
+    public void testUpdateAndDeleteMangaListing(){
         // todo
+    }
+
+    @Test
+    public void testUserMangaListing(){
+        // test status
+        {
+            final List<UserMangaListStatus> list =
+                mal.getUserMangaListing()
+                   .withStatus(MangaStatus.PlanToRead)
+                   .search();
+            Assertions.assertEquals(MangaStatus.PlanToRead, list.get(0).getStatus());
+        }
+        // test sort
+        {
+            final List<UserMangaListStatus> list =
+                mal.getUserMangaListing()
+                   .sortBy(MangaSort.StartDate)
+                   .search();
+            Assertions.assertTrue(list.get(0).getStartDate() < list.get(1).getStartDate());
+        }
+        // test standard
+        {
+            final UserMangaListStatus status =
+                mal.getUserMangaListing()
+                    .search()
+                    .get(0);
+            Assertions.assertNotNull(status.getStatus());
+            Assertions.assertNotEquals(-1, status.getScore());
+            Assertions.assertNotEquals(-1, status.getVolumesRead());
+            Assertions.assertNotEquals(-1, status.getChaptersRead());
+            Assertions.assertFalse(status.isRereading()); // weak test
+            Assertions.assertNotEquals(-1, status.getStartDate());
+            Assertions.assertNotEquals(-1, status.getFinishDate());
+            Assertions.assertNotEquals(-1, status.getPriority());
+            Assertions.assertNotEquals(-1, status.getTimesReread());
+            Assertions.assertNotEquals(-1, status.getRereadValue());
+            Assertions.assertNotNull(status.getTags());
+            Assertions.assertNotNull(status.getComments());
+            Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        }
     }
 
     // User

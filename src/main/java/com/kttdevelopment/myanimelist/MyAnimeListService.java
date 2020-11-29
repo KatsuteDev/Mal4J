@@ -94,10 +94,10 @@ public interface MyAnimeListService {
     );
 
     @SuppressWarnings("SpellCheckingInspection")
-    @GET("anime/{user_name}/animelist")
+    @GET("users/{user_name}/animelist")
     Call<GetUserAnimeList> getUserAnimeListing(
         @Header("Authorization")                    final String token,
-        @Path(value = "user_name")                  final String username,
+        @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
         @Query("limit")                             final Integer limit,
@@ -188,10 +188,10 @@ public interface MyAnimeListService {
     );
 
     @SuppressWarnings("SpellCheckingInspection")
-    @GET("manga/{user_name}/mangalist")
+    @GET("users/{user_name}/mangalist")
     Call<GetUserMangaList> getUserMangaListing(
         @Header("Authorization")                    final String token,
-        @Path(value = "user_name")                  final String username,
+        @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
         @Query("limit")                             final Integer limit,

@@ -37,7 +37,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    private static final String animeFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics";
+    private static final String animeFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics";
 
     @Override
     public final AnimeSearchQuery getAnime(){
@@ -49,8 +49,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getAnime(
                         auth,
                         query,
-                        limit,
-                        offset,
+                        between(null, limit, 100),
+                        between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
                     .execute()
@@ -93,8 +93,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getAnimeRanking(
                         auth,
                         rankingType != null ? rankingType.field() : null,
-                        limit,
-                        offset,
+                        between(0, limit, 500),
+                        between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
                     .execute()
@@ -122,8 +122,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         year,
                         season != null ? season.field() : null,
                         sort != null ? sort.field() : null,
-                        limit,
-                        offset,
+                        between(0, limit, 500),
+                        between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
                     .execute()
@@ -136,6 +136,30 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 return anime;
             }
 
+        };
+    }
+
+    @Override
+    public final AnimeSuggestionQuery getAnimeSuggestions(){
+        return new AnimeSuggestionQuery(service) {
+            @Override
+            public final List<AnimePreview> search(){
+                final Call.GetSuggestedAnime response = handleResponse(
+                    () -> service.getAnimeSuggestions(
+                        auth,
+                        between(0, limit, 100),
+                        between(0, offset, null),
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw)
+                    .execute()
+                );
+                if(response == null) return null;
+
+                final List<AnimePreview> anime = new ArrayList<>();
+                for(final Common.Node<TopLevelObject.Anime> iterator : response.data)
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.node));
+                return anime;
+            }
         };
     }
 
@@ -179,6 +203,11 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
+    public final UserAnimeListQuery getUserAnimeListing(){
+        return getUserAnimeListing("@me");
+    }
+
+    @Override
     public final UserAnimeListQuery getUserAnimeListing(final String username){
         return new UserAnimeListQuery(service, username) {
 
@@ -187,11 +216,11 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 final Call.GetUserAnimeList response = handleResponse(
                     () -> service.getUserAnimeListing(
                         auth,
-                        username,
+                        username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
-                        limit,
-                        offset)
+                        between(0, limit, 1000),
+                        between(0, offset, null))
                     .execute()
                 );
                 if(response == null) return null;
@@ -236,8 +265,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getForumBoard(
                 auth,
                 id,
-                limit,
-                offset)
+                between(0, limit, 100),
+                between(0, offset, null))
             .execute()
         );
         if(response == null) return null;
@@ -259,8 +288,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                         auth,
                         boardId,
                         subboardId,
-                        limit,
-                        offset,
+                        between(0, limit, 100),
+                        between(0, offset, null),
                         sort,
                         query,
                         topicUsername,
@@ -278,7 +307,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
         };
     }
     
-    private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role}";
+    private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,list_status,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role}";
 
     @Override
     public final MangaSearchQuery getManga(){
@@ -290,8 +319,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getManga(
                         auth,
                         query,
-                        limit,
-                        offset,
+                        between(0, limit, 100),
+                        between(0, offset, null),
                         fields == null ? mangaFields : asStringList(fields),
                         nsfw)
                     .execute()
@@ -334,8 +363,8 @@ public final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getMangaRanking(
                         auth,
                         rankingType != null ? rankingType.field() : null,
-                        limit,
-                        offset,
+                        between(0, limit, 500),
+                        between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
                     .execute()
@@ -392,6 +421,11 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
+    public final UserMangaListQuery getUserMangaListing(){
+        return getUserMangaListing("@me");
+    }
+
+    @Override
     public final UserMangaListQuery getUserMangaListing(final String username){
         return new UserMangaListQuery(service, username) {
 
@@ -400,11 +434,11 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 final Call.GetUserMangaList response = handleResponse(
                     () -> service.getUserMangaListing(
                         auth,
-                        username,
+                        username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
-                        limit,
-                        offset)
+                        between(0, limit, 1000),
+                        between(0, offset, null))
                     .execute()
                 );
                 if(response == null) return null;
@@ -490,6 +524,19 @@ public final class MyAnimeListImpl extends MyAnimeList{
                 return str.substring(0, str.length() -1);
         }
         return null;
+    }
+
+    //
+
+    private static Integer between(final Integer min, final Integer between, final Integer max){
+        if(between == null)
+            return null;
+        else if(min == null)
+            return Math.min(between, max);
+        else if(max == null)
+            return Math.max(between, min);
+        else
+            return Math.min(Math.max(min, between), max);
     }
 
 }

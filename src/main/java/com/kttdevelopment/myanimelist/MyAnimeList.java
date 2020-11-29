@@ -40,11 +40,17 @@ public abstract class MyAnimeList {
 
     public abstract AnimeSeasonQuery getAnimeSeason(final int year, final Season season);
 
+    // anime suggestions
+
+    public abstract AnimeSuggestionQuery getAnimeSuggestions();
+
     // anime list
 
     public abstract AnimeListUpdate updateAnimeListing(final long id);
 
     public abstract void deleteAnimeListing(final long id);
+
+    public abstract UserAnimeListQuery getUserAnimeListing();
 
     public abstract UserAnimeListQuery getUserAnimeListing(final String username);
 
@@ -81,6 +87,8 @@ public abstract class MyAnimeList {
     public abstract MangaListUpdate updateMangaListing(final long id);
 
     public abstract void deleteMangaListing(final long id);
+
+    public abstract UserMangaListQuery getUserMangaListing();
 
     public abstract UserMangaListQuery getUserMangaListing(final String username);
 

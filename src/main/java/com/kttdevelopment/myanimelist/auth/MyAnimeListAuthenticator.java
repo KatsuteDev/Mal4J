@@ -29,6 +29,7 @@ public class MyAnimeListAuthenticator {
         token = authService
             .getToken(
                 client_id,
+                null,
                 "authorization_code",
                 auth.getAuthorization(),
                 auth.getVerifier())
