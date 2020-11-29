@@ -83,7 +83,7 @@ MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("cl
 ### Authenticate with client id (easy)
 
 For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the `MyAnimeListAuthenticator`.
-The app redirect url should be `http://localhost:5050` or what ever port you set it as in [step 2](#2-register-api-key)
+The app redirect url should be `http://localhost:5050` or whatever port you set it as in [step 2](#2-register-api-key).
 
 The client secret will be null if your application does not have one.
 
