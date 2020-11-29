@@ -49,7 +49,7 @@ abstract class MyAnimeListAPIResponseMapping {
                                     onHold      = requireNonNullElse(() -> schema.status.on_hold, 0),
                                     dropped     = requireNonNullElse(() -> schema.status.dropped, 0),
                                     planToWatch = requireNonNullElse(() -> schema.status.plan_to_watch, 0),
-                                    userCount   = requireNonNullElse(() -> schema.num_list_users, 0);
+                                    userCount   = requireNonNullElse(() -> schema.num_list_users, -1);
 
                 // API methods
 
@@ -188,10 +188,10 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
                 private final String synopsis       = requireNonNull(() -> schema.synopsis);
                 private final float meanRating      = requireNonNullElse(() -> schema.mean, 0f);
-                private final int rank              = requireNonNullElse(() -> schema.rank, 0);
-                private final int popularity        = requireNonNullElse(() -> schema.popularity, 0);
-                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, 0);
-                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, 0);
+                private final int rank              = requireNonNullElse(() -> schema.rank, -1);
+                private final int popularity        = requireNonNullElse(() -> schema.popularity, -1);
+                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, -1);
+                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, -1);
                 private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
                 private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id), Genre.class));
                 private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
@@ -199,11 +199,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.media_type));
                 private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum(schema.status));
                 private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status, this));
-                private final int episodes          = requireNonNullElse(() -> schema.num_episodes, 0);
+                private final int episodes          = requireNonNullElse(() -> schema.num_episodes, -1);
                 private final StartSeason startSeason = requireNonNull(() -> asStartSeason(mal, schema.start_season));
                 private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.broadcast));
                 private final AnimeSource source    = requireNonNull(() -> AnimeSource.asEnum(schema.source));
-                private final int episodeLength     = requireNonNullElse(() -> schema.average_episode_duration, 0);
+                private final int episodeLength     = requireNonNullElse(() -> schema.average_episode_duration, -1);
                 private final AnimeRating rating    = requireNonNull(() -> AnimeRating.asEnum(schema.rating));
                 private final Studio[] studios      = requireNonNull(() -> adaptArray(schema.studios, s -> asStudio(mal, s), Studio.class));
                 private final Picture[] pictures    = requireNonNull(() -> adaptArray(schema.pictures, p -> Common.asPicture(mal, p), Picture.class));
@@ -390,17 +390,17 @@ abstract class MyAnimeListAPIResponseMapping {
             return new AnimeListStatus() {
 
                 private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum(schema.status));
-                private final int score             = requireNonNullElse(() -> schema.score, 0);
+                private final int score             = requireNonNullElse(() -> schema.score, -1);
                 private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
                 private final long finishDate       = requireNonNullElse(() -> parseDate(schema.finish_date), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.priority, 0);
+                private final int priority          = requireNonNullElse(() -> schema.priority, -1);
                 private final String[] tags         = requireNonNull(() -> schema.tags);
                 private final String comments       = requireNonNull(() -> schema.comments);
                 private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_watched_episodes, 0);
+                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_watched_episodes, -1);
                 private final boolean rewatching    = requireNonNullElse(() -> schema.is_rewatching, false);
-                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, 0);
-                private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, 0);
+                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, -1);
+                private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, -1);
 
                 // API methods
 
@@ -490,10 +490,10 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
                 private final String synopsis       = requireNonNull(() -> schema.synopsis);
                 private final float meanRating      = requireNonNullElse(() -> schema.mean, 0f);
-                private final int rank              = requireNonNullElse(() -> schema.rank, 0);
-                private final int popularity        = requireNonNullElse(() -> schema.popularity, 0);
-                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, 0);
-                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, 0);
+                private final int rank              = requireNonNullElse(() -> schema.rank, -1);
+                private final int popularity        = requireNonNullElse(() -> schema.popularity, -1);
+                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, -1);
+                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, -1);
                 private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
                 private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id), Genre.class));
                 private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
@@ -501,11 +501,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.media_type));
                 private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum(schema.status));
                 private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status, this));
-                private final int episodes          = requireNonNullElse(() -> schema.num_episodes, 0);
+                private final int episodes          = requireNonNullElse(() -> schema.num_episodes, -1);
                 private final StartSeason startSeason = requireNonNull(() -> asStartSeason(mal, schema.start_season));
                 private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.broadcast));
                 private final AnimeSource source    = requireNonNull(() -> AnimeSource.asEnum(schema.source));
-                private final int episodeLength     = requireNonNullElse(() -> schema.average_episode_duration, 0);
+                private final int episodeLength     = requireNonNullElse(() -> schema.average_episode_duration, -1);
                 private final AnimeRating rating    = requireNonNull(() -> AnimeRating.asEnum(schema.rating));
                 private final Studio[] studios      = requireNonNull(() -> adaptArray(schema.studios, s -> asStudio(mal, s), Studio.class));
 
@@ -660,8 +660,8 @@ abstract class MyAnimeListAPIResponseMapping {
             return new AnimeRanking() {
 
                 private final AnimePreview anime    = requireNonNull(() -> asAnimePreview(mal, schema.node));
-                private final int ranking           = requireNonNullElse(() -> schema.ranking.rank, 0);
-                private final int previousRanking   = requireNonNullElse(() -> schema.ranking.previous_rank, 0);
+                private final int ranking           = requireNonNullElse(() -> schema.ranking.rank, -1);
+                private final int previousRanking   = requireNonNullElse(() -> schema.ranking.previous_rank, -1);
 
                 // API methods
 
@@ -698,7 +698,7 @@ abstract class MyAnimeListAPIResponseMapping {
             return new AnimeRecommendation() {
 
                 private final AnimePreview anime    = requireNonNull(() -> asAnimePreview(mal, schema.node));
-                private final int recommendations   = requireNonNullElse(() -> schema.num_recommendations, 0);
+                private final int recommendations   = requireNonNullElse(() -> schema.num_recommendations, -1);
 
                 // API methods
 
@@ -771,17 +771,17 @@ abstract class MyAnimeListAPIResponseMapping {
             return new UserAnimeListStatus() {
 
                 private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum(schema.status));
-                private final int score             = requireNonNullElse(() -> schema.score, 0);
+                private final int score             = requireNonNullElse(() -> schema.score, -1);
                 private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
                 private final long finishDate       = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.priority, 0);
+                private final int priority          = requireNonNullElse(() -> schema.priority, -1);
                 private final String[] tags         = requireNonNull(() -> schema.tags);
                 private final String comments       = requireNonNull(() -> schema.comments);
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_watched_episodes, 0);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
+                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_watched_episodes, -1);
                 private final boolean rewatching    = requireNonNullElse(() -> schema.is_rewatching, false);
-                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, 0);
-                private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, 0);
+                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, -1);
+                private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, -1);
 
                 // API methods
 
@@ -909,7 +909,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final String title                  = requireNonNull(() -> schema.title);
                 private final long createdAt                = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
                 private final ForumTopicCreator createdBy   = requireNonNull(() -> asForumTopicCreator(mal, schema.created_by));
-                private final int posts                     = requireNonNullElse(() -> schema.number_of_posts, 0);
+                private final int posts                     = requireNonNullElse(() -> schema.number_of_posts, -1);
                 private final long lastPostedAt             = requireNonNullElse(() -> parseISO8601(schema.last_post_created_at), -1L);
                 private final ForumTopicCreator lastPostedBy = requireNonNull(() -> asForumTopicCreator(mal, schema.last_post_created_by));
                 private final boolean locked                = requireNonNullElse(() -> schema.is_locked, false);
@@ -1016,7 +1016,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 private final long id       = requireNonNullElse(() -> schema.id, -1L);
                 private final String text   = requireNonNull(() -> schema.text);
-                private final int votes     = requireNonNullElse(() -> schema.votes, 0);
+                private final int votes     = requireNonNullElse(() -> schema.votes, -1);
 
                 // API methods
 
@@ -1375,10 +1375,10 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
                 private final String synopsis       = requireNonNull(() -> schema.synopsis);
                 private final float meanRating      = requireNonNullElse(() -> schema.mean, 0F);
-                private final int rank              = requireNonNullElse(() -> schema.rank, 0);
-                private final int popularity        = requireNonNullElse(() -> schema.popularity, 0);
-                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, 0);
-                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, 0);
+                private final int rank              = requireNonNullElse(() -> schema.rank, -1);
+                private final int popularity        = requireNonNullElse(() -> schema.popularity, -1);
+                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, -1);
+                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, -1);
                 private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
                 private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id), Genre.class));
                 private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
@@ -1386,8 +1386,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.media_type));
                 private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum(schema.status));
                 private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status, this));
-                private final int volumes           = requireNonNullElse(() -> schema.num_volumes, 0);
-                private final int chapters          = requireNonNullElse(() -> schema.num_chapters, 0);
+                private final int volumes           = requireNonNullElse(() -> schema.num_volumes, -1);
+                private final int chapters          = requireNonNullElse(() -> schema.num_chapters, -1);
                 private final Author[] authors      = requireNonNull(() -> adaptArray(schema.authors, a -> asAuthor(mal, a), Author.class));
                 private final Picture[] pictures    = requireNonNull(() -> adaptArray(schema.pictures, p -> Common.asPicture(mal, p), Picture.class));
                 private final String background     = requireNonNull(() -> schema.background);
@@ -1552,18 +1552,18 @@ abstract class MyAnimeListAPIResponseMapping {
             return new MangaListStatus() {
 
                 private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum(schema.status));
-                private final int score             = requireNonNullElse(() -> schema.score, 0);
+                private final int score             = requireNonNullElse(() -> schema.score, -1);
                 private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
                 private final long finishDate       = requireNonNullElse(() -> parseDate(schema.finish_date), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.priority, 0);
+                private final int priority          = requireNonNullElse(() -> schema.priority, -1);
                 private final String[] tags         = requireNonNull(() -> schema.tags);
                 private final String comments       = requireNonNull(() -> schema.comments);
                 private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int volumesRead       = requireNonNullElse(() -> schema.num_volumes_read, 0);
-                private final int chaptersRead      = requireNonNullElse(() -> schema.num_chapters_read, 0);
+                private final int volumesRead       = requireNonNullElse(() -> schema.num_volumes_read, -1);
+                private final int chaptersRead      = requireNonNullElse(() -> schema.num_chapters_read, -1);
                 private final boolean rereading     = requireNonNullElse(() -> schema.is_rereading, false);
-                private final int timesReread       = requireNonNullElse(() -> schema.num_times_reread, 0);
-                private final int rereadValue       = requireNonNullElse(() -> schema.reread_value, 0);
+                private final int timesReread       = requireNonNullElse(() -> schema.num_times_reread, -1);
+                private final int rereadValue       = requireNonNullElse(() -> schema.reread_value, -1);
 
                 // API methods
 
@@ -1658,10 +1658,10 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
                 private final String synopsis       = requireNonNull(() -> schema.synopsis);
                 private final float meanRating      = requireNonNullElse(() -> schema.mean, 0F);
-                private final int rank              = requireNonNullElse(() -> schema.rank, 0);
-                private final int popularity        = requireNonNullElse(() -> schema.popularity, 0);
-                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, 0);
-                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, 0);
+                private final int rank              = requireNonNullElse(() -> schema.rank, -1);
+                private final int popularity        = requireNonNullElse(() -> schema.popularity, -1);
+                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, -1);
+                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, -1);
                 private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
                 private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id), Genre.class));
                 private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
@@ -1669,8 +1669,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.media_type));
                 private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum(schema.status));
                 private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status, this));
-                private final int volumes           = requireNonNullElse(() -> schema.num_volumes, 0);
-                private final int chapters          = requireNonNullElse(() -> schema.num_chapters, 0);
+                private final int volumes           = requireNonNullElse(() -> schema.num_volumes, -1);
+                private final int chapters          = requireNonNullElse(() -> schema.num_chapters, -1);
                 private final Author[] authors      = requireNonNull(() -> adaptArray(schema.authors, a -> asAuthor(mal, a), Author.class));
 
                 // API methods
@@ -1804,8 +1804,8 @@ abstract class MyAnimeListAPIResponseMapping {
             return new MangaRanking() {
 
                 private final MangaPreview manga    = requireNonNull(() -> asMangaPreview(mal, schema.node));
-                private final int ranking           = requireNonNullElse(() -> schema.ranking.rank, 0);
-                private final int previousRanking   = requireNonNullElse(() -> schema.ranking.previous_rank, 0);
+                private final int ranking           = requireNonNullElse(() -> schema.ranking.rank, -1);
+                private final int previousRanking   = requireNonNullElse(() -> schema.ranking.previous_rank, -1);
 
                 // API method
 
@@ -1843,7 +1843,7 @@ abstract class MyAnimeListAPIResponseMapping {
             return new MangaRecommendation() {
 
                 private final MangaPreview manga    = requireNonNull(() -> asMangaPreview(mal, schema.node));
-                private final int recommendations   = requireNonNullElse(() -> schema.num_recommendations, 0);
+                private final int recommendations   = requireNonNullElse(() -> schema.num_recommendations, -1);
 
                 // API methods
 
@@ -1915,18 +1915,18 @@ abstract class MyAnimeListAPIResponseMapping {
             return new UserMangaListStatus() {
 
                 private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum(schema.status));
-                private final int score             = requireNonNullElse(() -> schema.score, 0);
+                private final int score             = requireNonNullElse(() -> schema.score, -1);
                 private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
                 private final long finishDate       = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.priority, 0);
+                private final int priority          = requireNonNullElse(() -> schema.priority, -1);
                 private final String[] tags         = requireNonNull(() -> schema.tags);
                 private final String comments       = requireNonNull(() -> schema.comments);
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int volumesRead       = requireNonNullElse(() -> schema.num_volumes_read, 0);
-                private final int chaptersRead      = requireNonNullElse(() -> schema.num_chapters_read, 0);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
+                private final int volumesRead       = requireNonNullElse(() -> schema.num_volumes_read, -1);
+                private final int chaptersRead      = requireNonNullElse(() -> schema.num_chapters_read, -1);
                 private final boolean rereading     = requireNonNullElse(() -> schema.is_rereading, false);
-                private final int timesReread       = requireNonNullElse(() -> schema.num_times_reread, 0);
-                private final int rereadValue       = requireNonNullElse(() -> schema.reread_value, 0);
+                private final int timesReread       = requireNonNullElse(() -> schema.num_times_reread, -1);
+                private final int rereadValue       = requireNonNullElse(() -> schema.reread_value, -1);
 
                 // API methods
 
@@ -2103,20 +2103,20 @@ abstract class MyAnimeListAPIResponseMapping {
         static UserAnimeStatistics asUserAnimeStatistics(final MyAnimeList mal, final Call.GetUserInformation.AnimeStatistics schema){
             return new UserAnimeStatistics() {
                 
-                private final int watching          = requireNonNullElse(() -> schema.num_items_watching, 0);
-                private final int completed         = requireNonNullElse(() -> schema.num_items_completed, 0);
-                private final int onHold            = requireNonNullElse(() -> schema.num_items_on_hold, 0);
-                private final int dropped           = requireNonNullElse(() -> schema.num_items_dropped, 0);
-                private final int planToWatch       = requireNonNullElse(() -> schema.num_items_plan_to_watch, 0);
-                private final int items             = requireNonNullElse(() -> schema.num_items, 0);
+                private final int watching          = requireNonNullElse(() -> schema.num_items_watching, -1);
+                private final int completed         = requireNonNullElse(() -> schema.num_items_completed, -1);
+                private final int onHold            = requireNonNullElse(() -> schema.num_items_on_hold, -1);
+                private final int dropped           = requireNonNullElse(() -> schema.num_items_dropped, -1);
+                private final int planToWatch       = requireNonNullElse(() -> schema.num_items_plan_to_watch, -1);
+                private final int items             = requireNonNullElse(() -> schema.num_items, -1);
                 private final float daysWatching    = requireNonNullElse(() -> schema.num_days_watching, 0f);
                 private final float daysCompleted   = requireNonNullElse(() -> schema.num_days_completed, 0f);
                 private final float daysOnHold      = requireNonNullElse(() -> schema.num_days_on_hold, 0f);
                 private final float daysDropped     = requireNonNullElse(() -> schema.num_days_dropped, 0f);
                 private final float days            = requireNonNullElse(() -> schema.num_days, 0f);
-                private final int episodesWatched   = requireNonNullElse(() -> schema.num_episodes, 0);
+                private final int episodesWatched   = requireNonNullElse(() -> schema.num_episodes, -1);
                 @SuppressWarnings("SpellCheckingInspection")
-                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, 0);
+                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, -1);
                 private final float meanScore       = requireNonNullElse(() -> schema.mean_score, 0f);
 
                 // API methods
@@ -2295,9 +2295,7 @@ abstract class MyAnimeListAPIResponseMapping {
     private static long parseDate(final String date){
         if(date == null) return -1;
 
-        final TimeZone   tz = TimeZone.getTimeZone("UTC");
         final DateFormat df = new SimpleDateFormat(date.length() == 10 ? "yyyy-MM-dd" : date.length() == 7 ? "yyyy-MM" : "yyyy");
-        df.setTimeZone(tz);
 
         try{
             return df.parse(date).getTime();

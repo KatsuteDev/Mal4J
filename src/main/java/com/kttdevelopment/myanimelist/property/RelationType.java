@@ -2,6 +2,7 @@ package com.kttdevelopment.myanimelist.property;
 
 public enum RelationType {
 
+    Other               ("other"),
     Sequel              ("sequel"),
     Prequel             ("prequel"),
     AlternativeSetting  ("alternative_setting"),
