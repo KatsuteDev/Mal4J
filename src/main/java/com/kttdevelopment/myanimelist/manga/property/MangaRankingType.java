@@ -23,10 +23,26 @@ public enum MangaRankingType {
         this.field = field;
     }
 
+    /**
+     * Returns the json field name.
+     *
+     * @return json field name
+     *
+     * @since 1.0.0
+     */
     public final String field(){
         return field;
     }
 
+    /**
+     * Returns the field name as an enum.
+     *
+     * @param string json field name
+     *
+     * @return enum
+     *
+     * @since 1.0.0
+     */
     public static MangaRankingType asEnum(final String string){
         for(final MangaRankingType value : values())
             if(value.field.equalsIgnoreCase(string))

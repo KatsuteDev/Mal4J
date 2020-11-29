@@ -1,8 +1,5 @@
 package com.kttdevelopment.myanimelist;
 
-import com.kttdevelopment.myanimelist.forum.ForumTopic;
-import com.kttdevelopment.myanimelist.forum.property.ForumTopicDetail;
-
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;

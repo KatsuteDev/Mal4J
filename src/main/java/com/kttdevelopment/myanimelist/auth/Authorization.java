@@ -1,9 +1,11 @@
 package com.kttdevelopment.myanimelist.auth;
 
-public abstract class Authorization {
+abstract class Authorization {
 
+    // auth code
     public abstract String getAuthorization();
 
+    // PKCE
     public abstract String getVerifier();
 
 }

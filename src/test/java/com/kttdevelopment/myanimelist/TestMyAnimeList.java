@@ -26,25 +26,26 @@ public class TestMyAnimeList {
     private static MyAnimeList mal;
 
     private static final Path client = new File("src/test/java/com/kttdevelopment/myanimelist/client.txt").toPath();
-    private static final Path oauth = new File("src/test/java/com/kttdevelopment/myanimelist/oauth.txt").toPath();
+    private static final Path oauth  = new File("src/test/java/com/kttdevelopment/myanimelist/oauth.txt").toPath();
 
     private static MyAnimeListAuthenticator authenticator;
 
     @BeforeAll
     public static void beforeAll() throws IOException{
-        if(oauth.toFile().exists()){
+        if(oauth.toFile().exists()){ // use existing OAuth
             mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
-        }else{
-            Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (requires user authentication)");
-            final String clientId = Files.readString(client);
-            authenticator = new MyAnimeListAuthenticator(clientId, null, 5050);
-            mal = MyAnimeList.withAuthorization(authenticator);
-            Files.write(oauth, authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
-
-            Assertions.assertNotNull(mal.getAnime().withQuery("さくら荘のペットな彼女").search());
-            mal.refreshOAuthToken();
+            if(mal.getAnime().withQuery("さくら荘のペットな彼女").search() != null)
+                return; // create new auth only if above null
         }
 
+        Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (requires user authentication)");
+        final String clientId = Files.readString(client);
+        authenticator = new MyAnimeListAuthenticator(clientId, null, 5050);
+        mal = MyAnimeList.withAuthorization(authenticator);
+
+        // test refresh auth
+        Assertions.assertNotNull(mal.getAnime().withQuery("さくら荘のペットな彼女").search());
+        mal.refreshOAuthToken();
     }
 
     @AfterAll
@@ -269,7 +270,26 @@ public class TestMyAnimeList {
 
     @Test @Disabled
     public void testUpdateAndDeleteAnimeListing(){
-        // todo: get
+        // test get
+        {
+            final UserAnimeListStatus status =
+                mal.getUserAnimeListing()
+                    .search()
+                    .get(0);
+            Assertions.assertNotEquals(-1, status.getAnimePreview().getID());
+            Assertions.assertNotNull(status.getStatus());
+            Assertions.assertNotEquals(-1, status.getScore());
+            Assertions.assertNotEquals(-1, status.getWatchedEpisodes());
+            Assertions.assertFalse(status.isRewatching()); // weak test
+            Assertions.assertNotEquals(-1, status.getStartDate());
+            Assertions.assertNotEquals(-1, status.getFinishDate());
+            Assertions.assertNotEquals(-1, status.getPriority());
+            Assertions.assertNotEquals(-1, status.getTimesRewatched());
+            Assertions.assertNotEquals(-1, status.getRewatchValue());
+            Assertions.assertNotNull(status.getTags());
+            Assertions.assertNotNull(status.getComments());
+            Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        }
 
         // todo: delete
 
@@ -293,26 +313,6 @@ public class TestMyAnimeList {
                    .sortBy(AnimeSort.UpdatedAt)
                    .search();
             Assertions.assertTrue(list.get(0).getUpdatedAt() > list.get(1).getUpdatedAt());
-        }
-        // test standard
-        { // todo: move this to update?
-            final UserAnimeListStatus status =
-                mal.getUserAnimeListing()
-                    .search()
-                    .get(0);
-            Assertions.assertNotEquals(-1, status.getAnimePreview().getID());
-            Assertions.assertNotNull(status.getStatus());
-            Assertions.assertNotEquals(-1, status.getScore());
-            Assertions.assertNotEquals(-1, status.getWatchedEpisodes());
-            Assertions.assertFalse(status.isRewatching()); // weak test
-            Assertions.assertNotEquals(-1, status.getStartDate());
-            Assertions.assertNotEquals(-1, status.getFinishDate());
-            Assertions.assertNotEquals(-1, status.getPriority());
-            Assertions.assertNotEquals(-1, status.getTimesRewatched());
-            Assertions.assertNotEquals(-1, status.getRewatchValue());
-            Assertions.assertNotNull(status.getTags());
-            Assertions.assertNotNull(status.getComments());
-            Assertions.assertNotEquals(-1, status.getUpdatedAt());
         }
     }
 
@@ -572,7 +572,26 @@ public class TestMyAnimeList {
 
     @Test @Disabled
     public void testUpdateAndDeleteMangaListing(){
-        // todo: get
+        // test get
+        {
+            final UserMangaListStatus status =
+                mal.getUserMangaListing()
+                    .search()
+                    .get(0);
+            Assertions.assertNotNull(status.getStatus());
+            Assertions.assertNotEquals(-1, status.getScore());
+            Assertions.assertNotEquals(-1, status.getVolumesRead());
+            Assertions.assertNotEquals(-1, status.getChaptersRead());
+            Assertions.assertFalse(status.isRereading()); // weak test
+            Assertions.assertNotEquals(-1, status.getStartDate());
+            Assertions.assertNotEquals(-1, status.getFinishDate());
+            Assertions.assertNotEquals(-1, status.getPriority());
+            Assertions.assertNotEquals(-1, status.getTimesReread());
+            Assertions.assertNotEquals(-1, status.getRereadValue());
+            Assertions.assertNotNull(status.getTags());
+            Assertions.assertNotNull(status.getComments());
+            Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        }
 
         // todo: delete
 
@@ -598,26 +617,6 @@ public class TestMyAnimeList {
                    .withLimit(2)
                    .search();
             Assertions.assertTrue(list.get(0).getUpdatedAt() > list.get(1).getUpdatedAt());
-        }
-        // test standard
-        { // todo: move this to update?
-            final UserMangaListStatus status =
-                mal.getUserMangaListing()
-                    .search()
-                    .get(0);
-            Assertions.assertNotNull(status.getStatus());
-            Assertions.assertNotEquals(-1, status.getScore());
-            Assertions.assertNotEquals(-1, status.getVolumesRead());
-            Assertions.assertNotEquals(-1, status.getChaptersRead());
-            Assertions.assertFalse(status.isRereading()); // weak test
-            Assertions.assertNotEquals(-1, status.getStartDate());
-            Assertions.assertNotEquals(-1, status.getFinishDate());
-            Assertions.assertNotEquals(-1, status.getPriority());
-            Assertions.assertNotEquals(-1, status.getTimesReread());
-            Assertions.assertNotEquals(-1, status.getRereadValue());
-            Assertions.assertNotNull(status.getTags());
-            Assertions.assertNotNull(status.getComments());
-            Assertions.assertNotEquals(-1, status.getUpdatedAt());
         }
     }
 

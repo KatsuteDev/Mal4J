@@ -18,10 +18,26 @@ public enum RelationType {
         this.field = field;
     }
 
+    /**
+     * Returns the json field name.
+     *
+     * @return json field name
+     *
+     * @since 1.0.0
+     */
     public final String field(){
         return field;
     }
 
+    /**
+     * Returns the field name as an enum.
+     *
+     * @param string json field name
+     *
+     * @return enum
+     *
+     * @since 1.0.0
+     */
     public static RelationType asEnum(final String string){
         for(final RelationType value : values())
             if(value.field.equalsIgnoreCase(string))

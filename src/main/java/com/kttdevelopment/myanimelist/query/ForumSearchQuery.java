@@ -1,7 +1,7 @@
 package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeListService;
-import com.kttdevelopment.myanimelist.forum.property.ForumTopicDetail;
+import com.kttdevelopment.myanimelist.forum.ForumTopicDetail;
 
 import java.util.List;
 
