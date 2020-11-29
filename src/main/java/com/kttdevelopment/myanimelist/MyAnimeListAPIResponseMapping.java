@@ -15,6 +15,7 @@ import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.*;
 import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
 import com.kttdevelopment.myanimelist.query.MangaListUpdate;
+import com.kttdevelopment.myanimelist.user.User;
 import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
 
 import java.lang.reflect.Array;
@@ -893,6 +894,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 // additional methods
+
+
+                @Override
+                public final com.kttdevelopment.myanimelist.user.User getUser(){
+                    return mal.getUser(name);
+                }
 
                 @Override
                 public final String toString() {

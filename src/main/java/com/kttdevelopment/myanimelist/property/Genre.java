@@ -67,6 +67,15 @@ public enum Genre {
         return null;
     }
 
+    /**
+     * Returns the field name as an enum.
+     *
+     * @param string json field name
+     *
+     * @return enum
+     *
+     * @since 1.0.0
+     */
     public static Genre asEnum(final String string){
         for(final Genre value : values())
             if(value.name.equalsIgnoreCase(string))

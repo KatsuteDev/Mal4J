@@ -8,6 +8,14 @@ import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.*;
 
+/**
+ * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/authorization">https://myanimelist.net/apiconfig/references/authorization</a> <br>
+ * Authenticator used to retrieve OAuth2 tokens given a client id and client secret.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public final class MyAnimeListAuthenticator {
 
     private static final String authUrl =
@@ -23,6 +31,17 @@ public final class MyAnimeListAuthenticator {
     private final String client_id, client_secret, authorizationCode, pkce;
     private AccessToken token;
 
+    /**
+     * Creates a MyAnimeListAuthenticator (easy) and deploys a server to retrieve the OAuth2 token.
+     *
+     * @param client_id client id
+     * @param client_secret client secret (optional)
+     * @param port port to run the retrieval server
+     * @throws IOException if client could not contact auth server
+     *
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 1.0.0
+     */
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port) throws IOException{
         final Authorization auth = authenticateWithLocalServer(client_id, Math.min(Math.max(0, port), 65535));
 
@@ -42,6 +61,19 @@ public final class MyAnimeListAuthenticator {
             .body();
     }
 
+    /**
+     * Creates a MyAnimeListAuthenticator.
+     *
+     * @param client_id client id
+     * @param client_secret client secret (optional)
+     * @param authorization_code authorization code
+     * @param PKCE_code_challenge PKCE code challenge
+     * @throws IOException if client could not contact auth server
+     *
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 1.0.0
+     */
+    @SuppressWarnings("SpellCheckingInspection")
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge) throws IOException{
         this.client_id          = client_id;
         this.client_secret      = client_secret;
@@ -104,7 +136,7 @@ public final class MyAnimeListAuthenticator {
         }catch(final URISyntaxException ignored){ } // URL is guaranteed to be valid
 
         try{
-            latch.await();
+            latch.await(1, TimeUnit.MINUTES);
         }catch(final InterruptedException ignored){ } // soft failure
         exec.shutdownNow();
         server.stop(0);
