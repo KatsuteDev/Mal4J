@@ -1,5 +1,13 @@
 package com.kttdevelopment.myanimelist.property;
 
+/**
+ * Represents a relation type.
+ *
+ * @see RelatedMedia#getRelationType()
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum RelationType {
 
     Other               ("other"),

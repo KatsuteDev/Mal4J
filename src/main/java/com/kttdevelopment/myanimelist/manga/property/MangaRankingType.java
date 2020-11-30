@@ -2,9 +2,15 @@ package com.kttdevelopment.myanimelist.manga.property;
 
 import com.kttdevelopment.myanimelist.property.RankingType;
 
+/**
+ * Represents the Manga ranking type.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 @SuppressWarnings("SpellCheckingInspection")
 public enum MangaRankingType {
-
 
     Manga   ("manga"),
     Novels  ("novels"),

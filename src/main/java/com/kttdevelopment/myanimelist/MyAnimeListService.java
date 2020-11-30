@@ -7,6 +7,14 @@ import retrofit2.http.*;
 
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Call.*;
 
+/**
+ * Represents the HTTP requests for MyAnimeList
+ *
+ * @see MyAnimeList
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public interface MyAnimeListService {
 
     static MyAnimeListService create(){

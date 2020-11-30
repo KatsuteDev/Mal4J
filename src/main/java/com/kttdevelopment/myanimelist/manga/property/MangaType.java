@@ -1,5 +1,13 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
+/**
+ * Represents the type of medium the Manga is.
+ *
+ * @see com.kttdevelopment.myanimelist.manga.MangaPreview#getType()
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 @SuppressWarnings("SpellCheckingInspection")
 public enum MangaType {
 

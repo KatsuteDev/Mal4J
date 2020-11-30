@@ -3,6 +3,7 @@ package com.kttdevelopment.myanimelist.forum.property;
 import com.kttdevelopment.myanimelist.forum.Post;
 import com.kttdevelopment.myanimelist.property.IDN;
 import com.kttdevelopment.myanimelist.user.User;
+import com.kttdevelopment.myanimelist.user.property.UserRetrievable;
 
 /**
  * Returns the post's author.
@@ -12,7 +13,7 @@ import com.kttdevelopment.myanimelist.user.User;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class PostAuthor implements IDN {
+public abstract class PostAuthor implements IDN, UserRetrievable {
 
     // API methods
 
@@ -24,17 +25,5 @@ public abstract class PostAuthor implements IDN {
      * @since 1.0.0
      */
     public abstract String getForumAvatarURL();
-
-    // additional methods
-
-    /**
-     * Returns the user.
-     *
-     * @return user
-     *
-     * @see User
-     * @since 1.0.0
-     */
-    public abstract User getUser();
 
 }

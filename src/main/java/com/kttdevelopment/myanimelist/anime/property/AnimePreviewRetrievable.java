@@ -15,7 +15,7 @@ public interface AnimePreviewRetrievable {
     /**
      * Returns the Anime preview.
      *
-     * @return anime preview
+     * @return Anime preview
      *
      * @see AnimePreview
      * @since 1.0.0

@@ -26,7 +26,16 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Forum
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Manga.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.User.*;
 
-public final class MyAnimeListImpl extends MyAnimeList{
+/**
+ * Implements the {@link MyAnimeList} interface with the {@link MyAnimeListService}.
+ *
+ * @see MyAnimeList
+ * @see MyAnimeListService
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
+final class MyAnimeListImpl extends MyAnimeList{
 
     private transient String auth;
     private MyAnimeListAuthenticator authenticator;
@@ -37,7 +46,7 @@ public final class MyAnimeListImpl extends MyAnimeList{
         this.auth = auth;
     }
 
-    public MyAnimeListImpl(final MyAnimeListAuthenticator authenticator){
+    MyAnimeListImpl(final MyAnimeListAuthenticator authenticator){
         this.authenticator = authenticator;
         this.auth = authenticator.getAccessToken().getToken();
     }
@@ -265,17 +274,17 @@ public final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final ForumTopic getForumTopicDetails(final long id){
-        return getForumTopicDetails(id, -1, -1);
+    public final ForumTopic getForumTopicDetail(final long id){
+        return getForumTopicDetail(id, -1, -1);
     }
 
     @Override
-    public final ForumTopic getForumTopicDetails(final long id, final int limit){
-        return getForumTopicDetails(id, limit, -1);
+    public final ForumTopic getForumTopicDetail(final long id, final int limit){
+        return getForumTopicDetail(id, limit, -1);
     }
 
     @Override
-    public final ForumTopic getForumTopicDetails(final long id, final int limit, final int offset){
+    public final ForumTopic getForumTopicDetail(final long id, final int limit, final int offset){
         final Call.GetForumTopicDetail response = handleResponse(
             () -> service.getForumBoard(
                 auth,

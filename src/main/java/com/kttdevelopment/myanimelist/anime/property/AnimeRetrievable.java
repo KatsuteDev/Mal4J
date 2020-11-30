@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
 import com.kttdevelopment.myanimelist.anime.Anime;
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
 
 /**
  * Indicates that an Anime can be retrieved from the object.
@@ -16,7 +15,7 @@ public interface AnimeRetrievable {
     /**
      * Returns the Anime.
      *
-     * @return anime
+     * @return Anime
      *
      * @see Anime
      * @since 1.0.0

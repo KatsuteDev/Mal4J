@@ -1,9 +1,32 @@
 package com.kttdevelopment.myanimelist.property;
 
-public abstract class Ranking {
+/**
+ * Indicates that the object has a ranking.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
+public interface Ranking {
 
-    public abstract int getRanking();
+    /**
+     * The item's current ranking.
+     *
+     * @return ranking
+     *
+     * @see #getPreviousRank()
+     * @since 1.0.0
+     */
+    int getRanking();
 
-    public abstract int getPreviousRank();
+    /**
+     * Returns the item's previous ranking.
+     *
+     * @return previous ranking
+     *
+     * @see #getRanking()
+     * @since 1.0.0
+     */
+    int getPreviousRank();
 
 }

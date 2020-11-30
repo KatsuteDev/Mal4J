@@ -1,7 +1,13 @@
 package com.kttdevelopment.myanimelist.property;
 
-import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
-
+/**
+ * Represents the NSFW status.
+ *
+ * @see MediaItem#getNSFW()
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum NSFW {
 
     White   ("white"),

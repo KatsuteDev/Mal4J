@@ -346,7 +346,7 @@ public class TestMyAnimeList {
     public void testForumTopicDetail(){
         // test standard
         {
-            final ForumTopic topic = mal.getForumTopicDetails(481);
+            final ForumTopic topic = mal.getForumTopicDetail(481);
             Assertions.assertNotNull(topic.getTitle());
             // posts
             {
