@@ -1,10 +1,20 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
+import com.kttdevelopment.myanimelist.property.MediaItem;
+
+/**
+ * Represents a Manga's publishing status.
+ *
+ * @see MediaItem#getStatus()
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum MangaPublishStatus {
 
-    Publishing  ("currently_publishing"),
-    NotYetPublished   ("not_yet_published"),
-    Finished    ("finished");
+    Publishing      ("currently_publishing"),
+    NotYetPublished ("not_yet_published"),
+    Finished        ("finished");
 
     private final String field;
 

@@ -1,11 +1,9 @@
 package com.kttdevelopment.myanimelist.anime.property;
 
-import com.kttdevelopment.myanimelist.property.ListStatus;
-
 /**
  * Represents an Anime's status on a users Anime list.
  *
- * @see ListStatus#getStatus()
+ * @see com.kttdevelopment.myanimelist.anime.AnimePreview#getStatus()
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development

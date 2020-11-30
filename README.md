@@ -39,11 +39,13 @@ Create a new API key at [https://myanimelist.net/apiconfig](https://myanimelist.
 Fill in all required fields and App Redirect URL. For users using easy authentication ([below](#authenticate-with-client-id-easy) set this to `http://localhost:5050`.
 
 
-![Create ID](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_2.png)
+![Register application](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_2.png)
 
 ### 3. Retrieve Client ID
 
 Copy client ID and client secret (if the application has a client secret).
+
+![Copy client id and client secret](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_3.png)
 
 ## Library setup
 

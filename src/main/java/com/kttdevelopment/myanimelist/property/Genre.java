@@ -1,5 +1,12 @@
 package com.kttdevelopment.myanimelist.property;
 
+/**
+ * Represents a Genre.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 @SuppressWarnings("SpellCheckingInspection")
 public enum Genre {
 

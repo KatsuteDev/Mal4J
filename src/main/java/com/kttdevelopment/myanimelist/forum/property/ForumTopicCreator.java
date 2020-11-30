@@ -3,6 +3,7 @@ package com.kttdevelopment.myanimelist.forum.property;
 import com.kttdevelopment.myanimelist.forum.ForumTopicDetail;
 import com.kttdevelopment.myanimelist.property.IDN;
 import com.kttdevelopment.myanimelist.user.User;
+import com.kttdevelopment.myanimelist.user.property.UserRetrievable;
 
 /**
  * Represents a forum topic creator.
@@ -12,10 +13,6 @@ import com.kttdevelopment.myanimelist.user.User;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class ForumTopicCreator implements IDN {
-
-    // additional methods
-
-    public abstract User getUser();
+public abstract class ForumTopicCreator implements IDN, UserRetrievable {
 
 }

@@ -1,5 +1,12 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
+/**
+ * Represents how to sort the Manga search query.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum MangaSort {
 
     Score       ("list_score"),

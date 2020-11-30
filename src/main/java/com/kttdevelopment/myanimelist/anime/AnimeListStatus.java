@@ -10,6 +10,7 @@ import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put</a> <br>
  * Represents a user's Anime list status.
  *
+ * @see Anime#getListStatus()
  * @see MyAnimeList#updateAnimeListing(long)
  * @see ListStatus
  * @since 1.0.0

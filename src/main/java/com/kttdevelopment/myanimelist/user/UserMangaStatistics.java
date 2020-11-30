@@ -1,23 +1,24 @@
 package com.kttdevelopment.myanimelist.user;
 
 /**
- * Represents a User's Anime statistics.
+ * Represents a User's Manga statistics.
  *
- * @see User#getAnimeStatistics()
+ * @deprecated Does not exist in the API currently
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Deveopment
  */
-public abstract class UserAnimeStatistics {
+@Deprecated
+public abstract class UserMangaStatistics {
 
-    /**
-     * Returns total items watching.
+/**
+     * Returns total items reading.
      *
-     * @return total items watching
+     * @return total items reading
      *
      * @since 1.0.0
      */
-    public abstract int getItemsWatching();
+    public abstract int getItemsReading();
 
     /**
      * Returns total items completed.
@@ -47,13 +48,13 @@ public abstract class UserAnimeStatistics {
     public abstract int getItemsDropped();
 
     /**
-     * Returns total items planned to watch.
+     * Returns total items planned to read.
      *
-     * @return total items planned to watch
+     * @return total items planned to read
      *
      * @since 1.0.0
      */
-    public abstract int getItemsPlanToWatch();
+    public abstract int getItemsPlanToRead();
 
     /**
      * Returns total items.
@@ -65,22 +66,22 @@ public abstract class UserAnimeStatistics {
     public abstract int getItems();
 
     /**
-     * Returns total days watched.
+     * Returns total days read.
      *
-     * @return total days watched
+     * @return total days read
      *
      * @since 1.0.0
      */
     public abstract float getDaysWatched();
 
     /**
-     * Returns total days watching.
+     * Returns total days reading.
      *
-     * @return total days watching
+     * @return total days reading
      *
      * @since 1.0.0
      */
-    public abstract float getDaysWatching();
+    public abstract float getDaysReading();
 
     /**
      * Returns total days completed.
@@ -119,23 +120,31 @@ public abstract class UserAnimeStatistics {
     public abstract float getDays();
 
     /**
-     * Returns total episodes watched.
+     * Returns total volumes read.
      *
-     * @return total episodes watching
+     * @return total volumes
      *
      * @since 1.0.0
      */
-    public abstract int getEpisodes();
+    public abstract int getVolumes();
 
     /**
-     * Returns times rewatched.
+     * Returns total chapters read.
      *
-     * @return times rewatched
+     * @return total chapters
      *
      * @since 1.0.0
      */
-    @SuppressWarnings("SpellCheckingInspection")
-    public abstract int getTimesRewatched();
+    public abstract int getChapters();
+
+    /**
+     * Returns times reread
+     *
+     * @return times reread
+     *
+     * @since 1.0.0
+     */
+    public abstract int getTimesReread();
 
     /**
      * Returns the average score.

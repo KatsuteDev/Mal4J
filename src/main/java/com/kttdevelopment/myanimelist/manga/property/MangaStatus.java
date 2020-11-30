@@ -1,5 +1,13 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
+/**
+ * Represents a Manga's status on a users Manga list.
+ *
+ * @see com.kttdevelopment.myanimelist.manga.MangaPreview#getStatus()
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum MangaStatus {
 
     Reading     ("reading"),

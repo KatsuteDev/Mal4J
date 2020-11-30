@@ -1,5 +1,12 @@
 package com.kttdevelopment.myanimelist.property;
 
+/**
+ * Represents the general ranking sort types.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 public enum RankingType {
 
     All         ("all"),

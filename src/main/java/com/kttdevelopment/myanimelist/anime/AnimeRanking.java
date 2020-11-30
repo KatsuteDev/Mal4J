@@ -15,6 +15,6 @@ import com.kttdevelopment.myanimelist.property.Ranking;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeRanking extends Ranking implements AnimePreviewRetrievable, AnimeRetrievable {
+public abstract class AnimeRanking implements AnimePreviewRetrievable, AnimeRetrievable, Ranking {
 
 }
