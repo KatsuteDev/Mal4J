@@ -1,8 +1,6 @@
 package com.kttdevelopment.myanimelist.manga;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.anime.Anime;
-import com.kttdevelopment.myanimelist.anime.property.time.Season;
 import com.kttdevelopment.myanimelist.manga.property.Author;
 import com.kttdevelopment.myanimelist.manga.property.MangaPublishStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaRetrievable;

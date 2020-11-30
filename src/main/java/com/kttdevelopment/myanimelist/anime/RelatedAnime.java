@@ -3,7 +3,6 @@ package com.kttdevelopment.myanimelist.anime;
 import com.kttdevelopment.myanimelist.anime.property.AnimePreviewRetrievable;
 import com.kttdevelopment.myanimelist.anime.property.AnimeRetrievable;
 import com.kttdevelopment.myanimelist.manga.Manga;
-import com.kttdevelopment.myanimelist.property.Recommendation;
 import com.kttdevelopment.myanimelist.property.RelatedMedia;
 
 /**

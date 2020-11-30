@@ -4,70 +4,86 @@ import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 
-import java.util.*;
-
+/**
+ * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put</a> <br>
+ * Represents an Anime list update.
+ *
+ * @see com.kttdevelopment.myanimelist.MyAnimeList#updateAnimeListing(long)
+ * @see ListUpdate
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
+ */
 @SuppressWarnings("SpellCheckingInspection")
-public abstract class AnimeListUpdate {
+public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeListStatus,AnimeStatus> {
 
-    protected final MyAnimeListService service;
-    protected final long id;
-
-    protected AnimeStatus status;
     protected Boolean rewatching;
-    protected Integer score, watchedEpisodes, priority, timesRewatched, rewatchValue;
-    protected List<String> tags;
-    protected String comments;
+    protected Integer watchedEpisodes, timesRewatched, rewatchValue;
 
+    /**
+     * Creates an Anime list update. Applications do not use this constructor.
+     *
+     * @param service MyAnimeList
+     * @param id Anime id
+     *
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#updateAnimeListing(long)
+     * @since 1.0.0
+     */
     public AnimeListUpdate(final MyAnimeListService service, final long id){
-        this.service = service;
-        this.id = id;
+        super(service, id);
     }
 
-    public final AnimeListUpdate status(final AnimeStatus status){
-        this.status = status;
-        return this;
-    }
-
-    public final AnimeListUpdate rewatching(final Boolean rewatching){
+    /**
+     * Sets the rewatching status.
+     *
+     * @param rewatching rewatching
+     * @return list update
+     *
+     * @since 1.0.0
+     */
+    public final AnimeListUpdate rewatching(final boolean rewatching){
         this.rewatching = rewatching;
         return this;
     }
 
-    public final AnimeListUpdate score(final int score){
-        this.score = score;
-        return this;
-    }
-
+    /**
+     * Sets the episodes watched.
+     *
+     * @param watchedEpisodes watched episodes
+     * @return list update
+     *
+     * @since 1.0.0
+     */
     public final AnimeListUpdate episodesWatched(final int watchedEpisodes){
         this.watchedEpisodes = watchedEpisodes;
         return this;
     }
 
-    public final AnimeListUpdate priority(final int priority){
-        this.priority = priority;
-        return this;
-    }
-
+    /**
+     * Sets the times rewatched.
+     *
+     * @param timesRewatched times rewatched
+     * @return list update
+     *
+     * @since 1.0.0
+     */
     public final AnimeListUpdate timesRewatched(final int timesRewatched){
         this.timesRewatched = timesRewatched;
         return this;
     }
 
+    /**
+     * Sets the rewatch value.
+     *
+     * @param rewatchValue rewatch value
+     * @return list update
+     *
+     * @since 1.0.0
+     */
     public final AnimeListUpdate rewatchValue(final int rewatchValue){
         this.rewatchValue = rewatchValue;
         return this;
     }
 
-    public final AnimeListUpdate tags(final String... tags){
-        this.tags = Arrays.asList(tags);
-        return this;
-    }
-
-    public final AnimeListUpdate setComments(final String comments){
-        this.comments = comments;
-        return this;
-    }
-
-    public abstract AnimeListStatus update();
 
 }

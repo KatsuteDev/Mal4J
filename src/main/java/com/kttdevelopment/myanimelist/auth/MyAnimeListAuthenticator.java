@@ -28,6 +28,7 @@ public final class MyAnimeListAuthenticator {
 
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
 
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private final String client_id, client_secret, authorizationCode, pkce;
     private AccessToken token;
 
@@ -91,10 +92,27 @@ public final class MyAnimeListAuthenticator {
             .body();
     }
 
+    /**
+     * Returns the access token.
+     *
+     * @return access token
+     *
+     * @see AccessToken
+     * @since 1.0.0
+     */
     public final AccessToken getAccessToken(){
         return token;
     }
 
+    /**
+     * Refreshes the access token.
+     *
+     * @return updated access token
+     * @throws IOException if client could not contact the auth server
+     *
+     * @see AccessToken
+     * @since 1.0.0
+     */
     public final AccessToken refreshAccessToken() throws IOException {
         return token = authService
             .refreshToken(
@@ -108,10 +126,21 @@ public final class MyAnimeListAuthenticator {
             .body();
     }
 
+    /**
+     * Returns the authorization URL for a client id.
+     *
+     * @param client_id client id
+     * @param PKCE_code_challenge PKCE code challenge
+     * @return authorization URL
+     *
+     * @since 1.0.0
+     */
+    @SuppressWarnings("SpellCheckingInspection")
     public static String getAuthorizationURL(final String client_id, final String PKCE_code_challenge){
         return String.format(authUrl, URLEncoder.encode(client_id, StandardCharsets.UTF_8), PKCE_code_challenge);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private static Authorization authenticateWithLocalServer(final String client_id, final int port) throws IOException{
         final String verify = PKCE.generateCodeVerifier();
         final String url = getAuthorizationURL(client_id, verify);

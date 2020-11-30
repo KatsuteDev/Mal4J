@@ -9,6 +9,7 @@ package com.kttdevelopment.myanimelist.property;
  * @version 1.0.0
  * @author Ktt Development
  */
+@SuppressWarnings("deprecation")
 public abstract class Statistics {
 
     /**

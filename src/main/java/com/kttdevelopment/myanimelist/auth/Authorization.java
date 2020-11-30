@@ -6,6 +6,7 @@ abstract class Authorization {
     public abstract String getAuthorization();
 
     // PKCE
+    @SuppressWarnings("SpellCheckingInspection")
     public abstract String getVerifier();
 
 }

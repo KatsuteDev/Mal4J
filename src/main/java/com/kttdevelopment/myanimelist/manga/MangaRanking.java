@@ -1,8 +1,5 @@
 package com.kttdevelopment.myanimelist.manga;
 
-import com.kttdevelopment.myanimelist.anime.Anime;
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
-import com.kttdevelopment.myanimelist.anime.property.AnimeRankingType;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.Ranking;
 

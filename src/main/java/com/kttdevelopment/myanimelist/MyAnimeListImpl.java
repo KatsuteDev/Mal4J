@@ -250,7 +250,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<UserAnimeListStatus> anime = new ArrayList<>();
-                for(final SubLevelObject.ListEdge<TopLevelObject.Anime, Call.UpdateUserAnimeList> iterator : response.data)
+                for(final SubLevelObject.ListEdge<TopLevelObject.Anime,Call.UpdateUserAnimeList> iterator : response.data)
                     anime.add(asUserAnimeListStatus(MyAnimeListImpl.this, iterator.list_status, asAnimePreview(MyAnimeListImpl.this, iterator.node)));
                 return anime;
             }
@@ -470,7 +470,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<UserMangaListStatus> manga = new ArrayList<>();
-                for(final SubLevelObject.ListEdge<TopLevelObject.Manga, Call.UpdateUserMangaList> iterator : response.data)
+                for(final SubLevelObject.ListEdge<TopLevelObject.Manga,Call.UpdateUserMangaList> iterator : response.data)
                     manga.add(asUserMangaListStatus(MyAnimeListImpl.this, iterator.list_status, asMangaPreview(MyAnimeListImpl.this, iterator.node)));
                 return manga;
             }
@@ -509,7 +509,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    private <R> R handleResponse(final ExceptionSupplier<Response<R>, IOException> supplier){
+    private <R> R handleResponse(final ExceptionSupplier<Response<R>,IOException> supplier){
         try{
             final Response<R> response = supplier.get();
             switch(response.code()){
