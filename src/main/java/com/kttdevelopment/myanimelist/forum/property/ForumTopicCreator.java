@@ -2,7 +2,6 @@ package com.kttdevelopment.myanimelist.forum.property;
 
 import com.kttdevelopment.myanimelist.forum.ForumTopicDetail;
 import com.kttdevelopment.myanimelist.property.IDN;
-import com.kttdevelopment.myanimelist.user.User;
 import com.kttdevelopment.myanimelist.user.property.UserRetrievable;
 
 /**

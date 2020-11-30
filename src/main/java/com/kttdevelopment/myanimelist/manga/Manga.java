@@ -1,10 +1,7 @@
 package com.kttdevelopment.myanimelist.manga;
 
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.FullMediaItem;
-import com.kttdevelopment.myanimelist.property.MediaItem;
-import jdk.jfr.Experimental;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get</a> <br>
@@ -18,6 +15,7 @@ import jdk.jfr.Experimental;
  * @version 1.0.0
  * @author Ktt Development
  */
+@SuppressWarnings("deprecation")
 public abstract class Manga extends MangaPreview implements FullMediaItem<MangaType,MangaPublishStatus,MangaListStatus,MangaRecommendation,MangaStatistics> {
 
     // API methods

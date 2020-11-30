@@ -13,6 +13,7 @@ public enum ForumSort {
 
     private final String field;
 
+    @SuppressWarnings("SameParameterValue")
     ForumSort(final String field){
         this.field = field;
     }

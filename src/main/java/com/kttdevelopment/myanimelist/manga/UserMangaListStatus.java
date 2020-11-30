@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist.manga;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaPreviewRetrievable;
 import com.kttdevelopment.myanimelist.manga.property.MangaRetrievable;
 

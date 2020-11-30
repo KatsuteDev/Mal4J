@@ -19,7 +19,7 @@ public final class AccessToken {
     private String refresh_token;
 
     /**
-     * Returns token with token type. Ex: 'Bearer oauth2token
+     * Returns token with token type. Ex: 'Bearer oauth2token'
      * '
      * @return token
      *

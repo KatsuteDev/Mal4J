@@ -80,6 +80,7 @@ public interface FullMediaItem<MediaType extends Enum<?>,Status extends Enum<?>,
      * @see com.kttdevelopment.myanimelist.manga.property.MangaStatistics
      * @since 1.0.0
      */
+    @SuppressWarnings("deprecation")
     Statistics getStatistics();
 
 }

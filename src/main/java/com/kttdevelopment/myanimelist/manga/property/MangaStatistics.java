@@ -1,18 +1,15 @@
 package com.kttdevelopment.myanimelist.manga.property;
 
-import com.kttdevelopment.myanimelist.manga.Manga;
 import com.kttdevelopment.myanimelist.property.Statistics;
 
 /**
  * Represents an Manga's statistics.
  *
  * @deprecated Does not exist in the API currently
- * @see Manga#getStatistics()
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-@SuppressWarnings("DeprecatedIsStillUsed")
 @Deprecated
 public abstract class MangaStatistics extends Statistics {
 

@@ -15,7 +15,6 @@ import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.*;
 import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
 import com.kttdevelopment.myanimelist.query.MangaListUpdate;
-import com.kttdevelopment.myanimelist.user.User;
 import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
 
 import java.lang.reflect.Array;
@@ -2286,7 +2285,7 @@ abstract class MyAnimeListAPIResponseMapping {
     //
 
     @SuppressWarnings("unchecked")
-    private static <T,R> R[] adaptArray(final T[] arr, final Function<T,R> adapter, final Class<R> Class){
+    private static <T,R> R[] adaptArray(final T[] arr, final Function<T,R> adapter,final Class<R> Class){
         final List<R> list = new ArrayList<>();
         for(final T obj : arr)
             list.add(adapter.apply(obj));

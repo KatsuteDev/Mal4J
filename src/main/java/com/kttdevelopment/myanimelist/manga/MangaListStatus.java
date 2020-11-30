@@ -3,9 +3,7 @@ package com.kttdevelopment.myanimelist.manga;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
-import com.kttdevelopment.myanimelist.property.Editable;
 import com.kttdevelopment.myanimelist.property.ListStatus;
-import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
 import com.kttdevelopment.myanimelist.query.MangaListUpdate;
 
 /**
