@@ -534,6 +534,14 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     }
 
+    @Override
+    public String toString(){
+        return "MyAnimeListImpl{" +
+               "authenticator=" + authenticator +
+               ", service=" + service +
+               '}';
+    }
+
     //
 
     private static String asStringList(final List<String> fields){
