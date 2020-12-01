@@ -51,4 +51,12 @@ public final class AccessToken {
         return refresh_token;
     }
 
+    @Override
+    public String toString(){
+        return "AccessToken{" +
+               "token_type='" + token_type + '\'' +
+               ", expires_in=" + expires_in +
+               '}';
+    }
+
 }

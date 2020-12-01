@@ -100,7 +100,7 @@ abstract class MyAnimeListAPIResponse {
         static class UpdateUserAnimeList extends AutomatedToString {
 
             String status;
-            int score, num_watched_episodes;
+            int score, num_episodes_watched;
             boolean is_rewatching;
             String start_date, end_date;
             int priority, num_times_rewatched, rewatch_value;

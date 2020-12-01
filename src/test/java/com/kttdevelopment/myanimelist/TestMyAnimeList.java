@@ -8,6 +8,7 @@ import com.kttdevelopment.myanimelist.forum.*;
 import com.kttdevelopment.myanimelist.forum.property.*;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
+import com.kttdevelopment.myanimelist.property.ListStatus;
 import com.kttdevelopment.myanimelist.property.NSFW;
 import com.kttdevelopment.myanimelist.user.User;
 import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.List;
 
 @SuppressWarnings("SpellCheckingInspection")
@@ -259,7 +261,6 @@ public class TestMyAnimeList {
         }
     }
 
-
     @Test
     public void testAnimeSuggestions(){
         final List<AnimePreview> suggestions =
@@ -270,30 +271,69 @@ public class TestMyAnimeList {
 
     @Test @Disabled
     public void testUpdateAndDeleteAnimeListing(){
-        // test get
+        // test delete
         {
-            final UserAnimeListStatus status =
-                mal.getUserAnimeListing()
-                    .search()
-                    .get(0);
-            Assertions.assertNotEquals(-1, status.getAnimePreview().getID());
-            Assertions.assertNotNull(status.getStatus());
-            Assertions.assertNotEquals(-1, status.getScore());
-            Assertions.assertNotEquals(-1, status.getWatchedEpisodes());
+            mal.deleteAnimeListing(13759);
+            Assertions.assertNull(mal.getAnime(13759).getListStatus());
+        }
+        // update
+        {
+            final AnimeListStatus status = mal.updateAnimeListing(13759)
+                .status(AnimeStatus.Completed)
+                .score(10)
+                .episodesWatched(24)
+                .rewatching(false)
+                .priority(2)
+                .timesRewatched(0)
+                .rewatchValue(5)
+                .tags("ignore", "tags")
+                .setComments("ignore comments")
+                .update();
+
+            Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
+            Assertions.assertEquals(10, status.getScore());
+            Assertions.assertEquals(24, status.getWatchedEpisodes());
             Assertions.assertFalse(status.isRewatching()); // weak test
-            Assertions.assertNotEquals(-1, status.getStartDate());
-            Assertions.assertNotEquals(-1, status.getFinishDate());
-            Assertions.assertNotEquals(-1, status.getPriority());
-            Assertions.assertNotEquals(-1, status.getTimesRewatched());
-            Assertions.assertNotEquals(-1, status.getRewatchValue());
-            Assertions.assertNotNull(status.getTags());
-            Assertions.assertNotNull(status.getComments());
+            // Assertions.assertNotEquals(-1, status.getStartDate()); // will fail
+            // Assertions.assertNotEquals(-1, status.getFinishDate()); // will fail
+            Assertions.assertEquals(2, status.getPriority());
+            Assertions.assertEquals(0, status.getTimesRewatched());
+            Assertions.assertEquals(5, status.getRewatchValue());
+            Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
+            Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
+            Assertions.assertEquals("ignore comments", status.getComments());
             Assertions.assertNotEquals(-1, status.getUpdatedAt());
         }
 
-        // todo: delete
+        // test get
+        { // fixme: API only returns limited fields, not all
+            final List<UserAnimeListStatus> list =
+                mal.getUserAnimeListing()
+                    .withStatus(AnimeStatus.Completed)
+                    .withLimit(1000)
+                    .search();
 
-        // todo: update
+            UserAnimeListStatus status = null;
+            for(final UserAnimeListStatus userAnimeListStatus : list)
+                if((status = userAnimeListStatus).getAnimePreview().getID() == 13759)
+                    break;
+            if(status == null)
+                Assertions.fail();
+
+            Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
+            Assertions.assertEquals(10, status.getScore());
+            Assertions.assertEquals(24, status.getWatchedEpisodes());
+            Assertions.assertFalse(status.isRewatching()); // weak test
+            // Assertions.assertNotEquals(-1, status.getStartDate());
+            // Assertions.assertNotEquals(-1, status.getFinishDate());
+            Assertions.assertEquals(2, status.getPriority());
+            Assertions.assertEquals(0, status.getTimesRewatched());
+            Assertions.assertEquals(5, status.getRewatchValue());
+            Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
+            Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
+            Assertions.assertEquals("ignore comments", status.getComments());
+            Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        }
     }
 
     @Test
