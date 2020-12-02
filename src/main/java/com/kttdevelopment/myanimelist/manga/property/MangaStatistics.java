@@ -10,6 +10,7 @@ import com.kttdevelopment.myanimelist.property.Statistics;
  * @version 1.0.0
  * @author Ktt Development
  */
+@SuppressWarnings("DeprecatedIsStillUsed")
 @Deprecated
 public abstract class MangaStatistics extends Statistics {
 

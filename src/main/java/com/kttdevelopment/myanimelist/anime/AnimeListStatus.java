@@ -2,15 +2,18 @@ package com.kttdevelopment.myanimelist.anime;
 
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
+import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.property.ListStatus;
 import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put</a> <br>
+ * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_animelist_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_animelist_get</a> <br>
  * Represents a user's Anime list status.
  *
  * @see Anime#getListStatus()
+ * @see MyAnimeList#getUserAnimeListing()
+ * @see MyAnimeList#getUserAnimeListing(String)
  * @see MyAnimeList#updateAnimeListing(long)
  * @see ListStatus
  * @since 1.0.0
@@ -18,7 +21,7 @@ import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
  * @author Ktt Development
  */
 @SuppressWarnings("SpellCheckingInspection")
-public abstract class AnimeListStatus implements ListStatus<AnimeStatus> {
+public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRetrievable,AnimePreviewRetrievable {
 
     // API methods
 

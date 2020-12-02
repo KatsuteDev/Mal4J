@@ -209,7 +209,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                 );
                 if(response == null) return null;
 
-                return asUserAnimeListStatus(MyAnimeListImpl.this, response, null);
+                return asAnimeListStatus(MyAnimeListImpl.this, response, id);
             }
 
         };
@@ -235,7 +235,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         return new UserAnimeListQuery(service, username) {
 
             @Override
-            public final List<UserAnimeListStatus> search(){
+            public final List<AnimeListStatus> search(){
                 final Call.GetUserAnimeList response = handleResponse(
                     () -> service.getUserAnimeListing(
                         auth,
@@ -249,9 +249,9 @@ final class MyAnimeListImpl extends MyAnimeList{
                 );
                 if(response == null) return null;
 
-                final List<UserAnimeListStatus> anime = new ArrayList<>();
+                final List<AnimeListStatus> anime = new ArrayList<>();
                 for(final SubLevelObject.ListEdge<TopLevelObject.Anime,Call.UpdateUserAnimeList> iterator : response.data)
-                    anime.add(asUserAnimeListStatus(MyAnimeListImpl.this, iterator.list_status, asAnimePreview(MyAnimeListImpl.this, iterator.node)));
+                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.list_status, asAnimePreview(MyAnimeListImpl.this, iterator.node)));
                 return anime;
             }
 
@@ -413,23 +413,23 @@ final class MyAnimeListImpl extends MyAnimeList{
             public synchronized final MangaListStatus update(){
                 final Call.UpdateUserMangaList response = handleResponse(
                     () -> service.updateMangaListing(
-                            auth,
-                            id,
-                            status != null ? status.field() : null,
-                            rereading,
-                            score,
-                            volumesRead,
-                            chaptersRead,
-                            priority,
-                            timesReread,
-                            rereadValue,
-                            asStringList(tags),
-                            comments)
+                        auth,
+                        id,
+                        status != null ? status.field() : null,
+                        rereading,
+                        score,
+                        volumesRead,
+                        chaptersRead,
+                        priority,
+                        timesReread,
+                        rereadValue,
+                        asStringList(tags),
+                        comments)
                     .execute()
                 );
                 if(response == null) return null;
 
-                return asUserMangaListStatus(MyAnimeListImpl.this, response, null);
+                return asMangaListStatus(MyAnimeListImpl.this, response, id);
             }
 
         };
@@ -455,7 +455,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         return new UserMangaListQuery(service, username) {
 
             @Override
-            public final List<UserMangaListStatus> search(){
+            public final List<MangaListStatus> search(){
                 final Call.GetUserMangaList response = handleResponse(
                     () -> service.getUserMangaListing(
                         auth,
@@ -469,9 +469,9 @@ final class MyAnimeListImpl extends MyAnimeList{
                 );
                 if(response == null) return null;
 
-                final List<UserMangaListStatus> manga = new ArrayList<>();
+                final List<MangaListStatus> manga = new ArrayList<>();
                 for(final SubLevelObject.ListEdge<TopLevelObject.Manga,Call.UpdateUserMangaList> iterator : response.data)
-                    manga.add(asUserMangaListStatus(MyAnimeListImpl.this, iterator.list_status, asMangaPreview(MyAnimeListImpl.this, iterator.node)));
+                    manga.add(asMangaListStatus(MyAnimeListImpl.this, iterator.list_status, asMangaPreview(MyAnimeListImpl.this, iterator.node)));
                 return manga;
             }
 

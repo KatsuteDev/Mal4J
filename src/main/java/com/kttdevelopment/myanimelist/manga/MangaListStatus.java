@@ -2,22 +2,25 @@ package com.kttdevelopment.myanimelist.manga;
 
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
+import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.ListStatus;
 import com.kttdevelopment.myanimelist.query.MangaListUpdate;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put</a> <br>
+ * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get</a> <br>
  * Represents a user's Anime list status.
  *
  * @see Manga#getListStatus()
+ * @see MyAnimeList#getUserMangaListing()
+ * @see MyAnimeList#getUserMangaListing(String)
  * @see MyAnimeList#updateMangaListing(long)
  * @see ListStatus
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaListStatus implements ListStatus<MangaStatus> {
+public abstract class MangaListStatus implements ListStatus<MangaStatus>,MangaRetrievable,MangaPreviewRetrievable {
 
     // API methods
 

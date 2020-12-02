@@ -97,15 +97,7 @@ abstract class MyAnimeListAPIResponse {
 
         }
 
-        static class UpdateUserAnimeList extends AutomatedToString {
-
-            String status;
-            int score, num_episodes_watched;
-            boolean is_rewatching;
-            String start_date, end_date;
-            int priority, num_times_rewatched, rewatch_value;
-            String[] tags;
-            String comments, updated_at;
+        static class UpdateUserAnimeList extends Anime.MyListStatus {
 
         }
 
@@ -155,14 +147,7 @@ abstract class MyAnimeListAPIResponse {
 
         }
 
-        static class UpdateUserMangaList extends AutomatedToString {
-
-            String status;
-            boolean is_rereading;
-            String start_date, end_date;
-            int score, num_volumes_read, num_chapters_read, priority, num_times_reread, reread_value;
-            String[] tags;
-            String comments, updated_at;
+        static class UpdateUserMangaList extends Manga.MyListStatus {
 
         }
 

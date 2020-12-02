@@ -307,14 +307,14 @@ public class TestMyAnimeList {
 
         // test get
         { // fixme: API only returns limited fields, not all
-            final List<UserAnimeListStatus> list =
+            final List<AnimeListStatus> list =
                 mal.getUserAnimeListing()
                     .withStatus(AnimeStatus.Completed)
                     .withLimit(1000)
                     .search();
 
-            UserAnimeListStatus status = null;
-            for(final UserAnimeListStatus userAnimeListStatus : list)
+            AnimeListStatus status = null;
+            for(final AnimeListStatus userAnimeListStatus : list)
                 if((status = userAnimeListStatus).getAnimePreview().getID() == 13759)
                     break;
             if(status == null)
@@ -340,7 +340,7 @@ public class TestMyAnimeList {
     public void testUserAnimeListing(){
         // test status
         {
-            final List<UserAnimeListStatus> list =
+            final List<AnimeListStatus> list =
                 mal.getUserAnimeListing()
                    .withStatus(AnimeStatus.Dropped)
                    .search();
@@ -348,7 +348,7 @@ public class TestMyAnimeList {
         }
         // test sort
         {
-            final List<UserAnimeListStatus> list =
+            final List<AnimeListStatus> list =
                 mal.getUserAnimeListing()
                    .sortBy(AnimeSort.UpdatedAt)
                    .search();
@@ -614,7 +614,7 @@ public class TestMyAnimeList {
     public void testUpdateAndDeleteMangaListing(){
         // test get
         {
-            final UserMangaListStatus status =
+            final MangaListStatus status =
                 mal.getUserMangaListing()
                     .search()
                     .get(0);
@@ -642,7 +642,7 @@ public class TestMyAnimeList {
     public void testUserMangaListing(){
         // test status
         {
-            final List<UserMangaListStatus> list =
+            final List<MangaListStatus> list =
                 mal.getUserMangaListing()
                    .withStatus(MangaStatus.PlanToRead)
                    .withLimit(1)
@@ -651,7 +651,7 @@ public class TestMyAnimeList {
         }
         // test sort
         {
-            final List<UserMangaListStatus> list =
+            final List<MangaListStatus> list =
                 mal.getUserMangaListing()
                    .sortBy(MangaSort.UpdatedAt)
                    .withLimit(2)
