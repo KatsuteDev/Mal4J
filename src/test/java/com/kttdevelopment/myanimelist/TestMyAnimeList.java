@@ -22,7 +22,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
-@SuppressWarnings("SpellCheckingInspection")
+@SuppressWarnings({"SpellCheckingInspection", "CommentedOutCode"})
 public class TestMyAnimeList {
 
     private static MyAnimeList mal;
@@ -518,10 +518,10 @@ public class TestMyAnimeList {
 
     @Test
     public void testManga(){
-        final Manga manga = mal.getManga(21479);
+        final Manga manga = mal.getManga(28107);
         Assertions.assertEquals(manga, manga.getManga());
 
-        Assertions.assertEquals(21479, manga.getID());
+        Assertions.assertEquals(28107, manga.getID());
         Assertions.assertNotNull(manga.getTitle());
         Assertions.assertNotNull(manga.getMainPicture().getMediumURL());
         Assertions.assertNotNull(manga.getMainPicture().getLargeURL());
@@ -553,10 +553,11 @@ public class TestMyAnimeList {
         Assertions.assertNotNull(manga.getBackground());
         // related
         {
-            final RelatedAnime relatedAnime = manga.getRelatedAnime()[0];
-            Assertions.assertNotEquals(-1, relatedAnime.getAnimePreview().getID());
-            Assertions.assertNotNull(relatedAnime.getRelationType());
-            Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
+            // Manga is unlikely to have related Anime
+            // final RelatedAnime relatedAnime = manga.getRelatedAnime()[0];
+            // Assertions.assertNotEquals(-1, relatedAnime.getAnimePreview().getID());
+            // Assertions.assertNotNull(relatedAnime.getRelationType());
+            // Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
 
             final RelatedManga relatedManga = manga.getRelatedManga()[0];
             Assertions.assertNotEquals(-1, relatedManga.getMangaPreview().getID());
