@@ -398,7 +398,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final String[] tags         = requireNonNull(() -> schema.tags);
                 private final String comments       = requireNonNull(() -> schema.comments);
                 private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_watched_episodes, -1);
+                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_episodes_watched, -1);
                 private final boolean rewatching    = requireNonNullElse(() -> schema.is_rewatching, false);
                 private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, -1);
                 private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, -1);
@@ -502,7 +502,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final String[] tags         = requireNonNull(() -> schema.tags);
                 private final String comments       = requireNonNull(() -> schema.comments);
                 private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_watched_episodes, -1);
+                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_episodes_watched, -1);
                 private final boolean rewatching    = requireNonNullElse(() -> schema.is_rewatching, false);
                 private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, -1);
                 private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, -1);

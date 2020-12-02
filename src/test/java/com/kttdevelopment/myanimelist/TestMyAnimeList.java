@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 @SuppressWarnings({"SpellCheckingInspection", "CommentedOutCode"})
 public class TestMyAnimeList {
@@ -260,20 +261,7 @@ public class TestMyAnimeList {
             mal.deleteAnimeListing(13759);
             Assertions.assertNull(mal.getAnime(13759).getListStatus());
         }
-        // update
-        {
-            final AnimeListStatus status = mal.updateAnimeListing(13759)
-                .status(AnimeStatus.Completed)
-                .score(10)
-                .episodesWatched(24)
-                .rewatching(false)
-                .priority(2)
-                .timesRewatched(0)
-                .rewatchValue(5)
-                .tags("ignore", "tags")
-                .setComments("ignore comments")
-                .update();
-
+        final Consumer<AnimeListStatus> test = status -> {
             Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
             Assertions.assertEquals(10, status.getScore());
             Assertions.assertEquals(24, status.getWatchedEpisodes());
@@ -287,10 +275,26 @@ public class TestMyAnimeList {
             Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
             Assertions.assertEquals("ignore comments", status.getComments());
             Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        };
+
+        // update
+        {
+            final AnimeListStatus status = mal.updateAnimeListing(13759)
+                .status(AnimeStatus.Completed)
+                .score(10)
+                .episodesWatched(24)
+                .rewatching(false)
+                .priority(2)
+                .timesRewatched(0)
+                .rewatchValue(5)
+                .tags("ignore", "tags")
+                .setComments("ignore comments")
+                .update();
+            test.accept(status);
         }
 
         // test get
-        { // fixme: API only returns limited fields, not all
+        {
             final List<AnimeListStatus> list =
                 mal.getUserAnimeListing()
                     .withStatus(AnimeStatus.Completed)
@@ -304,35 +308,12 @@ public class TestMyAnimeList {
             if(status == null)
                 Assertions.fail();
 
-            Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
-            Assertions.assertEquals(10, status.getScore());
-            Assertions.assertEquals(24, status.getWatchedEpisodes());
-            Assertions.assertFalse(status.isRewatching()); // weak test
-            Assertions.assertNotEquals(-1, status.getStartDate());
-            Assertions.assertNotEquals(-1, status.getFinishDate());
-            Assertions.assertEquals(2, status.getPriority());
-            Assertions.assertEquals(0, status.getTimesRewatched());
-            Assertions.assertEquals(5, status.getRewatchValue());
-            Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
-            Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
-            Assertions.assertEquals("ignore comments", status.getComments());
-            Assertions.assertNotEquals(-1, status.getUpdatedAt());
+            test.accept(status);
         }
         // list status
-        {
-            final AnimeListStatus listStatus = mal.getAnime(13759).getListStatus();
-            Assertions.assertNotNull(listStatus.getStatus());
-            Assertions.assertNotEquals(-1, listStatus.getScore());
-            Assertions.assertNotEquals(-1, listStatus.getWatchedEpisodes());
-            Assertions.assertFalse(listStatus.isRewatching()); // weak test
-            Assertions.assertNotEquals(-1, listStatus.getStartDate());
-            Assertions.assertNotEquals(-1, listStatus.getFinishDate());
-            Assertions.assertNotEquals(-1, listStatus.getPriority());
-            Assertions.assertNotEquals(-1, listStatus.getTimesRewatched());
-            Assertions.assertNotEquals(-1, listStatus.getRewatchValue());
-            Assertions.assertNotNull(listStatus.getTags());
-            Assertions.assertNotNull(listStatus.getComments());
-            Assertions.assertNotEquals(-1, listStatus.getUpdatedAt());
+        { // fixme: API only returns limited fields, not all
+            final AnimeListStatus status = mal.getAnime(13759).getListStatus();
+            test.accept(status);
         }
     }
 
