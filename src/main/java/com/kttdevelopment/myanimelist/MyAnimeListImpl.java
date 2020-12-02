@@ -60,7 +60,8 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    private static final String animeFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,list_status,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics";
+    @SuppressWarnings("SpellCheckingInspection")
+    private static final String animeFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics,my_list_status{start_date,end_date,priority,num_times_rewatched,rewatch_value,tags,comments},list_status{start_date,end_date,priority,num_times_rewatched,rewatch_value,tags,comments}";
 
     @Override
     public final AnimeSearchQuery getAnime(){
@@ -332,7 +333,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         };
     }
     
-    private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,list_status,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role}";
+    private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role},my_list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments},list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments}";
 
     @Override
     public final MangaSearchQuery getManga(){
