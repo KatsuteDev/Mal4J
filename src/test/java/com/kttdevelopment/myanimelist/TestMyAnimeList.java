@@ -188,22 +188,6 @@ public class TestMyAnimeList {
             Assertions.assertNotEquals(-1, statistics.getWatching());
             Assertions.assertNotEquals(-1, statistics.getUserCount());
         }
-        // list status
-        {
-            final AnimeListStatus listStatus = anime.getListStatus();
-            Assertions.assertNotNull(listStatus.getStatus());
-            Assertions.assertNotEquals(-1, listStatus.getScore());
-            Assertions.assertNotEquals(-1, listStatus.getWatchedEpisodes());
-            Assertions.assertFalse(listStatus.isRewatching()); // weak test
-            Assertions.assertNotEquals(-1, listStatus.getStartDate());
-            Assertions.assertNotEquals(-1, listStatus.getFinishDate());
-            Assertions.assertNotEquals(-1, listStatus.getPriority());
-            Assertions.assertNotEquals(-1, listStatus.getTimesRewatched());
-            Assertions.assertNotEquals(-1, listStatus.getRewatchValue());
-            Assertions.assertNotNull(listStatus.getTags());
-            Assertions.assertNotNull(listStatus.getComments());
-            Assertions.assertNotEquals(-1, listStatus.getUpdatedAt());
-        }
     }
 
     @Test
@@ -324,8 +308,8 @@ public class TestMyAnimeList {
             Assertions.assertEquals(10, status.getScore());
             Assertions.assertEquals(24, status.getWatchedEpisodes());
             Assertions.assertFalse(status.isRewatching()); // weak test
-            // Assertions.assertNotEquals(-1, status.getStartDate());
-            // Assertions.assertNotEquals(-1, status.getFinishDate());
+            Assertions.assertNotEquals(-1, status.getStartDate());
+            Assertions.assertNotEquals(-1, status.getFinishDate());
             Assertions.assertEquals(2, status.getPriority());
             Assertions.assertEquals(0, status.getTimesRewatched());
             Assertions.assertEquals(5, status.getRewatchValue());
@@ -333,6 +317,22 @@ public class TestMyAnimeList {
             Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
             Assertions.assertEquals("ignore comments", status.getComments());
             Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        }
+        // list status
+        {
+            final AnimeListStatus listStatus = mal.getAnime(13759).getListStatus();
+            Assertions.assertNotNull(listStatus.getStatus());
+            Assertions.assertNotEquals(-1, listStatus.getScore());
+            Assertions.assertNotEquals(-1, listStatus.getWatchedEpisodes());
+            Assertions.assertFalse(listStatus.isRewatching()); // weak test
+            Assertions.assertNotEquals(-1, listStatus.getStartDate());
+            Assertions.assertNotEquals(-1, listStatus.getFinishDate());
+            Assertions.assertNotEquals(-1, listStatus.getPriority());
+            Assertions.assertNotEquals(-1, listStatus.getTimesRewatched());
+            Assertions.assertNotEquals(-1, listStatus.getRewatchValue());
+            Assertions.assertNotNull(listStatus.getTags());
+            Assertions.assertNotNull(listStatus.getComments());
+            Assertions.assertNotEquals(-1, listStatus.getUpdatedAt());
         }
     }
 
@@ -572,23 +572,6 @@ public class TestMyAnimeList {
         }
         Assertions.assertNotEquals(-1, manga.getSerialization()[0].getID());
         Assertions.assertNotNull(manga.getSerialization()[0].getName());
-        // list status
-        {
-            final MangaListStatus listStatus = manga.getListStatus();
-            Assertions.assertNotNull(listStatus.getStatus());
-            Assertions.assertNotEquals(-1, listStatus.getScore());
-            Assertions.assertNotEquals(-1, listStatus.getVolumesRead());
-            Assertions.assertNotEquals(-1, listStatus.getChaptersRead());
-            Assertions.assertFalse(listStatus.isRereading()); // weak test
-            Assertions.assertNotEquals(-1, listStatus.getStartDate());
-            Assertions.assertNotEquals(-1, listStatus.getFinishDate());
-            Assertions.assertNotEquals(-1, listStatus.getPriority());
-            Assertions.assertNotEquals(-1, listStatus.getTimesReread());
-            Assertions.assertNotEquals(-1, listStatus.getRereadValue());
-            Assertions.assertNotNull(listStatus.getTags());
-            Assertions.assertNotNull(listStatus.getComments());
-            Assertions.assertNotEquals(-1, listStatus.getUpdatedAt());
-        }
         Assumptions.assumeTrue(manga.getSerialization()[0].getRole() != null, "API issue, disregard failure"); // seems to be an API issue
     }
 
@@ -613,6 +596,16 @@ public class TestMyAnimeList {
 
     @Test @Disabled
     public void testUpdateAndDeleteMangaListing(){
+        // test delete
+        {
+            mal.deleteMangaListing(28107);
+            Assertions.assertNotNull(mal.getManga(28107).getListStatus());
+        }
+        // update
+        {
+            // todo
+        }
+
         // test get
         {
             final MangaListStatus status =
@@ -634,9 +627,23 @@ public class TestMyAnimeList {
             Assertions.assertNotEquals(-1, status.getUpdatedAt());
         }
 
-        // todo: delete
-
-        // todo: update
+        // list status
+        {
+            final MangaListStatus listStatus = mal.getManga(28107).getListStatus();
+            Assertions.assertNotNull(listStatus.getStatus());
+            Assertions.assertNotEquals(-1, listStatus.getScore());
+            Assertions.assertNotEquals(-1, listStatus.getVolumesRead());
+            Assertions.assertNotEquals(-1, listStatus.getChaptersRead());
+            Assertions.assertFalse(listStatus.isRereading()); // weak test
+            Assertions.assertNotEquals(-1, listStatus.getStartDate());
+            Assertions.assertNotEquals(-1, listStatus.getFinishDate());
+            Assertions.assertNotEquals(-1, listStatus.getPriority());
+            Assertions.assertNotEquals(-1, listStatus.getTimesReread());
+            Assertions.assertNotEquals(-1, listStatus.getRereadValue());
+            Assertions.assertNotNull(listStatus.getTags());
+            Assertions.assertNotNull(listStatus.getComments());
+            Assertions.assertNotEquals(-1, listStatus.getUpdatedAt());
+        }
     }
 
     @Test
