@@ -2,7 +2,7 @@ package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.MyAnimeListService;
-import com.kttdevelopment.myanimelist.manga.UserMangaListStatus;
+import com.kttdevelopment.myanimelist.manga.MangaListStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaSort;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 
@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class UserMangaListQuery extends FieldSearchQuery<UserMangaListQuery,List<UserMangaListStatus>> {
+public abstract class UserMangaListQuery extends FieldSearchQuery<UserMangaListQuery,List<MangaListStatus>> {
 
     protected final String username;
     protected MangaSort sort;
