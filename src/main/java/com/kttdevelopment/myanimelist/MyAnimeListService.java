@@ -135,7 +135,7 @@ public interface MyAnimeListService {
     @SuppressWarnings("SpellCheckingInspection")
     @GET("forum/topics")
     Call<GetForumTopics> getForumTopics(
-        @Header("Authorizations")   final String token,
+        @Header("Authorization")   final String token,
         @Query("board_id")          final Long board_id,
         @Query("subboard_id")       final Long subboard_id,
         @Query("limit")             final Integer limit,

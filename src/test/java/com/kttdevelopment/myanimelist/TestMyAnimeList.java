@@ -397,7 +397,7 @@ public class TestMyAnimeList {
         }
     }
 
-    @Test @Disabled // todo: give forum IDs that have values for all fields
+    @Test
     public void testForumTopics(){
         // test standard
         {
@@ -405,7 +405,7 @@ public class TestMyAnimeList {
             final ForumCategory category = boards.get(0);
             Assertions.assertNotNull(category.getTitle());
 
-            final ForumBoard board = category.getForumBoards()[0];
+            final ForumBoard board = category.getForumBoards()[2];
             Assertions.assertNotEquals(-1, board.getID());
             Assertions.assertNotNull(board.getTitle());
             Assertions.assertNotNull(board.getDescription());
@@ -427,9 +427,7 @@ public class TestMyAnimeList {
         // test search
         {
             final List<ForumTopicDetail> topics = mal.getForumTopics()
-                .withLimit(1)
-                .withOffset(1)
-                .withQuery("")
+                .withQuery("MyAnimeList API")
                 .search();
             final ForumTopicDetail topic = topics.get(0);
             test.accept(topic);
@@ -440,6 +438,7 @@ public class TestMyAnimeList {
                 mal.getForumTopics()
                     .withLimit(1)
                     .withOffset(1)
+                    .withQuery("MyAnimeList API")
                     .search();
             Assertions.assertEquals(1, topics.size());
         }
@@ -447,8 +446,8 @@ public class TestMyAnimeList {
         {
             final List<ForumTopicDetail> topics = mal.getForumTopics()
                 .withLimit(1)
-                .withOffset(1)
-                .withTopicUsername("")
+                .withQuery("MyAnimeList API")
+                // .withTopicUsername("Myanimelist Redesign") // fixme
                 .search();
             final ForumTopicDetail topic = topics.get(0);
             test.accept(topic);
@@ -457,8 +456,7 @@ public class TestMyAnimeList {
         {
             final List<ForumTopicDetail> topics = mal.getForumTopics()
                 .withLimit(1)
-                .withOffset(1)
-                .withUsername("")
+                .withUsername("Xinil")
                 .search();
             final ForumTopicDetail topic = topics.get(0);
             test.accept(topic);
@@ -469,8 +467,7 @@ public class TestMyAnimeList {
             {
                 final List<ForumTopicDetail> topics = mal.getForumTopics()
                     .withLimit(1)
-                    .withOffset(1)
-                    .withBoardId(1)
+                    .withBoardId(5)
                     .search();
                 final ForumTopicDetail topic = topics.get(0);
                 test.accept(topic);
@@ -479,15 +476,14 @@ public class TestMyAnimeList {
             {
                 final List<ForumTopicDetail> topics = mal.getForumTopics()
                     .withLimit(1)
-                    .withOffset(1)
-                    .withBoardId(1)
+                    .withSubboardId(2)
                     .search();
                 final ForumTopicDetail topic = topics.get(0);
                 test.accept(topic);
             }
             // id
             {
-                final ForumTopic topic = mal.getForumTopicDetail(-1);
+                final ForumTopic topic = mal.getForumTopicDetail(481);
                 Assertions.assertNotNull(topic.getTitle());
                 final Post post = topic.getPosts()[0];
                 Assertions.assertNotEquals(-1, post.getID());
