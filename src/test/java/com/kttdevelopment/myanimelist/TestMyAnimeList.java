@@ -397,11 +397,42 @@ public class TestMyAnimeList {
         }
     }
 
-    @Test // todo
+    @Test @Disabled // todo: give forum IDs that have values for all fields
     public void testForumTopics(){
         // test standard
         {
+            final List<ForumCategory> boards = mal.getForumBoards();
+            final ForumCategory category = boards.get(0);
+            Assertions.assertNotNull(category.getTitle());
 
+            final ForumBoard board = category.getForumBoards()[0];
+            Assertions.assertNotEquals(-1, board.getID());
+            Assertions.assertNotNull(board.getTitle());
+            Assertions.assertNotNull(board.getDescription());
+            Assertions.assertNotEquals(-1, board.getSubBoards()[0].getBoard().getID());
+            Assertions.assertNotNull(board.getSubBoards()[0].getBoard().getTitle());
+        }
+        final Consumer<ForumTopicDetail> test = topic -> {
+            Assertions.assertNotEquals(-1, topic.getID());
+            Assertions.assertNotNull(topic.getTitle());
+            Assertions.assertNotEquals(-1, topic.getCreatedAt());
+            Assertions.assertNotEquals(-1, topic.getCreatedBy().getID());
+            Assertions.assertNotNull(topic.getCreatedBy().getName());
+            Assertions.assertNotEquals(-1, topic.getPostsCount());
+            Assertions.assertNotEquals(-1, topic.getLastPostCreatedAt());
+            Assertions.assertNotEquals(-1, topic.getLastPostCreatedBy().getID());
+            Assertions.assertNotNull(topic.getLastPostCreatedBy().getName());
+            Assertions.assertFalse(topic.isLocked());  // weak test
+        };
+        // test search
+        {
+            final List<ForumTopicDetail> topics = mal.getForumTopics()
+                .withLimit(1)
+                .withOffset(1)
+                .withQuery("")
+                .search();
+            final ForumTopicDetail topic = topics.get(0);
+            test.accept(topic);
         }
         // test limit & offset
         {
@@ -412,21 +443,72 @@ public class TestMyAnimeList {
                     .search();
             Assertions.assertEquals(1, topics.size());
         }
-        // id
-        {
-
-        }
-        // test search
-        {
-
-        }
         // test topic name
         {
-
+            final List<ForumTopicDetail> topics = mal.getForumTopics()
+                .withLimit(1)
+                .withOffset(1)
+                .withTopicUsername("")
+                .search();
+            final ForumTopicDetail topic = topics.get(0);
+            test.accept(topic);
         }
         // test username
         {
-
+            final List<ForumTopicDetail> topics = mal.getForumTopics()
+                .withLimit(1)
+                .withOffset(1)
+                .withUsername("")
+                .search();
+            final ForumTopicDetail topic = topics.get(0);
+            test.accept(topic);
+        }
+        // id
+        {
+            // board
+            {
+                final List<ForumTopicDetail> topics = mal.getForumTopics()
+                    .withLimit(1)
+                    .withOffset(1)
+                    .withBoardId(1)
+                    .search();
+                final ForumTopicDetail topic = topics.get(0);
+                test.accept(topic);
+            }
+            // sub board
+            {
+                final List<ForumTopicDetail> topics = mal.getForumTopics()
+                    .withLimit(1)
+                    .withOffset(1)
+                    .withBoardId(1)
+                    .search();
+                final ForumTopicDetail topic = topics.get(0);
+                test.accept(topic);
+            }
+            // id
+            {
+                final ForumTopic topic = mal.getForumTopicDetail(-1);
+                Assertions.assertNotNull(topic.getTitle());
+                final Post post = topic.getPosts()[0];
+                Assertions.assertNotEquals(-1, post.getID());
+                Assertions.assertNotEquals(-1, post.getNumber());
+                Assertions.assertNotEquals(-1, post.getCreatedAt());
+                Assertions.assertNotEquals(-1, post.getAuthor().getID());
+                Assertions.assertNotNull(post.getAuthor().getName());
+                Assertions.assertNotNull(post.getAuthor().getForumAvatarURL());
+                Assertions.assertNotNull(post.getBody());
+                Assertions.assertNotNull(post.getSignature());
+                Assertions.assertEquals(topic, post.getForumTopic());
+                final Poll poll = topic.getPoll();
+                Assertions.assertNotEquals(-1, poll.getID());
+                Assertions.assertNotNull(poll.getQuestion());
+                Assertions.assertFalse(poll.isClosed());  // weak test
+                Assertions.assertNotEquals(-1, poll.getOptions()[0].getID());
+                Assertions.assertNotNull(poll.getOptions()[1].getText());
+                Assertions.assertNotEquals(-1, poll.getOptions()[0].getVotes());
+                Assertions.assertEquals(topic, poll.getForumTopic());
+                Assertions.assertEquals(poll, poll.getOptions()[0].getPoll());
+            }
         }
     }
 
