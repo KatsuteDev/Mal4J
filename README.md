@@ -92,3 +92,7 @@ The client secret will be null if your application does not have one.
 ```java
 MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", (int) port));
 ```
+
+## Disclaimer
+- @Katsute and Ktt-Development are not affiliated with MyAnimeList.
+- By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
