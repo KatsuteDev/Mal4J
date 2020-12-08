@@ -1,6 +1,7 @@
 package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeListService;
+import com.kttdevelopment.myanimelist.PaginatedIterator;
 
 /**
  * Represents a search query.
@@ -54,5 +55,14 @@ abstract class SearchQuery<T extends SearchQuery<T,R>,R> {
      * @since 1.0.0
      */
     public abstract R search();
+
+    /**
+     * Runs the search query and returns an iterable.
+     *
+     * @return search iterable
+     *
+     * @since 1.0.0
+     */
+    // public abstract PaginatedIterator<R> searchAll();
 
 }
