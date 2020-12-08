@@ -333,7 +333,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         };
     }
     
-    private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,my_list_status,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role},my_list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments},list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments}";
+    private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role},my_list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments},list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments}";
 
     @Override
     public final MangaSearchQuery getManga(){
@@ -391,7 +391,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType != null ? rankingType.field() : null,
                         between(0, limit, 500),
                         between(0, offset, null),
-                        fields == null ? animeFields : asStringList(fields),
+                        fields == null ? mangaFields : asStringList(fields),
                         nsfw)
                     .execute()
                 );
@@ -465,7 +465,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         between(0, limit, 1000),
                         between(0, offset, null),
-                        fields == null ? animeFields : asStringList(fields))
+                        fields == null ? mangaFields : asStringList(fields))
                     .execute()
                 );
                 if(response == null) return null;

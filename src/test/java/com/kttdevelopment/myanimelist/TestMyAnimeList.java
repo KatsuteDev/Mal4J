@@ -8,7 +8,6 @@ import com.kttdevelopment.myanimelist.forum.*;
 import com.kttdevelopment.myanimelist.forum.property.*;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.*;
-import com.kttdevelopment.myanimelist.property.ListStatus;
 import com.kttdevelopment.myanimelist.property.NSFW;
 import com.kttdevelopment.myanimelist.user.User;
 import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
@@ -254,7 +253,7 @@ public class TestMyAnimeList {
         Assertions.assertNotNull(suggestions);
     }
 
-    @Test @Disabled
+    @Test
     public void testUpdateAndDeleteAnimeListing(){
         // test delete
         {
@@ -277,7 +276,7 @@ public class TestMyAnimeList {
             Assertions.assertNotEquals(-1, status.getUpdatedAt());
         };
 
-        // update
+        // test update
         {
             final AnimeListStatus status = mal.updateAnimeListing(13759)
                 .status(AnimeStatus.Completed)
@@ -288,7 +287,7 @@ public class TestMyAnimeList {
                 .timesRewatched(0)
                 .rewatchValue(5)
                 .tags("ignore", "tags")
-                .setComments("ignore comments")
+                .comments("ignore comments")
                 .update();
             test.accept(status);
         }
@@ -311,7 +310,7 @@ public class TestMyAnimeList {
             test.accept(status);
         }
         // list status
-        { // fixme: API only returns limited fields, not all
+        {
             final AnimeListStatus status = mal.getAnime(13759).getListStatus();
             test.accept(status);
         }
@@ -575,55 +574,68 @@ public class TestMyAnimeList {
         }
     }
 
-    @Test @Disabled
+    @Test
     public void testUpdateAndDeleteMangaListing(){
         // test delete
         {
             mal.deleteMangaListing(28107);
-            Assertions.assertNotNull(mal.getManga(28107).getListStatus());
+            Assertions.assertNull(mal.getManga(28107).getListStatus());
         }
-        // update
+        final Consumer<MangaListStatus> test = status -> {
+            Assertions.assertEquals(MangaStatus.PlanToRead, status.getStatus());
+            Assertions.assertEquals(10, status.getScore());
+            Assertions.assertEquals(0, status.getVolumesRead());
+            Assertions.assertEquals(0, status.getChaptersRead());
+            Assertions.assertFalse(status.isRereading()); // weak test
+            // Assertions.assertNotEquals(-1, status.getStartDate()); // will fail
+            // Assertions.assertNotEquals(-1, status.getFinishDate()); // will fail
+            Assertions.assertEquals(2, status.getPriority());
+            Assertions.assertEquals(0, status.getTimesReread());
+            Assertions.assertEquals(5, status.getRereadValue());
+            Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
+            Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
+            Assertions.assertEquals("ignore comments", status.getComments());
+            Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        };
+        // test update
         {
-            // todo
+            final MangaListStatus status = mal.updateMangaListing(28107)
+                .status(MangaStatus.PlanToRead)
+                .score(10)
+                .volumesRead(0)
+                .chaptersRead(0)
+                .rereading(false)
+                .priority(2)
+                .timesReread(0)
+                .rereadValue(5)
+                .tags("ignore", "tags")
+                .comments("ignore comments")
+                .update();
+            test.accept(status);
         }
 
         // test get
         {
-            final MangaListStatus status =
+            final List<MangaListStatus> list =
                 mal.getUserMangaListing()
-                    .search()
-                    .get(0);
-            Assertions.assertNotNull(status.getStatus());
-            Assertions.assertNotEquals(-1, status.getScore());
-            Assertions.assertNotEquals(-1, status.getVolumesRead());
-            Assertions.assertNotEquals(-1, status.getChaptersRead());
-            Assertions.assertFalse(status.isRereading()); // weak test
-            Assertions.assertNotEquals(-1, status.getStartDate());
-            Assertions.assertNotEquals(-1, status.getFinishDate());
-            Assertions.assertNotEquals(-1, status.getPriority());
-            Assertions.assertNotEquals(-1, status.getTimesReread());
-            Assertions.assertNotEquals(-1, status.getRereadValue());
-            Assertions.assertNotNull(status.getTags());
-            Assertions.assertNotNull(status.getComments());
-            Assertions.assertNotEquals(-1, status.getUpdatedAt());
+                    .withStatus(MangaStatus.PlanToRead)
+                    .withLimit(1000)
+                    .search();
+
+            MangaListStatus status = null;
+            for(final MangaListStatus userAnimeListStatus : list)
+                if((status = userAnimeListStatus).getMangaPreview().getID() == 28107)
+                    break;
+            if(status == null)
+                Assertions.fail();
+
+            test.accept(status);
         }
 
         // list status
         {
-            final MangaListStatus listStatus = mal.getManga(28107).getListStatus();
-            Assertions.assertNotNull(listStatus.getStatus());
-            Assertions.assertNotEquals(-1, listStatus.getScore());
-            Assertions.assertNotEquals(-1, listStatus.getVolumesRead());
-            Assertions.assertNotEquals(-1, listStatus.getChaptersRead());
-            Assertions.assertFalse(listStatus.isRereading()); // weak test
-            Assertions.assertNotEquals(-1, listStatus.getStartDate());
-            Assertions.assertNotEquals(-1, listStatus.getFinishDate());
-            Assertions.assertNotEquals(-1, listStatus.getPriority());
-            Assertions.assertNotEquals(-1, listStatus.getTimesReread());
-            Assertions.assertNotEquals(-1, listStatus.getRereadValue());
-            Assertions.assertNotNull(listStatus.getTags());
-            Assertions.assertNotNull(listStatus.getComments());
-            Assertions.assertNotEquals(-1, listStatus.getUpdatedAt());
+            final MangaListStatus status = mal.getManga(28107).getListStatus();
+            test.accept(status);
         }
     }
 

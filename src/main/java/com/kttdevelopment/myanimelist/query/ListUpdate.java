@@ -93,7 +93,7 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
      *
      * @since 1.0.0
      */
-    public final T setComments(final String comments){
+    public final T comments(final String comments){
         this.comments = comments;
         return (T) this;
     }
