@@ -19,7 +19,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.IntUnaryOperator;
 
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Anime.*;
@@ -36,6 +35,7 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.User.
  * @version 1.0.0
  * @author Ktt Development
  */
+@SuppressWarnings("deprecation")
 final class MyAnimeListImpl extends MyAnimeList{
 
     private transient String auth;
@@ -464,6 +464,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         return getForumTopicDetail(id, limit, -1);
     }
 
+    @SuppressWarnings("CommentedOutCode")
     @Override
     public final ForumTopic getForumTopicDetail(final long id, final int limit, final int offset){
         final Call.GetForumTopicDetail response = handleResponse(
@@ -552,7 +553,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
         };
     }
-    
+
     private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role},my_list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments},list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments}";
 
     @Override
@@ -892,6 +893,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
+    @SuppressWarnings("SameParameterValue")
     private static Integer between(final Integer min, final Integer between, final Integer max){
         if(between == null)
             return null;

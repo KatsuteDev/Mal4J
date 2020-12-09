@@ -34,6 +34,7 @@ final class AuthHandler implements HttpHandler {
     private final byte[] success_html, failure_html;
     private final CountDownLatch latch;
 
+    @SuppressWarnings("SameParameterValue")
     AuthHandler(final CountDownLatch latch, final String success_html, final String failure_html){
         this.latch          = latch;
         this.success_html   = success_html.getBytes(StandardCharsets.UTF_8);

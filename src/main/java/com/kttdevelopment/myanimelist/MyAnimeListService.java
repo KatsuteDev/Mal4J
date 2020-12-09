@@ -17,6 +17,7 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Call.*;
  */
 public interface MyAnimeListService {
 
+    @SuppressWarnings("CommentedOutCode")
     static MyAnimeListService create(){
         // final okhttp3.logging.HttpLoggingInterceptor interceptor = new okhttp3.logging.HttpLoggingInterceptor();
         // interceptor.setLevel(okhttp3.logging.HttpLoggingInterceptor.Level.BODY);
