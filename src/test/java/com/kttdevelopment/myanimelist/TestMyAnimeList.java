@@ -129,8 +129,8 @@ public class TestMyAnimeList {
             try{
                 Assumptions.assumeTrue(mal.getAnime().withLimit(200).search() != null, "API issue, disregard failure");
                 Assumptions.assumeTrue(mal.getAnime().withOffset(-1).search() != null, "API issue, disregard failure");
-            }catch(final InvalidParametersException e){
-                e.printStackTrace();
+            }catch(final InvalidParametersException ignored){
+                Assumptions.assumeTrue(false, "API issue, disregard failure");
             }
         }
     }
@@ -156,11 +156,13 @@ public class TestMyAnimeList {
         Assertions.assertNotEquals(-1, anime.getUserListingCount());
         Assertions.assertNotEquals(-1, anime.getUserScoringCount());
         Assertions.assertNotNull(anime.getNSFW());
-        Assertions.assertNotNull(anime.getGenres());
+        Assertions.assertNotEquals(-1, anime.getGenres()[0].getId());
+        Assertions.assertNotNull(anime.getGenres()[0].getName());
         Assertions.assertNotEquals(-1, anime.getCreatedAt());
         Assertions.assertNotEquals(-1, anime.getUpdatedAt());
         Assertions.assertNotNull(anime.getType());
         Assertions.assertNotNull(anime.getStatus());
+        Assertions.assertNotEquals(-1, anime.getEpisodes());
         Assertions.assertNotNull(anime.getStartSeason().getSeason());
         Assertions.assertNotEquals(-1, anime.getStartSeason().getYear());
         Assertions.assertNotNull(anime.getBroadcast().getDayOfWeek());
@@ -372,6 +374,7 @@ public class TestMyAnimeList {
                     Assertions.assertNotEquals(-1, subBoard.getID());
                     Assertions.assertNotNull(subBoard.getTitle());
                 }
+                Assertions.assertEquals(category, board.getCategory());
             }
         }
     }
@@ -431,10 +434,12 @@ public class TestMyAnimeList {
             Assertions.assertNotNull(topic.getTitle());
             Assertions.assertNotEquals(-1, topic.getCreatedAt());
             Assertions.assertNotEquals(-1, topic.getCreatedBy().getID());
+            // Assertions.assertEquals(topic.getCreatedBy().getID(), topic.getCreatedBy().getUser().getID()); // not yet implemented
             Assertions.assertNotNull(topic.getCreatedBy().getName());
             Assertions.assertNotEquals(-1, topic.getPostsCount());
             Assertions.assertNotEquals(-1, topic.getLastPostCreatedAt());
             Assertions.assertNotEquals(-1, topic.getLastPostCreatedBy().getID());
+            // Assertions.assertEquals(topic.getLastPostCreatedBy().getID(), topic.getLastPostCreatedBy().getUser().getID()); // not yet implemented
             Assertions.assertNotNull(topic.getLastPostCreatedBy().getName());
             Assertions.assertFalse(topic.isLocked());  // weak test
         };
@@ -506,6 +511,7 @@ public class TestMyAnimeList {
                 Assertions.assertNotEquals(-1, post.getAuthor().getID());
                 Assertions.assertNotNull(post.getAuthor().getName());
                 Assertions.assertNotNull(post.getAuthor().getForumAvatarURL());
+                // Assertions.assertEquals(post.getAuthor().getID(), post.getAuthor().getUser().getID()); // not yet implemented
                 Assertions.assertNotNull(post.getBody());
                 Assertions.assertNotNull(post.getSignature());
                 Assertions.assertEquals(topic, post.getForumTopic());
@@ -609,7 +615,8 @@ public class TestMyAnimeList {
         Assertions.assertNotEquals(-1, manga.getUserListingCount());
         Assertions.assertNotEquals(-1, manga.getUserScoringCount());
         Assertions.assertNotNull(manga.getNSFW());
-        Assertions.assertNotNull(manga.getGenres());
+        Assertions.assertNotEquals(-1, manga.getGenres()[0].getId());
+        Assertions.assertNotNull(manga.getGenres()[0].getName());
         Assertions.assertNotEquals(-1, manga.getCreatedAt());
         Assertions.assertNotEquals(-1, manga.getUpdatedAt());
         Assertions.assertNotNull(manga.getType());
@@ -773,6 +780,8 @@ public class TestMyAnimeList {
             Assertions.assertNotEquals(-1, statistics.getItemsCompleted());
             Assertions.assertNotEquals(-1, statistics.getDaysOnHold());
             Assertions.assertNotEquals(-1, statistics.getItemsPlanToWatch());
+            Assertions.assertNotEquals(-1, statistics.getItemsDropped());
+            Assertions.assertNotEquals(-1, statistics.getItemsOnHold());
             Assertions.assertNotEquals(-1, statistics.getItems());
             Assertions.assertNotEquals(-1, statistics.getDaysWatched());
             Assertions.assertNotEquals(-1, statistics.getDaysWatching());

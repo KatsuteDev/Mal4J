@@ -4,8 +4,6 @@ import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.manga.MangaRanking;
 import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 
-import java.util.List;
-
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_ranking_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_ranking_get</a> <br>
  * Represents a Manga ranking query.

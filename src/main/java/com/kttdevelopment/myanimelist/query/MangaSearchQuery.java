@@ -4,8 +4,6 @@ import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.manga.MangaPreview;
 
-import java.util.List;
-
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get</a> <br>
  * Represents a Manga search query.

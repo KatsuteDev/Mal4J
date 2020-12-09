@@ -6,8 +6,6 @@ import com.kttdevelopment.myanimelist.manga.MangaListStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaSort;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 
-import java.util.List;
-
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get</a> <br>
  *

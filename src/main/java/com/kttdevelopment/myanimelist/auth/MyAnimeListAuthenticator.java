@@ -140,7 +140,7 @@ public final class MyAnimeListAuthenticator {
         return String.format(authUrl, URLEncoder.encode(client_id, StandardCharsets.UTF_8), PKCE_code_challenge);
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
+    @SuppressWarnings({"SpellCheckingInspection", "ResultOfMethodCallIgnored"})
     private static Authorization authenticateWithLocalServer(final String client_id, final int port) throws IOException{
         final String verify = PKCE.generateCodeVerifier();
         final String url = getAuthorizationURL(client_id, verify);

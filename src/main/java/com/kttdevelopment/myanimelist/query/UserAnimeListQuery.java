@@ -5,8 +5,6 @@ import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.*;
 
-import java.util.List;
-
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_animelist_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_animelist_get</a> <br>
  *

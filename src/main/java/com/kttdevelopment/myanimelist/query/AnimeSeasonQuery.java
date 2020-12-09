@@ -6,8 +6,6 @@ import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import com.kttdevelopment.myanimelist.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
 
-import java.util.List;
-
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_season_year_season_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_season_year_season_get</a> <br>
  * Represents an Anime season query.

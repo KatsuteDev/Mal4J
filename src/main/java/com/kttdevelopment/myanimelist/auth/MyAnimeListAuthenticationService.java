@@ -7,6 +7,7 @@ import retrofit2.http.*;
 
 interface MyAnimeListAuthenticationService {
 
+    @SuppressWarnings("CommentedOutCode")
     static MyAnimeListAuthenticationService create(){
         // final okhttp3.logging.HttpLoggingInterceptor interceptor = new okhttp3.logging.HttpLoggingInterceptor();
         // interceptor.setLevel(okhttp3.logging.HttpLoggingInterceptor.Level.BODY);
