@@ -18,7 +18,7 @@ import java.util.List;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery,List<AnimePreview>> {
+public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery,AnimePreview> {
 
     protected final int year;
     protected final Season season;

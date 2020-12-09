@@ -31,12 +31,13 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      * @return query
      *
      * @see #withFields(String...)
+     * @see #withFields(List)
      * @since 1.0.0
      */
     public final T withField(final String field){
         if(this.fields == null)
             this.fields = new ArrayList<>();
-        if(!this.fields.contains(field))
+        if(field != null && !this.fields.contains(field))
             this.fields.add(field);
         return (T) this;
     }
@@ -49,14 +50,39 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      * @return query
      *
      * @see #withField(String)
+     * @see #withFields(List)
      * @since 1.0.0
      */
     public final T withFields(final String... fields){
-        if(this.fields == null)
+        if(fields == null)
+            this.fields = null;
+        else if(this.fields == null)
             this.fields = new ArrayList<>();
-        for (String field : fields)
-            if(!this.fields.contains(field))
-                this.fields.add(field);
+        if(fields != null)
+            for(String field : fields)
+                withField(field);
+        return (T) this;
+    }
+
+    /**
+     * Adds a list of fields to return.
+     *
+     * @param fields fields
+     *
+     * @return query
+     *
+     * @see #withField(String)
+     * @see #withFields(String...)
+     * @since 1.0.0
+     */
+    public final T withFields(final List<String> fields){
+        if(fields == null)
+            this.fields = null;
+        else if(this.fields == null)
+            this.fields = new ArrayList<>();
+        if(fields != null)
+            for(String field : fields)
+                withField(field);
         return (T) this;
     }
 

@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggestionQuery,List<AnimePreview>> {
+public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggestionQuery,AnimePreview> {
 
     protected String query;
     protected Boolean nsfw;

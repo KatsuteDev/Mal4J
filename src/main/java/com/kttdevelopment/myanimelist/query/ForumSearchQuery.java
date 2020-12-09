@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class ForumSearchQuery extends FieldSearchQuery<ForumSearchQuery,List<ForumTopicDetail>> {
+public abstract class ForumSearchQuery extends FieldSearchQuery<ForumSearchQuery,ForumTopicDetail> {
 
     protected String query;
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})

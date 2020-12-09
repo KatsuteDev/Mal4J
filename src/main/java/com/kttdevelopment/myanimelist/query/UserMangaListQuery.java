@@ -20,7 +20,7 @@ import java.util.List;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class UserMangaListQuery extends FieldSearchQuery<UserMangaListQuery,List<MangaListStatus>> {
+public abstract class UserMangaListQuery extends FieldSearchQuery<UserMangaListQuery,MangaListStatus> {
 
     protected final String username;
     protected MangaSort sort;

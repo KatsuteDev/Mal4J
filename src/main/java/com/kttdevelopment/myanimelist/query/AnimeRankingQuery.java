@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeRankingQuery extends FieldSearchQuery<AnimeRankingQuery,List<AnimeRanking>> {
+public abstract class AnimeRankingQuery extends FieldSearchQuery<AnimeRankingQuery,AnimeRanking> {
 
     protected final AnimeRankingType rankingType;
     protected Boolean nsfw;
