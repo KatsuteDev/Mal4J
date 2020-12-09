@@ -13,11 +13,11 @@ import java.util.*;
  */
 public abstract class PaginatedIterator<T> implements Iterator<T> {
 
-    private int index = 0; // thread safe by methods
+    private int index = -1; // thread safe by methods
     private List<T> list = new ArrayList<>();
 
     private boolean hasNextItem(){
-        return index < list.size();
+        return index+1 < list.size();
     }
 
     @Override
@@ -27,11 +27,13 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
 
     @Override
     public synchronized final T next(){
-        if(hasNextItem())
-            return list.get(index++);
-        else if(hasNextPage()){
+        if(hasNextItem()){
+            index++;
+            return list.get(index);
+        }else if(hasNextPage()){
             nextPage();
-            return list.get(index++);
+            index++;
+            return list.get(index);
         }else
             throw new NoSuchElementException();
     }
@@ -43,14 +45,11 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
      *
      * @since 1.0.0
      */
-    public abstract boolean hasNextPage();
+    abstract boolean hasNextPage();
 
-    public synchronized final void nextPage(){
-        if(hasNextPage()){
-            list = getNextPage();
-            index = -1;
-        }else
-            throw new NoSuchElementException();
+    private synchronized void nextPage(){
+        list = getNextPage();
+        index = -1;
     }
 
     /**
@@ -60,7 +59,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
      *
      * @since 1.0.0
      */
-    protected abstract List<T> getNextPage();
+    abstract List<T> getNextPage();
 
     @Override
     public synchronized final void remove(){

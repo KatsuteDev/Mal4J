@@ -56,6 +56,20 @@ public class TestMyAnimeList {
             Files.write(oauth, authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
     }
 
+    // iterator
+
+    @Test
+    public void testIterator(){
+        final PaginatedIterator<AnimePreview> iterator = mal.getAnime()
+            .withQuery("さくら荘のペットな彼女")
+            .withLimit(100)
+            .searchAll();
+
+        final AnimePreview first = iterator.next();
+        Assertions.assertEquals(13759, first.getID());
+        iterator.forEachRemaining(animePreview -> Assertions.assertNotEquals(13759, animePreview.getID()));
+    }
+
     // Anime
 
     @Test

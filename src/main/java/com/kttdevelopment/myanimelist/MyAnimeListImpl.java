@@ -17,8 +17,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.IntUnaryOperator;
 
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Anime.*;
@@ -73,7 +74,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getAnime(
                         auth,
                         query,
-                        between(null, limit, 100),
+                        between(0, limit, 100),
                         between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
@@ -87,6 +88,41 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return anime;
             }
 
+            @Override
+            public final PaginatedIterator<AnimePreview> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetAnimeList response = handleResponse(
+                            () -> service.getAnime(
+                                auth,
+                                query,
+                                between(0, limit, 100),
+                                between(0, current.get(), null),
+                                null,
+                                nsfw)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<AnimePreview> getNextPage(){
+                        final AnimeSearchQuery asq = getAnime()
+                            .withQuery(query)
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 100)))
+                            .withFields(fields);
+                        if(nsfw != null)
+                            asq.includeNSFW(nsfw);
+                        return asq.search();
+                    }
+
+                };
+            }
         };
     }
 
@@ -109,14 +145,14 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType){
-        return new AnimeRankingQuery(service, rankingType) {
+        return new AnimeRankingQuery(service, Objects.requireNonNull(rankingType)) {
 
             @Override
             public final List<AnimeRanking> search(){
                 final Call.GetAnimeRanking response = handleResponse(
                     () -> service.getAnimeRanking(
                         auth,
-                        rankingType != null ? rankingType.field() : null,
+                        rankingType.field(),
                         between(0, limit, 500),
                         between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
@@ -131,12 +167,46 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return anime;
             }
 
+            @Override
+            public final PaginatedIterator<AnimeRanking> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetAnimeRanking response = handleResponse(
+                            () -> service.getAnimeRanking(
+                                auth,
+                                rankingType.field(),
+                                between(0, limit, 500),
+                                between(0,  current.get(), null),
+                                null,
+                                nsfw)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<AnimeRanking> getNextPage(){
+                        final AnimeRankingQuery arq = getAnimeRanking(rankingType)
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 500)))
+                            .withFields(fields);
+                        if(nsfw != null)
+                            arq.includeNSFW(nsfw);
+                        return arq.search();
+                    }
+
+                };
+            }
         };
     }
 
     @Override
     public final AnimeSeasonQuery getAnimeSeason(final int year, final Season season){
-        return new AnimeSeasonQuery(service, year, season) {
+        return new AnimeSeasonQuery(service, year, Objects.requireNonNull(season)) {
 
             @Override
             public final List<AnimePreview> search(){
@@ -144,7 +214,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                     () -> service.getAnimeSeason(
                         auth,
                         year,
-                        season != null ? season.field() : null,
+                        season.field(),
                         sort != null ? sort.field() : null,
                         between(0, limit, 500),
                         between(0, offset, null),
@@ -160,12 +230,51 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return anime;
             }
 
+            @Override
+            public final PaginatedIterator<AnimePreview> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetSeasonalAnime response = handleResponse(
+                            () -> service.getAnimeSeason(
+                                auth,
+                                year,
+                                season.field(),
+                                sort != null ? sort.field() : null,
+                                between(0, limit, 500),
+                                between(0, current.get(), null),
+                                null,
+                                nsfw)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<AnimePreview> getNextPage(){
+                        final AnimeSeasonQuery asq = getAnimeSeason(year, season)
+                            .sortBy(sort)
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 500)))
+                            .withFields(fields);
+                        if(nsfw != null)
+                            asq.includeNSFW(nsfw);
+                        return asq.search();
+                    }
+
+                };
+            }
+
         };
     }
 
     @Override
     public final AnimeSuggestionQuery getAnimeSuggestions(){
         return new AnimeSuggestionQuery(service) {
+
             @Override
             public final List<AnimePreview> search(){
                 final Call.GetSuggestedAnime response = handleResponse(
@@ -184,6 +293,41 @@ final class MyAnimeListImpl extends MyAnimeList{
                     anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.node));
                 return anime;
             }
+
+            @Override
+            public final PaginatedIterator<AnimePreview> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetSuggestedAnime response = handleResponse(
+                            () -> service.getAnimeSuggestions(
+                                auth,
+                                between(0, limit, 100),
+                                between(0, current.get(), null),
+                                null,
+                                nsfw)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<AnimePreview> getNextPage(){
+                        final AnimeSuggestionQuery asq = getAnimeSuggestions()
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 100)))
+                            .withFields(fields);
+                        if(nsfw != null)
+                            asq.includeNSFW(nsfw);
+                        return asq.search();
+                    }
+
+                };
+            }
+
         };
     }
 
@@ -233,7 +377,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final UserAnimeListQuery getUserAnimeListing(final String username){
-        return new UserAnimeListQuery(service, username) {
+        return new UserAnimeListQuery(service, Objects.requireNonNull(username)) {
 
             @Override
             public final List<AnimeListStatus> search(){
@@ -254,6 +398,42 @@ final class MyAnimeListImpl extends MyAnimeList{
                 for(final SubLevelObject.ListEdge<TopLevelObject.Anime,Call.UpdateUserAnimeList> iterator : response.data)
                     anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.list_status, asAnimePreview(MyAnimeListImpl.this, iterator.node)));
                 return anime;
+            }
+
+            @Override
+            public final PaginatedIterator<AnimeListStatus> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetUserAnimeList response = handleResponse(
+                            () -> service.getUserAnimeListing(
+                                auth,
+                                username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                                status != null ? status.field() : null,
+                                sort != null ? sort.field() : null,
+                                between(0, limit, 1000),
+                                between(0, current.get(), null),
+                                null)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<AnimeListStatus> getNextPage(){
+                        return getUserAnimeListing(username)
+                            .withStatus(status)
+                            .sortBy(sort)
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 1000)))
+                            .withFields(fields)
+                            .search();
+                    }
+
+                };
             }
 
         };
@@ -330,6 +510,46 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return topics;
             }
 
+            @Override
+            public synchronized final PaginatedIterator<ForumTopicDetail> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetForumTopics response = handleResponse(
+                            () -> service.getForumTopics(
+                                auth,
+                                boardId,
+                                subboardId,
+                                between(0, limit, 100),
+                                between(0, current.get(), null),
+                                sort,
+                                query,
+                                topicUsername,
+                                username)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<ForumTopicDetail> getNextPage(){
+                        return getForumTopics()
+                            .withBoardId(boardId)
+                            .withSubboardId(subboardId)
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 100)))
+                            .withQuery(query)
+                            .withTopicUsername(topicUsername)
+                            .withUsername(username)
+                            .search();
+                    }
+
+                };
+            }
+
         };
     }
     
@@ -359,6 +579,42 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return manga;
             }
 
+            @Override
+            public final PaginatedIterator<MangaPreview> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetMangaList response = handleResponse(
+                            () -> service.getManga(
+                                auth,
+                                query,
+                                between(0, limit, 100),
+                                between(0, current.get(), null),
+                                null,
+                                nsfw)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<MangaPreview> getNextPage(){
+                        final MangaSearchQuery msq = getManga()
+                            .withQuery(query)
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 100)))
+                            .withFields(fields);
+                        if(nsfw != null)
+                            msq.includeNSFW(nsfw);
+                        return msq.search();
+                    }
+
+                };
+            }
+
         };
     }
 
@@ -381,7 +637,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final MangaRankingQuery getMangaRanking(final MangaRankingType rankingType){
-        return new MangaRankingQuery(service, rankingType) {
+        return new MangaRankingQuery(service, Objects.requireNonNull(rankingType)) {
 
             @Override
             public final List<MangaRanking> search(){
@@ -401,6 +657,41 @@ final class MyAnimeListImpl extends MyAnimeList{
                 for(final SubLevelObject.Ranking<TopLevelObject.Manga> iterator : response.data)
                     manga.add(asMangaRanking(MyAnimeListImpl.this, iterator));
                 return manga;
+            }
+
+            @Override
+            public final PaginatedIterator<MangaRanking> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetMangaRanking response = handleResponse(
+                            () -> service.getMangaRanking(
+                                auth,
+                                rankingType != null ? rankingType.field() : null,
+                                between(0, limit, 500),
+                                between(0, offset, null),
+                                fields == null ? mangaFields : asStringList(fields),
+                                nsfw)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<MangaRanking> getNextPage(){
+                        final MangaRankingQuery mrq = getMangaRanking(rankingType)
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 500)))
+                            .withFields(fields);
+                        if(nsfw != null)
+                            mrq.includeNSFW(nsfw);
+                        return mrq.search();
+                    }
+
+                };
             }
 
         };
@@ -453,7 +744,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final UserMangaListQuery getUserMangaListing(final String username){
-        return new UserMangaListQuery(service, username) {
+        return new UserMangaListQuery(service, Objects.requireNonNull(username)) {
 
             @Override
             public final List<MangaListStatus> search(){
@@ -474,6 +765,42 @@ final class MyAnimeListImpl extends MyAnimeList{
                 for(final SubLevelObject.ListEdge<TopLevelObject.Manga,Call.UpdateUserMangaList> iterator : response.data)
                     manga.add(asMangaListStatus(MyAnimeListImpl.this, iterator.list_status, asMangaPreview(MyAnimeListImpl.this, iterator.node)));
                 return manga;
+            }
+
+            @Override
+            public final PaginatedIterator<MangaListStatus> searchAll(){
+                return new PaginatedIterator<>() {
+
+                    private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
+
+                    @Override
+                    final boolean hasNextPage(){
+                        final Call.GetUserMangaList response = handleResponse(
+                            () -> service.getUserMangaListing(
+                                auth,
+                                username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                                status != null ? status.field() : null,
+                                sort != null ? sort.field() : null,
+                                between(0, limit, 1000),
+                                between(0, current.get(), null),
+                                null)
+                            .execute()
+                        );
+                        return response != null && response.paging.next != null;
+                    }
+
+                    @Override
+                    synchronized final List<MangaListStatus> getNextPage(){
+                        return getUserMangaListing(username)
+                            .withStatus(status)
+                            .sortBy(sort)
+                            .withLimit(limit)
+                            .withOffset(current.addAndGet(between(0, limit, 1000)))
+                            .withFields(fields)
+                            .search();
+                    }
+
+                };
             }
 
         };

@@ -16,7 +16,7 @@ import java.util.List;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery,List<MangaPreview>> {
+public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery,MangaPreview> {
 
     protected String query;
     protected Boolean nsfw;
