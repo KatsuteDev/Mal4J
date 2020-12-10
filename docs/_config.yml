@@ -1,0 +1,32 @@
+livereload: true
+timezone: America/New_York
+
+title: MyAnimeList Java API
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+exclude:
+  - "CNAME"
+  - "LICENSE"
+  - ".gitignore"
+  - "README.md"
+  - "/_plugins"
+  - "*.liquid"
+
+sass:
+  sass_dir: /dependencies/kttdevelopment/css
+  style: compressed
+
+compress_html:
+  clippings: []
+  comments: all
+  endings: []
+  ignore:
+    envs: []
+  blanklines: false
+  profile: false
+  startings: []

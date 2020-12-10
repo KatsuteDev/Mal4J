@@ -1,0 +1,14 @@
+a:not(.nav-link):not(.navbar-brand){
+    &, &:hover{
+        transition: all 0.25s ease-in-out !important;
+        text-decoration: none !important;
+    }
+    
+    &:hover{
+        color: #0056b3 !important;
+    }
+}
+
+.user-select-none{
+    user-select: none;
+}

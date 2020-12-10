@@ -3,3 +3,6 @@ target
 *.iml
 
 /src/test/java/com/kttdevelopment/myanimelist/*.txt
+
+/docs/_site
+/docs/.jekyll-cache
