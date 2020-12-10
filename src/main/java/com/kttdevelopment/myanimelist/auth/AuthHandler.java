@@ -31,23 +31,34 @@ final class AuthHandler implements HttpHandler {
         return OUT;
     }
 
-    private final byte[] success_html, failure_html;
     private final CountDownLatch latch;
 
     @SuppressWarnings("SameParameterValue")
-    AuthHandler(final CountDownLatch latch, final String success_html, final String failure_html){
+    AuthHandler(final CountDownLatch latch){
         this.latch          = latch;
-        this.success_html   = success_html.getBytes(StandardCharsets.UTF_8);
-        this.failure_html   = failure_html.getBytes(StandardCharsets.UTF_8);
     }
 
     private transient final AtomicReference<String> auth = new AtomicReference<>();
+
+    private static final String OK = "&#10004;&#65039;";
+    private static final String FAIL = "&#10060;";
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private static final String HTML = "<!DOCTYPE html><html><head><title>MyAnimeList Authenticator</title><style>html,body{width:100%;height:100%;-webkit-user-select: none;-ms-user-select: none;user-select: none;}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication {{ state }}</h1><p title=\"{{ hint }}\">{{ message }}</p></div></body></html>";
 
     @Override
     public final void handle(final HttpExchange exchange) throws IOException{
         final Map<String,String> query = parseWwwFormEnc(exchange.getRequestURI().getRawQuery());
 
-        auth.set(query.get("code"));
+        final String code = query.get("code");
+
+        final String state = code == null ? "Failed " + FAIL : "Completed " + OK;
+        final String hint = query.getOrDefault("hint", "");
+        final String message = code == null
+            ? "<b>" + query.get("error").substring(0, 1).toUpperCase() + query.get("error").substring(1).replace('_', ' ') + "</b>: " + query.get("message")
+            : "You may now close the window.";
+
+        auth.set(code);
 
         /* send */ {
             exchange.getResponseHeaders().set("Accept-Encoding","gzip");
@@ -55,7 +66,13 @@ final class AuthHandler implements HttpHandler {
             exchange.getResponseHeaders().set("Connection","keep-alive");
             exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
             try(GZIPOutputStream OUT = new GZIPOutputStream(exchange.getResponseBody())){
-                OUT.write(query.containsKey("code") ? success_html : failure_html);
+                OUT.write(
+                    HTML
+                        .replace("{{ state }}", state)
+                        .replace("{{ hint }}", hint)
+                        .replace("{{ message }}", message)
+                        .getBytes(StandardCharsets.UTF_8)
+                );
                 OUT.finish();
                 OUT.flush();
             }
