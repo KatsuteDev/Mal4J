@@ -140,7 +140,7 @@ public final class MyAnimeListAuthenticator {
         return String.format(authUrl, URLEncoder.encode(client_id, StandardCharsets.UTF_8), PKCE_code_challenge);
     }
 
-    @SuppressWarnings({"SpellCheckingInspection", "ResultOfMethodCallIgnored"})
+    @SuppressWarnings({"ResultOfMethodCallIgnored"})
     private static Authorization authenticateWithLocalServer(final String client_id, final int port) throws IOException{
         final String verify = PKCE.generateCodeVerifier();
         final String url = getAuthorizationURL(client_id, verify);
@@ -154,10 +154,7 @@ public final class MyAnimeListAuthenticator {
 
         final HttpServer server    = HttpServer.create(new InetSocketAddress(port), 0);
         server.setExecutor(exec);
-        final AuthHandler handler = new AuthHandler(
-            latch,
-            "<!DOCTYPE html><html><head><style>html,body{width:100%;height:100%}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication Completed &#10004;&#65039;</h1><p>You may now close this window.</p></div></body></html>",
-            "<!DOCTYPE html><html><head><style>html,body{width:100%;height:100%}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication Failed &#10060;</h1><p>You may now close this window.</p></div></body></html>");
+        final AuthHandler handler = new AuthHandler(latch);
         server.createContext("/", handler);
         server.start();
 
