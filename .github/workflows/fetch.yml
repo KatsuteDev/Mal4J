@@ -1,0 +1,36 @@
+name: Fetch Repository Data
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 5 * * 0'
+	
+jobs:
+  fetch:
+    name: Fetch
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Prepate Git Repo
+        uses: actions/checkout@v2
+
+      - name: 🐍 Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+		  
+	  - name: 📚 Install Dependencies
+        run: |
+          sudo apt-get update
+          python -m pip install --upgrade pip
+          pip install -r docs/.github/requirements.txt
+		  
+	  - name: 📄 Fetch new data
+        run: python docs/.github/main.py ${{ secrets.GITHUB_TOKEN }}
+		
+	  - name: 💾 Push to Repo
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f "docs/_data"
+          git diff-index --quiet HEAD || git commit -m 'Update repository.json'
+          git push

@@ -6,3 +6,7 @@ target
 
 /docs/_site
 /docs/.jekyll-cache
+
+Pipfile
+Pipfile.lock
+__pycache__

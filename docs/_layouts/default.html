@@ -2,7 +2,7 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<html class="h-100">
+<html>
   <head>
         {% comment %} Bootstrap {% endcomment %}
         <meta charset="utf-8">
@@ -20,10 +20,18 @@ layout: compress
         <link rel="stylesheet" href="/dependencies/kttdevelopment/css/highlight.css">
     </head>
 
-    <body class="d-flex flex-column h-100">
+    <body>
         {% include nav.html %}
 
+        <div id="main" class="min-vh-100">
+            <div class="container">
+
+            </div>
+        </div>
+
         {{ content }}
+
+        {% include footer.html %}
 
         {% comment %} Bootstrap {% endcomment %}
         <script src="/dependencies/jquery/js/jquery-3.5.1.min.js"></script>
@@ -34,7 +42,8 @@ layout: compress
                 $('[data-toggle="tooltip"]').tooltip();
             })
         </script>
-        {% comment %} Local  {% endcomment %}
+        {% comment %} Local {% endcomment %}
         <script src="/dependencies/kttdevelopment/js/anchor-scroll.js"></script>
+        <script src="/dependencies/kttdevelopment/js/nav.js"></script>
     </body>
 </html>

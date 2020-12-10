@@ -34,13 +34,56 @@ html, body{
 
 //
 
+nav{
+    transition: all .3s ease-in-out;
+    a, a:hover{
+        transition: all .15s ease-in-out;
+        color: white;
+    }
+
+    .navbar-collapse:not(.collapsing):not(.show){
+        a{
+            border-bottom: 3px solid transparent;
+        }
+        a:hover{
+            margin-top: -3px;
+            border-bottom: 3px solid white;
+        }
+    }
+
+    &:not(.active){
+        background-color: transparent !important;
+    }
+    &.active{
+        background-color: rgba(32,32,32,.5) !important;
+    }
+}
+
 #main{
     background-color: $color-blue;
 }
 
-.item{
-    border-top-color: $color-blue;
-    border-top-width: 5px;
+.module{
+
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+    
+    a:hover{
+        text-decoration: none;
+    }
+
+    .before{
+        background-color: $color-blue;
+        height: 5px;
+    }
+
+    i {
+        color: $color-blue;
+    }
+
+}
+
+footer{
+    background-color: $color-blue;
+    color: white;
 }
