@@ -4,7 +4,7 @@ on:
     branches: [main]
   schedule:
     - cron: '0 5 * * 0'
-	
+
 jobs:
   fetch:
     name: Fetch
@@ -17,17 +17,17 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
-		  
-	  - name: 📚 Install Dependencies
+ 
+      - name: 📚 Install Dependencies
         run: |
           sudo apt-get update
           python -m pip install --upgrade pip
           pip install -r docs/.github/requirements.txt
-		  
-	  - name: 📄 Fetch new data
+
+      - name: 📄 Fetch new data
         run: python docs/.github/main.py ${{ secrets.GITHUB_TOKEN }}
-		
-	  - name: 💾 Push to Repo
+
+      - name: 💾 Push to Repo
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
