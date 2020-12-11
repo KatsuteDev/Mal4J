@@ -3,13 +3,22 @@ timezone: America/New_York
 
 title: MyAnimeList Java API
 
+plugins:
+  - jekyll-readme-index
+  - jekyll-optional-front-matter
+
 defaults:
   - scope:
       path: ""
     values:
       layout: "default"
+  - scope:
+      path: "*.md"
+    values:
+      layout: "markdown"
 
 exclude:
+  - "features.md"
   - "CNAME"
   - "LICENSE"
   - ".gitignore"

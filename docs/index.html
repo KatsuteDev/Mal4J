@@ -1,60 +1,53 @@
 ---
+# All IDs for the development team
 devs:
  - 58778985
 ---
-<div class="py-5">
-    <div class="container">
-        <h1 class="display-4 text-center">Title</h1>
-        <p class="text-muted text-center my-4">Content</p>
-
-        <div class="row d-flex justify-content-center mt-5">
-            {% include module.liquid 
-                icon = "fas fa-paper-plane"
-                link = "/setup"
-                title = "Quick Start"
-                body = "Installation guide for new or experienced developers."
-            %}
-            {% include module.liquid
-                icon = "fas fa-book"
-                link = "/documentation"
-                title = "Documentation"
-                body = "Utilize the full capacity of this library by viewing the documentation."
-            %}
-            {% include module.liquid 
-                icon ="far fa-comment-alt"
-                link = "https://github.com/Ktt-Development/MyAnimeList-Java-API/discussions"
-                new = true
-                title = "Discussion"
-                body = "Have a suggestion or need project inspiration? View our discussions."
-            %}
-
-            {% comment %} maybe have 6? link to issues, etc. {% endcomment %}
-        </div>
-    </div>
-</div>
-<div class="bg-white py-5">
-    <div class="container py-5">
-        <h1 class="display-4 text-center">Open Source</h1>
-        <p class="text-muted text-center my-4">This project is open source, Contribute new features to our API or fork a copy for yourself.</p>
-        <div class="d-flex justify-content-center">
-            <a 
-                class="btn btn-outline-primary mx-1" 
-                href="{{ site.data.repository.html_url }}"
-                target="_blank"><i class="fab fa-github"></i> View Repository</a>
-            <a 
-                class="btn btn-outline-primary mx-1" 
-                data-toggle="tooltip" data-placement="right" 
-                title="{{ site.data.repository.forks_count }}"
-                href="{{ site.data.repository.html_url }}/fork"
-                target="_blank"><i class="fas fa-code-branch"></i> Fork</a>
-            <a 
-                class="btn btn-outline-primary mx-1" 
-                data-toggle="tooltip" data-placement="right" 
-                title="{{ site.data.repository.stargazers_count }}"
-                href="{{ site.data.repository.html_url }}/stargazers"
-                target="_blank"><i class="far fa-star"></i> Star</a>
-        </div>
-        <div class="my-4">&ZeroWidthSpace;</div>
+{% capture body %}
+    {% include module.liquid 
+        icon = "fas fa-paper-plane"
+        link = "/setup"
+        title = "Quick Start"
+        body = "Installation guide for new or experienced developers."
+    %}
+    {% include module.liquid
+        icon = "fas fa-book"
+        link = "/documentation"
+        title = "Documentation"
+        body = "Utilize the full capacity of this library by viewing the documentation."
+    %}
+    {% include module.liquid 
+        icon ="far fa-comment-alt"
+        link = "https://github.com/Ktt-Development/MyAnimeList-Java-API/discussions"
+        new = true
+        title = "Discussion"
+        body = "Have a suggestion or need project inspiration? View our discussions."
+    %}
+{% endcapture %}
+{% include section.liquid
+    title = "Quick Links"
+    content = ""
+    body = body
+%}
+{% comment %} #################### Section #################### {% endcomment %}
+{% capture body %}
+    <a 
+        class="btn btn-outline-primary mx-1" 
+        href="{{ site.data.repository.html_url }}"
+        target="_blank"><i class="fab fa-github"></i> View Repository</a>
+    <a 
+        class="btn btn-outline-primary mx-1" 
+        data-toggle="tooltip" data-placement="right" 
+        title="{{ site.data.repository.forks_count }}"
+        href="{{ site.data.repository.html_url }}/fork"
+        target="_blank"><i class="fas fa-code-branch"></i> Fork</a>
+    <a 
+        class="btn btn-outline-primary mx-1" 
+        data-toggle="tooltip" data-placement="right" 
+        title="{{ site.data.repository.stargazers_count }}"
+        href="{{ site.data.repository.html_url }}/stargazers"
+        target="_blank"><i class="far fa-star"></i> Star</a>
+    <div class="mt-5 w-100">
         {% assign contributors = site.data.contributors | sort: "contributions" %}
         <h4 class="text-center mt-3">Development Team</h4>
         <div class="d-flex flex-wrap flex-fill justify-content-center container">
@@ -94,4 +87,38 @@ devs:
             {% endfor %}
         </div>
     </div>
-</div>
+{% endcapture %}
+{% include section.liquid 
+    alt = true
+    title = "Open Source"
+    content = "This project is open source, contribute new features to our API or fork a copy for yourself."
+    body = body 
+%}
+{% comment %} #################### Section #################### {% endcomment %}
+{% capture body %}
+    {% capture ct %}{% include_relative features.md %}{% endcapture ct %}
+    {% assign secs = ct | markdownify %}
+    {% assign secs = secs | split: "<hr />" %}
+    {% for sec in secs %}
+        {% assign odd = forloop.index | modulo: 2 %}
+        {% assign third = forloop.index | modulo: 3 %}
+
+        {% if odd == 1 %}
+            <div class="row w-100 mb-5">
+        {% endif %}
+
+        <div class="col-12 col-lg-6 mb-2 {% if odd == 1 %} order-first{% endif %}{% if third == 0 %} order-lg-last{% endif %}">
+            {{ sec }}
+        </div>
+
+        {% if odd == 0 %}
+            </div>
+        {% endif %}
+    {% endfor %}
+
+{% endcapture %}
+{% include section.liquid 
+    title = "Features"
+    content = "Nearly <b>All</b> features from the <a href='https://myanimelist.net/apiconfig/references/api/v2'>MyAnimeList API</a> can be found in this library."
+    body = body
+%}

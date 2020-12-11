@@ -1,0 +1,29 @@
+---
+layout: default
+---
+<div>
+    <div class="container py-4">
+        <h1>Contents</h1>
+        {% include markdown/toc.html html=content %}
+    </div>
+</div>
+
+<div>
+    {% capture html %}
+        {% include markdown/anchor_headings.html html=content anchorBody="#" %}
+    {% endcapture %}
+
+    {% assign s = "<h1 " %}
+    {% assign html = html | split: s %}
+    {% for sec in html %}
+        {% comment %} below fixes jekyll split defect {% endcomment %}
+        {% if forloop.index > 1 %}
+            {% assign alt = forloop.index | modulo:2 %}
+            <div {% if alt == 0 %}class="bg-white"{% endif %}>
+                <div class="container py-5">
+                    {{ s }}{{ sec }}
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

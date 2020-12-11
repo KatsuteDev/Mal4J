@@ -76,6 +76,10 @@ nav{
     background-color: $color-blue;
 }
 
+img{
+    max-width: 100%;
+}
+
 .module{
     height: 200px;
     border-top-left-radius: 0;
@@ -97,6 +101,6 @@ nav{
 }
 
 footer{
-    background-color: $color-blue;
+    background-color: $color-dark;
     color: white;
 }

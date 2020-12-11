@@ -2,7 +2,7 @@
 layout: compress
 ---
 <!DOCTYPE html>
-<html>
+<html class="h-100">
   <head>
         {% comment %} Bootstrap {% endcomment %}
         <meta charset="utf-8">
@@ -21,17 +21,17 @@ layout: compress
     </head>
 
     <body>
-        {% include nav.html %}
+        {% include layouts/nav.html %}
 
-        <div id="main" class="min-vh-100">
-            <div class="container">
-
+        <div id="main" class="d-flex justify-content-center align-items-center min-vh-100 text-white">
+            <div class="my-3">
+                {{ page.heading }}
             </div>
         </div>
 
         {{ content }}
 
-        {% include footer.html %}
+        {% include layouts/footer.html %}
 
         {% comment %} Bootstrap {% endcomment %}
         <script src="/dependencies/jquery/js/jquery-3.5.1.min.js"></script>
