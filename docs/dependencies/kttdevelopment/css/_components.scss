@@ -1,4 +1,4 @@
-a:not(.nav-link):not(.navbar-brand):not(.text-body){
+a:not(.nav-link):not(.navbar-brand):not(.text-body):not(.btn){
     &, &:hover{
         transition: all 0.25s ease-in-out !important;
         text-decoration: none !important;

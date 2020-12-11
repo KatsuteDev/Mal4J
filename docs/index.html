@@ -1,25 +1,97 @@
 ---
+devs:
+ - 58778985
 ---
-<div class="container text-center">
-    <h6>title</h6>
-    <p>content</p>
+<div class="py-5">
+    <div class="container">
+        <h1 class="display-4 text-center">Title</h1>
+        <p class="text-muted text-center my-4">Content</p>
+
+        <div class="row d-flex justify-content-center mt-5">
+            {% include module.liquid 
+                icon = "fas fa-paper-plane"
+                link = "/setup"
+                title = "Quick Start"
+                body = "Installation guide for new or experienced developers."
+            %}
+            {% include module.liquid
+                icon = "fas fa-book"
+                link = "/documentation"
+                title = "Documentation"
+                body = "Utilize the full capacity of this library by viewing the documentation."
+            %}
+            {% include module.liquid 
+                icon ="far fa-comment-alt"
+                link = "https://github.com/Ktt-Development/MyAnimeList-Java-API/discussions"
+                new = true
+                title = "Discussion"
+                body = "Have a suggestion or need project inspiration? View our discussions."
+            %}
+
+            {% comment %} maybe have 6? link to issues, etc. {% endcomment %}
+        </div>
+    </div>
 </div>
-<div class="container">
-    <div class="row d-flex justify-content-center">
-        {% include module.liquid 
-            icon = "fas fa-paper-plane"
-            title = "Quick Start"
-            link = "/setup"
-        %}
-        {% include module.liquid
-            icon = "fas fa-book"
-            title = "Documentation"
-            link = "/documentation"
-        %}
-        {% include module.liquid 
-            icon ="fas fa-star"
-            title = "Showcase"
-            link = "/showcase"
-        %}
+<div class="bg-white py-5">
+    <div class="container py-5">
+        <h1 class="display-4 text-center">Open Source</h1>
+        <p class="text-muted text-center my-4">This project is open source, Contribute new features to our API or fork a copy for yourself.</p>
+        <div class="d-flex justify-content-center">
+            <a 
+                class="btn btn-outline-primary mx-1" 
+                href="{{ site.data.repository.html_url }}"
+                target="_blank"><i class="fab fa-github"></i> View Repository</a>
+            <a 
+                class="btn btn-outline-primary mx-1" 
+                data-toggle="tooltip" data-placement="right" 
+                title="{{ site.data.repository.forks_count }}"
+                href="{{ site.data.repository.html_url }}/fork"
+                target="_blank"><i class="fas fa-code-branch"></i> Fork</a>
+            <a 
+                class="btn btn-outline-primary mx-1" 
+                data-toggle="tooltip" data-placement="right" 
+                title="{{ site.data.repository.stargazers_count }}"
+                href="{{ site.data.repository.html_url }}/stargazers"
+                target="_blank"><i class="far fa-star"></i> Star</a>
+        </div>
+        <div class="my-4">&ZeroWidthSpace;</div>
+        {% assign contributors = site.data.contributors | sort: "contributions" %}
+        <h4 class="text-center mt-3">Development Team</h4>
+        <div class="d-flex flex-wrap flex-fill justify-content-center container">
+            {% for contributor in contributors %}
+                {% for dev in page.devs %}
+                    {% if dev == contributor.id %}
+                        {% if page.devs contains contributor.id %}
+                            {% include contributor.liquid 
+                                login = contributor.login
+                                html_url = contributor.html_url
+                                avatar_url = contributor.avatar_url
+                            %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <h4 class="text-center mt-3">Contributors</h4>
+        <div class="d-flex flex-wrap flex-fill justify-content-center container">
+            {% assign index = 0 %}
+            {% for contributor in contributors %}
+                {% for dev in page.devs %}
+                    {% if dev != contributor.id %}
+                        {% if page.devs contains contributor.id %}
+                            {% include contributor.liquid 
+                                login = contributor.login
+                                html_url = contributor.html_url
+                                avatar_url = contributor.avatar_url
+                            %}
+                        {% endif %}
+                        {% assign index = index | plus: 1 %}
+                        {% if index == 20 %}
+                            {% break %}
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
     </div>
 </div>

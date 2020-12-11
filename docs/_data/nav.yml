@@ -7,8 +7,6 @@
 - name: Discussion
   link: https://github.com/Ktt-Development/MyAnimeList-Java-API/discussions
   new: true
-- name: Showcase
-  link: /showcase
 - name: <i class="fab fa-github fa-lg"></i>
   link: https://github.com/Ktt-Development/MyAnimeList-Java-API
   new: true

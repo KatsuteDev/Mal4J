@@ -43,11 +43,10 @@ nav{
 
     .navbar-collapse:not(.collapsing):not(.show){
         a{
-            border-bottom: 3px solid transparent;
+            border-bottom: 4px solid transparent;
         }
         a:hover{
-            margin-top: -3px;
-            border-bottom: 3px solid white;
+            border-bottom: 4px solid white;
         }
     }
 
@@ -59,12 +58,26 @@ nav{
     }
 }
 
+.btn{
+    &.btn-primary{
+        background-color: $color-blue !important;
+    }
+    &.btn-outline-primary{
+        color: $color-blue;
+        border-color: $color-blue !important;
+        &:hover{
+            color: white;
+            background-color: $color-blue !important;
+        }
+    }
+}
+
 #main{
     background-color: $color-blue;
 }
 
 .module{
-
+    height: 200px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
     

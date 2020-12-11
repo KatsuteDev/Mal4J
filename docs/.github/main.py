@@ -5,6 +5,7 @@ import requests
 
 URL = r"https://api.github.com/repos/Ktt-Development/MyAnimeList-Java-API"
 
+
 def main():
     if len(sys.argv) <= 1:
         print("Failed to update file (no oauth token provided)")
@@ -16,9 +17,15 @@ def main():
         "Authorization": "token " + token
     }
 
-    response = requests.get(URL, headers=headers)
-
     with codecs.open("../_data/repository.json", 'w', encoding="utf-8") as file:
+        response = requests.get(URL, headers=headers)
+
+        file.write(response.text)
+        file.close()
+
+    with codecs.open("../_data/contributors.json", 'w', encoding="utf-8") as file:
+        response = requests.get(URL + "/contributors", headers=headers)
+
         file.write(response.text)
         file.close()
 
@@ -27,4 +34,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
