@@ -1,0 +1,46 @@
+livereload: true
+timezone: America/New_York
+
+title: MyAnimeList Java API
+
+plugins:
+  - jekyll-readme-index
+  - jekyll-optional-front-matter
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+  - scope:
+      path: "*.md"
+    values:
+      layout: "markdown"
+
+exclude:
+  - "features.md"
+  - "CNAME"
+  - "LICENSE"
+  - ".gitignore"
+  - "README.md"
+  - "/_plugins"
+  - "*.liquid"
+  - "/.github"
+  - "Pipfile"
+  - "Pipfile.lock"
+  - "/__pycache__"
+  - "requirements.txt"
+
+sass:
+  sass_dir: /dependencies/kttdevelopment/css
+  style: compressed
+
+compress_html:
+  clippings: []
+  comments: all
+  endings: []
+  ignore:
+    envs: []
+  blanklines: false
+  profile: false
+  startings: []

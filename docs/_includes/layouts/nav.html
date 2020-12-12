@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-lg fixed-top">
+    <div class="container-lg">
+        <a class="navbar-brand" href="/">
+            <img src="https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/logo.png" width="30" height="30" class="d-inline-block align-top mr-1" alt="">
+            {{ site.title }}
+        </a>
+        <button class="navbar-toggler text-white" type="button" data-toggle="collapse" data-target="#navDropdown">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navDropdown">
+            <ul class="navbar-nav ml-auto">
+                {% for link in site.data.nav %}
+                    <li class="nav-item active hover-lift">
+                        <a class="nav-link p-0 mx-2" href="{{ link.link }}"{% if link.new %}target="_blank"{% endif%}>{{ link.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</nav>

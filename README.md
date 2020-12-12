@@ -6,11 +6,13 @@
     <p align="center">
         📘 Java wrapper for the official MyAnimeList API
         <br />
-        <a href="https://docs.kttdevelopment.com/myanimelist/">Docs</a>
+        <a href="https://myanimelist.kttdevelopment.com/documentation/">Docs</a>
         •
-        <a href="https://wiki.kttdevelopment.com/myanimelist/">Wiki</a>
+        <a href="https://myanimelist.kttdevelopment.com/setup/">Setup</a>
         •
         <a href="https://github.com/Ktt-Development/MyAnimeList-Java-API/issues">Issues</a>
+        •
+        <a href="https://github.com/Ktt-Development/MyAnimeList-Java-API/discussions">Discussions</a>
     </p>
 </p>
 
@@ -24,75 +26,35 @@
 
 ---
 
-# Setup
+# Overview
 
-## API setup
+The MyAnimeList Java API is a wrapper for the MyAnimeList API written for JDK 11 and simplifies many complex operations into an easy to use library.
 
-### 1. Create new API key
+# [Setup](https://myanimelist.kttdevelopment.com/setup)
 
-Create a new API key at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
+Dependencies are hosted on Maven Central and compiled builds can be found in releases, note that this library requires JDK 11 or above.
 
-![Create ID](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_1.png)
-
-### 2. Register API key
-
-Fill in all required fields and App Redirect URL. For users using easy authentication ([below](#authenticate-with-client-id-easy) set this to `http://localhost:5050`.
-
-
-![Register application](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_2.png)
-
-### 3. Retrieve Client ID
-
-Copy client ID and client secret (if the application has a client secret).
-
-![Copy client id and client secret](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_3.png)
-
-## Library setup
-
-### Dependency Management
+## Maven Central
 
 For users using Maven/Gradle etc. binaries can be found on Maven Central. [![maven central](https://img.shields.io/maven-central/v/com.kttdevelopment/MyAnimeList-Java-API)](https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist)
 
-### Local (not recommended)
+## Local (not recommended)
 
-For users developing locally, compiled binaries can be found in releases. [![releases](https://img.shields.io/github/v/release/ktt-development/MyAnimeList-Java-API)](https://github.com/Ktt-Development/MyAnimeList-Java-API/releases).
+For users developing locally, compiled binaries can be found in releases. [![releases](https://img.shields.io/github/v/release/ktt-development/MyAnimeList-Java-API)](https://github.com/Ktt-Development/MyAnimeList-Java-API/releases)
 
-This library also requires dependencies [retrofit2](https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit) and [retrofit2/converter-gson](https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson) to function properly.
+Required dependencies:
+ - [retrofit2](https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit)
+ - [retrofit2/converter-gson](https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson)
 
-## Authentication
+### More information on further stages of the setup can be found [here](https://myanimelist.kttdevelopment.com/setup).
 
-### Authenticate with OAuth2 (advanced)
+## Contributing
 
-For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#client-registration) you can simply use the OAuth key that you generate.
-```java
-MyAnimeList mal = MyAnimeList.withOAuthToken("oauth_token");
-```
+- Found a bug? Post it in [issues](https://github.com/Ktt-Development/MyAnimeList-Java-API/issues).
+- Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/Ktt-Development/MyAnimeList-Java-API/discussions).
+- Want to further expand our project or site? [Fork](https://github.com/Ktt-Development/MyAnimeList-Java-API/fork) this repository and submit a pull.
 
-### Authenticate with client id (advanced)
-
-For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the `MyAnimeListAuthenticator` to generate an OAuth token.
-
-The client secret will be null if your application does not have one.
-
-The URL to obtain the authorization code can be generated using `MyAnimeListAuthenticator#getAuthorizationURL(String,String)`.
-
-```java
-String authorization_url = MyAnimeListAuthenticator.getAuthorizationURL("client_id", "PKCE_code_challenge");
-
-MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
-```
-
-### Authenticate with client id (easy)
-
-For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the `MyAnimeListAuthenticator`.
-The app redirect url should be `http://localhost:5050` or whatever port you set it as in [step 2](#2-register-api-key).
-
-The client secret will be null if your application does not have one.
-
-```java
-MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", (int) port));
-```
-
+---
 ## Disclaimer
-- @Katsute and Ktt-Development are not affiliated with MyAnimeList.
+- [@Katsute](https://github.com/Katsute) and [Ktt&nbsp;Development](https://github.com/Ktt-Development) are not affiliated with MyAnimeList.
 - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
