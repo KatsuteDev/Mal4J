@@ -1,0 +1,15 @@
+.hover{
+    $transition: all .15s ease-in-out;
+    &-shadow{
+        transition: $transition;
+        &:hover{
+            box-shadow: 0 10px 25px rgba(32, 32, 32, .25);
+        }
+    }
+    &-lift{
+        transition: $transition;
+        &:hover{
+            transform: translateY(-5px);
+        }
+    }
+}

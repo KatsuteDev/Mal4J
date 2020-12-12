@@ -1,0 +1,106 @@
+---
+---
+
+@import 'transitions', 'components';
+
+$color-dark: #202020;
+$color-white: #F3F2F1;
+$color-blue: #2E51A2;
+
+@font-face{
+    font-family: 'Lexend Deca';
+    src: url("/dependencies/google/webfonts/LexendDeca.ttf")
+}
+
+@font-face{
+    font-family: 'Fira Code';
+    src: url("/dependencies/google/webfonts/FiraCode.ttf")
+}
+
+* {
+    font-family: 'Lexend Deca', Arial, Helvetica, sans-serif;
+    outline: none !important;
+}
+
+code, pre {
+    & & > * {
+        font-family: 'Fira Code', 'Courier New', Courier, monospace;
+    }
+}
+
+html, body{
+    background-color: $color-white;
+}
+
+//
+
+nav{
+    transition: all .3s ease-in-out;
+    a, a:hover{
+        transition: all .15s ease-in-out;
+        color: white;
+    }
+
+    .navbar-collapse:not(.collapsing):not(.show){
+        a{
+            border-bottom: 4px solid transparent;
+        }
+        a:hover{
+            border-bottom: 4px solid white;
+        }
+    }
+
+    &:not(.active){
+        background-color: transparent !important;
+    }
+    &.active{
+        background-color: rgba(32,32,32,.5) !important;
+    }
+}
+
+.btn{
+    &.btn-primary{
+        background-color: $color-blue !important;
+    }
+    &.btn-outline-primary{
+        color: $color-blue;
+        border-color: $color-blue !important;
+        &:hover{
+            color: white;
+            background-color: $color-blue !important;
+        }
+    }
+}
+
+#main{
+    background-color: $color-blue;
+}
+
+img{
+    max-width: 100%;
+}
+
+.module{
+    height: 200px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    
+    a:hover{
+        text-decoration: none;
+    }
+
+    .before{
+        background-color: $color-blue;
+        height: 5px;
+    }
+
+    i {
+        color: $color-blue;
+    }
+
+}
+
+footer{
+    background-color: $color-dark;
+    color: white;
+}

@@ -1,0 +1,10 @@
+<div class="{% if include.alt %}bg-white {% endif %}py-5">
+    <div class="container">
+        <h1 class="display-4 text-center">{{ include.title }}</h1>
+        <p class="text-muted text-center my-4">{{ include.content }}</p>
+
+        <div class="row d-flex justify-content-center mt-5">
+            {{ include.body }}
+        </div>
+    </div>
+</div>

@@ -3,3 +3,10 @@ target
 *.iml
 
 /src/test/java/com/kttdevelopment/myanimelist/*.txt
+
+/docs/_site
+/docs/.jekyll-cache
+
+Pipfile
+Pipfile.lock
+__pycache__
