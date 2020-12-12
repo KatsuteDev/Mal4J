@@ -24,7 +24,7 @@ import java.util.List;
 public abstract class MyAnimeList {
 
     /**
-     * Creates an interface with an OAuth token.
+     * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshOAuthToken()}.
      *
      * @param token OAuth token
      *
