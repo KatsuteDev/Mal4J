@@ -39,19 +39,15 @@ heading: |
 {% capture body %}
     <a 
         class="btn btn-outline-primary mx-1" 
-        href="{{ site.data.repository.html_url }}"
+        href="https://github.com/Ktt-Development/MyAnimeList-Java-API"
         target="_blank"><i class="fab fa-github"></i> View Repository</a>
     <a 
-        class="btn btn-outline-primary mx-1" 
-        data-toggle="tooltip" data-placement="right" 
-        title="{{ site.data.repository.forks_count }}"
-        href="{{ site.data.repository.html_url }}/fork"
+        class="btn btn-outline-primary mx-1"
+        href="https://github.com/Ktt-Development/MyAnimeList-Java-API/fork"
         target="_blank"><i class="fas fa-code-branch"></i> Fork</a>
     <a 
-        class="btn btn-outline-primary mx-1" 
-        data-toggle="tooltip" data-placement="right" 
-        title="{{ site.data.repository.stargazers_count }}"
-        href="{{ site.data.repository.html_url }}/stargazers"
+        class="btn btn-outline-primary mx-1"
+        href="https://github.com/Ktt-Development/MyAnimeList-Java-API/stargazers"
         target="_blank"><i class="far fa-star"></i> Star</a>
     <div class="mt-5 w-100">
         {% assign contributors = site.data.contributors | sort: "contributions" %}
@@ -125,6 +121,6 @@ heading: |
 {% endcapture %}
 {% include section.liquid 
     title = "Features"
-    content = "Nearly <b>All</b> features from the <a href='https://myanimelist.net/apiconfig/references/api/v2'>MyAnimeList API</a> can be found in this library."
+    content = "Nearly <b>All</b> features from the <a href='https://myanimelist.net/apiconfig/references/api/v2' target="'_blank">MyAnimeList API</a> can be found in this library."
     body = body
 %}
