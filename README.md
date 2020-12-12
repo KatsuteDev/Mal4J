@@ -48,13 +48,14 @@ Required dependencies:
 
 ### More information on further stages of the setup can be found [here](https://myanimelist.kttdevelopment.com/setup).
 
+---
+
 ## Contributing
 
 - Found a bug? Post it in [issues](https://github.com/Ktt-Development/MyAnimeList-Java-API/issues).
 - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/Ktt-Development/MyAnimeList-Java-API/discussions).
 - Want to further expand our project or site? [Fork](https://github.com/Ktt-Development/MyAnimeList-Java-API/fork) this repository and submit a pull.
 
----
 ## Disclaimer
 - [@Katsute](https://github.com/Katsute) and [Ktt&nbsp;Development](https://github.com/Ktt-Development) are not affiliated with MyAnimeList.
 - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
