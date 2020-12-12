@@ -17,13 +17,13 @@ def main():
         "Authorization": "token " + token
     }
 
-    with codecs.open("../_data/repository.json", 'w', encoding="utf-8") as file:
+    with codecs.open("docs/_data/repository.json", 'w', encoding="utf-8") as file:
         response = requests.get(URL, headers=headers)
 
         file.write(response.text)
         file.close()
 
-    with codecs.open("../_data/contributors.json", 'w', encoding="utf-8") as file:
+    with codecs.open("docs/_data/contributors.json", 'w', encoding="utf-8") as file:
         response = requests.get(URL + "/contributors", headers=headers)
 
         file.write(response.text)
