@@ -8,6 +8,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    environment: Maven Central
     steps:
       - name: 📦 Prepate Git Repo
         uses: actions/checkout@v2
