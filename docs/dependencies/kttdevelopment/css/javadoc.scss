@@ -130,7 +130,7 @@ table{
             &:hover{
                 background-color: $color-blue-darker !important;
             }
-            
+
         }
         &.activeTableTab{
             background-color: $color-blue-darker !important;
@@ -191,6 +191,8 @@ th tr {
 
 ul.blockList li.blockList{
     h1, h2, h3, h4, h5, h6{
+        margin: 0 !important;
+        padding: .5rem !important;
         background-color: $color-dark !important;
         color: $color-white !important;
     }
