@@ -1,5 +1,7 @@
 package com.kttdevelopment.myanimelist;
 
+import org.junit.jupiter.api.Test;
+
 public class TestJson {
 
     private static String jsonObj = "{\n" +
@@ -39,6 +41,11 @@ public class TestJson {
                                     "\t\t]\n" +
                                     "\t]\n" +
                                     "}";
-    private static String jsonObjSLN = jsonObj.replace("\n", "");
+    private static String jsonObjSLN = jsonObj.replace("\n", "").replace("\t", "");
+
+    @Test
+    public void test(){
+        System.out.println(jsonObjSLN);
+    }
 
 }

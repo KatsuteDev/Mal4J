@@ -14,6 +14,15 @@ import java.util.regex.Pattern;
  */
 abstract class Json {
 
+    /*
+     * Notable limitations:
+     * - Allows dangling commas on last item in map and list
+     * - Does not allow comments
+     */
+
+    // (?<!\\")(?<=[{}\[\],])() ?(?!$)
+    private static final Pattern lineSplit = Pattern.compile("(?<!\\\\\")(?<=[{}\\[\\],])() ?(?!$)");
+
     // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<num>-?\d+\.?\d*) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType  = Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<num>-?\\d+\\.?\\d*) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
     // ^\s*} *,?\s*$
@@ -34,7 +43,8 @@ abstract class Json {
     }
 
     static Object parse(final String json){
-        try(final BufferedReader IN = new BufferedReader(new StringReader(json))){
+        final String lines = lineSplit.matcher(json).replaceAll("\n"); // unwrap json into multiple lines
+        try(final BufferedReader IN = new BufferedReader(new StringReader(lines))){
             final String line = IN.readLine();
             if(line != null){
                 final String ln = line.trim();
