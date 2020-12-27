@@ -18,10 +18,15 @@ abstract class Json {
      * Notable limitations:
      * - Allows dangling commas on last item in map and list
      * - Does not allow comments
+     * - Ignores duplicate keys
      */
 
     // (?<!\\")(?<=[{}\[\],])() ?(?!$)
     private static final Pattern lineSplit = Pattern.compile("(?<!\\\\\")(?<=[{}\\[\\],])() ?(?!$)");
+    // fixme: doesn't work with  "k": "v"} , may split within string
+
+    // \\"
+    private static final Pattern escQuote = Pattern.compile("\\\\\"");
 
     // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<num>-?\d+\.?\d*) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType  = Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<num>-?\\d+\\.?\\d*) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
@@ -33,15 +38,43 @@ abstract class Json {
     // ^\s*] *,?\s*$
     private static final Pattern arrClose = Pattern.compile("^\\s*] *,?\\s*$");
 
+    /**
+     * Returns json as a array. <b>Mutable</b>.
+     *
+     * @param json json string
+     * @return parsed json
+     *
+     * @see #parse(String)
+     * @since 1.0.0
+     */
     static List<?> parseArray(final String json){
         return (List<?>) parse(json);
     }
 
+    /**
+     * Returns json as a map. <b>Mutable</b>.
+     *
+     * @param json json string
+     * @return parsed json
+     *
+     * @see #parse(String)
+     * @since 1.0.0
+     */
     @SuppressWarnings("unchecked")
     static Map<String,?> parseMap(final String json){
         return (Map<String,?>) parse(json);
     }
 
+    /**
+     * Returns json as a map or array. <b>Mutable</b>.
+     *
+     * @param json json string
+     * @return parsed json
+     *
+     * @see #parseArray(String)
+     * @see #parseMap(String)
+     * @since 1.0.0
+     */
     static Object parse(final String json){
         final String lines = lineSplit.matcher(json).replaceAll("\n"); // unwrap json into multiple lines
         try(final BufferedReader IN = new BufferedReader(new StringReader(lines))){
@@ -63,6 +96,7 @@ abstract class Json {
 
     private static List<?> openArray(final BufferedReader reader) throws IOException{
         final Matcher matcher = arrType.matcher("");
+        final Matcher strMatcher = escQuote.matcher("");
         final List<Object> list = new ArrayList<>();
         String ln;
         while((ln = reader.readLine()) != null){ // while not closing tag
@@ -72,7 +106,7 @@ abstract class Json {
                 if((raw = matcher.group("num")) != null)
                     list.add(Double.parseDouble(raw));
                 else if((raw = matcher.group("string")) != null)
-                    list.add(raw);
+                    list.add(strMatcher.reset(raw).replaceAll("\""));
                 else if(matcher.group("array") != null) // open new array
                     list.add(openArray(reader));
                 else if(matcher.group("map") != null) // open new map
@@ -87,17 +121,18 @@ abstract class Json {
 
     private static Map<String,?> openMap(final BufferedReader reader) throws IOException{
         final Matcher matcher = mapType.matcher("");
+        final Matcher strMatcher = escQuote.matcher("");
         final Map<String,Object> map = new HashMap<>();
         String ln;
         while((ln = reader.readLine()) != null){
             ln = ln.trim();
             if(matcher.reset(ln).matches()){
-                final String key = matcher.group("key");
+                final String key = strMatcher.reset(matcher.group("key")).replaceAll("\"");
                 String raw;
                 if((raw = matcher.group("num")) != null)
                     map.put(key, Double.parseDouble(raw));
                 else if((raw = matcher.group("string")) != null)
-                    map.put(key, raw);
+                    map.put(key, strMatcher.reset(raw).replaceAll("\""));
                 else if(matcher.group("array") != null) // open new array
                     map.put(key, openArray(reader));
                 else if(matcher.group("map") != null) // open new map

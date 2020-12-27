@@ -1,51 +1,84 @@
 package com.kttdevelopment.myanimelist;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+import java.util.Map;
+
+@SuppressWarnings("SpellCheckingInspection")
 public class TestJson {
 
-    private static String jsonObj = "{\n" +
-                                    "\t\"double\": 1.0,\n" +
-                                    "\t\"doublen\": -1.0,\n" +
-                                    "\t\"doubles\": 1.0,\n" +
-                                    "\t\"int\": 5,\n" +
-                                    "\t\"intn\": -5,\n" +
-                                    "\t\"ints\": 5,\n" +
-                                    "\t\"string\": \"string\",\n" +
-                                    "\t\"obj\": {\n" +
-                                    "\t\t\"double\": 1.0,\n" +
-                                    "\t\t\"doublen\": -1.0,\n" +
-                                    "\t\t\"doubles\": 1.0,\n" +
-                                    "\t\t\"int\": 5,\n" +
-                                    "\t\t\"intn\": -5,\n" +
-                                    "\t\t\"ints\": 5,\n" +
-                                    "\t\t\"string\": \"string\",\n" +
-                                    "\t\t\"obj\": {\n" +
-                                    "\t\t\t\"string\": \"string\"\n" +
-                                    "\t\t},\n" +
-                                    "\t\t\"arr\": [\n" +
-                                    "\t\t\t\"string\"\n" +
-                                    "\t\t]\n" +
-                                    "\t},\n" +
-                                    "\t\"arr\": [\n" +
-                                    "\t\t1.0,\n" +
-                                    "\t\t-1.0,\n" +
-                                    "\t\t5,\n" +
-                                    "\t\t-5,\n" +
-                                    "\t\t\"str\",\n" +
-                                    "\t\t{\n" +
-                                    "\t\t\t\"string\": \"string\"\n" +
-                                    "\t\t},\n" +
-                                    "\t\t[\n" +
-                                    "\t\t\t\"string\"\n" +
-                                    "\t\t]\n" +
-                                    "\t]\n" +
-                                    "}";
-    private static String jsonObjSLN = jsonObj.replace("\n", "").replace("\t", "");
+    @Test
+    public void testMap(){
+        final String map = String.join("",
+            "{",
+                "\"double\": 1.0,",
+                "\"doublen\": -1.0,",
+                "\"doubles\":1.0,",
+                "\"int\": 1,",
+                "\"intn\": -1,",
+                "\"ints\":1,",
+                "\"string\": \"string\",",
+                "\"strings\":\"string\",",
+                "\"str\\\"ingx\":\"str\\\"ing\",",
+                "\"obj\": {" +
+                    "\"k\": \"v\"" +
+                "}," +
+                "\"arr\": [" +
+                    "\"str\"" +
+                "]" +
+            "}"
+        );
+
+        final Map<String,?> json = Json.parseMap(map);
+
+        Assertions.assertEquals(1.0, json.get("double"));
+        Assertions.assertEquals(-1.0, json.get("doublen"));
+        Assertions.assertEquals(1.0, json.get("doubles"));
+        Assertions.assertEquals(1, json.get("int"));
+        Assertions.assertEquals(-1, json.get("intn"));
+        Assertions.assertEquals(1, json.get("ints"));
+        Assertions.assertEquals("string", json.get("string"));
+        Assertions.assertEquals("string", json.get("strings"));
+        Assertions.assertEquals("str\"ingx", json.get("str\"ing"));
+        Assertions.assertEquals(Map.of("k", "v"), json.get("obj"));
+        Assertions.assertEquals(List.of("str"), json.get("arr"));
+    }
 
     @Test
-    public void test(){
-        System.out.println(jsonObjSLN);
+    public void testArray(){
+        final String arr = String.join("",
+           "[",
+                " 1.0,",
+                " -1.0",
+                "2.0,",
+                " 1,",
+                " -1,",
+                "2,",
+                "\"string\",",
+                " \"str\\\"ingx\",",
+                "{" +
+                    "\"k\": \"v\"" +
+                "}," +
+                "[" +
+                    "\"str\"" +
+                "]" +
+            "]"
+        );
+
+        final List<?> json = Json.parseArray(arr);
+
+        Assertions.assertTrue(json.contains(1.0));
+        Assertions.assertTrue(json.contains(-1.0));
+        Assertions.assertTrue(json.contains(2.0));
+        Assertions.assertTrue(json.contains(1));
+        Assertions.assertTrue(json.contains(-1));
+        Assertions.assertTrue(json.contains(2));
+        Assertions.assertTrue(json.contains("string"));
+        Assertions.assertTrue(json.contains("str\"ingx"));
+        Assertions.assertTrue(json.contains(Map.of("k", "v")));
+        Assertions.assertTrue(json.contains(List.of("str")));
     }
 
 }
