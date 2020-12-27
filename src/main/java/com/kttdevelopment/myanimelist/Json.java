@@ -1,7 +1,7 @@
 package com.kttdevelopment.myanimelist;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,21 +14,98 @@ import java.util.regex.Pattern;
  */
 abstract class Json {
 
-    // merge below into a single regex and then check content of 2nd capture group
+    // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<num>-?\d+\.?\d*) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
+    private static final Pattern mapType  = Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<num>-?\\d+\\.?\\d*) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+    // ^\s*} *,?\s*$
+    private static final Pattern mapClose = Pattern.compile("^\\s*} *,?\\s*$");
 
-    private static final Pattern number     = Pattern.compile("^\"(.+)\": ?(\\d+\\.?\\d*),?$"); // if contains '.' and doesn't start or end with "
-    private static final Pattern string     = Pattern.compile("^\"(.+)\": ?\"(.+)\",?$"); // if starts and ends with ""
-    private static final Pattern map_or_arr = Pattern.compile("^\"(.+)\": ?([\\[{])$"); // if equal to exactly [ or {
+    // ^\s*((?<num>-?\d+\.?\d*) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
+    private static final Pattern arrType  = Pattern.compile("^\\s*((?<num>-?\\d+\\.?\\d*) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+    // ^\s*] *,?\s*$
+    private static final Pattern arrClose = Pattern.compile("^\\s*] *,?\\s*$");
 
-    static Map<String,?> parse(final String json){
-        // use #reset on matcher
-        final Map<String,? super Object> response = new HashMap<>();
-        json.lines().forEach(s -> {
-            final String ln = s.trim();
+    static List<?> parseArray(final String json){
+        return (List<?>) parse(json);
+    }
 
-        });
+    @SuppressWarnings("unchecked")
+    static Map<String,?> parseMap(final String json){
+        return (Map<String,?>) parse(json);
+    }
 
-        return null;
+    static Object parse(final String json){
+        try(final BufferedReader IN = new BufferedReader(new StringReader(json))){
+            final String line = IN.readLine();
+            if(line != null){
+                final String ln = line.trim();
+                if(ln.equals("{"))
+                    return openMap(IN);
+                else if(ln.equals("["))
+                    return openArray(IN);
+                else
+                    throw new JsonSyntaxException("Unexpected starting character: '" + (ln.length() == 1 ? ln.charAt(0) : "") + "' expected '{' or ']'");
+            }else
+                throw new JsonSyntaxException("Json string was empty");
+        }catch(final IOException e){ // should never occur, but just in case:
+            throw new UncheckedIOException(e);
+        }
+    }
+
+    private static List<?> openArray(final BufferedReader reader) throws IOException{
+        final Matcher matcher = arrType.matcher("");
+        final List<Object> list = new ArrayList<>();
+        String ln;
+        while((ln = reader.readLine()) != null){ // while not closing tag
+            ln = ln.trim();
+            if(matcher.reset(ln).matches()){
+                String raw;
+                if((raw = matcher.group("num")) != null)
+                    list.add(Double.parseDouble(raw));
+                else if((raw = matcher.group("string")) != null)
+                    list.add(raw);
+                else if(matcher.group("array") != null) // open new array
+                    list.add(openArray(reader));
+                else if(matcher.group("map") != null) // open new map
+                    list.add(openMap(reader));
+            }else if(arrClose.matcher(ln).matches())
+                return list;
+            else
+                throw new JsonSyntaxException("Unexpected array value syntax: " + ln);
+        }
+        throw new JsonSyntaxException("Object was missing closing character ']'");
+    }
+
+    private static Map<String,?> openMap(final BufferedReader reader) throws IOException{
+        final Matcher matcher = mapType.matcher("");
+        final Map<String,Object> map = new HashMap<>();
+        String ln;
+        while((ln = reader.readLine()) != null){
+            ln = ln.trim();
+            if(matcher.reset(ln).matches()){
+                final String key = matcher.group("key");
+                String raw;
+                if((raw = matcher.group("num")) != null)
+                    map.put(key, Double.parseDouble(raw));
+                else if((raw = matcher.group("string")) != null)
+                    map.put(key, raw);
+                else if(matcher.group("array") != null) // open new array
+                    map.put(key, openArray(reader));
+                else if(matcher.group("map") != null) // open new map
+                    map.put(key, openMap(reader));
+            }else if(mapClose.matcher(ln).matches())
+                return map;
+            else
+                throw new JsonSyntaxException("Unexpected object value syntax: " + ln);
+        }
+        throw new JsonSyntaxException("Object was missing closing character '}'");
+    }
+
+    private static class JsonSyntaxException extends RuntimeException {
+
+        public JsonSyntaxException(final String message){
+            super(message);
+        }
+
     }
 
 }
