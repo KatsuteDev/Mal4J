@@ -21,12 +21,15 @@ abstract class Json {
      * - Ignores duplicate keys
      */
 
-    // (?<!\\")(?<=[{}\[\],])() ?(?!$)
-    private static final Pattern lineSplit = Pattern.compile("(?<!\\\\\")(?<=[{}\\[\\],])() ?(?!$)");
-    // fixme: doesn't work with  "k": "v"} , may split within string
+    // todo: fix so regex also handles escaped quotes instead of using chained replaceAll
+    // (?<=[{\[,]|(?=[}\]]))() ?(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)
+    private static final Pattern lineSplit = Pattern.compile("(?<=[{\\[,]|(?=[}\\]]))() ?(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)");
 
     // \\"
     private static final Pattern escQuote = Pattern.compile("\\\\\"");
+
+    // \t
+    private static final Pattern tab = Pattern.compile("\\t");
 
     // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<num>-?\d+\.?\d*) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType  = Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<num>-?\\d+\\.?\\d*) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
@@ -76,7 +79,17 @@ abstract class Json {
      * @since 1.0.0
      */
     static Object parse(final String json){
-        final String lines = lineSplit.matcher(json).replaceAll("\n"); // unwrap json into multiple lines
+        // split json into multiple lines
+        final String lines =
+            tab.matcher(
+                lineSplit.matcher(
+                    escQuote.matcher(
+                        tab.matcher(json)
+                        .replaceAll("  ") // replace tabs with two spaces
+                    ).replaceAll("\t") // replace escaped quotes with tab
+                ).replaceAll("\n") // replace separator with new line
+            ).replaceAll("\\\""); // replace escaped quotes (represented with tabs) with re-escaped quotes
+
         try(final BufferedReader IN = new BufferedReader(new StringReader(lines))){
             final String line = IN.readLine();
             if(line != null){
@@ -86,7 +99,7 @@ abstract class Json {
                 else if(ln.equals("["))
                     return openArray(IN);
                 else
-                    throw new JsonSyntaxException("Unexpected starting character: '" + (ln.length() == 1 ? ln.charAt(0) : "") + "' expected '{' or ']'");
+                    throw new JsonSyntaxException("Unexpected starting character: '" + (ln.length() == 1 ? ln.charAt(0) : "") + "' expected '{' or '['");
             }else
                 throw new JsonSyntaxException("Json string was empty");
         }catch(final IOException e){ // should never occur, but just in case:
@@ -145,9 +158,9 @@ abstract class Json {
         throw new JsonSyntaxException("Object was missing closing character '}'");
     }
 
-    private static class JsonSyntaxException extends RuntimeException {
+    static class JsonSyntaxException extends RuntimeException {
 
-        public JsonSyntaxException(final String message){
+        JsonSyntaxException(final String message){
             super(message);
         }
 
