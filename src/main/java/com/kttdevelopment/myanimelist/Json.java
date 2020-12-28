@@ -22,8 +22,8 @@ abstract class Json {
      */
 
     // todo: fix so regex also handles escaped quotes instead of using chained replaceAll
-    // (?<=[{\[,]|(?=[}\]]))() ?(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)
-    private static final Pattern lineSplit = Pattern.compile("(?<=[{\\[,]|(?=[}\\]]))() ?(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)");
+    // (?<=[{\[,])|(?=[}\]])(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)
+    private static final Pattern lineSplit = Pattern.compile("(?<=[{\\[,])|(?=[}\\]])(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)");
 
     // \\"
     private static final Pattern escQuote = Pattern.compile("\\\\\"");
@@ -79,16 +79,19 @@ abstract class Json {
      * @since ?
      */
     static Object parse(final String json){
+        Objects.requireNonNull(json);
         // split json into multiple lines
         final String lines =
-            tab.matcher(
-                lineSplit.matcher(
-                    escQuote.matcher(
-                        tab.matcher(json)
-                        .replaceAll("  ") // replace tabs with two spaces
-                    ).replaceAll("\t") // replace escaped quotes with tab
-                ).replaceAll("\n") // replace separator with new line
-            ).replaceAll("\\\""); // replace escaped quotes (represented with tabs) with re-escaped quotes
+            escQuote.matcher(json).matches()
+            ? tab.matcher( // hacky method if contains escaped quotes
+                    lineSplit.matcher(
+                        escQuote.matcher(
+                            tab.matcher(json)
+                            .replaceAll("  ") // replace tabs with two spaces
+                        ).replaceAll("\t") // replace escaped quotes with tab
+                    ).replaceAll("\n") // replace separator with new line
+                ).replaceAll("\\\"") // replace escaped quotes (represented with tabs) with re-escaped quotes
+            : lineSplit.matcher(json).replaceAll("\n");
 
         try(final BufferedReader IN = new BufferedReader(new StringReader(lines))){
             final String line = IN.readLine();
