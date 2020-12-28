@@ -16,9 +16,9 @@ public class TestJson {
                 "\"double\": 1.0,",
                 "\"doublen\": -1.0,",
                 "\"doubles\":1.0,",
-                "\"int\": 2,",
-                "\"intn\": -2,",
-                "\"ints\":2,",
+                "\"int\": 1,",
+                "\"intn\": -1,",
+                "\"ints\":1,",
                 "\"string\": \"string\",",
                 "\"strings\":\"string\",",
                 "\"str\\\"ingx\":\"str\\\"ing\",",
@@ -38,9 +38,9 @@ public class TestJson {
         Assertions.assertEquals(1.0, json.get("double"));
         Assertions.assertEquals(-1.0, json.get("doublen"));
         Assertions.assertEquals(1.0, json.get("doubles"));
-        Assertions.assertEquals(2.0, json.get("int"));
-        Assertions.assertEquals(-2.0,  json.get("intn"));
-        Assertions.assertEquals(2.0, json.get("ints"));
+        Assertions.assertEquals(1, json.get("int"));
+        Assertions.assertEquals(-1,  json.get("intn"));
+        Assertions.assertEquals(1, json.get("ints"));
         Assertions.assertEquals("string", json.get("string"));
         Assertions.assertEquals("string", json.get("strings"));
         Assertions.assertEquals("str\"ing", json.get("str\"ingx"));
@@ -57,9 +57,9 @@ public class TestJson {
                 " 1.0,",
                 " -1.0,",
                 "2.0,",
-                " 3,",
-                " -3,",
-                "4,",
+                " 1,",
+                " -1,",
+                "2,",
                 "\"string\",",
                 " \"str\\\"ingx\",",
                 "{" +
@@ -78,9 +78,9 @@ public class TestJson {
         Assertions.assertTrue(json.contains(1.0));
         Assertions.assertTrue(json.contains(-1.0));
         Assertions.assertTrue(json.contains(2.0));
-        Assertions.assertTrue(json.contains(3.0));
-        Assertions.assertTrue(json.contains(-3.0));
-        Assertions.assertTrue(json.contains(4.0));
+        Assertions.assertTrue(json.contains(1));
+        Assertions.assertTrue(json.contains(-1));
+        Assertions.assertTrue(json.contains(2));
         Assertions.assertTrue(json.contains("string"));
         Assertions.assertTrue(json.contains("str\"ingx"));
         Assertions.assertTrue(json.contains(Map.of("k", "v")));

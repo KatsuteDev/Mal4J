@@ -31,13 +31,13 @@ abstract class Json {
     // \t
     private static final Pattern tab = Pattern.compile("\\t");
 
-    // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<num>-?\d+\.?\d*) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
-    private static final Pattern mapType  = Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<num>-?\\d+\\.?\\d*) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+    // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<double>-?\d+\.?\d+) *,?|(?<int>-?\d+) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
+    private static final Pattern mapType  = Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<double>-?\\d+\\.?\\d+) *,?|(?<int>-?\\d+) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
     // ^\s*} *,?\s*$
     private static final Pattern mapClose = Pattern.compile("^\\s*} *,?\\s*$");
 
-    // ^\s*((?<num>-?\d+\.?\d*) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
-    private static final Pattern arrType  = Pattern.compile("^\\s*((?<num>-?\\d+\\.?\\d*) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+    // ^\s*((?<double>-?\d+\.?\d+) *,?|(?<int>-?\d+) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
+    private static final Pattern arrType  = Pattern.compile("^\\s*((?<double>-?\\d+\\.?\\d+) *,?|(?<int>-?\\d+) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
     // ^\s*] *,?\s*$
     private static final Pattern arrClose = Pattern.compile("^\\s*] *,?\\s*$");
 
@@ -48,7 +48,7 @@ abstract class Json {
      * @return parsed json
      *
      * @see #parse(String)
-     * @since 1.0.0
+     * @since ?
      */
     static List<?> parseArray(final String json){
         return (List<?>) parse(json);
@@ -61,7 +61,7 @@ abstract class Json {
      * @return parsed json
      *
      * @see #parse(String)
-     * @since 1.0.0
+     * @since ?
      */
     @SuppressWarnings("unchecked")
     static Map<String,?> parseMap(final String json){
@@ -76,7 +76,7 @@ abstract class Json {
      *
      * @see #parseArray(String)
      * @see #parseMap(String)
-     * @since 1.0.0
+     * @since ?
      */
     static Object parse(final String json){
         // split json into multiple lines
@@ -116,8 +116,10 @@ abstract class Json {
             ln = ln.trim();
             if(matcher.reset(ln).matches()){
                 String raw;
-                if((raw = matcher.group("num")) != null)
+                if((raw = matcher.group("double")) != null)
                     list.add(Double.parseDouble(raw));
+                else if((raw = matcher.group("int")) != null)
+                    list.add(Integer.parseInt(raw));
                 else if((raw = matcher.group("string")) != null)
                     list.add(strMatcher.reset(raw).replaceAll("\""));
                 else if(matcher.group("array") != null) // open new array
@@ -142,8 +144,10 @@ abstract class Json {
             if(matcher.reset(ln).matches()){
                 final String key = strMatcher.reset(matcher.group("key")).replaceAll("\"");
                 String raw;
-                if((raw = matcher.group("num")) != null)
+                if((raw = matcher.group("double")) != null)
                     map.put(key, Double.parseDouble(raw));
+                else if((raw = matcher.group("int")) != null)
+                    map.put(key, Integer.parseInt(raw));
                 else if((raw = matcher.group("string")) != null)
                     map.put(key, strMatcher.reset(raw).replaceAll("\""));
                 else if(matcher.group("array") != null) // open new array
