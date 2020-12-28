@@ -3,7 +3,6 @@ package com.kttdevelopment.myanimelist;
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.AnimeRankingType;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
-import com.kttdevelopment.myanimelist.auth.MyAnimeListAuthenticator;
 import com.kttdevelopment.myanimelist.forum.ForumCategory;
 import com.kttdevelopment.myanimelist.forum.ForumTopic;
 import com.kttdevelopment.myanimelist.forum.ForumTopicDetail;

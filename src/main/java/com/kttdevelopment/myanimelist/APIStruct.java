@@ -10,7 +10,7 @@ abstract class APIStruct {
     @Documented
     @Target(METHOD)
     @Retention(RUNTIME)
-    @interface ENDPOINT {
+    @interface Endpoint {
 
         String method() default "GET";
 
@@ -77,7 +77,7 @@ abstract class APIStruct {
             this.code = code;
         }
 
-        final T response(){
+        final T body(){
             return response;
         }
 

@@ -1,5 +1,6 @@
-package com.kttdevelopment.myanimelist.auth;
+package com.kttdevelopment.myanimelist;
 
+import com.kttdevelopment.myanimelist.APIStruct.Response;
 import com.sun.net.httpserver.*;
 
 import java.awt.*;
@@ -44,7 +45,7 @@ public final class MyAnimeListAuthenticator {
      * @param port port to run the retrieval server
      * @throws IOException if client could not contact auth server
      *
-     * @see com.kttdevelopment.myanimelist.MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port) throws IOException{
@@ -55,15 +56,15 @@ public final class MyAnimeListAuthenticator {
         this.authorizationCode  = auth.getAuthorization();
         this.pkce               = auth.getVerifier();
 
-        token = authService
+        token = parseToken(authService
             .getToken(
                 client_id,
                 client_secret,
                 "authorization_code",
-                this.authorizationCode,
-                this.pkce)
-            .execute()
-            .body();
+                authorizationCode,
+                pkce
+            )
+        );
     }
 
     /**
@@ -75,7 +76,7 @@ public final class MyAnimeListAuthenticator {
      * @param PKCE_code_challenge PKCE code challenge
      * @throws IOException if client could not contact auth server
      *
-     * @see com.kttdevelopment.myanimelist.MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
     @SuppressWarnings("SpellCheckingInspection")
@@ -85,15 +86,15 @@ public final class MyAnimeListAuthenticator {
         this.authorizationCode  = authorization_code;
         this.pkce               = PKCE_code_challenge;
 
-        token = authService
+        token = parseToken(authService
             .getToken(
                 client_id,
                 client_secret,
                 "authorization_code",
                 authorization_code,
-                PKCE_code_challenge)
-            .execute()
-            .body();
+                PKCE_code_challenge
+            )
+        );
     }
 
     /**
@@ -118,16 +119,16 @@ public final class MyAnimeListAuthenticator {
      * @since 1.0.0
      */
     public final AccessToken refreshAccessToken() throws IOException {
-        return token = authService
+        return token = parseToken( authService
             .refreshToken(
                 client_id,
                 client_secret,
                 "refresh_token",
                 authorizationCode,
                 pkce,
-                token.getRefreshToken())
-            .execute()
-            .body();
+                token.getRefreshToken()
+            )
+        );
     }
 
     /**
@@ -186,6 +187,16 @@ public final class MyAnimeListAuthenticator {
         };
     }
 
+    private AccessToken parseToken(final Response<Map<String,?>> response){
+        final Map<String,?> body = response.body();
+        return new AccessToken(
+            (String) body.get("token_type"),
+            Integer.valueOf((int) body.get("expires_in")).longValue(),
+            (String) body.get("access_token"),
+            (String) body.get("refresh_token")
+        );
+    }
+
     @SuppressWarnings("SpellCheckingInspection")
     private static final class PKCE {
 
@@ -195,6 +206,17 @@ public final class MyAnimeListAuthenticator {
             secureRandom.nextBytes(codeVerifier);
             return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
         }
+
+    }
+
+    private static abstract class Authorization {
+
+        // auth code
+        public abstract String getAuthorization();
+
+        // PKCE
+        @SuppressWarnings("SpellCheckingInspection")
+        public abstract String getVerifier();
 
     }
 

@@ -1,6 +1,6 @@
 package com.kttdevelopment.myanimelist;
 
-import com.kttdevelopment.myanimelist.APIStruct.ENDPOINT;
+import com.kttdevelopment.myanimelist.APIStruct.Endpoint;
 import com.kttdevelopment.myanimelist.APIStruct.Response;
 
 import java.io.*;
@@ -27,10 +27,10 @@ final class APICall {
         this.path       = path;
     }
 
-    APICall(final String baseURL, final Method method, final Object[] args){
+    APICall(final String baseURL, final Method method, final Object... args){
         this.baseURL = baseURL;
 
-        final ENDPOINT endpoint = method.getAnnotation(ENDPOINT.class);
+        final Endpoint endpoint = method.getAnnotation(Endpoint.class);
         if(endpoint != null){
             this.method = endpoint.method();
             path = endpoint.value();
@@ -53,7 +53,7 @@ final class APICall {
                 else if(type == Query.class)
                     withQuery(((Query) annotation).value(), arg, ((Query) annotation).encoded());
                 else if(type == Field.class)
-                    withField(((Query) annotation).value(), arg, ((Query) annotation).encoded());
+                    withField(((Field) annotation).value(), arg, ((Field) annotation).encoded());
             }
         }
     }
@@ -160,7 +160,7 @@ final class APICall {
 
     final <T> Response<T> call(final Function<String,T> processor) throws IOException{
         final Response<String> call = call();
-        return new Response<T>(processor.apply(call.response()), call.code());
+        return new Response<>(processor.apply(call.body()), call.code());
     }
 
     @Override
