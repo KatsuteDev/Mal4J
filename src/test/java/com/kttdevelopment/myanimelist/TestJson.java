@@ -19,6 +19,10 @@ public class TestJson {
                 "\"int\": 1,",
                 "\"intn\": -1,",
                 "\"ints\":1,",
+                "\"bool\": true,",
+                "\"bools\":false,",
+                "\"null\":null,",
+                "\"nulls\": null,",
                 "\"string\": \"string\",",
                 "\"strings\":\"string\",",
                 "\"str\\\"ingx\":\"str\\\"ing\",",
@@ -41,6 +45,12 @@ public class TestJson {
         Assertions.assertEquals(1, json.get("int"));
         Assertions.assertEquals(-1,  json.get("intn"));
         Assertions.assertEquals(1, json.get("ints"));
+        Assertions.assertTrue((boolean) json.get("bool"));
+        Assertions.assertFalse((boolean) json.get("bools"));
+        Assertions.assertNull(json.get("null"));
+        Assertions.assertTrue(json.containsKey("null"));
+        Assertions.assertNull(json.get("nulls"));
+        Assertions.assertTrue(json.containsKey("nulls"));
         Assertions.assertEquals("string", json.get("string"));
         Assertions.assertEquals("string", json.get("strings"));
         Assertions.assertEquals("str\"ing", json.get("str\"ingx"));
@@ -60,6 +70,9 @@ public class TestJson {
                 " 1,",
                 " -1,",
                 "2,",
+                "true,",
+                "false,",
+                "null,",
                 "\"string\",",
                 " \"str\\\"ingx\",",
                 "{" +
@@ -81,6 +94,9 @@ public class TestJson {
         Assertions.assertTrue(json.contains(1));
         Assertions.assertTrue(json.contains(-1));
         Assertions.assertTrue(json.contains(2));
+        Assertions.assertTrue(json.contains(true));
+        Assertions.assertTrue(json.contains(false));
+        Assertions.assertTrue(json.contains(null));
         Assertions.assertTrue(json.contains("string"));
         Assertions.assertTrue(json.contains("str\"ingx"));
         Assertions.assertTrue(json.contains(Map.of("k", "v")));

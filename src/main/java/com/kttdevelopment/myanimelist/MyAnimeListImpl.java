@@ -476,6 +476,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         );
         if(response == null) return null;
 
+        // // #7
         // final List<ForumTopic> topics = new ArrayList<>();
         // for(final TopLevelObject.ForumTopicData iterator : response.data)
         //     topics.add(asForumTopic(MyAnimeListImpl.this, iterator));

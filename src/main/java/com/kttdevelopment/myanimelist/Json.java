@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  * @version ?
  * @author Ktt Development
  */
+@SuppressWarnings("SpellCheckingInspection")
 abstract class Json {
 
     /*
@@ -35,16 +36,16 @@ abstract class Json {
     private static final Pattern tab =
         Pattern.compile("\\t");
 
-    // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
+    // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType =
-        Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+        Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
     // ^\s*} *,?\s*$
     private static final Pattern mapClose =
         Pattern.compile("^\\s*} *,?\\s*$");
 
-    // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
+    // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern arrType =
-        Pattern.compile("^\\s*((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+        Pattern.compile("^\\s*((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
 
     // ^\s*] *,?\s*$
     private static final Pattern arrClose =
@@ -140,6 +141,10 @@ abstract class Json {
                     }catch(final NumberFormatException ignored){ // only occurs if too large
                         list.add(Long.parseLong(raw));
                     }
+                else if((raw = matcher.group("boolean")) != null)
+                    list.add(Boolean.parseBoolean(raw));
+                else if(matcher.group("null") != null)
+                    list.add(null);
                 else if((raw = matcher.group("string")) != null)
                     list.add(strMatcher.reset(raw).replaceAll("\""));
                 else if(matcher.group("array") != null) // open new array
@@ -176,6 +181,10 @@ abstract class Json {
                     }catch(final NumberFormatException ignored){ // only occurs if too large
                         map.put(key, Long.parseLong(raw));
                     }
+                else if((raw = matcher.group("boolean")) != null)
+                    map.put(key, Boolean.parseBoolean(raw));
+                else if(matcher.group("null") != null)
+                    map.put(key, null);
                 else if((raw = matcher.group("string")) != null)
                     map.put(key, strMatcher.reset(raw).replaceAll("\""));
                 else if(matcher.group("array") != null) // open new array
