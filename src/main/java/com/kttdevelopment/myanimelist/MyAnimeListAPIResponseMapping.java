@@ -1,13 +1,8 @@
 package com.kttdevelopment.myanimelist;
 
-import com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Call;
-import com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.SubLevelObject;
-import com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.TopLevelObject;
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.*;
-import com.kttdevelopment.myanimelist.anime.property.time.DayOfWeek;
-import com.kttdevelopment.myanimelist.anime.property.time.Season;
-import com.kttdevelopment.myanimelist.anime.property.time.Time;
+import com.kttdevelopment.myanimelist.anime.property.time.*;
 import com.kttdevelopment.myanimelist.forum.*;
 import com.kttdevelopment.myanimelist.forum.property.*;
 import com.kttdevelopment.myanimelist.manga.*;
@@ -19,14 +14,10 @@ import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
-import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Common.IDN;
 
 /**
  * Represents the MyAnimeList API response as an object.
@@ -41,7 +32,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
     static abstract class Anime {
 
-        static AnimeStatistics asAnimeStatistics(final MyAnimeList mal, final Call.GetAnime.Statistics schema){
+        static AnimeStatistics asAnimeStatistics(final MyAnimeList mal, final Map<String,?> schema){
             return new AnimeStatistics() {
 
                 private final int   watching    = requireNonNullElse(() -> schema.status.watching, 0),
@@ -49,7 +40,7 @@ abstract class MyAnimeListAPIResponseMapping {
                                     onHold      = requireNonNullElse(() -> schema.status.on_hold, 0),
                                     dropped     = requireNonNullElse(() -> schema.status.dropped, 0),
                                     planToWatch = requireNonNullElse(() -> schema.status.plan_to_watch, 0),
-                                    userCount   = requireNonNullElse(() -> schema.num_list_users, -1);
+                                    userCount   = requireNonNullElse(() -> (int) schema.get("num_list_users"), -1);
 
                 // API methods
 
@@ -93,11 +84,11 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static Broadcast asBroadcast(final MyAnimeList mal, final TopLevelObject.Anime.Broadcast schema){
+        static Broadcast asBroadcast(final MyAnimeList mal, final Map<String,?> schema){
             return new Broadcast() {
 
-                private final DayOfWeek dayOfWeek   = requireNonNull(() -> DayOfWeek.asEnum(schema.day_of_the_week));
-                private final Time time             = requireNonNull(() -> asTime(schema.start_time));
+                private final DayOfWeek dayOfWeek   = requireNonNull(() -> DayOfWeek.asEnum((String) schema.get("day_of_the_week")));
+                private final Time time             = requireNonNull(() -> asTime((String) schema.get("start_time")));
 
                 // API methods
 
@@ -121,11 +112,11 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static StartSeason asStartSeason(final MyAnimeList mal, final TopLevelObject.Anime.StartSeason schema){
+        static StartSeason asStartSeason(final MyAnimeList mal, final Map<String,?> schema){
             return new StartSeason() {
 
-                private final int year      = requireNonNullElse(() -> schema.year, -1);
-                private final Season season = requireNonNull(() -> Season.asEnum(schema.season));
+                private final int year      = requireNonNullElse(() -> (int) schema.get("year"), -1);
+                private final Season season = requireNonNull(() -> Season.asEnum((String) schema.get("season")));
 
                 // API methods
 
@@ -149,11 +140,11 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static Studio asStudio(final MyAnimeList mal, final IDN schema){
+        static Studio asStudio(final MyAnimeList mal, final Map<String,?> schema){
             return new Studio() {
 
-                private final long id       = requireNonNullElse(() -> schema.id, -1L);
-                private final String name   = requireNonNull(() -> schema.name);
+                private final long id       = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String name   = requireNonNull(() -> (String) schema.get("name"));
 
                 // API methods
 
@@ -177,37 +168,37 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static com.kttdevelopment.myanimelist.anime.Anime asAnime(final MyAnimeList mal, final Call.GetAnime schema){
+        static com.kttdevelopment.myanimelist.anime.Anime asAnime(final MyAnimeList mal, final Map<String,?> schema){
             return new com.kttdevelopment.myanimelist.anime.Anime() {
 
-                private final long id               = requireNonNullElse(() -> schema.id, -1L);
-                private final String title          = requireNonNull(() -> schema.title);
+                private final long id               = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String title          = requireNonNull(() -> (String) schema.get("title"));
                 private final Picture mainPicture   = requireNonNull(() -> Common.asPicture(mal, schema.main_picture));
                 private final AlternativeTitles alternativeTitles = requireNonNull(() -> Common.asAlternativeTitles(mal, schema.alternative_titles));
-                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
-                private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
-                private final String synopsis       = requireNonNull(() -> schema.synopsis);
-                private final float meanRating      = requireNonNullElse(() -> schema.mean, 0f);
-                private final int rank              = requireNonNullElse(() -> schema.rank, -1);
-                private final int popularity        = requireNonNullElse(() -> schema.popularity, -1);
-                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, -1);
-                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, -1);
-                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
+                private final long startDate        = requireNonNullElse(() -> parseDate((String) schema.get("start_date")), -1L);
+                private final long endDate          = requireNonNullElse(() -> parseDate((String) schema.get("end_date")), -1L);
+                private final String synopsis       = requireNonNull(() -> (String) schema.get("synopsis"));
+                private final float meanRating      = requireNonNullElse(() -> (float) schema.get("mean"), 0f);
+                private final int rank              = requireNonNullElse(() -> (int) schema.get("rank"), -1);
+                private final int popularity        = requireNonNullElse(() -> (int) schema.get("popularity"), -1);
+                private final int usersListing      = requireNonNullElse(() -> (int) schema.get("num_list_users"), -1);
+                private final int usersScoring      = requireNonNullElse(() -> (int) schema.get("num_scoring_users"), -1);
+                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum((String) schema.get("nsfw")));
                 private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id), Genre.class));
-                private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
-                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
-                private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.media_type));
-                private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum(schema.status));
+                private final long createdAt        = requireNonNullElse(() -> parseISO8601((String) schema.get("created_at")), -1L);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601((String) schema.get("updated_at")), -1L);
+                private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum((String) schema.get("media_type")));
+                private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum((String) schema.get("status")));
                 private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status, this));
-                private final int episodes          = requireNonNullElse(() -> schema.num_episodes, -1);
+                private final int episodes          = requireNonNullElse(() -> (int) schema.get("num_episodes"), -1);
                 private final StartSeason startSeason = requireNonNull(() -> asStartSeason(mal, schema.start_season));
                 private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.broadcast));
-                private final AnimeSource source    = requireNonNull(() -> AnimeSource.asEnum(schema.source));
-                private final int episodeLength     = requireNonNullElse(() -> schema.average_episode_duration, -1);
-                private final AnimeRating rating    = requireNonNull(() -> AnimeRating.asEnum(schema.rating));
+                private final AnimeSource source    = requireNonNull(() -> AnimeSource.asEnum((String) schema.get("source")));
+                private final int episodeLength     = requireNonNullElse(() -> (int) schema.get("average_episode_duration"), -1);
+                private final AnimeRating rating    = requireNonNull(() -> AnimeRating.asEnum((String) schema.get("rating")));
                 private final Studio[] studios      = requireNonNull(() -> adaptArray(schema.studios, s -> asStudio(mal, s), Studio.class));
                 private final Picture[] pictures    = requireNonNull(() -> adaptArray(schema.pictures, p -> Common.asPicture(mal, p), Picture.class));
-                private final String background     = requireNonNull(() -> schema.background);
+                private final String background     = requireNonNull(() -> (String) schema.get("background"));
                 private final RelatedAnime[] relatedAnime = requireNonNull(() -> adaptArray(schema.related_anime, a -> asRelatedAnime(mal, a), RelatedAnime.class));
                 private final RelatedManga[] relatedManga = requireNonNull(() -> adaptArray(schema.related_manga, m -> Manga.asRelatedManga(mal, m), RelatedManga.class));
                 private final AnimeRecommendation[] recommendations = requireNonNull(() -> adaptArray(schema.recommendations, r -> asAnimeRecommendation(mal, r), AnimeRecommendation.class));
@@ -386,22 +377,22 @@ abstract class MyAnimeListAPIResponseMapping {
         }
 
         @SuppressWarnings("SpellCheckingInspection") // make sure matches below
-        static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final TopLevelObject.Anime.MyListStatus schema, final long anime_id) {
+        static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final Map<String,?> schema, final long anime_id) {
             return new AnimeListStatus() {
 
                 private final long id               = requireNonNullElse(() -> anime_id, -1L);
-                private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum(schema.status));
-                private final int score             = requireNonNullElse(() -> schema.score, -1);
-                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
-                private final long finishDate       = requireNonNullElse(() -> parseDate(schema.finish_date), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.priority, -1);
+                private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum((String) schema.get("status")));
+                private final int score             = requireNonNullElse(() -> (int) schema.get("score"), -1);
+                private final long startDate        = requireNonNullElse(() -> parseDate((String) schema.get("start_date")), -1L);
+                private final long finishDate       = requireNonNullElse(() -> parseDate((String) schema.get("finish_date")), -1L);
+                private final int priority          = requireNonNullElse(() -> (int) schema.get("priority"), -1);
                 private final String[] tags         = requireNonNull(() -> schema.tags);
-                private final String comments       = requireNonNull(() -> schema.comments);
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_episodes_watched, -1);
-                private final boolean rewatching    = requireNonNullElse(() -> schema.is_rewatching, false);
-                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, -1);
-                private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, -1);
+                private final String comments       = requireNonNull(() -> (String) schema.get("comments"));
+                private final long updatedAt        = requireNonNull(() -> parseISO8601((String) schema.get("updated_at")));
+                private final int watchedEpisodes   = requireNonNullElse(() -> (int) schema.get("num_episodes_watched"), -1);
+                private final boolean rewatching    = requireNonNullElse(() -> (boolean) schema.get("is_rewatching"), false);
+                private final int timesRewatched    = requireNonNullElse(() -> (int) schema.get("num_times_rewatched"), -1);
+                private final int rewatchValue      = requireNonNullElse(() -> (int) schema.get("rewatch_value"), -1);
 
                 // API methods
 
@@ -491,21 +482,21 @@ abstract class MyAnimeListAPIResponseMapping {
         }
 
         @SuppressWarnings("SpellCheckingInspection")
-        static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final TopLevelObject.Anime.MyListStatus schema, final AnimePreview anime) {
+        static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final Map<String,?> schema, final AnimePreview anime) {
             return new AnimeListStatus() {
 
-                private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum(schema.status));
-                private final int score             = requireNonNullElse(() -> schema.score, -1);
-                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
-                private final long finishDate       = requireNonNullElse(() -> parseDate(schema.finish_date), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.priority, -1);
+                private final AnimeStatus status    = requireNonNull(() -> AnimeStatus.asEnum((String) schema.get("status")));
+                private final int score             = requireNonNullElse(() -> (int) schema.get("score"), -1);
+                private final long startDate        = requireNonNullElse(() -> parseDate((String) schema.get("start_date")), -1L);
+                private final long finishDate       = requireNonNullElse(() -> parseDate((String) schema.get("finish_date")), -1L);
+                private final int priority          = requireNonNullElse(() -> (int) schema.get("priority"), -1);
                 private final String[] tags         = requireNonNull(() -> schema.tags);
-                private final String comments       = requireNonNull(() -> schema.comments);
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int watchedEpisodes   = requireNonNullElse(() -> schema.num_episodes_watched, -1);
-                private final boolean rewatching    = requireNonNullElse(() -> schema.is_rewatching, false);
-                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, -1);
-                private final int rewatchValue      = requireNonNullElse(() -> schema.rewatch_value, -1);
+                private final String comments       = requireNonNull(() -> (String) schema.get("comments"));
+                private final long updatedAt        = requireNonNull(() -> parseISO8601((String) schema.get("updated_at")));
+                private final int watchedEpisodes   = requireNonNullElse(() -> (int) schema.get("num_episodes_watched"), -1);
+                private final boolean rewatching    = requireNonNullElse(() -> (boolean) schema.get("is_rewatching"), false);
+                private final int timesRewatched    = requireNonNullElse(() -> (int) schema.get("num_times_rewatched"), -1);
+                private final int rewatchValue      = requireNonNullElse(() -> (int) schema.get("rewatch_value"), -1);
 
                 // API methods
 
@@ -594,34 +585,34 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static AnimePreview asAnimePreview(final MyAnimeList mal, final TopLevelObject.Anime schema){
+        static AnimePreview asAnimePreview(final MyAnimeList mal, final Map<String,?> schema){
             return new AnimePreview() {
 
-                private final long id               = requireNonNullElse(() -> schema.id, -1L);
-                private final String title          = requireNonNull(() -> schema.title);
+                private final long id               = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String title          = requireNonNull(() -> (String) schema.get("title"));
                 private final Picture mainPicture   = requireNonNull(() -> Common.asPicture(mal, schema.main_picture));
                 private final AlternativeTitles alternativeTitles = requireNonNull(() -> Common.asAlternativeTitles(mal, schema.alternative_titles));
-                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
-                private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
-                private final String synopsis       = requireNonNull(() -> schema.synopsis);
-                private final float meanRating      = requireNonNullElse(() -> schema.mean, 0f);
-                private final int rank              = requireNonNullElse(() -> schema.rank, -1);
-                private final int popularity        = requireNonNullElse(() -> schema.popularity, -1);
-                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, -1);
-                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, -1);
-                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
+                private final long startDate        = requireNonNullElse(() -> parseDate((String) schema.get("start_date")), -1L);
+                private final long endDate          = requireNonNullElse(() -> parseDate((String) schema.get("end_date")), -1L);
+                private final String synopsis       = requireNonNull(() -> (String) schema.get("synopsis"));
+                private final float meanRating      = requireNonNullElse(() -> (float) schema.get("mean"), 0f);
+                private final int rank              = requireNonNullElse(() -> (int) schema.get("rank"), -1);
+                private final int popularity        = requireNonNullElse(() -> (int) schema.get("popularity"), -1);
+                private final int usersListing      = requireNonNullElse(() -> (int) schema.get("num_list_users"), -1);
+                private final int usersScoring      = requireNonNullElse(() -> (int) schema.get("num_scoring_users"), -1);
+                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum((String) schema.get("nsfw")));
                 private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id), Genre.class));
-                private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
-                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
-                private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.media_type));
-                private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum(schema.status));
+                private final long createdAt        = requireNonNullElse(() -> parseISO8601((String) schema.get("created_at")), -1L);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601((String) schema.get("updated_at")), -1L);
+                private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum((String) schema.get("media_type")));
+                private final AnimeAirStatus status = requireNonNull(() -> AnimeAirStatus.asEnum((String) schema.get("status")));
                 private final AnimeListStatus listStatus = requireNonNull(() -> asAnimeListStatus(mal, schema.my_list_status, this));
-                private final int episodes          = requireNonNullElse(() -> schema.num_episodes, -1);
+                private final int episodes          = requireNonNullElse(() -> (int) schema.get("num_episodes"), -1);
                 private final StartSeason startSeason = requireNonNull(() -> asStartSeason(mal, schema.start_season));
                 private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.broadcast));
-                private final AnimeSource source    = requireNonNull(() -> AnimeSource.asEnum(schema.source));
-                private final int episodeLength     = requireNonNullElse(() -> schema.average_episode_duration, -1);
-                private final AnimeRating rating    = requireNonNull(() -> AnimeRating.asEnum(schema.rating));
+                private final AnimeSource source    = requireNonNull(() -> AnimeSource.asEnum((String) schema.get("source")));
+                private final int episodeLength     = requireNonNullElse(() -> (int) schema.get("average_episode_duration"), -1);
+                private final AnimeRating rating    = requireNonNull(() -> AnimeRating.asEnum((String) schema.get("rating")));
                 private final Studio[] studios      = requireNonNull(() -> adaptArray(schema.studios, s -> asStudio(mal, s), Studio.class));
 
                 // API methods
@@ -771,7 +762,7 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static AnimeRanking asAnimeRanking(final MyAnimeList mal, final SubLevelObject.Ranking<TopLevelObject.Anime> schema){
+        static AnimeRanking asAnimeRanking(final MyAnimeList mal, final Map<String,?> schema){
             return new AnimeRanking() {
 
                 private final AnimePreview anime    = requireNonNull(() -> asAnimePreview(mal, schema.node));
@@ -809,11 +800,11 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static AnimeRecommendation asAnimeRecommendation(final MyAnimeList mal, final SubLevelObject.Recommendation<TopLevelObject.Anime> schema){
+        static AnimeRecommendation asAnimeRecommendation(final MyAnimeList mal, final Map<String,?> schema){
             return new AnimeRecommendation() {
 
                 private final AnimePreview anime    = requireNonNull(() -> asAnimePreview(mal, schema.node));
-                private final int recommendations   = requireNonNullElse(() -> schema.num_recommendations, -1);
+                private final int recommendations   = requireNonNullElse(() -> (int) schema.get("num_recommendations"), -1);
 
                 // API methods
 
@@ -842,12 +833,12 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static RelatedAnime asRelatedAnime(final MyAnimeList mal, final SubLevelObject.RelatedAnimeEdge schema){
+        static RelatedAnime asRelatedAnime(final MyAnimeList mal, final Map<String,?> schema){
             return new RelatedAnime() {
 
                 private final AnimePreview anime            = requireNonNull(() -> asAnimePreview(mal, schema.node));
-                private final RelationType relationType     = requireNonNull(() -> RelationType.asEnum(schema.relation_type));
-                private final String relationTypeFormatted  = requireNonNull(() -> schema.relation_type_formatted);
+                private final RelationType relationType     = requireNonNull(() -> RelationType.asEnum((String) schema.get("relation_type")));
+                private final String relationTypeFormatted  = requireNonNull(() -> (String) schema.get("relation_type_formatted"));
 
                 // API methods
 
@@ -885,11 +876,11 @@ abstract class MyAnimeListAPIResponseMapping {
 
     static abstract class Forum {
 
-        static ForumTopicCreator asForumTopicCreator(final MyAnimeList mal, final IDN schema){
+        static ForumTopicCreator asForumTopicCreator(final MyAnimeList mal, final Map<String,?> schema){
             return new ForumTopicCreator() {
 
-                private final long id = requireNonNullElse(() -> schema.id, -1L);
-                private final String name = requireNonNull(() -> schema.name);
+                private final long id = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String name = requireNonNull(() -> (String) schema.get("name"));
 
                 // API methods
 
@@ -919,17 +910,17 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumTopicDetail asForumTopicDetail(final MyAnimeList mal, final TopLevelObject.ForumTopicsData schema){
+        static ForumTopicDetail asForumTopicDetail(final MyAnimeList mal, final Map<String,?> schema){
             return new ForumTopicDetail() {
 
-                private final long id                       = requireNonNullElse(() -> schema.id, -1L);
-                private final String title                  = requireNonNull(() -> schema.title);
-                private final long createdAt                = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
+                private final long id                       = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String title                  = requireNonNull(() -> (String) schema.get("title"));
+                private final long createdAt                = requireNonNullElse(() -> parseISO8601((String) schema.get("created_at")), -1L);
                 private final ForumTopicCreator createdBy   = requireNonNull(() -> asForumTopicCreator(mal, schema.created_by));
-                private final int posts                     = requireNonNullElse(() -> schema.number_of_posts, -1);
-                private final long lastPostedAt             = requireNonNullElse(() -> parseISO8601(schema.last_post_created_at), -1L);
+                private final int posts                     = requireNonNullElse(() -> (int) schema.get("number_of_posts"), -1);
+                private final long lastPostedAt             = requireNonNullElse(() -> parseISO8601((String) schema.get("last_post_created_at")), -1L);
                 private final ForumTopicCreator lastPostedBy = requireNonNull(() -> asForumTopicCreator(mal, schema.last_post_created_by));
-                private final boolean locked                = requireNonNullElse(() -> schema.is_locked, false);
+                private final boolean locked                = requireNonNullElse(() -> (boolean) schema.get("is_locked"), false);
 
                 // APi methods
 
@@ -983,12 +974,12 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static Poll asPoll(final MyAnimeList mal, final TopLevelObject.ForumTopicData.Poll schema, final ForumTopic forumTopic){
+        static Poll asPoll(final MyAnimeList mal, final Map<String,?> schema, final ForumTopic forumTopic){
             return new Poll() {
 
-                private final long id = requireNonNullElse(() -> schema.id, -1L);
-                private final String question = requireNonNull(() -> schema.question);
-                private final boolean isClosed = requireNonNullElse(() -> schema.close, false);
+                private final long id = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String question = requireNonNull(() -> (String) schema.get("question"));
+                private final boolean isClosed = requireNonNullElse(() -> (boolean) schema.get("close"), false);
                 private final PollOption[] options = requireNonNull(() -> adaptArray(schema.options, o -> asPollOption(mal, o, this), PollOption.class));
 
                 // API methods
@@ -1028,12 +1019,12 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static PollOption asPollOption(final MyAnimeList mal, final TopLevelObject.ForumTopicData.Poll.PollOption schema, final Poll poll){
+        static PollOption asPollOption(final MyAnimeList mal, final Map<String,?> schema, final Poll poll){
             return new PollOption() {
 
-                private final long id       = requireNonNullElse(() -> schema.id, -1L);
-                private final String text   = requireNonNull(() -> schema.text);
-                private final int votes     = requireNonNullElse(() -> schema.votes, -1);
+                private final long id       = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String text   = requireNonNull(() -> (String) schema.get("text"));
+                private final int votes     = requireNonNullElse(() -> (int) schema.get("votes"), -1);
 
                 // API methods
 
@@ -1067,12 +1058,12 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static PostAuthor asPostAuthor(final MyAnimeList mal, final TopLevelObject.ForumTopicData.Post.PostCreator schema){
+        static PostAuthor asPostAuthor(final MyAnimeList mal, final Map<String,?> schema){
             return new PostAuthor() {
 
-                private final long id               = requireNonNullElse(() -> schema.id, -1L);
-                private final String name           = requireNonNull(() -> schema.name);
-                private final String forumAvatarURL = requireNonNull(() -> schema.forum_avator);
+                private final long id               = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String name           = requireNonNull(() -> (String) schema.get("name"));
+                private final String forumAvatarURL = requireNonNull(() -> (String) schema.get("forum_avator"));
 
                 // API methods
 
@@ -1106,12 +1097,12 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumBoard asForumBoard(final MyAnimeList mal, final TopLevelObject.ForumCategory.ForumBoard schema, final ForumCategory forumCategory){
+        static ForumBoard asForumBoard(final MyAnimeList mal, final Map<String,?> schema, final ForumCategory forumCategory){
             return new ForumBoard() {
 
-                private final long id                   = requireNonNullElse(() -> schema.id, -1L);
-                private final String title              = requireNonNull(() -> schema.title);
-                private final String description        = requireNonNull(() -> schema.description);
+                private final long id                   = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String title              = requireNonNull(() -> (String) schema.get("title"));
+                private final String description        = requireNonNull(() -> (String) schema.get("description"));
                 private final ForumSubBoard[] subBoards = adaptArray(schema.subboards, b -> asForumSubBoard(mal, b, this), ForumSubBoard.class);
 
                 // API methods
@@ -1151,10 +1142,10 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumCategory asForumCategory(final MyAnimeList mal, final TopLevelObject.ForumCategory schema){
+        static ForumCategory asForumCategory(final MyAnimeList mal, final Map<String,?> schema){
             return new ForumCategory() {
 
-                private final String title              = requireNonNull(() -> schema.title);
+                private final String title              = requireNonNull(() -> (String) schema.get("title"));
                 private final ForumBoard[] forumBoards  = adaptArray(schema.boards, b -> asForumBoard(mal, b, this), ForumBoard.class);
 
                 // API methods
@@ -1179,11 +1170,11 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumSubBoard asForumSubBoard(final MyAnimeList mal, final TopLevelObject.ForumCategory.ForumBoard.SubBoard schema, final ForumBoard forumBoard){
+        static ForumSubBoard asForumSubBoard(final MyAnimeList mal, final Map<String,?> schema, final ForumBoard forumBoard){
             return new ForumSubBoard() {
 
-                private final long id       = requireNonNullElse(() -> schema.id, -1L);
-                private final String title  = requireNonNull(() -> schema.title);
+                private final long id       = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String title  = requireNonNull(() -> (String) schema.get("title"));
 
                 // API methods
 
@@ -1212,10 +1203,10 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumTopic asForumTopic(final MyAnimeList mal, final TopLevelObject.ForumTopicData schema){
+        static ForumTopic asForumTopic(final MyAnimeList mal, final Map<String,?> schema){
             return new ForumTopic() {
 
-                private final String title = requireNonNull(() -> schema.title);
+                private final String title = requireNonNull(() -> (String) schema.get("title"));
                 private final Post[] posts = requireNonNull(() -> adaptArray(schema.posts, p -> asPost(mal, p, this), Post.class));
                 // private final Poll[] polls = requireNonNull(() -> adaptArray(schema.poll, p -> asPoll(mal, p, this), Poll.class));
                 private final Poll poll = requireNonNull(() -> asPoll(mal, schema.poll, this));
@@ -1247,15 +1238,15 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static Post asPost(final MyAnimeList mal, final TopLevelObject.ForumTopicData.Post schema, final ForumTopic forumTopic){
+        static Post asPost(final MyAnimeList mal, final Map<String,?> schema, final ForumTopic forumTopic){
             return new Post() {
 
-                private final long id           = requireNonNullElse(() -> schema.id, -1L);
-                private final int number        = requireNonNullElse(() -> schema.number, -1);
-                private final long createdAt    = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
+                private final long id           = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final int number        = requireNonNullElse(() -> (int) schema.get("number"), -1);
+                private final long createdAt    = requireNonNullElse(() -> parseISO8601((String) schema.get("created_at")), -1L);
                 private final PostAuthor author = requireNonNull(() -> asPostAuthor(mal, schema.created_by));
-                private final String body       = requireNonNull(() -> schema.body);
-                private final String signature  = requireNonNull(() -> schema.signature);
+                private final String body       = requireNonNull(() -> (String) schema.get("body"));
+                private final String signature  = requireNonNull(() -> (String) schema.get("signature"));
 
                 // API methods
 
@@ -1308,13 +1299,13 @@ abstract class MyAnimeListAPIResponseMapping {
 
     static abstract class Manga {
 
-        static Author asAuthor(final MyAnimeList mal, final TopLevelObject.Manga.PersonRoleEdge schema){
+        static Author asAuthor(final MyAnimeList mal, final Map<String,?> schema){
             return new Author() {
 
                 private final long id           = requireNonNullElse(() -> schema.node.id, -1L);
                 private final String firstName  = requireNonNull(() -> schema.node.first_name);
                 private final String lastName   = requireNonNull(() -> schema.node.last_name);
-                private final String role       = requireNonNull(() -> schema.role);
+                private final String role       = requireNonNull(() -> (String) schema.get("role"));
 
                 // API methods
 
@@ -1348,12 +1339,12 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static Publisher asPublisher(final MyAnimeList mal, final Call.GetManga.MagazineRelationEdge schema){
+        static Publisher asPublisher(final MyAnimeList mal, final Map<String,?> schema){
             return new Publisher() {
 
                 private final long id       = requireNonNullElse(() -> schema.node.id, -1L);
                 private final String name   = requireNonNull(() -> schema.node.name);
-                private final String role   = requireNonNull(() -> schema.role);
+                private final String role   = requireNonNull(() -> (String) schema.get("role"));
 
                 // API methods
 
@@ -1382,38 +1373,38 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static com.kttdevelopment.myanimelist.manga.Manga asManga(final MyAnimeList mal, final Call.GetManga schema){
+        static com.kttdevelopment.myanimelist.manga.Manga asManga(final MyAnimeList mal, final Map<String,?> schema){
             return new com.kttdevelopment.myanimelist.manga.Manga() {
 
-                private final long id               = requireNonNullElse(() -> schema.id, -1L);
-                private final String title          = requireNonNull(() -> schema.title);
+                private final long id               = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String title          = requireNonNull(() -> (String) schema.get("title"));
                 private final Picture mainPicture   = requireNonNull(() -> Common.asPicture(mal, schema.main_picture));
                 private final AlternativeTitles alternativeTitles = requireNonNull(() -> Common.asAlternativeTitles(mal, schema.alternative_titles));
-                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
-                private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
-                private final String synopsis       = requireNonNull(() -> schema.synopsis);
-                private final float meanRating      = requireNonNullElse(() -> schema.mean, 0F);
-                private final int rank              = requireNonNullElse(() -> schema.rank, -1);
-                private final int popularity        = requireNonNullElse(() -> schema.popularity, -1);
-                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, -1);
-                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, -1);
-                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
+                private final long startDate        = requireNonNullElse(() -> parseDate((String) schema.get("start_date")), -1L);
+                private final long endDate          = requireNonNullElse(() -> parseDate((String) schema.get("end_date")), -1L);
+                private final String synopsis       = requireNonNull(() -> (String) schema.get("synopsis"));
+                private final float meanRating      = requireNonNullElse(() -> (float) schema.get("mean"), 0F);
+                private final int rank              = requireNonNullElse(() -> (int) schema.get("rank"), -1);
+                private final int popularity        = requireNonNullElse(() -> (int) schema.get("popularity"), -1);
+                private final int usersListing      = requireNonNullElse(() -> (int) schema.get("num_list_users"), -1);
+                private final int usersScoring      = requireNonNullElse(() -> (int) schema.get("num_scoring_users"), -1);
+                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum((String) schema.get("nsfw")));
                 private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id), Genre.class));
-                private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
-                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
-                private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.media_type));
-                private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum(schema.status));
+                private final long createdAt        = requireNonNullElse(() -> parseISO8601((String) schema.get("created_at")), -1L);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601((String) schema.get("updated_at")), -1L);
+                private final MangaType type        = requireNonNull(() -> MangaType.asEnum((String) schema.get("media_type")));
+                private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum((String) schema.get("status")));
                 private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status, this));
-                private final int volumes           = requireNonNullElse(() -> schema.num_volumes, -1);
-                private final int chapters          = requireNonNullElse(() -> schema.num_chapters, -1);
+                private final int volumes           = requireNonNullElse(() -> (int) schema.get("num_volumes"), -1);
+                private final int chapters          = requireNonNullElse(() -> (int) schema.get("num_chapters"), -1);
                 private final Author[] authors      = requireNonNull(() -> adaptArray(schema.authors, a -> asAuthor(mal, a), Author.class));
                 private final Picture[] pictures    = requireNonNull(() -> adaptArray(schema.pictures, p -> Common.asPicture(mal, p), Picture.class));
-                private final String background     = requireNonNull(() -> schema.background);
+                private final String background     = requireNonNull(() -> (String) schema.get("background"));
                 private final RelatedAnime[] relatedAnime = requireNonNull(() -> adaptArray(schema.related_anime, a -> Anime.asRelatedAnime(mal, a), RelatedAnime.class));
                 private final RelatedManga[] relatedManga = requireNonNull(() -> adaptArray(schema.related_manga, m -> asRelatedManga(mal, m), RelatedManga.class));
                 private final MangaRecommendation[] recommendations = requireNonNull(() -> adaptArray(schema.recommendations, r -> asMangaRecommendation(mal, r), MangaRecommendation.class));
                 private final Publisher[] serialization   = requireNonNull(() -> adaptArray(schema.serialization, s -> asPublisher(mal, s), Publisher.class));
-                
+
                 // API methods
 
                 @Override
@@ -1567,23 +1558,23 @@ abstract class MyAnimeListAPIResponseMapping {
         }
 
         // make sure matches below
-        static MangaListStatus asMangaListStatus(final MyAnimeList mal, final TopLevelObject.Manga.MyListStatus schema, final long manga_id){
+        static MangaListStatus asMangaListStatus(final MyAnimeList mal, final Map<String,?> schema, final long manga_id){
             return new MangaListStatus() {
 
                 private final long id               = requireNonNullElse(() -> manga_id, -1L);
-                private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum(schema.status));
-                private final int score             = requireNonNullElse(() -> schema.score, -1);
-                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
-                private final long finishDate       = requireNonNullElse(() -> parseDate(schema.finish_date), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.priority, -1);
+                private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum((String) schema.get("status")));
+                private final int score             = requireNonNullElse(() -> (int) schema.get("score"), -1);
+                private final long startDate        = requireNonNullElse(() -> parseDate((String) schema.get("start_date")), -1L);
+                private final long finishDate       = requireNonNullElse(() -> parseDate((String) schema.get("finish_date")), -1L);
+                private final int priority          = requireNonNullElse(() -> (int) schema.get("priority"), -1);
                 private final String[] tags         = requireNonNull(() -> schema.tags);
-                private final String comments       = requireNonNull(() -> schema.comments);
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int volumesRead       = requireNonNullElse(() -> schema.num_volumes_read, -1);
-                private final int chaptersRead      = requireNonNullElse(() -> schema.num_chapters_read, -1);
-                private final boolean rereading     = requireNonNullElse(() -> schema.is_rereading, false);
-                private final int timesReread       = requireNonNullElse(() -> schema.num_times_reread, -1);
-                private final int rereadValue       = requireNonNullElse(() -> schema.reread_value, -1);
+                private final String comments       = requireNonNull(() -> (String) schema.get("comments"));
+                private final long updatedAt        = requireNonNull(() -> parseISO8601((String) schema.get("updated_at")));
+                private final int volumesRead       = requireNonNullElse(() -> (int) schema.get("num_volumes_read"), -1);
+                private final int chaptersRead      = requireNonNullElse(() -> (int) schema.get("num_chapters_read"), -1);
+                private final boolean rereading     = requireNonNullElse(() -> (boolean) schema.get("is_rereading"), false);
+                private final int timesReread       = requireNonNullElse(() -> (int) schema.get("num_times_reread"), -1);
+                private final int rereadValue       = requireNonNullElse(() -> (int) schema.get("reread_value"), -1);
 
                 // API methods
 
@@ -1677,22 +1668,22 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static MangaListStatus asMangaListStatus(final MyAnimeList mal, final TopLevelObject.Manga.MyListStatus schema, final MangaPreview manga){
+        static MangaListStatus asMangaListStatus(final MyAnimeList mal, final Map<String,?> schema, final MangaPreview manga){
             return new MangaListStatus() {
 
-                private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum(schema.status));
-                private final int score             = requireNonNullElse(() -> schema.score, -1);
-                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
-                private final long finishDate       = requireNonNullElse(() -> parseDate(schema.finish_date), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.priority, -1);
+                private final MangaStatus status    = requireNonNull(() -> MangaStatus.asEnum((String) schema.get("status")));
+                private final int score             = requireNonNullElse(() -> (int) schema.get("score"), -1);
+                private final long startDate        = requireNonNullElse(() -> parseDate((String) schema.get("start_date")), -1L);
+                private final long finishDate       = requireNonNullElse(() -> parseDate((String) schema.get("finish_date")), -1L);
+                private final int priority          = requireNonNullElse(() -> (int) schema.get("priority"), -1);
                 private final String[] tags         = requireNonNull(() -> schema.tags);
-                private final String comments       = requireNonNull(() -> schema.comments);
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.updated_at));
-                private final int volumesRead       = requireNonNullElse(() -> schema.num_volumes_read, -1);
-                private final int chaptersRead      = requireNonNullElse(() -> schema.num_chapters_read, -1);
-                private final boolean rereading     = requireNonNullElse(() -> schema.is_rereading, false);
-                private final int timesReread       = requireNonNullElse(() -> schema.num_times_reread, -1);
-                private final int rereadValue       = requireNonNullElse(() -> schema.reread_value, -1);
+                private final String comments       = requireNonNull(() -> (String) schema.get("comments"));
+                private final long updatedAt        = requireNonNull(() -> parseISO8601((String) schema.get("updated_at")));
+                private final int volumesRead       = requireNonNullElse(() -> (int) schema.get("num_volumes_read"), -1);
+                private final int chaptersRead      = requireNonNullElse(() -> (int) schema.get("num_chapters_read"), -1);
+                private final boolean rereading     = requireNonNullElse(() -> (boolean) schema.get("is_rereading"), false);
+                private final int timesReread       = requireNonNullElse(() -> (int) schema.get("num_times_reread"), -1);
+                private final int rereadValue       = requireNonNullElse(() -> (int) schema.get("reread_value"), -1);
 
                 // API methods
 
@@ -1786,30 +1777,30 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static MangaPreview asMangaPreview(final MyAnimeList mal, final TopLevelObject.Manga schema){
+        static MangaPreview asMangaPreview(final MyAnimeList mal, final Map<String,?> schema){
             return new MangaPreview() {
 
-                private final long id               = requireNonNullElse(() -> schema.id, -1L);
-                private final String title          = requireNonNull(() -> schema.title);
+                private final long id               = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String title          = requireNonNull(() -> (String) schema.get("title"));
                 private final Picture mainPicture   = requireNonNull(() -> Common.asPicture(mal, schema.main_picture));
                 private final AlternativeTitles alternativeTitles = requireNonNull(() -> Common.asAlternativeTitles(mal, schema.alternative_titles));
-                private final long startDate        = requireNonNullElse(() -> parseDate(schema.start_date), -1L);
-                private final long endDate          = requireNonNullElse(() -> parseDate(schema.end_date), -1L);
-                private final String synopsis       = requireNonNull(() -> schema.synopsis);
-                private final float meanRating      = requireNonNullElse(() -> schema.mean, 0F);
-                private final int rank              = requireNonNullElse(() -> schema.rank, -1);
-                private final int popularity        = requireNonNullElse(() -> schema.popularity, -1);
-                private final int usersListing      = requireNonNullElse(() -> schema.num_list_users, -1);
-                private final int usersScoring      = requireNonNullElse(() -> schema.num_scoring_users, -1);
-                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.nsfw));
+                private final long startDate        = requireNonNullElse(() -> parseDate((String) schema.get("start_date")), -1L);
+                private final long endDate          = requireNonNullElse(() -> parseDate((String) schema.get("end_date")), -1L);
+                private final String synopsis       = requireNonNull(() -> (String) schema.get("synopsis"));
+                private final float meanRating      = requireNonNullElse(() -> (float) schema.get("mean"), 0F);
+                private final int rank              = requireNonNullElse(() -> (int) schema.get("rank"), -1);
+                private final int popularity        = requireNonNullElse(() -> (int) schema.get("popularity"), -1);
+                private final int usersListing      = requireNonNullElse(() -> (int) schema.get("num_list_users"), -1);
+                private final int usersScoring      = requireNonNullElse(() -> (int) schema.get("num_scoring_users"), -1);
+                private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum((String) schema.get("nsfw")));
                 private final Genre[] genres        = requireNonNull(() -> adaptArray(schema.genres, g -> Genre.asEnum((int) g.id), Genre.class));
-                private final long createdAt        = requireNonNullElse(() -> parseISO8601(schema.created_at), -1L);
-                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.updated_at), -1L);
-                private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.media_type));
-                private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum(schema.status));
+                private final long createdAt        = requireNonNullElse(() -> parseISO8601((String) schema.get("created_at")), -1L);
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601((String) schema.get("updated_at")), -1L);
+                private final MangaType type        = requireNonNull(() -> MangaType.asEnum((String) schema.get("media_type")));
+                private final MangaPublishStatus status = requireNonNull(() -> MangaPublishStatus.asEnum((String) schema.get("status")));
                 private final MangaListStatus listStatus = requireNonNull(() -> asMangaListStatus(mal, schema.my_list_status, this));
-                private final int volumes           = requireNonNullElse(() -> schema.num_volumes, -1);
-                private final int chapters          = requireNonNullElse(() -> schema.num_chapters, -1);
+                private final int volumes           = requireNonNullElse(() -> (int) schema.get("num_volumes"), -1);
+                private final int chapters          = requireNonNullElse(() -> (int) schema.get("num_chapters"), -1);
                 private final Author[] authors      = requireNonNull(() -> adaptArray(schema.authors, a -> asAuthor(mal, a), Author.class));
 
                 // API methods
@@ -1939,7 +1930,7 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static MangaRanking asMangaRanking(final MyAnimeList mal, final SubLevelObject.Ranking<TopLevelObject.Manga> schema){
+        static MangaRanking asMangaRanking(final MyAnimeList mal, final Map<String,?> schema){
             return new MangaRanking() {
 
                 private final MangaPreview manga    = requireNonNull(() -> asMangaPreview(mal, schema.node));
@@ -1978,11 +1969,11 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static MangaRecommendation asMangaRecommendation(final MyAnimeList mal, final SubLevelObject.Recommendation<TopLevelObject.Manga> schema){
+        static MangaRecommendation asMangaRecommendation(final MyAnimeList mal, final Map<String,?> schema){
             return new MangaRecommendation() {
 
                 private final MangaPreview manga    = requireNonNull(() -> asMangaPreview(mal, schema.node));
-                private final int recommendations   = requireNonNullElse(() -> schema.num_recommendations, -1);
+                private final int recommendations   = requireNonNullElse(() -> (int) schema.get("num_recommendations"), -1);
 
                 // API methods
 
@@ -2011,12 +2002,12 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static RelatedManga asRelatedManga(final MyAnimeList mal, final SubLevelObject.RelatedMangaEdge schema){
+        static RelatedManga asRelatedManga(final MyAnimeList mal, final Map<String,?> schema){
             return new RelatedManga() {
 
                 private final MangaPreview manga            = requireNonNull(() -> asMangaPreview(mal, schema.node));
-                private final RelationType relationType     = requireNonNull(() -> RelationType.asEnum(schema.relation_type));
-                private final String relationTypeFormatted  = requireNonNull(() -> schema.relation_type_formatted);
+                private final RelationType relationType     = requireNonNull(() -> RelationType.asEnum((String) schema.get("relation_type")));
+                private final String relationTypeFormatted  = requireNonNull(() -> (String) schema.get("relation_type_formatted"));
 
                 // API methods
 
@@ -2051,35 +2042,35 @@ abstract class MyAnimeListAPIResponseMapping {
         }
 
     }
-    
+
     static abstract class User {
-        
-        static com.kttdevelopment.myanimelist.user.User asUser(final MyAnimeList mal, final Call.GetUserInformation schema){
+
+        static com.kttdevelopment.myanimelist.user.User asUser(final MyAnimeList mal, final Map<String,?> schema){
             return new com.kttdevelopment.myanimelist.user.User() {
 
-                private final long id           = requireNonNullElse(() -> schema.id, -1L);
-                private final String name       = requireNonNull(() -> schema.name);
-                private final String picture    = requireNonNull(() -> schema.picture);
-                private final String gender     = requireNonNull(() -> schema.gender);
-                private final long birthday     = requireNonNullElse(() -> parseDate(schema.birthday), -1L);
-                private final String location   = requireNonNull(() -> schema.location);
-                private final long joinedAt     = requireNonNullElse(() -> parseISO8601(schema.joined_at), -1L);
+                private final long id           = requireNonNullElse(() -> (long) schema.get("id"), -1L);
+                private final String name       = requireNonNull(() -> (String) schema.get("name"));
+                private final String picture    = requireNonNull(() -> (String) schema.get("picture"));
+                private final String gender     = requireNonNull(() -> (String) schema.get("gender"));
+                private final long birthday     = requireNonNullElse(() -> parseDate((String) schema.get("birthday")), -1L);
+                private final String location   = requireNonNull(() -> (String) schema.get("location"));
+                private final long joinedAt     = requireNonNullElse(() -> parseISO8601((String) schema.get("joined_at")), -1L);
                 private final UserAnimeStatistics animeStatistics = requireNonNull(() -> asUserAnimeStatistics(mal, schema.anime_statistics));
-                private final String timezone   = requireNonNull(() -> schema.time_zone);
-                private final boolean supporter = requireNonNullElse(() -> schema.is_supporter, false);
-                
+                private final String timezone   = requireNonNull(() -> (String) schema.get("time_zone"));
+                private final boolean supporter = requireNonNullElse(() -> (boolean) schema.get("is_supporter"), false);
+
                 // API methods
-                
+
                 @Override
                 public final long getID(){
                     return id;
                 }
-                
+
                 @Override
                 public final String getName(){
                     return name;
                 }
-                
+
                 @Override
                 public final String getPictureURL(){
                     return picture;
@@ -2119,35 +2110,35 @@ abstract class MyAnimeListAPIResponseMapping {
                 public final boolean isSupporter(){
                     return supporter;
                 }
-                
+
                 // additional methods
-                
+
                 @Override
                 public final String toString(){
                     return AutomatedToString(this);
                 }
-                
+
             };
         }
 
-        static UserAnimeStatistics asUserAnimeStatistics(final MyAnimeList mal, final Call.GetUserInformation.AnimeStatistics schema){
+        static UserAnimeStatistics asUserAnimeStatistics(final MyAnimeList mal, final Map<String,?> schema){
             return new UserAnimeStatistics() {
-                
-                private final int watching          = requireNonNullElse(() -> schema.num_items_watching, -1);
-                private final int completed         = requireNonNullElse(() -> schema.num_items_completed, -1);
-                private final int onHold            = requireNonNullElse(() -> schema.num_items_on_hold, -1);
-                private final int dropped           = requireNonNullElse(() -> schema.num_items_dropped, -1);
-                private final int planToWatch       = requireNonNullElse(() -> schema.num_items_plan_to_watch, -1);
-                private final int items             = requireNonNullElse(() -> schema.num_items, -1);
-                private final float daysWatching    = requireNonNullElse(() -> schema.num_days_watching, 0f);
-                private final float daysCompleted   = requireNonNullElse(() -> schema.num_days_completed, 0f);
-                private final float daysOnHold      = requireNonNullElse(() -> schema.num_days_on_hold, 0f);
-                private final float daysDropped     = requireNonNullElse(() -> schema.num_days_dropped, 0f);
-                private final float days            = requireNonNullElse(() -> schema.num_days, 0f);
-                private final int episodesWatched   = requireNonNullElse(() -> schema.num_episodes, -1);
+
+                private final int watching          = requireNonNullElse(() -> (int) schema.get("num_items_watching"), -1);
+                private final int completed         = requireNonNullElse(() -> (int) schema.get("num_items_completed"), -1);
+                private final int onHold            = requireNonNullElse(() -> (int) schema.get("num_items_on_hold"), -1);
+                private final int dropped           = requireNonNullElse(() -> (int) schema.get("num_items_dropped"), -1);
+                private final int planToWatch       = requireNonNullElse(() -> (int) schema.get("num_items_plan_to_watch"), -1);
+                private final int items             = requireNonNullElse(() -> (int) schema.get("num_items"), -1);
+                private final float daysWatching    = requireNonNullElse(() -> (float) schema.get("num_days_watching"), 0f);
+                private final float daysCompleted   = requireNonNullElse(() -> (float) schema.get("num_days_completed"), 0f);
+                private final float daysOnHold      = requireNonNullElse(() -> (float) schema.get("num_days_on_hold"), 0f);
+                private final float daysDropped     = requireNonNullElse(() -> (float) schema.get("num_days_dropped"), 0f);
+                private final float days            = requireNonNullElse(() -> (float) schema.get("num_days"), 0f);
+                private final int episodesWatched   = requireNonNullElse(() -> (int) schema.get("num_episodes"), -1);
                 @SuppressWarnings("SpellCheckingInspection")
-                private final int timesRewatched    = requireNonNullElse(() -> schema.num_times_rewatched, -1);
-                private final float meanScore       = requireNonNullElse(() -> schema.mean_score, 0f);
+                private final int timesRewatched    = requireNonNullElse(() -> (int) schema.get("num_times_rewatched"), -1);
+                private final float meanScore       = requireNonNullElse(() -> (float) schema.get("mean_score"), 0f);
 
                 // API methods
 
@@ -2226,7 +2217,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 public final float getMeanScore(){
                     return meanScore;
                 }
-                
+
                 // additional methods
 
                 @Override
@@ -2236,17 +2227,17 @@ abstract class MyAnimeListAPIResponseMapping {
 
             };
         }
-        
+
     }
 
     static abstract class Common {
 
-        static AlternativeTitles asAlternativeTitles(final MyAnimeList mal, final SubLevelObject.AlternativeTitles schema){
+        static AlternativeTitles asAlternativeTitles(final MyAnimeList mal, final Map<String,?> schema){
             return new AlternativeTitles() {
 
                 private final String[] synonyms = requireNonNull(() -> schema.synonyms);
-                private final String english    = requireNonNull(() -> schema.en);
-                private final String japanese   = requireNonNull(() -> schema.ja);
+                private final String english    = requireNonNull(() -> (String) schema.get("en"));
+                private final String japanese   = requireNonNull(() -> (String) schema.get("ja"));
 
                 // API methods
 
@@ -2275,11 +2266,11 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static Picture asPicture(final MyAnimeList mal, final SubLevelObject.Picture schema){
+        static Picture asPicture(final MyAnimeList mal, final Map<String,?> schema){
             return new Picture() {
 
-                private final String medium = requireNonNull(() -> schema.medium);
-                private final String large  = requireNonNull(() -> schema.large);
+                private final String medium = requireNonNull(() -> (String) schema.get("medium"));
+                private final String large  = requireNonNull(() -> (String) schema.get("large"));
 
                 // API methods
 

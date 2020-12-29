@@ -24,8 +24,8 @@ public abstract class TestProvider {
     public static final String MangaQuery = "さくら荘のペットな彼女";
     public static final long MangaID = 28107;
 
-    public static final String AltMangaQuery = "ソードアートオンライン";
-    public static final long AltMangaID = 21479;
+    public static final String AltMangaQuery = "ソードアートオンライン"; // for tests that require additional fields
+    public static final long AltMangaID = 21479; // for tests that require additional fields
 
     public static final String NSFW_MangaQuery = "いただきっセーエキ";
     public static final long NSFW_MangaID = 49697;
@@ -44,7 +44,7 @@ public abstract class TestProvider {
     public static void init() throws IOException{
         if(oauth.toFile().exists()){ // use existing OAuth
             mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
-            if(mal.getAnime().withQuery("さくら荘のペットな彼女").withLimit(1).withFields((List<String>) null).search() != null)
+            if(mal.getAnime().withQuery(AnimeQuery).withLimit(1).withFields((List<String>) null).search() != null)
                 TestAuthRefresh.beforeAll(); // refresh if old token
         }
         Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (client id missing)");
