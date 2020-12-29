@@ -11,6 +11,7 @@ public class TestUser {
     private static MyAnimeList mal;
     private static User user;
 
+    @SuppressWarnings("ConstantConditions")
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
@@ -56,7 +57,7 @@ public class TestUser {
         Assertions.assertNotEquals(-1, statistics.getMeanScore());
     }
 
-    @Test
+    @Test // test does actually pass
     public void testBirthday(){
         Assumptions.assumeFalse(user.getBirthday() == -1, "User might not specify a birthday");
     }

@@ -2,9 +2,6 @@ package com.kttdevelopment.myanimelist.MangaTests;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.TestProvider;
-import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
-import com.kttdevelopment.myanimelist.anime.property.AnimeSort;
-import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 import com.kttdevelopment.myanimelist.manga.MangaListStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaSort;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;

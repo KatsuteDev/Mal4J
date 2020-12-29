@@ -1,8 +1,5 @@
 package com.kttdevelopment.myanimelist;
 
-import com.kttdevelopment.myanimelist.APIStruct.Endpoint;
-import com.kttdevelopment.myanimelist.APIStruct.Response;
-
 import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -148,6 +145,7 @@ final class APICall {
             }
         }
 
+        @SuppressWarnings("SpellCheckingInspection")
         final int rcode = conn.getResponseCode();
 
         return new Response<>(

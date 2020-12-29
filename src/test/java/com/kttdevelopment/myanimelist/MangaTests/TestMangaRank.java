@@ -2,9 +2,6 @@ package com.kttdevelopment.myanimelist.MangaTests;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.TestProvider;
-import com.kttdevelopment.myanimelist.anime.AnimeRanking;
-import com.kttdevelopment.myanimelist.anime.property.AnimeRankingType;
-import com.kttdevelopment.myanimelist.anime.property.AnimeType;
 import com.kttdevelopment.myanimelist.manga.MangaRanking;
 import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 import com.kttdevelopment.myanimelist.manga.property.MangaType;

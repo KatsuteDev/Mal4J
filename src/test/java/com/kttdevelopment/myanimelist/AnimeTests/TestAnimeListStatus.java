@@ -21,16 +21,11 @@ public class TestAnimeListStatus {
 
     @AfterAll
     public static void cleanup(){
+        mal.deleteMangaListing(TestProvider.AnimeID);
         mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
             .score(10)
             .episodesWatched(24)
-            .rewatching(false)
-            .priority(0)
-            .timesRewatched(0)
-            .rewatchValue(0)
-            .tags()
-            .comments("")
             .update();
     }
 
@@ -84,6 +79,7 @@ public class TestAnimeListStatus {
         testStatus(status);
     }
 
+    @SuppressWarnings("CommentedOutCode")
     private void testStatus(final AnimeListStatus status){
         Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
         Assertions.assertEquals(10, status.getScore());

@@ -9,9 +9,11 @@ import org.junit.jupiter.api.*;
 
 public class TestAnime {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private static MyAnimeList mal;
     private static Anime anime;
 
+    @SuppressWarnings("ConstantConditions")
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();

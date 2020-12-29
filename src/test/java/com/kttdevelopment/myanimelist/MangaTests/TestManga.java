@@ -3,17 +3,16 @@ package com.kttdevelopment.myanimelist.MangaTests;
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.TestProvider;
 import com.kttdevelopment.myanimelist.anime.*;
-import com.kttdevelopment.myanimelist.anime.property.AnimeStatistics;
 import com.kttdevelopment.myanimelist.manga.*;
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
-
 public class TestManga {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private static MyAnimeList mal;
     private static Manga manga;
 
+    @SuppressWarnings("ConstantConditions")
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
