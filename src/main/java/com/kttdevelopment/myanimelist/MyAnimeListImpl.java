@@ -873,7 +873,7 @@ final class MyAnimeListImpl extends MyAnimeList{
     //
 
     private static String asStringList(final List<String> fields){
-        return asStringList(fields.toArray(new String[0]));
+        return asStringList(fields == null ? null : fields.toArray(new String[0]));
     }
 
     private static String asStringList(final String... fields){

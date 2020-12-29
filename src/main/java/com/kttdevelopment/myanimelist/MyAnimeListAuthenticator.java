@@ -189,6 +189,7 @@ public final class MyAnimeListAuthenticator {
 
     private AccessToken parseToken(final Response<Map<String,?>> response){
         final Map<String,?> body = response.body();
+        // todo: handle response codes
         return new AccessToken(
             (String) body.get("token_type"),
             Integer.valueOf((int) body.get("expires_in")).longValue(),

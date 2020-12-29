@@ -20,6 +20,7 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.TopLevelObje
  * @author Ktt Development
  */
 @SuppressWarnings({"SpellCheckingInspection","unused"})
+@Deprecated
 abstract class MyAnimeListAPIResponse {
 
     // commonly used formats
