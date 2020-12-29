@@ -2,7 +2,9 @@ package com.kttdevelopment.myanimelist;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -173,6 +175,48 @@ final class APICall {
                ", formUrlEncoded=" + formUrlEncoded +
                ", fields=" + fields +
                '}';
+    }
+
+    //
+
+    @SuppressWarnings("unchecked")
+    static <C> C create(final String baseURL, final Class<C> service){
+        if(!service.isInterface())
+            throw new IllegalArgumentException("Service must be an interface");
+        final InvocationHandler handler = new InterfaceInvocation(baseURL, service);
+        return (C)
+            Proxy.newProxyInstance(
+                service.getClassLoader(),
+                new Class<?>[]{service},
+               handler
+            );
+    }
+
+    private static class InterfaceInvocation implements InvocationHandler {
+
+        private final String baseURL;
+        private final Class<?> service;
+
+        public InterfaceInvocation(final String baseURL, final Class<?> service){
+            this.baseURL = baseURL;
+            this.service = service;
+        }
+
+        @Override
+        public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable{
+            if(method.getDeclaringClass() != service)
+                return method.invoke(this, args);
+            try{
+                return new APICall(
+                    baseURL,
+                    method,
+                    args
+                ).call(Json::parseMap);
+            }catch(final IOException e){
+                throw new UncheckedIOException(e);
+            }
+        }
+
     }
 
 }

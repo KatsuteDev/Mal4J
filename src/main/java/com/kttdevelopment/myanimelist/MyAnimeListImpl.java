@@ -1,5 +1,6 @@
 package com.kttdevelopment.myanimelist;
 
+import com.kttdevelopment.myanimelist.APIStruct.Response;
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.AnimeRankingType;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
@@ -10,7 +11,6 @@ import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 import com.kttdevelopment.myanimelist.query.*;
 import com.kttdevelopment.myanimelist.user.User;
-import retrofit2.Response;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -19,7 +19,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Anime.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Forum.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Manga.*;
@@ -34,7 +33,7 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.User.
  * @version 1.0.0
  * @author Ktt Development
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation", "unchecked"})
 final class MyAnimeListImpl extends MyAnimeList{
 
     private transient String auth;
@@ -69,7 +68,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimePreview> search(){
-                final Call.GetAnimeList response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getAnime(
                         auth,
                         query,
@@ -77,13 +76,12 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<AnimePreview> anime = new ArrayList<>();
-                for(final Common.Node<TopLevelObject.Anime> iterator : response.data)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.node));
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node")));
                 return anime;
             }
 
@@ -95,7 +93,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetAnimeList response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getAnime(
                                 auth,
                                 query,
@@ -103,9 +101,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0, current.get(), null),
                                 null,
                                 nsfw)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -138,7 +135,6 @@ final class MyAnimeListImpl extends MyAnimeList{
                 auth,
                 id,
                 fields == null ? animeFields : asStringList(fields))
-            .execute()
         ));
     }
 
@@ -148,7 +144,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimeRanking> search(){
-                final Call.GetAnimeRanking response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getAnimeRanking(
                         auth,
                         rankingType.field(),
@@ -156,12 +152,11 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<AnimeRanking> anime = new ArrayList<>();
-                for(final SubLevelObject.Ranking<TopLevelObject.Anime> iterator : response.data)
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
                     anime.add(asAnimeRanking(MyAnimeListImpl.this, iterator));
                 return anime;
             }
@@ -174,7 +169,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetAnimeRanking response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getAnimeRanking(
                                 auth,
                                 rankingType.field(),
@@ -182,9 +177,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0,  current.get(), null),
                                 null,
                                 nsfw)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -209,7 +203,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimePreview> search(){
-                final Call.GetSeasonalAnime response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getAnimeSeason(
                         auth,
                         year,
@@ -219,13 +213,12 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<AnimePreview> anime = new ArrayList<>();
-                for(final Common.Node<TopLevelObject.Anime> iterator : response.data)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.node));
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node")));
                 return anime;
             }
 
@@ -237,7 +230,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetSeasonalAnime response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getAnimeSeason(
                                 auth,
                                 year,
@@ -247,9 +240,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0, current.get(), null),
                                 null,
                                 nsfw)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -276,20 +268,19 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimePreview> search(){
-                final Call.GetSuggestedAnime response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getAnimeSuggestions(
                         auth,
                         between(0, limit, 100),
                         between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields),
                         nsfw)
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<AnimePreview> anime = new ArrayList<>();
-                for(final Common.Node<TopLevelObject.Anime> iterator : response.data)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.node));
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node")));
                 return anime;
             }
 
@@ -301,16 +292,15 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetSuggestedAnime response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getAnimeSuggestions(
                                 auth,
                                 between(0, limit, 100),
                                 between(0, current.get(), null),
                                 null,
                                 nsfw)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -336,7 +326,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public synchronized final AnimeListStatus update(){
-                final Call.UpdateUserAnimeList response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.updateAnimeListing(
                         auth,
                         id,
@@ -349,7 +339,6 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, rewatchValue, 5),
                         asStringList(tags),
                         comments)
-                    .execute()
                 );
                 if(response == null) return null;
 
@@ -361,11 +350,10 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public synchronized final void deleteAnimeListing(final long id){
-        handleResponse(
+        handleVoidResponse(
             () -> service.deleteAnimeListing(
                 auth,
                 (int) id)
-            .execute()
         );
     }
 
@@ -380,7 +368,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimeListStatus> search(){
-                final Call.GetUserAnimeList response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getUserAnimeListing(
                         auth,
                         username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
@@ -389,13 +377,12 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, limit, 1000),
                         between(0, offset, null),
                         fields == null ? animeFields : asStringList(fields))
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<AnimeListStatus> anime = new ArrayList<>();
-                for(final SubLevelObject.ListEdge<TopLevelObject.Anime,Call.UpdateUserAnimeList> iterator : response.data)
-                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.list_status, asAnimePreview(MyAnimeListImpl.this, iterator.node)));
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, (Map<String,?>) iterator.get("list_status"), asAnimePreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node"))));
                 return anime;
             }
 
@@ -407,7 +394,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetUserAnimeList response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getUserAnimeListing(
                                 auth,
                                 username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
@@ -416,9 +403,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0, limit, 1000),
                                 between(0, current.get(), null),
                                 null)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -440,15 +426,14 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final List<ForumCategory> getForumBoards(){
-        final Call.GetForumBoards response = handleResponse(
+        final Map<String,?> response = handleResponse(
             () -> service.getForumBoards(
                 auth)
-            .execute()
         );
         if(response == null) return null;
 
         final List<ForumCategory> categories = new ArrayList<>();
-        for(final TopLevelObject.ForumCategory iterator : response.categories)
+        for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("categories"))
             categories.add(asForumCategory(MyAnimeListImpl.this, iterator));
         return categories;
     }
@@ -466,22 +451,21 @@ final class MyAnimeListImpl extends MyAnimeList{
     @SuppressWarnings("CommentedOutCode")
     @Override
     public final ForumTopic getForumTopicDetail(final long id, final int limit, final int offset){
-        final Call.GetForumTopicDetail response = handleResponse(
+        final Map<String,?> response = handleResponse(
             () -> service.getForumBoard(
                 auth,
                 id,
                 limit == -1 ? null : between(0, limit, 100),
                 offset == -1 ? null : between(0, offset, null))
-            .execute()
         );
         if(response == null) return null;
 
         // // #7
         // final List<ForumTopic> topics = new ArrayList<>();
-        // for(final TopLevelObject.ForumTopicData iterator : response.data)
+        // for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
         //     topics.add(asForumTopic(MyAnimeListImpl.this, iterator));
         // return topics;
-        return asForumTopic(MyAnimeListImpl.this, response.data);
+        return asForumTopic(MyAnimeListImpl.this, (Map<String,?>) response.get("data"));
     }
 
     @Override
@@ -490,7 +474,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<ForumTopicDetail> search(){
-                final Call.GetForumTopics response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getForumTopics(
                         auth,
                         boardId,
@@ -501,12 +485,11 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         topicUsername,
                         username)
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<ForumTopicDetail> topics = new ArrayList<>();
-                for(final TopLevelObject.ForumTopicsData iterator : response.data)
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
                     topics.add(asForumTopicDetail(MyAnimeListImpl.this, iterator));
                 return topics;
             }
@@ -519,7 +502,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetForumTopics response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getForumTopics(
                                 auth,
                                 boardId,
@@ -530,9 +513,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 query,
                                 topicUsername,
                                 username)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -562,7 +544,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<MangaPreview> search(){
-                final Call.GetMangaList response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getManga(
                         auth,
                         query,
@@ -570,13 +552,12 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, offset, null),
                         fields == null ? mangaFields : asStringList(fields),
                         nsfw)
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<MangaPreview> manga = new ArrayList<>();
-                for(final Common.Node<TopLevelObject.Manga> iterator : response.data)
-                    manga.add(asMangaPreview(MyAnimeListImpl.this, iterator.node));
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                    manga.add(asMangaPreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node")));
                 return manga;
             }
 
@@ -588,7 +569,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetMangaList response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getManga(
                                 auth,
                                 query,
@@ -596,9 +577,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0, current.get(), null),
                                 null,
                                 nsfw)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -632,7 +612,6 @@ final class MyAnimeListImpl extends MyAnimeList{
                 auth,
                 id,
                 fields == null ? mangaFields : asStringList(fields))
-            .execute()
         ));
     }
 
@@ -642,7 +621,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<MangaRanking> search(){
-                final Call.GetMangaRanking response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getMangaRanking(
                         auth,
                         rankingType != null ? rankingType.field() : null,
@@ -650,12 +629,11 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, offset, null),
                         fields == null ? mangaFields : asStringList(fields),
                         nsfw)
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<MangaRanking> manga = new ArrayList<>();
-                for(final SubLevelObject.Ranking<TopLevelObject.Manga> iterator : response.data)
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
                     manga.add(asMangaRanking(MyAnimeListImpl.this, iterator));
                 return manga;
             }
@@ -668,7 +646,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetMangaRanking response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getMangaRanking(
                                 auth,
                                 rankingType != null ? rankingType.field() : null,
@@ -676,9 +654,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0, offset, null),
                                 fields == null ? mangaFields : asStringList(fields),
                                 nsfw)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -704,7 +681,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public synchronized final MangaListStatus update(){
-                final Call.UpdateUserMangaList response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.updateMangaListing(
                         auth,
                         id,
@@ -718,7 +695,6 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, rereadValue, 5),
                         asStringList(tags),
                         comments)
-                    .execute()
                 );
                 if(response == null) return null;
 
@@ -730,11 +706,10 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public synchronized final void deleteMangaListing(final long id){
-        handleResponse(
+        handleVoidResponse(
             () -> service.deleteMangaListing(
                 auth,
                 id)
-            .execute()
         );
     }
 
@@ -749,7 +724,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<MangaListStatus> search(){
-                final Call.GetUserMangaList response = handleResponse(
+                final Map<String,?> response = handleResponse(
                     () -> service.getUserMangaListing(
                         auth,
                         username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
@@ -758,13 +733,12 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, limit, 1000),
                         between(0, offset, null),
                         fields == null ? mangaFields : asStringList(fields))
-                    .execute()
                 );
                 if(response == null) return null;
 
                 final List<MangaListStatus> manga = new ArrayList<>();
-                for(final SubLevelObject.ListEdge<TopLevelObject.Manga,Call.UpdateUserMangaList> iterator : response.data)
-                    manga.add(asMangaListStatus(MyAnimeListImpl.this, iterator.list_status, asMangaPreview(MyAnimeListImpl.this, iterator.node)));
+                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                    manga.add(asMangaListStatus(MyAnimeListImpl.this, (Map<String,?>) iterator.get("list_status"), asMangaPreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node"))));
                 return manga;
             }
 
@@ -776,7 +750,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Call.GetUserMangaList response = handleResponse(
+                        final Map<String,?> response = handleResponse(
                             () -> service.getUserMangaListing(
                                 auth,
                                 username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
@@ -785,9 +759,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0, limit, 1000),
                                 between(0, current.get(), null),
                                 null)
-                            .execute()
                         );
-                        return response != null && response.paging.next != null;
+                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
                     }
 
                     @Override
@@ -832,18 +805,27 @@ final class MyAnimeListImpl extends MyAnimeList{
                 auth,
                 username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
                 fields == null ? userFields : asStringList(fields))
-            .execute()
         ));
     }
 
     //
+    
+    private void handleVoidResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
+        handleResponseCodes(supplier);
+    }
+    
+    private Map<String,?> handleResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
+        final Response<?> response = handleResponseCodes(supplier);
+        return response.code() == HttpURLConnection.HTTP_OK ? (Map<String,?>) response.body() : null;
+    }
 
-    private <R> R handleResponse(final ExceptionSupplier<Response<R>,IOException> supplier){
+    private Response<?> handleResponseCodes(final ExceptionSupplier<Response<?>,IOException> supplier){
         try{
-            final Response<R> response = supplier.get();
+            final Response<?> response = supplier.get();
             switch(response.code()){
+                default:
                 case HttpURLConnection.HTTP_OK:
-                    return response.body();
+                    return response;
                 case HttpURLConnection.HTTP_BAD_REQUEST:
                     throw new InvalidParametersException(response.toString());
                 case HttpURLConnection.HTTP_UNAUTHORIZED:
@@ -854,10 +836,9 @@ final class MyAnimeListImpl extends MyAnimeList{
         }catch(final IOException e){ // client side failure
             throw new FailedRequestException(e);
         }
-        return null;
     }
 
-    private interface ExceptionSupplier<T,E extends Exception>{
+    private interface ExceptionSupplier<T,E extends Throwable>{
 
         T get() throws E;
 

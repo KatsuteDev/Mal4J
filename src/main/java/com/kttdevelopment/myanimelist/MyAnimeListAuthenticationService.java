@@ -4,19 +4,19 @@ import java.util.Map;
 
 import static com.kttdevelopment.myanimelist.APIStruct.*;
 
-abstract class MyAnimeListAuthenticationService {
+interface MyAnimeListAuthenticationService {
 
-    private static final String BaseURL = "https://myanimelist.net/v1/oauth2/";
+    String baseURL = "https://myanimelist.net/v1/oauth2/";
 
     static MyAnimeListAuthenticationService create(){
-        return MyAnimeListAuthenticatorServiceImpl.create(BaseURL);
+        return APICall.create(baseURL, MyAnimeListAuthenticationService.class);
     }
 
     // auth
 
     @Endpoint(method="POST", value="token")
     @FormUrlEncoded
-    abstract Response<Map<String,?>> getToken(
+    Response<Map<String,?>> getToken(
         @Field("client_id")     final String client_id,
         @Field("client_secret") final String client_secret,
         @Field("grant_type")    final String grant_type,
@@ -26,7 +26,7 @@ abstract class MyAnimeListAuthenticationService {
 
     @Endpoint(method="POST", value="token")
     @FormUrlEncoded
-    abstract Response<Map<String,?>> refreshToken(
+    Response<Map<String,?>> refreshToken(
         @Field("client_id")     final String client_id,
         @Field("client_secret") final String client_secret,
         @Field("grant_type")    final String grant_type,
