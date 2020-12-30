@@ -52,40 +52,11 @@ abstract class Json {
         Pattern.compile("^\\s*] *,?\\s*$");
 
     /**
-     * Returns json as a array. <b>Mutable</b>.
-     *
-     * @param json json string
-     * @return parsed json
-     *
-     * @see #parse(String)
-     * @since ?
-     */
-    static List<?> parseArray(final String json){
-        return (List<?>) parse(json);
-    }
-
-    /**
-     * Returns json as a map. <b>Mutable</b>.
-     *
-     * @param json json string
-     * @return parsed json
-     *
-     * @see #parse(String)
-     * @since ?
-     */
-    @SuppressWarnings("unchecked")
-    static Map<String,?> parseMap(final String json){
-        return (Map<String,?>) parse(json);
-    }
-
-    /**
      * Returns json as a map or array. <b>Mutable</b>.
      *
      * @param json json string
      * @return parsed json
      *
-     * @see #parseArray(String)
-     * @see #parseMap(String)
      * @since ?
      */
     static Object parse(final String json){
@@ -159,10 +130,10 @@ abstract class Json {
         throw new JsonSyntaxException("Object was missing closing character ']'");
     }
 
-    private static Map<String,?> openMap(final BufferedReader reader) throws IOException{
+    private static JsonObject openMap(final BufferedReader reader) throws IOException{
         final Matcher matcher = mapType.matcher("");
         final Matcher strMatcher = escQuote.matcher("");
-        final Map<String,Object> map = new HashMap<>();
+        final JsonObject obj = new JsonObject();
         String ln;
         while((ln = reader.readLine()) != null){
             ln = ln.trim();
@@ -171,33 +142,106 @@ abstract class Json {
                 String raw;
                 if((raw = matcher.group("double")) != null)
                     try{
-                        map.put(key, Double.parseDouble(raw));
+                        obj.set(key, Double.parseDouble(raw));
                     }catch(final NumberFormatException ignored){ // only occurs if too large
-                        map.put(key, Long.parseLong(raw));
+                        obj.set(key, Long.parseLong(raw));
                     }
                 else if((raw = matcher.group("int")) != null)
                     try{
-                        map.put(key, Integer.parseInt(raw));
+                        obj.set(key, Integer.parseInt(raw));
                     }catch(final NumberFormatException ignored){ // only occurs if too large
-                        map.put(key, Long.parseLong(raw));
+                        obj.set(key, Long.parseLong(raw));
                     }
                 else if((raw = matcher.group("boolean")) != null)
-                    map.put(key, Boolean.parseBoolean(raw));
+                    obj.set(key, Boolean.parseBoolean(raw));
                 else if(matcher.group("null") != null)
-                    map.put(key, null);
+                    obj.set(key, null);
                 else if((raw = matcher.group("string")) != null)
-                    map.put(key, strMatcher.reset(raw).replaceAll("\""));
+                    obj.set(key, strMatcher.reset(raw).replaceAll("\""));
                 else if(matcher.group("array") != null) // open new array
-                    map.put(key, openArray(reader));
+                    obj.set(key, openArray(reader));
                 else if(matcher.group("map") != null) // open new map
-                    map.put(key, openMap(reader));
+                    obj.set(key, openMap(reader));
             }else if(mapClose.matcher(ln).matches())
-                return map;
+                return obj;
             else
                 throw new JsonSyntaxException("Unexpected object value syntax: " + ln);
         }
         throw new JsonSyntaxException("Object was missing closing character '}'");
     }
+
+    // objects
+
+    static class JsonObject {
+
+        private final Map<String,Object> map = new HashMap<>();
+
+        JsonObject(){ }
+
+        public final Object get(final String key){
+            return map.get(key);
+        }
+
+        public final String getString(final String key){
+            final Object value = map.get(key);
+            return
+                value == null
+                ? null
+                : value instanceof String
+                    ? (String) value
+                    : value.toString();
+        }
+
+        public final int getInt(final String key){
+            return ((Number) map.get(key)).intValue();
+        }
+
+        public final double getDouble(final String key){
+            return ((Number) map.get(key)).doubleValue();
+        }
+
+        public final float getFloat(final String key){
+            return ((Number) map.get(key)).floatValue();
+        }
+
+        public final long getLong(final String key){
+            return ((Number) map.get(key)).longValue();
+        }
+
+        public final JsonObject getJsonObject(final String key){
+            return (JsonObject) map.get(key);
+        }
+
+        public final String[] getStringArray(final String key){
+            final List<?> list = (List<?>) map.get(key);
+            final List<String> arr = new ArrayList<>();
+            for(final Object o : list)
+                arr.add(o == null ? null : o instanceof String ? (String) o : o.toString());
+            return arr.toArray(new String[0]);
+        }
+
+        public final JsonObject[] getJsonArray(final String key){
+            final List<?> list = (List<?>) map.get(key);
+            final List<JsonObject> arr = new ArrayList<>();
+            for(final Object o : list)
+                arr.add((JsonObject) o);
+            return arr.toArray(new JsonObject[0]);
+        }
+
+        private void set(final String key, final Object value){
+            map.put(key, value);
+        }
+
+        @Override
+        public String toString(){
+            return "JsonObject{" +
+                   "map=" + map +
+                   '}';
+        }
+
+    }
+
+    // exceptions
 
     static class JsonSyntaxException extends RuntimeException {
 

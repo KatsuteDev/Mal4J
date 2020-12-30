@@ -1,9 +1,8 @@
 package com.kttdevelopment.myanimelist;
 
 
-import java.util.Map;
-
 import static com.kttdevelopment.myanimelist.APIStruct.*;
+import static com.kttdevelopment.myanimelist.Json.*;
 
 /**
  * Represents the HTTP requests for MyAnimeList
@@ -25,7 +24,7 @@ public interface MyAnimeListService {
     // anime
 
     @Endpoint(method="GET", value="anime")
-    Response<Map<String,?>> getAnime(
+    Response<JsonObject> getAnime(
         @Header("Authorization")                    final String token,
         @Query("q")                                 final String search,
         @Query("limit")                             final Integer limit,
@@ -35,14 +34,14 @@ public interface MyAnimeListService {
     );
 
     @Endpoint(method="GET", value="anime/{anime_id}")
-    Response<Map<String,?>> getAnime(
+    Response<JsonObject> getAnime(
         @Header("Authorization")                   final String token,
         @Path(value = "anime_id")                  final Long anime_id,
         @Query(value = "fields", encoded = true)   final String fields
     );
 
     @Endpoint(method="GET", value="anime/ranking")
-    Response<Map<String,?>> getAnimeRanking(
+    Response<JsonObject> getAnimeRanking(
         @Header("Authorization")                    final String token,
         @Query("ranking_type")                      final String ranking_type,
         @Query("limit")                             final Integer limit,
@@ -52,7 +51,7 @@ public interface MyAnimeListService {
     );
 
     @Endpoint(method="GET", value="anime/season/{year}/{season}")
-    Response<Map<String,?>> getAnimeSeason(
+    Response<JsonObject> getAnimeSeason(
         @Header("Authorization")                    final String token,
         @Path(value = "year")                       final Integer year,
         @Path(value = "season")                     final String season,
@@ -64,7 +63,7 @@ public interface MyAnimeListService {
     );
 
     @Endpoint(method="GET", value="anime/suggestions")
-    Response<Map<String,?>> getAnimeSuggestions(
+    Response<JsonObject> getAnimeSuggestions(
         @Header("Authorization")                    final String token,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset,
@@ -77,7 +76,7 @@ public interface MyAnimeListService {
     @SuppressWarnings("SpellCheckingInspection")
     @FormUrlEncoded
     @Endpoint(method="PATCH", value="anime/{anime_id}/my_list_status")
-    Response<Map<String,?>> updateAnimeListing(
+    Response<JsonObject> updateAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "anime_id")                   final Long anime_id,
         @Field("status")                            final String status,
@@ -99,7 +98,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @Endpoint(method="GET", value="users/{user_name}/animelist")
-    Response<Map<String,?>> getUserAnimeListing(
+    Response<JsonObject> getUserAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
@@ -112,12 +111,12 @@ public interface MyAnimeListService {
     // forum
 
     @Endpoint(method="GET", value="forum/boards")
-    Response<Map<String,?>> getForumBoards(
+    Response<JsonObject> getForumBoards(
         @Header("Authorization") final String token
     );
 
     @Endpoint(method="GET", value="forum/topic/{topic_id}")
-    Response<Map<String,?>> getForumBoard(
+    Response<JsonObject> getForumBoard(
         @Header("Authorization")                    final String token,
         @Path(value = "topic_id")                   final Long topic_id,
         @Query("limit")                             final Integer limit,
@@ -126,7 +125,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @Endpoint(method="GET", value="forum/topics")
-    Response<Map<String,?>> getForumTopics(
+    Response<JsonObject> getForumTopics(
         @Header("Authorization")   final String token,
         @Query("board_id")          final Long board_id,
         @Query("subboard_id")       final Long subboard_id,
@@ -141,7 +140,7 @@ public interface MyAnimeListService {
     // manga
 
     @Endpoint(method="GET", value="manga")
-    Response<Map<String,?>> getManga(
+    Response<JsonObject> getManga(
         @Header("Authorization")                    final String token,
         @Query("q")                                 final String search,
         @Query("limit")                             final Integer limit,
@@ -151,14 +150,14 @@ public interface MyAnimeListService {
     );
 
     @Endpoint(method="GET", value="manga/{manga_id}")
-    Response<Map<String,?>> getManga(
+    Response<JsonObject> getManga(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id")                   final Long manga_id,
         @Query(value = "fields", encoded = true)    final String fields
     );
 
     @Endpoint(method="GET", value="manga/ranking")
-    Response<Map<String,?>> getMangaRanking(
+    Response<JsonObject> getMangaRanking(
         @Header("Authorization")                    final String token,
         @Query("ranking_type")                      final String ranking_type,
         @Query("limit")                             final Integer limit,
@@ -171,7 +170,7 @@ public interface MyAnimeListService {
 
     @FormUrlEncoded
     @Endpoint(method="PATCH", value="manga/{manga_id}/my_list_status")
-    Response<Map<String,?>> updateMangaListing(
+    Response<JsonObject> updateMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id")                   final Long manga_id,
         @Field("status")                            final String status,
@@ -194,7 +193,7 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @Endpoint(method="GET", value="users/{user_name}/mangalist")
-    Response<Map<String,?>> getUserMangaListing(
+    Response<JsonObject> getUserMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
@@ -207,7 +206,7 @@ public interface MyAnimeListService {
     // user
 
     @Endpoint(method="GET", value="users/{user_name}")
-    Response<Map<String,?>> getUser(
+    Response<JsonObject> getUser(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query(value = "fields", encoded = true)    final String fields

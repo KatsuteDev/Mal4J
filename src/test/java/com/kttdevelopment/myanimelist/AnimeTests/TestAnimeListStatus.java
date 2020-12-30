@@ -2,7 +2,6 @@ package com.kttdevelopment.myanimelist.AnimeTests;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.TestProvider;
-import com.kttdevelopment.myanimelist.anime.Anime;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 import org.junit.jupiter.api.*;

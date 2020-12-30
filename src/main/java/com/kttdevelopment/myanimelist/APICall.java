@@ -123,10 +123,12 @@ final class APICall {
         return this;
     }
 
-    // [{}|\\^\[\]`]
-    private static Pattern blockedURI = Pattern.compile("[{}|\\\\^\\[\\]`]");
+    // call
 
-    private static URIEncoder encoder = new URIEncoder();
+    // [{}|\\^\[\]`]
+    private static final Pattern blockedURI = Pattern.compile("[{}|\\\\^\\[\\]`]");
+
+    private static final URIEncoder encoder = new URIEncoder();
 
     final Response<String> call() throws IOException, InterruptedException{
         final String URL =
@@ -175,7 +177,38 @@ final class APICall {
                '}';
     }
 
-    //
+    // replace bad URI chars
+
+    private static class URIEncoder implements Function<MatchResult,String> {
+
+        @Override
+        public final String apply(final MatchResult matchResult){
+            final char ch = matchResult.group().charAt(0);
+            switch(ch){
+                case '{':
+                    return "%7B";
+                case '}':
+                    return "%7D";
+                case '|':
+                    return "%7C";
+                case '\\':
+                    return "%5C";
+                case '^':
+                    return "%5E";
+                case '[':
+                    return "%5B";
+                case ']':
+                    return "%5D";
+                case '`':
+                    return "%60";
+                default:
+                    return matchResult.group(0);
+            }
+        }
+
+    }
+
+    // interface instantiation
 
     @SuppressWarnings("unchecked")
     static <C> C create(final String baseURL, final Class<C> service){

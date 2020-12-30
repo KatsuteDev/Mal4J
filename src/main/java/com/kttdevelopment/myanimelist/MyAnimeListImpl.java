@@ -19,6 +19,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static com.kttdevelopment.myanimelist.Json.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Anime.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Forum.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Manga.*;
@@ -68,7 +69,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimePreview> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getAnime(
                         auth,
                         query,
@@ -80,8 +81,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<AnimePreview> anime = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node")));
+                for(final JsonObject iterator : response.getJsonArray("data"))
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -93,7 +94,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getAnime(
                                 auth,
                                 query,
@@ -144,7 +145,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimeRanking> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getAnimeRanking(
                         auth,
                         rankingType.field(),
@@ -156,7 +157,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<AnimeRanking> anime = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                for(final JsonObject iterator : response.getJsonArray("data"))
                     anime.add(asAnimeRanking(MyAnimeListImpl.this, iterator));
                 return anime;
             }
@@ -169,7 +170,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getAnimeRanking(
                                 auth,
                                 rankingType.field(),
@@ -203,7 +204,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimePreview> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getAnimeSeason(
                         auth,
                         year,
@@ -217,8 +218,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<AnimePreview> anime = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node")));
+                for(final JsonObject iterator : response.getJsonArray("data"))
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -230,7 +231,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getAnimeSeason(
                                 auth,
                                 year,
@@ -268,7 +269,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimePreview> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getAnimeSuggestions(
                         auth,
                         between(0, limit, 100),
@@ -279,8 +280,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<AnimePreview> anime = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node")));
+                for(final JsonObject iterator : response.getJsonArray("data"))
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -292,7 +293,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getAnimeSuggestions(
                                 auth,
                                 between(0, limit, 100),
@@ -326,7 +327,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public synchronized final AnimeListStatus update(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.updateAnimeListing(
                         auth,
                         id,
@@ -368,7 +369,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<AnimeListStatus> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getUserAnimeListing(
                         auth,
                         username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
@@ -381,8 +382,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<AnimeListStatus> anime = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
-                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, (Map<String,?>) iterator.get("list_status"), asAnimePreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node"))));
+                for(final JsonObject iterator : response.getJsonArray("data"))
+                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
                 return anime;
             }
 
@@ -394,7 +395,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getUserAnimeListing(
                                 auth,
                                 username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
@@ -426,14 +427,14 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final List<ForumCategory> getForumBoards(){
-        final Map<String,?> response = handleResponse(
+        final JsonObject response = handleResponse(
             () -> service.getForumBoards(
                 auth)
         );
         if(response == null) return null;
 
         final List<ForumCategory> categories = new ArrayList<>();
-        for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("categories"))
+        for(final JsonObject iterator : response.getJsonArray("categories"))
             categories.add(asForumCategory(MyAnimeListImpl.this, iterator));
         return categories;
     }
@@ -451,7 +452,7 @@ final class MyAnimeListImpl extends MyAnimeList{
     @SuppressWarnings("CommentedOutCode")
     @Override
     public final ForumTopic getForumTopicDetail(final long id, final int limit, final int offset){
-        final Map<String,?> response = handleResponse(
+        final JsonObject response = handleResponse(
             () -> service.getForumBoard(
                 auth,
                 id,
@@ -465,7 +466,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         // for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
         //     topics.add(asForumTopic(MyAnimeListImpl.this, iterator));
         // return topics;
-        return asForumTopic(MyAnimeListImpl.this, (Map<String,?>) response.get("data"));
+        return asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"));
     }
 
     @Override
@@ -474,7 +475,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<ForumTopicDetail> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getForumTopics(
                         auth,
                         boardId,
@@ -489,7 +490,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<ForumTopicDetail> topics = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                for(final JsonObject iterator : response.getJsonArray("data"))
                     topics.add(asForumTopicDetail(MyAnimeListImpl.this, iterator));
                 return topics;
             }
@@ -502,7 +503,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getForumTopics(
                                 auth,
                                 boardId,
@@ -544,7 +545,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<MangaPreview> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getManga(
                         auth,
                         query,
@@ -556,8 +557,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<MangaPreview> manga = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
-                    manga.add(asMangaPreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node")));
+                for(final JsonObject iterator : response.getJsonArray("data"))
+                    manga.add(asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return manga;
             }
 
@@ -569,7 +570,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getManga(
                                 auth,
                                 query,
@@ -621,7 +622,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<MangaRanking> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getMangaRanking(
                         auth,
                         rankingType != null ? rankingType.field() : null,
@@ -633,7 +634,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<MangaRanking> manga = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
+                for(final JsonObject iterator : response.getJsonArray("data"))
                     manga.add(asMangaRanking(MyAnimeListImpl.this, iterator));
                 return manga;
             }
@@ -646,7 +647,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getMangaRanking(
                                 auth,
                                 rankingType != null ? rankingType.field() : null,
@@ -681,7 +682,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public synchronized final MangaListStatus update(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.updateMangaListing(
                         auth,
                         id,
@@ -724,7 +725,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final List<MangaListStatus> search(){
-                final Map<String,?> response = handleResponse(
+                final JsonObject response = handleResponse(
                     () -> service.getUserMangaListing(
                         auth,
                         username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
@@ -737,8 +738,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response == null) return null;
 
                 final List<MangaListStatus> manga = new ArrayList<>();
-                for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
-                    manga.add(asMangaListStatus(MyAnimeListImpl.this, (Map<String,?>) iterator.get("list_status"), asMangaPreview(MyAnimeListImpl.this, (Map<String,?>) iterator.get("node"))));
+                for(final JsonObject iterator : response.getJsonArray("data"))
+                    manga.add(asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
                 return manga;
             }
 
@@ -750,7 +751,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     @Override
                     final boolean hasNextPage(){
-                        final Map<String,?> response = handleResponse(
+                        final JsonObject response = handleResponse(
                             () -> service.getUserMangaListing(
                                 auth,
                                 username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
@@ -814,9 +815,9 @@ final class MyAnimeListImpl extends MyAnimeList{
         handleResponseCodes(supplier);
     }
     
-    private Map<String,?> handleResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
+    private JsonObject handleResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
         final Response<?> response = handleResponseCodes(supplier);
-        return response.code() == HttpURLConnection.HTTP_OK ? (Map<String,?>) response.body() : null;
+        return response.code() == HttpURLConnection.HTTP_OK ? (JsonObject) response.body() : null;
     }
 
     private Response<?> handleResponseCodes(final ExceptionSupplier<Response<?>,IOException> supplier){
