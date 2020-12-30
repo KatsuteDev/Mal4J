@@ -46,15 +46,17 @@ final class APICall {
         for(int i = 0, size = method.getParameterAnnotations().length; i < size; i++){
             final Object arg = args[i];
             for(final Annotation annotation : method.getParameterAnnotations()[i]){
-                final Class<? extends Annotation> type = annotation.annotationType();
-                if(type == Path.class)
-                    withPathVar(((Path) annotation).value(), arg, ((Path) annotation).encoded());
-                else if(type == Header.class)
-                    withHeader(((Header) annotation).value(), Objects.toString(arg));
-                else if(type == Query.class)
-                    withQuery(((Query) annotation).value(), arg, ((Query) annotation).encoded());
-                else if(type == Field.class)
-                    withField(((Field) annotation).value(), arg, ((Field) annotation).encoded());
+                if(arg != null){
+                    final Class<? extends Annotation> type = annotation.annotationType();
+                    if(type == Path.class)
+                        withPathVar(((Path) annotation).value(), arg, ((Path) annotation).encoded());
+                    else if(type == Header.class)
+                        withHeader(((Header) annotation).value(), Objects.toString(arg));
+                    else if(type == Query.class)
+                        withQuery(((Query) annotation).value(), arg, ((Query) annotation).encoded());
+                    else if(type == Field.class)
+                        withField(((Field) annotation).value(), arg, ((Field) annotation).encoded());
+                }
             }
         }
     }
@@ -106,6 +108,7 @@ final class APICall {
         return formUrlEncoded(true);
     }
 
+    @SuppressWarnings("SameParameterValue")
     final APICall formUrlEncoded(final boolean formUrlEncoded){
         this.formUrlEncoded = formUrlEncoded;
         return this;
@@ -132,9 +135,9 @@ final class APICall {
 
     final Response<String> call() throws IOException, InterruptedException{
         final String URL =
-                baseURL +
-                pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group(1))) + // path args
-                (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' +e.getValue()).collect( Collectors.joining("&"))); // query
+            baseURL +
+            pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group(1))) + // path args
+            (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' +e.getValue()).collect( Collectors.joining("&"))); // query
 
         final HttpRequest.Builder request = HttpRequest.newBuilder();
 
@@ -158,7 +161,7 @@ final class APICall {
         return new Response<>(response.body(), response.statusCode());
     }
 
-    final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException, URISyntaxException{
+    final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException{
         final Response<String> call = call();
         return new Response<>(processor.apply(call.body()), call.code());
     }

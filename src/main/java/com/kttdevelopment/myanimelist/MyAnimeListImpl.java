@@ -647,7 +647,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 rankingType != null ? rankingType.field() : null,
                                 between(0, limit, 500),
                                 between(0, offset, null),
-                                fields == null ? mangaFields : asStringList(fields),
+                                null,
                                 nsfw)
                         );
                         return response != null && response.getJsonObject("paging").containsKey("next");
@@ -850,7 +850,7 @@ final class MyAnimeListImpl extends MyAnimeList{
     //
 
     private static String asStringList(final List<String> fields){
-        return asStringList(fields == null ? null : fields.toArray(new String[0]));
+        return asStringList(fields == null || fields.isEmpty() ? null : fields.toArray(new String[0]));
     }
 
     private static String asStringList(final String... fields){

@@ -18,6 +18,7 @@ public class TestIterator {
             .getAnime()
             .withQuery(TestProvider.AnimeQuery)
             .withLimit(100)
+            .withFields("id")
             .searchAll();
 
         final AnimePreview first = iterator.next();

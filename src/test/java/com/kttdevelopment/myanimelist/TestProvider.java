@@ -45,7 +45,7 @@ public abstract class TestProvider {
     public static void init() throws IOException{
         if(oauth.toFile().exists()){ // use existing OAuth
             mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
-            if(mal.getAnime(AnimeID) == null)
+            if(mal.getAnime(AnimeID, new String[0]) == null)
                 TestAuthRefresh.beforeAll(); // refresh if old token
         }
         Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (client id missing)");

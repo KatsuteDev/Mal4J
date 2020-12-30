@@ -16,25 +16,19 @@ import java.util.regex.Pattern;
 abstract class Json {
 
     /*
-     * Notable limitations:
+     * Notable issues:
      * - Allows dangling commas on last item in map and list
-     * - Inefficient splitting caused by escaped quotes
-     * - Does not allow comments
-     * - Ignores duplicate keys
      */
 
-    // todo: fix so regex also handles escaped quotes instead of using chained replaceAll
-    // (?<=[{\[,]|(?=[}\]]))(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)
-    private static final Pattern lineSplit = // fixme
-        Pattern.compile("(?<=[{\\[,]|(?=[}\\]]))(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)");
+    // [\{\}\[\],]
+    private static final Pattern split = Pattern.compile("[{}\\[\\],]");
+
+    // (?<!\\)"
+    private static final Pattern nonEscQuote = Pattern.compile("(?<!\\\\)\"");
 
     // \\"
     private static final Pattern escQuote =
         Pattern.compile("\\\\\"");
-
-    // \t
-    private static final Pattern tab =
-        Pattern.compile("\\t");
 
     // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType =
@@ -61,18 +55,37 @@ abstract class Json {
      */
     static Object parse(final String json){
         Objects.requireNonNull(json);
-        // split json into multiple lines
-        final String lines =
-            escQuote.matcher(json).find()
-            ? tab.matcher( // hacky method if contains escaped quotes
-                    lineSplit.matcher( // fixme - causes stack overflow
-                        escQuote.matcher(
-                            tab.matcher(json)
-                            .replaceAll("  ") // replace tabs with two spaces
-                        ).replaceAll("\t") // replace escaped quotes with tab
-                    ).replaceAll("\n") // replace separator with new line
-                ).replaceAll("\\\"") // replace escaped quotes (represented with tabs) with re-escaped quotes
-            : lineSplit.matcher(json).replaceAll("\n");
+
+        // split by symbols {}[], except within non-escaped quotes
+        final StringBuilder OUT = new StringBuilder();
+        int lastMatch = -1; // the index after the previous match
+        final Matcher matcher = split.matcher(json);
+        final Matcher quotes = nonEscQuote.matcher("");
+        while(matcher.find()){ // while still contains line splitting symbol
+            final int index = matcher.start();
+            final String after = json.substring(index + 1);
+            final long count = quotes.reset(after).results().count();
+            if(count %2 == 0){ // even means symbol is not within quotes
+                if(lastMatch != -1) // if not first (no before content)
+                    OUT.append(json, lastMatch, index); // add content between last match and here
+                lastMatch = index + 1;
+                final char ch = matcher.group().charAt(0);
+                switch(ch){ // determine where to break line
+                    case '{':
+                    case '[':
+                    case ',':
+                        OUT.append(ch).append('\n');
+                        break;
+                    case '}':
+                    case ']':
+                        OUT.append('\n').append(ch);
+                        break;
+                }
+            }
+        }
+
+        // parse line by line
+        final String lines = lastMatch == 0 ? json : OUT.toString();
 
         try(final BufferedReader IN = new BufferedReader(new StringReader(lines))){
             final String line = IN.readLine();
@@ -124,10 +137,10 @@ abstract class Json {
                     list.add(openMap(reader));
             }else if(arrClose.matcher(ln).matches())
                 return list;
-            else
-                throw new JsonSyntaxException("Unexpected array value syntax: " + ln);
+            else if(!ln.isBlank())
+                throw new JsonSyntaxException("Unexpected array value syntax: '" + ln + '\'');
         }
-        throw new JsonSyntaxException("Object was missing closing character ']'");
+        throw new JsonSyntaxException("Object was missing closing character: ']'");
     }
 
     private static JsonObject openMap(final BufferedReader reader) throws IOException{
@@ -164,10 +177,10 @@ abstract class Json {
                     obj.set(key, openMap(reader));
             }else if(mapClose.matcher(ln).matches())
                 return obj;
-            else
-                throw new JsonSyntaxException("Unexpected object value syntax: " + ln);
+            else if(!ln.isBlank())
+                throw new JsonSyntaxException("Unexpected object value syntax: '" + ln + '\'');
         }
-        throw new JsonSyntaxException("Object was missing closing character '}'");
+        throw new JsonSyntaxException("Object was missing closing character: '}'");
     }
 
     // objects
