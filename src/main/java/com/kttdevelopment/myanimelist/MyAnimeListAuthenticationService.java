@@ -3,6 +3,7 @@ package com.kttdevelopment.myanimelist;
 import java.util.Map;
 
 import static com.kttdevelopment.myanimelist.APIStruct.*;
+import static com.kttdevelopment.myanimelist.Json.*;
 
 interface MyAnimeListAuthenticationService {
 
@@ -16,7 +17,7 @@ interface MyAnimeListAuthenticationService {
 
     @Endpoint(method="POST", value="token")
     @FormUrlEncoded
-    Response<Map<String,?>> getToken(
+    Response<JsonObject> getToken(
         @Field("client_id")     final String client_id,
         @Field("client_secret") final String client_secret,
         @Field("grant_type")    final String grant_type,
@@ -26,7 +27,7 @@ interface MyAnimeListAuthenticationService {
 
     @Endpoint(method="POST", value="token")
     @FormUrlEncoded
-    Response<Map<String,?>> refreshToken(
+    Response<JsonObject> refreshToken(
         @Field("client_id")     final String client_id,
         @Field("client_secret") final String client_secret,
         @Field("grant_type")    final String grant_type,

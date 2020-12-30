@@ -4,7 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
-import java.util.Map;
+
+import static com.kttdevelopment.myanimelist.Json.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class TestJson {
@@ -37,27 +38,27 @@ public class TestJson {
             "}"
         );
 
-        final Map<String,?> json = Json.parseMap(map);
+        final JsonObject json = (JsonObject) parse(map);
 
-        Assertions.assertEquals(1.0, json.get("double"));
-        Assertions.assertEquals(-1.0, json.get("doublen"));
-        Assertions.assertEquals(1.0, json.get("doubles"));
-        Assertions.assertEquals(1, json.get("int"));
-        Assertions.assertEquals(-1,  json.get("intn"));
-        Assertions.assertEquals(1, json.get("ints"));
-        Assertions.assertTrue((boolean) json.get("bool"));
-        Assertions.assertFalse((boolean) json.get("bools"));
+        Assertions.assertEquals(1.0, json.getDouble("double"));
+        Assertions.assertEquals(-1.0, json.getDouble("doublen"));
+        Assertions.assertEquals(1.0, json.getDouble("doubles"));
+        Assertions.assertEquals(1, json.getInt("int"));
+        Assertions.assertEquals(-1,  json.getInt("intn"));
+        Assertions.assertEquals(1, json.getInt("ints"));
+        Assertions.assertTrue(json.getBoolean("bool"));
+        Assertions.assertFalse(json.getBoolean("bools"));
         Assertions.assertNull(json.get("null"));
         Assertions.assertTrue(json.containsKey("null"));
         Assertions.assertNull(json.get("nulls"));
         Assertions.assertTrue(json.containsKey("nulls"));
-        Assertions.assertEquals("string", json.get("string"));
-        Assertions.assertEquals("string", json.get("strings"));
-        Assertions.assertEquals("str\"ing", json.get("str\"ingx"));
-        Assertions.assertEquals(Map.of("k", "v"), json.get("obj"));
-        Assertions.assertEquals(Map.of(), json.get("cobj"));
-        Assertions.assertEquals(List.of("str"), json.get("arr"));
-        Assertions.assertEquals(List.of(), json.get("carr"));
+        Assertions.assertEquals("string", json.getString("string"));
+        Assertions.assertEquals("string", json.getString("strings"));
+        Assertions.assertEquals("str\"ing", json.getString("str\"ingx"));
+        Assertions.assertEquals("v", json.getJsonObject("obj").getString("k"));
+        Assertions.assertEquals(0, json.getJsonObject("cobj").size());
+        Assertions.assertEquals("str", json.getStringArray("arr")[0]);
+        Assertions.assertEquals(0, json.getJsonArray("carr").length);
     }
 
     @Test
@@ -86,7 +87,7 @@ public class TestJson {
             "]"
         );
 
-        final List<?> json = Json.parseArray(arr);
+        final List<?> json = (List<?>) parse(arr);
 
         Assertions.assertTrue(json.contains(1.0));
         Assertions.assertTrue(json.contains(-1.0));
@@ -99,18 +100,18 @@ public class TestJson {
         Assertions.assertTrue(json.contains(null));
         Assertions.assertTrue(json.contains("string"));
         Assertions.assertTrue(json.contains("str\"ingx"));
-        Assertions.assertTrue(json.contains(Map.of("k", "v")));
-        Assertions.assertTrue(json.contains(Map.of()));
+        Assertions.assertEquals("v", ((JsonObject) json.get(11)).getString("k"));
+        Assertions.assertEquals(0, ((JsonObject) json.get(12)).size());
         Assertions.assertTrue(json.contains(List.of("str")));
         Assertions.assertTrue(json.contains(List.of()));
     }
 
     @Test
     public void testMalformed(){
-        Assertions.assertThrows(Json.JsonSyntaxException.class, () -> Json.parse(""));
-        Assertions.assertThrows(Json.JsonSyntaxException.class, () -> Json.parse("?"));
-        Assertions.assertThrows(Json.JsonSyntaxException.class, () -> Json.parse("{"));
-        Assertions.assertThrows(Json.JsonSyntaxException.class, () -> Json.parse("["));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> parse(""));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("?"));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("{"));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("["));
     }
 
 }

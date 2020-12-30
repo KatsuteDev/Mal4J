@@ -1,11 +1,12 @@
 package com.kttdevelopment.myanimelist;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Assumptions;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.List;
 
 public abstract class TestProvider {
 
@@ -44,7 +45,7 @@ public abstract class TestProvider {
     public static void init() throws IOException{
         if(oauth.toFile().exists()){ // use existing OAuth
             mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
-            if(mal.getAnime().withQuery(AnimeQuery).withLimit(1).withFields((List<String>) null).search() != null)
+            if(mal.getAnime(AnimeID) == null)
                 TestAuthRefresh.beforeAll(); // refresh if old token
         }
         Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (client id missing)");

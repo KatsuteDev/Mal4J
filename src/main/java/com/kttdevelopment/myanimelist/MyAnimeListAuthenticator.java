@@ -13,6 +13,8 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.zip.GZIPOutputStream;
 
+import static com.kttdevelopment.myanimelist.Json.*;
+
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/authorization">https://myanimelist.net/apiconfig/references/authorization</a> <br>
  * Authenticator used to retrieve OAuth2 tokens given a client id and client secret.
@@ -187,14 +189,14 @@ public final class MyAnimeListAuthenticator {
         };
     }
 
-    private AccessToken parseToken(final Response<Map<String,?>> response){
-        final Map<String,?> body = response.body();
+    private AccessToken parseToken(final Response<JsonObject> response){
+        final JsonObject body = response.body();
         // todo: handle response codes
         return new AccessToken(
-            (String) body.get("token_type"),
-            Integer.valueOf((int) body.get("expires_in")).longValue(),
-            (String) body.get("access_token"),
-            (String) body.get("refresh_token")
+            body.getString("token_type"),
+            body.getLong("expires_in"),
+            body.getString("access_token"),
+            body.getString("refresh_token")
         );
     }
 

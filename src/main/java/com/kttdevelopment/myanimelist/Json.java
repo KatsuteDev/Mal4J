@@ -24,9 +24,9 @@ abstract class Json {
      */
 
     // todo: fix so regex also handles escaped quotes instead of using chained replaceAll
-    // (?<=[{\[,]|(?=[}\]])) ?(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)
+    // (?<=[{\[,]|(?=[}\]]))(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)
     private static final Pattern lineSplit = // fixme
-        Pattern.compile("(?<=[{\\[,]|(?=[}\\]])) ?(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)");
+        Pattern.compile("(?<=[{\\[,]|(?=[}\\]]))(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)");
 
     // \\"
     private static final Pattern escQuote =
@@ -63,9 +63,9 @@ abstract class Json {
         Objects.requireNonNull(json);
         // split json into multiple lines
         final String lines =
-            escQuote.matcher(json).matches()
+            escQuote.matcher(json).find()
             ? tab.matcher( // hacky method if contains escaped quotes
-                    lineSplit.matcher(
+                    lineSplit.matcher( // fixme - causes stack overflow
                         escQuote.matcher(
                             tab.matcher(json)
                             .replaceAll("  ") // replace tabs with two spaces
@@ -83,7 +83,7 @@ abstract class Json {
                 else if(ln.equals("["))
                     return openArray(IN);
                 else
-                    throw new JsonSyntaxException("Unexpected starting character: '" + (ln.length() == 1 ? ln.charAt(0) : "") + "' expected '{' or '['");
+                    throw new JsonSyntaxException("Unexpected starting character: '" + ln + "' expected '{' or '['");
             }else
                 throw new JsonSyntaxException("Json string was empty");
         }catch(final IOException e){ // should never occur, but just in case:
@@ -193,19 +193,28 @@ abstract class Json {
         }
 
         public final int getInt(final String key){
-            return ((Number) map.get(key)).intValue();
+            final Object value = map.get(key);
+            return value instanceof String ? Integer.parseInt((String) value) : ((Number) value).intValue();
         }
 
         public final double getDouble(final String key){
-            return ((Number) map.get(key)).doubleValue();
+            final Object value = map.get(key);
+            return value instanceof String ? Double.parseDouble((String) value) : ((Number) value).doubleValue();
         }
 
         public final float getFloat(final String key){
-            return ((Number) map.get(key)).floatValue();
+            final Object value = map.get(key);
+            return value instanceof String ? Float.parseFloat((String) value) : ((Number) value).floatValue();
         }
 
         public final long getLong(final String key){
-            return ((Number) map.get(key)).longValue();
+            final Object value = map.get(key);
+            return value instanceof String ? Long.parseLong((String) value) : ((Number) value).longValue();
+        }
+
+        public final boolean getBoolean(final String key){
+            final Object value = map.get(key);
+            return value instanceof String ? Boolean.parseBoolean((String) value) : (boolean) value;
         }
 
         public final JsonObject getJsonObject(final String key){
@@ -226,6 +235,14 @@ abstract class Json {
             for(final Object o : list)
                 arr.add((JsonObject) o);
             return arr.toArray(new JsonObject[0]);
+        }
+
+        public final boolean containsKey(final String key){
+            return map.containsKey(key);
+        }
+
+        public final int size(){
+            return map.size();
         }
 
         private void set(final String key, final Object value){

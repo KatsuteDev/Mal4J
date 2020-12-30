@@ -25,7 +25,7 @@ public abstract class MyAnimeList {
     /**
      * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshOAuthToken()}.
      *
-     * @param token OAuth token
+     * @param token OAuth token, Ex: 'Bearer oauth2token'
      *
      * @return MyAnimeList
      *

@@ -34,7 +34,7 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.User.
  * @version 1.0.0
  * @author Ktt Development
  */
-@SuppressWarnings({"deprecation", "unchecked"})
+@SuppressWarnings({"deprecation"})
 final class MyAnimeListImpl extends MyAnimeList{
 
     private transient String auth;
@@ -103,7 +103,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 null,
                                 nsfw)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
@@ -179,7 +179,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 null,
                                 nsfw)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
@@ -242,7 +242,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 null,
                                 nsfw)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
@@ -301,7 +301,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 null,
                                 nsfw)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
@@ -405,7 +405,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0, current.get(), null),
                                 null)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
@@ -449,7 +449,6 @@ final class MyAnimeListImpl extends MyAnimeList{
         return getForumTopicDetail(id, limit, -1);
     }
 
-    @SuppressWarnings("CommentedOutCode")
     @Override
     public final ForumTopic getForumTopicDetail(final long id, final int limit, final int offset){
         final JsonObject response = handleResponse(
@@ -461,11 +460,6 @@ final class MyAnimeListImpl extends MyAnimeList{
         );
         if(response == null) return null;
 
-        // // #7
-        // final List<ForumTopic> topics = new ArrayList<>();
-        // for(final Map<String,?> iterator : (List<Map<String,?>>) response.get("data"))
-        //     topics.add(asForumTopic(MyAnimeListImpl.this, iterator));
-        // return topics;
         return asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"));
     }
 
@@ -515,7 +509,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 topicUsername,
                                 username)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
@@ -579,7 +573,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 null,
                                 nsfw)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
@@ -656,7 +650,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 fields == null ? mangaFields : asStringList(fields),
                                 nsfw)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
@@ -761,7 +755,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                                 between(0, current.get(), null),
                                 null)
                         );
-                        return response != null && ((Map<String,?>) response.get("paging")).containsKey("next");
+                        return response != null && response.getJsonObject("paging").containsKey("next");
                     }
 
                     @Override
