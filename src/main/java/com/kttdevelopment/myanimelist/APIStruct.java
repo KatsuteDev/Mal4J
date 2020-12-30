@@ -67,7 +67,7 @@ abstract class APIStruct {
 
     }
 
-    static final class Response<T>{
+    public static final class Response<T>{
 
         private final T response;
         private final int code;

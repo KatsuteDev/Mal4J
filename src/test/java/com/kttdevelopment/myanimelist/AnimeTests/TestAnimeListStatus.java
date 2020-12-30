@@ -2,6 +2,7 @@ package com.kttdevelopment.myanimelist.AnimeTests;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.TestProvider;
+import com.kttdevelopment.myanimelist.anime.Anime;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 import org.junit.jupiter.api.*;
@@ -75,7 +76,7 @@ public class TestAnimeListStatus {
 
     @Test @Order(3)
     public void testGetFromAnime(){
-        final AnimeListStatus status = mal.getAnime(13759).getListStatus();
+        final AnimeListStatus status = mal.getAnime(TestProvider.AnimeID).getListStatus();
         testStatus(status);
     }
 

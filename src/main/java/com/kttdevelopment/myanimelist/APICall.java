@@ -6,9 +6,11 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.*;
+import java.net.http.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
+import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -121,44 +123,40 @@ final class APICall {
         return this;
     }
 
-    final Response<String> call() throws IOException{
-        final String URL =
-            baseURL +
-            pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group())) + // path args
-            (queries.isEmpty() ? "" : queries.entrySet().stream().map(e -> e.getKey() + '=' +e.getValue()).collect( Collectors.joining("&"))); // query
+    // [{}|\\^\[\]`]
+    private static Pattern blockedURI = Pattern.compile("[{}|\\\\^\\[\\]`]");
 
-        final HttpURLConnection conn = (HttpURLConnection) new URL(URL).openConnection();
-        conn.setRequestMethod(method);
+    private static URIEncoder encoder = new URIEncoder();
+
+    final Response<String> call() throws IOException, InterruptedException{
+        final String URL =
+                baseURL +
+                pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group(1))) + // path args
+                (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' +e.getValue()).collect( Collectors.joining("&"))); // query
+
+        final HttpRequest.Builder request = HttpRequest.newBuilder();
+
+        request.uri(URI.create(blockedURI.matcher(URL).replaceAll(encoder)));
+        request.method(method, HttpRequest.BodyPublishers.noBody());
         for(final Map.Entry<String, String> entry : headers.entrySet())
-            conn.setRequestProperty(entry.getKey(), entry.getValue());
-        conn.setUseCaches(false);
-        conn.setInstanceFollowRedirects(false);
+            request.header(entry.getKey(), entry.getValue());
+
+        request.header("Cache-Control", "no-cache");
 
         if(formUrlEncoded){
             final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' +e.getValue()).collect( Collectors.joining("&"));
-            final byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
-            conn.setDoOutput(true);
-            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            conn.setRequestProperty("charset", "utf-8");
-            conn.setRequestProperty("Content-Length", Integer.toString(bytes.length));
-
-            try(final DataOutputStream OUT = new DataOutputStream(conn.getOutputStream())){
-                OUT.write(bytes);
-            }
+            request.header("Content-Type", "application/x-www-form-urlencoded");
+            request.method(method, HttpRequest.BodyPublishers.ofString(data));
         }
+        final HttpResponse<String> response = HttpClient
+            .newBuilder()
+            .build()
+            .send(request.build(), HttpResponse.BodyHandlers.ofString());
 
-        @SuppressWarnings("SpellCheckingInspection")
-        final int rcode = conn.getResponseCode();
-
-        return new Response<>(
-            new BufferedReader(new InputStreamReader(rcode >= 200 && rcode < 300 ? conn.getInputStream() : conn.getErrorStream()))
-                .lines()
-                .collect(Collectors.joining("\n")),
-            rcode
-        );
+        return new Response<>(response.body(), response.statusCode());
     }
 
-    final <T> Response<T> call(final Function<String,T> processor) throws IOException{
+    final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException, URISyntaxException{
         final Response<String> call = call();
         return new Response<>(processor.apply(call.body()), call.code());
     }
@@ -211,9 +209,11 @@ final class APICall {
                     baseURL,
                     method,
                     args
-                ).call(Json::parseMap);
+                ).call(Json::parse);
             }catch(final IOException e){
                 throw new UncheckedIOException(e);
+            }catch(final InterruptedException e){
+                throw new RuntimeException(e);
             }
         }
 

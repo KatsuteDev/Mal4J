@@ -24,9 +24,9 @@ abstract class Json {
      */
 
     // todo: fix so regex also handles escaped quotes instead of using chained replaceAll
-    // (?<=[{\[,])|(?=[}\]])(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)
-    private static final Pattern lineSplit =
-        Pattern.compile("(?<=[{\\[,])|(?=[}\\]])(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)");
+    // (?<=[{\[,]|(?=[}\]])) ?(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)
+    private static final Pattern lineSplit = // fixme
+        Pattern.compile("(?<=[{\\[,]|(?=[}\\]])) ?(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)(?!$)");
 
     // \\"
     private static final Pattern escQuote =
