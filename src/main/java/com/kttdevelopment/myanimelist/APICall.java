@@ -16,18 +16,38 @@ import java.util.stream.Collectors;
 
 import static com.kttdevelopment.myanimelist.APIStruct.*;
 
+/**
+ * Represents an API call.
+ */
+@SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 final class APICall {
 
     private final String method;
     private final String baseURL;
     private final String path;
 
+    /**
+     * API call builder.
+     *
+     * @param method request method
+     * @param baseURL base url
+     * @param path path
+     */
     APICall(final String method, final String baseURL, final String path){
         this.method     = method;
         this.baseURL    = baseURL;
         this.path       = path;
     }
 
+    /**
+     * API call from annotated interface method.
+     *
+     * @param baseURL base url
+     * @param method method
+     * @param args method arguments
+     *
+     * @see APIStruct
+     */
     APICall(final String baseURL, final Method method, final Object... args){
         this.baseURL = baseURL;
 
@@ -108,7 +128,6 @@ final class APICall {
         return formUrlEncoded(true);
     }
 
-    @SuppressWarnings("SameParameterValue")
     final APICall formUrlEncoded(final boolean formUrlEncoded){
         this.formUrlEncoded = formUrlEncoded;
         return this;
@@ -157,13 +176,14 @@ final class APICall {
             .newBuilder()
             .build()
             .send(request.build(), HttpResponse.BodyHandlers.ofString());
-
-        return new Response<>(response.body(), response.statusCode());
+        final String body = response.body();
+        return new Response<>(body, body, response.statusCode());
     }
 
     final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException{
-        final Response<String> call = call();
-        return new Response<>(processor.apply(call.body()), call.code());
+        final Response<String> response = call();
+        final String body = response.body();
+        return new Response<>(body, processor.apply(body), response.code());
     }
 
     @Override

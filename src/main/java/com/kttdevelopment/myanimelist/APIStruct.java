@@ -1,10 +1,17 @@
 package com.kttdevelopment.myanimelist;
 
 import java.lang.annotation.*;
+import java.lang.reflect.Method;
 
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.*;
 
+/**
+ * Annotations used to structure API calls.
+ *
+ * @see APICall
+ * @see APICall#APICall(String, Method, Object...)
+ */
 abstract class APIStruct {
 
     @Documented
@@ -67,14 +74,25 @@ abstract class APIStruct {
 
     }
 
+    /**
+     * Represents HTTP response.
+     *
+     * @param <T> response type
+     */
     public static final class Response<T>{
 
+        private final String raw;
         private final T response;
         private final int code;
 
-        Response(final T response, final int code){
-            this.response = response;
-            this.code = code;
+        Response(final String raw, final T response, final int code){
+            this.raw        = raw;
+            this.response   = response;
+            this.code       = code;
+        }
+
+        final String raw(){
+            return raw;
         }
 
         final T body(){

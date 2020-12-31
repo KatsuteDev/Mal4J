@@ -24,9 +24,7 @@ import static com.kttdevelopment.myanimelist.Json.*;
 /**
  * Represents the MyAnimeList API response as an object.
  *
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
+ * @see MyAnimeListImpl
  */
 @SuppressWarnings({"unused","unchecked","ConstantConditions"})
 abstract class MyAnimeListAPIResponseMapping {

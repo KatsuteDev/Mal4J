@@ -2,6 +2,10 @@ package com.kttdevelopment.myanimelist;
 
 /**
  * Thrown if the request returns a code 403 (forbidden). Indicates that the server will not allow the request.
+ *
+ * @since 1.0.0
+ * @version 1.0.0
+ * @author Ktt Development
  */
 public final class ConnectionForbiddenException extends RuntimeException {
 

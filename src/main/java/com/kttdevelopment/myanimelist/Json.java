@@ -7,10 +7,6 @@ import java.util.regex.Pattern;
 
 /**
  * A massively simplified json parsing class. Supports the bare minimum read requirements for the REST API responses.
- * 
- * @since ?
- * @version ?
- * @author Ktt Development
  */
 @SuppressWarnings("SpellCheckingInspection")
 abstract class Json {
@@ -46,12 +42,12 @@ abstract class Json {
         Pattern.compile("^\\s*] *,?\\s*$");
 
     /**
-     * Returns json as a map or array. <b>Mutable</b>.
+     * Returns json as a JsonObject or List. <b>Mutable</b>.
      *
      * @param json json string
      * @return parsed json
      *
-     * @since ?
+     * @see JsonObject
      */
     static Object parse(final String json){
         Objects.requireNonNull(json);
@@ -185,6 +181,9 @@ abstract class Json {
 
     // objects
 
+    /**
+     * Represents map as a json object.
+     */
     static class JsonObject {
 
         private final Map<String,Object> map = new HashMap<>();
@@ -273,6 +272,9 @@ abstract class Json {
 
     // exceptions
 
+    /**
+     * Thrown then the json is malformed
+     */
     static class JsonSyntaxException extends RuntimeException {
 
         JsonSyntaxException(final String message){

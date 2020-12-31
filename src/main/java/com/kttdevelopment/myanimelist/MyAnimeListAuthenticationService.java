@@ -1,10 +1,13 @@
 package com.kttdevelopment.myanimelist;
 
-import java.util.Map;
-
 import static com.kttdevelopment.myanimelist.APIStruct.*;
 import static com.kttdevelopment.myanimelist.Json.*;
 
+/**
+ * Represents the HTTP requests for authentication.
+ *
+ * @see MyAnimeListAuthenticator
+ */
 interface MyAnimeListAuthenticationService {
 
     String baseURL = "https://myanimelist.net/v1/oauth2/";

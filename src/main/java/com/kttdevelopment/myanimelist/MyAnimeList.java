@@ -54,11 +54,11 @@ public abstract class MyAnimeList {
     /**
      * Refreshes the OAuth token. Only works with {@link #withAuthorization(MyAnimeListAuthenticator)}.
      *
-     * @throws IOException if client could not contact auth server
+     * @throws UnsupportedOperationException if the object was not created with an authenticator
      *
      * @since 1.0.0
      */
-    public abstract void refreshOAuthToken() throws IOException;
+    public abstract void refreshOAuthToken();
 
     // anime
 
@@ -174,6 +174,7 @@ public abstract class MyAnimeList {
     /**
      * Removes an Anime listing.
      *
+     * @throws InvalidParametersException if parameters are invalid
      * @throws InvalidAuthException if auth token is invalid or expired
      * @throws ConnectionForbiddenException if the server does not allow the request
      * @throws FailedRequestException if the client failed to execute the request
@@ -221,6 +222,10 @@ public abstract class MyAnimeList {
      * Returns the top level forum boards.
      *
      * @return forum boards
+     * @throws InvalidParametersException if parameters are invalid
+     * @throws InvalidAuthException if auth token is invalid or expired
+     * @throws ConnectionForbiddenException if the server does not allow the request
+     * @throws FailedRequestException if the client failed to execute the request
      *
      * @see ForumCategory
      * @since 1.0.0
@@ -234,6 +239,10 @@ public abstract class MyAnimeList {
      *
      * @param id forum topic id
      * @return forum topic
+     * @throws InvalidParametersException if parameters are invalid
+     * @throws InvalidAuthException if auth token is invalid or expired
+     * @throws ConnectionForbiddenException if the server does not allow the request
+     * @throws FailedRequestException if the client failed to execute the request
      *
      * @see #getForumTopicDetail(long, int)
      * @see #getForumTopicDetail(long, int, int)
@@ -249,6 +258,10 @@ public abstract class MyAnimeList {
      * @param id forum topic id
      * @param limit limit
      * @return forum topic
+     * @throws InvalidParametersException if parameters are invalid
+     * @throws InvalidAuthException if auth token is invalid or expired
+     * @throws ConnectionForbiddenException if the server does not allow the request
+     * @throws FailedRequestException if the client failed to execute the request
      *
      * @see #getForumTopicDetail(long)
      * @see #getForumTopicDetail(long, int, int)
@@ -265,6 +278,10 @@ public abstract class MyAnimeList {
      * @param limit limit
      * @param offset offset
      * @return forum topic
+     * @throws InvalidParametersException if parameters are invalid
+     * @throws InvalidAuthException if auth token is invalid or expired
+     * @throws ConnectionForbiddenException if the server does not allow the request
+     * @throws FailedRequestException if the client failed to execute the request
      *
      * @see #getForumTopicDetail(long)
      * @see #getForumTopicDetail(long, int)
@@ -369,6 +386,7 @@ public abstract class MyAnimeList {
     /**
      * Removes a Manga listing.
      *
+     * @throws InvalidParametersException if parameters are invalid
      * @throws InvalidAuthException if auth token is invalid or expired
      * @throws ConnectionForbiddenException if the server does not allow the request
      * @throws FailedRequestException if the client failed to execute the request
@@ -416,6 +434,10 @@ public abstract class MyAnimeList {
      * Returns the authenticated user.
      *
      * @return user
+     * @throws InvalidParametersException if parameters are invalid
+     * @throws InvalidAuthException if auth token is invalid or expired
+     * @throws ConnectionForbiddenException if the server does not allow the request
+     * @throws FailedRequestException if the client failed to execute the request
      *
      * @see User
      * @see #getMyself(String[])
@@ -428,6 +450,10 @@ public abstract class MyAnimeList {
      *
      * @param fields the fields to return
      * @return user
+     * @throws InvalidParametersException if parameters are invalid
+     * @throws InvalidAuthException if auth token is invalid or expired
+     * @throws ConnectionForbiddenException if the server does not allow the request
+     * @throws FailedRequestException if the client failed to execute the request
      *
      * @see User
      * @see #getMyself()
@@ -438,12 +464,12 @@ public abstract class MyAnimeList {
     /**
      * Returns a user given their username.
      *
+     * @param username username
+     * @return user
      * @throws InvalidParametersException if parameters are invalid
      * @throws InvalidAuthException if auth token is invalid or expired
      * @throws ConnectionForbiddenException if the server does not allow the request
      * @throws FailedRequestException if the client failed to execute the request
-     * @param username username
-     * @return user
      *
      * @see User
      * @see #getUser(String, String...)
@@ -454,13 +480,13 @@ public abstract class MyAnimeList {
     /**
      * Returns a user given their username.
      *
+     * @param username username
+     * @param fields the fields to return
+     * @return user
      * @throws InvalidParametersException if parameters are invalid
      * @throws InvalidAuthException if auth token is invalid or expired
      * @throws ConnectionForbiddenException if the server does not allow the request
      * @throws FailedRequestException if the client failed to execute the request
-     * @param username username
-     * @param fields the fields to return
-     * @return user
      *
      * @see User
      * @see #getUser(String)

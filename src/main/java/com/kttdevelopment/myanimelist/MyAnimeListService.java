@@ -12,7 +12,7 @@ import static com.kttdevelopment.myanimelist.Json.*;
  * @version 1.0.0
  * @author Ktt Development
  */
-@SuppressWarnings("DefaultAnnotationParam")
+@SuppressWarnings({"DefaultAnnotationParam", "ClassEscapesDefinedScope"})
 public interface MyAnimeListService {
 
     String baseURL = "https://api.myanimelist.net/v2/";

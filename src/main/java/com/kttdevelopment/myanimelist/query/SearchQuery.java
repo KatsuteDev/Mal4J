@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist.query;
 
-import com.kttdevelopment.myanimelist.MyAnimeListService;
-import com.kttdevelopment.myanimelist.PaginatedIterator;
+import com.kttdevelopment.myanimelist.*;
 
 import java.util.List;
 
@@ -53,6 +52,10 @@ abstract class SearchQuery<T extends SearchQuery<T,R>,R> {
      * Runs the search query.
      *
      * @return search listings
+     * @throws InvalidParametersException if parameters are invalid
+     * @throws InvalidAuthException if auth token is invalid or expired
+     * @throws ConnectionForbiddenException if the server does not allow the request
+     * @throws FailedRequestException if the client failed to execute the request
      *
      * @since 1.0.0
      */
@@ -62,6 +65,10 @@ abstract class SearchQuery<T extends SearchQuery<T,R>,R> {
      * Runs the search query and returns an iterable.
      *
      * @return search iterable
+     * @throws InvalidParametersException if parameters are invalid
+     * @throws InvalidAuthException if auth token is invalid or expired
+     * @throws ConnectionForbiddenException if the server does not allow the request
+     * @throws FailedRequestException if the client failed to execute the request
      *
      * @since 1.0.0
      */

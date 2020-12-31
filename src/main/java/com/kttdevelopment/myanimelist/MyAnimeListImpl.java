@@ -51,7 +51,7 @@ final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public synchronized final void refreshOAuthToken() throws IOException{
+    public synchronized final void refreshOAuthToken(){
         if(authenticator == null)
             throw new UnsupportedOperationException("OAuth token refresh can only be used with authorization");
         this.auth = authenticator.refreshAccessToken().getToken();
@@ -828,11 +828,11 @@ final class MyAnimeListImpl extends MyAnimeList{
                 case HttpURLConnection.HTTP_OK:
                     return response;
                 case HttpURLConnection.HTTP_BAD_REQUEST:
-                    throw new InvalidParametersException(response.toString());
+                    throw new InvalidParametersException(response.raw());
                 case HttpURLConnection.HTTP_UNAUTHORIZED:
-                    throw new InvalidAuthException(response.toString());
+                    throw new InvalidAuthException(response.raw());
                 case HttpURLConnection.HTTP_FORBIDDEN:
-                    throw new ConnectionForbiddenException(response.toString());
+                    throw new ConnectionForbiddenException(response.raw());
             }
         }catch(final IOException e){ // client side failure
             throw new FailedRequestException(e);
