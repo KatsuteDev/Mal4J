@@ -10,19 +10,19 @@ heading: |
 ---
 # Installation
 
-Dependencies are hosted on Maven Central and compiled builds can be found in releases, note that this library requires JDK 11 or above.
+Dependencies are hosted on Maven Central and compiled builds can be found in releases.
+
+**MyAnimeList Java API requires at least JDK 11.**
 
 ## Maven Central
 
-For users using Maven/Gradle etc. binaries can be found on Maven Central. [![maven central](https://img.shields.io/maven-central/v/com.kttdevelopment/MyAnimeList-Java-API)](https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist)
+Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/MyAnimeList-Java-API)](https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist)
 
-## Local (not recommended)
+## Local
 
-For users developing locally, compiled binaries can be found in releases. [![releases](https://img.shields.io/github/v/release/ktt-development/MyAnimeList-Java-API)](https://github.com/Ktt-Development/MyAnimeList-Java-API/releases)
+For projects built locally, jars can be found in releases → [![Releases](https://img.shields.io/github/v/release/Katsute/MyAnimeList-Java-API)](https://github.com/Katsute/MyAnimeList-Java-API/releases)
 
-Required dependencies:
- - [retrofit2](https://mvnrepository.com/artifact/com.squareup.retrofit2/retrofit)
- - [retrofit2/converter-gson](https://mvnrepository.com/artifact/com.squareup.retrofit2/converter-gson)
+The MyAnimeList Java API is a standalone library and requires no additional dependencies.
 
 # API setup
 
@@ -30,20 +30,20 @@ Required dependencies:
 
 In order to use the MyAnimeList API you must retrieve your own client ID. You can create a new API key at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
 
-![Create ID](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_1.png)
+![Create ID](https://raw.githubusercontent.com/Katsute/MyAnimeList-Java-API/main/setup_1.png)
 
 ## 2. Register API key
 
 Fill in all required fields and App Redirect URL, this is what we use to retrieve the OAuth token. For users using easy authentication ([below](#authenticate-with-client-id-easy)) set this to `http://localhost:5050` or whatever port you are using.
 
 
-![Register application](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_2.png)
+![Register application](https://raw.githubusercontent.com/Katsute/MyAnimeList-Java-API/main/setup_2.png)
 
 ## 3. Retrieve Client ID
 
 Copy client ID and client secret (if the application has a client secret), this will be used to authenticate the application with the API.
 
-![Copy client id and client secret](https://raw.githubusercontent.com/Ktt-Development/MyAnimeList-Java-API/main/setup_3.png)
+![Copy client id and client secret](https://raw.githubusercontent.com/Katsute/MyAnimeList-Java-API/main/setup_3.png)
 
 # Authentication
 
