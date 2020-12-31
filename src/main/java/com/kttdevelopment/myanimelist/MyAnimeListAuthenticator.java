@@ -5,6 +5,7 @@ import com.sun.net.httpserver.*;
 
 import java.awt.*;
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
@@ -46,10 +47,8 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
      * @throws IOException if client could not contact auth server
-     * @throws InvalidParametersException if parameters are invalid
-     * @throws InvalidAuthException if auth token is invalid or expired
-     * @throws ConnectionForbiddenException if the server does not allow the request
-     * @throws FailedRequestException if the client failed to execute the request
+     * @throws HTTPException if request failed
+     * @throws UncheckedIOException if client failed to execute request
      *
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
@@ -80,10 +79,8 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret (optional)
      * @param authorization_code authorization code
      * @param PKCE_code_challenge PKCE code challenge
-     * @throws ConnectionForbiddenException if the server does not allow the connection
-     * @throws FailedRequestException if request failed to execute (client side)
-     * @throws InvalidAuthException if request was not authenticated
-     * @throws InvalidParametersException if the provided parameters were invalid
+     * @throws HTTPException if request failed
+     * @throws UncheckedIOException if client failed to execute request
      *
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
@@ -122,10 +119,8 @@ public final class MyAnimeListAuthenticator {
      * Refreshes the access token.
      *
      * @return updated access token
-     * @throws InvalidParametersException if parameters are invalid
-     * @throws InvalidAuthException if auth token is invalid or expired
-     * @throws ConnectionForbiddenException if the server does not allow the request
-     * @throws FailedRequestException if the client failed to execute the request
+     * @throws HTTPException if request failed
+     * @throws UncheckedIOException if client failed to execute request
      *
      * @see AccessToken
      * @since 1.0.0
@@ -201,22 +196,16 @@ public final class MyAnimeListAuthenticator {
 
     private AccessToken parseToken(final Response<JsonObject> response){
         final JsonObject body = response.body();
-        switch(response.code()){
-            default:
-            case HttpURLConnection.HTTP_OK:
-                return new AccessToken(
-                    body.getString("token_type"),
-                    body.getLong("expires_in"),
-                    body.getString("access_token"),
-                    body.getString("refresh_token")
-                );
-            case HttpURLConnection.HTTP_BAD_REQUEST:
-                throw new InvalidParametersException(response.raw());
-            case HttpURLConnection.HTTP_UNAUTHORIZED:
-                throw new InvalidAuthException(response.raw());
-            case HttpURLConnection.HTTP_FORBIDDEN:
-                throw new ConnectionForbiddenException(response.raw());
-        }
+        if(response.code() == HttpURLConnection.HTTP_OK)
+            return new AccessToken(
+                body.getString("token_type"),
+                body.getLong("expires_in"),
+                body.getString("access_token"),
+                body.getString("refresh_token")
+            );
+        else
+            throw new HTTPException(response.URL(), response.code(), (body.getString("body") + ' ' + body.getString("error")).trim());
+
     }
 
     @SuppressWarnings("SpellCheckingInspection")

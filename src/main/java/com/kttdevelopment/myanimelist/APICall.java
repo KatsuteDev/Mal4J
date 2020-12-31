@@ -156,7 +156,7 @@ final class APICall {
         final String URL =
             baseURL +
             pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group(1))) + // path args
-            (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' +e.getValue()).collect( Collectors.joining("&"))); // query
+            (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect( Collectors.joining("&"))); // query
 
         final HttpRequest.Builder request = HttpRequest.newBuilder();
 
@@ -168,7 +168,7 @@ final class APICall {
         request.header("Cache-Control", "no-cache");
 
         if(formUrlEncoded){
-            final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' +e.getValue()).collect( Collectors.joining("&"));
+            final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect( Collectors.joining("&"));
             request.header("Content-Type", "application/x-www-form-urlencoded");
             request.method(method, HttpRequest.BodyPublishers.ofString(data));
         }
@@ -177,13 +177,13 @@ final class APICall {
             .build()
             .send(request.build(), HttpResponse.BodyHandlers.ofString());
         final String body = response.body();
-        return new Response<>(body, body, response.statusCode());
+        return new Response<>(URL, body, body, response.statusCode());
     }
 
     final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException{
         final Response<String> response = call();
         final String body = response.body();
-        return new Response<>(body, processor.apply(body), response.code());
+        return new Response<>(response.URL(), body, processor.apply(body), response.code());
     }
 
     @Override

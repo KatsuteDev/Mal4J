@@ -11,6 +11,7 @@ import com.kttdevelopment.myanimelist.query.*;
 import com.kttdevelopment.myanimelist.user.User;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
@@ -823,19 +824,17 @@ final class MyAnimeListImpl extends MyAnimeList{
     private Response<?> handleResponseCodes(final ExceptionSupplier<Response<?>,IOException> supplier){
         try{
             final Response<?> response = supplier.get();
-            switch(response.code()){
-                default:
-                case HttpURLConnection.HTTP_OK:
-                    return response;
-                case HttpURLConnection.HTTP_BAD_REQUEST:
-                    throw new InvalidParametersException(response.raw());
-                case HttpURLConnection.HTTP_UNAUTHORIZED:
-                    throw new InvalidAuthException(response.raw());
-                case HttpURLConnection.HTTP_FORBIDDEN:
-                    throw new ConnectionForbiddenException(response.raw());
-            }
+
+            if(response.code() == HttpURLConnection.HTTP_OK)
+                return response;
+            else
+                try{
+                    throw new HTTPException(response.URL(), response.code(), (((JsonObject) response.body()).getString("message") + ' ' + ((JsonObject) response.body()).getString("error")).trim());
+                }catch(final ClassCastException ignored){
+                    throw new HTTPException(response.URL(), response.code(), response.raw());
+                }
         }catch(final IOException e){ // client side failure
-            throw new FailedRequestException(e);
+            throw new UncheckedIOException(e);
         }
     }
 

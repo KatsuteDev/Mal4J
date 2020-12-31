@@ -81,14 +81,20 @@ abstract class APIStruct {
      */
     public static final class Response<T>{
 
+        private final String URL;
         private final String raw;
         private final T response;
         private final int code;
 
-        Response(final String raw, final T response, final int code){
+        Response(final String URL, final String raw, final T response, final int code){
+            this.URL        = URL;
             this.raw        = raw;
             this.response   = response;
             this.code       = code;
+        }
+
+        final String URL(){
+            return URL;
         }
 
         final String raw(){
