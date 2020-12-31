@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0.0
  * @author Ktt Development
  */
-@SuppressWarnings({"unchecked"})
+@SuppressWarnings({"unchecked", "UnusedReturnValue"})
 abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends SearchQuery<T,R> {
 
     protected List<String> fields;

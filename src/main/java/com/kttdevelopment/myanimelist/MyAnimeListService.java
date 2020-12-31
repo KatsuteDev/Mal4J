@@ -1,11 +1,8 @@
 package com.kttdevelopment.myanimelist;
 
-import retrofit2.Call;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-import retrofit2.http.*;
 
-import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Call.*;
+import static com.kttdevelopment.myanimelist.APIStruct.*;
+import static com.kttdevelopment.myanimelist.Json.*;
 
 /**
  * Represents the HTTP requests for MyAnimeList
@@ -15,26 +12,19 @@ import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponse.Call.*;
  * @version 1.0.0
  * @author Ktt Development
  */
+@SuppressWarnings({"DefaultAnnotationParam", "ClassEscapesDefinedScope"})
 public interface MyAnimeListService {
 
-    @SuppressWarnings("CommentedOutCode")
+    String baseURL = "https://api.myanimelist.net/v2/";
+
     static MyAnimeListService create(){
-        // final okhttp3.logging.HttpLoggingInterceptor interceptor = new okhttp3.logging.HttpLoggingInterceptor();
-        // interceptor.setLevel(okhttp3.logging.HttpLoggingInterceptor.Level.BODY);
-        return new Retrofit
-            .Builder()
-            // .client(new okhttp3.OkHttpClient.Builder()
-            //     .addInterceptor(interceptor).build())
-            .baseUrl("https://api.myanimelist.net/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(MyAnimeListService.class);
+        return APICall.create(baseURL, MyAnimeListService.class);
     }
 
     // anime
 
-    @GET("anime")
-    Call<GetAnimeList> getAnime(
+    @Endpoint(method="GET", value="anime")
+    Response<JsonObject> getAnime(
         @Header("Authorization")                    final String token,
         @Query("q")                                 final String search,
         @Query("limit")                             final Integer limit,
@@ -43,15 +33,15 @@ public interface MyAnimeListService {
         @Query("nsfw")                              final Boolean nsfw
     );
 
-    @GET("anime/{anime_id}")
-    Call<GetAnime> getAnime(
+    @Endpoint(method="GET", value="anime/{anime_id}")
+    Response<JsonObject> getAnime(
         @Header("Authorization")                   final String token,
         @Path(value = "anime_id")                  final Long anime_id,
         @Query(value = "fields", encoded = true)   final String fields
     );
 
-    @GET("anime/ranking")
-    Call<GetAnimeRanking> getAnimeRanking(
+    @Endpoint(method="GET", value="anime/ranking")
+    Response<JsonObject> getAnimeRanking(
         @Header("Authorization")                    final String token,
         @Query("ranking_type")                      final String ranking_type,
         @Query("limit")                             final Integer limit,
@@ -60,8 +50,8 @@ public interface MyAnimeListService {
         @Query("nsfw")                              final Boolean nsfw
     );
 
-    @GET("anime/season/{year}/{season}")
-    Call<GetSeasonalAnime> getAnimeSeason(
+    @Endpoint(method="GET", value="anime/season/{year}/{season}")
+    Response<JsonObject> getAnimeSeason(
         @Header("Authorization")                    final String token,
         @Path(value = "year")                       final Integer year,
         @Path(value = "season")                     final String season,
@@ -72,8 +62,8 @@ public interface MyAnimeListService {
         @Query("nsfw")                              final Boolean nsfw
     );
 
-    @GET("anime/suggestions")
-    Call<GetSuggestedAnime> getAnimeSuggestions(
+    @Endpoint(method="GET", value="anime/suggestions")
+    Response<JsonObject> getAnimeSuggestions(
         @Header("Authorization")                    final String token,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset,
@@ -85,8 +75,8 @@ public interface MyAnimeListService {
 
     @SuppressWarnings("SpellCheckingInspection")
     @FormUrlEncoded
-    @PATCH("anime/{anime_id}/my_list_status")
-    Call<UpdateUserAnimeList> updateAnimeListing(
+    @Endpoint(method="PATCH", value="anime/{anime_id}/my_list_status")
+    Response<JsonObject> updateAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "anime_id")                   final Long anime_id,
         @Field("status")                            final String status,
@@ -100,15 +90,15 @@ public interface MyAnimeListService {
         @Field("comments")                          final String comments
     );
 
-    @DELETE("anime/{anime_id}/my_list_status")
-    Call<Void> deleteAnimeListing(
+    @Endpoint(method="DELETE", value="anime/{anime_id}/my_list_status")
+    Response<Void> deleteAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "anime_id")                   final Integer anime_id
     );
 
     @SuppressWarnings("SpellCheckingInspection")
-    @GET("users/{user_name}/animelist")
-    Call<GetUserAnimeList> getUserAnimeListing(
+    @Endpoint(method="GET", value="users/{user_name}/animelist")
+    Response<JsonObject> getUserAnimeListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
@@ -120,13 +110,13 @@ public interface MyAnimeListService {
 
     // forum
 
-    @GET("forum/boards")
-    Call<GetForumBoards> getForumBoards(
+    @Endpoint(method="GET", value="forum/boards")
+    Response<JsonObject> getForumBoards(
         @Header("Authorization") final String token
     );
 
-    @GET("forum/topic/{topic_id}")
-    Call<GetForumTopicDetail> getForumBoard(
+    @Endpoint(method="GET", value="forum/topic/{topic_id}")
+    Response<JsonObject> getForumBoard(
         @Header("Authorization")                    final String token,
         @Path(value = "topic_id")                   final Long topic_id,
         @Query("limit")                             final Integer limit,
@@ -134,8 +124,8 @@ public interface MyAnimeListService {
     );
 
     @SuppressWarnings("SpellCheckingInspection")
-    @GET("forum/topics")
-    Call<GetForumTopics> getForumTopics(
+    @Endpoint(method="GET", value="forum/topics")
+    Response<JsonObject> getForumTopics(
         @Header("Authorization")   final String token,
         @Query("board_id")          final Long board_id,
         @Query("subboard_id")       final Long subboard_id,
@@ -149,8 +139,8 @@ public interface MyAnimeListService {
 
     // manga
 
-    @GET("manga")
-    Call<GetMangaList> getManga(
+    @Endpoint(method="GET", value="manga")
+    Response<JsonObject> getManga(
         @Header("Authorization")                    final String token,
         @Query("q")                                 final String search,
         @Query("limit")                             final Integer limit,
@@ -159,15 +149,15 @@ public interface MyAnimeListService {
         @Query("nsfw")                              final Boolean nsfw
     );
 
-    @GET("manga/{manga_id}")
-    Call<GetManga> getManga(
+    @Endpoint(method="GET", value="manga/{manga_id}")
+    Response<JsonObject> getManga(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id")                   final Long manga_id,
         @Query(value = "fields", encoded = true)    final String fields
     );
 
-    @GET("manga/ranking")
-    Call<GetMangaRanking> getMangaRanking(
+    @Endpoint(method="GET", value="manga/ranking")
+    Response<JsonObject> getMangaRanking(
         @Header("Authorization")                    final String token,
         @Query("ranking_type")                      final String ranking_type,
         @Query("limit")                             final Integer limit,
@@ -179,8 +169,8 @@ public interface MyAnimeListService {
     // manga list
 
     @FormUrlEncoded
-    @PATCH("manga/{manga_id}/my_list_status")
-    Call<UpdateUserMangaList> updateMangaListing(
+    @Endpoint(method="PATCH", value="manga/{manga_id}/my_list_status")
+    Response<JsonObject> updateMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id")                   final Long manga_id,
         @Field("status")                            final String status,
@@ -195,15 +185,15 @@ public interface MyAnimeListService {
         @Field("comments")                          final String comments
     );
 
-    @DELETE("manga/{manga_id}/my_list_status")
-    Call<Void> deleteMangaListing(
+    @Endpoint(method="DELETE", value="manga/{manga_id}/my_list_status")
+    Response<Void> deleteMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "manga_id")                   final Long manga_id
     );
 
     @SuppressWarnings("SpellCheckingInspection")
-    @GET("users/{user_name}/mangalist")
-    Call<GetUserMangaList> getUserMangaListing(
+    @Endpoint(method="GET", value="users/{user_name}/mangalist")
+    Response<JsonObject> getUserMangaListing(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
@@ -215,8 +205,8 @@ public interface MyAnimeListService {
 
     // user
 
-    @GET("users/{user_name}")
-    Call<GetUserInformation> getUser(
+    @Endpoint(method="GET", value="users/{user_name}")
+    Response<JsonObject> getUser(
         @Header("Authorization")                    final String token,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query(value = "fields", encoded = true)    final String fields

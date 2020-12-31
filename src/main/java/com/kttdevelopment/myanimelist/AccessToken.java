@@ -1,4 +1,4 @@
-package com.kttdevelopment.myanimelist.auth;
+package com.kttdevelopment.myanimelist;
 
 /**
  * Represents an OAuth2 authentication body.
@@ -8,15 +8,17 @@ package com.kttdevelopment.myanimelist.auth;
  * @author Ktt Development
  */
 public final class AccessToken {
-    // do not label variables as transient, it will cause retrofit to fail
 
-    private String token_type;
+    private final String token_type;
+    private final long expires_in;
+    private transient final String access_token, refresh_token;
 
-    private long expires_in;
-
-    private String access_token;
-
-    private String refresh_token;
+    AccessToken(final String token_type, final long expires_in, final String access_token, final String refresh_token){
+        this.token_type     = token_type;
+        this.expires_in     = expires_in;
+        this.access_token   = access_token;
+        this.refresh_token  = refresh_token;
+    }
 
     /**
      * Returns token with token type. Ex: 'Bearer oauth2token'
