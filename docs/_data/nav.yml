@@ -5,8 +5,8 @@
 - name: Setup
   link: /setup
 - name: Discussion
-  link: https://github.com/Ktt-Development/MyAnimeList-Java-API/discussions
+  link: https://github.com/Katsute/MyAnimeList-Java-API/discussions
   new: true
 - name: <i class="fab fa-github fa-lg"></i>
-  link: https://github.com/Ktt-Development/MyAnimeList-Java-API
+  link: https://github.com/Katsute/MyAnimeList-Java-API
   new: true
