@@ -10,6 +10,7 @@ import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 import com.kttdevelopment.myanimelist.query.*;
 import com.kttdevelopment.myanimelist.user.User;
 
+import java.io.UncheckedIOException;
 import java.util.List;
 
 /**

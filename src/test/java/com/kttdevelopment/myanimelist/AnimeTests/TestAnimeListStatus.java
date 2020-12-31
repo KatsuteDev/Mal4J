@@ -23,6 +23,7 @@ public class TestAnimeListStatus {
     public static void cleanup(){
         TestProvider.testRequireLiveUser();
 
+        mal.deleteAnimeListing(TestProvider.AnimeID);
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
             .score(10)
