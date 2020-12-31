@@ -5,6 +5,7 @@ import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.ListStatus;
 import com.kttdevelopment.myanimelist.query.MangaListUpdate;
+import com.kttdevelopment.myanimelist.query.property.RereadValue;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put</a> <br>
@@ -65,9 +66,10 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>,MangaRe
      *
      * @return reread value
      *
+     * @see RereadValue
      * @since 1.0.0
      */
-    public abstract int getRereadValue();
+    public abstract RereadValue getRereadValue();
 
     // additional methods
 

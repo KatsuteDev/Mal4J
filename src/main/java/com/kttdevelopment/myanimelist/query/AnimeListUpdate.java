@@ -3,6 +3,7 @@ package com.kttdevelopment.myanimelist.query;
 import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
+import com.kttdevelopment.myanimelist.query.property.RewatchValue;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put</a> <br>
@@ -18,7 +19,8 @@ import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeListStatus,AnimeStatus> {
 
     protected Boolean rewatching;
-    protected Integer watchedEpisodes, timesRewatched, rewatchValue;
+    protected Integer watchedEpisodes, timesRewatched;
+    protected RewatchValue rewatchValue;
 
     /**
      * Creates an Anime list update. Applications do not use this constructor.
@@ -78,9 +80,10 @@ public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeLi
      * @param rewatchValue rewatch value
      * @return list update
      *
+     * @see RewatchValue
      * @since 1.0.0
      */
-    public final AnimeListUpdate rewatchValue(final int rewatchValue){
+    public final AnimeListUpdate rewatchValue(final RewatchValue rewatchValue){
         this.rewatchValue = rewatchValue;
         return this;
     }

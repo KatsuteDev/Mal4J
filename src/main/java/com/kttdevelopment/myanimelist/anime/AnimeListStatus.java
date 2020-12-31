@@ -5,6 +5,7 @@ import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.anime.property.*;
 import com.kttdevelopment.myanimelist.property.ListStatus;
 import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
+import com.kttdevelopment.myanimelist.query.property.RewatchValue;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put</a> <br>
@@ -57,9 +58,10 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      *
      * @return rewatch value
      *
+     * @see RewatchValue
      * @since 1.0.0
      */
-    public abstract int getRewatchValue();
+    public abstract RewatchValue getRewatchValue();
 
     // additional methods
 

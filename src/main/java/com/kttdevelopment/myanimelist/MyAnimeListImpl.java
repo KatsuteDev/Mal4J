@@ -342,9 +342,9 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rewatching,
                         between(0, score, 10),
                         between(0, watchedEpisodes, null),
-                        between(0, priority, 2),
+                        between(0, priority.value(), 2),
                         between(0, timesRewatched, null),
-                        between(0, rewatchValue, 5),
+                        between(0, rewatchValue.value(), 5),
                         asStringList(tags),
                         comments)
                 );
@@ -692,9 +692,9 @@ final class MyAnimeListImpl extends MyAnimeList{
                         between(0, score, 10),
                         between(0, volumesRead, null),
                         between(0, chaptersRead, null),
-                        between(0, priority, 2),
+                        between(0, priority.value(), 2),
                         between(0, timesReread, null),
-                        between(0, rereadValue, 5),
+                        between(0, rereadValue.value(), 5),
                         asStringList(tags),
                         comments)
                 );

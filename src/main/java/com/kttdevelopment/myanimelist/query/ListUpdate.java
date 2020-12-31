@@ -2,6 +2,7 @@ package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.property.ListStatus;
+import com.kttdevelopment.myanimelist.query.property.Priority;
 
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,8 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
     protected final long id;
 
     protected S status;
-    protected Integer score, priority;
+    protected Integer score;
+    protected Priority priority;
     protected List<String> tags;
     protected String comments;
 
@@ -65,9 +67,10 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
      * @param priority priority
      * @return list update
      *
+     * @see Priority
      * @since 1.0.0
      */
-    public final T priority(final int priority){
+    public final T priority(final Priority priority){
         this.priority = priority;
         return (T) this;
     }
