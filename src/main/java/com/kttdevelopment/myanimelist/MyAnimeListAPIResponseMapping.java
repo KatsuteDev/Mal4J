@@ -10,6 +10,7 @@ import com.kttdevelopment.myanimelist.manga.property.*;
 import com.kttdevelopment.myanimelist.property.*;
 import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
 import com.kttdevelopment.myanimelist.query.MangaListUpdate;
+import com.kttdevelopment.myanimelist.query.property.*;
 import com.kttdevelopment.myanimelist.user.UserAnimeStatistics;
 
 import java.lang.reflect.Array;
@@ -384,14 +385,14 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final int score             = requireNonNullElse(() -> schema.getInt("score"), -1);
                 private final long startDate        = requireNonNullElse(() -> parseDate(schema.getString("start_date")), -1L);
                 private final long finishDate       = requireNonNullElse(() -> parseDate(schema.getString("finish_date")), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.getInt("priority"), -1);
+                private final Priority priority     = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
                 private final String[] tags         = requireNonNull(() -> schema.getStringArray("tags"));
                 private final String comments       = requireNonNull(() -> schema.getString("comments"));
                 private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
                 private final int watchedEpisodes   = requireNonNullElse(() -> schema.getInt("num_episodes_watched"), -1);
                 private final boolean rewatching    = requireNonNullElse(() -> (boolean) schema.get("is_rewatching"), false);
                 private final int timesRewatched    = requireNonNullElse(() -> schema.getInt("num_times_rewatched"), -1);
-                private final int rewatchValue      = requireNonNullElse(() -> schema.getInt("rewatch_value"), -1);
+                private final RewatchValue rewatchValue = requireNonNull(() -> RewatchValue.asEnum(schema.getInt("rewatch_value")));
 
                 // API methods
 
@@ -416,7 +417,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final int getPriority() {
+                public final Priority getPriority() {
                     return priority;
                 }
 
@@ -451,7 +452,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final int getRewatchValue() {
+                public final RewatchValue getRewatchValue() {
                     return rewatchValue;
                 }
 
@@ -488,14 +489,14 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final int score             = requireNonNullElse(() -> schema.getInt("score"), -1);
                 private final long startDate        = requireNonNullElse(() -> parseDate(schema.getString("start_date")), -1L);
                 private final long finishDate       = requireNonNullElse(() -> parseDate(schema.getString("finish_date")), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.getInt("priority"), -1);
+                private final Priority priority     = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
                 private final String[] tags         = requireNonNull(() -> schema.getStringArray("tags"));
                 private final String comments       = requireNonNull(() -> schema.getString("comments"));
                 private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
                 private final int watchedEpisodes   = requireNonNullElse(() -> schema.getInt("num_episodes_watched"), -1);
                 private final boolean rewatching    = requireNonNullElse(() -> (boolean) schema.get("is_rewatching"), false);
                 private final int timesRewatched    = requireNonNullElse(() -> schema.getInt("num_times_rewatched"), -1);
-                private final int rewatchValue      = requireNonNullElse(() -> schema.getInt("rewatch_value"), -1);
+                private final RewatchValue rewatchValue = requireNonNull(() -> RewatchValue.asEnum(schema.getInt("rewatch_value")));
 
                 // API methods
 
@@ -520,7 +521,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final int getPriority() {
+                public final Priority getPriority() {
                     return priority;
                 }
 
@@ -555,7 +556,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final int getRewatchValue() {
+                public final RewatchValue getRewatchValue() {
                     return rewatchValue;
                 }
 
@@ -1565,7 +1566,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final int score             = requireNonNullElse(() -> schema.getInt("score"), -1);
                 private final long startDate        = requireNonNullElse(() -> parseDate(schema.getString("start_date")), -1L);
                 private final long finishDate       = requireNonNullElse(() -> parseDate(schema.getString("finish_date")), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.getInt("priority"), -1);
+                private final Priority priority     = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
                 private final String[] tags         = requireNonNull(() -> schema.getStringArray("tags"));
                 private final String comments       = requireNonNull(() -> schema.getString("comments"));
                 private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
@@ -1573,7 +1574,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final int chaptersRead      = requireNonNullElse(() -> schema.getInt("num_chapters_read"), -1);
                 private final boolean rereading     = requireNonNullElse(() -> (boolean) schema.get("is_rereading"), false);
                 private final int timesReread       = requireNonNullElse(() -> schema.getInt("num_times_reread"), -1);
-                private final int rereadValue       = requireNonNullElse(() -> schema.getInt("reread_value"), -1);
+                private final RereadValue rereadValue  = requireNonNull(() -> RereadValue.asEnum(schema.getInt("reread_value")));
 
                 // API methods
 
@@ -1598,7 +1599,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final int getPriority() {
+                public final Priority getPriority() {
                     return priority;
                 }
 
@@ -1638,7 +1639,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final int getRereadValue() {
+                public final RereadValue getRereadValue() {
                     return rereadValue;
                 }
 
@@ -1674,7 +1675,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final int score             = requireNonNullElse(() -> schema.getInt("score"), -1);
                 private final long startDate        = requireNonNullElse(() -> parseDate(schema.getString("start_date")), -1L);
                 private final long finishDate       = requireNonNullElse(() -> parseDate(schema.getString("finish_date")), -1L);
-                private final int priority          = requireNonNullElse(() -> schema.getInt("priority"), -1);
+                private final Priority priority     = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
                 private final String[] tags         = requireNonNull(() -> schema.getStringArray("tags"));
                 private final String comments       = requireNonNull(() -> schema.getString("comments"));
                 private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
@@ -1682,7 +1683,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final int chaptersRead      = requireNonNullElse(() -> schema.getInt("num_chapters_read"), -1);
                 private final boolean rereading     = requireNonNullElse(() -> (boolean) schema.get("is_rereading"), false);
                 private final int timesReread       = requireNonNullElse(() -> schema.getInt("num_times_reread"), -1);
-                private final int rereadValue       = requireNonNullElse(() -> schema.getInt("reread_value"), -1);
+                private final RereadValue rereadValue = requireNonNull(() -> RereadValue.asEnum(schema.getInt("reread_value")));
 
                 // API methods
 
@@ -1707,7 +1708,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final int getPriority() {
+                public final Priority getPriority() {
                     return priority;
                 }
 
@@ -1747,7 +1748,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final int getRereadValue() {
+                public final RereadValue getRereadValue() {
                     return rereadValue;
                 }
 

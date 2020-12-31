@@ -3,6 +3,7 @@ package com.kttdevelopment.myanimelist.query;
 import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.manga.MangaListStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
+import com.kttdevelopment.myanimelist.query.property.RereadValue;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put</a> <br>
@@ -17,7 +18,8 @@ import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 public abstract class MangaListUpdate extends ListUpdate<MangaListUpdate,MangaListStatus,MangaStatus> {
 
     protected Boolean rereading;
-    protected Integer volumesRead, chaptersRead, timesReread, rereadValue;
+    protected Integer volumesRead, chaptersRead, timesReread;
+    protected RereadValue rereadValue;
 
     /**
      * Creates a Manga list update. Applications do not use this constructor.
@@ -90,9 +92,10 @@ public abstract class MangaListUpdate extends ListUpdate<MangaListUpdate,MangaLi
      * @param rereadValue reread value
      * @return list update
      *
+     * @see RereadValue
      * @since 1.0.0
      */
-    public final MangaListUpdate rereadValue(final int rereadValue){
+    public final MangaListUpdate rereadValue(final RereadValue rereadValue){
         this.rereadValue = rereadValue;
         return this;
     }

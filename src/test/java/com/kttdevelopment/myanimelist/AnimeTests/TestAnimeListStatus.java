@@ -4,6 +4,8 @@ import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.TestProvider;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
+import com.kttdevelopment.myanimelist.query.property.Priority;
+import com.kttdevelopment.myanimelist.query.property.RewatchValue;
 import org.junit.jupiter.api.*;
 
 import java.util.Arrays;
@@ -29,9 +31,9 @@ public class TestAnimeListStatus {
             .score(10)
             .episodesWatched(24)
             .rewatching(false)
-            .priority(0)
+            .priority(Priority.Low)
             .timesRewatched(0)
-            .rewatchValue(0)
+            .rewatchValue(RewatchValue.None)
             .tags("")
             .comments("")
             .update();
@@ -40,9 +42,9 @@ public class TestAnimeListStatus {
         Assertions.assertEquals(10, status.getScore());
         Assertions.assertEquals(24, status.getWatchedEpisodes());
         Assertions.assertFalse(status.isRewatching());
-        Assertions.assertEquals(0, status.getPriority());
+        Assertions.assertEquals(Priority.Low, status.getPriority());
         Assertions.assertEquals(0, status.getTimesRewatched());
-        Assertions.assertEquals(0, status.getRewatchValue());
+        Assertions.assertEquals(RewatchValue.None, status.getRewatchValue());
         Assertions.assertEquals(0, status.getTags().length);
         Assertions.assertEquals("", status.getComments());
     }
@@ -60,9 +62,9 @@ public class TestAnimeListStatus {
             .score(10)
             .episodesWatched(24)
             .rewatching(true)
-            .priority(2)
+            .priority(Priority.High)
             .timesRewatched(0)
-            .rewatchValue(5)
+            .rewatchValue(RewatchValue.VeryHigh)
             .tags("ignore", "tags")
             .comments("ignore comments")
             .update();
@@ -105,9 +107,9 @@ public class TestAnimeListStatus {
         Assertions.assertTrue(status.isRewatching());
         // Assertions.assertNotEquals(-1, status.getStartDate()); // will fail (unable to set start date)
         // Assertions.assertNotEquals(-1, status.getFinishDate()); // will fail (unable to set finish date)
-        Assertions.assertEquals(2, status.getPriority());
+        Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesRewatched());
-        Assertions.assertEquals(5, status.getRewatchValue());
+        Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
         Assertions.assertEquals("ignore comments", status.getComments());

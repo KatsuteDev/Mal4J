@@ -1,5 +1,7 @@
 package com.kttdevelopment.myanimelist.property;
 
+import com.kttdevelopment.myanimelist.query.property.Priority;
+
 /**
  * Indicates that the object is a list status.
  *
@@ -56,9 +58,10 @@ public interface ListStatus<Status extends Enum<?>> {
      *
      * @return priority
      *
+     * @see Priority
      * @since 1.0.0
      */
-    int getPriority();
+    Priority getPriority();
 
     /**
      * Returns the tags for the listing.

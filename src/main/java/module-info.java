@@ -12,6 +12,7 @@ module MyAnimeListAPI {
     exports com.kttdevelopment.myanimelist.manga;
     exports com.kttdevelopment.myanimelist.manga.property;
     exports com.kttdevelopment.myanimelist.property;
+    exports com.kttdevelopment.myanimelist.query.property;
     exports com.kttdevelopment.myanimelist.query;
     exports com.kttdevelopment.myanimelist.user;
     exports com.kttdevelopment.myanimelist;
