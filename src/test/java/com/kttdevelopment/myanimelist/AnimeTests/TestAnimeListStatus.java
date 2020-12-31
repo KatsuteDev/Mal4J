@@ -4,6 +4,7 @@ import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.TestProvider;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
+import com.kttdevelopment.myanimelist.query.AnimeListUpdate;
 import org.junit.jupiter.api.*;
 
 import java.util.Arrays;
@@ -21,12 +22,27 @@ public class TestAnimeListStatus {
 
     @AfterAll
     public static void cleanup(){
-        mal.deleteMangaListing(TestProvider.AnimeID);
-        mal.updateAnimeListing(TestProvider.AnimeID)
+        final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
             .score(10)
             .episodesWatched(24)
+            .rewatching(false)
+            .priority(0)
+            .timesRewatched(0)
+            .rewatchValue(0)
+            .tags("")
+            .comments("")
             .update();
+
+        Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
+        Assertions.assertEquals(10, status.getScore());
+        Assertions.assertEquals(24, status.getWatchedEpisodes());
+        Assertions.assertFalse(status.isRewatching());
+        Assertions.assertEquals(0, status.getPriority());
+        Assertions.assertEquals(0, status.getTimesRewatched());
+        Assertions.assertEquals(0, status.getRewatchValue());
+        Assertions.assertEquals(0, status.getTags().length);
+        Assertions.assertEquals("", status.getComments());
     }
 
     @Test @Order(1)

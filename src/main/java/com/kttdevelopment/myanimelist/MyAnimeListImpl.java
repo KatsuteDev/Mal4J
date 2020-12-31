@@ -856,7 +856,7 @@ final class MyAnimeListImpl extends MyAnimeList{
     //
 
     private static String asStringList(final List<String> fields){
-        return asStringList(fields == null || fields.isEmpty() ? null : fields.toArray(new String[0]));
+        return asStringList(fields == null ? null : fields.toArray(new String[0]));
     }
 
     private static String asStringList(final String... fields){
@@ -870,7 +870,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             if(!str.isBlank())
                 return str.substring(0, str.length() -1);
         }
-        return null;
+        return fields == null ? null : "";
     }
 
     //

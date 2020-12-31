@@ -21,10 +21,29 @@ public class TestMangaListStatus {
 
     @AfterAll
     public static void cleanup(){
-        mal.deleteMangaListing(TestProvider.MangaID);
-        mal.updateMangaListing(TestProvider.MangaID)
-        .status(MangaStatus.PlanToRead)
-        .update();
+        final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
+            .status(MangaStatus.PlanToRead)
+            .score(0)
+            .volumesRead(0)
+            .chaptersRead(0)
+            .rereading(false)
+            .priority(0)
+            .timesReread(0)
+            .rereadValue(0)
+            .tags("")
+            .comments("")
+            .update();
+
+        Assertions.assertEquals(MangaStatus.PlanToRead, status.getStatus());
+        Assertions.assertEquals(0, status.getScore());
+        Assertions.assertEquals(0, status.getVolumesRead());
+        Assertions.assertEquals(0, status.getChaptersRead());
+        Assertions.assertFalse(status.isRereading());
+        Assertions.assertEquals(0, status.getPriority());
+        Assertions.assertEquals(0, status.getTimesReread());
+        Assertions.assertEquals(0, status.getRereadValue());
+        Assertions.assertEquals(0, status.getTags().length);
+        Assertions.assertEquals("", status.getComments());
     }
 
     @Test @Order(1)
