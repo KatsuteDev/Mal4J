@@ -53,7 +53,7 @@ The MyAnimeList Java API is a standalone library and requires no additional depe
 
 ## Contributing
 
-For devs running tests locally simply add a text file named 'client.txt' that contains the client ID in the `src\test\java\com\kttdevelopment\myanimelist` directory.
+For devs running tests locally simply add a text file named `client.txt` that contains the client ID in the `src\test\java\com\kttdevelopment\myanimelist` directory.
 
 - Found a bug? Post it in [issues](https://github.com/Katsute/MyAnimeList-Java-API/issues).
 - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/Katsute/MyAnimeList-Java-API/discussions).
