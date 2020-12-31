@@ -21,6 +21,8 @@ public class TestMangaListStatus {
 
     @AfterAll
     public static void cleanup(){
+        TestProvider.testRequireLiveUser();
+
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
             .status(MangaStatus.PlanToRead)
             .score(0)

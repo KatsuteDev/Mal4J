@@ -10,6 +10,8 @@ public class TestAuthRefresh {
 
     @BeforeAll
     public static void beforeAll() throws IOException{
+        TestProvider.testRequireLiveUser();
+
         final String clientId = Files.readString(TestProvider.client);
         final MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator(clientId, null, 5050);
         final MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);

@@ -21,6 +21,8 @@ public class TestAnimeListStatus {
 
     @AfterAll
     public static void cleanup(){
+        TestProvider.testRequireLiveUser();
+
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
             .score(10)

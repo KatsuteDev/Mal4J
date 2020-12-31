@@ -48,8 +48,12 @@ public abstract class TestProvider {
             if(mal.getAnime(AnimeID, new String[0]) != null)
                 return;
         }
-        Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (client id missing)");
+        testRequireLiveUser();
         TestAuthRefresh.beforeAll(); // refresh old token
+    }
+
+    public static void testRequireLiveUser(){
+        Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (client id missing)");
     }
 
     public static MyAnimeList getMyAnimeList(){
