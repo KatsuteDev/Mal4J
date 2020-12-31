@@ -4,9 +4,7 @@ import com.kttdevelopment.myanimelist.APIStruct.Response;
 import com.kttdevelopment.myanimelist.anime.*;
 import com.kttdevelopment.myanimelist.anime.property.AnimeRankingType;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
-import com.kttdevelopment.myanimelist.forum.ForumCategory;
-import com.kttdevelopment.myanimelist.forum.ForumTopic;
-import com.kttdevelopment.myanimelist.forum.ForumTopicDetail;
+import com.kttdevelopment.myanimelist.forum.*;
 import com.kttdevelopment.myanimelist.manga.*;
 import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 import com.kttdevelopment.myanimelist.query.*;
@@ -17,6 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static com.kttdevelopment.myanimelist.Json.*;
@@ -92,18 +91,25 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                     private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
 
-                    @Override
+                    private final AtomicInteger last = new AtomicInteger(); // the index that was last polled
+                    private final AtomicBoolean lastResponse = new AtomicBoolean(); // the last response
+
+                    @Override // this method returns last response or polls for a new one if we have not yet checked
                     final boolean hasNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getAnime(
-                                auth,
-                                query,
-                                between(0, limit, 100),
-                                between(0, current.get(), null),
-                                null,
-                                nsfw)
-                        );
-                        return response != null && response.getJsonObject("paging").containsKey("next");
+                        if(last.get() != current.get()){ // skip unless we have not yet polled the index
+                            final JsonObject response = handleResponse(
+                                () -> service.getAnime(
+                                    auth,
+                                    query,
+                                    between(0, limit, 100),
+                                    between(0, current.get(), null),
+                                    null,
+                                    nsfw)
+                            );
+                            last.set(current.get());
+                            lastResponse.set(response != null && response.getJsonObject("paging").containsKey("next"));
+                        }
+                        return lastResponse.get();
                     }
 
                     @Override
