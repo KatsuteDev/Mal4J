@@ -16,8 +16,10 @@ import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicReference;
+import java.util.concurrent.atomic.*;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.kttdevelopment.myanimelist.Json.*;
 import static com.kttdevelopment.myanimelist.MyAnimeListAPIResponseMapping.Anime.*;
@@ -87,56 +89,17 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final PaginatedIterator<Anime> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){ // required for first check (since no previous page has yet provided info on next paging)
-                            final JsonObject response = handleResponse(
-                                () -> service.getAnime(
-                                    auth,
-                                    query,
-                                    between(0, limit, 100),
-                                    between(0, current.get(), null),
-                                    null,
-                                    nsfw)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<Anime> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getAnime(
-                                auth,
-                                query,
-                                between(0, limit, 100),
-                                current.addAndGet(between(0, limit == null ? 100 : limit, 100)),
-                                fields == null ? animeFields : asStringList(fields),
-                                nsfw)
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<Anime> anime = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return anime;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getAnime(
+                        auth,
+                        query,
+                        between(0, limit, 100),
+                        offset,
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw),
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                );
             }
         };
     }
@@ -182,56 +145,17 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final PaginatedIterator<AnimeRanking> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){
-                            final JsonObject response = handleResponse(
-                                () -> service.getAnimeRanking(
-                                    auth,
-                                    rankingType.field(),
-                                    between(0, limit, 500),
-                                    between(0, current.get(), null),
-                                    null,
-                                    nsfw)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<AnimeRanking> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getAnimeRanking(
-                                auth,
-                                rankingType.field(),
-                                between(0, limit, 500),
-                                current.addAndGet(between(0, limit == null ? 500 : limit, 500)),
-                                fields == null ? animeFields : asStringList(fields),
-                                nsfw)
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<AnimeRanking> anime = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            anime.add(asAnimeRanking(MyAnimeListImpl.this, iterator));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return anime;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getAnimeRanking(
+                        auth,
+                        rankingType.field(),
+                        between(0, limit, 500),
+                        offset,
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw),
+                    iterator -> asAnimeRanking(MyAnimeListImpl.this, iterator)
+                );
             }
         };
     }
@@ -263,60 +187,19 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final PaginatedIterator<Anime> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){ // required for first check (since no previous page has yet provided info on next paging)
-                            final JsonObject response = handleResponse(
-                                () -> service.getAnimeSeason(
-                                    auth,
-                                    year,
-                                    season.field(),
-                                    sort != null ? sort.field() : null,
-                                    between(0, limit, 500),
-                                    between(0, current.get(), null),
-                                    null,
-                                    nsfw)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<Anime> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getAnimeSeason(
-                                auth,
-                                year,
-                                season.field(),
-                                sort != null ? sort.field() : null,
-                                between(0, limit, 500),
-                                current.addAndGet(between(0, limit == null ? 500 : limit, 500)),
-                                fields == null ? animeFields : asStringList(fields),
-                                nsfw)
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<Anime> anime = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return anime;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getAnimeSeason(
+                        auth,
+                        year,
+                        season.field(),
+                        sort != null ? sort.field() : null,
+                        between(0, limit, 500),
+                        offset,
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw),
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                );
             }
 
         };
@@ -346,54 +229,16 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final PaginatedIterator<Anime> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){ // required for first check (since no previous page has yet provided info on next paging)
-                            final JsonObject response = handleResponse(
-                                () -> service.getAnimeSuggestions(
-                                    auth,
-                                    between(0, limit, 100),
-                                    between(0, current.get(), null),
-                                    null,
-                                    nsfw)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<Anime> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getAnimeSuggestions(
-                                auth,
-                                between(0, limit, 100),
-                                current.addAndGet(between(0, limit == null ? 100 : limit, 100)),
-                                fields == null ? animeFields : asStringList(fields),
-                                nsfw)
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<Anime> anime = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return anime;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getAnimeSuggestions(
+                        auth,
+                        between(0, limit, 100),
+                        offset,
+                        fields == null ? animeFields : asStringList(fields),
+                        nsfw),
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                );
             }
 
         };
@@ -467,58 +312,18 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final PaginatedIterator<AnimeListStatus> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){ // required for first check (since no previous page has yet provided info on next paging)
-                            final JsonObject response = handleResponse(
-                                () -> service.getUserAnimeListing(
-                                    auth,
-                                    username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
-                                    status != null ? status.field() : null,
-                                    sort != null ? sort.field() : null,
-                                    between(0, limit, 1000),
-                                    between(0, current.get(), null),
-                                    null)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<AnimeListStatus> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getUserAnimeListing(
-                                auth,
-                                username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
-                                status != null ? status.field() : null,
-                                sort != null ? sort.field() : null,
-                                between(0, limit, 1000),
-                                current.addAndGet(between(0, limit == null ? 1000 : limit, 1000)),
-                                fields == null ? animeFields : asStringList(fields))
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<AnimeListStatus> anime = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return anime;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getUserAnimeListing(
+                        auth,
+                        username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        status != null ? status.field() : null,
+                        sort != null ? sort.field() : null,
+                        between(0, limit, 1000),
+                        offset,
+                        fields == null ? animeFields : asStringList(fields)),
+                    iterator -> asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
+                );
             }
 
         };
@@ -590,62 +395,20 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public synchronized final PaginatedIterator<ForumTopicDetail> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){ // required for first check (since no previous page has yet provided info on next paging)
-                            final JsonObject response = handleResponse(
-                                () -> service.getForumTopics(
-                                    auth,
-                                    boardId,
-                                    subboardId,
-                                    between(0, limit, 100),
-                                    between(0, current.get(), null),
-                                    sort,
-                                    query,
-                                    topicUsername,
-                                    username)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<ForumTopicDetail> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getForumTopics(
-                                auth,
-                                boardId,
-                                subboardId,
-                                between(0, limit, 100),
-                                current.addAndGet(between(0, limit == null ? 100 : limit, 100)),
-                                sort,
-                                query,
-                                topicUsername,
-                                username)
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<ForumTopicDetail> topics = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            topics.add(asForumTopicDetail(MyAnimeListImpl.this, iterator));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return topics;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getForumTopics(
+                        auth,
+                        boardId,
+                        subboardId,
+                        between(0, limit, 100),
+                        offset,
+                        sort,
+                        query,
+                        topicUsername,
+                        username),
+                    iterator -> asForumTopicDetail(MyAnimeListImpl.this, iterator)
+                );
             }
 
         };
@@ -678,56 +441,17 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final PaginatedIterator<Manga> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){ // required for first check (since no previous page has yet provided info on next paging)
-                            final JsonObject response = handleResponse(
-                                () -> service.getManga(
-                                    auth,
-                                    query,
-                                    between(0, limit, 100),
-                                    between(0, current.get(), null),
-                                    null,
-                                    nsfw)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<Manga> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getManga(
-                                auth,
-                                query,
-                                between(0, limit, 100),
-                                current.addAndGet(between(0, limit == null ? 100 : limit, 100)),
-                                fields == null ? mangaFields : asStringList(fields),
-                                nsfw)
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<Manga> manga = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            manga.add(asManga(MyAnimeListImpl.this, iterator.getJsonObject("node")));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return manga;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getManga(
+                        auth,
+                        query,
+                        between(0, limit, 100),
+                        offset,
+                        fields == null ? mangaFields : asStringList(fields),
+                        nsfw),
+                    iterator -> asManga(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                );
             }
 
         };
@@ -774,56 +498,17 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final PaginatedIterator<MangaRanking> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){ // required for first check (since no previous page has yet provided info on next paging)
-                            final JsonObject response = handleResponse(
-                                () -> service.getMangaRanking(
-                                    auth,
-                                    rankingType != null ? rankingType.field() : null,
-                                    between(0, limit, 500),
-                                    between(0, offset, null),
-                                    null,
-                                    nsfw)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<MangaRanking> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getMangaRanking(
-                                auth,
-                                rankingType != null ? rankingType.field() : null,
-                                between(0, limit, 500),
-                                current.addAndGet(between(0, limit == null ? 500 : limit, 500)),
-                                fields == null ? mangaFields : asStringList(fields),
-                                nsfw)
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<MangaRanking> manga = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            manga.add(asMangaRanking(MyAnimeListImpl.this, iterator));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return manga;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getMangaRanking(
+                        auth,
+                        rankingType != null ? rankingType.field() : null,
+                        between(0, limit, 500),
+                        offset,
+                        fields == null ? mangaFields : asStringList(fields),
+                        nsfw),
+                    iterator -> asMangaRanking(MyAnimeListImpl.this, iterator)
+                );
             }
 
         };
@@ -898,58 +583,18 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             @Override
             public final PaginatedIterator<MangaListStatus> searchAll(){
-                return new PaginatedIterator<>() {
-
-                    private final AtomicInteger current = new AtomicInteger(-between(0, limit == null ? 100 : limit, 100)); // make so first nextPage returns offset 0
-
-                    private final AtomicReference<Boolean> hasNextPage = new AtomicReference<>(null);
-
-                    @Override
-                    final boolean hasNextPage(){
-                        if(hasNextPage.get() == null){ // required for first check (since no previous page has yet provided info on next paging)
-                            final JsonObject response = handleResponse(
-                                () -> service.getUserMangaListing(
-                                    auth,
-                                    username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
-                                    status != null ? status.field() : null,
-                                    sort != null ? sort.field() : null,
-                                    between(0, limit, 1000),
-                                    between(0, current.get(), null),
-                                    null)
-                            );
-                            hasNextPage.set(response != null && response.getJsonObject("paging").containsKey("next"));
-                        }
-                        return hasNextPage.get();
-                    }
-
-                    @Override
-                    synchronized final List<MangaListStatus> getNextPage(){
-                        final JsonObject response = handleResponse(
-                            () -> service.getUserMangaListing(
-                                auth,
-                                username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
-                                status != null ? status.field() : null,
-                                sort != null ? sort.field() : null,
-                                between(0, limit, 1000),
-                                current.addAndGet(between(0, limit == null ? 1000 : limit, 1000)),
-                                fields == null ? mangaFields : asStringList(fields))
-                        );
-
-                        if(response == null){
-                            hasNextPage.set(false); // make sure null responses count as no next page
-                            return null;
-                        }
-
-                        final List<MangaListStatus> manga = new ArrayList<>();
-                        for(final JsonObject iterator : response.getJsonArray("data"))
-                            manga.add(asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
-
-                        hasNextPage.set(response.getJsonObject("paging").containsKey("next"));
-
-                        return manga;
-                    }
-
-                };
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getUserMangaListing(
+                        auth,
+                        username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        status != null ? status.field() : null,
+                        sort != null ? sort.field() : null,
+                        between(0, limit, 1000),
+                        offset,
+                        fields == null ? mangaFields : asStringList(fields)),
+                    iterator -> asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
+                );
             }
 
         };
@@ -985,16 +630,16 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     //
     
-    private void handleVoidResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
+    private static void handleVoidResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
         handleResponseCodes(supplier);
     }
     
-    private JsonObject handleResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
+    private static JsonObject handleResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
         final Response<?> response = handleResponseCodes(supplier);
         return response.code() == HttpURLConnection.HTTP_OK ? (JsonObject) response.body() : null;
     }
 
-    private Response<?> handleResponseCodes(final ExceptionSupplier<Response<?>,IOException> supplier){
+    private static Response<?> handleResponseCodes(final ExceptionSupplier<Response<?>,IOException> supplier){
         try{
             final Response<?> response = supplier.get();
 
@@ -1023,6 +668,74 @@ final class MyAnimeListImpl extends MyAnimeList{
                "authenticator=" + authenticator +
                ", service=" + service +
                '}';
+    }
+
+    //
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private static class PagedIterator<T> extends PaginatedIterator<T> {
+
+        // ^\Qhttps://api.myanimelist.net/v2/\E.+?[?&]\Qoffset=\E(\d+)(?:&.*$|$)
+        private static final Pattern nextPageRegex = Pattern.compile("^\\Q" + MyAnimeListService.baseURL + "\\E.+?[?&]\\Qoffset=\\E(\\d+)(?:&.*$|$)");
+
+        private final Matcher nextPageMatcher = nextPageRegex.matcher("");
+
+        private final Function<Integer,Response<JsonObject>> fullPageSupplier;
+        private final Function<JsonObject,T> listAdapter;
+
+        private final AtomicReference<Integer> nextOffset = new AtomicReference<>();
+        private final List<T> firstPage;
+        private final AtomicReference<Boolean> isFirstPage = new AtomicReference<>(null);
+
+        PagedIterator(
+            final Integer offset,
+            final Function<Integer,Response<JsonObject>> fullPageSupplier,
+            final Function<JsonObject,T> listAdapter
+        ){
+            this.fullPageSupplier   = fullPageSupplier;
+            this.listAdapter        = listAdapter;
+
+            // handle first page
+            nextOffset.set(offset);
+            firstPage = getNextPage();
+            isFirstPage.set(true);
+        }
+
+        @Override
+        final boolean hasNextPage(){
+            return nextOffset.get() != -1;
+        }
+
+        @Override
+        synchronized final List<T> getNextPage(){
+            if(isFirstPage.get() != null && isFirstPage.get()){
+                isFirstPage.set(false);
+                return firstPage;
+            }else{
+                final JsonObject response = handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));
+
+                if(response == null){
+                    nextOffset.set(-1);
+                    return null;
+                }
+
+                final List<T> list = new ArrayList<>();
+                for(final JsonObject data : response.getJsonArray("data"))
+                    list.add(listAdapter.apply(data));
+
+                if(response.getJsonObject("paging").containsKey("next")){
+                    nextPageMatcher.reset(response.getJsonObject("paging").getString("next"));
+                    if(nextPageMatcher.matches()){
+                        nextOffset.set(Integer.parseInt(nextPageMatcher.group(1)));
+                        return list;
+                    }
+                }
+                nextOffset.set(-1);
+
+                return list;
+            }
+        }
+
     }
 
     //
