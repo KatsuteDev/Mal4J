@@ -166,6 +166,7 @@ final class APICall {
             request.header(entry.getKey(), entry.getValue());
 
         request.header("Cache-Control", "no-cache, no-store, must-revalidate");
+        request.header("Accept", "application/json");
 
         if(formUrlEncoded){
             final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect( Collectors.joining("&"));
