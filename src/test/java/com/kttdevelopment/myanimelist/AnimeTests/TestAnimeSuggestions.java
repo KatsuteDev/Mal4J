@@ -2,6 +2,7 @@ package com.kttdevelopment.myanimelist.AnimeTests;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.TestProvider;
+import com.kttdevelopment.myanimelist.anime.Anime;
 import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import org.junit.jupiter.api.*;
 
@@ -18,7 +19,7 @@ public class TestAnimeSuggestions {
 
     @Test
     public void testAnimeSuggestions(){
-        final List<AnimePreview> suggestions =
+        final List<Anime> suggestions =
             mal.getAnimeSuggestions()
                 .search();
         Assertions.assertNotNull(suggestions);

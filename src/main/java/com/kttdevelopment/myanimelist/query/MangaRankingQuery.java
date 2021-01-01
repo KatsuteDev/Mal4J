@@ -1,6 +1,5 @@
 package com.kttdevelopment.myanimelist.query;
 
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.manga.MangaRanking;
 import com.kttdevelopment.myanimelist.manga.property.MangaRankingType;
 
@@ -22,15 +21,13 @@ public abstract class MangaRankingQuery extends FieldSearchQuery<MangaRankingQue
     /**
      * Creates a Manga ranking query. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      * @param rankingType ranking type
      *
      * @see com.kttdevelopment.myanimelist.MyAnimeList#getMangaRanking(MangaRankingType)
      * @see MangaRankingType
      * @since 1.0.0
      */
-    public MangaRankingQuery(final MyAnimeListService service, final MangaRankingType rankingType) {
-        super(service);
+    public MangaRankingQuery(final MangaRankingType rankingType) {
         this.rankingType = rankingType;
     }
 

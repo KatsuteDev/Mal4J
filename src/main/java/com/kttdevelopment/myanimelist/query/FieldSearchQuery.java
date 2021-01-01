@@ -1,7 +1,5 @@
 package com.kttdevelopment.myanimelist.query;
 
-import com.kttdevelopment.myanimelist.MyAnimeListService;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +18,7 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
 
     protected List<String> fields;
 
-    FieldSearchQuery(MyAnimeListService service) {
-        super(service);
-    }
+    FieldSearchQuery() { }
 
     /**
      * Adds a field to return.

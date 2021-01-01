@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.*;
 
@@ -26,15 +25,13 @@ public abstract class UserAnimeListQuery extends FieldSearchQuery<UserAnimeListQ
     /**
      * Creates a user Anime search query. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      * @param username username
      *
      * @see MyAnimeList#getUserAnimeListing()
      * @see MyAnimeList#getUserAnimeListing(String)
      * @since 1.0.0
      */
-    public UserAnimeListQuery(final MyAnimeListService service, final String username) {
-        super(service);
+    public UserAnimeListQuery(final String username) {
         this.username = username;
     }
 

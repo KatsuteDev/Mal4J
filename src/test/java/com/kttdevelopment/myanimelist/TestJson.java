@@ -27,6 +27,7 @@ public class TestJson {
                 "\"string\": \"string\",",
                 "\"strings\":\"string\",",
                 "\"str\\\"ingx\":\"str\\\"ing\",",
+                "\"slash\": \"\\/\\\\\",",
                 "\"obj\": {" +
                     "\"k\": \"v\"" +
                 "}," +
@@ -55,6 +56,7 @@ public class TestJson {
         Assertions.assertEquals("string", json.getString("string"));
         Assertions.assertEquals("string", json.getString("strings"));
         Assertions.assertEquals("str\"ing", json.getString("str\"ingx"));
+        Assertions.assertEquals("/\\", json.getString("slash"));
         Assertions.assertEquals("v", json.getJsonObject("obj").getString("k"));
         Assertions.assertEquals(0, json.getJsonObject("cobj").size());
         Assertions.assertEquals("str", json.getStringArray("arr")[0]);
@@ -76,6 +78,7 @@ public class TestJson {
                 "null,",
                 "\"string\",",
                 " \"str\\\"ingx\",",
+                "\"\\/\\\\\",",
                 "{" +
                     "\"k\": \"v\"" +
                 "}," +
@@ -86,6 +89,8 @@ public class TestJson {
                 "[]" +
             "]"
         );
+
+        // \/\\
 
         final List<?> json = (List<?>) parse(arr);
 
@@ -100,8 +105,9 @@ public class TestJson {
         Assertions.assertTrue(json.contains(null));
         Assertions.assertTrue(json.contains("string"));
         Assertions.assertTrue(json.contains("str\"ingx"));
-        Assertions.assertEquals("v", ((JsonObject) json.get(11)).getString("k"));
-        Assertions.assertEquals(0, ((JsonObject) json.get(12)).size());
+        Assertions.assertTrue(json.contains("/\\"));
+        Assertions.assertEquals("v", ((JsonObject) json.get(12)).getString("k"));
+        Assertions.assertEquals(0, ((JsonObject) json.get(13)).size());
         Assertions.assertTrue(json.contains(List.of("str")));
         Assertions.assertTrue(json.contains(List.of()));
     }
