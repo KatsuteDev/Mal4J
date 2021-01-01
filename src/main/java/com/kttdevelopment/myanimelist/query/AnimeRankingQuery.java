@@ -1,6 +1,5 @@
 package com.kttdevelopment.myanimelist.query;
 
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.AnimeRanking;
 import com.kttdevelopment.myanimelist.anime.property.AnimeRankingType;
 
@@ -22,15 +21,13 @@ public abstract class AnimeRankingQuery extends FieldSearchQuery<AnimeRankingQue
     /**
      * Creates an Anime ranking query. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      * @param rankingType ranking type
      *
      * @see com.kttdevelopment.myanimelist.MyAnimeList#getAnimeRanking(AnimeRankingType)
      * @see AnimeRankingType
      * @since 1.0.0
      */
-    public AnimeRankingQuery(final MyAnimeListService service, final AnimeRankingType rankingType) {
-        super(service);
+    public AnimeRankingQuery(final AnimeRankingType rankingType) {
         this.rankingType = rankingType;
     }
 

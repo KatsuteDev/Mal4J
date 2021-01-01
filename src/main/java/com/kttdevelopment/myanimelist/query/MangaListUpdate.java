@@ -1,6 +1,5 @@
 package com.kttdevelopment.myanimelist.query;
 
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.manga.MangaListStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
 import com.kttdevelopment.myanimelist.query.property.RereadValue;
@@ -24,14 +23,13 @@ public abstract class MangaListUpdate extends ListUpdate<MangaListUpdate,MangaLi
     /**
      * Creates a Manga list update. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      * @param id Manga id
      *
      * @see com.kttdevelopment.myanimelist.MyAnimeList#updateMangaListing(long)
      * @since 1.0.0
      */
-    public MangaListUpdate(final MyAnimeListService service, final long id){
-        super(service, id);
+    public MangaListUpdate(final long id){
+        super( id);
     }
 
     /**

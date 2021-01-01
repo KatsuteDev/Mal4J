@@ -1,8 +1,7 @@
 package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.MyAnimeListService;
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
+import com.kttdevelopment.myanimelist.anime.Anime;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_suggestions_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_suggestions_get</a> <br>
@@ -14,7 +13,7 @@ import com.kttdevelopment.myanimelist.anime.AnimePreview;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggestionQuery,AnimePreview> {
+public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggestionQuery,Anime> {
 
     protected String query;
     protected Boolean nsfw;
@@ -22,14 +21,11 @@ public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggest
     /**
      * Creates an Anime suggestion query. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      *
      * @see MyAnimeList#getAnimeSuggestions()
      * @since 1.0.0
      */
-    public AnimeSuggestionQuery(final MyAnimeListService service) {
-        super(service);
-    }
+    public AnimeSuggestionQuery() { }
 
     /**
      * Sets the search query.

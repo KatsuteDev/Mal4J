@@ -1,6 +1,5 @@
 package com.kttdevelopment.myanimelist.query;
 
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.AnimeListStatus;
 import com.kttdevelopment.myanimelist.anime.property.AnimeStatus;
 import com.kttdevelopment.myanimelist.query.property.RewatchValue;
@@ -25,14 +24,13 @@ public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeLi
     /**
      * Creates an Anime list update. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      * @param id Anime id
      *
      * @see com.kttdevelopment.myanimelist.MyAnimeList#updateAnimeListing(long)
      * @since 1.0.0
      */
-    public AnimeListUpdate(final MyAnimeListService service, final long id){
-        super(service, id);
+    public AnimeListUpdate(final long id){
+        super(id);
     }
 
     /**

@@ -19,23 +19,31 @@ abstract class Json {
     // [\{\}\[\],]
     private static final Pattern split = Pattern.compile("[{}\\[\\],]");
 
-    // (?<!\\)"
-    private static final Pattern nonEscQuote = Pattern.compile("(?<!\\\\)\"");
+    // (?<!\\)(?:\\\\)*"
+    private static final Pattern nonEscQuote = Pattern.compile("(?<!\\\\)(?:\\\\\\\\)*\"");
 
     // \\"
     private static final Pattern escQuote =
         Pattern.compile("\\\\\"");
 
-    // ^\s*(?<!\\)"(?<key>.+)(?<!\\)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
+    // \\\/
+    private static final Pattern escFwdSlash =
+        Pattern.compile("\\\\/");
+
+    // \\\\
+    private static final Pattern escBackSlash =
+        Pattern.compile("\\\\\\\\");
+
+    // ^\s*(?<!\\)"(?<key>.+(?<!\\)(?:\\\\)*)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType =
-        Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+        Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+(?<!\\\\)(?:\\\\\\\\)*)\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*(?<!\\\\)(?:\\\\\\\\)*)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
     // ^\s*} *,?\s*$
     private static final Pattern mapClose =
         Pattern.compile("^\\s*} *,?\\s*$");
 
-    // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*)(?<!\\)" *,?|(?<array>\[)|(?<map>\{))\s*$
+    // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern arrType =
-        Pattern.compile("^\\s*((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+        Pattern.compile("^\\s*((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*(?<!\\\\)(?:\\\\\\\\)*)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
 
     // ^\s*] *,?\s*$
     private static final Pattern arrClose =
@@ -58,7 +66,7 @@ abstract class Json {
         final Matcher matcher = split.matcher(json);
         final Matcher quotes = nonEscQuote.matcher("");
         while(matcher.find()){ // while still contains line splitting symbol
-            final int index = matcher.start();
+            final int index = matcher.end() - 1; // before the comma/split character
             final String after = json.substring(index + 1);
             final long count = quotes.reset(after).results().count();
             if(count %2 == 0){ // even means symbol is not within quotes
@@ -102,7 +110,10 @@ abstract class Json {
 
     private static List<?> openArray(final BufferedReader reader) throws IOException{
         final Matcher matcher = arrType.matcher("");
-        final Matcher strMatcher = escQuote.matcher("");
+        final Matcher escQuoteMatcher = escQuote.matcher("");
+        final Matcher escFwdSlashMatcher = escFwdSlash.matcher("");
+        final Matcher escBackSlashMatcher = escBackSlash.matcher("");
+
         final List<Object> list = new ArrayList<>();
         String ln;
         while((ln = reader.readLine()) != null){ // while not closing tag
@@ -126,7 +137,14 @@ abstract class Json {
                 else if(matcher.group("null") != null)
                     list.add(null);
                 else if((raw = matcher.group("string")) != null)
-                    list.add(strMatcher.reset(raw).replaceAll("\""));
+                    list.add(
+                        escBackSlashMatcher.reset(
+                            escFwdSlashMatcher.reset(
+                                escQuoteMatcher.reset(raw)
+                                .replaceAll("\""))
+                            .replaceAll("/"))
+                        .replaceAll("\\\\")
+                    );
                 else if(matcher.group("array") != null) // open new array
                     list.add(openArray(reader));
                 else if(matcher.group("map") != null) // open new map
@@ -141,13 +159,22 @@ abstract class Json {
 
     private static JsonObject openMap(final BufferedReader reader) throws IOException{
         final Matcher matcher = mapType.matcher("");
-        final Matcher strMatcher = escQuote.matcher("");
+        final Matcher escQuoteMatcher = escQuote.matcher("");
+        final Matcher escFwdSlashMatcher = escFwdSlash.matcher("");
+        final Matcher escBackSlashMatcher = escBackSlash.matcher("");
+
         final JsonObject obj = new JsonObject();
         String ln;
         while((ln = reader.readLine()) != null){
             ln = ln.trim();
             if(matcher.reset(ln).matches()){
-                final String key = strMatcher.reset(matcher.group("key")).replaceAll("\"");
+                final String key =
+                    escBackSlashMatcher.reset(
+                        escFwdSlashMatcher.reset(
+                            escQuoteMatcher.reset(matcher.group("key"))
+                            .replaceAll("\""))
+                        .replaceAll("/"))
+                    .replaceAll("\\\\");
                 String raw;
                 if((raw = matcher.group("double")) != null)
                     try{
@@ -166,7 +193,15 @@ abstract class Json {
                 else if(matcher.group("null") != null)
                     obj.set(key, null);
                 else if((raw = matcher.group("string")) != null)
-                    obj.set(key, strMatcher.reset(raw).replaceAll("\""));
+                    obj.set(
+                        key,
+                        escBackSlashMatcher.reset(
+                            escFwdSlashMatcher.reset(
+                                escQuoteMatcher.reset(raw)
+                                .replaceAll("\""))
+                            .replaceAll("/"))
+                        .replaceAll("\\\\")
+                    );
                 else if(matcher.group("array") != null) // open new array
                     obj.set(key, openArray(reader));
                 else if(matcher.group("map") != null) // open new map
