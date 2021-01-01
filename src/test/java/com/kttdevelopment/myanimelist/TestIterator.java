@@ -1,6 +1,6 @@
 package com.kttdevelopment.myanimelist;
 
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
+import com.kttdevelopment.myanimelist.anime.Anime;
 import org.junit.jupiter.api.*;
 
 public class TestIterator {
@@ -14,14 +14,14 @@ public class TestIterator {
 
     @Test
     public void testIterator(){
-        final PaginatedIterator<AnimePreview> iterator = mal
+        final PaginatedIterator<Anime> iterator = mal
             .getAnime()
             .withQuery(TestProvider.AnimeQuery)
             .withLimit(100)
             .withFields("id")
             .searchAll();
 
-        final AnimePreview first = iterator.next();
+        final Anime first = iterator.next();
         Assertions.assertEquals(TestProvider.AnimeID, first.getID());
         iterator.forEachRemaining(animePreview -> Assertions.assertNotEquals(TestProvider.AnimeID, animePreview.getID()));
     }

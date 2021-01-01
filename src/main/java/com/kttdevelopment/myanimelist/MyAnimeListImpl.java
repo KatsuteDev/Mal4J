@@ -68,7 +68,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         return new AnimeSearchQuery(service) {
 
             @Override
-            public final List<AnimePreview> search(){
+            public final List<Anime> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnime(
                         auth,
@@ -80,14 +80,14 @@ final class MyAnimeListImpl extends MyAnimeList{
                 );
                 if(response == null) return null;
 
-                final List<AnimePreview> anime = new ArrayList<>();
+                final List<Anime> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<AnimePreview> searchAll(){
+            public final PaginatedIterator<Anime> searchAll(){
                 return new PaginatedIterator<>() {
 
                     private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
@@ -114,7 +114,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                     }
 
                     @Override
-                    synchronized final List<AnimePreview> getNextPage(){
+                    synchronized final List<Anime> getNextPage(){
                         final AnimeSearchQuery asq = getAnime()
                             .withQuery(query)
                             .withLimit(limit)
@@ -210,7 +210,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         return new AnimeSeasonQuery(service, year, Objects.requireNonNull(season)) {
 
             @Override
-            public final List<AnimePreview> search(){
+            public final List<Anime> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeSeason(
                         auth,
@@ -224,14 +224,14 @@ final class MyAnimeListImpl extends MyAnimeList{
                 );
                 if(response == null) return null;
 
-                final List<AnimePreview> anime = new ArrayList<>();
+                final List<Anime> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<AnimePreview> searchAll(){
+            public final PaginatedIterator<Anime> searchAll(){
                 return new PaginatedIterator<>() {
 
                     private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
@@ -253,7 +253,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                     }
 
                     @Override
-                    synchronized final List<AnimePreview> getNextPage(){
+                    synchronized final List<Anime> getNextPage(){
                         final AnimeSeasonQuery asq = getAnimeSeason(year, season)
                             .sortBy(sort)
                             .withLimit(limit)
@@ -275,7 +275,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         return new AnimeSuggestionQuery(service) {
 
             @Override
-            public final List<AnimePreview> search(){
+            public final List<Anime> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeSuggestions(
                         auth,
@@ -286,14 +286,14 @@ final class MyAnimeListImpl extends MyAnimeList{
                 );
                 if(response == null) return null;
 
-                final List<AnimePreview> anime = new ArrayList<>();
+                final List<Anime> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<AnimePreview> searchAll(){
+            public final PaginatedIterator<Anime> searchAll(){
                 return new PaginatedIterator<>() {
 
                     private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
@@ -312,7 +312,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                     }
 
                     @Override
-                    synchronized final List<AnimePreview> getNextPage(){
+                    synchronized final List<Anime> getNextPage(){
                         final AnimeSuggestionQuery asq = getAnimeSuggestions()
                             .withLimit(limit)
                             .withOffset(current.addAndGet(between(0, limit, 100)))
@@ -545,7 +545,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         return new MangaSearchQuery(service) {
 
             @Override
-            public final List<MangaPreview> search(){
+            public final List<Manga> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getManga(
                         auth,
@@ -557,14 +557,14 @@ final class MyAnimeListImpl extends MyAnimeList{
                 );
                 if(response == null) return null;
 
-                final List<MangaPreview> manga = new ArrayList<>();
+                final List<Manga> manga = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    manga.add(asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    manga.add(asManga(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return manga;
             }
 
             @Override
-            public final PaginatedIterator<MangaPreview> searchAll(){
+            public final PaginatedIterator<Manga> searchAll(){
                 return new PaginatedIterator<>() {
 
                     private final AtomicInteger current = new AtomicInteger(-limit); // make so first nextPage returns offset 0
@@ -584,7 +584,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                     }
 
                     @Override
-                    synchronized final List<MangaPreview> getNextPage(){
+                    synchronized final List<Manga> getNextPage(){
                         final MangaSearchQuery msq = getManga()
                             .withQuery(query)
                             .withLimit(limit)

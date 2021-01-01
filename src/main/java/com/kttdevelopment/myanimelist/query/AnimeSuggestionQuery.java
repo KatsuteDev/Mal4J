@@ -2,6 +2,7 @@ package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.MyAnimeListService;
+import com.kttdevelopment.myanimelist.anime.Anime;
 import com.kttdevelopment.myanimelist.anime.AnimePreview;
 
 /**
@@ -14,7 +15,7 @@ import com.kttdevelopment.myanimelist.anime.AnimePreview;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggestionQuery,AnimePreview> {
+public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggestionQuery,Anime> {
 
     protected String query;
     protected Boolean nsfw;

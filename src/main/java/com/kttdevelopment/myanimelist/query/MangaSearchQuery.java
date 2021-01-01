@@ -2,6 +2,7 @@ package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
 import com.kttdevelopment.myanimelist.MyAnimeListService;
+import com.kttdevelopment.myanimelist.manga.Manga;
 import com.kttdevelopment.myanimelist.manga.MangaPreview;
 
 /**
@@ -14,7 +15,7 @@ import com.kttdevelopment.myanimelist.manga.MangaPreview;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery,MangaPreview> {
+public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery,Manga> {
 
     protected String query;
     protected Boolean nsfw;
