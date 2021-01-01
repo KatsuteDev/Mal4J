@@ -1,9 +1,7 @@
 package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.Anime;
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
 import com.kttdevelopment.myanimelist.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.myanimelist.anime.property.time.Season;
 
@@ -27,7 +25,6 @@ public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery
     /**
      * Creates an Anime season query. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      * @param year year
      * @param season season
      *
@@ -35,8 +32,7 @@ public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery
      * @see Season
      * @since 1.0.0
      */
-    public AnimeSeasonQuery(final MyAnimeListService service, final int year, final Season season) {
-        super(service);
+    public AnimeSeasonQuery(final int year, final Season season) {
         this.year = year;
         this.season = season;
     }

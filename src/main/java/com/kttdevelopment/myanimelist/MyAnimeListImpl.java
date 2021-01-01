@@ -64,7 +64,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final AnimeSearchQuery getAnime(){
-        return new AnimeSearchQuery(service) {
+        return new AnimeSearchQuery() {
 
             @Override
             public final List<Anime> search(){
@@ -159,7 +159,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType){
-        return new AnimeRankingQuery(service, Objects.requireNonNull(rankingType)) {
+        return new AnimeRankingQuery(Objects.requireNonNull(rankingType)) {
 
             @Override
             public final List<AnimeRanking> search(){
@@ -238,7 +238,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final AnimeSeasonQuery getAnimeSeason(final int year, final Season season){
-        return new AnimeSeasonQuery(service, year, Objects.requireNonNull(season)) {
+        return new AnimeSeasonQuery(year, Objects.requireNonNull(season)) {
 
             @Override
             public final List<Anime> search(){
@@ -324,7 +324,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final AnimeSuggestionQuery getAnimeSuggestions(){
-        return new AnimeSuggestionQuery(service) {
+        return new AnimeSuggestionQuery() {
 
             @Override
             public final List<Anime> search(){
@@ -401,7 +401,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final AnimeListUpdate updateAnimeListing(final long id){
-        return new AnimeListUpdate(service, id) {
+        return new AnimeListUpdate(id) {
 
             @Override
             public synchronized final AnimeListStatus update(){
@@ -443,7 +443,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final UserAnimeListQuery getUserAnimeListing(final String username){
-        return new UserAnimeListQuery(service, Objects.requireNonNull(username)) {
+        return new UserAnimeListQuery(Objects.requireNonNull(username)) {
 
             @Override
             public final List<AnimeListStatus> search(){
@@ -564,7 +564,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final ForumSearchQuery getForumTopics(){
-        return new ForumSearchQuery(service) {
+        return new ForumSearchQuery() {
 
             @Override
             public final List<ForumTopicDetail> search(){
@@ -655,7 +655,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final MangaSearchQuery getManga(){
-        return new MangaSearchQuery(service) {
+        return new MangaSearchQuery() {
 
             @Override
             public final List<Manga> search(){
@@ -751,7 +751,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final MangaRankingQuery getMangaRanking(final MangaRankingType rankingType){
-        return new MangaRankingQuery(service, Objects.requireNonNull(rankingType)) {
+        return new MangaRankingQuery(Objects.requireNonNull(rankingType)) {
 
             @Override
             public final List<MangaRanking> search(){
@@ -831,7 +831,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final MangaListUpdate updateMangaListing(final long id){
-        return new MangaListUpdate(service, id) {
+        return new MangaListUpdate(id) {
 
             @Override
             public synchronized final MangaListStatus update(){
@@ -874,7 +874,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final UserMangaListQuery getUserMangaListing(final String username){
-        return new UserMangaListQuery(service, Objects.requireNonNull(username)) {
+        return new UserMangaListQuery(Objects.requireNonNull(username)) {
 
             @Override
             public final List<MangaListStatus> search(){

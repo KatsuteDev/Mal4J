@@ -13,7 +13,7 @@ import static com.kttdevelopment.myanimelist.Json.*;
  * @author Ktt Development
  */
 @SuppressWarnings({"DefaultAnnotationParam", "ClassEscapesDefinedScope"})
-public interface MyAnimeListService {
+interface MyAnimeListService {
 
     String baseURL = "https://api.myanimelist.net/v2/";
 
@@ -35,9 +35,9 @@ public interface MyAnimeListService {
 
     @Endpoint(method="GET", value="anime/{anime_id}")
     Response<JsonObject> getAnime(
-        @Header("Authorization")                   final String token,
-        @Path(value = "anime_id")                  final Long anime_id,
-        @Query(value = "fields", encoded = true)   final String fields
+        @Header("Authorization")                    final String token,
+        @Path(value = "anime_id")                   final Long anime_id,
+        @Query(value = "fields", encoded = true)    final String fields
     );
 
     @Endpoint(method="GET", value="anime/ranking")
@@ -126,15 +126,15 @@ public interface MyAnimeListService {
     @SuppressWarnings("SpellCheckingInspection")
     @Endpoint(method="GET", value="forum/topics")
     Response<JsonObject> getForumTopics(
-        @Header("Authorization")   final String token,
-        @Query("board_id")          final Long board_id,
-        @Query("subboard_id")       final Long subboard_id,
-        @Query("limit")             final Integer limit,
-        @Query("offset")            final Integer offset,
-        @Query("sort")              final String sort,
-        @Query("q")                 final String search,
-        @Query("topic_user_name")   final String topic_username,
-        @Query("user_name")         final String username
+        @Header("Authorization")                    final String token,
+        @Query("board_id")                          final Long board_id,
+        @Query("subboard_id")                       final Long subboard_id,
+        @Query("limit")                             final Integer limit,
+        @Query("offset")                            final Integer offset,
+        @Query("sort")                              final String sort,
+        @Query("q")                                 final String search,
+        @Query("topic_user_name")                   final String topic_username,
+        @Query("user_name")                         final String username
     );
 
     // manga

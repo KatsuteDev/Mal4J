@@ -1,6 +1,5 @@
 package com.kttdevelopment.myanimelist.query;
 
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.property.ListStatus;
 import com.kttdevelopment.myanimelist.query.property.Priority;
 
@@ -21,7 +20,6 @@ import java.util.List;
 @SuppressWarnings("unchecked")
 abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S extends Enum<?>> {
 
-    protected final MyAnimeListService service;
     protected final long id;
 
     protected S status;
@@ -30,8 +28,7 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
     protected List<String> tags;
     protected String comments;
 
-    ListUpdate(final MyAnimeListService service, final long id){
-        this.service = service;
+    ListUpdate(final long id){
         this.id = id;
     }
 

@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.forum.ForumTopicDetail;
 import com.kttdevelopment.myanimelist.forum.property.ForumSort;
 
@@ -22,9 +21,7 @@ public abstract class ForumSearchQuery extends FieldSearchQuery<ForumSearchQuery
     protected final String sort = ForumSort.Recent.field();
     protected String topicUsername, username;
     
-    public ForumSearchQuery(final MyAnimeListService service){
-        super(service);
-    }
+    public ForumSearchQuery(){ }
 
     /**
      * Sets the search query.

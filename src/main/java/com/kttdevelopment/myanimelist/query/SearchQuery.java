@@ -14,14 +14,10 @@ import java.util.List;
 @SuppressWarnings({"unchecked"})
 abstract class SearchQuery<T extends SearchQuery<T,R>,R> {
 
-    protected final MyAnimeListService service;
-
     protected Integer limit;
     protected Integer offset;
 
-    SearchQuery(final MyAnimeListService service) {
-        this.service = service;
-    }
+    SearchQuery() { }
 
     /**
      * Sets maximum amount of listings to return.

@@ -1,9 +1,7 @@
 package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.anime.Anime;
-import com.kttdevelopment.myanimelist.anime.AnimePreview;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get</a> <br>
@@ -23,14 +21,11 @@ public abstract class AnimeSearchQuery extends FieldSearchQuery<AnimeSearchQuery
     /**
      * Creates an Anime search query. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      *
      * @see MyAnimeList#getAnime()
      * @since 1.0.0
      */
-    public AnimeSearchQuery(final MyAnimeListService service) {
-        super(service);
-    }
+    public AnimeSearchQuery() { }
 
     /**
      * Sets the search query.

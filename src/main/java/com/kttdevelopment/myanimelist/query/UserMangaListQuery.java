@@ -1,7 +1,6 @@
 package com.kttdevelopment.myanimelist.query;
 
 import com.kttdevelopment.myanimelist.MyAnimeList;
-import com.kttdevelopment.myanimelist.MyAnimeListService;
 import com.kttdevelopment.myanimelist.manga.MangaListStatus;
 import com.kttdevelopment.myanimelist.manga.property.MangaSort;
 import com.kttdevelopment.myanimelist.manga.property.MangaStatus;
@@ -27,15 +26,13 @@ public abstract class UserMangaListQuery extends FieldSearchQuery<UserMangaListQ
     /**
      * Creates a user Manga search query. Applications do not use this constructor.
      *
-     * @param service MyAnimeList
      * @param username username
      *
      * @see MyAnimeList#getUserMangaListing()
      * @see MyAnimeList#getUserMangaListing(String)
      * @since 1.0.0
      */
-    public UserMangaListQuery(final MyAnimeListService service, final String username) {
-        super(service);
+    public UserMangaListQuery(final String username) {
         this.username = username;
     }
 
