@@ -34,16 +34,16 @@ abstract class Json {
     private static final Pattern escBackSlash =
         Pattern.compile("\\\\\\\\");
 
-    // ^\s*(?<!\\)"(?<key>.+)(?<!\\)(?:\\\\)*": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*)(?<!\\)(?:\\\\)*" *,?|(?<array>\[)|(?<map>\{))\s*$
+    // ^\s*(?<!\\)"(?<key>.+(?<!\\)(?:\\\\)*)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType =
-        Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+)(?<!\\\\)(?:\\\\\\\\)*\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)(?:\\\\\\\\)*\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+        Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+(?<!\\\\)(?:\\\\\\\\)*)\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*(?<!\\\\)(?:\\\\\\\\)*)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
     // ^\s*} *,?\s*$
     private static final Pattern mapClose =
         Pattern.compile("^\\s*} *,?\\s*$");
 
-    // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*)(?<!\\)(?:\\\\)*" *,?|(?<array>\[)|(?<map>\{))\s*$
+    // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern arrType =
-        Pattern.compile("^\\s*((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*)(?<!\\\\)(?:\\\\\\\\)*\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
+        Pattern.compile("^\\s*((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*(?<!\\\\)(?:\\\\\\\\)*)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
 
     // ^\s*] *,?\s*$
     private static final Pattern arrClose =
@@ -66,7 +66,7 @@ abstract class Json {
         final Matcher matcher = split.matcher(json);
         final Matcher quotes = nonEscQuote.matcher("");
         while(matcher.find()){ // while still contains line splitting symbol
-            final int index = matcher.start();
+            final int index = matcher.end() - 1; // before the comma/split character
             final String after = json.substring(index + 1);
             final long count = quotes.reset(after).results().count();
             if(count %2 == 0){ // even means symbol is not within quotes
@@ -143,7 +143,7 @@ abstract class Json {
                                 escQuoteMatcher.reset(raw)
                                 .replaceAll("\""))
                             .replaceAll("/"))
-                        .replaceAll("\\")
+                        .replaceAll("\\\\")
                     );
                 else if(matcher.group("array") != null) // open new array
                     list.add(openArray(reader));
@@ -174,7 +174,7 @@ abstract class Json {
                             escQuoteMatcher.reset(matcher.group("key"))
                             .replaceAll("\""))
                         .replaceAll("/"))
-                    .replaceAll("\\");
+                    .replaceAll("\\\\");
                 String raw;
                 if((raw = matcher.group("double")) != null)
                     try{
@@ -200,7 +200,7 @@ abstract class Json {
                                 escQuoteMatcher.reset(raw)
                                 .replaceAll("\""))
                             .replaceAll("/"))
-                        .replaceAll("\\")
+                        .replaceAll("\\\\")
                     );
                 else if(matcher.group("array") != null) // open new array
                     obj.set(key, openArray(reader));

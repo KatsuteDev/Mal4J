@@ -106,8 +106,8 @@ public class TestJson {
         Assertions.assertTrue(json.contains("string"));
         Assertions.assertTrue(json.contains("str\"ingx"));
         Assertions.assertTrue(json.contains("/\\"));
-        Assertions.assertEquals("v", ((JsonObject) json.get(11)).getString("k"));
-        Assertions.assertEquals(0, ((JsonObject) json.get(12)).size());
+        Assertions.assertEquals("v", ((JsonObject) json.get(12)).getString("k"));
+        Assertions.assertEquals(0, ((JsonObject) json.get(13)).size());
         Assertions.assertTrue(json.contains(List.of("str")));
         Assertions.assertTrue(json.contains(List.of()));
     }
