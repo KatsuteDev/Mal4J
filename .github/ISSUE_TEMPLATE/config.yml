@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Feature Requests
+    url: https://github.com/Katsute/MyAnimeList-Java-API/discussions/categories/feature-requests
+    about: New feature requests must be posted here first before they may become an issue
+  - name: Discussions
+    url: https://github.com/Katsute/MyAnimeList-Java-API/discussions
+    about: Check here before posting an issue
