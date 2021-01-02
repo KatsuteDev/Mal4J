@@ -19,12 +19,12 @@ categories:
   - title: "🐞 Bug Fixes"
     labels:
       - "bug"
-      - "error"
+      - "critical bug"
   - title: "📘 Dependencies"
     label: "dependencies"
 no-changes-template: "*No changes*"
 change-template: "- $TITLE #$NUMBER (@$AUTHOR)"
 template: |
-  # 📘 $NEXT_MINOR_VERSION
+  # 🌈 Changes
 
   $CHANGES
