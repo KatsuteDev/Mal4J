@@ -244,9 +244,8 @@ public abstract class MyAnimeList {
     /**
      * Returns a forum topic.
      *
-     * @deprecated The limit parameter is listed on the API but doesn't actually do anything
      * @param id forum topic id
-     * @param limit limit
+     * @param limit post limit
      * @return forum topic
      * @throws HTTPException if request failed
      * @throws UncheckedIOException if client failed to execute request
@@ -255,16 +254,14 @@ public abstract class MyAnimeList {
      * @see #getForumTopicDetail(long, int, int)
      * @since 1.0.0
      */
-    @Deprecated
     public abstract ForumTopic getForumTopicDetail(final long id, final int limit);
 
     /**
      * Returns a forum topic.
      *
-     * @deprecated The limit and offset parameters are listed on the API but it doesn't actually do anything
      * @param id forum topic id
-     * @param limit limit
-     * @param offset offset
+     * @param limit post limit
+     * @param offset post offset
      * @return forum topic
      * @throws HTTPException if request failed
      * @throws UncheckedIOException if client failed to execute request
@@ -273,7 +270,6 @@ public abstract class MyAnimeList {
      * @see #getForumTopicDetail(long, int)
      * @since 1.0.0
      */
-    @Deprecated
     public abstract ForumTopic getForumTopicDetail(final long id, final int limit, final int offset);
 
     //

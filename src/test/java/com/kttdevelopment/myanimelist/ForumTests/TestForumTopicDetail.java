@@ -54,4 +54,10 @@ public class TestForumTopicDetail {
         Assertions.assertSame(topic, poll.getForumTopic());
     }
 
+    @Test
+    public void testPostLimitOffset(){
+        Assertions.assertEquals(5, mal.getForumTopicDetail(481, 5).getPosts().length);
+        Assertions.assertEquals(6, mal.getForumTopicDetail(481, 5, 5).getPosts()[0].getNumber());
+    }
+
 }
