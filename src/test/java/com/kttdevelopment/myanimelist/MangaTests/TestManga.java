@@ -93,7 +93,7 @@ public class TestManga {
     
     @Test @DisplayName("#4 - Serialization") @Disabled
     public void testSerializationRole(){
-        Assertions.assertNotNull(manga.getSerialization()[1].getRole());
+        Assertions.assertNotNull(manga.getSerialization()[0].getRole());
     }
 
 }
