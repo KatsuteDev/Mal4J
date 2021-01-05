@@ -10,6 +10,8 @@
         •
         <a href="https://myanimelist.kttdevelopment.com/setup/">Setup</a>
         •
+        <a href="https://myanimelist.kttdevelopment.com/faq/">FAQ</a>
+        •
         <a href="https://github.com/Katsute/MyAnimeList-Java-API/issues">Issues</a>
         •
         <a href="https://github.com/Katsute/MyAnimeList-Java-API/discussions">Discussions</a>
