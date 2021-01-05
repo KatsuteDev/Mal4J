@@ -44,7 +44,7 @@ public class TestAnimeSearch {
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
                 .withLimit(1)
-                .withFields(new String[0])
+                .withFields(MyAnimeList.NO_FIELDS)
                 .search();
         Assertions.assertNull(search.get(0).getType());
     }
@@ -68,16 +68,6 @@ public class TestAnimeSearch {
                    .search();
             Assertions.assertEquals(TestProvider.NSFW_AnimeID, search.get(0).getID());
         }
-    }
-
-    @Test @DisplayName("#6 - Limit") @Disabled
-    public void testOverLimit(){
-        Assertions.assertNotNull(mal.getAnime().withLimit(200).search());
-    }
-
-    @Test @DisplayName("#6 - Offset") @Disabled
-    public void testZeroOffset(){
-        Assertions.assertNotNull(mal.getAnime().withOffset(0).search());
     }
 
 }

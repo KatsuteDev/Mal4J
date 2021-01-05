@@ -16,7 +16,7 @@ import java.util.List;
 @SuppressWarnings({"unchecked", "UnusedReturnValue"})
 abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends SearchQuery<T,R> {
 
-    protected List<String> fields;
+    protected List<String> fields = null;
 
     FieldSearchQuery() { }
 
@@ -31,9 +31,7 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      * @since 1.0.0
      */
     public final T withField(final String field){
-        if(this.fields == null)
-            this.fields = new ArrayList<>();
-        if(field != null && !this.fields.contains(field))
+        if(!this.fields.contains(field))
             this.fields.add(field);
         return (T) this;
     }
@@ -51,12 +49,13 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      */
     public final T withFields(final String... fields){
         if(fields == null)
-            this.fields = null;
-        else if(this.fields == null)
             this.fields = new ArrayList<>();
-        if(fields != null)
+        else{
+            if(this.fields == null)
+                this.fields = new ArrayList<>();
             for(String field : fields)
                 withField(field);
+        }
         return (T) this;
     }
 
@@ -73,12 +72,13 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      */
     public final T withFields(final List<String> fields){
         if(fields == null)
-            this.fields = null;
-        else if(this.fields == null)
             this.fields = new ArrayList<>();
-        if(fields != null)
+        else{
+            if(this.fields == null)
+                this.fields = new ArrayList<>();
             for(String field : fields)
                 withField(field);
+        }
         return (T) this;
     }
 
