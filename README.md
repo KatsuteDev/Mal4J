@@ -8,6 +8,8 @@
         <br />
         <a href="https://myanimelist.kttdevelopment.com/documentation/">Docs</a>
         •
+        <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
+        •
         <a href="https://myanimelist.kttdevelopment.com/setup/">Setup</a>
         •
         <a href="https://myanimelist.kttdevelopment.com/faq/">FAQ</a>
