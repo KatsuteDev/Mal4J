@@ -28,6 +28,8 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      *
      * @see #withFields(String...)
      * @see #withFields(List)
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#ALL_ANIME_FIELDS
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#ALL_MANGA_FIELDS
      * @since 1.0.0
      */
     public final T withField(final String field){
@@ -47,6 +49,8 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      *
      * @see #withField(String)
      * @see #withFields(List)
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#ALL_ANIME_FIELDS
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#ALL_MANGA_FIELDS
      * @since 1.0.0
      */
     public final T withFields(final String... fields){

@@ -120,6 +120,7 @@ public abstract class MyAnimeList {
      *
      * @see Anime
      * @see #getAnime()
+     * @see #ALL_ANIME_FIELDS
      * @since 1.0.0
      */
     public abstract Anime getAnime(final long id, final String... fields);
@@ -345,6 +346,7 @@ public abstract class MyAnimeList {
      *
      * @see Manga
      * @see #getManga()
+     * @see #ALL_MANGA_FIELDS
      * @since 1.0.0
      */
     public abstract Manga getManga(final long id, final String... fields);
@@ -450,6 +452,7 @@ public abstract class MyAnimeList {
      *
      * @see User
      * @see #getMyself()
+     * @see #ALL_USER_FIELDS
      * @since 1.0.0
      */
     public abstract User getMyself(final String... fields);
@@ -479,6 +482,7 @@ public abstract class MyAnimeList {
      *
      * @see User
      * @see #getUser(String)
+     * @see #ALL_USER_FIELDS
      * @since 1.0.0
      */
     public abstract User getUser(final String username, final String... fields);

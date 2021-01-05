@@ -37,12 +37,12 @@ public class TestAnimeSeason {
         final List<Anime> season =
             mal.getAnimeSeason(2020, Season.Winter)
                 .withLimit(2)
-                .sortBy(AnimeSeasonSort.Score)
+                .sortBy(AnimeSeasonSort.Users)
                 .withField(MyAnimeList.ALL_ANIME_FIELDS)
                 .search();
         final AnimePreview first = season.get(0);
         final AnimePreview second = season.get(1);
-        Assertions.assertTrue(first.getMeanRating() > second.getMeanRating());
+        Assertions.assertTrue(first.getUserScoringCount() > second.getUserScoringCount());
     }
 
     @Test @DisplayName("#5 - Seasonal") @Disabled
