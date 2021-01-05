@@ -17,7 +17,7 @@ public class TestAnime {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
-        anime = mal.getAnime(TestProvider.AltAnimeID);
+        anime = mal.getAnime(TestProvider.AltAnimeID, MyAnimeList.ALL_ANIME_FIELDS);
     }
 
     @Test

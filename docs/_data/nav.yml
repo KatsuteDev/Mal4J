@@ -4,6 +4,8 @@
   link: /documentation
 - name: Setup
   link: /setup
+- name: FAQ
+  link: /FAQ
 - name: Discussion
   link: https://github.com/Katsute/MyAnimeList-Java-API/discussions
   new: true

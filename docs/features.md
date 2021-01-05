@@ -10,6 +10,7 @@ List<AnimePreview> search =
         .withQuery("さくら荘のペットな彼女")
         .withLimit(1)
         .withOffset(1)
+        .withFields(MyAnimeList.ALL_ANIME_FIELDS)
         .includeNSFW(false)
         .search();
 ```
@@ -39,7 +40,7 @@ MangaListStatus status =
 <hr>
 ```java
 MyAnimeList mal = MyAnimeList.withOAuthToken("");
-Anime anime = mal.getAnime(13759);
+Anime anime = mal.getAnime(13759, MyAnimeList.ALL_ANIME_FIELDS);
 
 String ja = anime.getAlternativeTitles().getJapanese();
 Genre[] genres = anime.getGenres();

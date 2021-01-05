@@ -23,14 +23,18 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
     /**
      * Adds a field to return.
      *
-     * @param field field
+     * @param field a field or comma separated fields that should be returned
      * @return query
      *
      * @see #withFields(String...)
      * @see #withFields(List)
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#ALL_ANIME_FIELDS
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#ALL_MANGA_FIELDS
      * @since 1.0.0
      */
     public final T withField(final String field){
+        if(fields == null)
+            this.fields = new ArrayList<>();
         if(!this.fields.contains(field))
             this.fields.add(field);
         return (T) this;
@@ -39,12 +43,14 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
     /**
      * Adds a list of fields to return.
      *
-     * @param fields fields
+     * @param fields a comma separated string or a string array of the fields that should be returned
      *
      * @return query
      *
      * @see #withField(String)
      * @see #withFields(List)
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#ALL_ANIME_FIELDS
+     * @see com.kttdevelopment.myanimelist.MyAnimeList#ALL_MANGA_FIELDS
      * @since 1.0.0
      */
     public final T withFields(final String... fields){
@@ -62,7 +68,7 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
     /**
      * Adds a list of fields to return.
      *
-     * @param fields fields
+     * @param fields a list of the fields that should be returned
      *
      * @return query
      *

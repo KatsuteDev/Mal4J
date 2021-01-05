@@ -72,14 +72,4 @@ public class TestMangaSearch {
         }
     }
 
-    @Test @DisplayName("#6 - Limit") @Disabled
-    public void testOverLimit(){
-        Assertions.assertNotNull(mal.getManga().withLimit(200).search());
-    }
-
-    @Test @DisplayName("#6 - Offset") @Disabled
-    public void testZeroOffset(){
-        Assertions.assertNotNull(mal.getManga().withOffset(0).search());
-    }
-
 }

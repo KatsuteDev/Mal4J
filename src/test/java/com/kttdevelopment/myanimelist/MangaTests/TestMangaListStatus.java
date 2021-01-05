@@ -81,6 +81,7 @@ public class TestMangaListStatus {
             mal.getUserMangaListing()
                 .withStatus(MangaStatus.Reading)
                 .withLimit(1000)
+                .withField(MyAnimeList.ALL_MANGA_FIELDS)
                 .search();
 
         MangaListStatus status = null;
@@ -97,7 +98,7 @@ public class TestMangaListStatus {
 
     @Test @Order(3)
     public void testGetFromManga(){
-        final MangaListStatus status = mal.getManga(TestProvider.MangaID).getListStatus();
+        final MangaListStatus status = mal.getManga(TestProvider.MangaID, MyAnimeList.ALL_MANGA_FIELDS).getListStatus();
         testStatus(status);
     }
 
