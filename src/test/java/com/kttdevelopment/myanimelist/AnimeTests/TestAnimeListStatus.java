@@ -79,6 +79,7 @@ public class TestAnimeListStatus {
             mal.getUserAnimeListing()
                 .withStatus(AnimeStatus.Watching)
                 .withLimit(1000)
+                .withField(MyAnimeList.ALL_ANIME_FIELDS)
                 .search();
 
         AnimeListStatus status = null;
@@ -95,7 +96,9 @@ public class TestAnimeListStatus {
 
     @Test @Order(3)
     public void testGetFromAnime(){
-        final AnimeListStatus status = mal.getAnime(TestProvider.AnimeID).getListStatus();
+        final AnimeListStatus status = mal
+            .getAnime(TestProvider.AnimeID, MyAnimeList.ALL_ANIME_FIELDS)
+            .getListStatus();
         testStatus(status);
     }
 

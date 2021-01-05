@@ -23,6 +23,7 @@ public class TestUserAnimeListing {
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
                .withStatus(AnimeStatus.Dropped)
+               .withField(MyAnimeList.ALL_ANIME_FIELDS)
                .search();
         Assertions.assertEquals(AnimeStatus.Dropped, list.get(0).getStatus());
     }
@@ -32,6 +33,7 @@ public class TestUserAnimeListing {
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
                .sortBy(AnimeSort.UpdatedAt)
+               .withField(MyAnimeList.ALL_ANIME_FIELDS)
                .search();
         Assertions.assertTrue(list.get(0).getUpdatedAt() > list.get(1).getUpdatedAt());
     }
