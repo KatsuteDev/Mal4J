@@ -61,9 +61,6 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final String animeFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics,my_list_status{start_date,end_date,priority,num_times_rewatched,rewatch_value,tags,comments},list_status{start_date,end_date,priority,num_times_rewatched,rewatch_value,tags,comments}";
-
     @Override
     public final AnimeSearchQuery getAnime(){
         return new AnimeSearchQuery() {
@@ -76,7 +73,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         between(0, limit, 100),
                         between(0, offset, null),
-                        fields == null ? animeFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw)
                 );
                 if(response == null) return null;
@@ -96,7 +93,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         between(0, limit, 100),
                         offset,
-                        fields == null ? animeFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw),
                     iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
@@ -116,7 +113,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getAnime(
                 auth,
                 id,
-                fields == null ? animeFields : asStringList(fields))
+                asStringList(fields))
         ));
     }
 
@@ -132,7 +129,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType.field(),
                         between(0, limit, 500),
                         between(0, offset, null),
-                        fields == null ? animeFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw)
                 );
                 if(response == null) return null;
@@ -152,7 +149,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType.field(),
                         between(0, limit, 500),
                         offset,
-                        fields == null ? animeFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw),
                     iterator -> asAnimeRanking(MyAnimeListImpl.this, iterator)
                 );
@@ -174,7 +171,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         between(0, limit, 500),
                         between(0, offset, null),
-                        fields == null ? animeFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw)
                 );
                 if(response == null) return null;
@@ -196,7 +193,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         between(0, limit, 500),
                         offset,
-                        fields == null ? animeFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw),
                     iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
@@ -216,7 +213,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         auth,
                         between(0, limit, 100),
                         between(0, offset, null),
-                        fields == null ? animeFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw)
                 );
                 if(response == null) return null;
@@ -235,7 +232,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         auth,
                         between(0, limit, 100),
                         offset,
-                        fields == null ? animeFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw),
                     iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
@@ -300,7 +297,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         between(0, limit, 1000),
                         between(0, offset, null),
-                        fields == null ? animeFields : asStringList(fields))
+                        asStringList(fields))
                 );
                 if(response == null) return null;
 
@@ -321,7 +318,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         between(0, limit, 1000),
                         offset,
-                        fields == null ? animeFields : asStringList(fields)),
+                        asStringList(fields)),
                     iterator -> asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
                 );
             }
@@ -414,8 +411,6 @@ final class MyAnimeListImpl extends MyAnimeList{
         };
     }
 
-    private static final String mangaFields = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role},my_list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments},list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments}";
-
     @Override
     public final MangaSearchQuery getManga(){
         return new MangaSearchQuery() {
@@ -428,7 +423,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         between(0, limit, 100),
                         between(0, offset, null),
-                        fields == null ? mangaFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw)
                 );
                 if(response == null) return null;
@@ -448,7 +443,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         between(0, limit, 100),
                         offset,
-                        fields == null ? mangaFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw),
                     iterator -> asManga(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
@@ -469,7 +464,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getManga(
                 auth,
                 id,
-                fields == null ? mangaFields : asStringList(fields))
+                asStringList(fields))
         ));
     }
 
@@ -485,7 +480,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType != null ? rankingType.field() : null,
                         between(0, limit, 500),
                         between(0, offset, null),
-                        fields == null ? mangaFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw)
                 );
                 if(response == null) return null;
@@ -505,7 +500,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType != null ? rankingType.field() : null,
                         between(0, limit, 500),
                         offset,
-                        fields == null ? mangaFields : asStringList(fields),
+                        asStringList(fields),
                         nsfw),
                     iterator -> asMangaRanking(MyAnimeListImpl.this, iterator)
                 );
@@ -571,7 +566,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         between(0, limit, 1000),
                         between(0, offset, null),
-                        fields == null ? mangaFields : asStringList(fields))
+                        asStringList(fields))
                 );
                 if(response == null) return null;
 
@@ -592,15 +587,13 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         between(0, limit, 1000),
                         offset,
-                        fields == null ? mangaFields : asStringList(fields)),
+                        asStringList(fields)),
                     iterator -> asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
                 );
             }
 
         };
     }
-
-    private static final String userFields = "birthday,time_zone,anime_statistics";
 
     @Override
     public final User getMyself(){
@@ -624,7 +617,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getUser(
                 auth,
                 username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
-                fields == null ? userFields : asStringList(fields))
+                asStringList(fields))
         ));
     }
 
@@ -755,7 +748,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             if(!str.isBlank())
                 return str.substring(0, str.length() -1);
         }
-        return fields == null ? null : "";
+        return null;
     }
 
     //

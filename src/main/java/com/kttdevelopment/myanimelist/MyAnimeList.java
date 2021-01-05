@@ -25,7 +25,23 @@ public abstract class MyAnimeList {
     /**
      * Indicates that only default fields should be returned.
      */
-    public static String[] NO_FIELDS = new String[0];
+    public static final String[] NO_FIELDS = new String[0];
+
+    /**
+     * Returns all possible Anime fields.
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    public static final String ALL_ANIME_FIELDS = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics,my_list_status{start_date,end_date,priority,num_times_rewatched,rewatch_value,tags,comments},list_status{start_date,end_date,priority,num_times_rewatched,rewatch_value,tags,comments}";
+
+    /**
+     * Returns all possible Manga fields.
+     */
+    public static final String ALL_MANGA_FIELDS = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role},my_list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments},list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments}";
+
+    /**
+     * Returns all possible User fields.
+     */
+    public static final String ALL_USER_FIELDS = "birthday,time_zone,anime_statistics";
 
     /**
      * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshOAuthToken()}.
@@ -436,7 +452,7 @@ public abstract class MyAnimeList {
      * @see #getMyself()
      * @since 1.0.0
      */
-    public abstract User getMyself(final String[] fields);
+    public abstract User getMyself(final String... fields);
 
     /**
      * Returns a user given their username.

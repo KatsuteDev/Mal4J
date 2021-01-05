@@ -31,6 +31,8 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      * @since 1.0.0
      */
     public final T withField(final String field){
+        if(fields == null)
+            this.fields = new ArrayList<>();
         if(!this.fields.contains(field))
             this.fields.add(field);
         return (T) this;

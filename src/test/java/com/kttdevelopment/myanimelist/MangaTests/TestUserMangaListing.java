@@ -24,6 +24,7 @@ public class TestUserMangaListing {
             mal.getUserMangaListing()
                .withStatus(MangaStatus.PlanToRead)
                .withLimit(1)
+               .withField(MyAnimeList.ALL_MANGA_FIELDS)
                .search();
         Assertions.assertEquals(MangaStatus.PlanToRead, list.get(0).getStatus());
     }
@@ -34,6 +35,7 @@ public class TestUserMangaListing {
             mal.getUserMangaListing()
                .sortBy(MangaSort.UpdatedAt)
                .withLimit(2)
+               .withField(MyAnimeList.ALL_MANGA_FIELDS)
                .search();
         Assertions.assertTrue(list.get(0).getUpdatedAt() > list.get(1).getUpdatedAt());
     }

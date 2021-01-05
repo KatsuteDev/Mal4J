@@ -44,7 +44,6 @@ public class TestAnimeSearch {
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
                 .withLimit(1)
-                .withFields(MyAnimeList.NO_FIELDS)
                 .search();
         Assertions.assertNull(search.get(0).getType());
     }
