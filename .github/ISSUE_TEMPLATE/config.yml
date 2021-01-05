@@ -6,3 +6,6 @@ contact_links:
   - name: Discussions
     url: https://github.com/Katsute/MyAnimeList-Java-API/discussions
     about: Check here before posting an issue
+  - name: Official MyAnimeList API Club
+    url: https://myanimelist.net/clubs.php?cid=13727
+    about: We do not maintain the MyAnimeList API, issues regarding the API itself should be posted in their official club

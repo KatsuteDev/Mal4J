@@ -23,6 +23,11 @@ import java.util.List;
 public abstract class MyAnimeList {
 
     /**
+     * Indicates that only default fields should be returned.
+     */
+    public static String[] NO_FIELDS = new String[0];
+
+    /**
      * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshOAuthToken()}.
      *
      * @param token OAuth token, Ex: 'Bearer oauth2token'

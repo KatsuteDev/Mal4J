@@ -22,6 +22,8 @@ import static com.kttdevelopment.myanimelist.APIStruct.*;
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 final class APICall {
 
+    static boolean debug = false;
+
     private final String method;
     private final String baseURL;
     private final String path;
@@ -168,8 +170,15 @@ final class APICall {
         request.header("Cache-Control", "no-cache, no-store, must-revalidate");
         request.header("Accept", "application/json");
 
+        if(debug){
+            System.out.println("\nCall:     " + URL);
+            System.out.println("Method:   " + method);
+        }
+
         if(formUrlEncoded){
             final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect( Collectors.joining("&"));
+            if(debug)
+                System.out.println("Data:     " + data);
             request.header("Content-Type", "application/x-www-form-urlencoded");
             request.method(method, HttpRequest.BodyPublishers.ofString(data));
         }
@@ -178,6 +187,10 @@ final class APICall {
             .build()
             .send(request.build(), HttpResponse.BodyHandlers.ofString());
         final String body = response.body();
+
+        if(debug)
+            System.out.println("Response: " + body);
+
         return new Response<>(URL, body, body, response.statusCode());
     }
 
