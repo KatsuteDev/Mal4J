@@ -23,7 +23,7 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
     /**
      * Adds a field to return.
      *
-     * @param field field
+     * @param field a field or comma separated fields that should be returned
      * @return query
      *
      * @see #withFields(String...)
@@ -41,7 +41,7 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
     /**
      * Adds a list of fields to return.
      *
-     * @param fields fields
+     * @param fields a comma separated string or a string array of the fields that should be returned
      *
      * @return query
      *
@@ -64,7 +64,7 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
     /**
      * Adds a list of fields to return.
      *
-     * @param fields fields
+     * @param fields a list of the fields that should be returned
      *
      * @return query
      *
