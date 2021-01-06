@@ -96,6 +96,27 @@ public class TestMangaListStatus {
         testStatus(status);
     }
 
+    @Test @Order(3) @DisplayName("testGetUsername(), #25 - Rereading status")
+    public void testGetUsername(){
+        final List<MangaListStatus> list =
+            mal.getUserMangaListing("KatsuteDev")
+                .withStatus(MangaStatus.Reading)
+                .withLimit(1000)
+                .withField(MyAnimeList.ALL_MANGA_FIELDS)
+                .search();
+
+        MangaListStatus status = null;
+        for(final MangaListStatus userMangaListStatus : list)
+            if((status = userMangaListStatus).getMangaPreview().getID() == TestProvider.MangaID)
+                break;
+            else
+                status = null;
+        if(status == null)
+            Assertions.fail();
+
+        testStatus(status);
+    }
+
     @Test @Order(3)
     public void testGetFromManga(){
         final MangaListStatus status = mal.getManga(TestProvider.MangaID, MyAnimeList.ALL_MANGA_FIELDS).getListStatus();

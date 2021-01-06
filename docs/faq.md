@@ -29,3 +29,7 @@ By default this library follows the API and returns only the fields provided in 
 ## NSFW is not working.
 
 For search queries make sure you also run `#includeNSFW()` in the query builder.
+
+## I can't get other users.
+
+Currently the MyAnimeList API does not allow you to check users other than yourself.
