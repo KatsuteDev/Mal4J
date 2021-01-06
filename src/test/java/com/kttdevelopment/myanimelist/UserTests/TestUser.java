@@ -19,9 +19,11 @@ public class TestUser {
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    @Test @DisplayName("Not currently allowed by API") @Disabled
+    @Test @DisplayName("testUser() - not currently allowed by API")
     public void testUser(){
-        Assertions.assertEquals(8316239, mal.getUser("KatsuteDev").getID());
+        Assertions.assertThrows(UnsupportedOperationException.class, () ->
+            Assertions.assertEquals(8316239, mal.getUser("KatsuteDev").getID())
+        );
     }
 
     @Test

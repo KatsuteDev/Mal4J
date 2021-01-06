@@ -94,6 +94,28 @@ public class TestAnimeListStatus {
         testStatus(status);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
+    @Test @Order(3) @DisplayName("testGetUsername(), #25 - Rewatching status")
+    public void testGetUsername(){
+        final List<AnimeListStatus> list =
+            mal.getUserAnimeListing("KatsuteDev")
+                .withStatus(AnimeStatus.Watching)
+                .withLimit(1000)
+                .withField(MyAnimeList.ALL_ANIME_FIELDS)
+                .search();
+
+        AnimeListStatus status = null;
+        for(final AnimeListStatus userAnimeListStatus : list)
+            if((status = userAnimeListStatus).getAnimePreview().getID() == TestProvider.AnimeID)
+                break;
+            else
+                status = null;
+        if(status == null)
+            Assertions.fail();
+
+        testStatus(status);
+    }
+
     @Test @Order(3)
     public void testGetFromAnime(){
         final AnimeListStatus status = mal
