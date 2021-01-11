@@ -7,8 +7,8 @@
 - name: FAQ
   link: /FAQ
 - name: Discussion
-  link: https://github.com/Katsute/MyAnimeList-Java-API/discussions
+  link: https://github.com/Katsute/Mal4J/discussions
   new: true
 - name: <i class="fab fa-github fa-lg"></i>
-  link: https://github.com/Katsute/MyAnimeList-Java-API
+  link: https://github.com/Katsute/Mal4J
   new: true

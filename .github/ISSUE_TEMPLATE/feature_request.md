@@ -12,7 +12,7 @@ assignees: ''
 - [ ] I have checked that no other similar feature request already exists.
 - [ ] I have checked that this feature does not already exist.
 - [ ] This feature request makes sense for the project.
-- [ ] This feature request has been preapproved in [discussions](https://github.com/Katsute/MyAnimeList-Java-API/discussions/categories/feature-requests).
+- [ ] This feature request has been preapproved in [discussions](https://github.com/Katsute/Mal4J/discussions/categories/feature-requests).
 
 **Discussion Post:** *The link to the discussion post for this request. Required.*
 
