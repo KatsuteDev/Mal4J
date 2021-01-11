@@ -2,7 +2,7 @@
 target
 *.iml
 
-/src/test/java/com/kttdevelopment/myanimelist/*.txt
+/src/test/java/com/kttdevelopment/mal4j/*.txt
 
 /docs/_site
 /docs/.jekyll-cache
