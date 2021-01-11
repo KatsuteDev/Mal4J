@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.kttdevelopment</groupId>
-    <artifactId>myanimelist</artifactId>
+    <artifactId>mal4j</artifactId>
     <version>1.0.0</version>
 
     <profiles>
@@ -66,15 +66,15 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <name>MyAnimeList Java API</name>
-    <description>📘 Java wrapper for the official MyAnimeList API</description>
-    <url>https://github.com/Ktt-Development/MyAnimeList-Java-API</url>
+    <name>Mal4J</name>
+    <description>Java wrapper for the official MyAnimeList API</description>
+    <url>https://github.com/Katsute/Mal4J</url>
 
     <licenses>
         <license>
             <name>GPL-2</name>
             <distribution>repo</distribution>
-            <url>https://github.com/Ktt-Development/MyAnimeList-Java-API/blob/main/LICENSE</url>
+            <url>https://github.com/Katsute/Mal4J/blob/main/LICENSE</url>
         </license>
     </licenses>
 
@@ -91,9 +91,9 @@
     </developers>
 
     <scm>
-        <url>https://github.com/Ktt-Development/MyAnimeList-Java-API.git</url>
-        <connection>scm:git:git@github.com:Ktt-Development/MyAnimeList-Java-API.git</connection>
-        <developerConnection>scm:git:git@github.com:Ktt-Development/MyAnimeList-Java-API.git</developerConnection>
+        <url>https://github.com/Katsute/Mal4J.git</url>
+        <connection>scm:git:git@github.com:Katsute/Mal4J.git</connection>
+        <developerConnection>scm:git:git@github.com:Katsute/Mal4J.git</developerConnection>
         <tag>HEAD</tag>
     </scm>
 
@@ -116,7 +116,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Built-By>Ktt Development</Built-By>
+                            <Built-By>Katsute</Built-By>
                         </manifestEntries>
                     </archive>
                     <skip>true</skip>

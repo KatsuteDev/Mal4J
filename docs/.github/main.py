@@ -3,7 +3,7 @@ import sys
 
 import requests
 
-URL = r"https://api.github.com/repos/Katsute/MyAnimeList-Java-API"
+URL = r"https://api.github.com/repos/Katsute/Mal4J"
 
 
 def main():

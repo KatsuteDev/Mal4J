@@ -4,17 +4,17 @@ module MyAnimeListAPI {
     requires jdk.httpserver;
     requires java.desktop;
 
-    exports com.kttdevelopment.myanimelist.anime;
-    exports com.kttdevelopment.myanimelist.anime.property;
-    exports com.kttdevelopment.myanimelist.anime.property.time;
-    exports com.kttdevelopment.myanimelist.forum;
-    exports com.kttdevelopment.myanimelist.forum.property;
-    exports com.kttdevelopment.myanimelist.manga;
-    exports com.kttdevelopment.myanimelist.manga.property;
-    exports com.kttdevelopment.myanimelist.property;
-    exports com.kttdevelopment.myanimelist.query.property;
-    exports com.kttdevelopment.myanimelist.query;
-    exports com.kttdevelopment.myanimelist.user;
-    exports com.kttdevelopment.myanimelist;
+    exports com.kttdevelopment.mal4j.anime;
+    exports com.kttdevelopment.mal4j.anime.property;
+    exports com.kttdevelopment.mal4j.anime.property.time;
+    exports com.kttdevelopment.mal4j.forum;
+    exports com.kttdevelopment.mal4j.forum.property;
+    exports com.kttdevelopment.mal4j.manga;
+    exports com.kttdevelopment.mal4j.manga.property;
+    exports com.kttdevelopment.mal4j.property;
+    exports com.kttdevelopment.mal4j.query.property;
+    exports com.kttdevelopment.mal4j.query;
+    exports com.kttdevelopment.mal4j.user;
+    exports com.kttdevelopment.mal4j;
 
 }
