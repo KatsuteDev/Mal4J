@@ -5,8 +5,8 @@ heading: |
         Quick installation guide for new or experienced developers.
     </p>
     <a class="btn btn-outline-light" href="/documentation"><i class="fas fa-book"></i> Documentation</a>
-    <a class="btn btn-outline-light" href="https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist"><i class="fas fa-archive"></i> Maven Central</a>
-    <a class="btn btn-outline-light" href="https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist"><i class="fas fa-cloud-download-alt"></i> Releases</a>
+    <a class="btn btn-outline-light" href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><i class="fas fa-archive"></i> Maven Central</a>
+    <a class="btn btn-outline-light" href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><i class="fas fa-cloud-download-alt"></i> Releases</a>
 ---
 # Installation
 
@@ -16,7 +16,7 @@ Dependencies are hosted on Maven Central and compiled builds can be found in rel
 
 ## Maven Central
 
-Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/Mal4J)](https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist)
+Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/Mal4J)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j)
 
 ## Local
 
