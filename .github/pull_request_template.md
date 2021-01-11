@@ -7,7 +7,7 @@
 - [ ] Build runs without exceptions.
 - [ ] I have added/modified documentation (if applicable)
 - [ ] I have added/modified test cases (if applicable)
-- [ ] This pull request has a releated [issue](https://github.com/Katsute/MyAnimeList-Java-API/issues).
+- [ ] This pull request has a releated [issue](https://github.com/Katsute/Mal4J/issues).
 
 **Issue:** *The main issue(s) that this pull request fixes. Required.*
 

@@ -16,11 +16,11 @@ Dependencies are hosted on Maven Central and compiled builds can be found in rel
 
 ## Maven Central
 
-Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/MyAnimeList-Java-API)](https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist)
+Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/Mal4J)](https://mvnrepository.com/artifact/com.kttdevelopment/myanimelist)
 
 ## Local
 
-For projects built locally, jars can be found in releases → [![Releases](https://img.shields.io/github/v/release/Katsute/MyAnimeList-Java-API)](https://github.com/Katsute/MyAnimeList-Java-API/releases)
+For projects built locally, jars can be found in releases → [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
 
 The MyAnimeList Java API is a standalone library and requires no additional dependencies.
 
@@ -30,20 +30,20 @@ The MyAnimeList Java API is a standalone library and requires no additional depe
 
 In order to use the MyAnimeList API you must retrieve your own client ID. You can create a new API key at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
 
-![Create ID](https://raw.githubusercontent.com/Katsute/MyAnimeList-Java-API/main/setup_1.png)
+![Create ID](https://raw.githubusercontent.com/Katsute/Mal4J/main/setup_1.png)
 
 ## 2. Register API key
 
 Fill in all required fields and App Redirect URL, this is what we use to retrieve the OAuth token. For users using easy authentication ([below](#authenticate-with-client-id-easy)) set this to `http://localhost:5050` or whatever port you are using.
 
 
-![Register application](https://raw.githubusercontent.com/Katsute/MyAnimeList-Java-API/main/setup_2.png)
+![Register application](https://raw.githubusercontent.com/Katsute/Mal4J/main/setup_2.png)
 
 ## 3. Retrieve Client ID
 
 Copy client ID and client secret (if the application has a client secret), this will be used to authenticate the application with the API.
 
-![Copy client id and client secret](https://raw.githubusercontent.com/Katsute/MyAnimeList-Java-API/main/setup_3.png)
+![Copy client id and client secret](https://raw.githubusercontent.com/Katsute/Mal4J/main/setup_3.png)
 
 # Authentication
 

@@ -2,12 +2,12 @@ blank_issues_enabled: false
 contact_links:
   - name: FAQ
     about: Check frequently asked questions before posting an issue
-    url: https://myanimelist.kttdevelopment.com/faq/
+    url: https://mal4j.kttdevelopment.com/faq/
   - name: Discussions
-    url: https://github.com/Katsute/MyAnimeList-Java-API/discussions
+    url: https://github.com/Katsute/Mal4J/discussions
     about: Check here before posting an issue
   - name: Feature Requests
-    url: https://github.com/Katsute/MyAnimeList-Java-API/discussions/categories/feature-requests
+    url: https://github.com/Katsute/Mal4J/discussions/categories/feature-requests
     about: New feature requests must be posted here first before they may become an issue
   - name: MyAnimeList API
     url: https://myanimelist.net/apiconfig/references/api/v2
