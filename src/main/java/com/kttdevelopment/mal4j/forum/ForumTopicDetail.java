@@ -46,7 +46,7 @@ public abstract class ForumTopicDetail implements ID {
      *
      * @return topic creation time
      *
-     * @since 1.0.l0
+     * @since 1.0.0
      */
     public abstract long getCreatedAt();
 
