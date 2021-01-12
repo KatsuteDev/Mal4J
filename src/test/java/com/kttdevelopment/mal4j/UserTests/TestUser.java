@@ -33,7 +33,8 @@ public class TestUser {
         Assertions.assertNotNull(user.getPictureURL());
         Assertions.assertNotNull(user.getGender());
         Assertions.assertNotNull(user.getLocation());
-        Assertions.assertNotEquals(-1, user.getJoinedAt());
+        Assertions.assertNotEquals(-1, user.getJoinedAt().getTime());
+        Assertions.assertNotEquals(-1, user.getJoinedAtEpochMillis());
         Assertions.assertNotNull(user.getTimeZone());
         Assertions.assertFalse(user.isSupporter()); // weak test, default is false
     }

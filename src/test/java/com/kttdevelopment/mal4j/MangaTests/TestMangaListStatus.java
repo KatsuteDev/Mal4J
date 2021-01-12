@@ -138,7 +138,8 @@ public class TestMangaListStatus {
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
         Assertions.assertEquals("ignore comments", status.getComments());
-        Assertions.assertNotEquals(-1, status.getUpdatedAt());
+        Assertions.assertNotEquals(-1, status.getUpdatedAt().getTime());
+        Assertions.assertNotEquals(-1, status.getUpdatedAtEpochMillis());
     }
 
 }

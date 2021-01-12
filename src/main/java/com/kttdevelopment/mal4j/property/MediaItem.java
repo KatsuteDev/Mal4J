@@ -18,6 +18,8 @@
 
 package com.kttdevelopment.mal4j.property;
 
+import java.util.Date;
+
 /**
  * Indicates that the object contains these media fields.
  *
@@ -66,20 +68,46 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @return start date
      *
+     * @see #getStartDateEpochMillis()
      * @see #getEndDate()
+     * @see #getEndDateEpochMillis()
+     */
+    Date getStartDate();
+
+    /**
+     * Returns the start date as milliseconds since epoch.
+     *
+     * @return start date
+     *
+     * @see #getStartDate()
+     * @see #getEndDate()
+     * @see #getEndDateEpochMillis()
      * @since 1.0.0
      */
-    long getStartDate();
+    long getStartDateEpochMillis();
 
     /**
      * Returns the end date.
      *
      * @return end date
      *
+     * @see #getEndDateEpochMillis()
      * @see #getStartDate()
+     * @see #getStartDateEpochMillis()
      * @since 1.0.0
      */
-    long getEndDate();
+    Date getEndDate();
+
+    /**
+     * Returns the end date as milliseconds since epoch.
+     *
+     * @return end date
+     *
+     * @see #getEndDate()
+     * @see #getStartDate()
+     * @see #getStartDateEpochMillis()
+     */
+    long getEndDateEpochMillis();
 
     /**
      * Returns the synopsis.

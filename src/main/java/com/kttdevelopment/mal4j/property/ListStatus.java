@@ -20,6 +20,8 @@ package com.kttdevelopment.mal4j.property;
 
 import com.kttdevelopment.mal4j.query.property.Priority;
 
+import java.util.Date;
+
 /**
  * Indicates that the object is a list status.
  *
@@ -56,20 +58,48 @@ public interface ListStatus<Status extends Enum<?>> {
      *
      * @return start date
      *
+     * @see #getStartDateEpochMillis()
      * @see #getFinishDate()
+     * @see #getFinishDateEpochMillis()
      * @since 1.0.0
      */
-    long getStartDate();
+    Date getStartDate();
+
+    /**
+     * Returns the start date for the listing in milliseconds since epoch.
+     *
+     * @return start date
+     *
+     * @see #getStartDate()
+     * @see #getFinishDate()
+     * @see #getFinishDateEpochMillis()
+     * @since 1.0.0
+     */
+    long getStartDateEpochMillis();
 
     /**
      * Returns the finish date for the listing.
      *
      * @return finish date
      *
+     * @see #getFinishDateEpochMillis()
      * @see #getStartDate()
+     * @see #getStartDateEpochMillis()
      * @since 1.0.0
      */
-    long getFinishDate();
+    Date getFinishDate();
+
+    /**
+     * Returns the finish date for the listing in milliseconds since epoch.
+     *
+     * @return finish date
+     *
+     * @see #getFinishDate()
+     * @see #getStartDate()
+     * @see #getStartDateEpochMillis()
+     * @since 1.0.0
+     */
+    long getFinishDateEpochMillis();
 
     /**
      * Returns the priority for the listing.
@@ -104,8 +134,19 @@ public interface ListStatus<Status extends Enum<?>> {
      *
      * @return last updated
      *
+     * @see #getUpdatedAtEpochMillis()
      * @since 1.0.0
      */
-    long getUpdatedAt();
+    Date getUpdatedAt();
+
+    /**
+     * Returns when the listing was last updated in milliseconds since epoch.
+     *
+     * @return last updated
+     *
+     * @see #getUpdatedAt()
+     * @since 1.0.0
+     */
+    long getUpdatedAtEpochMillis();
 
 }
