@@ -32,13 +32,13 @@
 
 # Overview
 
-The MyAnimeList Java API is a wrapper for the MyAnimeList API written for JDK 11 and simplifies many complex operations into an easy to use library.
+Mal4J is a wrapper for the MyAnimeList API written for JDK 11 and simplifies many complex operations into an easy to use library.
 
 # [Setup](https://mal4j.kttdevelopment.com/setup)
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
 
-**MyAnimeList Java API requires at least JDK 11.**
+**Mal4J requires at least JDK 11.**
 
 ## Maven Central
 
@@ -48,7 +48,7 @@ Compiled binaries can be found on Maven Central → [![Maven Central](https://im
 
 For projects built locally, jars can be found in releases → [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
 
-The MyAnimeList Java API is a standalone library and requires no additional dependencies.
+Mal4J is a standalone library and requires no additional dependencies.
 
 
 ### More information on further stages of the setup can be found [here](https://mal4j.kttdevelopment.com/setup).

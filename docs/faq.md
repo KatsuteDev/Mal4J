@@ -4,6 +4,7 @@ heading: |
     <p class="mt-3 mb-5">
         Frequently asked questions.
     </p>
+title: FAQ
 ---
 # General
 
@@ -20,11 +21,19 @@ This library offers ***ALL*** the features provided by the API.
 - Make sure that you are providing an auth token and not the client id.
 - Your token may be expired.
 
-# Methods
+## java.lang.UnsupportedClassVersionError
+
+This issue is caused by using an older, unsupported JDK. This library requires at least JDK 11.
+
+# API
 
 ## All the fields are null.
 
 By default this library follows the API and returns only the fields provided in the fields parameter. If you want all the fields use `MyAnimeList#ALL_ANIME_FIELDS`, `MyAnimeList#ALL_MANGA_FIELDS`, or `MyAnimeList#ALL_USER_FIELDS`.
+
+## Seasons query is returning Anime from other seasons.
+
+The seasons query returns Anime that is running in the current season, this includes Anime that may have started the season before and is still airing.
 
 ## NSFW is not working.
 

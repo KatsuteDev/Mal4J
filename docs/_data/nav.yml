@@ -5,7 +5,7 @@
 - name: Setup
   link: /setup
 - name: FAQ
-  link: /FAQ
+  link: /faq
 - name: Discussion
   link: https://github.com/Katsute/Mal4J/discussions
   new: true

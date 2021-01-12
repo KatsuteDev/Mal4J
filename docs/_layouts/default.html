@@ -14,8 +14,8 @@ layout: compress
         <link rel="stylesheet" href="/dependencies/fontawesome/css/all.min.css">
 
         {% comment %} Local {% endcomment %}
-        <title>{{ site.title }}</title>
-    
+        <title>{{ site.title }}{% if page.title %} - {{ page.title }}{% endif %}</title>
+
         <link rel="stylesheet" href="/dependencies/kttdevelopment/css/style.css">
         <link rel="stylesheet" href="/dependencies/kttdevelopment/css/highlight.css">
     </head>
