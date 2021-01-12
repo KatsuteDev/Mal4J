@@ -6,13 +6,14 @@ heading: |
     </p>
     <a class="btn btn-outline-light" href="/documentation"><i class="fas fa-book"></i> Documentation</a>
     <a class="btn btn-outline-light" href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><i class="fas fa-archive"></i> Maven Central</a>
-    <a class="btn btn-outline-light" href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><i class="fas fa-cloud-download-alt"></i> Releases</a>
+    <a class="btn btn-outline-light" href="https://github.com/Katsute/Mal4J/releases"><i class="fas fa-cloud-download-alt"></i> Releases</a>
+title: Setup
 ---
 # Installation
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
 
-**MyAnimeList Java API requires at least JDK 11.**
+**Mal4J requires at least JDK 11.**
 
 ## Maven Central
 
@@ -22,7 +23,7 @@ Compiled binaries can be found on Maven Central → [![Maven Central](https://im
 
 For projects built locally, jars can be found in releases → [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
 
-The MyAnimeList Java API is a standalone library and requires no additional dependencies.
+Mal4J is a standalone library and requires no additional dependencies.
 
 # API setup
 
