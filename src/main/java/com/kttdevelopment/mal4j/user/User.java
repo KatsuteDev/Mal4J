@@ -21,6 +21,8 @@ package com.kttdevelopment.mal4j.user;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.property.IDN;
 
+import java.util.Date;
+
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_get</a> <br>
  * Represents a user.
@@ -76,9 +78,20 @@ public abstract class User implements IDN {
      *
      * @return joined date
      *
+     * @see #getJoinedAtEpochMillis()
      * @since 1.0.0
      */
-    public abstract long getJoinedAt();
+    public abstract Date getJoinedAt();
+
+    /**
+     * Returns when the user first joined as milliseconds since epoch.
+     *
+     * @return joined date
+     *
+     * @see #getJoinedAt()
+     * @since 1.0.0
+     */
+    public abstract long getJoinedAtEpochMillis();
 
     /**
      * Returns the user's Anime statistics.

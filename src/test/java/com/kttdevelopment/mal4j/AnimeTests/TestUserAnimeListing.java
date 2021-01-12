@@ -35,7 +35,7 @@ public class TestUserAnimeListing {
                .sortBy(AnimeSort.UpdatedAt)
                .withField(MyAnimeList.ALL_ANIME_FIELDS)
                .search();
-        Assertions.assertTrue(list.get(0).getUpdatedAt() > list.get(1).getUpdatedAt());
+        Assertions.assertTrue(list.get(0).getUpdatedAt().getTime() > list.get(1).getUpdatedAt().getTime());
     }
 
 }

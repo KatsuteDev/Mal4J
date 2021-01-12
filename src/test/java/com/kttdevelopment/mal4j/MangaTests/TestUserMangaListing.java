@@ -37,7 +37,7 @@ public class TestUserMangaListing {
                .withLimit(2)
                .withField(MyAnimeList.ALL_MANGA_FIELDS)
                .search();
-        Assertions.assertTrue(list.get(0).getUpdatedAt() > list.get(1).getUpdatedAt());
+        Assertions.assertTrue(list.get(0).getUpdatedAt().getTime() > list.get(1).getUpdatedAt().getTime());
     }
 
 }

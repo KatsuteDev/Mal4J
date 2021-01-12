@@ -30,8 +30,10 @@ public class TestManga {
         Assertions.assertNotNull(manga.getAlternativeTitles().getEnglish());
         Assertions.assertNotNull(manga.getAlternativeTitles().getJapanese());
         Assertions.assertNotNull(manga.getAlternativeTitles().getSynonyms());
-        Assertions.assertNotEquals(-1, manga.getStartDate());
-        Assertions.assertNotEquals(-1, manga.getEndDate());
+        Assertions.assertNotEquals(-1, manga.getStartDate().getTime());
+        Assertions.assertNotEquals(-1, manga.getStartDateEpochMillis());
+        Assertions.assertNotEquals(-1, manga.getEndDate().getTime());
+        Assertions.assertNotEquals(-1, manga.getEndDateEpochMillis());
         Assertions.assertNotNull(manga.getSynopsis());
         Assertions.assertNotEquals(-1, manga.getMeanRating());
         Assertions.assertNotEquals(-1, manga.getRank());

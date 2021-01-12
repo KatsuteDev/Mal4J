@@ -31,8 +31,10 @@ public class TestAnime {
         Assertions.assertNotNull(anime.getAlternativeTitles().getEnglish());
         Assertions.assertNotNull(anime.getAlternativeTitles().getJapanese());
         Assertions.assertNotNull(anime.getAlternativeTitles().getSynonyms());
-        Assertions.assertNotEquals(-1, anime.getStartDate());
-        Assertions.assertNotEquals(-1, anime.getEndDate());
+        Assertions.assertNotEquals(-1, anime.getStartDate().getTime());
+        Assertions.assertNotEquals(-1, anime.getStartDateEpochMillis());
+        Assertions.assertNotEquals(-1, anime.getEndDate().getTime());
+        Assertions.assertNotEquals(-1, anime.getEndDateEpochMillis());
         Assertions.assertNotNull(anime.getSynopsis());
         Assertions.assertNotEquals(-1, anime.getMeanRating());
         Assertions.assertNotEquals(-1, anime.getRank());
