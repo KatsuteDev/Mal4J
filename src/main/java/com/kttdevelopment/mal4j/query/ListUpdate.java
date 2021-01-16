@@ -21,8 +21,7 @@ package com.kttdevelopment.mal4j.query;
 import com.kttdevelopment.mal4j.property.ListStatus;
 import com.kttdevelopment.mal4j.query.property.Priority;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Represents a list update.
@@ -42,6 +41,9 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
 
     protected S status;
     protected Integer score;
+
+    protected Long startDate, finishDate;
+
     protected Priority priority;
     protected List<String> tags;
     protected String comments;
@@ -73,6 +75,74 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
      */
     public final T score(final int score){
         this.score = score;
+        return (T) this;
+    }
+
+    /**
+     * Sets the start date.
+     *
+     * @param millis milliseconds since epoch
+     * @return list update
+     *
+     * @since 1.0.0
+     * @see #startDate(Date)
+     * @see #finishDate(long)
+     * @see #finishDate(Date)
+     */
+    public final T startDate(final long millis){
+        this.startDate = millis;
+        return (T) this;
+    }
+
+    /**
+     * Sets the start date.
+     *
+     * @param date date
+     * @return list update
+     *
+     * @since 1.0.0
+     * @see Date
+     * @see GregorianCalendar#GregorianCalendar(int, int, int)
+     * @see #startDate(long)
+     * @see #finishDate(long)
+     * @see #finishDate(Date)
+     */
+    public final T startDate(final Date date){
+        this.startDate = date.getTime();
+        return (T) this;
+    }
+
+    /**
+     * Sets the finish date.
+     *
+     * @param millis milliseconds since epoch
+     * @return list update
+     *
+     * @since 1.0.0
+     * @see #finishDate(Date)
+     * @see #startDate(long)
+     * @see #startDate(Date)
+     */
+    public final T finishDate(final long millis){
+        this.finishDate = millis;
+        return (T) this;
+    }
+
+    /**
+     * Sets the finish date.
+     *
+     * @param date date
+     * @return list update
+     *
+     * @since 1.0.0
+     * @see Date
+     * @see GregorianCalendar#GregorianCalendar(int, int, int)
+     * @see #finishDate(long)
+     * @see #startDate(long)
+     * @see #startDate(Date)
+     */
+    public final T finishDate(final Date date){
+        this.finishDate = date.getTime();
         return (T) this;
     }
 

@@ -8,8 +8,7 @@ import com.kttdevelopment.mal4j.query.property.Priority;
 import com.kttdevelopment.mal4j.query.property.RereadValue;
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestMangaListStatus {
@@ -59,9 +58,12 @@ public class TestMangaListStatus {
 
     @Test @Order(2)
     public void testUpdate(){
+        final Date now = new Date();
         final MangaListStatus status = mal.updateMangaListing(28107)
             .status(MangaStatus.Completed)
             .score(10)
+            .startDate(now)
+            .finishDate(now)
             .volumesRead(0)
             .chaptersRead(0)
             .rereading(true)
@@ -123,15 +125,16 @@ public class TestMangaListStatus {
         testStatus(status);
     }
 
-    @SuppressWarnings("CommentedOutCode")
     private void testStatus(final MangaListStatus status){
         Assertions.assertEquals(MangaStatus.Completed, status.getStatus());
         Assertions.assertEquals(10, status.getScore());
         Assertions.assertEquals(0, status.getVolumesRead());
         Assertions.assertEquals(0, status.getChaptersRead());
         Assertions.assertTrue(status.isRereading());
-        // Assertions.assertNotEquals(-1, status.getStartDate()); // will fail (unable to set start date)
-        // Assertions.assertNotEquals(-1, status.getFinishDate()); // will fail (unable to set finish date)
+        Assertions.assertNotEquals(-1, status.getStartDate().getTime());
+        Assertions.assertNotEquals(-1, status.getStartDateEpochMillis());
+        Assertions.assertNotEquals(-1, status.getFinishDate().getTime());
+        Assertions.assertNotEquals(-1, status.getFinishDateEpochMillis());
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesReread());
         Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue());
