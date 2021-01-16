@@ -33,6 +33,7 @@ import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.time.Month;
 import java.util.*;
 import java.util.concurrent.atomic.*;
@@ -778,11 +779,11 @@ final class MyAnimeListImpl extends MyAnimeList{
     }
 
     private static String asISO8601(final Long millis){
-        return millis == null ? null : MyAnimeListAPIResponseMapping.ISO8601.format(new Date(millis));
+        return millis == null ? null : new SimpleDateFormat(MyAnimeListAPIResponseMapping.ISO8601).format(new Date(millis));
     }
 
     private static String asYMD(final Long millis){
-        return millis == null ? null : MyAnimeListAPIResponseMapping.YMD.format(new Date(millis));
+        return millis == null ? null : new SimpleDateFormat(MyAnimeListAPIResponseMapping.YMD).format(new Date(millis));
     }
 
     //

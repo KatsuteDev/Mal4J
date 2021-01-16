@@ -2435,15 +2435,15 @@ abstract class MyAnimeListAPIResponseMapping {
         return array;
     }
 
-    static final DateFormat YMD = new SimpleDateFormat("yyyy-MM-dd");
-    static final DateFormat YM = new SimpleDateFormat("yyyy-MM");
-    static final DateFormat Y = new SimpleDateFormat("yyyy");
+    static final String YMD = "yyyy-MM-dd";
+    static final String YM  = "yyyy-MM";
+    static final String Y   = "yyyy";
 
     private static long parseDate(final String date){
         if(date == null) return -1;
 
         final int len = date.length();
-        final DateFormat df = len == 10 ? YMD : len == 7 ? YM : Y;
+        final DateFormat df = new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y);
 
         try{
             return df.parse(date).getTime();
@@ -2453,13 +2453,13 @@ abstract class MyAnimeListAPIResponseMapping {
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    static final DateFormat ISO8601 = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX");
+    static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
     private static long parseISO8601(final String timestamp){
         if(timestamp == null) return -1;
 
         try{
-            return ISO8601.parse(timestamp).getTime();
+            return new SimpleDateFormat(ISO8601).parse(timestamp).getTime();
         }catch(final ParseException ignored){
             return -1;
         }
