@@ -95,17 +95,19 @@ interface MyAnimeListService {
     @FormUrlEncoded
     @Endpoint(method="PATCH", value="anime/{anime_id}/my_list_status")
     Response<JsonObject> updateAnimeListing(
-        @Header("Authorization")                    final String token,
-        @Path(value = "anime_id")                   final Long anime_id,
-        @Field("status")                            final String status,
-        @Field("is_rewatching")                     final Boolean rewatching,
-        @Field("score")                             final Integer score,
-        @Field("num_watched_episodes")              final Integer episodes_watched,
-        @Field("priority")                          final Integer priority,
-        @Field("num_times_rewatched")               final Integer times_rewatched,
-        @Field("rewatch_value")                     final Integer rewatch_value,
-        @Field("tags")                              final String tags,
-        @Field("comments")                          final String comments
+        @Header("Authorization")                        final String token,
+        @Path(value = "anime_id")                       final Long anime_id,
+        @Field("status")                                final String status,
+        @Field("is_rewatching")                         final Boolean rewatching,
+        @Field("score")                                 final Integer score,
+        @Field(value = "start_date", encoded = true)    final String start_date,
+        @Field(value = "finish_date", encoded = true)   final String finish_date,
+        @Field("num_watched_episodes")                  final Integer episodes_watched,
+        @Field("priority")                              final Integer priority,
+        @Field("num_times_rewatched")                   final Integer times_rewatched,
+        @Field("rewatch_value")                         final Integer rewatch_value,
+        @Field("tags")                                  final String tags,
+        @Field("comments")                              final String comments
     );
 
     @Endpoint(method="DELETE", value="anime/{anime_id}/my_list_status")
@@ -189,18 +191,20 @@ interface MyAnimeListService {
     @FormUrlEncoded
     @Endpoint(method="PATCH", value="manga/{manga_id}/my_list_status")
     Response<JsonObject> updateMangaListing(
-        @Header("Authorization")                    final String token,
-        @Path(value = "manga_id")                   final Long manga_id,
-        @Field("status")                            final String status,
-        @Field("is_rereading")                      final Boolean rereading,
-        @Field("score")                             final Integer score,
-        @Field("num_volumes_read")                  final Integer volumes_read,
-        @Field("num_chapters_read")                 final Integer chapters_read,
-        @Field("priority")                          final Integer priority,
-        @Field("num_times_reread")                  final Integer times_reread,
-        @Field("reread_value")                      final Integer reread_value,
-        @Field("tags")                              final String tags,
-        @Field("comments")                          final String comments
+        @Header("Authorization")                        final String token,
+        @Path(value = "manga_id")                       final Long manga_id,
+        @Field("status")                                final String status,
+        @Field("is_rereading")                          final Boolean rereading,
+        @Field("score")                                 final Integer score,
+        @Field(value = "start_date", encoded = true)    final String start_date,
+        @Field(value = "finish_date", encoded = true)   final String finish_date,
+        @Field("num_volumes_read")                      final Integer volumes_read,
+        @Field("num_chapters_read")                     final Integer chapters_read,
+        @Field("priority")                              final Integer priority,
+        @Field("num_times_reread")                      final Integer times_reread,
+        @Field("reread_value")                          final Integer reread_value,
+        @Field("tags")                                  final String tags,
+        @Field("comments")                              final String comments
     );
 
     @Endpoint(method="DELETE", value="manga/{manga_id}/my_list_status")
