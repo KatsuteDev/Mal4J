@@ -103,6 +103,7 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
      * @since 1.0.0
      * @see Date
      * @see GregorianCalendar#GregorianCalendar(int, int, int)
+     * @see GregorianCalendar#getTime()
      * @see #startDate(long)
      * @see #finishDate(long)
      * @see #finishDate(Date)
@@ -137,6 +138,7 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
      * @since 1.0.0
      * @see Date
      * @see GregorianCalendar#GregorianCalendar(int, int, int)
+     * @see GregorianCalendar#getTime()
      * @see #finishDate(long)
      * @see #startDate(long)
      * @see #startDate(Date)
