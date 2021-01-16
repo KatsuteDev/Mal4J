@@ -33,6 +33,8 @@ import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.Function;
@@ -272,6 +274,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                         status != null ? status.field() : null,
                         rewatching,
                         between(0, score, 10),
+                        asYMD(startDate),
+                        asYMD(finishDate),
                         between(0, watchedEpisodes, null),
                         between(0, priority.value(), 2),
                         between(0, timesRewatched, null),
@@ -540,6 +544,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                         status != null ? status.field() : null,
                         rereading,
                         between(0, score, 10),
+                        asYMD(startDate),
+                        asYMD(finishDate),
                         between(0, volumesRead, null),
                         between(0, chaptersRead, null),
                         between(0, priority.value(), 2),
@@ -770,6 +776,14 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return str.substring(0, str.length() -1);
         }
         return null;
+    }
+
+    private static String asISO8601(final Long millis){
+        return millis == null ? null : new SimpleDateFormat(MyAnimeListAPIResponseMapping.ISO8601).format(new Date(millis));
+    }
+
+    private static String asYMD(final Long millis){
+        return millis == null ? null : new SimpleDateFormat(MyAnimeListAPIResponseMapping.YMD).format(new Date(millis));
     }
 
     //

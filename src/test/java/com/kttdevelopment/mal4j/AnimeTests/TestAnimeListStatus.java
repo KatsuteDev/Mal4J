@@ -8,8 +8,7 @@ import com.kttdevelopment.mal4j.query.property.Priority;
 import com.kttdevelopment.mal4j.query.property.RewatchValue;
 import org.junit.jupiter.api.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TestAnimeListStatus {
@@ -57,9 +56,12 @@ public class TestAnimeListStatus {
 
     @Test @Order(2)
     public void testUpdate(){
+        final Date now = new Date();
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
             .score(10)
+            .startDate(now)
+            .finishDate(now)
             .episodesWatched(24)
             .rewatching(true)
             .priority(Priority.High)
@@ -124,14 +126,15 @@ public class TestAnimeListStatus {
         testStatus(status);
     }
 
-    @SuppressWarnings("CommentedOutCode")
     private void testStatus(final AnimeListStatus status){
         Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
         Assertions.assertEquals(10, status.getScore());
         Assertions.assertEquals(24, status.getWatchedEpisodes());
         Assertions.assertTrue(status.isRewatching());
-        // Assertions.assertNotEquals(-1, status.getStartDate()); // will fail (unable to set start date)
-        // Assertions.assertNotEquals(-1, status.getFinishDate()); // will fail (unable to set finish date)
+        Assertions.assertNotEquals(-1, status.getStartDate().getTime());
+        Assertions.assertNotEquals(-1, status.getStartDateEpochMillis());
+        Assertions.assertNotEquals(-1, status.getFinishDate().getTime());
+        Assertions.assertNotEquals(-1, status.getFinishDateEpochMillis());
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesRewatched());
         Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
