@@ -15,7 +15,7 @@ public class TestUser {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
-        user = mal.getMyself(MyAnimeList.ALL_USER_FIELDS);
+        user = mal.getMyself();
     }
 
     @SuppressWarnings("SpellCheckingInspection")

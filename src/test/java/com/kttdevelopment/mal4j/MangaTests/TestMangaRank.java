@@ -23,7 +23,6 @@ public class TestMangaRank {
         final List<MangaRanking> ranking =
             mal.getMangaRanking(MangaRankingType.Manga)
                 .withLimit(1)
-                .withFields(MyAnimeList.ALL_MANGA_FIELDS)
                 .search();
         final MangaRanking first = ranking.get(0);
         Assertions.assertEquals(1,first.getRanking());

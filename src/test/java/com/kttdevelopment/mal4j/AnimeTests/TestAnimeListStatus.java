@@ -81,7 +81,6 @@ public class TestAnimeListStatus {
             mal.getUserAnimeListing()
                 .withStatus(AnimeStatus.Watching)
                 .withLimit(1000)
-                .withField(MyAnimeList.ALL_ANIME_FIELDS)
                 .search();
 
         AnimeListStatus status = null;
@@ -103,7 +102,6 @@ public class TestAnimeListStatus {
             mal.getUserAnimeListing("KatsuteDev")
                 .withStatus(AnimeStatus.Watching)
                 .withLimit(1000)
-                .withField(MyAnimeList.ALL_ANIME_FIELDS)
                 .search();
 
         AnimeListStatus status = null;
@@ -121,7 +119,7 @@ public class TestAnimeListStatus {
     @Test @Order(3)
     public void testGetFromAnime(){
         final AnimeListStatus status = mal
-            .getAnime(TestProvider.AnimeID, MyAnimeList.ALL_ANIME_FIELDS)
+            .getAnime(TestProvider.AnimeID)
             .getListStatus();
         testStatus(status);
     }
