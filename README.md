@@ -57,7 +57,9 @@ Mal4J is a standalone library and requires no additional dependencies.
 
 ## Contributing
 
-For devs running tests locally simply add a text file named `client.txt` that contains the client ID in the `src\test\java\com\kttdevelopment\mal4j` directory.
+For devs running tests locally simply add a text file named `client.txt` that contains the client ID in the `src/test/java/resources` directory.
+
+Please note that the Client ID being used for tests must not have a client secret and must have an app redirect url of `http://localhost:5050`.
 
 - Found a bug? Post it in [issues](https://github.com/Katsute/Mal4J/issues).
 - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/Katsute/Mal4J/discussions).

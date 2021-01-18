@@ -10,16 +10,18 @@ public class TestAuthRefresh {
 
     @BeforeAll
     public static void beforeAll() throws IOException{
-        TestProvider.testRequireLiveUser();
+        TestProvider.testRequireClientID();
 
         final String clientId = Files.readString(TestProvider.client);
         final MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator(clientId, null, 5050);
         final MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);
 
+        // test refresh token
         Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search());
         mal.refreshOAuthToken();
         Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search());
 
+        // write stable OAuth
         Files.write(TestProvider.oauth, authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
     }
 

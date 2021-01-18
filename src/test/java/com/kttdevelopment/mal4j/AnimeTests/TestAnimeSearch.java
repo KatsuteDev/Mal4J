@@ -20,6 +20,7 @@ public class TestAnimeSearch {
         final List<Anime> search =
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
+                .withAllFields()
                 .search();
         Assertions.assertEquals(TestProvider.AnimeID, search.get(0).getID());
         Assertions.assertNotEquals(1, search.size());
@@ -29,7 +30,7 @@ public class TestAnimeSearch {
     public void testOffsetLimit(){
         final List<Anime> search =
             mal.getAnime()
-                .withQuery(TestProvider.AnimeQuery)
+                .withQuery(TestProvider.AltAnimeQuery)
                 .withLimit(1)
                 .withOffset(1)
                 .search();
@@ -43,6 +44,7 @@ public class TestAnimeSearch {
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
                 .withLimit(1)
+                .withNoFields()
                 .search();
         Assertions.assertNull(search.get(0).getType());
     }

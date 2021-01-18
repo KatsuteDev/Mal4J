@@ -23,7 +23,6 @@ public class TestAnimeRank {
         final List<AnimeRanking> ranking =
             mal.getAnimeRanking(AnimeRankingType.Movie)
                 .withLimit(1)
-                .withField(MyAnimeList.ALL_ANIME_FIELDS)
                 .search();
         final AnimeRanking first = ranking.get(0);
         Assertions.assertEquals(1, first.getRanking());
