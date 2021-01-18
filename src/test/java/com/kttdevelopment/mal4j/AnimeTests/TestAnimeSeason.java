@@ -38,7 +38,6 @@ public class TestAnimeSeason {
             mal.getAnimeSeason(2020, Season.Winter)
                 .withLimit(2)
                 .sortBy(AnimeSeasonSort.Users)
-                .withField(MyAnimeList.ALL_ANIME_FIELDS)
                 .search();
         final AnimePreview first = season.get(0);
         final AnimePreview second = season.get(1);

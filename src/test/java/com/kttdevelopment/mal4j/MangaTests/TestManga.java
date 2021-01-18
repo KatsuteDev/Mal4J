@@ -16,7 +16,7 @@ public class TestManga {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
-        manga = mal.getManga(TestProvider.MangaID, MyAnimeList.ALL_MANGA_FIELDS);
+        manga = mal.getManga(TestProvider.MangaID);
     }
 
     @Test

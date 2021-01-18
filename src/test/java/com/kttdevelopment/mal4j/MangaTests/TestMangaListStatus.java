@@ -22,7 +22,7 @@ public class TestMangaListStatus {
 
     @AfterAll
     public static void cleanup(){
-        TestProvider.testRequireLiveUser();
+        TestProvider.testRequireClientID();
 
         mal.deleteMangaListing(TestProvider.MangaID);
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
@@ -83,7 +83,6 @@ public class TestMangaListStatus {
             mal.getUserMangaListing()
                 .withStatus(MangaStatus.Reading)
                 .withLimit(1000)
-                .withField(MyAnimeList.ALL_MANGA_FIELDS)
                 .search();
 
         MangaListStatus status = null;
@@ -98,13 +97,13 @@ public class TestMangaListStatus {
         testStatus(status);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(3) @DisplayName("testGetUsername(), #25 - Rereading status")
     public void testGetUsername(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing("KatsuteDev")
                 .withStatus(MangaStatus.Reading)
                 .withLimit(1000)
-                .withField(MyAnimeList.ALL_MANGA_FIELDS)
                 .search();
 
         MangaListStatus status = null;
@@ -121,7 +120,7 @@ public class TestMangaListStatus {
 
     @Test @Order(3)
     public void testGetFromManga(){
-        final MangaListStatus status = mal.getManga(TestProvider.MangaID, MyAnimeList.ALL_MANGA_FIELDS).getListStatus();
+        final MangaListStatus status = mal.getManga(TestProvider.MangaID).getListStatus();
         testStatus(status);
     }
 

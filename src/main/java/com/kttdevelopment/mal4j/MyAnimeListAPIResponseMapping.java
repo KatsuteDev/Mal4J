@@ -2200,7 +2200,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final long getBirthday(){
+                public final Date getBirthday(){
+                    return new Date(birthday);
+                }
+
+                @Override
+                public final long getBirthdayEpochMillis(){
                     return birthday;
                 }
 
