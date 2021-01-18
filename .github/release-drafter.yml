@@ -12,7 +12,6 @@ categories:
   - title: "📄 Documentation"
     labels:
       - "documentation"
-      - "website"
   - title: "❌ Removed"
     labels:
       - "depreciated"
@@ -22,6 +21,8 @@ categories:
       - "critical bug"
   - title: "📘 Dependencies"
     label: "dependencies"
+exclude-labels:
+  - "website"
 no-changes-template: "*No changes*"
 change-template: "- $TITLE #$NUMBER (@$AUTHOR)"
 template: |
