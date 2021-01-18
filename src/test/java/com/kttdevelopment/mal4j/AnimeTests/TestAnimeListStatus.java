@@ -22,7 +22,7 @@ public class TestAnimeListStatus {
 
     @AfterAll
     public static void cleanup(){
-        TestProvider.testRequireLiveUser();
+        TestProvider.testRequireClientID();
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)

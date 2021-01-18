@@ -17,7 +17,7 @@ public class TestIterator {
         final PaginatedIterator<Anime> iterator = mal
             .getAnime()
             .withQuery(TestProvider.AnimeQuery)
-            .withFields(MyAnimeList.NO_FIELDS)
+            .withNoFields()
             .withLimit(100)
             .searchAll();
 

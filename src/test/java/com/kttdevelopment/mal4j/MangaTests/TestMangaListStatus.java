@@ -22,7 +22,7 @@ public class TestMangaListStatus {
 
     @AfterAll
     public static void cleanup(){
-        TestProvider.testRequireLiveUser();
+        TestProvider.testRequireClientID();
 
         mal.deleteMangaListing(TestProvider.MangaID);
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)

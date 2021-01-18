@@ -38,10 +38,8 @@ public abstract class TestProvider {
 
     //
 
-    @SuppressWarnings("SpellCheckingInspection")
-    static final Path client = new File("src/test/java/com/kttdevelopment/mal4j/client.txt").toPath();
-    @SuppressWarnings("SpellCheckingInspection")
-    static final Path oauth  = new File("src/test/java/com/kttdevelopment/mal4j/oauth.txt").toPath();
+    static final Path client = new File("src/test/java/resources/client.txt").toPath();
+    static final Path oauth  = new File("src/test/java/resources/oauth.txt").toPath();
 
     public static void init() throws IOException{
         APICall.debug = false;
@@ -50,12 +48,12 @@ public abstract class TestProvider {
             if(mal.getAnime(AnimeID, new String[0]) != null)
                 return;
         }
-        testRequireLiveUser();
+        testRequireClientID(); // prevent CI from executing tests
         TestAuthRefresh.beforeAll(); // refresh old token
     }
 
-    public static void testRequireLiveUser(){
-        Assumptions.assumeTrue(client.toFile().exists(), "Skipping tests (client id missing)");
+    public static void testRequireClientID(){
+        Assumptions.assumeTrue(client.toFile().exists(), "File with Client ID was missing, please create a file with the Client ID at: " + client.toFile().getAbsolutePath());
     }
 
     public static MyAnimeList getMyAnimeList(){
