@@ -10,9 +10,9 @@
         •
         <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
         •
-        <a href="https://mal4j.kttdevelopment.com/setup/">Setup</a>
+        <a href="https://github.com/Katsute/Mal4J/blob/main/setup.md">Setup</a>
         •
-        <a href="https://mal4j.kttdevelopment.com/faq/">FAQ</a>
+        <a href="https://github.com/Katsute/Mal4J/blob/main/faq.md">FAQ</a>
         •
         <a href="https://github.com/Katsute/Mal4J/issues">Issues</a>
         •
@@ -34,7 +34,7 @@
 
 Mal4J is a wrapper for the MyAnimeList API written for JDK 11 and simplifies many complex operations into an easy to use library.
 
-# [Setup](https://mal4j.kttdevelopment.com/setup)
+# [Setup](https://github.com/Katsute/Mal4J/blob/main/setup.md)
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
 
@@ -51,7 +51,57 @@ For projects built locally, jars can be found in releases → [![Releases](https
 Mal4J is a standalone library and requires no additional dependencies.
 
 
-### More information on further stages of the setup can be found [here](https://mal4j.kttdevelopment.com/setup).
+### More information on further stages of the setup can be found [here](https://github.com/Katsute/Mal4J/blob/main/setup.md).
+
+# Features
+
+### Search Queries
+
+Easily search through MyAnimeList with search, ranking, seasonal, and suggestion queries; returning only selected or all fields.
+
+```java
+MyAnimeList mal = MyAnimeList.withOAuthToken("");
+List<AnimePreview> search =
+    mal.getAnime()
+        .withQuery("さくら荘のペットな彼女")
+        .withLimit(1)
+        .withOffset(1)
+        .includeNSFW(false)
+        .search();
+```
+
+### List Modification
+Easily update your Anime and Manga listings through update methods.
+
+```java
+MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MangaListStatus status =
+    mal.updateMangaListing(28107)
+        .status(MangaStatus.Reading)
+        .volumesRead(7)
+        .chaptersRead(2)
+        .rereading(false)
+        .priority(2)
+        .timesReread(0)
+        .rereadValue(5)
+        .tags("tags", "more tags")
+        .comments("comments")
+        .update();
+```
+
+### Structured Objects
+
+**All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, and statistics is accessible in this library. Effortlessly retrive any and all information you need.
+
+```java
+MyAnimeList mal = MyAnimeList.withOAuthToken("");
+Anime anime = mal.getAnime(13759, MyAnimeList.ALL_ANIME_FIELDS);
+
+String ja = anime.getAlternativeTitles().getJapanese();
+Genre[] genres = anime.getGenres();
+RelatedAnime[] relatedAnime = anime.getRelatedAnime();
+AnimeRecommendation[] recs = anime.getRecommendations();
+```
 
 ---
 

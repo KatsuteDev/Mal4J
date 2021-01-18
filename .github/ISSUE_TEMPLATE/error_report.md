@@ -12,7 +12,7 @@ assignees: ''
 - [ ] I have checked that no other similar issue already exists.
 - [ ] I have checked that this issue is actually a bug and not a feature.
 - [ ] I have checked the [documentation](https://mal4j.kttdevelopment.com/documentation/)
-- [ ] I have checked the [FAQ](https://mal4j.kttdevelopment.com/faq/)
+- [ ] I have checked the [FAQ](https://github.com/Katsute/Mal4J/blob/main/faq.md)
 - [ ] I am running the latest release version.
 
 **Operating System:** *Operating system name and version.*
