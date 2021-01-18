@@ -18,15 +18,18 @@
 
 package com.kttdevelopment.mal4j.query;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.kttdevelopment.mal4j.MyAnimeList;
+
+import java.util.*;
 
 /**
- * Represents a field query.
+ * Represents a field query. Returns all fields by default.
  *
  * @param <T> this
  * @param <R> completed request
  *
+ * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
+ * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
@@ -44,10 +47,12 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      * @param field a field or comma separated fields that should be returned
      * @return query
      *
-     * @see #withFields(String...)
-     * @see #withFields(List)
      * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
      * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
+     * @see #withFields(String...)
+     * @see #withFields(List)
+     * @see #withAllFields()
+     * @see #withNoFields()
      * @since 1.0.0
      */
     public final T withField(final String field){
@@ -65,10 +70,12 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      *
      * @return query
      *
-     * @see #withField(String)
-     * @see #withFields(List)
      * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
      * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
+     * @see #withField(String)
+     * @see #withFields(List)
+     * @see #withAllFields()
+     * @see #withNoFields()
      * @since 1.0.0
      */
     public final T withFields(final String... fields){
@@ -90,8 +97,12 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
      *
      * @return query
      *
+     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
+     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
      * @see #withField(String)
      * @see #withFields(String...)
+     * @see #withAllFields()
+     * @see #withNoFields()
      * @since 1.0.0
      */
     public final T withFields(final List<String> fields){
@@ -103,6 +114,41 @@ abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends Searc
             for(String field : fields)
                 withField(field);
         }
+        return (T) this;
+    }
+
+    /**
+     * Makes query return all possible fields.
+     *
+     * @return query
+     *
+     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
+     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
+     * @see #withField(String)
+     * @see #withFields(String...)
+     * @see #withFields(List)
+     * @see #withNoFields()
+     * @since 1.0.0
+     */
+    public final T withAllFields(){
+        this.fields = null;
+        return (T) this;
+    }
+
+    /**
+     * Makes query return only default fields.
+     *
+     * @return query
+     *
+     * @see com.kttdevelopment.mal4j.MyAnimeList#NO_FIELDS
+     * @see #withField(String)
+     * @see #withFields(String...)
+     * @see #withFields(List)
+     * @see #withAllFields()
+     * @since 1.0.0
+     */
+    public final T withNoFields(){
+        this.fields = Arrays.asList(MyAnimeList.NO_FIELDS);
         return (T) this;
     }
 

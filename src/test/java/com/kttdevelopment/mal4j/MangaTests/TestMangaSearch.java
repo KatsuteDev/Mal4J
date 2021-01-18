@@ -21,6 +21,7 @@ public class TestMangaSearch {
         final List<Manga> search =
             mal.getManga()
                 .withQuery(TestProvider.AltMangaQuery)
+                .withAllFields()
                 .search();
         Assertions.assertEquals(TestProvider.AltMangaID, search.get(0).getID());
         Assertions.assertNotEquals(1, search.size());
@@ -44,7 +45,7 @@ public class TestMangaSearch {
             mal.getManga()
                 .withQuery(TestProvider.MangaQuery)
                 .withLimit(1)
-                .withFields(MyAnimeList.NO_FIELDS)
+                .withNoFields()
                 .search();
         Assertions.assertNull(search.get(0).getType());
     }
