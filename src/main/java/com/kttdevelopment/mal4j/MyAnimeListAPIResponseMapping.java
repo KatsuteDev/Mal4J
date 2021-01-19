@@ -305,12 +305,22 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final long getCreatedAt() {
+                public final Date getCreatedAt() {
+                    return new Date(createdAt);
+                }
+
+                @Override
+                public final long getCreatedAtEpochMillis(){
                     return createdAt;
                 }
 
                 @Override
-                public final long getUpdatedAt() {
+                public final Date getUpdatedAt() {
+                    return new Date(updatedAt);
+                }
+
+                @Override
+                public final long getUpdatedAtEpochMillis(){
                     return updatedAt;
                 }
 
@@ -756,12 +766,22 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final long getCreatedAt() {
+                public final Date getCreatedAt() {
+                    return new Date(createdAt);
+                }
+
+                @Override
+                public final long getCreatedAtEpochMillis(){
                     return createdAt;
                 }
 
                 @Override
-                public final long getUpdatedAt() {
+                public final Date getUpdatedAt() {
+                    return new Date(updatedAt);
+                }
+
+                @Override
+                public final long getUpdatedAtEpochMillis(){
                     return updatedAt;
                 }
 
@@ -1556,12 +1576,22 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final long getCreatedAt() {
+                public final Date getCreatedAt() {
+                    return new Date(createdAt);
+                }
+
+                @Override
+                public final long getCreatedAtEpochMillis(){
                     return createdAt;
                 }
 
                 @Override
-                public final long getUpdatedAt() {
+                public final Date getUpdatedAt() {
+                    return new Date(updatedAt);
+                }
+
+                @Override
+                public final long getUpdatedAtEpochMillis(){
                     return updatedAt;
                 }
 
@@ -1994,12 +2024,22 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final long getCreatedAt() {
+                public final Date getCreatedAt() {
+                    return new Date(createdAt);
+                }
+
+                @Override
+                public final long getCreatedAtEpochMillis(){
                     return createdAt;
                 }
 
                 @Override
-                public final long getUpdatedAt() {
+                public final Date getUpdatedAt() {
+                    return new Date(updatedAt);
+                }
+
+                @Override
+                public final long getUpdatedAtEpochMillis(){
                     return updatedAt;
                 }
 
