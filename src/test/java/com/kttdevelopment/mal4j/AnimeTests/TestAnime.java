@@ -44,8 +44,10 @@ public class TestAnime {
         Assertions.assertNotNull(anime.getNSFW());
         Assertions.assertNotEquals(-1, anime.getGenres()[0].getId());
         Assertions.assertNotNull(anime.getGenres()[0].getName());
-        Assertions.assertNotEquals(-1, anime.getCreatedAt());
-        Assertions.assertNotEquals(-1, anime.getUpdatedAt());
+        Assertions.assertNotEquals(-1, anime.getCreatedAt().getTime());
+        Assertions.assertNotEquals(-1, anime.getCreatedAtEpochMillis());
+        Assertions.assertNotEquals(-1, anime.getUpdatedAt().getTime());
+        Assertions.assertNotEquals(-1, anime.getUpdatedAtEpochMillis());
         Assertions.assertNotNull(anime.getType());
         Assertions.assertNotNull(anime.getStatus());
         Assertions.assertNotEquals(-1, anime.getEpisodes());
