@@ -81,9 +81,9 @@ MangaListStatus status =
         .volumesRead(7)
         .chaptersRead(2)
         .rereading(false)
-        .priority(2)
+        .priority(Priority.High)
         .timesReread(0)
-        .rereadValue(5)
+        .rereadValue(RereadValue.VeryHigh)
         .tags("tags", "more tags")
         .comments("comments")
         .update();
