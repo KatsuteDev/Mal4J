@@ -29,7 +29,7 @@ public class TestAnimeSeason {
                 .search();
         final AnimePreview anime = season.get(0);
         Assertions.assertEquals(2020, anime.getStartSeason().getYear());
-        Assertions.assertEquals(Season.Summer, anime.getStartSeason().getSeason());
+        Assertions.assertTrue(anime.getStartSeason().getSeason() == Season.Summer || anime.getStartSeason().getSeason() == Season.Spring);
     }
 
     @Test
