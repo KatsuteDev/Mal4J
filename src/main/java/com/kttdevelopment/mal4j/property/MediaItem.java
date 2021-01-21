@@ -183,24 +183,52 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
     Genre[] getGenres();
 
     /**
-     * Returns when this was created.
+     * Returns the creation date.
+     *
+     * @return creation date
+     *
+     * @see #getCreatedAtEpochMillis()
+     * @see #getUpdatedAt()
+     * @see #getUpdatedAtEpochMillis()
+     * @since 1.0.0
+     */
+    Date getCreatedAt();
+
+    /**
+     * Returns the creation date as milliseconds since epoch.
      *
      * @return creation time
      *
+     * @see #getCreatedAt()
+     * @see #getUpdatedAt()
      * @see #getUpdatedAt()
      * @since 1.0.0
      */
-    long getCreatedAt();
+    long getCreatedAtEpochMillis();
 
     /**
      * Returns when this was last updated.
      *
      * @return updated time
      *
+     * @see #getUpdatedAtEpochMillis()
      * @see #getCreatedAt()
+     * @see #getCreatedAtEpochMillis()
      * @since 1.0.0
      */
-    long getUpdatedAt();
+    Date getUpdatedAt();
+
+    /**
+     * Returns when this was last updated as milliseconds since epoch.
+     *
+     * @return updated time
+     *
+     * @see #getUpdatedAt()
+     * @see #getCreatedAt()
+     * @see #getCreatedAtEpochMillis()
+     * @since 1.0.0
+     */
+    long getUpdatedAtEpochMillis();
 
     /**
      * Returns the media type.

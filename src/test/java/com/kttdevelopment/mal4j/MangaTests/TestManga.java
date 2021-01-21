@@ -43,8 +43,10 @@ public class TestManga {
         Assertions.assertNotNull(manga.getNSFW());
         Assertions.assertNotEquals(-1, manga.getGenres()[0].getId());
         Assertions.assertNotNull(manga.getGenres()[0].getName());
-        Assertions.assertNotEquals(-1, manga.getCreatedAt());
-        Assertions.assertNotEquals(-1, manga.getUpdatedAt());
+        Assertions.assertNotEquals(-1, manga.getCreatedAt().getTime());
+        Assertions.assertNotEquals(-1, manga.getCreatedAtEpochMillis());
+        Assertions.assertNotEquals(-1, manga.getUpdatedAt().getTime());
+        Assertions.assertNotEquals(-1, manga.getUpdatedAtEpochMillis());
         Assertions.assertNotNull(manga.getType());
         Assertions.assertNotNull(manga.getStatus());
         Assertions.assertNotEquals(-1, manga.getVolumes());
