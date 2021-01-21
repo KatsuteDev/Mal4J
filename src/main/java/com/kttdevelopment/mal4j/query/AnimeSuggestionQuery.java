@@ -33,7 +33,6 @@ import com.kttdevelopment.mal4j.anime.Anime;
  */
 public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggestionQuery,Anime> {
 
-    protected String query;
     protected Boolean nsfw;
 
     /**
@@ -44,19 +43,6 @@ public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggest
      * @since 1.0.0
      */
     public AnimeSuggestionQuery() { }
-
-    /**
-     * Sets the search query.
-     *
-     * @param query query
-     * @return suggestion query
-     *
-     * @since 1.0.0
-     */
-    public final AnimeSuggestionQuery withQuery(final String query){
-        this.query = query;
-        return this;
-    }
 
     /**
      * Sets if the query will return NSFW results.
