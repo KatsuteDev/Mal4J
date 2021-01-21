@@ -27,7 +27,7 @@ package com.kttdevelopment.mal4j.anime.property;
  */
 public enum AnimeSort {
 
-    Score       ("List_score"),
+    Score       ("list_score"),
     UpdatedAt   ("list_updated_at"),
     Title       ("anime_title"),
     StartDate   ("anime_start_date"),
