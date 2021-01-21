@@ -426,7 +426,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final Priority priority     = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
                 private final String[] tags         = requireNonNull(() -> schema.getStringArray("tags"));
                 private final String comments       = requireNonNull(() -> schema.getString("comments"));
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.getString("updated_at")), -1L);
                 private final int watchedEpisodes   = requireNonNullElse(() -> schema.getInt("num_episodes_watched"), -1);
                 private final boolean rewatching    = requireNonNullElse(() -> (boolean) schema.get("is_rewatching"), false);
                 private final int timesRewatched    = requireNonNullElse(() -> schema.getInt("num_times_rewatched"), -1);
@@ -545,7 +545,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final Priority priority     = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
                 private final String[] tags         = requireNonNull(() -> schema.getStringArray("tags"));
                 private final String comments       = requireNonNull(() -> schema.getString("comments"));
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.getString("updated_at")), -1L);
                 private final int watchedEpisodes   = requireNonNullElse(() -> schema.getInt("num_episodes_watched"), -1);
                 private final boolean rewatching    = requireNonNullElse(() -> (boolean) schema.get("is_rewatching"), false);
                 private final int timesRewatched    = requireNonNullElse(() -> schema.getInt("num_times_rewatched"), -1);
@@ -1677,7 +1677,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final Priority priority     = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
                 private final String[] tags         = requireNonNull(() -> schema.getStringArray("tags"));
                 private final String comments       = requireNonNull(() -> schema.getString("comments"));
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.getString("updated_at")), -1L);
                 private final int volumesRead       = requireNonNullElse(() -> schema.getInt("num_volumes_read"), -1);
                 private final int chaptersRead      = requireNonNullElse(() -> schema.getInt("num_chapters_read"), -1);
                 private final boolean rereading     = requireNonNullElse(() -> (boolean) schema.get("is_rereading"), false);
@@ -1801,7 +1801,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final Priority priority     = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
                 private final String[] tags         = requireNonNull(() -> schema.getStringArray("tags"));
                 private final String comments       = requireNonNull(() -> schema.getString("comments"));
-                private final long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
+                private final long updatedAt        = requireNonNullElse(() -> parseISO8601(schema.getString("updated_at")), -1L);
                 private final int volumesRead       = requireNonNullElse(() -> schema.getInt("num_volumes_read"), -1);
                 private final int chaptersRead      = requireNonNullElse(() -> schema.getInt("num_chapters_read"), -1);
                 private final boolean rereading     = requireNonNullElse(() -> (boolean) schema.get("is_rereading"), false);
