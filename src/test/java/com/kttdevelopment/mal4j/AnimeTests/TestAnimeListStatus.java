@@ -51,7 +51,7 @@ public class TestAnimeListStatus {
     @Test @Order(1)
     public void testDelete(){
         mal.deleteAnimeListing(TestProvider.AnimeID);
-        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID).getListStatus());
+        Assertions.assertEquals(-1L, mal.getAnime(TestProvider.AnimeID).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
