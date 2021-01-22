@@ -30,6 +30,7 @@ import com.kttdevelopment.mal4j.property.RankingType;
 @SuppressWarnings("SpellCheckingInspection")
 public enum MangaRankingType {
 
+    All     (RankingType.All.field()),
     Manga   ("manga"),
     Novels  ("novels"),
     OneShots("oneshots"),
@@ -37,8 +38,7 @@ public enum MangaRankingType {
     Manhwa  ("manhwa"),
     Manhua  ("manhua"),
 
-    All         (RankingType.All.field()),
-    ByPopularity(RankingType.ByPopularity.field()),
+    Pupularity  (RankingType.Popularity.field()),
     Favorite    (RankingType.Favorite.field());
 
     private final String field;
