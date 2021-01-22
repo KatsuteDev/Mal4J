@@ -412,7 +412,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         subboardId,
                         limit,
                         offset,
-                        sort,
+                        sort.field(),
                         query,
                         topicUsername,
                         username
@@ -436,7 +436,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         subboardId,
                         limit,
                         offset,
-                        sort,
+                        sort.field(),
                         query,
                         topicUsername,
                         username

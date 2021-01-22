@@ -27,11 +27,11 @@ package com.kttdevelopment.mal4j.anime.property;
  */
 public enum AnimeSort {
 
+    ID          ("anime_id"),
+    Title       ("anime_title"),
     Score       ("list_score"),
     UpdatedAt   ("list_updated_at"),
-    Title       ("anime_title"),
-    StartDate   ("anime_start_date"),
-    ID          ("anime_id");
+    StartDate   ("anime_start_date");
 
     private final String field;
 
