@@ -1,0 +1,22 @@
+"/users/{user_name}":  # API path as set by MAL API
+  requestBody:
+    schema:
+      type: object
+      properties:
+        name:
+          type: string
+
+  x-codeSample:
+    lang: Java
+    source: |
+      // code here
+
+  responses:
+    "200":
+      schema:
+        type: object
+        properties:
+          name:
+            type: string
+        example:
+          name: KatsuteDev
