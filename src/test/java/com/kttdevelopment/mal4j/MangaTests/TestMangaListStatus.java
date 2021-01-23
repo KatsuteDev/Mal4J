@@ -53,6 +53,7 @@ public class TestMangaListStatus {
     @Test @Order(1)
     public void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
+        Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
         Assertions.assertEquals(-1L, mal.getManga(TestProvider.MangaID).getListStatus().getUpdatedAtEpochMillis());
     }
 

@@ -116,7 +116,7 @@ public abstract class MyAnimeList {
     /**
      * Returns the full Anime details given an ID.
      *
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      * @param id Anime id
      * @return Anime
@@ -130,7 +130,7 @@ public abstract class MyAnimeList {
     /**
      * Returns Anime details requested in the fields given an ID.
      *
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      * @param id Anime id
      * @param fields a comma separated string or a string array of the fields that should be returned
@@ -210,7 +210,7 @@ public abstract class MyAnimeList {
     /**
      * Removes an Anime listing.
      *
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      * @param id Anime id
      *
@@ -256,7 +256,7 @@ public abstract class MyAnimeList {
      * Returns the top level forum boards.
      *
      * @return forum boards
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see ForumCategory
@@ -271,7 +271,7 @@ public abstract class MyAnimeList {
      *
      * @param id forum topic id
      * @return forum topic
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see #getForumTopicDetail(long, int)
@@ -287,7 +287,7 @@ public abstract class MyAnimeList {
      * @param id forum topic id
      * @param limit post limit
      * @return forum topic
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see #getForumTopicDetail(long)
@@ -303,7 +303,7 @@ public abstract class MyAnimeList {
      * @param limit post limit
      * @param offset post offset
      * @return forum topic
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see #getForumTopicDetail(long)
@@ -342,7 +342,7 @@ public abstract class MyAnimeList {
     /**
      * Returns the full Manga details given an ID.
      *
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      * @param id Manga id
      * @return Manga
@@ -356,7 +356,7 @@ public abstract class MyAnimeList {
     /**
      * Returns Manga details requested in the fields given an ID.
      *
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      * @param id Manga id
      * @param fields a comma separated string or a string array of the fields that should be returned
@@ -405,7 +405,7 @@ public abstract class MyAnimeList {
     /**
      * Removes a Manga listing.
      *
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      * @param id Manga id
      *
@@ -451,7 +451,7 @@ public abstract class MyAnimeList {
      * Returns the authenticated user.
      *
      * @return user
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User
@@ -465,7 +465,7 @@ public abstract class MyAnimeList {
      *
      * @param fields a comma separated string or a string array of the fields that should be returned
      * @return user
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User
@@ -480,7 +480,7 @@ public abstract class MyAnimeList {
      *
      * @param username username
      * @return user
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User
@@ -495,7 +495,7 @@ public abstract class MyAnimeList {
      * @param username username
      * @param fields a comma separated string or a string array of the fields that should be returned
      * @return user
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User

@@ -67,7 +67,7 @@ abstract class SearchQuery<T extends SearchQuery<T,R>,R> {
      * Runs the search query.
      *
      * @return search listings
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @since 1.0.0
@@ -78,7 +78,7 @@ abstract class SearchQuery<T extends SearchQuery<T,R>,R> {
      * Runs the search query and returns an iterable.
      *
      * @return search iterable
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @since 1.0.0
