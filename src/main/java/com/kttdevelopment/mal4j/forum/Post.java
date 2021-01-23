@@ -40,7 +40,7 @@ public abstract class Post implements ID {
      *
      * @since 1.0.0
      */
-    public abstract int getNumber();
+    public abstract Integer getNumber();
 
     /**
      * Returns when the post was created at.
@@ -49,7 +49,7 @@ public abstract class Post implements ID {
      *
      * @since 1.0.0
      */
-    public abstract long getCreatedAt();
+    public abstract Long getCreatedAt();
 
     /**
      * Returns the post author.

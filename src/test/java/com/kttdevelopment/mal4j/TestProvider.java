@@ -15,7 +15,7 @@ public abstract class TestProvider {
     public static final String AnimeQuery = "さくら荘のペットな彼女";
     public static final long AnimeID = 13759;
 
-     public static final String AltAnimeQuery = "ソードアートオンライン"; // for tests that require additional fields
+    public static final String AltAnimeQuery = "ソードアートオンライン"; // for tests that require additional fields
     public static final long AltAnimeID = 11757; // for tests that require additional fields
 
     public static final String NSFW_AnimeQuery = "いただきっセーエキ";

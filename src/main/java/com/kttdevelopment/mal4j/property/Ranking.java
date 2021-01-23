@@ -35,7 +35,7 @@ public interface Ranking {
      * @see #getPreviousRank()
      * @since 1.0.0
      */
-    int getRanking();
+    Integer getRanking();
 
     /**
      * Returns the item's previous ranking.
@@ -45,6 +45,6 @@ public interface Ranking {
      * @see #getRanking()
      * @since 1.0.0
      */
-    int getPreviousRank();
+    Integer getPreviousRank();
 
 }

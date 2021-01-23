@@ -47,7 +47,7 @@ public abstract class MangaPreview implements MangaRetrievable,MediaItem<MangaTy
      * @see #getChapters()
      * @since 1.0.0
      */
-    public abstract int getVolumes();
+    public abstract Integer getVolumes();
 
     /**
      * Returns the total amount of chapters.
@@ -57,7 +57,7 @@ public abstract class MangaPreview implements MangaRetrievable,MediaItem<MangaTy
      * @see #getVolumes()
      * @since 1.0.0
      */
-    public abstract int getChapters();
+    public abstract Integer getChapters();
 
     /**
      * Returns the Manga's authors.

@@ -35,7 +35,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsWatching();
+    public abstract Integer getItemsWatching();
 
     /**
      * Returns total items completed.
@@ -44,7 +44,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsCompleted();
+    public abstract Integer getItemsCompleted();
 
     /**
      * Returns total items on hold.
@@ -53,7 +53,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsOnHold();
+    public abstract Integer getItemsOnHold();
 
     /**
      * Returns total items dropped.
@@ -62,7 +62,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsDropped();
+    public abstract Integer getItemsDropped();
 
     /**
      * Returns total items planned to watch.
@@ -71,7 +71,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsPlanToWatch();
+    public abstract Integer getItemsPlanToWatch();
 
     /**
      * Returns total items.
@@ -80,7 +80,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItems();
+    public abstract Integer getItems();
 
     /**
      * Returns total days watched.
@@ -89,7 +89,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysWatched();
+    public abstract Float getDaysWatched();
 
     /**
      * Returns total days watching.
@@ -98,7 +98,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysWatching();
+    public abstract Float getDaysWatching();
 
     /**
      * Returns total days completed.
@@ -107,7 +107,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysCompleted();
+    public abstract Float getDaysCompleted();
 
     /**
      * Returns total days on hold.
@@ -116,7 +116,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysOnHold();
+    public abstract Float getDaysOnHold();
 
     /**
      * Returns total days dropped.
@@ -125,7 +125,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysDropped();
+    public abstract Float getDaysDropped();
 
     /**
      * Returns total days.
@@ -134,7 +134,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDays();
+    public abstract Float getDays();
 
     /**
      * Returns total episodes watched.
@@ -143,7 +143,7 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getEpisodes();
+    public abstract Integer getEpisodes();
 
     /**
      * Returns times rewatched.
@@ -153,7 +153,7 @@ public abstract class UserAnimeStatistics {
      * @since 1.0.0
      */
     @SuppressWarnings("SpellCheckingInspection")
-    public abstract int getTimesRewatched();
+    public abstract Integer getTimesRewatched();
 
     /**
      * Returns the average score.
@@ -162,6 +162,6 @@ public abstract class UserAnimeStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getMeanScore();
+    public abstract Float getMeanScore();
 
 }

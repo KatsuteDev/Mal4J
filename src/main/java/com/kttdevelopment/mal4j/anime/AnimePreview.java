@@ -47,7 +47,7 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
      *
      * @since 1.0.0
      */
-    public abstract int getEpisodes();
+    public abstract Integer getEpisodes();
 
     /**
      * Returns the Anime start season.
@@ -86,7 +86,7 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
      *
      * @since 1.0.0
      */
-    public abstract int getAverageEpisodeLength();
+    public abstract Integer getAverageEpisodeLength();
 
     /**
      * Returns the Anime's TV viewing rating (ex: pg13).

@@ -38,7 +38,7 @@ public abstract class AnimeStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getWatching();
+    public abstract Integer getWatching();
 
     /**
      * The total amount of users completed.
@@ -47,7 +47,7 @@ public abstract class AnimeStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getCompleted();
+    public abstract Integer getCompleted();
 
     /**
      * The total amount of users on hold.
@@ -56,7 +56,7 @@ public abstract class AnimeStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getOnHold();
+    public abstract Integer getOnHold();
 
     /**
      * The total amount of users dropped.
@@ -65,7 +65,7 @@ public abstract class AnimeStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getDropped();
+    public abstract Integer getDropped();
 
     /**
      * The total amount of users planning to watch.
@@ -74,6 +74,6 @@ public abstract class AnimeStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getPlanToWatch();
+    public abstract Integer getPlanToWatch();
 
 }

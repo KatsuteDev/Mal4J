@@ -51,7 +51,7 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      *
      * @since 1.0.0
      */
-    public abstract int getWatchedEpisodes();
+    public abstract Integer getWatchedEpisodes();
 
     /**
      * Returns if the user is rewatching.
@@ -60,7 +60,7 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      *
      * @since 1.0.0
      */
-    public abstract boolean isRewatching();
+    public abstract Boolean isRewatching();
 
     /**
      * Returns the total times rewatched.
@@ -69,7 +69,7 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      *
      * @since 1.0.0
      */
-    public abstract int getTimesRewatched();
+    public abstract Integer getTimesRewatched();
 
     /**
      * Returns the rewatch value.
