@@ -31,34 +31,34 @@ public class TestAnime {
         Assertions.assertNotNull(anime.getAlternativeTitles().getEnglish());
         Assertions.assertNotNull(anime.getAlternativeTitles().getJapanese());
         Assertions.assertNotNull(anime.getAlternativeTitles().getSynonyms());
-        Assertions.assertDoesNotThrow(() -> anime.getStartDate().getTime());
-        Assertions.assertDoesNotThrow(() -> anime.getStartDateEpochMillis());
-        Assertions.assertDoesNotThrow(() -> anime.getEndDate().getTime());
-        Assertions.assertDoesNotThrow(() -> anime.getEndDateEpochMillis());
+        Assertions.assertNotNull(anime.getStartDate());
+        Assertions.assertNotNull(anime.getStartDateEpochMillis());
+        Assertions.assertNotNull(anime.getEndDate());
+        Assertions.assertNotNull(anime.getEndDateEpochMillis());
         Assertions.assertNotNull(anime.getSynopsis());
-        Assertions.assertDoesNotThrow(() -> anime.getMeanRating());
-        Assertions.assertDoesNotThrow(() -> anime.getRank());
-        Assertions.assertDoesNotThrow(() -> anime.getPopularity());
-        Assertions.assertDoesNotThrow(() -> anime.getUserListingCount());
-        Assertions.assertDoesNotThrow(() -> anime.getUserScoringCount());
+        Assertions.assertNotNull(anime.getMeanRating());
+        Assertions.assertNotNull(anime.getRank());
+        Assertions.assertNotNull(anime.getPopularity());
+        Assertions.assertNotNull(anime.getUserListingCount());
+        Assertions.assertNotNull(anime.getUserScoringCount());
         Assertions.assertNotNull(anime.getNSFW());
-        Assertions.assertDoesNotThrow(() -> anime.getGenres()[0].getId());
+        Assertions.assertNotNull(anime.getGenres()[0]);
         Assertions.assertNotNull(anime.getGenres()[0].getName());
-        Assertions.assertDoesNotThrow(() -> anime.getCreatedAt().getTime());
-        Assertions.assertDoesNotThrow(() -> anime.getCreatedAtEpochMillis());
-        Assertions.assertDoesNotThrow(() -> anime.getUpdatedAt().getTime());
-        Assertions.assertDoesNotThrow(() -> anime.getUpdatedAtEpochMillis());
+        Assertions.assertNotNull(anime.getCreatedAt());
+        Assertions.assertNotNull(anime.getCreatedAtEpochMillis());
+        Assertions.assertNotNull(anime.getUpdatedAt());
+        Assertions.assertNotNull(anime.getUpdatedAtEpochMillis());
         Assertions.assertNotNull(anime.getType());
         Assertions.assertNotNull(anime.getStatus());
-        Assertions.assertDoesNotThrow(() -> anime.getEpisodes());
+        Assertions.assertNotNull(anime.getEpisodes());
         Assertions.assertNotNull(anime.getStartSeason().getSeason());
-        Assertions.assertDoesNotThrow(() -> anime.getStartSeason().getYear());
+        Assertions.assertNotNull(anime.getStartSeason().getYear());
         Assertions.assertNotNull(anime.getBroadcast().getDayOfWeek());
         Assertions.assertNotNull(anime.getBroadcast().getStartTime());
         Assertions.assertNotNull(anime.getSource());
-        Assertions.assertDoesNotThrow(() -> anime.getAverageEpisodeLength());
+        Assertions.assertNotNull(anime.getAverageEpisodeLength());
         Assertions.assertNotNull(anime.getRating());
-        Assertions.assertDoesNotThrow(() -> anime.getStudios()[0].getID());
+        Assertions.assertNotNull(anime.getStudios()[0].getID());
         Assertions.assertNotNull(anime.getStudios()[0].getName());
         Assertions.assertNotNull(anime.getPictures()[0].getMediumURL());
         Assertions.assertNotNull(anime.getPictures()[0].getLargeURL());
@@ -68,7 +68,7 @@ public class TestAnime {
     @Test
     public void testRelatedAnime(){
         final RelatedAnime relatedAnime = anime.getRelatedAnime()[0];
-        Assertions.assertDoesNotThrow(() -> relatedAnime.getAnimePreview().getID());
+        Assertions.assertNotNull(relatedAnime.getAnimePreview().getID());
         Assertions.assertNotNull(relatedAnime.getRelationType());
         Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
     }
@@ -76,7 +76,7 @@ public class TestAnime {
     @Test @DisplayName("Anime may not have related Manga") @Disabled
     public void testRelatedManga(){
         final RelatedManga relatedManga = anime.getRelatedManga()[0];
-        Assertions.assertDoesNotThrow(() -> relatedManga.getMangaPreview().getID());
+        Assertions.assertNotNull(relatedManga.getMangaPreview().getID());
         Assertions.assertNotNull(relatedManga.getRelationType());
         Assertions.assertNotNull(relatedManga.getRelationTypeFormat());
     }
@@ -84,19 +84,19 @@ public class TestAnime {
     @Test
     public void testRecommendations(){
         final AnimeRecommendation recommendation = anime.getRecommendations()[0];
-        Assertions.assertDoesNotThrow(() -> recommendation.getAnimePreview().getID());
-        Assertions.assertDoesNotThrow(recommendation::getRecommendations);
+        Assertions.assertNotNull(recommendation.getAnimePreview().getID());
+        Assertions.assertNotNull(recommendation.getRecommendations());
     }
 
     @Test
     public void testStatistics(){
         final AnimeStatistics statistics = anime.getStatistics();
-        Assertions.assertDoesNotThrow(statistics::getCompleted);
-        Assertions.assertDoesNotThrow(statistics::getDropped);
-        Assertions.assertDoesNotThrow(statistics::getOnHold);
-        Assertions.assertDoesNotThrow(statistics::getPlanToWatch);
-        Assertions.assertDoesNotThrow(statistics::getWatching);
-        Assertions.assertDoesNotThrow(statistics::getUserCount);
+        Assertions.assertNotNull(statistics.getCompleted());
+        Assertions.assertNotNull(statistics.getDropped());
+        Assertions.assertNotNull(statistics.getOnHold());
+        Assertions.assertNotNull(statistics.getPlanToWatch());
+        Assertions.assertNotNull(statistics.getWatching());
+        Assertions.assertNotNull(statistics.getUserCount());
     }
 
 }

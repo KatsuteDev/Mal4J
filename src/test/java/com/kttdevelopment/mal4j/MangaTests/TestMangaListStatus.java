@@ -131,18 +131,18 @@ public class TestMangaListStatus {
         Assertions.assertEquals(0, status.getVolumesRead());
         Assertions.assertEquals(0, status.getChaptersRead());
         Assertions.assertTrue(status.isRereading());
-        Assertions.assertDoesNotThrow(() -> status.getStartDate().getTime());
-        Assertions.assertDoesNotThrow(status::getStartDateEpochMillis);
-        Assertions.assertDoesNotThrow(() -> status.getFinishDate().getTime());
-        Assertions.assertDoesNotThrow(status::getFinishDateEpochMillis);
+        Assertions.assertNotNull(status.getStartDate());
+        Assertions.assertNotNull(status.getStartDateEpochMillis());
+        Assertions.assertNotNull(status.getFinishDate());
+        Assertions.assertNotNull(status.getFinishDateEpochMillis());
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesReread());
         Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue());
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
         Assertions.assertEquals("ignore comments", status.getComments());
-        Assertions.assertDoesNotThrow(() -> status.getUpdatedAt().getTime());
-        Assertions.assertDoesNotThrow(status::getUpdatedAtEpochMillis);
+        Assertions.assertNotNull(status.getUpdatedAt());
+        Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
 }

@@ -26,7 +26,7 @@ public class TestForumCategories {
     @Test
     public void testBoard(){
         final ForumBoard board = category.getForumBoards()[2];
-        Assertions.assertDoesNotThrow(board::getID);
+        Assertions.assertNotNull(board.getID());
         Assertions.assertNotNull(board.getTitle());
         Assertions.assertNotNull(board.getDescription());
 
@@ -37,7 +37,7 @@ public class TestForumCategories {
     @Test // not all forums have subboards
     public void testSubBoard(){
         final ForumSubBoard subBoard = category.getForumBoards()[2].getSubBoards()[0];
-        Assertions.assertDoesNotThrow(subBoard::getID);
+        Assertions.assertNotNull(subBoard.getID());
         Assertions.assertNotNull(subBoard.getTitle());
     }
 

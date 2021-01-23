@@ -15,7 +15,7 @@ public abstract class TestProvider {
     public static final String AnimeQuery = "さくら荘のペットな彼女";
     public static final long AnimeID = 13759;
 
-     public static final String AltAnimeQuery = "ソードアートオンライン"; // for tests that require additional fields
+    public static final String AltAnimeQuery = "ソードアートオンライン"; // for tests that require additional fields
     public static final long AltAnimeID = 11757; // for tests that require additional fields
 
     public static final String NSFW_AnimeQuery = "いただきっセーエキ";
@@ -42,7 +42,7 @@ public abstract class TestProvider {
     static final Path oauth  = new File("src/test/java/resources/oauth.txt").toPath();
 
     public static void init() throws IOException{
-        APICall.debug = true;
+        APICall.debug = false;
         if(oauth.toFile().exists()){ // use existing OAuth
             mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
             if(mal.getAnime(AnimeID, new String[0]) != null)

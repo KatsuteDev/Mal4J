@@ -10,7 +10,6 @@ import org.junit.jupiter.api.*;
 
 public class TestForumTopicDetail {
 
-    @SuppressWarnings("FieldCanBeLocal")
     private static MyAnimeList mal;
     private static ForumTopic topic;
 
@@ -29,9 +28,9 @@ public class TestForumTopicDetail {
     @Test
     public void testPosts(){
         final Post post = topic.getPosts()[0];
-        Assertions.assertDoesNotThrow(post::getID);
-        Assertions.assertDoesNotThrow(post::getNumber);
-        Assertions.assertDoesNotThrow(post::getCreatedAt);
+        Assertions.assertNotNull(post.getID());
+        Assertions.assertNotNull(post.getNumber());
+        Assertions.assertNotNull(post.getCreatedAt());
         Assertions.assertNotNull(post.getBody());
         Assertions.assertNotNull(post.getSignature());
         Assertions.assertSame(topic, post.getForumTopic());
@@ -40,15 +39,15 @@ public class TestForumTopicDetail {
     @Test
     public void testPoll(){
         final Poll poll = topic.getPoll();
-        Assertions.assertDoesNotThrow(poll::getID);
+        Assertions.assertNotNull(poll.getID());
         Assertions.assertNotNull(poll.getQuestion());
         Assertions.assertFalse(poll.isClosed());
         // options
         {
             final PollOption option = poll.getOptions()[0];
-            Assertions.assertDoesNotThrow(option::getID);
+            Assertions.assertNotNull(option.getID());
             Assertions.assertNotNull(option.getText());
-            Assertions.assertDoesNotThrow(option::getVotes);
+            Assertions.assertNotNull(option.getVotes());
             Assertions.assertSame(poll, option.getPoll());
         }
         Assertions.assertSame(topic, poll.getForumTopic());

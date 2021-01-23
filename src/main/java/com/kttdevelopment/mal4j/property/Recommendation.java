@@ -36,6 +36,6 @@ public abstract class Recommendation {
      *
      * @since 1.0.0
      */
-    public abstract int getRecommendations();
+    public abstract Integer getRecommendations();
 
 }

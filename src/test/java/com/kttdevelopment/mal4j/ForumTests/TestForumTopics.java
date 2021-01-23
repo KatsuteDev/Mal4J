@@ -84,10 +84,10 @@ public class TestForumTopics {
         final ForumTopic topic = mal.getForumTopicDetail(481);
         Assertions.assertNotNull(topic.getTitle());
         final Post post = topic.getPosts()[0];
-        Assertions.assertDoesNotThrow(post::getID);
-        Assertions.assertDoesNotThrow(post::getNumber);
-        Assertions.assertDoesNotThrow(post::getCreatedAt);
-        Assertions.assertDoesNotThrow(() -> post.getAuthor().getID());
+        Assertions.assertNotNull(post.getID());
+        Assertions.assertNotNull(post.getNumber());
+        Assertions.assertNotNull(post.getCreatedAt());
+        Assertions.assertNotNull(post.getAuthor().getID());
         Assertions.assertNotNull(post.getAuthor().getName());
         Assertions.assertNotNull(post.getAuthor().getForumAvatarURL());
         // Assertions.assertEquals(post.getAuthor().getID(), post.getAuthor().getUser().getID()); // not yet implemented
@@ -95,26 +95,26 @@ public class TestForumTopics {
         Assertions.assertNotNull(post.getSignature());
         Assertions.assertEquals(topic, post.getForumTopic());
         final Poll poll = topic.getPoll();
-        Assertions.assertDoesNotThrow(poll::getID);
+        Assertions.assertNotNull(poll.getID());
         Assertions.assertNotNull(poll.getQuestion());
         Assertions.assertFalse(poll.isClosed());
-        Assertions.assertDoesNotThrow(() -> poll.getOptions()[0].getID());
+        Assertions.assertNotNull(poll.getOptions()[0].getID());
         Assertions.assertNotNull(poll.getOptions()[1].getText());
-        Assertions.assertDoesNotThrow(() -> poll.getOptions()[0].getVotes());
+        Assertions.assertNotNull(poll.getOptions()[0].getVotes());
         Assertions.assertEquals(topic, poll.getForumTopic());
         Assertions.assertEquals(poll, poll.getOptions()[0].getPoll());
     }
 
     private void testForumTopicDetail(final ForumTopicDetail topic){
-        Assertions.assertDoesNotThrow(topic::getID);
+        Assertions.assertNotNull(topic.getID());
         Assertions.assertNotNull(topic.getTitle());
-        Assertions.assertDoesNotThrow(topic::getCreatedAt);
-        Assertions.assertDoesNotThrow(() -> topic.getCreatedBy().getID());
+        Assertions.assertNotNull(topic.getCreatedAt());
+        Assertions.assertNotNull(topic.getCreatedBy().getID());
         // Assertions.assertEquals(topic.getCreatedBy().getID(), topic.getCreatedBy().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(topic.getCreatedBy().getName());
-        Assertions.assertDoesNotThrow(topic::getPostsCount);
-        Assertions.assertDoesNotThrow(topic::getLastPostCreatedAt);
-        Assertions.assertDoesNotThrow(() -> topic.getLastPostCreatedBy().getID());
+        Assertions.assertNotNull(topic.getPostsCount());
+        Assertions.assertNotNull(topic.getLastPostCreatedAt());
+        Assertions.assertNotNull(topic.getLastPostCreatedBy().getID());
         // Assertions.assertEquals(topic.getLastPostCreatedBy().getID(), topic.getLastPostCreatedBy().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(topic.getLastPostCreatedBy().getName());
         Assertions.assertFalse(topic.isLocked());

@@ -130,18 +130,18 @@ public class TestAnimeListStatus {
         Assertions.assertEquals(10, status.getScore());
         Assertions.assertEquals(24, status.getWatchedEpisodes());
         Assertions.assertTrue(status.isRewatching());
-        Assertions.assertDoesNotThrow(() -> status.getStartDate().getTime());
-        Assertions.assertDoesNotThrow(status::getStartDateEpochMillis);
-        Assertions.assertDoesNotThrow(() -> status.getFinishDate().getTime());
-        Assertions.assertDoesNotThrow(status::getFinishDateEpochMillis);
+        Assertions.assertNotNull(status.getStartDate());
+        Assertions.assertNotNull(status.getStartDateEpochMillis());
+        Assertions.assertNotNull(status.getFinishDate());
+        Assertions.assertNotNull(status.getFinishDateEpochMillis());
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesRewatched());
         Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
         Assertions.assertEquals("ignore comments", status.getComments());
-        Assertions.assertDoesNotThrow(() -> status.getUpdatedAt().getTime());
-        Assertions.assertDoesNotThrow(status::getUpdatedAtEpochMillis);
+        Assertions.assertNotNull(status.getUpdatedAt());
+        Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
 }

@@ -51,7 +51,7 @@ public interface ListStatus<Status extends Enum<?>> {
      *
      * @since 1.0.0
      */
-    int getScore();
+    Integer getScore();
 
     /**
      * Returns the start date for the listing.
@@ -75,7 +75,7 @@ public interface ListStatus<Status extends Enum<?>> {
      * @see #getFinishDateEpochMillis()
      * @since 1.0.0
      */
-    long getStartDateEpochMillis();
+    Long getStartDateEpochMillis();
 
     /**
      * Returns the finish date for the listing.
@@ -99,7 +99,7 @@ public interface ListStatus<Status extends Enum<?>> {
      * @see #getStartDateEpochMillis()
      * @since 1.0.0
      */
-    long getFinishDateEpochMillis();
+    Long getFinishDateEpochMillis();
 
     /**
      * Returns the priority for the listing.
@@ -147,6 +147,6 @@ public interface ListStatus<Status extends Enum<?>> {
      * @see #getUpdatedAt()
      * @since 1.0.0
      */
-    long getUpdatedAtEpochMillis();
+    Long getUpdatedAtEpochMillis();
 
 }

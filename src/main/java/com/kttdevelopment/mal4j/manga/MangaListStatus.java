@@ -50,7 +50,7 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>,MangaRe
      *
      * @since 1.0.0
      */
-    public abstract int getVolumesRead();
+    public abstract Integer getVolumesRead();
 
     /**
      * Returns the total amount of chapters read.
@@ -59,7 +59,7 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>,MangaRe
      *
      * @since 1.0.0
      */
-    public abstract int getChaptersRead();
+    public abstract Integer getChaptersRead();
 
     /**
      * Returns if the user is rereading.
@@ -68,7 +68,7 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>,MangaRe
      *
      * @since 1.0.0
      */
-    public abstract boolean isRereading();
+    public abstract Boolean isRereading();
 
     /**
      * Returns the total times reread.
@@ -77,7 +77,7 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>,MangaRe
      *
      * @since 1.0.0
      */
-    public abstract int getTimesReread();
+    public abstract Integer getTimesReread();
 
     /**
      * Returns the reread value.

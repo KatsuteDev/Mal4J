@@ -37,6 +37,6 @@ public abstract class Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getUserCount();
+    public abstract Integer getUserCount();
 
 }
