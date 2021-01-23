@@ -54,7 +54,7 @@ public class TestMangaListStatus {
     public void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
         Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
-        Assertions.assertEquals(-1L, mal.getManga(TestProvider.MangaID).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertThrows(NullPointerException.class, () -> mal.getManga(TestProvider.MangaID).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -131,18 +131,18 @@ public class TestMangaListStatus {
         Assertions.assertEquals(0, status.getVolumesRead());
         Assertions.assertEquals(0, status.getChaptersRead());
         Assertions.assertTrue(status.isRereading());
-        Assertions.assertNotEquals(-1, status.getStartDate().getTime());
-        Assertions.assertNotEquals(-1, status.getStartDateEpochMillis());
-        Assertions.assertNotEquals(-1, status.getFinishDate().getTime());
-        Assertions.assertNotEquals(-1, status.getFinishDateEpochMillis());
+        Assertions.assertDoesNotThrow(() -> status.getStartDate().getTime());
+        Assertions.assertDoesNotThrow(status::getStartDateEpochMillis);
+        Assertions.assertDoesNotThrow(() -> status.getFinishDate().getTime());
+        Assertions.assertDoesNotThrow(status::getFinishDateEpochMillis);
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesReread());
         Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue());
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
         Assertions.assertEquals("ignore comments", status.getComments());
-        Assertions.assertNotEquals(-1, status.getUpdatedAt().getTime());
-        Assertions.assertNotEquals(-1, status.getUpdatedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> status.getUpdatedAt().getTime());
+        Assertions.assertDoesNotThrow(status::getUpdatedAtEpochMillis);
     }
 
 }

@@ -42,7 +42,7 @@ public abstract class TestProvider {
     static final Path oauth  = new File("src/test/java/resources/oauth.txt").toPath();
 
     public static void init() throws IOException{
-        APICall.debug = false;
+        APICall.debug = true;
         if(oauth.toFile().exists()){ // use existing OAuth
             mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
             if(mal.getAnime(AnimeID, new String[0]) != null)

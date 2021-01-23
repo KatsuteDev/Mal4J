@@ -84,10 +84,10 @@ public class TestForumTopics {
         final ForumTopic topic = mal.getForumTopicDetail(481);
         Assertions.assertNotNull(topic.getTitle());
         final Post post = topic.getPosts()[0];
-        Assertions.assertNotEquals(-1, post.getID());
-        Assertions.assertNotEquals(-1, post.getNumber());
-        Assertions.assertNotEquals(-1, post.getCreatedAt());
-        Assertions.assertNotEquals(-1, post.getAuthor().getID());
+        Assertions.assertDoesNotThrow(post::getID);
+        Assertions.assertDoesNotThrow(post::getNumber);
+        Assertions.assertDoesNotThrow(post::getCreatedAt);
+        Assertions.assertDoesNotThrow(() -> post.getAuthor().getID());
         Assertions.assertNotNull(post.getAuthor().getName());
         Assertions.assertNotNull(post.getAuthor().getForumAvatarURL());
         // Assertions.assertEquals(post.getAuthor().getID(), post.getAuthor().getUser().getID()); // not yet implemented
@@ -95,29 +95,29 @@ public class TestForumTopics {
         Assertions.assertNotNull(post.getSignature());
         Assertions.assertEquals(topic, post.getForumTopic());
         final Poll poll = topic.getPoll();
-        Assertions.assertNotEquals(-1, poll.getID());
+        Assertions.assertDoesNotThrow(poll::getID);
         Assertions.assertNotNull(poll.getQuestion());
-        Assertions.assertFalse(poll.isClosed());  // weak test
-        Assertions.assertNotEquals(-1, poll.getOptions()[0].getID());
+        Assertions.assertFalse(poll.isClosed());
+        Assertions.assertDoesNotThrow(() -> poll.getOptions()[0].getID());
         Assertions.assertNotNull(poll.getOptions()[1].getText());
-        Assertions.assertNotEquals(-1, poll.getOptions()[0].getVotes());
+        Assertions.assertDoesNotThrow(() -> poll.getOptions()[0].getVotes());
         Assertions.assertEquals(topic, poll.getForumTopic());
         Assertions.assertEquals(poll, poll.getOptions()[0].getPoll());
     }
 
     private void testForumTopicDetail(final ForumTopicDetail topic){
-        Assertions.assertNotEquals(-1, topic.getID());
+        Assertions.assertDoesNotThrow(topic::getID);
         Assertions.assertNotNull(topic.getTitle());
-        Assertions.assertNotEquals(-1, topic.getCreatedAt());
-        Assertions.assertNotEquals(-1, topic.getCreatedBy().getID());
+        Assertions.assertDoesNotThrow(topic::getCreatedAt);
+        Assertions.assertDoesNotThrow(() -> topic.getCreatedBy().getID());
         // Assertions.assertEquals(topic.getCreatedBy().getID(), topic.getCreatedBy().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(topic.getCreatedBy().getName());
-        Assertions.assertNotEquals(-1, topic.getPostsCount());
-        Assertions.assertNotEquals(-1, topic.getLastPostCreatedAt());
-        Assertions.assertNotEquals(-1, topic.getLastPostCreatedBy().getID());
+        Assertions.assertDoesNotThrow(topic::getPostsCount);
+        Assertions.assertDoesNotThrow(topic::getLastPostCreatedAt);
+        Assertions.assertDoesNotThrow(() -> topic.getLastPostCreatedBy().getID());
         // Assertions.assertEquals(topic.getLastPostCreatedBy().getID(), topic.getLastPostCreatedBy().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(topic.getLastPostCreatedBy().getName());
-        Assertions.assertFalse(topic.isLocked());  // weak test
+        Assertions.assertFalse(topic.isLocked());
     }
 
 }

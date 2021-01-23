@@ -29,9 +29,9 @@ public class TestForumTopicDetail {
     @Test
     public void testPosts(){
         final Post post = topic.getPosts()[0];
-        Assertions.assertNotEquals(-1, post.getID());
-        Assertions.assertNotEquals(-1, post.getNumber());
-        Assertions.assertNotEquals(-1, post.getCreatedAt());
+        Assertions.assertDoesNotThrow(post::getID);
+        Assertions.assertDoesNotThrow(post::getNumber);
+        Assertions.assertDoesNotThrow(post::getCreatedAt);
         Assertions.assertNotNull(post.getBody());
         Assertions.assertNotNull(post.getSignature());
         Assertions.assertSame(topic, post.getForumTopic());
@@ -40,15 +40,15 @@ public class TestForumTopicDetail {
     @Test
     public void testPoll(){
         final Poll poll = topic.getPoll();
-        Assertions.assertNotEquals(-1, poll.getID());
+        Assertions.assertDoesNotThrow(poll::getID);
         Assertions.assertNotNull(poll.getQuestion());
-        Assertions.assertFalse(poll.isClosed()); // weak test
+        Assertions.assertFalse(poll.isClosed());
         // options
         {
             final PollOption option = poll.getOptions()[0];
-            Assertions.assertNotEquals(-1, option.getID());
+            Assertions.assertDoesNotThrow(option::getID);
             Assertions.assertNotNull(option.getText());
-            Assertions.assertNotEquals(-1, option.getVotes());
+            Assertions.assertDoesNotThrow(option::getVotes);
             Assertions.assertSame(poll, option.getPoll());
         }
         Assertions.assertSame(topic, poll.getForumTopic());

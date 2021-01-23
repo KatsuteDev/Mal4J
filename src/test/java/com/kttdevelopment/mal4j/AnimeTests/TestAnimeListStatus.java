@@ -52,7 +52,7 @@ public class TestAnimeListStatus {
     public void testDelete(){
         mal.deleteAnimeListing(TestProvider.AnimeID);
         Assertions.assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID));
-        Assertions.assertEquals(-1L, mal.getAnime(TestProvider.AnimeID).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertThrows(NullPointerException.class, () -> mal.getAnime(TestProvider.AnimeID).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -130,18 +130,18 @@ public class TestAnimeListStatus {
         Assertions.assertEquals(10, status.getScore());
         Assertions.assertEquals(24, status.getWatchedEpisodes());
         Assertions.assertTrue(status.isRewatching());
-        Assertions.assertNotEquals(-1, status.getStartDate().getTime());
-        Assertions.assertNotEquals(-1, status.getStartDateEpochMillis());
-        Assertions.assertNotEquals(-1, status.getFinishDate().getTime());
-        Assertions.assertNotEquals(-1, status.getFinishDateEpochMillis());
+        Assertions.assertDoesNotThrow(() -> status.getStartDate().getTime());
+        Assertions.assertDoesNotThrow(status::getStartDateEpochMillis);
+        Assertions.assertDoesNotThrow(() -> status.getFinishDate().getTime());
+        Assertions.assertDoesNotThrow(status::getFinishDateEpochMillis);
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesRewatched());
         Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
         Assertions.assertEquals("ignore comments", status.getComments());
-        Assertions.assertNotEquals(-1, status.getUpdatedAt().getTime());
-        Assertions.assertNotEquals(-1, status.getUpdatedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> status.getUpdatedAt().getTime());
+        Assertions.assertDoesNotThrow(status::getUpdatedAtEpochMillis);
     }
 
 }

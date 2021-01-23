@@ -28,36 +28,36 @@ public class TestUser {
 
     @Test
     public void testMyself(){
-        Assertions.assertNotEquals(-1, user.getID());
+        Assertions.assertDoesNotThrow(user::getID);
         Assertions.assertNotNull(user.getName());
         Assertions.assertNotNull(user.getPictureURL());
         Assertions.assertNotNull(user.getGender());
         Assertions.assertNotNull(user.getLocation());
-        Assertions.assertNotEquals(-1, user.getJoinedAt().getTime());
-        Assertions.assertNotEquals(-1, user.getJoinedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> user.getJoinedAt().getTime());
+        Assertions.assertDoesNotThrow(() -> user.getJoinedAtEpochMillis());
         Assertions.assertNotNull(user.getTimeZone());
-        Assertions.assertFalse(user.isSupporter()); // weak test, default is false
+        Assertions.assertThrows(NullPointerException.class, user::isSupporter);
     }
 
     @Test
     public void testStatistics(){
         final UserAnimeStatistics statistics = user.getAnimeStatistics();
-        Assertions.assertNotEquals(-1, statistics.getItemsWatching());
-        Assertions.assertNotEquals(-1, statistics.getItemsCompleted());
-        Assertions.assertNotEquals(-1, statistics.getDaysOnHold());
-        Assertions.assertNotEquals(-1, statistics.getItemsPlanToWatch());
-        Assertions.assertNotEquals(-1, statistics.getItemsDropped());
-        Assertions.assertNotEquals(-1, statistics.getItemsOnHold());
-        Assertions.assertNotEquals(-1, statistics.getItems());
-        Assertions.assertNotEquals(-1, statistics.getDaysWatched());
-        Assertions.assertNotEquals(-1, statistics.getDaysWatching());
-        Assertions.assertNotEquals(-1, statistics.getDaysCompleted());
-        Assertions.assertNotEquals(-1, statistics.getDaysOnHold());
-        Assertions.assertNotEquals(-1, statistics.getDaysDropped());
-        Assertions.assertNotEquals(-1, statistics.getDays());
-        Assertions.assertNotEquals(-1, statistics.getEpisodes());
-        Assertions.assertNotEquals(-1, statistics.getTimesRewatched());
-        Assertions.assertNotEquals(-1, statistics.getMeanScore());
+        Assertions.assertDoesNotThrow(statistics::getItemsWatching);
+        Assertions.assertDoesNotThrow(statistics::getItemsCompleted);
+        Assertions.assertDoesNotThrow(statistics::getDaysOnHold);
+        Assertions.assertDoesNotThrow(statistics::getItemsPlanToWatch);
+        Assertions.assertDoesNotThrow(statistics::getItemsDropped);
+        Assertions.assertDoesNotThrow(statistics::getItemsOnHold);
+        Assertions.assertDoesNotThrow(statistics::getItems);
+        Assertions.assertDoesNotThrow(statistics::getDaysWatched);
+        Assertions.assertDoesNotThrow(statistics::getDaysWatching);
+        Assertions.assertDoesNotThrow(statistics::getDaysCompleted);
+        Assertions.assertDoesNotThrow(statistics::getDaysOnHold);
+        Assertions.assertDoesNotThrow(statistics::getDaysDropped);
+        Assertions.assertDoesNotThrow(statistics::getDays);
+        Assertions.assertDoesNotThrow(statistics::getEpisodes);
+        Assertions.assertDoesNotThrow(statistics::getTimesRewatched);
+        Assertions.assertDoesNotThrow(statistics::getMeanScore);
     }
 
     @Test // test does actually pass

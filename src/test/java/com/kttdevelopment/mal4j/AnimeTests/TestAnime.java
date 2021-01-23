@@ -31,34 +31,34 @@ public class TestAnime {
         Assertions.assertNotNull(anime.getAlternativeTitles().getEnglish());
         Assertions.assertNotNull(anime.getAlternativeTitles().getJapanese());
         Assertions.assertNotNull(anime.getAlternativeTitles().getSynonyms());
-        Assertions.assertNotEquals(-1, anime.getStartDate().getTime());
-        Assertions.assertNotEquals(-1, anime.getStartDateEpochMillis());
-        Assertions.assertNotEquals(-1, anime.getEndDate().getTime());
-        Assertions.assertNotEquals(-1, anime.getEndDateEpochMillis());
+        Assertions.assertDoesNotThrow(() -> anime.getStartDate().getTime());
+        Assertions.assertDoesNotThrow(() -> anime.getStartDateEpochMillis());
+        Assertions.assertDoesNotThrow(() -> anime.getEndDate().getTime());
+        Assertions.assertDoesNotThrow(() -> anime.getEndDateEpochMillis());
         Assertions.assertNotNull(anime.getSynopsis());
-        Assertions.assertNotEquals(-1, anime.getMeanRating());
-        Assertions.assertNotEquals(-1, anime.getRank());
-        Assertions.assertNotEquals(-1, anime.getPopularity());
-        Assertions.assertNotEquals(-1, anime.getUserListingCount());
-        Assertions.assertNotEquals(-1, anime.getUserScoringCount());
+        Assertions.assertDoesNotThrow(() -> anime.getMeanRating());
+        Assertions.assertDoesNotThrow(() -> anime.getRank());
+        Assertions.assertDoesNotThrow(() -> anime.getPopularity());
+        Assertions.assertDoesNotThrow(() -> anime.getUserListingCount());
+        Assertions.assertDoesNotThrow(() -> anime.getUserScoringCount());
         Assertions.assertNotNull(anime.getNSFW());
-        Assertions.assertNotEquals(-1, anime.getGenres()[0].getId());
+        Assertions.assertDoesNotThrow(() -> anime.getGenres()[0].getId());
         Assertions.assertNotNull(anime.getGenres()[0].getName());
-        Assertions.assertNotEquals(-1, anime.getCreatedAt().getTime());
-        Assertions.assertNotEquals(-1, anime.getCreatedAtEpochMillis());
-        Assertions.assertNotEquals(-1, anime.getUpdatedAt().getTime());
-        Assertions.assertNotEquals(-1, anime.getUpdatedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> anime.getCreatedAt().getTime());
+        Assertions.assertDoesNotThrow(() -> anime.getCreatedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> anime.getUpdatedAt().getTime());
+        Assertions.assertDoesNotThrow(() -> anime.getUpdatedAtEpochMillis());
         Assertions.assertNotNull(anime.getType());
         Assertions.assertNotNull(anime.getStatus());
-        Assertions.assertNotEquals(-1, anime.getEpisodes());
+        Assertions.assertDoesNotThrow(() -> anime.getEpisodes());
         Assertions.assertNotNull(anime.getStartSeason().getSeason());
-        Assertions.assertNotEquals(-1, anime.getStartSeason().getYear());
+        Assertions.assertDoesNotThrow(() -> anime.getStartSeason().getYear());
         Assertions.assertNotNull(anime.getBroadcast().getDayOfWeek());
         Assertions.assertNotNull(anime.getBroadcast().getStartTime());
         Assertions.assertNotNull(anime.getSource());
-        Assertions.assertNotEquals(-1, anime.getAverageEpisodeLength());
+        Assertions.assertDoesNotThrow(() -> anime.getAverageEpisodeLength());
         Assertions.assertNotNull(anime.getRating());
-        Assertions.assertNotEquals(-1, anime.getStudios()[0].getID());
+        Assertions.assertDoesNotThrow(() -> anime.getStudios()[0].getID());
         Assertions.assertNotNull(anime.getStudios()[0].getName());
         Assertions.assertNotNull(anime.getPictures()[0].getMediumURL());
         Assertions.assertNotNull(anime.getPictures()[0].getLargeURL());
@@ -68,7 +68,7 @@ public class TestAnime {
     @Test
     public void testRelatedAnime(){
         final RelatedAnime relatedAnime = anime.getRelatedAnime()[0];
-        Assertions.assertNotEquals(-1, relatedAnime.getAnimePreview().getID());
+        Assertions.assertDoesNotThrow(() -> relatedAnime.getAnimePreview().getID());
         Assertions.assertNotNull(relatedAnime.getRelationType());
         Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
     }
@@ -76,7 +76,7 @@ public class TestAnime {
     @Test @DisplayName("Anime may not have related Manga") @Disabled
     public void testRelatedManga(){
         final RelatedManga relatedManga = anime.getRelatedManga()[0];
-        Assertions.assertNotEquals(-1, relatedManga.getMangaPreview().getID());
+        Assertions.assertDoesNotThrow(() -> relatedManga.getMangaPreview().getID());
         Assertions.assertNotNull(relatedManga.getRelationType());
         Assertions.assertNotNull(relatedManga.getRelationTypeFormat());
     }
@@ -84,19 +84,19 @@ public class TestAnime {
     @Test
     public void testRecommendations(){
         final AnimeRecommendation recommendation = anime.getRecommendations()[0];
-        Assertions.assertNotEquals(-1, recommendation.getAnimePreview().getID());
-        Assertions.assertNotEquals(-1, recommendation.getRecommendations());
+        Assertions.assertDoesNotThrow(() -> recommendation.getAnimePreview().getID());
+        Assertions.assertDoesNotThrow(recommendation::getRecommendations);
     }
 
     @Test
     public void testStatistics(){
         final AnimeStatistics statistics = anime.getStatistics();
-        Assertions.assertNotEquals(-1, statistics.getCompleted());
-        Assertions.assertNotEquals(-1, statistics.getDropped());
-        Assertions.assertNotEquals(-1, statistics.getOnHold());
-        Assertions.assertNotEquals(-1, statistics.getPlanToWatch());
-        Assertions.assertNotEquals(-1, statistics.getWatching());
-        Assertions.assertNotEquals(-1, statistics.getUserCount());
+        Assertions.assertDoesNotThrow(statistics::getCompleted);
+        Assertions.assertDoesNotThrow(statistics::getDropped);
+        Assertions.assertDoesNotThrow(statistics::getOnHold);
+        Assertions.assertDoesNotThrow(statistics::getPlanToWatch);
+        Assertions.assertDoesNotThrow(statistics::getWatching);
+        Assertions.assertDoesNotThrow(statistics::getUserCount);
     }
 
 }

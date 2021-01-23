@@ -30,28 +30,28 @@ public class TestManga {
         Assertions.assertNotNull(manga.getAlternativeTitles().getEnglish());
         Assertions.assertNotNull(manga.getAlternativeTitles().getJapanese());
         Assertions.assertNotNull(manga.getAlternativeTitles().getSynonyms());
-        Assertions.assertNotEquals(-1, manga.getStartDate().getTime());
-        Assertions.assertNotEquals(-1, manga.getStartDateEpochMillis());
-        Assertions.assertNotEquals(-1, manga.getEndDate().getTime());
-        Assertions.assertNotEquals(-1, manga.getEndDateEpochMillis());
+        Assertions.assertDoesNotThrow(() -> manga.getStartDate().getTime());
+        Assertions.assertDoesNotThrow(() -> manga.getStartDateEpochMillis());
+        Assertions.assertDoesNotThrow(() -> manga.getEndDate().getTime());
+        Assertions.assertDoesNotThrow(() -> manga.getEndDateEpochMillis());
         Assertions.assertNotNull(manga.getSynopsis());
-        Assertions.assertNotEquals(-1, manga.getMeanRating());
-        Assertions.assertNotEquals(-1, manga.getRank());
-        Assertions.assertNotEquals(-1, manga.getPopularity());
-        Assertions.assertNotEquals(-1, manga.getUserListingCount());
-        Assertions.assertNotEquals(-1, manga.getUserScoringCount());
+        Assertions.assertDoesNotThrow(() -> manga.getMeanRating());
+        Assertions.assertDoesNotThrow(() -> manga.getRank());
+        Assertions.assertDoesNotThrow(() -> manga.getPopularity());
+        Assertions.assertDoesNotThrow(() -> manga.getUserListingCount());
+        Assertions.assertDoesNotThrow(() -> manga.getUserScoringCount());
         Assertions.assertNotNull(manga.getNSFW());
-        Assertions.assertNotEquals(-1, manga.getGenres()[0].getId());
+        Assertions.assertDoesNotThrow(() -> manga.getGenres()[0].getId());
         Assertions.assertNotNull(manga.getGenres()[0].getName());
-        Assertions.assertNotEquals(-1, manga.getCreatedAt().getTime());
-        Assertions.assertNotEquals(-1, manga.getCreatedAtEpochMillis());
-        Assertions.assertNotEquals(-1, manga.getUpdatedAt().getTime());
-        Assertions.assertNotEquals(-1, manga.getUpdatedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> manga.getCreatedAt().getTime());
+        Assertions.assertDoesNotThrow(() -> manga.getCreatedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> manga.getUpdatedAt().getTime());
+        Assertions.assertDoesNotThrow(() -> manga.getUpdatedAtEpochMillis());
         Assertions.assertNotNull(manga.getType());
         Assertions.assertNotNull(manga.getStatus());
-        Assertions.assertNotEquals(-1, manga.getVolumes());
-        Assertions.assertNotEquals(-1, manga.getChapters());
-        Assertions.assertNotEquals(-1, manga.getAuthors()[0].getID());
+        Assertions.assertDoesNotThrow(() -> manga.getVolumes());
+        Assertions.assertDoesNotThrow(() -> manga.getChapters());
+        Assertions.assertDoesNotThrow(() -> manga.getAuthors()[0].getID());
         Assertions.assertNotNull(manga.getAuthors()[0].getFirstName());
         Assertions.assertNotNull(manga.getAuthors()[0].getLastName());
         Assertions.assertNotNull(manga.getAuthors()[0].getRole());
@@ -63,7 +63,7 @@ public class TestManga {
     @Test @DisplayName("Manga may not have related Anime") @Disabled
     public void testRelatedAnime(){
         final RelatedAnime relatedAnime = manga.getRelatedAnime()[0];
-        Assertions.assertNotEquals(-1, relatedAnime.getAnimePreview().getID());
+        Assertions.assertDoesNotThrow(() -> relatedAnime.getAnimePreview().getID());
         Assertions.assertNotNull(relatedAnime.getRelationType());
         Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
     }
@@ -71,7 +71,7 @@ public class TestManga {
     @Test
     public void testRelatedManga(){
         final RelatedManga relatedManga = manga.getRelatedManga()[0];
-        Assertions.assertNotEquals(-1, relatedManga.getMangaPreview().getID());
+        Assertions.assertDoesNotThrow(() -> relatedManga.getMangaPreview().getID());
         Assertions.assertNotNull(relatedManga.getRelationType());
         Assertions.assertNotNull(relatedManga.getRelationTypeFormat());
     }
@@ -79,19 +79,19 @@ public class TestManga {
     @Test
     public void testRecommendations(){
         final MangaRecommendation recommendation = manga.getRecommendations()[0];
-        Assertions.assertNotEquals(-1, recommendation.getMangaPreview().getID());
-        Assertions.assertNotEquals(-1, recommendation.getRecommendations());
+        Assertions.assertDoesNotThrow(() -> recommendation.getMangaPreview().getID());
+        Assertions.assertDoesNotThrow(recommendation::getRecommendations);
     }
 
     @Test
     public void testStatistics(){
-        Assertions.assertNotEquals(-1, manga.getSerialization()[0].getID());
+        Assertions.assertDoesNotThrow(() -> manga.getSerialization()[0].getID());
         Assertions.assertNotNull(manga.getSerialization()[0].getName());
     }
 
     @Test
     public void testSerialization(){
-        Assertions.assertNotEquals(-1, manga.getSerialization()[0].getID());
+        Assertions.assertDoesNotThrow(() -> manga.getSerialization()[0].getID());
         Assertions.assertNotNull(manga.getSerialization()[0].getName());
     }
     
