@@ -25,12 +25,12 @@ package com.kttdevelopment.mal4j;
  * @version 1.0.0
  * @author Ktt Development
  */
-public class HTTPException extends RuntimeException {
+public class HttpException extends RuntimeException {
 
     private final String URL, message;
     private final int code;
 
-    HTTPException(final String URL, final int code, final String message){
+    HttpException(final String URL, final int code, final String message){
         super("Server returned code " + code + " from '" + URL + "': " + message);
         this.URL = URL;
         this.code = code;

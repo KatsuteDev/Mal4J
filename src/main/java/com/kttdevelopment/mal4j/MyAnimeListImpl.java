@@ -309,7 +309,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                             (int) id
                     )
             );
-        }catch(final HTTPException e){
+        }catch(final HttpException e){
             if(e.code() != 404)
                 throw e;
         }
@@ -597,7 +597,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                             id
                     )
             );
-        }catch(final HTTPException e){
+        }catch(final HttpException e){
             if(e.code() != 404)
                 throw e;
         }
@@ -702,9 +702,9 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return response;
             else
                 try{
-                    throw new HTTPException(response.URL(), response.code(), (((JsonObject) response.body()).getString("message") + ' ' + ((JsonObject) response.body()).getString("error")).trim());
+                    throw new HttpException(response.URL(), response.code(), (((JsonObject) response.body()).getString("message") + ' ' + ((JsonObject) response.body()).getString("error")).trim());
                 }catch(final Throwable ignored){
-                    throw new HTTPException(response.URL(), response.code(), response.raw());
+                    throw new HttpException(response.URL(), response.code(), response.raw());
                 }
         }catch(final IOException e){ // client side failure
             throw new UncheckedIOException(e);
