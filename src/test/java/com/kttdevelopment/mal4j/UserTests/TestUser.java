@@ -65,7 +65,7 @@ public class TestUser {
         Assumptions.assumeTrue(user.getBirthdayEpochMillis() != null, "User might not specify a birthday");
     }
 
-    @Test
+    @Test // false is treated as null
     public void testSupporter(){
         Assumptions.assumeTrue(user.isSupporter() != null);
     }
