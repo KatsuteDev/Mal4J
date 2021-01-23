@@ -302,12 +302,17 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public synchronized final void deleteAnimeListing(final long id){
-        handleVoidResponse(
-            () -> service.deleteAnimeListing(
-                auth,
-                (int) id
-            )
-        );
+        try{
+            handleVoidResponse(
+                    () -> service.deleteAnimeListing(
+                            auth,
+                            (int) id
+                    )
+            );
+        }catch(final HttpException e){
+            if(e.code() != 404)
+                throw e;
+        }
     }
 
     @Override
@@ -585,12 +590,17 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public synchronized final void deleteMangaListing(final long id){
-        handleVoidResponse(
-            () -> service.deleteMangaListing(
-                auth,
-                id
-            )
-        );
+        try{
+            handleVoidResponse(
+                    () -> service.deleteMangaListing(
+                            auth,
+                            id
+                    )
+            );
+        }catch(final HttpException e){
+            if(e.code() != 404)
+                throw e;
+        }
     }
 
     @Override
@@ -692,9 +702,9 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return response;
             else
                 try{
-                    throw new HTTPException(response.URL(), response.code(), (((JsonObject) response.body()).getString("message") + ' ' + ((JsonObject) response.body()).getString("error")).trim());
-                }catch(final ClassCastException ignored){
-                    throw new HTTPException(response.URL(), response.code(), response.raw());
+                    throw new HttpException(response.URL(), response.code(), (((JsonObject) response.body()).getString("message") + ' ' + ((JsonObject) response.body()).getString("error")).trim());
+                }catch(final Throwable ignored){
+                    throw new HttpException(response.URL(), response.code(), response.raw());
                 }
         }catch(final IOException e){ // client side failure
             throw new UncheckedIOException(e);

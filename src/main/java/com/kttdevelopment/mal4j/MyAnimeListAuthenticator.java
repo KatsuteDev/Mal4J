@@ -65,7 +65,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
      * @throws IOException if client could not contact auth server
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
@@ -97,7 +97,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret (optional)
      * @param authorization_code authorization code
      * @param PKCE_code_challenge PKCE code challenge
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
@@ -137,7 +137,7 @@ public final class MyAnimeListAuthenticator {
      * Refreshes the access token.
      *
      * @return updated access token
-     * @throws HTTPException if request failed
+     * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see AccessToken
@@ -222,7 +222,7 @@ public final class MyAnimeListAuthenticator {
                 body.getString("refresh_token")
             );
         else
-            throw new HTTPException(response.URL(), response.code(), (body.getString("body") + ' ' + body.getString("error")).trim());
+            throw new HttpException(response.URL(), response.code(), (body.getString("body") + ' ' + body.getString("error")).trim());
 
     }
 
