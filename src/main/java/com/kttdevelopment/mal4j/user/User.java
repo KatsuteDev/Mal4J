@@ -73,7 +73,7 @@ public abstract class User implements IDN {
      * @see #getBirthday()
      * @since 1.0.0
      */
-    public abstract long getBirthdayEpochMillis();
+    public abstract Long getBirthdayEpochMillis();
 
     /**
      * Returns the user's location.
@@ -102,7 +102,7 @@ public abstract class User implements IDN {
      * @see #getJoinedAt()
      * @since 1.0.0
      */
-    public abstract long getJoinedAtEpochMillis();
+    public abstract Long getJoinedAtEpochMillis();
 
     /**
      * Returns the user's Anime statistics.
@@ -130,6 +130,6 @@ public abstract class User implements IDN {
      *
      * @since 1.0.0
      */
-    public abstract boolean isSupporter();
+    public abstract Boolean isSupporter();
 
 }

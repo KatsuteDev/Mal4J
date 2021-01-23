@@ -49,7 +49,7 @@ public abstract class PollOption implements ID {
      *
      * @since 1.0.0
      */
-    public abstract int getVotes();
+    public abstract Integer getVotes();
 
     // additional methods
 

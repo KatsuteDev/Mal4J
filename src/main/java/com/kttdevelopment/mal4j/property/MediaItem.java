@@ -84,7 +84,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      * @see #getEndDateEpochMillis()
      * @since 1.0.0
      */
-    long getStartDateEpochMillis();
+    Long getStartDateEpochMillis();
 
     /**
      * Returns the end date.
@@ -107,7 +107,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      * @see #getStartDate()
      * @see #getStartDateEpochMillis()
      */
-    long getEndDateEpochMillis();
+    Long getEndDateEpochMillis();
 
     /**
      * Returns the synopsis.
@@ -125,7 +125,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    float getMeanRating();
+    Float getMeanRating();
 
     /**
      * Returns the overall rank.
@@ -134,7 +134,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    int getRank();
+    Integer getRank();
 
     /**
      * Returns the popularity.
@@ -143,7 +143,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    int getPopularity();
+    Integer getPopularity();
 
     /**
      * Returns how many users have this item on their list.
@@ -152,7 +152,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    int getUserListingCount();
+    Integer getUserListingCount();
 
     /**
      * Returns how many users have this item scored on their list.
@@ -161,7 +161,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    int getUserScoringCount();
+    Integer getUserScoringCount();
 
     /**
      * Returns the NSFW rating.
@@ -204,7 +204,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      * @see #getUpdatedAt()
      * @since 1.0.0
      */
-    long getCreatedAtEpochMillis();
+    Long getCreatedAtEpochMillis();
 
     /**
      * Returns when this was last updated.
@@ -228,7 +228,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      * @see #getCreatedAtEpochMillis()
      * @since 1.0.0
      */
-    long getUpdatedAtEpochMillis();
+    Long getUpdatedAtEpochMillis();
 
     /**
      * Returns the media type.

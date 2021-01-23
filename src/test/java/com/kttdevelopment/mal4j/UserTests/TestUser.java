@@ -28,42 +28,46 @@ public class TestUser {
 
     @Test
     public void testMyself(){
-        Assertions.assertNotEquals(-1, user.getID());
+        Assertions.assertNotNull(user.getID());
         Assertions.assertNotNull(user.getName());
         Assertions.assertNotNull(user.getPictureURL());
         Assertions.assertNotNull(user.getGender());
         Assertions.assertNotNull(user.getLocation());
-        Assertions.assertNotEquals(-1, user.getJoinedAt().getTime());
-        Assertions.assertNotEquals(-1, user.getJoinedAtEpochMillis());
+        Assertions.assertNotNull(user.getJoinedAt());
+        Assertions.assertNotNull(user.getJoinedAtEpochMillis());
         Assertions.assertNotNull(user.getTimeZone());
-        Assertions.assertFalse(user.isSupporter()); // weak test, default is false
     }
 
     @Test
     public void testStatistics(){
         final UserAnimeStatistics statistics = user.getAnimeStatistics();
-        Assertions.assertNotEquals(-1, statistics.getItemsWatching());
-        Assertions.assertNotEquals(-1, statistics.getItemsCompleted());
-        Assertions.assertNotEquals(-1, statistics.getDaysOnHold());
-        Assertions.assertNotEquals(-1, statistics.getItemsPlanToWatch());
-        Assertions.assertNotEquals(-1, statistics.getItemsDropped());
-        Assertions.assertNotEquals(-1, statistics.getItemsOnHold());
-        Assertions.assertNotEquals(-1, statistics.getItems());
-        Assertions.assertNotEquals(-1, statistics.getDaysWatched());
-        Assertions.assertNotEquals(-1, statistics.getDaysWatching());
-        Assertions.assertNotEquals(-1, statistics.getDaysCompleted());
-        Assertions.assertNotEquals(-1, statistics.getDaysOnHold());
-        Assertions.assertNotEquals(-1, statistics.getDaysDropped());
-        Assertions.assertNotEquals(-1, statistics.getDays());
-        Assertions.assertNotEquals(-1, statistics.getEpisodes());
-        Assertions.assertNotEquals(-1, statistics.getTimesRewatched());
-        Assertions.assertNotEquals(-1, statistics.getMeanScore());
+        Assertions.assertNotNull(statistics.getItemsWatching());
+        Assertions.assertNotNull(statistics.getItemsCompleted());
+        Assertions.assertNotNull(statistics.getDaysOnHold());
+        Assertions.assertNotNull(statistics.getItemsPlanToWatch());
+        Assertions.assertNotNull(statistics.getItemsDropped());
+        Assertions.assertNotNull(statistics.getItemsOnHold());
+        Assertions.assertNotNull(statistics.getItems());
+        Assertions.assertNotNull(statistics.getDaysWatched());
+        Assertions.assertNotNull(statistics.getDaysWatching());
+        Assertions.assertNotNull(statistics.getDaysCompleted());
+        Assertions.assertNotNull(statistics.getDaysOnHold());
+        Assertions.assertNotNull(statistics.getDaysDropped());
+        Assertions.assertNotNull(statistics.getDays());
+        Assertions.assertNotNull(statistics.getEpisodes());
+        Assertions.assertNotNull(statistics.getTimesRewatched());
+        Assertions.assertNotNull(statistics.getMeanScore());
     }
 
     @Test // test does actually pass
     public void testBirthday(){
-        Assumptions.assumeTrue(user.getBirthday().getTime() != -1, "User might not specify a birthday");
-        Assumptions.assumeTrue(user.getBirthdayEpochMillis() != -1, "User might not specify a birthday");
+        Assumptions.assumeTrue(user.getBirthday() != null, "User might not specify a birthday");
+        Assumptions.assumeTrue(user.getBirthdayEpochMillis() != null, "User might not specify a birthday");
+    }
+
+    @Test // false is treated as null
+    public void testSupporter(){
+        Assumptions.assumeTrue(user.isSupporter() != null);
     }
 
 }

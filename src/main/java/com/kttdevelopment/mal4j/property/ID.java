@@ -34,6 +34,6 @@ public interface ID {
      *
      * @since 1.0.0
      */
-    long getID();
+    Long getID();
 
 }

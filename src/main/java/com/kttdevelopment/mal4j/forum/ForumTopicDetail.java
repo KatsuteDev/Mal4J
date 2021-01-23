@@ -48,7 +48,7 @@ public abstract class ForumTopicDetail implements ID {
      *
      * @since 1.0.0
      */
-    public abstract long getCreatedAt();
+    public abstract Long getCreatedAt();
 
     /**
      * Returns who created the topic.
@@ -67,7 +67,7 @@ public abstract class ForumTopicDetail implements ID {
      *
      * @since 1.0.0
      */
-    public abstract int getPostsCount();
+    public abstract Integer getPostsCount();
 
     /**
      * Returns when the last post was created at.
@@ -76,7 +76,7 @@ public abstract class ForumTopicDetail implements ID {
      *
      * @since 1.0.0
      */
-    public abstract long getLastPostCreatedAt();
+    public abstract Long getLastPostCreatedAt();
 
     /**
      * Returns who the last post was created by.
@@ -95,6 +95,6 @@ public abstract class ForumTopicDetail implements ID {
      *
      * @since 1.0.0
      */
-    public abstract boolean isLocked();
+    public abstract Boolean isLocked();
 
 }

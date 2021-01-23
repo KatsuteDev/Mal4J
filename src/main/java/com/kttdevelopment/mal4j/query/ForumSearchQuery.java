@@ -36,6 +36,7 @@ public abstract class ForumSearchQuery extends SearchQuery<ForumSearchQuery,Foru
     protected String query;
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     protected Long boardId, subboardId;
+    @SuppressWarnings("CanBeFinal")
     protected ForumSort sort = ForumSort.Recent;
     protected String topicUsername, username;
     
