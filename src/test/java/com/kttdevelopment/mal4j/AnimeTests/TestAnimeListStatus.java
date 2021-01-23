@@ -52,7 +52,7 @@ public class TestAnimeListStatus {
     public void testDelete(){
         mal.deleteAnimeListing(TestProvider.AnimeID);
         Assertions.assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID));
-        Assertions.assertThrows(NullPointerException.class, () -> mal.getAnime(TestProvider.AnimeID).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)

@@ -54,7 +54,7 @@ public class TestMangaListStatus {
     public void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
         Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
-        Assertions.assertThrows(NullPointerException.class, () -> mal.getManga(TestProvider.MangaID).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertNull(mal.getManga(TestProvider.MangaID).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
