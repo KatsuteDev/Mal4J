@@ -87,6 +87,7 @@ public class TestForumTopics {
         Assertions.assertNotNull(post.getID());
         Assertions.assertNotNull(post.getNumber());
         Assertions.assertNotNull(post.getCreatedAt());
+        Assertions.assertNotNull(post.getCreatedAtEpochMillis());
         Assertions.assertNotNull(post.getAuthor().getID());
         Assertions.assertNotNull(post.getAuthor().getName());
         Assertions.assertNotNull(post.getAuthor().getForumAvatarURL());
@@ -109,11 +110,13 @@ public class TestForumTopics {
         Assertions.assertNotNull(topic.getID());
         Assertions.assertNotNull(topic.getTitle());
         Assertions.assertNotNull(topic.getCreatedAt());
+        Assertions.assertNotNull(topic.getCreatedAtEpochMillis());
         Assertions.assertNotNull(topic.getCreatedBy().getID());
         // Assertions.assertEquals(topic.getCreatedBy().getID(), topic.getCreatedBy().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(topic.getCreatedBy().getName());
         Assertions.assertNotNull(topic.getPostsCount());
         Assertions.assertNotNull(topic.getLastPostCreatedAt());
+        Assertions.assertNotNull(topic.getLastPostCreatedAtEpochMillis());
         Assertions.assertNotNull(topic.getLastPostCreatedBy().getID());
         // Assertions.assertEquals(topic.getLastPostCreatedBy().getID(), topic.getLastPostCreatedBy().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(topic.getLastPostCreatedBy().getName());

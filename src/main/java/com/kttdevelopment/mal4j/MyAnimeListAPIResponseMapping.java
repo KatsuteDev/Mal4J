@@ -1022,7 +1022,7 @@ abstract class MyAnimeListAPIResponseMapping {
                                                             = requireNonNull(() -> asForumTopicCreator(mal, schema.getJsonObject("last_post_created_by")));
                 private final Boolean locked                = requireNonNull(() -> schema.getBoolean("is_locked"));
 
-                // APi methods
+                // API methods
 
                 @Override
                 public final Long getID() {
@@ -1035,7 +1035,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getCreatedAt() {
+                public final Date getCreatedAt(){
+                    return createdAt == null ? null : new Date(createdAt);
+                }
+
+                @Override
+                public final Long getCreatedAtEpochMillis() {
                     return createdAt;
                 }
 
@@ -1050,7 +1055,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getLastPostCreatedAt() {
+                public final Date getLastPostCreatedAt(){
+                    return lastPostedAt == null ? null : new Date(lastPostedAt);
+                }
+
+                @Override
+                public final Long getLastPostCreatedAtEpochMillis() {
                     return lastPostedAt;
                 }
 
@@ -1360,7 +1370,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getCreatedAt() {
+                public final Date getCreatedAt(){
+                    return createdAt == null ? null : new Date(createdAt);
+                }
+
+                @Override
+                public final Long getCreatedAtEpochMillis() {
                     return createdAt;
                 }
 
@@ -2505,8 +2520,8 @@ abstract class MyAnimeListAPIResponseMapping {
     static final String YM  = "yyyy-MM";
     static final String Y   = "yyyy";
 
-    private static long parseDate(final String date){
-        if(date == null) return -1;
+    private static Long parseDate(final String date){
+        if(date == null) return null;
 
         final int len = date.length();
         final DateFormat df = new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y);
@@ -2514,20 +2529,20 @@ abstract class MyAnimeListAPIResponseMapping {
         try{
             return df.parse(date).getTime();
         }catch(final ParseException ignored){
-            return -1;
+            return null;
         }
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
-    private static long parseISO8601(final String timestamp){
-        if(timestamp == null) return -1;
+    private static Long parseISO8601(final String timestamp){
+        if(timestamp == null) return null;
 
         try{
             return new SimpleDateFormat(ISO8601).parse(timestamp).getTime();
         }catch(final ParseException ignored){
-            return -1;
+            return null;
         }
     }
 
