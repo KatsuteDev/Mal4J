@@ -32,9 +32,7 @@ public class TestAnime {
         Assertions.assertNotNull(anime.getAlternativeTitles().getJapanese());
         Assertions.assertNotNull(anime.getAlternativeTitles().getSynonyms());
         Assertions.assertNotNull(anime.getStartDate());
-        Assertions.assertNotNull(anime.getStartDateEpochMillis());
         Assertions.assertNotNull(anime.getEndDate());
-        Assertions.assertNotNull(anime.getEndDateEpochMillis());
         Assertions.assertNotNull(anime.getSynopsis());
         Assertions.assertNotNull(anime.getMeanRating());
         Assertions.assertNotNull(anime.getRank());

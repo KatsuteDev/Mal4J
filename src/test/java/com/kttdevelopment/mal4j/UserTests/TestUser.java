@@ -63,7 +63,6 @@ public class TestUser {
     @Test // test does actually pass
     public void testBirthday(){
         Assumptions.assumeTrue(user.getBirthday() != null, "User might not specify a birthday");
-        Assumptions.assumeTrue(user.getBirthdayEpochMillis() != null, "User might not specify a birthday");
     }
 
 }

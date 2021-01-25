@@ -132,9 +132,7 @@ public class TestMangaListStatus {
         Assertions.assertEquals(0, status.getChaptersRead());
         Assertions.assertTrue(status.isRereading());
         Assertions.assertNotNull(status.getStartDate());
-        Assertions.assertNotNull(status.getStartDateEpochMillis());
         Assertions.assertNotNull(status.getFinishDate());
-        Assertions.assertNotNull(status.getFinishDateEpochMillis());
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesReread());
         Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue());

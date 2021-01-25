@@ -21,6 +21,8 @@ package com.kttdevelopment.mal4j.forum;
 import com.kttdevelopment.mal4j.property.ID;
 import com.kttdevelopment.mal4j.forum.property.PostAuthor;
 
+import java.util.Date;
+
 /**
  * Represents a forum post.
  *
@@ -47,9 +49,20 @@ public abstract class Post implements ID {
      *
      * @return post creation time
      *
+     * @see #getCreatedAtEpochMillis()
      * @since 1.0.0
      */
-    public abstract Long getCreatedAt();
+    public abstract Date getCreatedAt();
+
+    /**
+     * Returns when the post was created at as milliseconds since epoch.
+     *
+     * @return post creation time
+     *
+     * @see #getCreatedAt()
+     * @since 1.0.0
+     */
+    public abstract Long getCreatedAtEpochMillis();
 
     /**
      * Returns the post author.
