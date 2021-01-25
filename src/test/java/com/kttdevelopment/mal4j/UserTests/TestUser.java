@@ -36,6 +36,7 @@ public class TestUser {
         Assertions.assertNotNull(user.getJoinedAt());
         Assertions.assertNotNull(user.getJoinedAtEpochMillis());
         Assertions.assertNotNull(user.getTimeZone());
+        Assertions.assertFalse(user.isSupporter());
     }
 
     @Test
@@ -63,11 +64,6 @@ public class TestUser {
     public void testBirthday(){
         Assumptions.assumeTrue(user.getBirthday() != null, "User might not specify a birthday");
         Assumptions.assumeTrue(user.getBirthdayEpochMillis() != null, "User might not specify a birthday");
-    }
-
-    @Test // false is treated as null
-    public void testSupporter(){
-        Assumptions.assumeTrue(user.isSupporter() != null);
     }
 
 }

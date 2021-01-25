@@ -59,7 +59,7 @@ public abstract class MyAnimeList {
     /**
      * Returns all possible User fields.
      */
-    public static final String ALL_USER_FIELDS = "birthday,time_zone,anime_statistics";
+    public static final String ALL_USER_FIELDS = "birthday,time_zone,anime_statistics,is_supporter";
 
     /**
      * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshOAuthToken()}.
