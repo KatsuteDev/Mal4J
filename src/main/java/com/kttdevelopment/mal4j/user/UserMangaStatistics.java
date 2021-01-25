@@ -90,7 +90,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract Float getDaysWatched();
+    public abstract Float getDaysRead();
 
     /**
      * Returns total days reading.
