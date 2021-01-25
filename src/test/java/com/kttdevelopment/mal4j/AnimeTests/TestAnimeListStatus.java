@@ -131,9 +131,7 @@ public class TestAnimeListStatus {
         Assertions.assertEquals(24, status.getWatchedEpisodes());
         Assertions.assertTrue(status.isRewatching());
         Assertions.assertNotNull(status.getStartDate());
-        Assertions.assertNotNull(status.getStartDateEpochMillis());
         Assertions.assertNotNull(status.getFinishDate());
-        Assertions.assertNotNull(status.getFinishDateEpochMillis());
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesRewatched());
         Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());

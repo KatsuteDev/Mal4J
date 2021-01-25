@@ -31,9 +31,7 @@ public class TestManga {
         Assertions.assertNotNull(manga.getAlternativeTitles().getJapanese());
         Assertions.assertNotNull(manga.getAlternativeTitles().getSynonyms());
         Assertions.assertNotNull(manga.getStartDate());
-        Assertions.assertNotNull(manga.getStartDateEpochMillis());
         Assertions.assertNotNull(manga.getEndDate());
-        Assertions.assertNotNull(manga.getEndDateEpochMillis());
         Assertions.assertNotNull(manga.getSynopsis());
         Assertions.assertNotNull(manga.getMeanRating());
         Assertions.assertNotNull(manga.getRank());
