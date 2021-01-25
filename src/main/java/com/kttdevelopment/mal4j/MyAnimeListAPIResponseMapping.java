@@ -257,18 +257,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getStartDateEpochMillis(){
-                    return startDate;
-                }
-
-                @Override
                 public final Date getEndDate() {
                     return endDate == null ? null : new Date(endDate);
-                }
-
-                @Override
-                public final Long getEndDateEpochMillis(){
-                    return endDate;
                 }
 
                 @Override
@@ -457,18 +447,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getStartDateEpochMillis(){
-                    return startDate;
-                }
-
-                @Override
                 public final Date getFinishDate() {
                     return finishDate == null ? null : new Date(finishDate);
-                }
-
-                @Override
-                public final Long getFinishDateEpochMillis(){
-                    return finishDate;
                 }
 
                 @Override
@@ -576,18 +556,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getStartDateEpochMillis(){
-                    return startDate;
-                }
-
-                @Override
                 public final Date getFinishDate() {
                     return finishDate == null ? null : new Date(finishDate);
-                }
-
-                @Override
-                public final Long getFinishDateEpochMillis(){
-                    return finishDate;
                 }
 
                 @Override
@@ -721,18 +691,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getStartDateEpochMillis(){
-                    return startDate;
-                }
-
-                @Override
                 public final Date getEndDate() {
                     return endDate == null ? null : new Date(endDate);
-                }
-
-                @Override
-                public final Long getEndDateEpochMillis(){
-                    return endDate;
                 }
 
                 @Override
@@ -1553,18 +1513,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getStartDateEpochMillis(){
-                    return startDate;
-                }
-
-                @Override
                 public final Date getEndDate() {
                     return endDate == null ? null : new Date(endDate);
-                }
-
-                @Override
-                public final Long getEndDateEpochMillis(){
-                    return endDate;
                 }
 
                 @Override
@@ -1734,18 +1684,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getStartDateEpochMillis(){
-                    return startDate;
-                }
-
-                @Override
                 public final Date getFinishDate() {
                     return finishDate == null ? null : new Date(finishDate);
-                }
-
-                @Override
-                public final Long getFinishDateEpochMillis(){
-                    return finishDate;
                 }
 
                 @Override
@@ -1858,18 +1798,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getStartDateEpochMillis(){
-                    return startDate;
-                }
-
-                @Override
                 public final Date getFinishDate() {
                     return finishDate == null ? null : new Date(finishDate);
-                }
-
-                @Override
-                public final Long getFinishDateEpochMillis(){
-                    return finishDate;
                 }
 
                 @Override
@@ -2004,18 +1934,8 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getStartDateEpochMillis(){
-                    return startDate;
-                }
-
-                @Override
                 public final Date getEndDate() {
                     return endDate == null ? null : new Date(endDate);
-                }
-
-                @Override
-                public final Long getEndDateEpochMillis(){
-                    return endDate;
                 }
 
                 @Override
@@ -2278,11 +2198,6 @@ abstract class MyAnimeListAPIResponseMapping {
                 @Override
                 public final Date getBirthday(){
                     return birthday == null ? null : new Date(birthday);
-                }
-
-                @Override
-                public final Long getBirthdayEpochMillis(){
-                    return birthday;
                 }
 
                 @Override

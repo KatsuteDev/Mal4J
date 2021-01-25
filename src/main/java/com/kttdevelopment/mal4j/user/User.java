@@ -60,20 +60,9 @@ public abstract class User implements IDN {
      *
      * @return birthday
      *
-     * @see #getBirthdayEpochMillis()
      * @since 1.0.0
      */
     public abstract Date getBirthday();
-
-    /**
-     * Returns the user's birthday as milliseconds since epoch.
-     *
-     * @return birthday
-     *
-     * @see #getBirthday()
-     * @since 1.0.0
-     */
-    public abstract Long getBirthdayEpochMillis();
 
     /**
      * Returns the user's location.
