@@ -81,22 +81,6 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
     /**
      * Sets the start date.
      *
-     * @param millis milliseconds since epoch
-     * @return list update
-     *
-     * @since 1.0.0
-     * @see #startDate(Date)
-     * @see #finishDate(long)
-     * @see #finishDate(Date)
-     */
-    public final T startDate(final long millis){
-        this.startDate = millis;
-        return (T) this;
-    }
-
-    /**
-     * Sets the start date.
-     *
      * @param date date
      * @return list update
      *
@@ -104,8 +88,6 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
      * @see Date
      * @see GregorianCalendar#GregorianCalendar(int, int, int)
      * @see GregorianCalendar#getTime()
-     * @see #startDate(long)
-     * @see #finishDate(long)
      * @see #finishDate(Date)
      */
     public final T startDate(final Date date){
@@ -116,22 +98,6 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
     /**
      * Sets the finish date.
      *
-     * @param millis milliseconds since epoch
-     * @return list update
-     *
-     * @since 1.0.0
-     * @see #finishDate(Date)
-     * @see #startDate(long)
-     * @see #startDate(Date)
-     */
-    public final T finishDate(final long millis){
-        this.finishDate = millis;
-        return (T) this;
-    }
-
-    /**
-     * Sets the finish date.
-     *
      * @param date date
      * @return list update
      *
@@ -139,8 +105,6 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
      * @see Date
      * @see GregorianCalendar#GregorianCalendar(int, int, int)
      * @see GregorianCalendar#getTime()
-     * @see #finishDate(long)
-     * @see #startDate(long)
      * @see #startDate(Date)
      */
     public final T finishDate(final Date date){
