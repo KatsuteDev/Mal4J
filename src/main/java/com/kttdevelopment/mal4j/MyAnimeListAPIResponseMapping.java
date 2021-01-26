@@ -968,8 +968,8 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumTopicDetail asForumTopicDetail(final MyAnimeList mal, final JsonObject schema){
-            return new ForumTopicDetail() {
+        static ForumTopic asForumTopicDetail(final MyAnimeList mal, final JsonObject schema){
+            return new ForumTopic() {
 
                 private final Long id                       = requireNonNull(() -> schema.getLong("id"));
                 private final String title                  = requireNonNull(() -> schema.getString("title"));
@@ -1043,7 +1043,7 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static Poll asPoll(final MyAnimeList mal, final JsonObject schema, final ForumTopic forumTopic){
+        static Poll asPoll(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
             return new Poll() {
 
                 private final Long id               = requireNonNull(() -> schema.getLong("id"));
@@ -1076,7 +1076,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final ForumTopic getForumTopic() {
+                public final ForumTopicDetail getForumTopicDetail() {
                     return forumTopic;
                 }
 
@@ -1272,8 +1272,8 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumTopic asForumTopic(final MyAnimeList mal, final JsonObject schema){
-            return new ForumTopic() {
+        static ForumTopicDetail asForumTopic(final MyAnimeList mal, final JsonObject schema){
+            return new ForumTopicDetail() {
 
                 private final String title  = requireNonNull(() -> schema.getString("title"));
                 private final Post[] posts  = requireNonNull(() -> adaptList(schema.getJsonArray("posts"), p -> asPost(mal, p, this), Post.class));
@@ -1306,7 +1306,7 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static Post asPost(final MyAnimeList mal, final JsonObject schema, final ForumTopic forumTopic){
+        static Post asPost(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
             return new Post() {
 
                 private final Long id           = requireNonNull(() -> schema.getLong("id"));
@@ -1356,7 +1356,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final ForumTopic getForumTopic() {
+                public final ForumTopicDetail getForumTopicDetail() {
                     return forumTopic;
                 }
 
