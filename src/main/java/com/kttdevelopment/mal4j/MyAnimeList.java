@@ -22,7 +22,7 @@ import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.anime.property.AnimeRankingType;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
 import com.kttdevelopment.mal4j.forum.ForumCategory;
-import com.kttdevelopment.mal4j.forum.ForumTopic;
+import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
 import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
 import com.kttdevelopment.mal4j.query.*;
@@ -278,7 +278,7 @@ public abstract class MyAnimeList {
      * @see #getForumTopicDetail(long, int, int)
      * @since 1.0.0
      */
-    public abstract ForumTopic getForumTopicDetail(final long id);
+    public abstract ForumTopicDetail getForumTopicDetail(final long id);
 
 
     /**
@@ -294,7 +294,7 @@ public abstract class MyAnimeList {
      * @see #getForumTopicDetail(long, int, int)
      * @since 1.0.0
      */
-    public abstract ForumTopic getForumTopicDetail(final long id, final int limit);
+    public abstract ForumTopicDetail getForumTopicDetail(final long id, final int limit);
 
     /**
      * Returns a forum topic.
@@ -310,7 +310,7 @@ public abstract class MyAnimeList {
      * @see #getForumTopicDetail(long, int)
      * @since 1.0.0
      */
-    public abstract ForumTopic getForumTopicDetail(final long id, final int limit, final int offset);
+    public abstract ForumTopicDetail getForumTopicDetail(final long id, final int limit, final int offset);
 
     //
 

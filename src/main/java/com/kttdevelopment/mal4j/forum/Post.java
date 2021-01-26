@@ -26,7 +26,7 @@ import java.util.Date;
 /**
  * Represents a forum post.
  *
- * @see ForumTopic#getPosts()
+ * @see ForumTopicDetail#getPosts()
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
@@ -99,9 +99,9 @@ public abstract class Post implements ID {
      *
      * @return forum topic
      *
-     * @see ForumTopic
+     * @see ForumTopicDetail
      * @since 1.0.0
      */
-    public abstract ForumTopic getForumTopic();
+    public abstract ForumTopicDetail getForumTopicDetail();
 
 }

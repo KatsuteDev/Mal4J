@@ -18,14 +18,14 @@
 
 package com.kttdevelopment.mal4j.forum.property;
 
-import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
+import com.kttdevelopment.mal4j.forum.ForumTopic;
 import com.kttdevelopment.mal4j.property.IDN;
 import com.kttdevelopment.mal4j.user.property.UserRetrievable;
 
 /**
  * Represents a forum topic creator.
  *
- * @see ForumTopicDetail#getCreatedBy()
+ * @see ForumTopic#getCreatedBy()
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development

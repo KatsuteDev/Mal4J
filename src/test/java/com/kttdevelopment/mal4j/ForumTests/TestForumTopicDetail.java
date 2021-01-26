@@ -2,7 +2,7 @@ package com.kttdevelopment.mal4j.ForumTests;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
-import com.kttdevelopment.mal4j.forum.ForumTopic;
+import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
 import com.kttdevelopment.mal4j.forum.Post;
 import com.kttdevelopment.mal4j.forum.property.Poll;
 import com.kttdevelopment.mal4j.forum.property.PollOption;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.*;
 public class TestForumTopicDetail {
 
     private static MyAnimeList mal;
-    private static ForumTopic topic;
+    private static ForumTopicDetail topic;
 
     @SuppressWarnings("ConstantConditions")
     @BeforeAll
@@ -33,7 +33,7 @@ public class TestForumTopicDetail {
         Assertions.assertNotNull(post.getCreatedAt());
         Assertions.assertNotNull(post.getBody());
         Assertions.assertNotNull(post.getSignature());
-        Assertions.assertSame(topic, post.getForumTopic());
+        Assertions.assertSame(topic, post.getForumTopicDetail());
     }
 
     @Test
@@ -50,7 +50,7 @@ public class TestForumTopicDetail {
             Assertions.assertNotNull(option.getVotes());
             Assertions.assertSame(poll, option.getPoll());
         }
-        Assertions.assertSame(topic, poll.getForumTopic());
+        Assertions.assertSame(topic, poll.getForumTopicDetail());
     }
 
     @Test

@@ -380,17 +380,17 @@ final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public final ForumTopic getForumTopicDetail(final long id){
+    public final ForumTopicDetail getForumTopicDetail(final long id){
         return getForumTopicDetail(id, -1, -1);
     }
 
     @Override
-    public final ForumTopic getForumTopicDetail(final long id, final int limit){
+    public final ForumTopicDetail getForumTopicDetail(final long id, final int limit){
         return getForumTopicDetail(id, limit, -1);
     }
 
     @Override
-    public final ForumTopic getForumTopicDetail(final long id, final int limit, final int offset){
+    public final ForumTopicDetail getForumTopicDetail(final long id, final int limit, final int offset){
         final JsonObject response = handleResponse(
             () -> service.getForumBoard(
                 auth,
@@ -409,7 +409,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         return new ForumSearchQuery() {
 
             @Override
-            public final List<ForumTopicDetail> search(){
+            public final List<ForumTopic> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getForumTopics(
                         auth,
@@ -425,14 +425,14 @@ final class MyAnimeListImpl extends MyAnimeList{
                 );
                 if(response == null) return null;
 
-                final List<ForumTopicDetail> topics = new ArrayList<>();
+                final List<ForumTopic> topics = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
                     topics.add(asForumTopicDetail(MyAnimeListImpl.this, iterator));
                 return topics;
             }
 
             @Override
-            public synchronized final PaginatedIterator<ForumTopicDetail> searchAll(){
+            public synchronized final PaginatedIterator<ForumTopic> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getForumTopics(

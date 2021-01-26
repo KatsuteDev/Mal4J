@@ -18,7 +18,7 @@
 
 package com.kttdevelopment.mal4j.forum.property;
 
-import com.kttdevelopment.mal4j.forum.ForumTopic;
+import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
 import com.kttdevelopment.mal4j.property.ID;
 
 /**
@@ -26,7 +26,7 @@ import com.kttdevelopment.mal4j.property.ID;
  *
  * Represents a forum poll.
  *
- * @see ForumTopic#getPoll()
+ * @see ForumTopicDetail#getPoll()
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
@@ -70,9 +70,9 @@ public abstract class Poll implements ID {
      *
      * @return forum topic
      *
-     * @see ForumTopic
+     * @see ForumTopicDetail
      * @since 1.0.0
      */
-    public abstract ForumTopic getForumTopic();
+    public abstract ForumTopicDetail getForumTopicDetail();
 
 }

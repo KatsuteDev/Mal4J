@@ -18,47 +18,107 @@
 
 package com.kttdevelopment.mal4j.forum;
 
-import com.kttdevelopment.mal4j.forum.property.Poll;
+import com.kttdevelopment.mal4j.forum.property.ForumTopicCreator;
+import com.kttdevelopment.mal4j.property.ID;
+
+import java.util.Date;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get</a>
  *
- * Represents a forum topic.
+ * Represents a forum topic's details.
  *
- * @see com.kttdevelopment.mal4j.MyAnimeList#getForumTopicDetail(long)
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class ForumTopic {
+public abstract class ForumTopic implements ID {
 
     /**
-     * Returns the topic title.
+     * Returns the title of the topic.
      *
-     * @return topic title
+     * @return title
      *
      * @since 1.0.0
      */
     public abstract String getTitle();
 
     /**
-     * Returns the posts in the topic.
+     * Returns when the topic was created at.
      *
-     * @return posts
+     * @return topic creation time
      *
-     * @see Post
+     * @see #getCreatedAtEpochMillis()
      * @since 1.0.0
      */
-    public abstract Post[] getPosts();
+    public abstract Date getCreatedAt();
 
     /**
-     * Returns the poll in the topic.
+     * Returns when the topic was created at as milliseconds since epoch.
      *
-     * @return poll
+     * @return topic creation time
      *
-     * @see Poll
+     * @see #getCreatedAt()
      * @since 1.0.0
      */
-    public abstract Poll getPoll();
+    public abstract Long getCreatedAtEpochMillis();
+
+    /**
+     * Returns who created the topic.
+     *
+     * @return topic creator
+     *
+     * @see ForumTopicCreator
+     * @since 1.0.0
+     */
+    public abstract ForumTopicCreator getCreatedBy();
+
+    /**
+     * Returns the total post count.
+     *
+     * @return total posts
+     *
+     * @since 1.0.0
+     */
+    public abstract Integer getPostsCount();
+
+    /**
+     * Returns when the last post was created at.
+     *
+     * @return last posted time
+     *
+     * @see #getLastPostCreatedAtEpochMillis()
+     * @since 1.0.0
+     */
+    public abstract Date getLastPostCreatedAt();
+
+    /**
+     * Returns when the last post was created at as milliseconds since epoch.
+     *
+     * @return last posted time
+     *
+     * @see #getLastPostCreatedAt()
+     * @since 1.0.0
+     */
+    public abstract Long getLastPostCreatedAtEpochMillis();
+
+    /**
+     * Returns who the last post was created by.
+     *
+     * @return last poster
+     *
+     * @see ForumTopicCreator
+     * @since 1.0.0
+     */
+    public abstract ForumTopicCreator getLastPostCreatedBy();
+
+    /**
+     * Returns if the topic is locked.
+     *
+     * @return locked
+     *
+     * @since 1.0.0
+     */
+    public abstract Boolean isLocked();
 
 }

@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
+import com.kttdevelopment.mal4j.forum.ForumTopic;
 import com.kttdevelopment.mal4j.forum.property.ForumSort;
 
 /**
@@ -31,7 +31,7 @@ import com.kttdevelopment.mal4j.forum.property.ForumSort;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class ForumSearchQuery extends SearchQuery<ForumSearchQuery,ForumTopicDetail> {
+public abstract class ForumSearchQuery extends SearchQuery<ForumSearchQuery, ForumTopic> {
 
     protected String query;
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
