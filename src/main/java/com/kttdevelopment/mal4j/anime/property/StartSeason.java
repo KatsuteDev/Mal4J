@@ -38,7 +38,7 @@ public abstract class StartSeason {
      *
      * @since 1.0.0
      */
-    public abstract int getYear();
+    public abstract Integer getYear();
 
     /**
      * The broadcast season that the Anime will start in

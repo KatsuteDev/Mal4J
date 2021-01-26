@@ -21,6 +21,8 @@ package com.kttdevelopment.mal4j.forum;
 import com.kttdevelopment.mal4j.forum.property.ForumTopicCreator;
 import com.kttdevelopment.mal4j.property.ID;
 
+import java.util.Date;
+
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topics_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topics_get</a> <br>
  *
@@ -46,9 +48,20 @@ public abstract class ForumTopicDetail implements ID {
      *
      * @return topic creation time
      *
+     * @see #getCreatedAtEpochMillis()
      * @since 1.0.0
      */
-    public abstract long getCreatedAt();
+    public abstract Date getCreatedAt();
+
+    /**
+     * Returns when the topic was created at as milliseconds since epoch.
+     *
+     * @return topic creation time
+     *
+     * @see #getCreatedAt()
+     * @since 1.0.0
+     */
+    public abstract Long getCreatedAtEpochMillis();
 
     /**
      * Returns who created the topic.
@@ -67,16 +80,27 @@ public abstract class ForumTopicDetail implements ID {
      *
      * @since 1.0.0
      */
-    public abstract int getPostsCount();
+    public abstract Integer getPostsCount();
 
     /**
      * Returns when the last post was created at.
      *
      * @return last posted time
      *
+     * @see #getLastPostCreatedAtEpochMillis()
      * @since 1.0.0
      */
-    public abstract long getLastPostCreatedAt();
+    public abstract Date getLastPostCreatedAt();
+
+    /**
+     * Returns when the last post was created at as milliseconds since epoch.
+     *
+     * @return last posted time
+     *
+     * @see #getLastPostCreatedAt()
+     * @since 1.0.0
+     */
+    public abstract Long getLastPostCreatedAtEpochMillis();
 
     /**
      * Returns who the last post was created by.
@@ -95,6 +119,6 @@ public abstract class ForumTopicDetail implements ID {
      *
      * @since 1.0.0
      */
-    public abstract boolean isLocked();
+    public abstract Boolean isLocked();
 
 }

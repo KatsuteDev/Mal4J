@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.kttdevelopment.mal4j.query.property;
+package com.kttdevelopment.mal4j.manga.property;
 
 /**
  * Represents a Anime listings rewatch value.

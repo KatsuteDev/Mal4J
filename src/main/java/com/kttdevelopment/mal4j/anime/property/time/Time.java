@@ -35,7 +35,7 @@ public abstract class Time {
      *
      * @since 1.0.0
      */
-    public abstract int getHour();
+    public abstract Integer getHour();
 
     /**
      * Returns the hour on a 12 hour clock (1-12).
@@ -44,7 +44,7 @@ public abstract class Time {
      *
      * @since 1.0.0
      */
-    public abstract int get12Hour();
+    public abstract Integer get12Hour();
 
     /**
      * Returns if the time is AM.
@@ -55,7 +55,7 @@ public abstract class Time {
      * @see #isPM()
      * @since 1.0.0
      */
-    public abstract boolean isAM();
+    public abstract Boolean isAM();
 
     /**
      * Returns if the time is PM.
@@ -66,7 +66,7 @@ public abstract class Time {
      * @see #isAM()
      * @since 1.0.0
      */
-    public abstract boolean isPM();
+    public abstract Boolean isPM();
 
     /**
      * Returns the minute (0-59).
@@ -75,6 +75,6 @@ public abstract class Time {
      *
      * @since 1.0.0
      */
-    public abstract int getMinute();
+    public abstract Integer getMinute();
 
 }

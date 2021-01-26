@@ -68,46 +68,19 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @return start date
      *
-     * @see #getStartDateEpochMillis()
      * @see #getEndDate()
-     * @see #getEndDateEpochMillis()
      */
     Date getStartDate();
-
-    /**
-     * Returns the start date as milliseconds since epoch.
-     *
-     * @return start date
-     *
-     * @see #getStartDate()
-     * @see #getEndDate()
-     * @see #getEndDateEpochMillis()
-     * @since 1.0.0
-     */
-    long getStartDateEpochMillis();
 
     /**
      * Returns the end date.
      *
      * @return end date
      *
-     * @see #getEndDateEpochMillis()
      * @see #getStartDate()
-     * @see #getStartDateEpochMillis()
      * @since 1.0.0
      */
     Date getEndDate();
-
-    /**
-     * Returns the end date as milliseconds since epoch.
-     *
-     * @return end date
-     *
-     * @see #getEndDate()
-     * @see #getStartDate()
-     * @see #getStartDateEpochMillis()
-     */
-    long getEndDateEpochMillis();
 
     /**
      * Returns the synopsis.
@@ -125,7 +98,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    float getMeanRating();
+    Float getMeanRating();
 
     /**
      * Returns the overall rank.
@@ -134,7 +107,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    int getRank();
+    Integer getRank();
 
     /**
      * Returns the popularity.
@@ -143,7 +116,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    int getPopularity();
+    Integer getPopularity();
 
     /**
      * Returns how many users have this item on their list.
@@ -152,7 +125,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    int getUserListingCount();
+    Integer getUserListingCount();
 
     /**
      * Returns how many users have this item scored on their list.
@@ -161,7 +134,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @since 1.0.0
      */
-    int getUserScoringCount();
+    Integer getUserScoringCount();
 
     /**
      * Returns the NSFW rating.
@@ -204,7 +177,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      * @see #getUpdatedAt()
      * @since 1.0.0
      */
-    long getCreatedAtEpochMillis();
+    Long getCreatedAtEpochMillis();
 
     /**
      * Returns when this was last updated.
@@ -228,7 +201,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      * @see #getCreatedAtEpochMillis()
      * @since 1.0.0
      */
-    long getUpdatedAtEpochMillis();
+    Long getUpdatedAtEpochMillis();
 
     /**
      * Returns the media type.

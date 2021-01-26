@@ -39,7 +39,7 @@ public abstract class MangaStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getReading();
+    public abstract Integer getReading();
 
     /**
      * Returns the total users completed.
@@ -48,7 +48,7 @@ public abstract class MangaStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getCompleted();
+    public abstract Integer getCompleted();
 
     /**
      * Returns the total users on hold.
@@ -57,7 +57,7 @@ public abstract class MangaStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getOnHold();
+    public abstract Integer getOnHold();
 
      /**
      * Returns the total users dropped.
@@ -66,7 +66,7 @@ public abstract class MangaStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getDropped();
+    public abstract Integer getDropped();
 
      /**
      * Returns the total users planning to read.
@@ -75,6 +75,6 @@ public abstract class MangaStatistics extends Statistics {
      *
      * @since 1.0.0
      */
-    public abstract int getPlanToRead();
+    public abstract Integer getPlanToRead();
 
 }

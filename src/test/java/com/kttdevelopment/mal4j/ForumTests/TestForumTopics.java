@@ -39,6 +39,7 @@ public class TestForumTopics {
 
     @Test @DisplayName("Documentation is unclear what this filters") @Disabled
     public void testTopicUsername(){
+        @SuppressWarnings("SpellCheckingInspection")
         final List<ForumTopicDetail> topics = mal.getForumTopics()
             .withLimit(1)
             .withQuery("MyAnimeList API")
@@ -84,10 +85,11 @@ public class TestForumTopics {
         final ForumTopic topic = mal.getForumTopicDetail(481);
         Assertions.assertNotNull(topic.getTitle());
         final Post post = topic.getPosts()[0];
-        Assertions.assertNotEquals(-1, post.getID());
-        Assertions.assertNotEquals(-1, post.getNumber());
-        Assertions.assertNotEquals(-1, post.getCreatedAt());
-        Assertions.assertNotEquals(-1, post.getAuthor().getID());
+        Assertions.assertNotNull(post.getID());
+        Assertions.assertNotNull(post.getNumber());
+        Assertions.assertNotNull(post.getCreatedAt());
+        Assertions.assertNotNull(post.getCreatedAtEpochMillis());
+        Assertions.assertNotNull(post.getAuthor().getID());
         Assertions.assertNotNull(post.getAuthor().getName());
         Assertions.assertNotNull(post.getAuthor().getForumAvatarURL());
         // Assertions.assertEquals(post.getAuthor().getID(), post.getAuthor().getUser().getID()); // not yet implemented
@@ -95,29 +97,31 @@ public class TestForumTopics {
         Assertions.assertNotNull(post.getSignature());
         Assertions.assertEquals(topic, post.getForumTopic());
         final Poll poll = topic.getPoll();
-        Assertions.assertNotEquals(-1, poll.getID());
+        Assertions.assertNotNull(poll.getID());
         Assertions.assertNotNull(poll.getQuestion());
-        Assertions.assertFalse(poll.isClosed());  // weak test
-        Assertions.assertNotEquals(-1, poll.getOptions()[0].getID());
+        Assertions.assertFalse(poll.isClosed());
+        Assertions.assertNotNull(poll.getOptions()[0].getID());
         Assertions.assertNotNull(poll.getOptions()[1].getText());
-        Assertions.assertNotEquals(-1, poll.getOptions()[0].getVotes());
+        Assertions.assertNotNull(poll.getOptions()[0].getVotes());
         Assertions.assertEquals(topic, poll.getForumTopic());
         Assertions.assertEquals(poll, poll.getOptions()[0].getPoll());
     }
 
     private void testForumTopicDetail(final ForumTopicDetail topic){
-        Assertions.assertNotEquals(-1, topic.getID());
+        Assertions.assertNotNull(topic.getID());
         Assertions.assertNotNull(topic.getTitle());
-        Assertions.assertNotEquals(-1, topic.getCreatedAt());
-        Assertions.assertNotEquals(-1, topic.getCreatedBy().getID());
+        Assertions.assertNotNull(topic.getCreatedAt());
+        Assertions.assertNotNull(topic.getCreatedAtEpochMillis());
+        Assertions.assertNotNull(topic.getCreatedBy().getID());
         // Assertions.assertEquals(topic.getCreatedBy().getID(), topic.getCreatedBy().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(topic.getCreatedBy().getName());
-        Assertions.assertNotEquals(-1, topic.getPostsCount());
-        Assertions.assertNotEquals(-1, topic.getLastPostCreatedAt());
-        Assertions.assertNotEquals(-1, topic.getLastPostCreatedBy().getID());
+        Assertions.assertNotNull(topic.getPostsCount());
+        Assertions.assertNotNull(topic.getLastPostCreatedAt());
+        Assertions.assertNotNull(topic.getLastPostCreatedAtEpochMillis());
+        Assertions.assertNotNull(topic.getLastPostCreatedBy().getID());
         // Assertions.assertEquals(topic.getLastPostCreatedBy().getID(), topic.getLastPostCreatedBy().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(topic.getLastPostCreatedBy().getName());
-        Assertions.assertFalse(topic.isLocked());  // weak test
+        Assertions.assertFalse(topic.isLocked());
     }
 
 }

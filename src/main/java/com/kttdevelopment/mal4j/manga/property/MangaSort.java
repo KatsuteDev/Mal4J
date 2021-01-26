@@ -27,12 +27,11 @@ package com.kttdevelopment.mal4j.manga.property;
  */
 public enum MangaSort {
 
-    Score       ("list_score"),
-    UpdatedAt   ("list_updated_at"),
-
+    ID          ("manga_id"),
     Title       ("manga_title"),
+    Score       ("list_score"),
     StartDate   ("manga_start_date"),
-    ID          ("manga_id");
+    UpdatedAt   ("list_updated_at");
 
     private final String field;
 

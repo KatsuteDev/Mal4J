@@ -36,7 +36,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsReading();
+    public abstract Integer getItemsReading();
 
     /**
      * Returns total items completed.
@@ -45,7 +45,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsCompleted();
+    public abstract Integer getItemsCompleted();
 
     /**
      * Returns total items on hold.
@@ -54,7 +54,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsOnHold();
+    public abstract Integer getItemsOnHold();
 
     /**
      * Returns total items dropped.
@@ -63,7 +63,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsDropped();
+    public abstract Integer getItemsDropped();
 
     /**
      * Returns total items planned to read.
@@ -72,7 +72,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItemsPlanToRead();
+    public abstract Integer getItemsPlanToRead();
 
     /**
      * Returns total items.
@@ -81,7 +81,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getItems();
+    public abstract Integer getItems();
 
     /**
      * Returns total days read.
@@ -90,7 +90,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysWatched();
+    public abstract Float getDaysRead();
 
     /**
      * Returns total days reading.
@@ -99,7 +99,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysReading();
+    public abstract Float getDaysReading();
 
     /**
      * Returns total days completed.
@@ -108,7 +108,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysCompleted();
+    public abstract Float getDaysCompleted();
 
     /**
      * Returns total days on hold.
@@ -117,7 +117,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysOnHold();
+    public abstract Float getDaysOnHold();
 
     /**
      * Returns total days dropped.
@@ -126,7 +126,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDaysDropped();
+    public abstract Float getDaysDropped();
 
     /**
      * Returns total days.
@@ -135,7 +135,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getDays();
+    public abstract Float getDays();
 
     /**
      * Returns total volumes read.
@@ -144,7 +144,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getVolumes();
+    public abstract Integer getVolumes();
 
     /**
      * Returns total chapters read.
@@ -153,7 +153,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getChapters();
+    public abstract Integer getChapters();
 
     /**
      * Returns times reread
@@ -162,7 +162,7 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract int getTimesReread();
+    public abstract Integer getTimesReread();
 
     /**
      * Returns the average score.
@@ -171,6 +171,6 @@ public abstract class UserMangaStatistics {
      *
      * @since 1.0.0
      */
-    public abstract float getMeanScore();
+    public abstract Float getMeanScore();
 
 }

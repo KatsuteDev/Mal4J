@@ -4,8 +4,8 @@ import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
-import com.kttdevelopment.mal4j.query.property.Priority;
-import com.kttdevelopment.mal4j.query.property.RereadValue;
+import com.kttdevelopment.mal4j.property.Priority;
+import com.kttdevelopment.mal4j.manga.property.RereadValue;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
@@ -53,7 +53,8 @@ public class TestMangaListStatus {
     @Test @Order(1)
     public void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
-        Assertions.assertNull(mal.getManga(TestProvider.MangaID).getListStatus());
+        Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
+        Assertions.assertNull(mal.getManga(TestProvider.MangaID).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -130,18 +131,16 @@ public class TestMangaListStatus {
         Assertions.assertEquals(0, status.getVolumesRead());
         Assertions.assertEquals(0, status.getChaptersRead());
         Assertions.assertTrue(status.isRereading());
-        Assertions.assertNotEquals(-1, status.getStartDate().getTime());
-        Assertions.assertNotEquals(-1, status.getStartDateEpochMillis());
-        Assertions.assertNotEquals(-1, status.getFinishDate().getTime());
-        Assertions.assertNotEquals(-1, status.getFinishDateEpochMillis());
+        Assertions.assertNotNull(status.getStartDate());
+        Assertions.assertNotNull(status.getFinishDate());
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesReread());
         Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue());
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
         Assertions.assertEquals("ignore comments", status.getComments());
-        Assertions.assertNotEquals(-1, status.getUpdatedAt().getTime());
-        Assertions.assertNotEquals(-1, status.getUpdatedAtEpochMillis());
+        Assertions.assertNotNull(status.getUpdatedAt());
+        Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
 }

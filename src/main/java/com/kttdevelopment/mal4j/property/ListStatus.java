@@ -18,8 +18,6 @@
 
 package com.kttdevelopment.mal4j.property;
 
-import com.kttdevelopment.mal4j.query.property.Priority;
-
 import java.util.Date;
 
 /**
@@ -51,55 +49,27 @@ public interface ListStatus<Status extends Enum<?>> {
      *
      * @since 1.0.0
      */
-    int getScore();
+    Integer getScore();
 
     /**
      * Returns the start date for the listing.
      *
      * @return start date
      *
-     * @see #getStartDateEpochMillis()
      * @see #getFinishDate()
-     * @see #getFinishDateEpochMillis()
      * @since 1.0.0
      */
     Date getStartDate();
-
-    /**
-     * Returns the start date for the listing in milliseconds since epoch.
-     *
-     * @return start date
-     *
-     * @see #getStartDate()
-     * @see #getFinishDate()
-     * @see #getFinishDateEpochMillis()
-     * @since 1.0.0
-     */
-    long getStartDateEpochMillis();
 
     /**
      * Returns the finish date for the listing.
      *
      * @return finish date
      *
-     * @see #getFinishDateEpochMillis()
      * @see #getStartDate()
-     * @see #getStartDateEpochMillis()
      * @since 1.0.0
      */
     Date getFinishDate();
-
-    /**
-     * Returns the finish date for the listing in milliseconds since epoch.
-     *
-     * @return finish date
-     *
-     * @see #getFinishDate()
-     * @see #getStartDate()
-     * @see #getStartDateEpochMillis()
-     * @since 1.0.0
-     */
-    long getFinishDateEpochMillis();
 
     /**
      * Returns the priority for the listing.
@@ -147,6 +117,6 @@ public interface ListStatus<Status extends Enum<?>> {
      * @see #getUpdatedAt()
      * @since 1.0.0
      */
-    long getUpdatedAtEpochMillis();
+    Long getUpdatedAtEpochMillis();
 
 }

@@ -21,9 +21,9 @@ package com.kttdevelopment.mal4j.anime;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.anime.property.*;
+import com.kttdevelopment.mal4j.property.Editable;
 import com.kttdevelopment.mal4j.property.ListStatus;
 import com.kttdevelopment.mal4j.query.AnimeListUpdate;
-import com.kttdevelopment.mal4j.query.property.RewatchValue;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put</a> <br>
@@ -40,7 +40,7 @@ import com.kttdevelopment.mal4j.query.property.RewatchValue;
  * @author Ktt Development
  */
 @SuppressWarnings("SpellCheckingInspection")
-public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRetrievable,AnimePreviewRetrievable {
+public abstract class AnimeListStatus implements ListStatus<AnimeStatus>, AnimeRetrievable, AnimePreviewRetrievable, Editable<AnimeListUpdate> {
 
     // API methods
 
@@ -51,7 +51,7 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      *
      * @since 1.0.0
      */
-    public abstract int getWatchedEpisodes();
+    public abstract Integer getWatchedEpisodes();
 
     /**
      * Returns if the user is rewatching.
@@ -60,7 +60,7 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      *
      * @since 1.0.0
      */
-    public abstract boolean isRewatching();
+    public abstract Boolean isRewatching();
 
     /**
      * Returns the total times rewatched.
@@ -69,7 +69,7 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      *
      * @since 1.0.0
      */
-    public abstract int getTimesRewatched();
+    public abstract Integer getTimesRewatched();
 
     /**
      * Returns the rewatch value.
@@ -91,6 +91,7 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      * @see AnimeListUpdate
      * @since 1.0.0
      */
+    @Override
     public abstract AnimeListUpdate edit();
 
 }

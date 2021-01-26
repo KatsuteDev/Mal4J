@@ -32,13 +32,13 @@ public enum AnimeRankingType {
     Airing  ("airing"),
     Upcoming("upcoming"),
 
+    All     (RankingType.All.field()),
     TV      ("tv"),
     OVA     ("ova"),
     Movie   ("movie"),
     Special ("special"),
 
-    All         (RankingType.All.field()),
-    ByPopularity(RankingType.ByPopularity.field()),
+    Popularity  (RankingType.Popularity.field()),
     Favorite    (RankingType.Favorite.field());
 
     private final String field;

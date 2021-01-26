@@ -51,7 +51,7 @@ public abstract class Poll implements ID {
      *
      * @since 1.0.0
      */
-    public abstract boolean isClosed();
+    public abstract Boolean isClosed();
 
     /**
      * Returns the poll's options.

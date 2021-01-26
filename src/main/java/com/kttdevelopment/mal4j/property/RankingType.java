@@ -29,7 +29,7 @@ public enum RankingType {
 
     All         ("all"),
     @SuppressWarnings("SpellCheckingInspection")
-    ByPopularity("bypopularity"),
+    Popularity("bypopularity"),
     Favorite    ("favorite");
 
     private final String field;
