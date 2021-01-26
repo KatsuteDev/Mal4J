@@ -6,13 +6,13 @@
     <p align="center">
         📘 Java wrapper for the official MyAnimeList API
         <br />
-        <a href="https://mal4j.kttdevelopment.com/documentation/">Docs</a>
+        <a href="https://mal4j.kttdevelopment.com/">Docs</a>
         •
         <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
         •
-        <a href="https://github.com/Katsute/Mal4J/blob/main/setup.md">Setup</a>
+        <a href="https://mal4j.kttdevelopment.com#section/Setup">Setup</a>
         •
-        <a href="https://github.com/Katsute/Mal4J/blob/main/faq.md">FAQ</a>
+        <a href="https://mal4j.kttdevelopment.com#section/FAQ">FAQ</a>
         •
         <a href="https://github.com/Katsute/Mal4J/issues">Issues</a>
         •
@@ -34,7 +34,7 @@
 
 Mal4J is a wrapper for the MyAnimeList API written for JDK 11 and simplifies many complex operations into an easy to use library.
 
-# [Setup](https://github.com/Katsute/Mal4J/blob/main/setup.md)
+# [Setup](https://mal4j.kttdevelopment.com#section/Setup)
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
 
@@ -51,7 +51,7 @@ For projects built locally, jars can be found in releases → [![Releases](https
 Mal4J is a standalone library and requires no additional dependencies.
 
 
-### More information on further stages of the setup can be found [here](https://github.com/Katsute/Mal4J/blob/main/setup.md).
+### More information on further stages of the setup can be found [here](https://mal4j.kttdevelopment.com#section/Setup).
 
 # Features
 
