@@ -18,8 +18,6 @@
 
 package com.kttdevelopment.mal4j.property;
 
-import com.kttdevelopment.mal4j.query.property.Priority;
-
 import java.util.Date;
 
 /**

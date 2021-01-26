@@ -20,7 +20,7 @@ package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
-import com.kttdevelopment.mal4j.query.property.RewatchValue;
+import com.kttdevelopment.mal4j.anime.property.RewatchValue;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_my_list_status_put</a> <br>

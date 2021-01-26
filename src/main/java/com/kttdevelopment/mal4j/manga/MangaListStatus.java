@@ -23,7 +23,6 @@ import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.manga.property.*;
 import com.kttdevelopment.mal4j.property.ListStatus;
 import com.kttdevelopment.mal4j.query.MangaListUpdate;
-import com.kttdevelopment.mal4j.query.property.RereadValue;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put</a> <br>
