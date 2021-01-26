@@ -16,26 +16,29 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.kttdevelopment.mal4j.query.property;
+package com.kttdevelopment.mal4j.anime.property;
 
 /**
- * Represents a listing priority.
+ * Represents a Anime listings rewatch value.
  *
- * @see com.kttdevelopment.mal4j.query.AnimeListUpdate#priority(Priority)
- * @see com.kttdevelopment.mal4j.query.MangaListUpdate#priority(Priority)
+ * @see com.kttdevelopment.mal4j.query.AnimeListUpdate#rewatchValue(RewatchValue)
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public enum Priority {
+@SuppressWarnings("SpellCheckingInspection")
+public enum RewatchValue {
 
-    Low     (0),
-    Medium  (1),
-    High    (2);
+    None        (0),
+    VeryLow     (1),
+    Low         (2),
+    Medium      (3),
+    High        (4),
+    VeryHigh    (5);
 
     private final int value;
 
-    Priority(final int value){
+    RewatchValue(final int value){
         this.value = value;
     }
 
@@ -59,8 +62,8 @@ public enum Priority {
      *
      * @since 1.0.0
      */
-    public static Priority asEnum(final Integer num){
-        for(final Priority value : values())
+    public static RewatchValue asEnum(final Integer num){
+        for(final RewatchValue value : values())
             if(value.value == num)
                 return value;
         return null;

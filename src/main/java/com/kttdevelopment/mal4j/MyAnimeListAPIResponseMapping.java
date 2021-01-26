@@ -28,7 +28,6 @@ import com.kttdevelopment.mal4j.manga.property.*;
 import com.kttdevelopment.mal4j.property.*;
 import com.kttdevelopment.mal4j.query.AnimeListUpdate;
 import com.kttdevelopment.mal4j.query.MangaListUpdate;
-import com.kttdevelopment.mal4j.query.property.*;
 import com.kttdevelopment.mal4j.user.UserAnimeStatistics;
 
 import java.lang.reflect.Array;

@@ -39,6 +39,7 @@ public class TestForumTopics {
 
     @Test @DisplayName("Documentation is unclear what this filters") @Disabled
     public void testTopicUsername(){
+        @SuppressWarnings("SpellCheckingInspection")
         final List<ForumTopicDetail> topics = mal.getForumTopics()
             .withLimit(1)
             .withQuery("MyAnimeList API")

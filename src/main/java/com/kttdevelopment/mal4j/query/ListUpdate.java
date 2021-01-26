@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.property.ListStatus;
-import com.kttdevelopment.mal4j.query.property.Priority;
+import com.kttdevelopment.mal4j.property.Priority;
 
 import java.util.*;
 

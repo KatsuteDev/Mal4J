@@ -20,7 +20,7 @@ package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
-import com.kttdevelopment.mal4j.query.property.RereadValue;
+import com.kttdevelopment.mal4j.manga.property.RereadValue;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put</a> <br>

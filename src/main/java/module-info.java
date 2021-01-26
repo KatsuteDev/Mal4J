@@ -12,7 +12,6 @@ module MyAnimeListAPI {
     exports com.kttdevelopment.mal4j.manga;
     exports com.kttdevelopment.mal4j.manga.property;
     exports com.kttdevelopment.mal4j.property;
-    exports com.kttdevelopment.mal4j.query.property;
     exports com.kttdevelopment.mal4j.query;
     exports com.kttdevelopment.mal4j.user;
     exports com.kttdevelopment.mal4j;

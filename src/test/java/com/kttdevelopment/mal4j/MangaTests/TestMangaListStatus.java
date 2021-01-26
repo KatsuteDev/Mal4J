@@ -4,8 +4,8 @@ import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
-import com.kttdevelopment.mal4j.query.property.Priority;
-import com.kttdevelopment.mal4j.query.property.RereadValue;
+import com.kttdevelopment.mal4j.property.Priority;
+import com.kttdevelopment.mal4j.manga.property.RereadValue;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
