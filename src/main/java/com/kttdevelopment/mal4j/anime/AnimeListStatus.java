@@ -21,6 +21,7 @@ package com.kttdevelopment.mal4j.anime;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.anime.property.*;
+import com.kttdevelopment.mal4j.property.Editable;
 import com.kttdevelopment.mal4j.property.ListStatus;
 import com.kttdevelopment.mal4j.query.AnimeListUpdate;
 
@@ -39,7 +40,7 @@ import com.kttdevelopment.mal4j.query.AnimeListUpdate;
  * @author Ktt Development
  */
 @SuppressWarnings("SpellCheckingInspection")
-public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRetrievable,AnimePreviewRetrievable {
+public abstract class AnimeListStatus implements ListStatus<AnimeStatus>, AnimeRetrievable, AnimePreviewRetrievable, Editable<AnimeListUpdate> {
 
     // API methods
 
@@ -90,6 +91,7 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>,AnimeRe
      * @see AnimeListUpdate
      * @since 1.0.0
      */
+    @Override
     public abstract AnimeListUpdate edit();
 
 }

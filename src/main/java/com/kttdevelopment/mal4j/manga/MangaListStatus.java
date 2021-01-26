@@ -21,6 +21,7 @@ package com.kttdevelopment.mal4j.manga;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.manga.property.*;
+import com.kttdevelopment.mal4j.property.Editable;
 import com.kttdevelopment.mal4j.property.ListStatus;
 import com.kttdevelopment.mal4j.query.MangaListUpdate;
 
@@ -38,7 +39,7 @@ import com.kttdevelopment.mal4j.query.MangaListUpdate;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaListStatus implements ListStatus<MangaStatus>,MangaRetrievable,MangaPreviewRetrievable {
+public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaRetrievable, MangaPreviewRetrievable, Editable<MangaListUpdate> {
 
     // API methods
 
@@ -98,6 +99,7 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>,MangaRe
      * @see MangaListUpdate
      * @since 1.0.0
      */
+    @Override
     public abstract MangaListUpdate edit();
 
 }
