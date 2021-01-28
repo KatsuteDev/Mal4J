@@ -12,24 +12,12 @@ assignees: ''
 - [ ] I have checked that no other similar feature request already exists.
 - [ ] I have checked that this feature does not already exist.
 - [ ] This feature request makes sense for the project.
-- [ ] This feature request has been preapproved in [discussions](https://github.com/Katsute/Mal4J/discussions/categories/feature-requests).
 
-**Discussion Post:** *The link to the discussion post for this request. Required.*
+**Discussion Post:** *The link to the discussion post for this request. Optional.*
 
-
-**Operating System:** *Operating system name and version.*
-
-
-**Release Version:** *Release version or branch commit where the issue occurred.*
+### Feature
+*Explain your feature. Add any examples here.*
 
 
-### Issue
-*Explain your issue. Add any relevant code or stacktraces here.*
-
-
-### Expected Behavior
-*Explain what was supposed to happen.*
-
-
-### Steps To Reproduce
-*Explain how and/or when the error occurred.*
+### Reason
+*Explain why you thing this feature should be added.*
