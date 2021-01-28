@@ -95,7 +95,7 @@ MangaListStatus status =
 
 ```java
 MyAnimeList mal = MyAnimeList.withOAuthToken("");
-Anime anime = mal.getAnime(13759, MyAnimeList.ALL_ANIME_FIELDS);
+Anime anime = mal.getAnime(13759);
 
 String ja = anime.getAlternativeTitles().getJapanese();
 Genre[] genres = anime.getGenres();
