@@ -1,4 +1,4 @@
-module MyAnimeListAPI {
+module Mal4J {
 
     requires java.net.http;
     requires jdk.httpserver;

@@ -1,4 +1,0 @@
-docs/* -linguist-documentation
-docs/dependencies/* linguist-vendored
-docs/dependencies/kttdevelopment/* -linguist-vendored
-docs/dependencies/kttdevelopment/* -linguist-documentation
