@@ -274,8 +274,8 @@ public abstract class MyAnimeList {
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
-     * @see #getForumTopicDetail(long, int)
-     * @see #getForumTopicDetail(long, int, int)
+     * @see #getForumTopicDetail(long, Integer)
+     * @see #getForumTopicDetail(long, Integer, Integer)
      * @since 1.0.0
      */
     public abstract ForumTopicDetail getForumTopicDetail(final long id);
@@ -291,10 +291,10 @@ public abstract class MyAnimeList {
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see #getForumTopicDetail(long)
-     * @see #getForumTopicDetail(long, int, int)
+     * @see #getForumTopicDetail(long, Integer, Integer)
      * @since 1.0.0
      */
-    public abstract ForumTopicDetail getForumTopicDetail(final long id, final int limit);
+    public abstract ForumTopicDetail getForumTopicDetail(final long id, final Integer limit);
 
     /**
      * Returns a forum topic.
@@ -307,10 +307,10 @@ public abstract class MyAnimeList {
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see #getForumTopicDetail(long)
-     * @see #getForumTopicDetail(long, int)
+     * @see #getForumTopicDetail(long, Integer)
      * @since 1.0.0
      */
-    public abstract ForumTopicDetail getForumTopicDetail(final long id, final int limit, final int offset);
+    public abstract ForumTopicDetail getForumTopicDetail(final long id, final Integer limit, final Integer offset);
 
     //
 

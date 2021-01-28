@@ -26,12 +26,12 @@ import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
  * Represents a Manga ranking query.
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getMangaRanking(MangaRankingType)
- * @see FieldSearchQuery
+ * @see FieldQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaRankingQuery extends FieldSearchQuery<MangaRankingQuery,MangaRanking> {
+public abstract class MangaRankingQuery extends FieldQuery<MangaRankingQuery,MangaRanking> {
 
     protected final MangaRankingType rankingType;
     protected Boolean nsfw;

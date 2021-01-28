@@ -381,22 +381,22 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final ForumTopicDetail getForumTopicDetail(final long id){
-        return getForumTopicDetail(id, -1, -1);
+        return getForumTopicDetail(id, null, null);
     }
 
     @Override
-    public final ForumTopicDetail getForumTopicDetail(final long id, final int limit){
-        return getForumTopicDetail(id, limit, -1);
+    public final ForumTopicDetail getForumTopicDetail(final long id, final Integer limit){
+        return getForumTopicDetail(id, limit, null);
     }
 
     @Override
-    public final ForumTopicDetail getForumTopicDetail(final long id, final int limit, final int offset){
+    public final ForumTopicDetail getForumTopicDetail(final long id, final Integer limit, final Integer offset){
         final JsonObject response = handleResponse(
             () -> service.getForumBoard(
                 auth,
                 id,
-                limit == -1 ? null : limit,
-                offset == -1 ? null : offset
+                limit,
+                offset
             )
         );
         if(response == null) return null;

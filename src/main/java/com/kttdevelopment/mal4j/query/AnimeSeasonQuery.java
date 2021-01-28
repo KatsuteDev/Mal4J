@@ -28,12 +28,12 @@ import com.kttdevelopment.mal4j.anime.property.time.Season;
  * Represents an Anime season query.
  *
  * @see MyAnimeList#getAnimeSeason(int, Season)
- * @see FieldSearchQuery
+ * @see FieldQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSeasonQuery extends FieldSearchQuery<AnimeSeasonQuery,Anime> {
+public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime> {
 
     protected final int year;
     protected final Season season;

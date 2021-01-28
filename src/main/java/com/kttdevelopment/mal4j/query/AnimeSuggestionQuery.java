@@ -26,12 +26,12 @@ import com.kttdevelopment.mal4j.anime.Anime;
  * Represents an Anime suggestion query.
  *
  * @see MyAnimeList#getAnimeSuggestions()
- * @see FieldSearchQuery
+ * @see FieldQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSuggestionQuery extends FieldSearchQuery<AnimeSuggestionQuery,Anime> {
+public abstract class AnimeSuggestionQuery extends FieldQuery<AnimeSuggestionQuery,Anime> {
 
     protected Boolean nsfw;
 

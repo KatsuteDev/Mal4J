@@ -26,7 +26,7 @@ import java.util.*;
  * Represents a field query. Returns all fields by default.
  *
  * @param <T> this
- * @param <R> completed request
+ * @param <R> response
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
  * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
@@ -35,11 +35,11 @@ import java.util.*;
  * @author Ktt Development
  */
 @SuppressWarnings({"unchecked", "UnusedReturnValue"})
-abstract class FieldSearchQuery<T extends FieldSearchQuery<T,R>,R> extends SearchQuery<T,R> {
+abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<T,R> {
 
     protected List<String> fields = null;
 
-    FieldSearchQuery() { }
+    FieldQuery() { }
 
     /**
      * Adds a field to return.
