@@ -29,12 +29,12 @@ import com.kttdevelopment.mal4j.anime.property.*;
  *
  * @see MyAnimeList#getUserAnimeListing()
  * @see MyAnimeList#getUserAnimeListing(String)
- * @see FieldSearchQuery
+ * @see FieldQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class UserAnimeListQuery extends FieldSearchQuery<UserAnimeListQuery,AnimeListStatus> {
+public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,AnimeListStatus> {
 
     protected final String username;
     protected AnimeSort sort;

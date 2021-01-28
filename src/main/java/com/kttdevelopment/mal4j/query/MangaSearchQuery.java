@@ -26,14 +26,13 @@ import com.kttdevelopment.mal4j.manga.Manga;
  * Represents a Manga search query.
  *
  * @see MyAnimeList#getManga()
- * @see FieldSearchQuery
+ * @see SearchQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery,Manga> {
+public abstract class MangaSearchQuery extends SearchQuery<MangaSearchQuery,Manga> {
 
-    protected String query;
     protected Boolean nsfw;
 
     /**
@@ -44,19 +43,6 @@ public abstract class MangaSearchQuery extends FieldSearchQuery<MangaSearchQuery
      * @since 1.0.0
      */
     public MangaSearchQuery() {
-    }
-
-    /**
-     * Sets the search query.
-     *
-     * @param query query
-     * @return search query
-     *
-     * @since 1.0.0
-     */
-    public final MangaSearchQuery withQuery(final String query){
-        this.query = query;
-        return this;
     }
 
     /**

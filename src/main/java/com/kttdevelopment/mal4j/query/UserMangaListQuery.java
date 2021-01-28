@@ -30,12 +30,12 @@ import com.kttdevelopment.mal4j.manga.property.MangaStatus;
  *
  * @see MyAnimeList#getUserMangaListing()
  * @see MyAnimeList#getUserMangaListing(String)
- * @see FieldSearchQuery
+ * @see FieldQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class UserMangaListQuery extends FieldSearchQuery<UserMangaListQuery,MangaListStatus> {
+public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,MangaListStatus> {
 
     protected final String username;
     protected MangaSort sort;

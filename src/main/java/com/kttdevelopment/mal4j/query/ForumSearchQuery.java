@@ -27,11 +27,12 @@ import com.kttdevelopment.mal4j.forum.property.ForumSort;
  * Represents a forum topic search query.
  *
  * @see MyAnimeList#getForumTopics()
+ * @see LimitOffsetQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class ForumSearchQuery extends SearchQuery<ForumSearchQuery, ForumTopic> {
+public abstract class ForumSearchQuery extends LimitOffsetQuery<ForumSearchQuery, ForumTopic> {
 
     protected String query;
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})

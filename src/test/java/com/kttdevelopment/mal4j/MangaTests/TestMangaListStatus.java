@@ -60,13 +60,13 @@ public class TestMangaListStatus {
     @Test @Order(2)
     public void testUpdate(){
         final Date now = new Date();
-        final MangaListStatus status = mal.updateMangaListing(28107)
+        final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
             .status(MangaStatus.Completed)
             .score(10)
             .startDate(now)
             .finishDate(now)
-            .volumesRead(0)
-            .chaptersRead(0)
+            .volumesRead(8)
+            .chaptersRead(49)
             .rereading(true)
             .priority(Priority.High)
             .timesReread(0)
@@ -128,8 +128,8 @@ public class TestMangaListStatus {
     private void testStatus(final MangaListStatus status){
         Assertions.assertEquals(MangaStatus.Completed, status.getStatus());
         Assertions.assertEquals(10, status.getScore());
-        Assertions.assertEquals(0, status.getVolumesRead());
-        Assertions.assertEquals(0, status.getChaptersRead());
+        Assertions.assertEquals(8, status.getVolumesRead());
+        Assertions.assertEquals(49, status.getChaptersRead());
         Assertions.assertTrue(status.isRereading());
         Assertions.assertNotNull(status.getStartDate());
         Assertions.assertNotNull(status.getFinishDate());

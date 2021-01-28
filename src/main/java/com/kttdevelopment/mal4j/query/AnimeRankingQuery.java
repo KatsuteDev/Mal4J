@@ -26,12 +26,12 @@ import com.kttdevelopment.mal4j.anime.property.AnimeRankingType;
  * Represents an Anime ranking query.
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getAnimeRanking(AnimeRankingType)
- * @see FieldSearchQuery
+ * @see FieldQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeRankingQuery extends FieldSearchQuery<AnimeRankingQuery,AnimeRanking> {
+public abstract class AnimeRankingQuery extends FieldQuery<AnimeRankingQuery,AnimeRanking> {
 
     protected final AnimeRankingType rankingType;
     protected Boolean nsfw;
