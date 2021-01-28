@@ -1,11 +1,3 @@
----
-heading: |
-    <h1 class="display-3">FAQ</h1>
-    <p class="mt-3 mb-5">
-        Frequently asked questions.
-    </p>
-title: FAQ
----
 # General
 
 ## Are their any rate limits?
@@ -25,11 +17,11 @@ This library offers ***ALL*** the features provided by the API.
 
 This issue is caused by using an older, unsupported JDK. This library requires at least JDK 11.
 
+## Will you update this library to support JDK 8?
+
+The latest long-term-support version for Java Development Kit is 11. This library is modular in order to be compliant with JDK11 standards and will not be downgraded for this very reason (modules are not supported in JDK8).
+
 # API
-
-## All the fields are null.
-
-By default this library follows the API and returns only the fields provided in the fields parameter. If you want all the fields use `MyAnimeList#ALL_ANIME_FIELDS`, `MyAnimeList#ALL_MANGA_FIELDS`, or `MyAnimeList#ALL_USER_FIELDS`.
 
 ## Seasons query is returning Anime from other seasons.
 

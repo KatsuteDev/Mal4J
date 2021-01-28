@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: FAQ
     about: Check frequently asked questions before posting an issue
-    url: https://mal4j.kttdevelopment.com/faq/
+    url: https://github.com/Katsute/Mal4J/blob/main/faq.md
   - name: Discussions
     url: https://github.com/Katsute/Mal4J/discussions
     about: Check here before posting an issue
