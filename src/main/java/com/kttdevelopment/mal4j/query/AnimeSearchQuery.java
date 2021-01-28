@@ -26,14 +26,13 @@ import com.kttdevelopment.mal4j.anime.Anime;
  * Represents a Anime search query.
  *
  * @see MyAnimeList#getAnime()
- * @see FieldSearchQuery
+ * @see SearchQuery
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSearchQuery extends FieldSearchQuery<AnimeSearchQuery,Anime> {
+public abstract class AnimeSearchQuery extends SearchQuery<AnimeSearchQuery,Anime> {
 
-    protected String query;
     protected Boolean nsfw;
 
     /**
@@ -44,19 +43,6 @@ public abstract class AnimeSearchQuery extends FieldSearchQuery<AnimeSearchQuery
      * @since 1.0.0
      */
     public AnimeSearchQuery() { }
-
-    /**
-     * Sets the search query.
-     *
-     * @param query query
-     * @return search query
-     *
-     * @since 1.0.0
-     */
-    public final AnimeSearchQuery withQuery(final String query){
-        this.query = query;
-        return this;
-    }
 
     /**
      * Sets if the query will return NSFW results.
