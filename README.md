@@ -8,7 +8,7 @@
         <br />
         <a href="https://mal4j.kttdevelopment.com/">Docs</a>
         •
-        <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
+        <a href="https://mal4j.kttdevelopment.com/docs">Javadoc</a>
         •
         <a href="https://mal4j.kttdevelopment.com#section/Setup">Setup</a>
         •
@@ -95,7 +95,7 @@ MangaListStatus status =
 
 ```java
 MyAnimeList mal = MyAnimeList.withOAuthToken("");
-Anime anime = mal.getAnime(13759, MyAnimeList.ALL_ANIME_FIELDS);
+Anime anime = mal.getAnime(13759);
 
 String ja = anime.getAlternativeTitles().getJapanese();
 Genre[] genres = anime.getGenres();
