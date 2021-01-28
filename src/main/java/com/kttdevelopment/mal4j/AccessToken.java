@@ -18,6 +18,8 @@
 
 package com.kttdevelopment.mal4j;
 
+import java.util.Date;
+
 /**
  * Represents an OAuth2 authentication body.
  *
@@ -28,12 +30,12 @@ package com.kttdevelopment.mal4j;
 public final class AccessToken {
 
     private final String token_type;
-    private final long expires_in;
+    private final long expiry;
     private transient final String access_token, refresh_token;
 
     AccessToken(final String token_type, final long expires_in, final String access_token, final String refresh_token){
         this.token_type     = token_type;
-        this.expires_in     = expires_in;
+        this.expiry         = (System.currentTimeMillis()/1000) + expires_in;
         this.access_token   = access_token;
         this.refresh_token  = refresh_token;
     }
@@ -50,14 +52,40 @@ public final class AccessToken {
     }
 
     /**
-     * Returns expiry in seconds.
+     * Returns expiry date.
      *
-     * @return expiry
+     * @return expiry date
      *
+     * @see #getTimeUntilExpires()
      * @since 1.0.0
      */
-    public final long getExpiry(){
-        return expires_in;
+    public final Date getExpiry(){
+        return new Date(expiry);
+    }
+
+    /**
+     * Returns how long until the token expires in seconds.
+     *
+     * @return time until expiry
+     *
+     * @see #getExpiry()
+     * @see #isExpired()
+     * @since 1.0.0
+     */
+    public final long getTimeUntilExpires(){
+        return expiry - (System.currentTimeMillis()/1000);
+    }
+
+    /**
+     * Returns if the token is expired.
+     *
+     * @return if token is expired
+     *
+     * @see #getTimeUntilExpires()
+     * @since 1.0.0
+     */
+    public final boolean isExpired(){
+        return getTimeUntilExpires() <= 0;
     }
 
     /**
@@ -75,7 +103,7 @@ public final class AccessToken {
     public String toString(){
         return "AccessToken{" +
                "token_type='" + token_type + '\'' +
-               ", expires_in=" + expires_in +
+               ", expires=" + expiry +
                '}';
     }
 
