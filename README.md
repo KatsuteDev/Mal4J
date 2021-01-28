@@ -6,7 +6,7 @@
     <p align="center">
         📘 Java wrapper for the official MyAnimeList API
         <br />
-        <a href="https://mal4j.kttdevelopment.com/documentation/">Docs</a>
+        <a href="https://mal4j.kttdevelopment.com/">Docs</a>
         •
         <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
         •
