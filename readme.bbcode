@@ -1,0 +1,55 @@
+[center][size=400]Mal4J[/size][/center]
+[center][size=200][url=https://github.com/Katsute/Mal4J]MyAnimeList Java API[/url][/size][/center]
+
+[size=250][u]Overview[/u][/size]
+Mal4J is a wrapper for the MyAnimeList API written for JDK 11 and simplifies many complex operations into an easy to use library.
+
+[size=250][u]Features[/u][/size]
+
+[size=150]Search Queries[/size]
+Easily search through MyAnimeList with search, ranking, seasonal, and suggestion queries; returning only selected or all fields.
+
+[code]
+MyAnimeList mal = MyAnimeList.withOAuthToken("");
+List<AnimePreview> search =
+    mal.getAnime()
+        .withQuery("さくら荘のペットな彼女")
+        .withLimit(1)
+        .withOffset(1)
+        .includeNSFW(false)
+        .search();
+[/code]
+
+[size=150]List Modification[/size]
+Easily update your Anime and Manga listings through update methods.
+
+[code]
+MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MangaListStatus status =
+    mal.updateMangaListing(28107)
+        .status(MangaStatus.Reading)
+        .volumesRead(7)
+        .chaptersRead(2)
+        .rereading(false)
+        .priority(Priority.High)
+        .timesReread(0)
+        .rereadValue(RereadValue.VeryHigh)
+        .tags("tags", "more tags")
+        .comments("comments")
+        .update();
+[/code]
+
+[size=150]List Modification[/size]
+[b]All[/b] information provided in the MyAnimeList API including Anime, Manga, forums, genres, pictures, and statistics is accessible in this library. Effortlessly retrive any and all information you need.
+
+[code]
+MyAnimeList mal = MyAnimeList.withOAuthToken("");
+Anime anime = mal.getAnime(13759);
+
+String ja = anime.getAlternativeTitles().getJapanese();
+Genre[] genres = anime.getGenres();
+RelatedAnime[] relatedAnime = anime.getRelatedAnime();
+AnimeRecommendation[] recs = anime.getRecommendations();
+[/code]
+
+[center][size=200][url=https://github.com/Katsute/Mal4J]View on GitHub[/url][/size][/center]
