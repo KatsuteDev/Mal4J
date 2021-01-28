@@ -8,7 +8,7 @@ contact_links:
     about: Check here before posting an issue
   - name: Feature Requests
     url: https://github.com/Katsute/Mal4J/discussions/categories/feature-requests
-    about: New feature requests must be posted here first before they may become an issue
+    about: Not quite sure about a feature request? You can discuss them here first
   - name: MyAnimeList API
     url: https://myanimelist.net/apiconfig/references/api/v2
     about: The official MyAnimeList API documentation
