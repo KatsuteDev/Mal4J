@@ -1,14 +1,3 @@
----
-heading: |
-    <h1 class="display-3">Setup</h1>
-    <p class="mt-3 mb-5">
-        Quick installation guide for new or experienced developers.
-    </p>
-    <a class="btn btn-outline-light" href="/documentation"><i class="fas fa-book"></i> Documentation</a>
-    <a class="btn btn-outline-light" href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><i class="fas fa-archive"></i> Maven Central</a>
-    <a class="btn btn-outline-light" href="https://github.com/Katsute/Mal4J/releases"><i class="fas fa-cloud-download-alt"></i> Releases</a>
-title: Setup
----
 # Installation
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
@@ -27,16 +16,15 @@ Mal4J is a standalone library and requires no additional dependencies.
 
 # API setup
 
-## 1. Create new API key
+## 1. Create new Client ID
 
-In order to use the MyAnimeList API you must retrieve your own client ID. You can create a new API key at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
+In order to use the MyAnimeList API you must retrieve your own client ID. You can create a new Client ID at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
 
 ![Create ID](https://raw.githubusercontent.com/Katsute/Mal4J/main/setup_1.png)
 
-## 2. Register API key
+## 2. Register application
 
 Fill in all required fields and App Redirect URL, this is what we use to retrieve the OAuth token. For users using easy authentication ([below](#authenticate-with-client-id-easy)) set this to `http://localhost:5050` or whatever port you are using.
-
 
 ![Register application](https://raw.githubusercontent.com/Katsute/Mal4J/main/setup_2.png)
 
