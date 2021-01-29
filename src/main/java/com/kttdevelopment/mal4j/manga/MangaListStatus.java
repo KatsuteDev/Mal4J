@@ -18,7 +18,6 @@
 
 package com.kttdevelopment.mal4j.manga;
 
-
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.manga.property.*;
 import com.kttdevelopment.mal4j.property.Editable;

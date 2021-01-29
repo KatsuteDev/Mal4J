@@ -59,20 +59,44 @@ public final class MyAnimeListAuthenticator {
     private AccessToken token;
 
     /**
-     * Creates a MyAnimeListAuthenticator (easy) and deploys a server to retrieve the OAuth2 token.
+     * Creates a MyAnimeListAuthenticator (easy) and deploys a server to retrieve the OAuth2 token. Local server will only be active for 3 minutes, if you need longer use {@link #MyAnimeListAuthenticator(String, String, int, long)}.
      *
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
+     * @throws BindException if selected port is already being used or is blocked
+     * @throws IllegalArgumentException if client id malformed or if selected port is invalid
      * @throws IOException if client could not contact auth server
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
+     * @see #MyAnimeListAuthenticator(String, String, int, long)
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port) throws IOException{
-        final Authorization auth = authenticateWithLocalServer(client_id, Math.min(Math.max(0, port), 65535));
+        this(client_id, client_secret, port, 180);
+    }
+
+    /**
+     * Creates a MyAnimeListAuthenticator (easy) and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
+     *
+     * @param client_id client id
+     * @param client_secret client secret (optional)
+     * @param port port to run the retrieval server
+     * @param timeout how long in seconds that the local authentication server will live for
+     * @throws BindException if selected port is already being used or is blocked
+     * @throws IllegalArgumentException if client id malformed or if selected port is invalid
+     * @throws IOException if client could not contact auth server
+     * @throws HttpException if request failed
+     * @throws UncheckedIOException if client failed to execute request
+     *
+     * @see #MyAnimeListAuthenticator(String, String, int)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 1.0.0
+     */
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final long timeout) throws IOException{
+        final Authorization auth = authenticateWithLocalServer(client_id, port, timeout);
 
         this.client_id          = client_id;
         this.client_secret      = client_secret;
@@ -144,7 +168,7 @@ public final class MyAnimeListAuthenticator {
      * @since 1.0.0
      */
     public final AccessToken refreshAccessToken(){
-        return token = parseToken( authService
+        return token = parseToken(authService
             .refreshToken(
                 client_id,
                 client_secret,
@@ -171,12 +195,12 @@ public final class MyAnimeListAuthenticator {
     }
 
     @SuppressWarnings({"ResultOfMethodCallIgnored"})
-    private static Authorization authenticateWithLocalServer(final String client_id, final int port) throws IOException{
+    private static Authorization authenticateWithLocalServer(final String client_id, final int port, final long timeout) throws IOException{
         final String verify = PKCE.generateCodeVerifier();
         final String url = getAuthorizationURL(client_id, verify);
 
         if(!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
-            throw new UnsupportedOperationException("Failed to authorize client (unable to open browser link.");
+            System.out.println("Desktop is not supported on this operating system. Please go to this URL manually: " + url);
 
         // get auth call back from local server
         final ExecutorService exec = Executors.newSingleThreadExecutor();
@@ -189,10 +213,14 @@ public final class MyAnimeListAuthenticator {
         server.start();
 
         try{ Desktop.getDesktop().browse(new URI(url));
-        }catch(final URISyntaxException ignored){ } // URL is guaranteed to be valid
+        }catch(final URISyntaxException ignored){
+            exec.shutdownNow();
+            server.stop(0);
+            throw new IllegalArgumentException("URL was malformed (most likely the client id was invalid).");
+        }
 
         try{
-            latch.await(1, TimeUnit.MINUTES);
+            latch.await(timeout, TimeUnit.SECONDS);
         }catch(final InterruptedException ignored){ } // soft failure
         exec.shutdownNow();
         server.stop(0);

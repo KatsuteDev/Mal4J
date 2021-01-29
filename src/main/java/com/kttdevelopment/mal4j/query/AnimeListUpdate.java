@@ -104,5 +104,4 @@ public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeLi
         return this;
     }
 
-
 }

@@ -954,7 +954,6 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 // additional methods
 
-
                 @Override
                 public final com.kttdevelopment.mal4j.user.User getUser(){
                     return mal.getUser(name);
