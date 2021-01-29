@@ -176,7 +176,7 @@ final class APICall {
         final String URL =
             baseURL +
             pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group(1))) + // path args
-            (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect( Collectors.joining("&"))); // query
+            (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
 
         final HttpRequest.Builder request = HttpRequest.newBuilder();
 
@@ -194,7 +194,7 @@ final class APICall {
         }
 
         if(formUrlEncoded){
-            final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect( Collectors.joining("&"));
+            final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
             if(debug)
                 System.out.println("Data:     " + data);
             request.header("Content-Type", "application/x-www-form-urlencoded");

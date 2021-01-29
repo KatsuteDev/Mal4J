@@ -25,7 +25,6 @@ import com.kttdevelopment.mal4j.manga.property.MangaRetrievable;
 import com.kttdevelopment.mal4j.manga.property.MangaType;
 import com.kttdevelopment.mal4j.property.MediaItem;
 
-
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get</a> <br>
  * Represents a Manga's full details.

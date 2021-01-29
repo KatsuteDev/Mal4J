@@ -280,7 +280,6 @@ public abstract class MyAnimeList {
      */
     public abstract ForumTopicDetail getForumTopicDetail(final long id);
 
-
     /**
      * Returns a forum topic.
      *

@@ -18,7 +18,6 @@
 
 package com.kttdevelopment.mal4j;
 
-
 import static com.kttdevelopment.mal4j.APIStruct.*;
 import static com.kttdevelopment.mal4j.Json.*;
 

@@ -47,7 +47,7 @@ public abstract class MangaListUpdate extends ListUpdate<MangaListUpdate,MangaLi
      * @since 1.0.0
      */
     public MangaListUpdate(final long id){
-        super( id);
+        super(id);
     }
 
     /**

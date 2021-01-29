@@ -49,7 +49,6 @@ public enum AnimeSource {
 
     private final String field;
 
-
     AnimeSource(String field) {
         this.field = field;
     }
