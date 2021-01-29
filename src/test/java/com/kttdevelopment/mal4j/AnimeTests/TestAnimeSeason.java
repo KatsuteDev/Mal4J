@@ -51,8 +51,10 @@ public class TestAnimeSeason {
                 .search();
         boolean hasNSFW = false;
         for(final Anime animePreview : season)
-            if(animePreview.getNSFW() != NSFW.White)
+            if(animePreview.getNSFW() != NSFW.White){
                 hasNSFW = true;
+                break;
+            }
         Assertions.assertTrue(hasNSFW);
     }
 

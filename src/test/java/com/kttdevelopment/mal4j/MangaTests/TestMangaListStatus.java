@@ -143,4 +143,11 @@ public class TestMangaListStatus {
         Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
+    @Test @DisplayName("#30 Consecutive Updates") @Disabled
+    public void testConsecutiveUpdates(){
+        testDelete();
+        testUpdate();
+        testUpdate();
+    }
+
 }
