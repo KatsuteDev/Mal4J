@@ -15,7 +15,7 @@ public class TestAuthRefresh {
         TestProvider.testRequireClientID();
 
         final String clientId = Files.readString(TestProvider.client);
-        authenticator = new MyAnimeListAuthenticator(clientId, null, 5050);
+        authenticator = new MyAnimeListAuthenticator(clientId, null, 5050, true);
         final MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);
 
         // test refresh token
@@ -28,11 +28,26 @@ public class TestAuthRefresh {
     }
 
     @Test
-    public void runStaticTest(){
+    public void testToken(){
         final AccessToken token = authenticator.getAccessToken();
         Assertions.assertTrue(token.getTimeUntilExpires() < 2_764_800);
         Assertions.assertTrue(token.getExpiry().getTime() - (System.currentTimeMillis()/1000) < 2_764_800);
         Assertions.assertFalse(token.isExpired());
+    }
+
+    @Test
+    public void testIgnored(){
+        // todo: test server ignored
+    }
+
+    @Test
+    public void testTimeout(){
+        // todo: test timeout (server should expire before, disregard exception)
+    }
+
+    @Test
+    public void testURL(){
+        // todo: test #getAuthorizationURL
     }
 
 }
