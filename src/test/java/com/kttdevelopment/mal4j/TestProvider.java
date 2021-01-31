@@ -49,7 +49,7 @@ public abstract class TestProvider {
                 return;
         }
         testRequireClientID(); // prevent CI from executing tests
-        TestAuthRefresh.beforeAll(); // refresh old token
+        TestAuthorization.beforeAll(); // refresh old token
     }
 
     public static void testRequireClientID(){

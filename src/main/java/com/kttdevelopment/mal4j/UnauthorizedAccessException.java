@@ -8,7 +8,7 @@ package com.kttdevelopment.mal4j;
  */
 public class UnauthorizedAccessException extends RuntimeException {
 
-    public UnauthorizedAccessException(final String message){
+    UnauthorizedAccessException(final String message){
         super(message);
     }
 
