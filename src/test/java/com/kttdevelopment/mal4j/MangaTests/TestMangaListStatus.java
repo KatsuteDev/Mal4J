@@ -92,8 +92,7 @@ public class TestMangaListStatus {
                 break;
             else
                 status = null;
-        if(status == null)
-            Assertions.fail();
+        Assertions.assertNotNull(status);
 
         testStatus(status);
     }
@@ -113,8 +112,7 @@ public class TestMangaListStatus {
                 break;
             else
                 status = null;
-        if(status == null)
-            Assertions.fail();
+        Assertions.assertNotNull(status);
 
         testStatus(status);
     }

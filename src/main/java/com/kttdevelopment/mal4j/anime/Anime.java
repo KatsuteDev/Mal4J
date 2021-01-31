@@ -35,6 +35,26 @@ import com.kttdevelopment.mal4j.property.FullMediaItem;
  */
 public abstract class Anime extends AnimePreview implements FullMediaItem<AnimeType,AnimeAirStatus,AnimeListStatus,AnimeRecommendation,AnimeStatistics> {
 
+    /**
+     * Returns the opening themes.
+     *
+     * @return opening themes
+     *
+     * @see OpeningTheme
+     * @since 1.0.0
+     */
+    public abstract OpeningTheme[] getOpeningThemes();
+
+    /**
+     * Returns the ending themes.
+     *
+     * @return ending themes
+     *
+     * @see EndingTheme
+     * @since 1.0.0
+     */
+    public abstract EndingTheme[] getEndingThemes();
+
     // additional methods
 
     @Override

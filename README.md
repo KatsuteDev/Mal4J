@@ -91,7 +91,7 @@ MangaListStatus status =
 
 ### Structured Objects
 
-**All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, and statistics is accessible in this library. Effortlessly retrive any and all information you need.
+**All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, statistics, and even some *undocumented* fields are accessible in this library. Effortlessly retrieve any and all information you need.
 
 ```java
 MyAnimeList mal = MyAnimeList.withOAuthToken("");
@@ -101,6 +101,7 @@ String ja = anime.getAlternativeTitles().getJapanese();
 Genre[] genres = anime.getGenres();
 RelatedAnime[] relatedAnime = anime.getRelatedAnime();
 AnimeRecommendation[] recs = anime.getRecommendations();
+OpeningTheme[] op = anime.getOpeningThemes();
 ```
 
 ---
