@@ -185,6 +185,72 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
+        static OpeningTheme asOpeningTheme(final MyAnimeList mal, final JsonObject schema, final com.kttdevelopment.mal4j.anime.Anime anime){
+            return new OpeningTheme() {
+
+                private final Long id       = requireNonNull(() -> schema.getLong("id"));
+                private final String text   = requireNonNull(() -> schema.getString("text"));
+
+                // API methods
+
+                @Override
+                public final Long getID(){
+                    return id;
+                }
+
+                @Override
+                public final String getText(){
+                    return text;
+                }
+
+                // additional methods
+
+                @Override
+                public final com.kttdevelopment.mal4j.anime.Anime getAnime(){
+                    return anime;
+                }
+
+                @Override
+                public String toString(){
+                    return AutomatedToString(this);
+                }
+
+            };
+        }
+
+        static EndingTheme asEndingTheme(final MyAnimeList mal, final JsonObject schema, final com.kttdevelopment.mal4j.anime.Anime anime){
+            return new EndingTheme() {
+
+                private final Long id       = requireNonNull(() -> schema.getLong("id"));
+                private final String text   = requireNonNull(() -> schema.getString("text"));
+
+                // API methods
+
+                @Override
+                public final Long getID(){
+                    return id;
+                }
+
+                @Override
+                public final String getText(){
+                    return text;
+                }
+
+                // additional methods
+
+                @Override
+                public final com.kttdevelopment.mal4j.anime.Anime getAnime(){
+                    return anime;
+                }
+
+                @Override
+                public String toString(){
+                    return AutomatedToString(this);
+                }
+
+            };
+        }
+
         static com.kttdevelopment.mal4j.anime.Anime asAnime(final MyAnimeList mal, final JsonObject schema){
             return new com.kttdevelopment.mal4j.anime.Anime() {
 
@@ -227,6 +293,10 @@ abstract class MyAnimeListAPIResponseMapping {
                                                     = requireNonNull(() -> adaptList(schema.getJsonArray("recommendations"), r -> asAnimeRecommendation(mal, r), AnimeRecommendation.class));
                 private final AnimeStatistics statistics
                                                     = requireNonNull(() -> asAnimeStatistics(mal, schema.getJsonObject("statistics")));
+                private final OpeningTheme[] openingThemes
+                                                    = requireNonNull(() -> adaptList(schema.getJsonArray("opening_themes"), o -> asOpeningTheme(mal, o, this), OpeningTheme.class));
+                private final EndingTheme[] endingThemes
+                                                    = requireNonNull(() -> adaptList(schema.getJsonArray("ending_themes"), o -> asEndingTheme(mal, o, this), EndingTheme.class));
 
                 // API methods
 
@@ -398,6 +468,16 @@ abstract class MyAnimeListAPIResponseMapping {
                 @Override
                 public final AnimeStatistics getStatistics() {
                     return statistics;
+                }
+
+                @Override
+                public final OpeningTheme[] getOpeningThemes(){
+                    return openingThemes;
+                }
+
+                @Override
+                public final EndingTheme[] getEndingThemes(){
+                    return endingThemes;
                 }
 
                 // additional methods
