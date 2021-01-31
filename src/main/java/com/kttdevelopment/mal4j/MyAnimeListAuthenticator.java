@@ -22,11 +22,10 @@ import com.kttdevelopment.mal4j.APIStruct.Response;
 import com.sun.net.httpserver.*;
 
 import java.awt.*;
-import java.io.IOException;
-import java.io.UncheckedIOException;
+import java.io.*;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
+import java.security.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -44,59 +43,214 @@ import static com.kttdevelopment.mal4j.Json.*;
  */
 public final class MyAnimeListAuthenticator {
 
+    // required fields
     private static final String authUrl =
         "https://myanimelist.net/v1/oauth2/authorize" +
         "?response_type=code" +
         "&client_id=%s" +
-        "&state=RequestID4" +
         "&code_challenge=%s" +
         "&code_challenge_method=plain";
 
+    // optional fields
+    private static final String authState   = "&state=%s";
+    private static final String redirectURI = "&redirect_uri=%s";
+
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
+
+    private static final int DEFAULT_TIMEOUT = 60 * 3;
+    private static final boolean DEFAULT_OPEN_BROWSER = false;
 
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private final String client_id, client_secret, authorizationCode, pkce;
     private AccessToken token;
 
     /**
-     * Creates a MyAnimeListAuthenticator (easy) and deploys a server to retrieve the OAuth2 token. Local server will only be active for 3 minutes, if you need longer use {@link #MyAnimeListAuthenticator(String, String, int, long)}.
+     * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
-     * @throws BindException if selected port is already being used or is blocked
-     * @throws IllegalArgumentException if client id malformed or if selected port is invalid
-     * @throws IOException if client could not contact auth server
-     * @throws HttpException if request failed
-     * @throws UncheckedIOException if client failed to execute request
+     * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
+     * @throws BindException if port was blocked
+     * @throws IOException if server could not be started
+     * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
+     * @throws NullPointerException if server was closed before the client could be authorized
+     * @throws HttpException if client request failed
      *
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean)
      * @see #MyAnimeListAuthenticator(String, String, int, long)
+     * @see #MyAnimeListAuthenticator(String, String, int, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, long, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, long, String)
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port) throws IOException{
-        this(client_id, client_secret, port, 180);
+        this(client_id, client_secret, port, DEFAULT_OPEN_BROWSER, DEFAULT_TIMEOUT, null);
     }
 
     /**
-     * Creates a MyAnimeListAuthenticator (easy) and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
+     * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
+     *
+     * @param client_id client id
+     * @param client_secret client secret (optional)
+     * @param port port to run the retrieval server
+     * @param openBrowser if the code should automatically open a browser window
+     * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
+     * @throws BindException if port was blocked
+     * @throws IOException if server could not be started
+     * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
+     * @throws NullPointerException if server was closed before the client could be authorized
+     * @throws HttpException if client request failed
+     *
+     * @see #MyAnimeListAuthenticator(String, String, int)
+     * @see #MyAnimeListAuthenticator(String, String, int, long)
+     * @see #MyAnimeListAuthenticator(String, String, int, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, long, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, long, String)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 1.0.0
+     */
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser) throws IOException{
+        this(client_id, client_secret, port, openBrowser, DEFAULT_TIMEOUT, null);
+    }
+
+    /**
+     * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
      * @param timeout how long in seconds that the local authentication server will live for
-     * @throws BindException if selected port is already being used or is blocked
-     * @throws IllegalArgumentException if client id malformed or if selected port is invalid
-     * @throws IOException if client could not contact auth server
-     * @throws HttpException if request failed
-     * @throws UncheckedIOException if client failed to execute request
+     * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
+     * @throws BindException if port was blocked
+     * @throws IOException if server could not be started
+     * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
+     * @throws NullPointerException if server was closed before the client could be authorized
+     * @throws HttpException if client request failed
      *
      * @see #MyAnimeListAuthenticator(String, String, int)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean)
+     * @see #MyAnimeListAuthenticator(String, String, int, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, long, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, long, String)
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final long timeout) throws IOException{
-        final Authorization auth = authenticateWithLocalServer(client_id, port, timeout);
+        this(client_id, client_secret, port, DEFAULT_OPEN_BROWSER, timeout, null);
+    }
+
+    /**
+     * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
+     *
+     * @param client_id client id
+     * @param client_secret client secret (optional)
+     * @param port port to run the retrieval server
+     * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
+     * @throws BindException if port was blocked
+     * @throws IOException if server could not be started
+     * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
+     * @throws NullPointerException if server was closed before the client could be authorized
+     * @throws HttpException if client request failed
+     *
+     * @see #MyAnimeListAuthenticator(String, String, int)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean)
+     * @see #MyAnimeListAuthenticator(String, String, int, long)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, long, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, long, String)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 1.0.0
+     */
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final String redirectURI) throws IOException{
+        this(client_id, client_secret, port, DEFAULT_OPEN_BROWSER, DEFAULT_TIMEOUT, redirectURI);
+    }
+
+    /**
+     * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
+     *
+     * @param client_id client id
+     * @param client_secret client secret (optional)
+     * @param port port to run the retrieval server
+     * @param openBrowser if the code should automatically open a browser window
+     * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
+     * @throws BindException if port was blocked
+     * @throws IOException if server could not be started
+     * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
+     * @throws NullPointerException if server was closed before the client could be authorized
+     * @throws HttpException if client request failed
+     *
+     * @see #MyAnimeListAuthenticator(String, String, int)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean)
+     * @see #MyAnimeListAuthenticator(String, String, int, long)
+     * @see #MyAnimeListAuthenticator(String, String, int, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, long, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, long, String)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 1.0.0
+     */
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser, final String redirectURI) throws IOException{
+        this(client_id, client_secret, port, openBrowser, DEFAULT_TIMEOUT, redirectURI);
+    }
+
+    /**
+     * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
+     *
+     * @param client_id client id
+     * @param client_secret client secret (optional)
+     * @param port port to run the retrieval server
+     * @param timeout how long in seconds that the local authentication server will live for
+     * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
+     * @throws BindException if port was blocked
+     * @throws IOException if server could not be started
+     * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
+     * @throws NullPointerException if server was closed before the client could be authorized
+     * @throws HttpException if client request failed
+     *
+     * @see #MyAnimeListAuthenticator(String, String, int)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean)
+     * @see #MyAnimeListAuthenticator(String, String, int, long)
+     * @see #MyAnimeListAuthenticator(String, String, int, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, long, String)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 1.0.0
+     */
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final long timeout, final String redirectURI) throws IOException{
+        this(client_id, client_secret, port, DEFAULT_OPEN_BROWSER, timeout, redirectURI);
+    }
+
+    /**
+     * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
+     *
+     * @param client_id client id
+     * @param client_secret client secret (optional)
+     * @param port port to run the retrieval server
+     * @param openBrowser if the code should automatically open a browser window
+     * @param timeout how long in seconds that the local authentication server will live for
+     * @param redirect_URI redirect URI to use
+     * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
+     * @throws BindException if port was blocked
+     * @throws IOException if server could not be started
+     * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
+     * @throws NullPointerException if server was closed before the client could be authorized
+     * @throws HttpException if client request failed
+     *
+     * @see #MyAnimeListAuthenticator(String, String, int)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean)
+     * @see #MyAnimeListAuthenticator(String, String, int, long)
+     * @see #MyAnimeListAuthenticator(String, String, int, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, boolean, String)
+     * @see #MyAnimeListAuthenticator(String, String, int, long, String)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 1.0.0
+     */
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser, final long timeout, final String redirect_URI) throws IOException{
+        final Authorization auth = authenticateWithLocalServer(client_id, port, openBrowser, timeout, redirect_URI);
 
         this.client_id          = client_id;
         this.client_secret      = client_secret;
@@ -118,9 +272,9 @@ public final class MyAnimeListAuthenticator {
      * Creates a MyAnimeListAuthenticator.
      *
      * @param client_id client id
-     * @param client_secret client secret (optional)
+     * @param client_secret client secret, null if application has none
      * @param authorization_code authorization code
-     * @param PKCE_code_challenge PKCE code challenge
+     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
@@ -144,6 +298,8 @@ public final class MyAnimeListAuthenticator {
             )
         );
     }
+
+// access token
 
     /**
      * Returns the access token.
@@ -180,27 +336,82 @@ public final class MyAnimeListAuthenticator {
         );
     }
 
+// URL
+
     /**
      * Returns the authorization URL for a client id.
      *
-     * @param client_id client id
-     * @param PKCE_code_challenge PKCE code challenge
+     * @param client_id client id. <i>required</i>
+     * @param PKCE_code_challenge PKCE code challenge. <i>required</i>
      * @return authorization URL
      *
+     * @see #getAuthorizationURL(String, String, String)
+     * @see #getAuthorizationURL(String, String, String, String)
      * @since 1.0.0
      */
     @SuppressWarnings("SpellCheckingInspection")
     public static String getAuthorizationURL(final String client_id, final String PKCE_code_challenge){
-        return String.format(authUrl, URLEncoder.encode(client_id, StandardCharsets.UTF_8), PKCE_code_challenge);
+        return getAuthorizationURL(client_id, PKCE_code_challenge, null, null);
     }
 
-    @SuppressWarnings({"ResultOfMethodCallIgnored"})
-    private static Authorization authenticateWithLocalServer(final String client_id, final int port, final long timeout) throws IOException{
-        final String verify = PKCE.generateCodeVerifier();
-        final String url = getAuthorizationURL(client_id, verify);
+    /**
+     * Returns the authorization URL for a client id.
+     *
+     * @param client_id client id. <i>required</i>
+     * @param PKCE_code_challenge PKCE code challenge. <i>required</i>
+     * @param redirect_URI preregistered URI, only needed if you want to select a specific application redirect URI. <i>optional</i>
+     * @return authorization URL
+     *
+     * @see #getAuthorizationURL(String, String)
+     * @see #getAuthorizationURL(String, String, String, String)
+     * @since 1.0.0
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    public static String getAuthorizationURL(final String client_id, final String PKCE_code_challenge, final String redirect_URI){
+        return getAuthorizationURL(client_id, PKCE_code_challenge, redirect_URI, null);
+    }
 
-        if(!Desktop.isDesktopSupported() || !Desktop.getDesktop().isSupported(Desktop.Action.BROWSE))
-            System.out.println("Desktop is not supported on this operating system. Please go to this URL manually: " + url);
+    /**
+     * Returns the authorization URL for a client id.
+     *
+     * @param client_id client id. <i>required</i>
+     * @param PKCE_code_challenge PKCE code challenge. <i>required</i>
+     * @param redirect_URI preregistered URI, only needed if you want to select a specific application redirect URI. <i>optional</i>
+     * @param state 0Auth2 state. <i>optional</i>
+     * @return authorization URL
+     *
+     * @see #getAuthorizationURL(String, String)
+     * @see #getAuthorizationURL(String, String, String)
+     * @since 1.0.0
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    public static String getAuthorizationURL(final String client_id, final String PKCE_code_challenge, final String redirect_URI, final String state){
+        return
+            String.format(authUrl, client_id, PKCE_code_challenge) +
+            (redirect_URI != null ? String.format(redirectURI, URLEncoder.encode(redirect_URI, StandardCharsets.UTF_8)) : "") +
+            (state != null ? String.format(authState, state) : "");
+    }
+
+// support methods
+
+    /**
+     * Returns if the code is allowed to open the client browser.
+     *
+     * @return if code can open browser
+     *
+     * @since 1.0.0
+     */
+    public static boolean canOpenBrowser(){
+        return Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE);
+    }
+
+    private static final PrintWriter sysOut = new PrintWriter(System.out);
+
+    @SuppressWarnings({"ResultOfMethodCallIgnored"})
+    private static Authorization authenticateWithLocalServer(final String client_id, final int port, final boolean openBrowser, final long timeout, final String redirectURI) throws IOException{
+        final String verify = PKCE.generateCodeVerifier();
+        final String state  = Hash.generateSha256(client_id + '&' + verify);
+        final String url    = getAuthorizationURL(client_id, verify, redirectURI, state);
 
         // get auth call back from local server
         final ExecutorService exec = Executors.newSingleThreadExecutor();
@@ -212,18 +423,26 @@ public final class MyAnimeListAuthenticator {
         server.createContext("/", handler);
         server.start();
 
-        try{ Desktop.getDesktop().browse(new URI(url));
-        }catch(final URISyntaxException ignored){
-            exec.shutdownNow();
-            server.stop(0);
-            throw new IllegalArgumentException("URL was malformed (most likely the client id was invalid).");
-        }
+        if(openBrowser)
+            if(!canOpenBrowser())
+                sysOut.println("Desktop is not supported on this operating system. Please go to this URL manually: " + url);
+            else
+                try{ Desktop.getDesktop().browse(new URI(url));
+                }catch(final URISyntaxException ignored){
+                    exec.shutdownNow();
+                    server.stop(0);
+                    throw new IllegalArgumentException("URL syntax was invalid (most likely the client id or redirect URI wasn't encoded correctly).");
+                }
 
-        try{
-            latch.await(timeout, TimeUnit.SECONDS);
+        try{ latch.await(timeout, TimeUnit.SECONDS);
         }catch(final InterruptedException ignored){ } // soft failure
         exec.shutdownNow();
         server.stop(0);
+
+        if(handler.getAuth() == null)
+            throw new NullPointerException("Failed to authorize request (server was closed before a response could be received).");
+        if(!state.equals(handler.getState()))
+            throw new UnauthorizedAccessException("Failed to authorize request (packet was intercepted by an unauthorized source).");
 
         return new Authorization(){
 
@@ -266,6 +485,29 @@ public final class MyAnimeListAuthenticator {
 
     }
 
+    private static final class Hash{
+
+        static String generateSha256(final String str){
+            final MessageDigest digest;
+            try{
+                digest = MessageDigest.getInstance("SHA-256");
+            }catch(final NoSuchAlgorithmException e){ // should NEVER occur
+                throw new RuntimeException(e);
+            }
+
+            final byte[] encodedHash        = digest.digest(str.getBytes(StandardCharsets.UTF_8));
+            final StringBuilder hexString   = new StringBuilder(2 * encodedHash.length);
+            for(final byte hash : encodedHash){
+                final String hex = Integer.toHexString(0xff & hash);
+                if(hex.length() == 1)
+                    hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        }
+
+    }
+
     private static abstract class Authorization {
 
         // auth code
@@ -302,7 +544,8 @@ public final class MyAnimeListAuthenticator {
             this.latch = latch;
         }
 
-        private transient final AtomicReference<String> auth = new AtomicReference<>();
+        private transient final AtomicReference<String> auth    = new AtomicReference<>();
+        private transient final AtomicReference<String> state   = new AtomicReference<>();
 
         private static final String OK   = "&#10004;&#65039;";
         private static final String FAIL = "&#10060;";
@@ -313,12 +556,12 @@ public final class MyAnimeListAuthenticator {
         @Override
         public final void handle(final HttpExchange exchange) throws IOException{
             final Map<String,String> query = parseWwwFormEnc(exchange.getRequestURI().getRawQuery());
+            state.set(query.get("state"));
 
-            final String code = query.get("code");
-
-            final String state = code == null ? "Failed " + FAIL : "Completed " + OK;
-            final String hint = query.getOrDefault("hint", "");
-            final String message = code == null
+            final String code       = query.get("code");
+            final String pass       = code == null ? "Failed " + FAIL : "Completed " + OK;
+            final String hint       = query.getOrDefault("hint", "");
+            final String message    = code == null
                 ? "<b>" + query.get("error").substring(0, 1).toUpperCase() + query.get("error").substring(1).replace('_', ' ') + "</b>: " + query.get("message")
                 : "You may now close the window.";
 
@@ -332,7 +575,7 @@ public final class MyAnimeListAuthenticator {
                 try(GZIPOutputStream OUT = new GZIPOutputStream(exchange.getResponseBody())){
                     OUT.write(
                         HTML
-                            .replace("{{ state }}", state)
+                            .replace("{{ state }}", pass)
                             .replace("{{ hint }}", hint)
                             .replace("{{ message }}", message)
                             .getBytes(StandardCharsets.UTF_8)
@@ -347,6 +590,10 @@ public final class MyAnimeListAuthenticator {
 
         public final String getAuth(){
             return auth.get();
+        }
+
+        public final String getState(){
+            return state.get();
         }
 
     }
