@@ -61,6 +61,12 @@ public class TestAnime {
         Assertions.assertNotNull(anime.getPictures()[0].getMediumURL());
         Assertions.assertNotNull(anime.getPictures()[0].getLargeURL());
         Assertions.assertNotNull(anime.getBackground());
+        Assertions.assertNotNull(anime.getOpeningThemes()[0].getID());
+        Assertions.assertNotNull(anime.getOpeningThemes()[0].getText());
+        Assertions.assertSame(anime.getOpeningThemes()[0].getAnime(), anime);
+        Assertions.assertNotNull(anime.getEndingThemes()[0].getID());
+        Assertions.assertNotNull(anime.getEndingThemes()[0].getText());
+        Assertions.assertSame(anime.getEndingThemes()[0].getAnime(), anime);
     }
 
     @Test

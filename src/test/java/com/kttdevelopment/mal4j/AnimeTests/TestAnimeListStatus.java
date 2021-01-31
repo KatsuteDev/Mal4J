@@ -90,8 +90,7 @@ public class TestAnimeListStatus {
                 break;
             else
                 status = null;
-        if(status == null)
-            Assertions.fail();
+        Assertions.assertNotNull(status);
 
         testStatus(status);
     }
@@ -111,8 +110,7 @@ public class TestAnimeListStatus {
                 break;
             else
                 status = null;
-        if(status == null)
-            Assertions.fail();
+        Assertions.assertNotNull(status);
 
         testStatus(status);
     }
