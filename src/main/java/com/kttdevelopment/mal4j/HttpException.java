@@ -37,16 +37,43 @@ public class HttpException extends RuntimeException {
         this.message = message;
     }
 
+    /**
+     * Returns the URL from the Http request.
+     * @return URL
+     *
+     * @since 1.0.0
+     */
     public final String URL(){
         return URL;
     }
 
+    /**
+     * Returns the message from the Http request.
+     * @return message
+     *
+     * @since 1.0.0
+     */
     public final String message(){
         return message;
     }
 
+    /**
+     * Returns the code for the Http request.
+     * @return code
+     *
+     * @since 1.0.0
+     */
     public final int code(){
         return code;
+    }
+
+    @Override
+    public String toString(){
+        return "HttpException{" +
+               "URL='" + URL + '\'' +
+               ", message='" + message + '\'' +
+               ", code=" + code +
+               '}';
     }
 
 }
