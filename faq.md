@@ -6,7 +6,7 @@ The MyAnimeList API currently has no rate limit in place so requests must be sen
 
 ## What does this library offer in comparison to the Official API?
 
-This library offers ***ALL*** the features provided by the API.
+This library offers ***ALL*** the features provided by the API and even some *undocumented* fields.
 
 ## My auth token doesn't work.
 

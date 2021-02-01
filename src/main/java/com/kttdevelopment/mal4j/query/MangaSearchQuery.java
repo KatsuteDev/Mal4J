@@ -31,9 +31,7 @@ import com.kttdevelopment.mal4j.manga.Manga;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaSearchQuery extends SearchQuery<MangaSearchQuery,Manga> {
-
-    protected Boolean nsfw;
+public abstract class MangaSearchQuery extends NSFWSearchQuery<MangaSearchQuery,Manga> {
 
     /**
      * Creates a Manga search query. Applications do not use this constructor.
@@ -43,19 +41,6 @@ public abstract class MangaSearchQuery extends SearchQuery<MangaSearchQuery,Mang
      * @since 1.0.0
      */
     public MangaSearchQuery() {
-    }
-
-    /**
-     * Sets if the query will return NSFW results.
-     *
-     * @param nsfw nsfw
-     * @return search query
-     *
-     * @since 1.0.0
-     */
-    public final MangaSearchQuery includeNSFW(final boolean nsfw){
-        this.nsfw = nsfw;
-        return this;
     }
 
 }

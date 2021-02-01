@@ -31,9 +31,7 @@ import com.kttdevelopment.mal4j.anime.Anime;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSearchQuery extends SearchQuery<AnimeSearchQuery,Anime> {
-
-    protected Boolean nsfw;
+public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery,Anime> {
 
     /**
      * Creates an Anime search query. Applications do not use this constructor.
@@ -43,18 +41,5 @@ public abstract class AnimeSearchQuery extends SearchQuery<AnimeSearchQuery,Anim
      * @since 1.0.0
      */
     public AnimeSearchQuery() { }
-
-    /**
-     * Sets if the query will return NSFW results.
-     *
-     * @param nsfw nsfw
-     * @return search query
-     *
-     * @since 1.0.0
-     */
-    public final AnimeSearchQuery includeNSFW(final boolean nsfw){
-        this.nsfw = nsfw;
-        return this;
-    }
 
 }

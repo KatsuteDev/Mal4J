@@ -31,7 +31,7 @@ import com.kttdevelopment.mal4j.anime.property.AnimeRankingType;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeRankingQuery extends FieldQuery<AnimeRankingQuery,AnimeRanking> {
+public abstract class AnimeRankingQuery extends FieldQuery<AnimeRankingQuery,AnimeRanking> implements NSFW<AnimeRankingQuery> {
 
     protected final AnimeRankingType rankingType;
     protected Boolean nsfw;
@@ -49,14 +49,12 @@ public abstract class AnimeRankingQuery extends FieldQuery<AnimeRankingQuery,Ani
         this.rankingType = rankingType;
     }
 
-    /**
-     * Sets if the query will return NSFW results.
-     *
-     * @param nsfw nsfw
-     * @return ranking query
-     *
-     * @since 1.0.0
-     */
+    @Override
+    public final AnimeRankingQuery includeNSFW(){
+        return includeNSFW(true);
+    }
+
+    @Override
     public final AnimeRankingQuery includeNSFW(final boolean nsfw){
         this.nsfw = nsfw;
         return this;

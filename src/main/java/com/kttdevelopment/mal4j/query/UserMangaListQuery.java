@@ -35,7 +35,7 @@ import com.kttdevelopment.mal4j.manga.property.MangaStatus;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,MangaListStatus> {
+public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,MangaListStatus> implements NSFW<UserMangaListQuery> {
 
     protected final String username;
     protected MangaSort sort;
@@ -82,18 +82,15 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
         return this;
     }
 
-    /**
-     * Sets if the query will return NSFW results.
-     *
-     * @param nsfw nsfw
-     * @return search query
-     *
-     * @since 1.0.0
-     */
+    @Override
+    public final UserMangaListQuery includeNSFW(){
+        return includeNSFW(true);
+    }
+
+    @Override
     public final UserMangaListQuery includeNSFW(final boolean nsfw){
         this.nsfw = nsfw;
         return this;
     }
-
 
 }

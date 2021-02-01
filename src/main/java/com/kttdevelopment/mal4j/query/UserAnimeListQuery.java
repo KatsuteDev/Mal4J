@@ -34,7 +34,7 @@ import com.kttdevelopment.mal4j.anime.property.*;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,AnimeListStatus> {
+public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,AnimeListStatus> implements NSFW<UserAnimeListQuery> {
 
     protected final String username;
     protected AnimeSort sort;
@@ -81,18 +81,15 @@ public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,A
         return this;
     }
 
-    /**
-     * Sets if the query will return NSFW results.
-     *
-     * @param nsfw nsfw
-     * @return search query
-     *
-     * @since 1.0.0
-     */
+    @Override
+    public final UserAnimeListQuery includeNSFW(){
+        return includeNSFW(true);
+    }
+
+    @Override
     public final UserAnimeListQuery includeNSFW(final boolean nsfw){
         this.nsfw = nsfw;
         return this;
     }
-
 
 }
