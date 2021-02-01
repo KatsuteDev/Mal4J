@@ -82,6 +82,7 @@ public class TestAnimeListStatus {
             mal.getUserAnimeListing()
                 .withStatus(AnimeStatus.Watching)
                 .withLimit(1000)
+                .includeNSFW(true)
                 .search();
 
         AnimeListStatus status = null;

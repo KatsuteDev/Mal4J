@@ -84,6 +84,7 @@ public class TestMangaListStatus {
             mal.getUserMangaListing()
                 .withStatus(MangaStatus.Reading)
                 .withLimit(1000)
+                .includeNSFW(true)
                 .search();
 
         MangaListStatus status = null;
@@ -104,6 +105,7 @@ public class TestMangaListStatus {
             mal.getUserMangaListing("KatsuteDev")
                 .withStatus(MangaStatus.Reading)
                 .withLimit(1000)
+                .includeNSFW(true)
                 .search();
 
         MangaListStatus status = null;
