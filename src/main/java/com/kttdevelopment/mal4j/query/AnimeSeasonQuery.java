@@ -72,13 +72,11 @@ public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime
     /**
      * Sets if the query will return NSFW results.
      *
-     * @deprecated The API does not support this option currently
      * @param nsfw nsfw
      * @return season query
      *
      * @since 1.0.0
      */
-    @Deprecated
     public final AnimeSeasonQuery includeNSFW(final boolean nsfw){
         this.nsfw = nsfw;
         return this;

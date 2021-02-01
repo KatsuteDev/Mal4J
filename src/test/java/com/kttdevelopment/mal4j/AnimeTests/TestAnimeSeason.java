@@ -44,10 +44,11 @@ public class TestAnimeSeason {
         Assertions.assertTrue(first.getUserScoringCount() > second.getUserScoringCount());
     }
 
-    @Test @DisplayName("#5 - Seasonal") @Disabled
+    @Test
     public void testNSFW(){
         final List<Anime> season =
             mal.getAnimeSeason(2014, Season.Winter)
+                .includeNSFW(true)
                 .search();
         boolean hasNSFW = false;
         for(final Anime animePreview : season)
