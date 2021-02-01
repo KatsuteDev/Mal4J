@@ -31,7 +31,7 @@ import com.kttdevelopment.mal4j.anime.Anime;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSuggestionQuery extends FieldQuery<AnimeSuggestionQuery,Anime> {
+public abstract class AnimeSuggestionQuery extends FieldQuery<AnimeSuggestionQuery,Anime> implements NSFW<AnimeSuggestionQuery> {
 
     protected Boolean nsfw;
 
@@ -44,16 +44,12 @@ public abstract class AnimeSuggestionQuery extends FieldQuery<AnimeSuggestionQue
      */
     public AnimeSuggestionQuery() { }
 
-    /**
-     * Sets if the query will return NSFW results.
-     *
-     * @deprecated The API does not support this option currently
-     * @param nsfw nsfw
-     * @return suggestion query
-     *
-     * @since 1.0.0
-     */
-    @Deprecated
+    @Override
+    public final AnimeSuggestionQuery includeNSFW(){
+        return includeNSFW(true);
+    }
+
+    @Override
     public final AnimeSuggestionQuery includeNSFW(final boolean nsfw){
         this.nsfw = nsfw;
         return this;

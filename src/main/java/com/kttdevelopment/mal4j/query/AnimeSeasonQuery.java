@@ -33,7 +33,7 @@ import com.kttdevelopment.mal4j.anime.property.time.Season;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime> {
+public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime> implements NSFW<AnimeSeasonQuery> {
 
     protected final int year;
     protected final Season season;
@@ -69,14 +69,12 @@ public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime
         return this;
     }
 
-    /**
-     * Sets if the query will return NSFW results.
-     *
-     * @param nsfw nsfw
-     * @return season query
-     *
-     * @since 1.0.0
-     */
+    @Override
+    public final AnimeSeasonQuery includeNSFW(){
+        return includeNSFW(true);
+    }
+
+    @Override
     public final AnimeSeasonQuery includeNSFW(final boolean nsfw){
         this.nsfw = nsfw;
         return this;
