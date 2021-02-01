@@ -66,7 +66,7 @@ public class TestAnimeSearch {
                    .withLimit(1)
                    .includeNSFW(true)
                    .search();
-            Assertions.assertEquals(TestProvider.NSFW_AnimeID, search.get(0).getID());
+            Assertions.assertTrue(search.get(0).getID() == TestProvider.NSFW_AnimeID || search.get(0).getID() == TestProvider.AltNSFW_AnimeID);
         }
     }
 

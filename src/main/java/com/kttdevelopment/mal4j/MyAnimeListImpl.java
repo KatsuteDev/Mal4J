@@ -334,7 +334,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), ALL_ANIME_FIELDS)
+                        asFieldList(toCommaSeparatedString(fields), ALL_ANIME_FIELDS),
+                        nsfw
                     )
                 );
                 if(response == null) return null;
@@ -356,7 +357,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), ALL_ANIME_FIELDS)
+                        asFieldList(toCommaSeparatedString(fields), ALL_ANIME_FIELDS),
+                        nsfw
                     ),
                     iterator -> asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
                 );
@@ -622,7 +624,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), ALL_MANGA_FIELDS)
+                        asFieldList(toCommaSeparatedString(fields), ALL_MANGA_FIELDS),
+                        nsfw
                     )
                 );
                 if(response == null) return null;
@@ -644,7 +647,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), ALL_MANGA_FIELDS)
+                        asFieldList(toCommaSeparatedString(fields), ALL_MANGA_FIELDS),
+                        nsfw
                     ),
                     iterator -> asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
                 );
