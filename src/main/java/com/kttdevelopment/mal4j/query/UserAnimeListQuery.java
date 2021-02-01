@@ -39,6 +39,7 @@ public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,A
     protected final String username;
     protected AnimeSort sort;
     protected AnimeStatus status;
+    protected Boolean nsfw;
 
     /**
      * Creates a user Anime search query. Applications do not use this constructor.
@@ -79,5 +80,19 @@ public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,A
         this.status = status;
         return this;
     }
+
+    /**
+     * Sets if the query will return NSFW results.
+     *
+     * @param nsfw nsfw
+     * @return search query
+     *
+     * @since 1.0.0
+     */
+    public final UserAnimeListQuery includeNSFW(final boolean nsfw){
+        this.nsfw = nsfw;
+        return this;
+    }
+
 
 }

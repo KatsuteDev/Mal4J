@@ -124,7 +124,8 @@ interface MyAnimeListService {
         @Query("sort")                              final String sort,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset,
-        @Query(value = "fields", encoded = true)    final String fields
+        @Query(value = "fields", encoded = true)    final String fields,
+        @Query("nsfw")                              final Boolean nsfw
     );
 
     // forum
@@ -221,7 +222,8 @@ interface MyAnimeListService {
         @Query("sort")                              final String sort,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset,
-        @Query(value = "fields", encoded = true)    final String fields
+        @Query(value = "fields", encoded = true)    final String fields,
+        @Query("nsfw")                              final Boolean nsfw
     );
 
     // user

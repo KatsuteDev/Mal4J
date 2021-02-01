@@ -40,6 +40,7 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
     protected final String username;
     protected MangaSort sort;
     protected MangaStatus status;
+    protected Boolean nsfw;
 
     /**
      * Creates a user Manga search query. Applications do not use this constructor.
@@ -80,5 +81,19 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
         this.status = status;
         return this;
     }
+
+    /**
+     * Sets if the query will return NSFW results.
+     *
+     * @param nsfw nsfw
+     * @return search query
+     *
+     * @since 1.0.0
+     */
+    public final UserMangaListQuery includeNSFW(final boolean nsfw){
+        this.nsfw = nsfw;
+        return this;
+    }
+
 
 }
