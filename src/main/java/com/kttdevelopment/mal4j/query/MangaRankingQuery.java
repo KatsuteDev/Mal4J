@@ -31,7 +31,7 @@ import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaRankingQuery extends FieldQuery<MangaRankingQuery,MangaRanking> {
+public abstract class MangaRankingQuery extends FieldQuery<MangaRankingQuery,MangaRanking> implements NSFW<MangaRankingQuery> {
 
     protected final MangaRankingType rankingType;
     protected Boolean nsfw;
@@ -49,16 +49,12 @@ public abstract class MangaRankingQuery extends FieldQuery<MangaRankingQuery,Man
         this.rankingType = rankingType;
     }
 
-    /**
-     * Sets if the query will return NSFW results.
-     *
-     * @deprecated The API does not support this option currently
-     * @param nsfw nsfw
-     * @return ranking query
-     *
-     * @since 1.0.0
-     */
-    @Deprecated
+    @Override
+    public final MangaRankingQuery includeNSFW(){
+        return includeNSFW(true);
+    }
+
+    @Override
     public final MangaRankingQuery includeNSFW(final boolean nsfw){
         this.nsfw = nsfw;
         return this;

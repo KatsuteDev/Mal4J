@@ -81,7 +81,7 @@ public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeLi
      * Sets the times rewatched.
      *
      * @param timesRewatched times rewatched
-     * @return list update
+     * @return list updateB
      *
      * @since 1.0.0
      */
