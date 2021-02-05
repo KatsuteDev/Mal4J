@@ -24,7 +24,7 @@ package com.kttdevelopment.mal4j.user;
  * @deprecated Does not exist in the API currently
  * @since 1.0.0
  * @version 1.0.0
- * @author Ktt Deveopment
+ * @author Ktt Development
  */
 @Deprecated
 public abstract class UserMangaStatistics {

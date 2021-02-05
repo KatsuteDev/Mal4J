@@ -63,7 +63,7 @@ ul.navListSearch input{
     &#search{
         border          : solid 1px #CCCCCC !important;
         border-radius   : 4px;
-        background-image: url("/dependencies/kttdevelopment/assets/javadoc/glass.png") !important;
+        background-image: url("glass.png") !important;
         transition: all .15s ease-in-out, box-shadow .15s ease-in-out !important;
         &:focus{
             border    : solid 1px $color-blue !important;
@@ -72,7 +72,7 @@ ul.navListSearch input{
     }
     &#reset{
         top: -5px !important;
-        background-image: url("/dependencies/kttdevelopment/assets/javadoc/x.png") !important;
+        background-image: url("x.png") !important;
         background-color: transparent !important;
     }
 }

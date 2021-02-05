@@ -25,7 +25,7 @@ package com.kttdevelopment.mal4j.property;
  * @see com.kttdevelopment.mal4j.manga.RelatedManga
  * @since 1.0.0
  * @version 1.0.0
- * @author Ktt Deveopment
+ * @author Ktt Development
  */
 public abstract class RelatedMedia {
 
