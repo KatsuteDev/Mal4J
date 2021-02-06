@@ -6,7 +6,7 @@ Dependencies are hosted on Maven Central and compiled builds can be found in rel
 
 ## Maven Central
 
-Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/Mal4J)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j)
+Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j)
 
 ## Local
 
