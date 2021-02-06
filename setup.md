@@ -73,5 +73,5 @@ The client secret will be `null` if your application does not have one.
 When this method is run it will launch your web browser to authenticate with MyAnimeList and then return with the OAuth key.
 
 ```java
-MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", (int) port));
+MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", (int) port, true));
 ```
