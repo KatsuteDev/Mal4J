@@ -51,11 +51,11 @@ MyAnimeList mal = MyAnimeList.withOAuthToken("oauth_token");
 
 ## Authenticate with client id (advanced)
 
-For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the `MyAnimeListAuthenticator` to generate an OAuth token from a client id and PKCE code challenge.
+For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the [`MyAnimeListAuthenticator`](https://mal4j.kttdevelopment.com/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html) to generate an OAuth token from a client id and PKCE code challenge.
 
 The client secret will be `null` if your application does not have one.
 
-The URL to obtain the authorization code can be generated using `MyAnimeListAuthenticator#getAuthorizationURL(String,String)`.
+The URL to obtain the authorization code can be generated using [`MyAnimeListAuthenticator#getAuthorizationURL(String,String)`](https://mal4j.kttdevelopment.com/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html#getAuthorizationURL(java.lang.String,java.lang.String)).
 
 ```java
 String authorization_url = MyAnimeListAuthenticator.getAuthorizationURL("client_id", "PKCE_code_challenge");
@@ -65,7 +65,7 @@ MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("cl
 
 ## Authenticate with client id (easy)
 
-For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the `MyAnimeListAuthenticator`.
+For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the [`MyAnimeListAuthenticator`](https://mal4j.kttdevelopment.com/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html).
 The app redirect url should be `http://localhost:5050` or whatever port you set it as in [step 2](#2-register-application).
 
 The client secret will be `null` if your application does not have one.
