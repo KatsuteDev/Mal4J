@@ -89,7 +89,7 @@ public abstract class Fields {
 
             public static final String tags = "tags";
 
-            public static final String comments = "comment";
+            public static final String comments = "comments";
 
         }
 
@@ -119,15 +119,7 @@ public abstract class Fields {
 
         public static final String ending_themes = "ending_themes";
 
-        public static final String list_status = list_status(
-            Common.ListStatus.start_date,
-            Common.ListStatus.finish_date,
-            Common.ListStatus.priority,
-            Common.ListStatus.tags,
-            Common.ListStatus.comments,
-            ListStatus.times_rewatched,
-            ListStatus.rewatch_value
-        );
+        //
 
         @SuppressWarnings("SpellCheckingInspection")
         public static class ListStatus extends Common.ListStatus {
@@ -139,6 +131,16 @@ public abstract class Fields {
         }
 
         public static class MyListStatus extends ListStatus { }
+
+        public static final String list_status = list_status(
+            Common.ListStatus.start_date,
+            Common.ListStatus.finish_date,
+            Common.ListStatus.priority,
+            Common.ListStatus.tags,
+            Common.ListStatus.comments,
+            ListStatus.times_rewatched,
+            ListStatus.rewatch_value
+        );
 
         public static String list_status(final String... fields){
             return "list_status{" + String.join(",", fields == null ? new String[0] : fields) + '}';
@@ -198,6 +200,8 @@ public abstract class Fields {
 
         public static final String chapters = "num_chapters";
 
+        //
+
         public static class ListStatus extends Common.ListStatus {
 
             public static final String times_reread = "num_times_reread";
@@ -228,6 +232,8 @@ public abstract class Fields {
             return "my_" + list_status(fields);
         }
 
+        //
+
         public static class Authors {
 
             public static final String first_name = "first_name";
@@ -244,6 +250,8 @@ public abstract class Fields {
         public static String authors(final String... fields){
             return "authors{" + String.join(",", fields == null ? new String[0] : fields) + '}';
         }
+
+        //
 
         public static class Serialization {
 
