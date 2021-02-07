@@ -69,13 +69,17 @@ public abstract class Fields {
 
         public static final String genres = "genres";
 
+        public static final String pictures = "pictures";
+
+        public static final String background = "background";
+
         public static final String related_anime = "related_anime";
 
         public static final String related_manga = "related_manga";
 
         public static final String recommendations = "recommendations";
 
-        public static class ListStatus {
+        static class ListStatus {
 
             public static final String start_date = "start_date";
 
@@ -107,10 +111,6 @@ public abstract class Fields {
 
         public static final String rating = "rating";
 
-        public static final String pictures = "pictures";
-
-        public static final String background = "background";
-
         public static final String studios = "studios";
 
         public static final String statistics = "statistics";
@@ -118,6 +118,16 @@ public abstract class Fields {
         public static final String opening_themes = "opening_themes";
 
         public static final String ending_themes = "ending_themes";
+
+        public static final String list_status = list_status(
+            Common.ListStatus.start_date,
+            Common.ListStatus.finish_date,
+            Common.ListStatus.priority,
+            Common.ListStatus.tags,
+            Common.ListStatus.comments,
+            ListStatus.times_rewatched,
+            ListStatus.rewatch_value
+        );
 
         @SuppressWarnings("SpellCheckingInspection")
         public static class ListStatus extends Common.ListStatus {
@@ -130,31 +140,55 @@ public abstract class Fields {
 
         public static class MyListStatus extends ListStatus { }
 
-        public static String list_status(){
-            return list_status(
-                Common.ListStatus.start_date,
-                Common.ListStatus.finish_date,
-                Common.ListStatus.priority,
-                Common.ListStatus.tags,
-                Common.ListStatus.comments,
-                ListStatus.times_rewatched,
-                ListStatus.rewatch_value
-            );
-        }
-
         public static String list_status(final String... fields){
             return "list_status{" + String.join(",", fields == null ? new String[0] : fields) + '}';
         }
 
-        public static String my_list_status(){
-            return "my_" + list_status();
-        }
+        public static final String my_list_status = "my_" + list_status;
 
         public static String my_list_status(final String... fields){
             return "my_" + list_status(fields);
         }
 
     }
+
+    public static final String anime = String.join(",",
+        Anime.id,
+        Anime.title,
+        Anime.main_picture,
+        Anime.alternative_titles,
+        Anime.start_date,
+        Anime.end_date,
+        Anime.synopsis,
+        Anime.mean,
+        Anime.rank,
+        Anime.popularity,
+        Anime.list_users,
+        Anime.scoring_users,
+        Anime.nsfw,
+        Anime.created_at,
+        Anime.updated_at,
+        Anime.media_type,
+        Anime.status,
+        Anime.genres,
+        Anime.pictures,
+        Anime.background,
+        Anime.related_anime,
+        Anime.related_manga,
+        Anime.recommendations,
+        Anime.episodes,
+        Anime.start_season,
+        Anime.broadcast,
+        Anime.source,
+        Anime.average_episode_duration,
+        Anime.rating,
+        Anime.studios,
+        Anime.statistics,
+        Anime.opening_themes,
+        Anime.ending_themes,
+        Anime.list_status,
+        Anime.my_list_status
+    );
 
     // manga
 
@@ -174,31 +208,27 @@ public abstract class Fields {
 
         public static class MyListStatus extends Manga.ListStatus { }
 
-        public static String list_status(){
-            return list_status(
-                Common.ListStatus.start_date,
-                Common.ListStatus.finish_date,
-                Common.ListStatus.priority,
-                Common.ListStatus.tags,
-                Common.ListStatus.comments,
-                ListStatus.times_reread,
-                ListStatus.reread_value
-            );
-        }
+        public static final String list_status = list_status(
+            Common.ListStatus.start_date,
+            Common.ListStatus.finish_date,
+            Common.ListStatus.priority,
+            Common.ListStatus.tags,
+            Common.ListStatus.comments,
+            ListStatus.times_reread,
+            ListStatus.reread_value
+        );
 
         public static String list_status(final String... fields){
             return "list_status{" + String.join(",", fields == null ? new String[0] : fields) + '}';
         }
 
-        public static String my_list_status(){
-            return "my_" + list_status();
-        }
+        public static final String my_list_status = "my_" + list_status;
 
         public static String my_list_status(final String... fields){
             return "my_" + list_status(fields);
         }
 
-        public static class authors {
+        public static class Authors {
 
             public static final String first_name = "first_name";
 
@@ -206,18 +236,16 @@ public abstract class Fields {
 
         }
 
-        public static String authors(){
-            return authors(
-                authors.first_name,
-                authors.last_name
-            );
-        }
+        public static final String authors = authors(
+            Authors.first_name,
+            Authors.last_name
+        );
 
         public static String authors(final String... fields){
             return "authors{" + String.join(",", fields == null ? new String[0] : fields) + '}';
         }
 
-        public static class serialization {
+        public static class Serialization {
 
             public static final String name = "name";
 
@@ -225,12 +253,10 @@ public abstract class Fields {
 
         }
 
-        public static String serialization(){
-            return serialization(
-                serialization.name,
-                serialization.role
-            );
-        }
+        public static final String serialization = serialization(
+            Serialization.name,
+            Serialization.role
+        );
 
         public static String serialization(final String... fields){
             return "serialization{" + String.join(",", fields == null ? new String[0] : fields) + '}';
@@ -238,21 +264,57 @@ public abstract class Fields {
 
     }
 
+    public static final String manga = String.join(",",
+        Manga.id,
+        Manga.title,
+        Manga.main_picture,
+        Manga.alternative_titles,
+        Manga.start_date,
+        Manga.end_date,
+        Manga.synopsis,
+        Manga.mean,
+        Manga.rank,
+        Manga.popularity,
+        Manga.list_users,
+        Manga.scoring_users,
+        Manga.nsfw,
+        Manga.created_at,
+        Manga.updated_at,
+        Manga.media_type,
+        Manga.status,
+        Manga.genres,
+        Manga.pictures,
+        Manga.background,
+        Manga.related_anime,
+        Manga.related_manga,
+        Manga.recommendations,
+        Manga.volumes,
+        Manga.chapters,
+        Manga.list_status,
+        Manga.my_list_status,
+        Manga.authors,
+        Manga.serialization
+   );
+
     // user
 
-    public static final String birthday = "birthday";
+    public static class User {
 
-    public static final String timezone = "time_zone";
+        public static final String birthday = "birthday";
 
-    public static final String anime_statistics = "anime_statistics";
+        public static final String timezone = "time_zone";
 
-    public static final String supporter = "is_supporter";
+        public static final String anime_statistics = "anime_statistics";
 
-    public static String User(){
-        return birthday + ',' +
-               timezone + ',' +
-               anime_statistics + ',' +
-               supporter;
+        public static final String supporter = "is_supporter";
+
     }
+
+    public static String user = String.join(",",
+        User.birthday,
+        User.timezone,
+        User.anime_statistics,
+        User.supporter
+    );
 
 }

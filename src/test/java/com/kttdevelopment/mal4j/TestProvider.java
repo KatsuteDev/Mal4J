@@ -46,7 +46,7 @@ public abstract class TestProvider {
         APICall.debug = false;
         if(oauth.toFile().exists()){ // use existing OAuth
             mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
-            if(mal.getAnime(AnimeID, MyAnimeList.NO_FIELDS) != null)
+            if(mal.getAnime(AnimeID, Fields.NO_FIELDS) != null)
                 return;
         }
         testRequireClientID(); // prevent CI from executing tests
