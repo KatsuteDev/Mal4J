@@ -20,6 +20,6 @@ package com.kttdevelopment.mal4j;
 
 public interface AuthenticationHandler {
 
-    String getHTML(final String code, final String message, final String hint, final String error);
+    String getHTML(final String code, final String error , final String message, final String hint);
 
 }
