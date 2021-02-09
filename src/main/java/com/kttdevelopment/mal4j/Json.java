@@ -67,6 +67,10 @@ abstract class Json {
     private static final Pattern arrClose =
         Pattern.compile("^\\s*] *,?\\s*$");
 
+    // \r?\n
+    private static final Pattern newline =
+        Pattern.compile("\\r?\\n");
+
     /**
      * Returns json as a JsonObject or List. <b>Mutable</b>.
      *
@@ -77,19 +81,20 @@ abstract class Json {
      */
     static Object parse(final String json){
         Objects.requireNonNull(json);
+        final String flatJson = newline.matcher(json).replaceAll("");
 
         // split by symbols {}[], except within non-escaped quotes
         final StringBuilder OUT = new StringBuilder();
         int lastMatch = -1; // the index after the previous match
-        final Matcher matcher = split.matcher(json);
+        final Matcher matcher = split.matcher(flatJson);
         final Matcher quotes = nonEscQuote.matcher("");
         while(matcher.find()){ // while still contains line splitting symbol
             final int index = matcher.end() - 1; // before the comma/split character
-            final String after = json.substring(index + 1);
+            final String after = flatJson.substring(index + 1);
             final long count = quotes.reset(after).results().count();
             if(count %2 == 0){ // even means symbol is not within quotes
                 if(lastMatch != -1) // if not first (no before content)
-                    OUT.append(json, lastMatch, index); // add content between last match and here
+                    OUT.append(flatJson, lastMatch, index); // add content between last match and here
                 lastMatch = index + 1;
                 final char ch = matcher.group().charAt(0);
                 switch(ch){ // determine where to break line
