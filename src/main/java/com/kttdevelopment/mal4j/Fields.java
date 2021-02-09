@@ -19,14 +19,19 @@
 package com.kttdevelopment.mal4j;
 
 /**
- *
+ * The fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
  * @since 1.1.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author Ktt Development
  */
 public abstract class Fields {
 
+    /**
+     * Indicates that only default fields should be returned.
+     *
+     * @since 1.1.0
+     */
     public static final String[] NO_FIELDS = new String[0];
 
     // shared
@@ -97,6 +102,14 @@ public abstract class Fields {
 
     // anime
 
+    /**
+     * All possible fields for an Anime.
+     *
+     * @see #anime
+     * @since 1.1.0
+     * @version 1.0.0
+     * @author Ktt Development
+     */
     public static class Anime extends Common {
 
         public static final String episodes = "num_episodes";
@@ -154,6 +167,11 @@ public abstract class Fields {
 
     }
 
+    /**
+     * Returns all Anime fields as a comma separated string.
+     *
+     * @since 1.0.0
+     */
     public static final String anime = String.join(",",
         Anime.id,
         Anime.title,
@@ -194,6 +212,14 @@ public abstract class Fields {
 
     // manga
 
+    /**
+     * All possible fields for a Manga.
+     *
+     * @see #manga
+     * @since 1.0.0
+     * @version 1.0.0
+     * @author Ktt Development
+     */
     public static class Manga extends Common {
 
         public static final String volumes = "num_volumes";
@@ -272,6 +298,11 @@ public abstract class Fields {
 
     }
 
+    /**
+     * Returns all Manga fields as a comma separated string.
+     *
+     * @since 1.0.0
+     */
     public static final String manga = String.join(",",
         Manga.id,
         Manga.title,
@@ -306,6 +337,14 @@ public abstract class Fields {
 
     // user
 
+    /**
+     * All possible fields for a User.
+     *
+     * @see #user
+     * @since 1.1.0
+     * @version 1.1.0
+     * @author Ktt Development
+     */
     public static class User {
 
         public static final String birthday = "birthday";
@@ -318,6 +357,11 @@ public abstract class Fields {
 
     }
 
+    /**
+     * Returns all User fields as a comma separated string.
+     *
+     * @since 1.0.0
+     */
     public static String user = String.join(",",
         User.birthday,
         User.timezone,
