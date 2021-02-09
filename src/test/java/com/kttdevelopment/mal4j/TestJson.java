@@ -120,4 +120,9 @@ public class TestJson {
         Assertions.assertThrows(JsonSyntaxException.class, () -> parse("["));
     }
 
+    @Test
+    public void testNewLine(){
+        Assertions.assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k"));
+    }
+
 }
