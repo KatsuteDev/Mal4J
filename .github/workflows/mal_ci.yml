@@ -10,7 +10,6 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    environment: MyAnimeList CI
     steps:
       - name: 📦 Prepate Git Repo
         uses: actions/checkout@v2
