@@ -594,10 +594,10 @@ final class MyAnimeListImpl extends MyAnimeList{
     public synchronized final void deleteMangaListing(final long id){
         try{
             handleVoidResponse(
-                    () -> service.deleteMangaListing(
-                            auth,
-                            id
-                    )
+                () -> service.deleteMangaListing(
+                    auth,
+                    id
+                )
             );
         }catch(final HttpException e){
             if(e.code() != 404)

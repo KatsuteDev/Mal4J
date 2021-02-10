@@ -50,7 +50,7 @@ public abstract class TestProvider {
                 return;
         }
         testRequireClientID(); // prevent CI from executing tests
-        TestAuthorization.beforeAll(); // refresh old token
+        TestAuthorizationLocalServer.beforeAll(); // refresh old token
     }
 
     public static void testRequireClientID(){
