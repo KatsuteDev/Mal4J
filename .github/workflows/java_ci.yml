@@ -20,11 +20,6 @@ jobs:
           version: '11'
           architecture: x64
 
-      - name: 🔑 Prepare OAuth Token
-        run: |
-          mkdir -p src/test/java/resources
-          echo "${{ secrets.MAL_OAUTH_TOKEN }}" > src/test/java/resources/oauth.txt
-
       - name: ✔ Test with Maven
         run: mvn test
 
