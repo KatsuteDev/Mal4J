@@ -11,6 +11,29 @@
 
 **Issue:** *The main issue(s) that this pull request fixes. Required.*
 
+### Maven Test Runs
+*Include the log of the passes tests. We require this to ensure that users have actually tested their pulls.*
+
+*Falsifying this information is prohibited.*
+```
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+
+↕ Include everything in between.
+
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: ?, Failures: ?, Errors: ?, Skipped: ?
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  ??.???s s
+[INFO] Finished at: ????-??-??T??:??:??Z
+[INFO] ------------------------------------------------------------------------
+```
+
 ### Changes Made
 *List any changes made and/or other relevant issues.*
 
