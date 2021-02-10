@@ -1,9 +1,9 @@
 name: Java CI
 on:
-  push: {}
+  push:
+    branches: [ main ]
   pull_request:
-    branches: [main]
-    types: [review_requested, ready_for_review]
+    branches: [ main ]
 
 jobs:
   java_ci:
@@ -20,27 +20,4 @@ jobs:
           architecture: x64
 
       - name: ✔ Test with Maven
-        run: mvn test
-
-  mal_ci:
-    name: MyAnimeList CI
-    runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false
-    environment: MyAnimeList CI
-    steps:
-      - name: 📦 Prepate Git Repo
-        uses: actions/checkout@v2
-
-      - name: 🔑 Prepare OAuth Token
-        run: |
-          mkdir -p src/test/java/resources
-          echo ${{ secrets.MAL_OAUTH_TOKEN }} > src/test/java/resources/oauth.txt
-
-      - name: ☕ Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1
-        with:
-          version: '11'
-          architecture: x64
-
-      - name: ✔ Test with Maven
-        run: mvn test
+        run: mvn test -fae
