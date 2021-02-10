@@ -1,12 +1,13 @@
 name: Java CI
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
+
 jobs:
-  build:
-    name: Build
+  java_ci:
+    name: Java CI
     runs-on: ubuntu-latest
     steps:
       - name: 📦 Prepate Git Repo
@@ -18,5 +19,5 @@ jobs:
           version: '11'
           architecture: x64
 
-      - name: 📦 Compile with Maven
-        run: mvn package
+      - name: ✔ Test with Maven
+        run: mvn test -fae
