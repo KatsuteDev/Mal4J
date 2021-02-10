@@ -34,7 +34,7 @@ jobs:
       - name: 🔑 Prepare OAuth Token
         run: |
           mkdir -p src/test/java/resources
-          echo "${{ secrets.MAL_OAUTH_TOKEN }}" > src/test/java/resources/oauth.txt
+          echo ${{ secrets.MAL_OAUTH_TOKEN }} > src/test/java/resources/oauth.txt
 
       - name: ☕ Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1
