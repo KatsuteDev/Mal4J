@@ -1,7 +1,6 @@
 name: Java CI
 on:
-  push:
-    branches: [main]
+  push: {}
   pull_request:
     branches: [main]
     types: [review_requested, ready_for_review]
