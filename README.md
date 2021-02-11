@@ -61,7 +61,7 @@ Easily search through MyAnimeList with search, ranking, seasonal, and suggestion
 
 ```java
 MyAnimeList mal = MyAnimeList.withOAuthToken("");
-List<AnimePreview> search =
+List<Anime> search =
     mal.getAnime()
         .withQuery("さくら荘のペットな彼女")
         .withLimit(1)
