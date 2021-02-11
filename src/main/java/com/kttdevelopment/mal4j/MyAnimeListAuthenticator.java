@@ -703,9 +703,9 @@ public final class MyAnimeListAuthenticator {
             auth.set(query.get("code"));
 
             /* send */ {
-                exchange.getResponseHeaders().set("Accept-Encoding","gzip");
-                exchange.getResponseHeaders().set("Content-Encoding","gzip");
-                exchange.getResponseHeaders().set("Connection","keep-alive");
+                exchange.getResponseHeaders().set("Accept-Encoding", "gzip");
+                exchange.getResponseHeaders().set("Content-Encoding", "gzip");
+                exchange.getResponseHeaders().set("Connection", "keep-alive");
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 try(GZIPOutputStream OUT = new GZIPOutputStream(exchange.getResponseBody())){
                     OUT.write(
@@ -752,7 +752,7 @@ public final class MyAnimeListAuthenticator {
 
             return HTML
                 .replace("{{ state }}", pass)
-                .replace("{{ hint }}", hint)
+                .replace("{{ hint }}", hint != null ? hint : "")
                 .replace("{{ message }}", msg);
         }
 
