@@ -141,7 +141,7 @@ public class TestAnimeListStatus {
         Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
-    @Test @DisplayName("#30 Consecutive Updates") @Disabled
+    @Test
     public void testConsecutiveUpdates(){
         testDelete();
         testUpdate();

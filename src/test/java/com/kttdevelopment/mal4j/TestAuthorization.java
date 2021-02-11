@@ -9,14 +9,14 @@ public class TestAuthorization {
 
     @Test
     public void testIgnored(){
-        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator(null, null, 5050, 5));
+        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator.LocalServerBuilder(null, 5050).setTimeout(5).build());
     }
 
     @Test
     public void testTimeout(){
          Assertions.assertTimeout(Duration.ofSeconds(10), () ->
              Assertions.assertThrows(NullPointerException.class, () ->
-                 new MyAnimeListAuthenticator("null", null, 5050, 5))
+                 new MyAnimeListAuthenticator.LocalServerBuilder(null, 5050).setTimeout(5).build())
          );
     }
 
