@@ -20,7 +20,7 @@ public abstract class TestProvider {
 
     public static final String NSFW_AnimeQuery = "いただきっセーエキ";
     public static final long NSFW_AnimeID = 22429;
-    public static final long AltNSFW_AnimeID = 22429;
+    public static final long AltNSFW_AnimeID = 23779;
 
     // Manga
 
