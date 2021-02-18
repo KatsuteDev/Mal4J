@@ -45,7 +45,7 @@ public abstract class TestProvider {
     public static void init() throws IOException{
         APICall.debug = false;
         if(oauth.toFile().exists()){ // use existing OAuth
-            mal = MyAnimeList.withOAuthToken(Files.readString(oauth));
+            mal = MyAnimeList.withOAuthToken(Files.readString(oauth).strip());
             if(mal.getAnime(AnimeID, MyAnimeList.NO_FIELDS) != null)
                 return;
         }
