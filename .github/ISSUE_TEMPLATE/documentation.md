@@ -2,7 +2,7 @@
 name: Documentation Bug
 about: Report a documentation issue
 title: ''
-labels: bug documentation
+labels: bug, documentation
 assignees: ''
 
 ---
