@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j;
 
 /**
- * The fields class holds all possible fields for a request. Usable in any methods that ask for fields.
+ * This fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
  * @since 1.1.0
  * @version 1.1.0
@@ -36,6 +36,15 @@ public abstract class Fields {
 
     // shared
 
+    /**
+     * Fields shared by {@link Anime} and {@link Manga}.
+     * 
+     * @see Anime
+     * @see Manga
+     * @since 1.1.0
+     * @version 1.1.0
+     * @author Ktt Development
+     */
     static class Common {
 
         public static final String id = "id";
@@ -84,6 +93,17 @@ public abstract class Fields {
 
         public static final String recommendations = "recommendations";
 
+        /**
+         * Fields shared by {@link Anime.ListStatus} and {@link Manga.ListStatus}.
+         * 
+         * @see Anime.ListStatus
+         * @see Anime.MyListStatus
+         * @see Manga.ListStatus
+         * @see Manga.MyListStatus
+         * @since 1.1.0
+         * @version 1.1.0
+         * @author Ktt Development
+         */
         static class ListStatus {
 
             public static final String start_date = "start_date";
@@ -107,7 +127,7 @@ public abstract class Fields {
      *
      * @see #anime
      * @since 1.1.0
-     * @version 1.0.0
+     * @version 1.1.0
      * @author Ktt Development
      */
     public static class Anime extends Common {
@@ -134,6 +154,16 @@ public abstract class Fields {
 
         //
 
+        /**
+         * All possible fields for an Anime list status.
+         *
+         * @see #list_status
+         * @see #list_status(String...)
+         * @see MyListStatus
+         * @since 1.1.0
+         * @version 1.1.0
+         * @author Ktt Development
+         */
         @SuppressWarnings("SpellCheckingInspection")
         public static class ListStatus extends Common.ListStatus {
 
@@ -143,8 +173,25 @@ public abstract class Fields {
 
         }
 
+        /**
+         * All possible fields for an Anime list status.
+         *
+         * @see #my_list_status
+         * @see #my_list_status(String...)
+         * @see ListStatus
+         * @since 1.1.0
+         * @version 1.1.0
+         * @author Ktt Development
+         */
         public static class MyListStatus extends ListStatus { }
 
+        /**
+         * Returns all Anime list_status fields as an object. Ex: `list_status{start_date, ...}`
+         *
+         * @see #list_status(String...)
+         * @see ListStatus
+         * @since 1.1.0
+         */
         public static final String list_status = list_status(
             Common.ListStatus.start_date,
             Common.ListStatus.finish_date,
@@ -155,12 +202,39 @@ public abstract class Fields {
             ListStatus.rewatch_value
         );
 
+        /**
+         * Creates a my_list_status object from a set of fields. Ex: `list_status{start_date}`
+         * 
+         * @param fields fields
+         * @return list_status
+         * 
+         * @see #list_status
+         * @see ListStatus
+         * @since 1.1.0
+         */
         public static String list_status(final String... fields){
             return "list_status{" + String.join(",", fields == null ? new String[0] : fields) + '}';
         }
 
+        /**
+         * Returns all Anime my_list_status fields as an object. Ex: `my_list_status{start_date}`
+         *
+         * @see #my_list_status(String...)
+         * @see MyListStatus
+         * @since 1.1.0
+         */
         public static final String my_list_status = "my_" + list_status;
 
+        /**
+         * Creates a my_list_status object from a set of fields. Ex: `my_list_status{start_date}`
+         *
+         * @param fields fields
+         * @return my_list_status
+         *
+         * @see #my_list_status
+         * @see MyListStatus
+         * @since 1.1.0
+         */
         public static String my_list_status(final String... fields){
             return "my_" + list_status(fields);
         }
@@ -170,7 +244,8 @@ public abstract class Fields {
     /**
      * Returns all Anime fields as a comma separated string.
      *
-     * @since 1.0.0
+     * @see Anime
+     * @since 1.1.0
      */
     public static final String anime = String.join(",",
         Anime.id,
@@ -216,8 +291,8 @@ public abstract class Fields {
      * All possible fields for a Manga.
      *
      * @see #manga
-     * @since 1.0.0
-     * @version 1.0.0
+     * @since 1.1.0
+     * @version 1.1.0
      * @author Ktt Development
      */
     public static class Manga extends Common {
@@ -228,6 +303,16 @@ public abstract class Fields {
 
         //
 
+        /**
+         * All possible fields for a Manga list status.
+         *
+         * @see #list_status
+         * @see #list_status(String...)
+         * @see Manga.MyListStatus
+         * @since 1.1.0
+         * @version 1.1.0
+         * @author Ktt Development
+         */
         public static class ListStatus extends Common.ListStatus {
 
             public static final String times_reread = "num_times_reread";
@@ -236,8 +321,25 @@ public abstract class Fields {
 
         }
 
+        /**
+         * All possible fields for a Manga list status.
+         *
+         * @see #my_list_status
+         * @see #my_list_status(String...)
+         * @see Manga.ListStatus
+         * @since 1.1.0
+         * @version 1.1.0
+         * @author Ktt Development
+         */
         public static class MyListStatus extends Manga.ListStatus { }
 
+        /**
+         * Returns all Manga list_status fields as an object. Ex: `list_status{start_date, ...}`
+         *
+         * @see #list_status(String...)
+         * @see Manga.ListStatus
+         * @since 1.1.0
+         */
         public static final String list_status = list_status(
             Common.ListStatus.start_date,
             Common.ListStatus.finish_date,
@@ -248,18 +350,54 @@ public abstract class Fields {
             ListStatus.reread_value
         );
 
+        /**
+         * Creates a my_list_status object from a set of fields. Ex: `list_status{start_date}`
+         * 
+         * @param fields fields
+         * @return list_status
+         * 
+         * @see #list_status
+         * @see Manga.ListStatus
+         * @since 1.1.0
+         */
         public static String list_status(final String... fields){
             return "list_status{" + String.join(",", fields == null ? new String[0] : fields) + '}';
         }
 
+        /**
+         * Returns all Manga my_list_status fields as an object. Ex: `my_list_status{start_date}`
+         *
+         * @see #my_list_status(String...)
+         * @see Manga.MyListStatus
+         * @since 1.1.0
+         */
         public static final String my_list_status = "my_" + list_status;
 
+        /**
+         * Creates a my_list_status object from a set of fields. Ex: `my_list_status{start_date}`
+         *
+         * @param fields fields
+         * @return my_list_status
+         *
+         * @see #my_list_status
+         * @see Manga.MyListStatus
+         * @since 1.1.0
+         */
         public static String my_list_status(final String... fields){
             return "my_" + list_status(fields);
         }
 
         //
 
+        /**
+         * All possible fields for an Author.
+         * 
+         * @see #authors
+         * @see #authors(String...)
+         * @since 1.1.0
+         * @version 1.1.0
+         * @author Ktt Development
+         */
         public static class Authors {
 
             public static final String first_name = "first_name";
@@ -268,17 +406,43 @@ public abstract class Fields {
 
         }
 
+        /**
+         * Returns all Author fields as an object. Ex: `authors{first_name,last_name}`
+         * 
+         * @see #authors
+         * @see Manga.Authors
+         * @since 1.1.0
+         */
         public static final String authors = authors(
             Authors.first_name,
             Authors.last_name
         );
 
+        /**
+         * Creates an authors object from a set of fields. Ex: `authors{first_name}`
+         * 
+         * @param fields fields
+         * @return authors
+         * 
+         * @see #authors
+         * @see Manga.Authors
+         * @since 1.1.0
+         */
         public static String authors(final String... fields){
             return "authors{" + String.join(",", fields == null ? new String[0] : fields) + '}';
         }
 
         //
 
+        /**
+         * All possible fields for serialization.
+         * 
+         * @see #serialization
+         * @see #serialization(String...)
+         * @since 1.1.0
+         * @version 1.1.0
+         * @author Ktt Development
+         */
         public static class Serialization {
 
             public static final String name = "name";
@@ -287,11 +451,28 @@ public abstract class Fields {
 
         }
 
+        /**
+         * Returns all serialization fields as an object. Ex: `serialization{name,role}`
+         *
+         * @see #serialization(String...)
+         * @see Manga.Serialization
+         * @since 1.1.0
+         */
         public static final String serialization = serialization(
             Serialization.name,
             Serialization.role
         );
 
+        /**
+         * Creates a serialization object from a set of fields. Ex: `serialization{first_name}`
+         *
+         * @param fields fields
+         * @return authors
+         *
+         * @see #serialization(String...)
+         * @see Manga.Serialization
+         * @since 1.1.0
+         */
         public static String serialization(final String... fields){
             return "serialization{" + String.join(",", fields == null ? new String[0] : fields) + '}';
         }
@@ -301,7 +482,8 @@ public abstract class Fields {
     /**
      * Returns all Manga fields as a comma separated string.
      *
-     * @since 1.0.0
+     * @see Manga
+     * @since 1.1.0
      */
     public static final String manga = String.join(",",
         Manga.id,
@@ -360,7 +542,8 @@ public abstract class Fields {
     /**
      * Returns all User fields as a comma separated string.
      *
-     * @since 1.0.0
+     * @see User
+     * @since 1.1.0
      */
     public static String user = String.join(",",
         User.birthday,
