@@ -267,6 +267,7 @@ public final class MyAnimeListAuthenticator {
     @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser, final long timeout, final String redirect_URI) throws IOException{
         this(client_id, client_secret, port, null,openBrowser, timeout, redirect_URI);
+        System.out.println("The MyAnimeListAuthenticator server constructor is deprecated and likely to be removed in the future. Please use MyAnimeListAuthenticator.LocalServerBuilder for local servers instead.");
     }
 
     @SuppressWarnings("SpellCheckingInspection")
@@ -311,7 +312,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_id client id
      * @param client_secret client secret, null if application has none
      * @param authorization_code authorization code
-     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code
+     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
@@ -320,6 +321,12 @@ public final class MyAnimeListAuthenticator {
      */
     @SuppressWarnings("SpellCheckingInspection")
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge){
+        Objects.requireNonNull(client_id, "Client ID must not be null");
+        Objects.requireNonNull(authorization_code, "Authorization code must not be null");
+        Objects.requireNonNull(PKCE_code_challenge, "PKCE code challenge must not be null");
+        if(PKCE_code_challenge.length() < 43 || PKCE_code_challenge.length() > 128)
+            throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters");
+
         this.client_id          = client_id;
         this.client_secret      = client_secret;
         this.authorizationCode  = authorization_code;
@@ -458,9 +465,7 @@ public final class MyAnimeListAuthenticator {
          * @since 1.1.0
          */
         public LocalServerBuilder(final String client_id, final int port){
-            this.client_id = client_id;
-            this.client_secret = null;
-            this.port = port;
+            this(client_id, null, port);
         }
 
         /**
@@ -474,6 +479,8 @@ public final class MyAnimeListAuthenticator {
          * @since 1.1.0
          */
         public LocalServerBuilder(final String client_id, final String client_secret, final int port){
+            Objects.requireNonNull(client_id, "Client ID must not be null");
+
             this.client_id = client_id;
             this.client_secret = client_secret;
             this.port = port;
@@ -597,8 +604,6 @@ public final class MyAnimeListAuthenticator {
         return Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE);
     }
 
-    private static final PrintWriter sysOut = new PrintWriter(System.out);
-
     // [authorization, PKCE verify]
     @SuppressWarnings({"ResultOfMethodCallIgnored", "SpellCheckingInspection"})
     private static String[] authenticateWithLocalServer(
@@ -627,7 +632,7 @@ public final class MyAnimeListAuthenticator {
 
         if(openBrowser)
             if(!canOpenBrowser())
-                sysOut.println("Desktop is not supported on this operating system. Please go to this URL manually: " + url);
+                System.out.println("Desktop is not supported on this operating system. Please go to this URL manually: " + url);
             else
                 try{ Desktop.getDesktop().browse(new URI(url));
                 }catch(final URISyntaxException ignored){
