@@ -1,0 +1,25 @@
+name: MyAnimeList CI
+on:
+  workflow_dispatch: {}
+
+jobs:
+  mal_ci:
+    name: MyAnimeList CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Prepate Git Repo
+        uses: actions/checkout@v2
+
+      - name: ☕ Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: '11'
+          architecture: x64
+
+      - name: 🔐 Load OAuth Token
+        run: |
+          mkdir src/test/java/resources
+          echo ${{ secrets.MAL_OAUTH }} > src/test/java/resources/oauth.txt
+
+      - name: ✔ Test with Maven
+        run: mvn test -fae
