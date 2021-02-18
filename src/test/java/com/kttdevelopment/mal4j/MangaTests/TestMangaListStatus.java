@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
 import com.kttdevelopment.mal4j.property.Priority;
@@ -54,7 +53,7 @@ public class TestMangaListStatus {
     public void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
         Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
-        Assertions.assertNull(mal.getManga(TestProvider.MangaID).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.updated_at).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -84,7 +83,8 @@ public class TestMangaListStatus {
             mal.getUserMangaListing()
                 .withStatus(MangaStatus.Reading)
                 .withLimit(1000)
-                .includeNSFW(true)
+                .withFields(Fields.Manga.list_status)
+                .includeNSFW()
                 .search();
 
         MangaListStatus status = null;
@@ -105,7 +105,8 @@ public class TestMangaListStatus {
             mal.getUserMangaListing("KatsuteDev")
                 .withStatus(MangaStatus.Reading)
                 .withLimit(1000)
-                .includeNSFW(true)
+                .withFields(Fields.Manga.list_status)
+                .includeNSFW()
                 .search();
 
         MangaListStatus status = null;
@@ -121,7 +122,7 @@ public class TestMangaListStatus {
 
     @Test @Order(3)
     public void testGetFromManga(){
-        final MangaListStatus status = mal.getManga(TestProvider.MangaID).getListStatus();
+        final MangaListStatus status = mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus();
         testStatus(status);
     }
 

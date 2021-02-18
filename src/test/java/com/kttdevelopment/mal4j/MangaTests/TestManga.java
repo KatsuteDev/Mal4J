@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.*;
 import com.kttdevelopment.mal4j.manga.*;
 import org.junit.jupiter.api.*;
@@ -16,7 +15,7 @@ public class TestManga {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
-        manga = mal.getManga(TestProvider.MangaID);
+        manga = mal.getManga(TestProvider.MangaID, Fields.manga);
     }
 
     @Test
