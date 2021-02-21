@@ -266,7 +266,7 @@ public final class MyAnimeListAuthenticator {
      */
     @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser, final long timeout, final String redirect_URI) throws IOException{
-        this(client_id, client_secret, port, null,openBrowser, timeout, redirect_URI);
+        this(client_id, client_secret, port, null, openBrowser, timeout, redirect_URI);
         System.out.println("The MyAnimeListAuthenticator server constructor is deprecated and likely to be removed in the future. Please use MyAnimeListAuthenticator.LocalServerBuilder for local servers instead.");
     }
 
