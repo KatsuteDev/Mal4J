@@ -440,8 +440,8 @@ public final class MyAnimeListAuthenticator {
      * Creates a MyAnimeList Authenticator by deploying a local server to authenticate the user.
      *
      * @see MyAnimeListAuthenticator
-     * @since 1.0.0
-     * @version 1.0.0
+     * @since 1.1.0
+     * @version 1.1.0
      * @author Ktt Development
      */
     public static final class LocalServerBuilder {
