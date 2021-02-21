@@ -33,6 +33,8 @@ import java.util.List;
 
 /**
  * The MyAnimeList API interface, used to execute requests with the API from Java.
+ * <br><br>
+ * The {@link MyAnimeList} class can be created by authenticating with either {@link MyAnimeList#withOAuthToken(String)} or {@link MyAnimeList#withAuthorization(MyAnimeListAuthenticator)}.
  *
  * @since 1.0.0
  * @version 1.0.0
