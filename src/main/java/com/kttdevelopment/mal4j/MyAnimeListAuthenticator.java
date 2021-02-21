@@ -430,6 +430,8 @@ public final class MyAnimeListAuthenticator {
      */
     @SuppressWarnings("SpellCheckingInspection")
     public static String getAuthorizationURL(final String client_id, final String PKCE_code_challenge, final String redirect_URI, final String state){
+        Objects.requireNonNull(client_id, "Client ID must not be null");
+        Objects.requireNonNull(PKCE_code_challenge, "PKCE must not be null");
         return
             String.format(authUrl, client_id, PKCE_code_challenge) +
             (redirect_URI != null ? String.format(redirectURI, URLEncoder.encode(redirect_URI, StandardCharsets.UTF_8)) : "") +

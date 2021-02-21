@@ -63,13 +63,14 @@ final class MyAnimeListImpl extends MyAnimeList{
     private final MyAnimeListService service = MyAnimeListService.create();
 
     MyAnimeListImpl(final String auth){
-        Objects.requireNonNull(auth, "OAuth token can not be null");
+        Objects.requireNonNull(auth, "OAuth token cannot be null");
         if(!auth.startsWith("Bearer "))
             throw new IllegalArgumentException("Oauth token should start with 'Bearer'");
         this.auth = auth;
     }
 
     MyAnimeListImpl(final MyAnimeListAuthenticator authenticator){
+        Objects.requireNonNull(authenticator, "Authenticator cannot be null");
         this.authenticator = authenticator;
         this.auth = authenticator.getAccessToken().getToken();
     }
@@ -144,7 +145,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType){
-        return new AnimeRankingQuery(Objects.requireNonNull(rankingType)) {
+        return new AnimeRankingQuery(Objects.requireNonNull(rankingType, "Ranking type cannot be null")) {
 
             @Override
             public final List<AnimeRanking> search(){
@@ -186,7 +187,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final AnimeSeasonQuery getAnimeSeason(final int year, final Season season){
-        return new AnimeSeasonQuery(year, Objects.requireNonNull(season)) {
+        return new AnimeSeasonQuery(year, Objects.requireNonNull(season, "Season cannot be null")) {
 
             @Override
             public final List<Anime> search(){
@@ -307,10 +308,10 @@ final class MyAnimeListImpl extends MyAnimeList{
     public synchronized final void deleteAnimeListing(final long id){
         try{
             handleVoidResponse(
-                    () -> service.deleteAnimeListing(
-                            auth,
-                            (int) id
-                    )
+                () -> service.deleteAnimeListing(
+                    auth,
+                    (int) id
+                )
             );
         }catch(final HttpException e){
             if(e.code() != 404)
@@ -325,7 +326,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final UserAnimeListQuery getUserAnimeListing(final String username){
-        return new UserAnimeListQuery(Objects.requireNonNull(username)) {
+        return new UserAnimeListQuery(Objects.requireNonNull(username, "Username cannot be null" )) {
 
             @Override
             public final List<AnimeListStatus> search(){
@@ -520,7 +521,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final MangaRankingQuery getMangaRanking(final MangaRankingType rankingType){
-        return new MangaRankingQuery(Objects.requireNonNull(rankingType)) {
+        return new MangaRankingQuery(Objects.requireNonNull(rankingType, "Ranking type cannot be null")) {
 
             @Override
             public final List<MangaRanking> search(){
@@ -615,7 +616,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     @Override
     public final UserMangaListQuery getUserMangaListing(final String username){
-        return new UserMangaListQuery(Objects.requireNonNull(username)) {
+        return new UserMangaListQuery(Objects.requireNonNull(username, "Username cannot be null")) {
 
             @Override
             public final List<MangaListStatus> search(){
@@ -678,8 +679,9 @@ final class MyAnimeListImpl extends MyAnimeList{
     @SuppressWarnings("ConstantConditions")
     @Override
     public final User getUser(final String username, final String... fields){
+        Objects.requireNonNull(username, "Username cannot be null");
         if(!username.equals("@me"))
-            throw new UnsupportedOperationException("The MyAnimeList API currently only supports user @me.");
+            throw new UnsupportedOperationException("The MyAnimeList API currently only supports user @me");
         return asUser(this,
         handleResponse(
             () -> service.getUser(
