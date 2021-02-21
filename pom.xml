@@ -150,7 +150,10 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <additionalJOption>--no-module-directories</additionalJOption>
+                    <additionalJOptions>
+                        <additionalJOption>--no-module-directories</additionalJOption>
+                        <additionalJOption>-public</additionalJOption>
+                    </additionalJOptions>
                 </configuration>
             </plugin>
 
