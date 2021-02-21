@@ -159,6 +159,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
+     * @param redirectURI redirect URI
      * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
      * @throws BindException if port was blocked
      * @throws IOException if server could not be started
@@ -188,6 +189,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
      * @param openBrowser if the code should automatically open a browser window
+     * @param redirectURI redirect URI
      * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
      * @throws BindException if port was blocked
      * @throws IOException if server could not be started
@@ -217,6 +219,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
      * @param timeout how long in seconds that the local authentication server will live for
+     * @param redirectURI redirect URI
      * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
      * @throws BindException if port was blocked
      * @throws IOException if server could not be started
