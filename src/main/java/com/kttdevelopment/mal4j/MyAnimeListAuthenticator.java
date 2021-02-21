@@ -388,6 +388,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_id client id. <i>required</i>
      * @param PKCE_code_challenge PKCE code challenge. <i>required</i>
      * @return authorization URL
+     * @throws NullPointerException if client ID or PKCE is null
      *
      * @see #getAuthorizationURL(String, String, String)
      * @see #getAuthorizationURL(String, String, String, String)
@@ -405,6 +406,7 @@ public final class MyAnimeListAuthenticator {
      * @param PKCE_code_challenge PKCE code challenge. <i>required</i>
      * @param redirect_URI preregistered URI, only needed if you want to select a specific application redirect URI. <i>optional</i>
      * @return authorization URL
+     * @throws NullPointerException if client ID or PKCE is null
      *
      * @see #getAuthorizationURL(String, String)
      * @see #getAuthorizationURL(String, String, String, String)
@@ -423,6 +425,7 @@ public final class MyAnimeListAuthenticator {
      * @param redirect_URI preregistered URI, only needed if you want to select a specific application redirect URI. <i>optional</i>
      * @param state 0Auth2 state. <i>optional</i>
      * @return authorization URL
+     * @throws NullPointerException if client ID or PKCE is null
      *
      * @see #getAuthorizationURL(String, String)
      * @see #getAuthorizationURL(String, String, String)

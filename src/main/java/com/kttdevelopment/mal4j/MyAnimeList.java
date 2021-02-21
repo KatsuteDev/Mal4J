@@ -72,6 +72,8 @@ public abstract class MyAnimeList {
      * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshOAuthToken()}.
      *
      * @param token OAuth token, Ex: 'Bearer oauth2token'
+     * @throws NullPointerException if token is null
+     * @throws IllegalArgumentException if token doesn't start with 'Bearer'
      *
      * @return MyAnimeList
      *
@@ -87,6 +89,7 @@ public abstract class MyAnimeList {
      *
      * @param authenticator authenticator
      * @return MyAnimeList
+     * @throws NullPointerException if authenticator is null
      *
      * @see #withOAuthToken(String)
      * @see #refreshOAuthToken()
@@ -157,6 +160,7 @@ public abstract class MyAnimeList {
      *
      * @param rankingType ranking type
      * @return ranked Anime
+     * @throws NullPointerException if ranking type is null
      *
      * @see AnimeRankingQuery
      * @see AnimeRankingQuery#search()
@@ -174,6 +178,7 @@ public abstract class MyAnimeList {
      * @param year year
      * @param season airing season
      * @return seasonal Anime
+     * @throws NullPointerException if season is null
      *
      * @see AnimeSeasonQuery
      * @see AnimeSeasonQuery#search()
@@ -247,6 +252,7 @@ public abstract class MyAnimeList {
      *
      * @param username username
      * @return Anime listing
+     * @throws NullPointerException if username is null
      *
      * @see UserAnimeListQuery
      * @see UserAnimeListQuery#search()
@@ -382,6 +388,7 @@ public abstract class MyAnimeList {
      *
      * @param rankingType ranking type
      * @return ranked Manga
+     * @throws NullPointerException if ranking type is null
      *
      * @see MangaRankingQuery
      * @see MangaRankingQuery#search()
@@ -441,6 +448,7 @@ public abstract class MyAnimeList {
      *
      * @param username username
      * @return Manga listing
+     * @throws NullPointerException if username is null
      *
      * @see UserMangaListQuery
      * @see UserMangaListQuery#search()
@@ -488,6 +496,7 @@ public abstract class MyAnimeList {
      * @return user
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
+     * @throws NullPointerException if username is null
      *
      * @see User
      * @see #getUser(String, String...)
@@ -503,6 +512,7 @@ public abstract class MyAnimeList {
      * @return user
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
+     * @throws NullPointerException if username is null
      *
      * @see User
      * @see #getUser(String)
