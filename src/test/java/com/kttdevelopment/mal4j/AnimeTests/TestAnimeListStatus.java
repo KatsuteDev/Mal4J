@@ -20,7 +20,7 @@ public class TestAnimeListStatus {
     }
 
     @AfterAll
-    public static void cleanup(){
+    public static void afterAll(){
         TestProvider.testRequireClientID();
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
