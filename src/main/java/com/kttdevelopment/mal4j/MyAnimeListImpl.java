@@ -63,6 +63,9 @@ final class MyAnimeListImpl extends MyAnimeList{
     private final MyAnimeListService service = MyAnimeListService.create();
 
     MyAnimeListImpl(final String auth){
+        Objects.requireNonNull(auth, "OAuth token can not be null");
+        if(!auth.startsWith("Bearer "))
+            throw new IllegalArgumentException("Oauth token should start with 'Bearer'");
         this.auth = auth;
     }
 

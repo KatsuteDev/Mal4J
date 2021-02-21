@@ -5,7 +5,6 @@ import org.junit.jupiter.api.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.time.Duration;
 
 public class TestAuthorizationLocalServer {
 
@@ -16,7 +15,7 @@ public class TestAuthorizationLocalServer {
         TestProvider.testRequireClientID();
 
         final String clientId = Files.readString(TestProvider.client);
-        authenticator = new MyAnimeListAuthenticator(clientId, null, 5050, true);
+        authenticator = new MyAnimeListAuthenticator.LocalServerBuilder(clientId, 5050).openBrowser().build();
         final MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);
 
         // test refresh token

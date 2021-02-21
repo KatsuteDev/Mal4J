@@ -5,18 +5,19 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class TestAuthorization {
 
     @Test
     public void testIgnored(){
-        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator(null, null, 5050, 5));
+        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator.LocalServerBuilder(null, 5050).setTimeout(5).build());
     }
 
     @Test
     public void testTimeout(){
          Assertions.assertTimeout(Duration.ofSeconds(10), () ->
              Assertions.assertThrows(NullPointerException.class, () ->
-                 new MyAnimeListAuthenticator("null", null, 5050, 5))
+                 new MyAnimeListAuthenticator.LocalServerBuilder(null, 5050).setTimeout(5).build())
          );
     }
 
@@ -43,6 +44,24 @@ public class TestAuthorization {
             Assertions.assertTrue(URL.contains("&redirect_uri=redirect"));
             Assertions.assertTrue(URL.contains("&state=state"));
         }
+    }
+
+    @Test
+    public void testNullBuilder(){
+        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator.LocalServerBuilder(null, 5050));
+    }
+
+    @Test
+    public void testNull(){
+        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator(null, null, null, null));
+        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator("?", null, null, null));
+    }
+
+    @Test
+    public void testPKCE(){
+        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator("?", null, "?", null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "42xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "129xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"));
     }
 
 }

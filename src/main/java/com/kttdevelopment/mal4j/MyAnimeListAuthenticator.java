@@ -38,7 +38,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * Authenticator used to retrieve OAuth2 tokens given a client id and client secret.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author Ktt Development
  */
 public final class MyAnimeListAuthenticator {
@@ -57,7 +57,9 @@ public final class MyAnimeListAuthenticator {
 
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
 
+    @Deprecated
     private static final int DEFAULT_TIMEOUT = 60 * 3;
+    @Deprecated
     private static final boolean DEFAULT_OPEN_BROWSER = false;
 
     @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
@@ -67,6 +69,7 @@ public final class MyAnimeListAuthenticator {
     /**
      * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
+     * @deprecated use {@link LocalServerBuilder}
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
@@ -86,6 +89,7 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
+    @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port) throws IOException{
         this(client_id, client_secret, port, DEFAULT_OPEN_BROWSER, DEFAULT_TIMEOUT, null);
     }
@@ -93,6 +97,7 @@ public final class MyAnimeListAuthenticator {
     /**
      * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
+     * @deprecated use {@link LocalServerBuilder}
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
@@ -113,6 +118,7 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
+    @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser) throws IOException{
         this(client_id, client_secret, port, openBrowser, DEFAULT_TIMEOUT, null);
     }
@@ -120,6 +126,7 @@ public final class MyAnimeListAuthenticator {
     /**
      * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
+     * @deprecated use {@link LocalServerBuilder}
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
@@ -140,6 +147,7 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
+    @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final long timeout) throws IOException{
         this(client_id, client_secret, port, DEFAULT_OPEN_BROWSER, timeout, null);
     }
@@ -147,6 +155,7 @@ public final class MyAnimeListAuthenticator {
     /**
      * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
+     * @deprecated use {@link LocalServerBuilder}
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
@@ -166,6 +175,7 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
+    @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final String redirectURI) throws IOException{
         this(client_id, client_secret, port, DEFAULT_OPEN_BROWSER, DEFAULT_TIMEOUT, redirectURI);
     }
@@ -173,6 +183,7 @@ public final class MyAnimeListAuthenticator {
     /**
      * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
+     * @deprecated use {@link LocalServerBuilder}
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
@@ -193,6 +204,7 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
+    @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser, final String redirectURI) throws IOException{
         this(client_id, client_secret, port, openBrowser, DEFAULT_TIMEOUT, redirectURI);
     }
@@ -200,6 +212,7 @@ public final class MyAnimeListAuthenticator {
     /**
      * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
+     * @deprecated use {@link LocalServerBuilder}
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
@@ -220,6 +233,7 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
+    @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final long timeout, final String redirectURI) throws IOException{
         this(client_id, client_secret, port, DEFAULT_OPEN_BROWSER, timeout, redirectURI);
     }
@@ -227,6 +241,7 @@ public final class MyAnimeListAuthenticator {
     /**
      * Creates a MyAnimeListAuthenticator and deploys a server to retrieve the OAuth2 token. Local server will be active until timeout.
      *
+     * @deprecated use {@link LocalServerBuilder}
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
@@ -249,13 +264,36 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
+    @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser, final long timeout, final String redirect_URI) throws IOException{
-        final Authorization auth = authenticateWithLocalServer(client_id, port, openBrowser, timeout, redirect_URI);
+        this(client_id, client_secret, port, null, openBrowser, timeout, redirect_URI);
+        System.out.println("The MyAnimeListAuthenticator server constructor is deprecated and likely to be removed in the future. Please use MyAnimeListAuthenticator.LocalServerBuilder for local servers instead.");
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private MyAnimeListAuthenticator(
+        final String client_id,
+        final String client_secret,
+        final int port,
+        final AuthResponseHandler handler,
+        final boolean openBrowser,
+        final long timeout,
+        final String redirect_URI
+    ) throws IOException{
+        // [authorization, PKCE verify]
+        final String[] auth = authenticateWithLocalServer(
+            client_id,
+            port,
+            handler,
+            openBrowser,
+            timeout,
+            redirect_URI
+        );
 
         this.client_id          = client_id;
         this.client_secret      = client_secret;
-        this.authorizationCode  = auth.getAuthorization();
-        this.pkce               = auth.getVerifier();
+        this.authorizationCode  = auth[0];
+        this.pkce               = auth[1];
 
         token = parseToken(authService
             .getToken(
@@ -274,7 +312,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_id client id
      * @param client_secret client secret, null if application has none
      * @param authorization_code authorization code
-     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code
+     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
@@ -283,6 +321,12 @@ public final class MyAnimeListAuthenticator {
      */
     @SuppressWarnings("SpellCheckingInspection")
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge){
+        Objects.requireNonNull(client_id, "Client ID must not be null");
+        Objects.requireNonNull(authorization_code, "Authorization code must not be null");
+        Objects.requireNonNull(PKCE_code_challenge, "PKCE code challenge must not be null");
+        if(PKCE_code_challenge.length() < 43 || PKCE_code_challenge.length() > 128)
+            throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters");
+
         this.client_id          = client_id;
         this.client_secret      = client_secret;
         this.authorizationCode  = authorization_code;
@@ -392,7 +436,162 @@ public final class MyAnimeListAuthenticator {
             (state != null ? String.format(authState, state) : "");
     }
 
-// support methods
+    /**
+     * Creates a MyAnimeList Authenticator by deploying a local server to authenticate the user.
+     *
+     * @see MyAnimeListAuthenticator
+     * @since 1.0.0
+     * @version 1.0.0
+     * @author Ktt Development
+     */
+    public static final class LocalServerBuilder {
+
+        private final String client_id, client_secret;
+        private final int port;
+
+        private boolean openBrowser = false;
+        private long timeout = 60 * 3;
+        private String redirect_URI = null;
+
+        private AuthResponseHandler responseHandler = null;
+
+        /**
+         * Instantiates a local server builder with a client id and port.
+         *
+         * @param client_id client id
+         * @param port port
+         *
+         * @see #LocalServerBuilder(String, String, int)
+         * @since 1.1.0
+         */
+        public LocalServerBuilder(final String client_id, final int port){
+            this(client_id, null, port);
+        }
+
+        /**
+         * Instantiates a local server builder with a client id, client secret, and port.
+         *
+         * @param client_id client id
+         * @param client_secret client secret
+         * @param port port
+         *
+         * @see #LocalServerBuilder(String, int)
+         * @since 1.1.0
+         */
+        public LocalServerBuilder(final String client_id, final String client_secret, final int port){
+            Objects.requireNonNull(client_id, "Client ID must not be null");
+
+            this.client_id = client_id;
+            this.client_secret = client_secret;
+            this.port = port;
+        }
+
+        /**
+         * Indicates that the authorization page should be opened in the user's browser automatically.
+         *
+         * @return builder
+         *
+         * @see #openBrowser(boolean)
+         * @since 1.1.0
+         */
+        public final LocalServerBuilder openBrowser(){
+            return openBrowser(true);
+        }
+
+        /**
+         * If true, a browser will automatically be opened to the authorization page. Note that if this is false you will have to go to the page manually using {@link #getAuthorizationURL(String, String)}, {@link #getAuthorizationURL(String, String, String)}, or {@link #getAuthorizationURL(String, String, String, String)}.
+         *
+         * @param openBrowser if browser should be opened
+         * @return builder
+         *
+         * @see #openBrowser()
+         * @since 1.1.0
+         */
+        public final LocalServerBuilder openBrowser(final boolean openBrowser){
+            this.openBrowser = openBrowser;
+            return this;
+        }
+
+        /**
+         * Sets how long (in seconds) that the server will expire in. Once the timeout has passed a new authentication builder must be used.
+         *
+         * @param timeout server timeout
+         * @return builder
+         *
+         * @since 1.1.0
+         */
+        public final LocalServerBuilder setTimeout(final int timeout){
+            this.timeout = timeout;
+            return this;
+        }
+
+        /**
+         * Sets the application redirect URI. Only required if your application has more than one redirect URI registered.
+         *
+         * @param redirectURI redirect URI
+         * @return builder
+         *
+         * @since 1.1.0
+         */
+        public final LocalServerBuilder setRedirectURI(final String redirectURI){
+            this.redirect_URI = redirectURI;
+            return this;
+        }
+
+        /**
+         * Sets the response handler.
+         *
+         * @param responseHandler response handler
+         * @return builder
+         *
+         * @see AuthResponseHandler
+         * @since 1.1.0
+         */
+        public final LocalServerBuilder setResponseHandler(final AuthResponseHandler responseHandler){
+            this.responseHandler = responseHandler;
+            return this;
+        }
+
+        /**
+         * Returns the built authenticator.
+         *
+         * @return authenticator
+         * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
+         * @throws BindException if port was blocked
+         * @throws IOException if server could not be started
+         * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
+         * @throws NullPointerException if server was closed before the client could be authorized
+         * @throws HttpException if client request failed
+         *
+         * @see MyAnimeListAuthenticator
+         * @since 1.1.0
+         */
+        public final MyAnimeListAuthenticator build() throws IOException{
+            return new MyAnimeListAuthenticator(
+                client_id,
+                client_secret,
+                port,
+                responseHandler,
+                openBrowser,
+                timeout,
+                redirect_URI
+            );
+        }
+
+        @Override
+        public String toString(){
+            return "LocalServerBuilder{" +
+                   "port=" + port +
+                   ", openBrowser=" + openBrowser +
+                   ", timeout=" + timeout +
+                   ", redirect_URI='" + redirect_URI + '\'' +
+                   ", responseHandler=" + responseHandler +
+                   '}';
+        }
+
+    }
+
+// local server
 
     /**
      * Returns if the code is allowed to open the client browser.
@@ -405,12 +604,20 @@ public final class MyAnimeListAuthenticator {
         return Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE);
     }
 
-    private static final PrintWriter sysOut = new PrintWriter(System.out);
+    // [authorization, PKCE verify]
+    @SuppressWarnings({"ResultOfMethodCallIgnored", "SpellCheckingInspection"})
+    private static String[] authenticateWithLocalServer(
+        final String client_id,
+        final int port,
+        final AuthResponseHandler responseHandler,
+        final boolean openBrowser,
+        final long timeout,
+        final String redirectURI
+    ) throws IOException{
+        Objects.requireNonNull(client_id, "Client ID must not be null");
 
-    @SuppressWarnings({"ResultOfMethodCallIgnored"})
-    private static Authorization authenticateWithLocalServer(final String client_id, final int port, final boolean openBrowser, final long timeout, final String redirectURI) throws IOException{
-        final String verify = PKCE.generateCodeVerifier();
-        final String state  = Hash.generateSha256(client_id + '&' + verify);
+        final String verify = generatePKCECodeVerifier();
+        final String state  = generateSha256(client_id + '&' + verify);
         final String url    = getAuthorizationURL(client_id, verify, redirectURI, state);
 
         // get auth call back from local server
@@ -419,19 +626,19 @@ public final class MyAnimeListAuthenticator {
 
         final HttpServer server    = HttpServer.create(new InetSocketAddress(port), 0);
         server.setExecutor(exec);
-        final AuthHandler handler = new AuthHandler(latch);
+        final AuthHandler handler = new AuthHandler(latch, responseHandler);
         server.createContext("/", handler);
         server.start();
 
         if(openBrowser)
             if(!canOpenBrowser())
-                sysOut.println("Desktop is not supported on this operating system. Please go to this URL manually: " + url);
+                System.out.println("Desktop is not supported on this operating system. Please go to this URL manually: " + url);
             else
                 try{ Desktop.getDesktop().browse(new URI(url));
                 }catch(final URISyntaxException ignored){
                     exec.shutdownNow();
                     server.stop(0);
-                    throw new IllegalArgumentException("URL syntax was invalid (most likely the client id or redirect URI wasn't encoded correctly).");
+                    throw new IllegalArgumentException("URL syntax was invalid (most likely the client id or redirect URI wasn't encoded correctly)");
                 }
 
         try{ latch.await(timeout, TimeUnit.SECONDS);
@@ -440,23 +647,11 @@ public final class MyAnimeListAuthenticator {
         server.stop(0);
 
         if(handler.getAuth() == null)
-            throw new NullPointerException("Failed to authorize request (server was closed before a response could be received).");
+            throw new NullPointerException("Failed to authorize request (server was closed before a response could be received)");
         if(!state.equals(handler.getState()))
-            throw new UnauthorizedAccessException("Failed to authorize request (packet was intercepted by an unauthorized source).");
+            throw new UnauthorizedAccessException("Failed to authorize request (packet was intercepted by an unauthorized source)");
 
-        return new Authorization(){
-
-            @Override
-            public final String getAuthorization(){
-                return handler.getAuth();
-            }
-
-            @Override
-            public final String getVerifier(){
-                return verify;
-            }
-
-        };
+        return new String[]{handler.getAuth(), verify};
     }
 
     private AccessToken parseToken(final Response<JsonObject> response){
@@ -470,52 +665,6 @@ public final class MyAnimeListAuthenticator {
             );
         else
             throw new HttpException(response.URL(), response.code(), (body.getString("body") + ' ' + body.getString("error")).trim());
-
-    }
-
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final class PKCE {
-
-        static String generateCodeVerifier(){
-            final SecureRandom secureRandom = new SecureRandom();
-            byte[] codeVerifier = new byte[64];
-            secureRandom.nextBytes(codeVerifier);
-            return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
-        }
-
-    }
-
-    private static final class Hash{
-
-        static String generateSha256(final String str){
-            final MessageDigest digest;
-            try{
-                digest = MessageDigest.getInstance("SHA-256");
-            }catch(final NoSuchAlgorithmException e){ // should NEVER occur
-                throw new RuntimeException(e);
-            }
-
-            final byte[] encodedHash        = digest.digest(str.getBytes(StandardCharsets.UTF_8));
-            final StringBuilder hexString   = new StringBuilder(2 * encodedHash.length);
-            for(final byte hash : encodedHash){
-                final String hex = Integer.toHexString(0xff & hash);
-                if(hex.length() == 1)
-                    hexString.append('0');
-                hexString.append(hex);
-            }
-            return hexString.toString();
-        }
-
-    }
-
-    private static abstract class Authorization {
-
-        // auth code
-        public abstract String getAuthorization();
-
-        // PKCE
-        @SuppressWarnings("SpellCheckingInspection")
-        public abstract String getVerifier();
 
     }
 
@@ -538,47 +687,39 @@ public final class MyAnimeListAuthenticator {
         }
 
         private final CountDownLatch latch;
+        private final AuthResponseHandler handler;
 
-        @SuppressWarnings("SameParameterValue")
-        AuthHandler(final CountDownLatch latch){
+        public AuthHandler(final CountDownLatch latch){
+            this(latch, defaultHandler);
+        }
+
+        AuthHandler(final CountDownLatch latch, final AuthResponseHandler handler){
             this.latch = latch;
+            this.handler = handler == null ? defaultHandler : handler;
         }
 
         private transient final AtomicReference<String> auth    = new AtomicReference<>();
         private transient final AtomicReference<String> state   = new AtomicReference<>();
 
-        private static final String OK   = "&#10004;&#65039;";
-        private static final String FAIL = "&#10060;";
-
-        @SuppressWarnings("SpellCheckingInspection")
-        private static final String HTML = "<!DOCTYPE html><html><head><title>MyAnimeList Authenticator</title><style>html,body{width:100%;height:100%;-webkit-user-select: none;-ms-user-select: none;user-select: none;}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication {{ state }}</h1><p title=\"{{ hint }}\">{{ message }}</p></div></body></html>";
-
         @Override
         public final void handle(final HttpExchange exchange) throws IOException{
             final Map<String,String> query = parseWwwFormEnc(exchange.getRequestURI().getRawQuery());
             state.set(query.get("state"));
-
-            final String code       = query.get("code");
-            final String pass       = code == null ? "Failed " + FAIL : "Completed " + OK;
-            final String hint       = query.getOrDefault("hint", "");
-            final String message    = code == null
-                ? "<b>" + query.get("error").substring(0, 1).toUpperCase() + query.get("error").substring(1).replace('_', ' ') + "</b>: " + query.get("message")
-                : "You may now close the window.";
-
-            auth.set(code);
+            auth.set(query.get("code"));
 
             /* send */ {
-                exchange.getResponseHeaders().set("Accept-Encoding","gzip");
-                exchange.getResponseHeaders().set("Content-Encoding","gzip");
-                exchange.getResponseHeaders().set("Connection","keep-alive");
+                exchange.getResponseHeaders().set("Accept-Encoding", "gzip");
+                exchange.getResponseHeaders().set("Content-Encoding", "gzip");
+                exchange.getResponseHeaders().set("Connection", "keep-alive");
                 exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
                 try(GZIPOutputStream OUT = new GZIPOutputStream(exchange.getResponseBody())){
                     OUT.write(
-                        HTML
-                            .replace("{{ state }}", pass)
-                            .replace("{{ hint }}", hint)
-                            .replace("{{ message }}", message)
-                            .getBytes(StandardCharsets.UTF_8)
+                        handler.getResponse(
+                            query.get("code"),
+                            query.get("error"),
+                            query.get("message"),
+                            query.get("hint")
+                        ).getBytes(StandardCharsets.UTF_8)
                     );
                     OUT.finish();
                     OUT.flush();
@@ -596,6 +737,58 @@ public final class MyAnimeListAuthenticator {
             return state.get();
         }
 
+    }
+
+    private static final AuthResponseHandler defaultHandler = new AuthResponseHandler(){
+
+        @SuppressWarnings("SpellCheckingInspection")
+        private static final String HTML = "<!DOCTYPE html><html><head><title>MyAnimeList Authenticator</title><style>html,body{width:100%;height:100%;-webkit-user-select: none;-ms-user-select: none;user-select: none;}body{display:flex;align-items:center;justify-content:center;background-color:#2E51A2;margin:0px;*{width:100%}}*{font-family:Helvetica,Arial,sans-serif;color:white;text-align:center}</style></head><body><div><h1>Authentication {{ state }}</h1><p title=\"{{ hint }}\">{{ message }}</p></div></body></html>";
+
+        private static final String OK   = "&#10004;&#65039;";
+        private static final String FAIL = "&#10060;";
+
+        @Override
+        public final String getResponse(final String code, final String error, final String message, final String hint){
+            final String pass = code == null ? "Failed " + FAIL : "Completed " + OK;
+            final String err = error == null ? "" : error;
+            final String msg = code == null
+                ? "<b>" + err.substring(0, 1).toUpperCase() + err.substring(1).replace('_', ' ') + "</b>: " + (message == null ? "" : message)
+                : "You may now close the window.";
+
+            return HTML
+                .replace("{{ state }}", pass)
+                .replace("{{ hint }}", hint != null ? hint : "")
+                .replace("{{ message }}", msg);
+        }
+
+    };
+
+// generator methods
+
+    private static String generatePKCECodeVerifier(){
+        final SecureRandom secureRandom = new SecureRandom();
+        byte[] codeVerifier = new byte[64];
+        secureRandom.nextBytes(codeVerifier);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
+    }
+
+    private static String generateSha256(final String str){
+        final MessageDigest digest;
+        try{
+            digest = MessageDigest.getInstance("SHA-256");
+        }catch(final NoSuchAlgorithmException e){ // should NEVER occur
+            throw new RuntimeException(e);
+        }
+
+        final byte[] encodedHash        = digest.digest(str.getBytes(StandardCharsets.UTF_8));
+        final StringBuilder hexString   = new StringBuilder(2 * encodedHash.length);
+        for(final byte hash : encodedHash){
+            final String hex = Integer.toHexString(0xff & hash);
+            if(hex.length() == 1)
+                hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 
 }
