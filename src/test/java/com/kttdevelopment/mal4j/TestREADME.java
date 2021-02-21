@@ -65,7 +65,7 @@ public class TestREADME {
     }
 
     public void testEZAuth() throws IOException{
-        MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", 5050, true));
+        MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator.LocalServerBuilder("client_id", "client_secret", 5050).openBrowser().build());
     }
 
 }
