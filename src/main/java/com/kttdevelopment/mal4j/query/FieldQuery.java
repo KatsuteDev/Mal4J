@@ -32,7 +32,7 @@ import java.util.*;
  * @see com.kttdevelopment.mal4j.Fields#anime
  * @see com.kttdevelopment.mal4j.Fields#manga
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author Ktt Development
  */
 @SuppressWarnings({"unchecked", "UnusedReturnValue"})
@@ -57,6 +57,8 @@ abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<
      * @since 1.0.0
      */
     public final T withField(final String field){
+        if(field == null) return (T) this;
+
         if(fields == null)
             this.fields = new ArrayList<>();
         if(!this.fields.contains(field))

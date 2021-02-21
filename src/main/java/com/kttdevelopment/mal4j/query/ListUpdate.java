@@ -31,7 +31,7 @@ import java.util.*;
  * @param <S> status type
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author Ktt Development
  */
 @SuppressWarnings("unchecked")
@@ -135,7 +135,7 @@ abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S 
      * @since 1.0.0
      */
     public final T tags(final String... tags){
-        this.tags = Arrays.asList(tags);
+        this.tags = tags == null ? null : Arrays.asList(tags);
         return (T) this;
     }
 
