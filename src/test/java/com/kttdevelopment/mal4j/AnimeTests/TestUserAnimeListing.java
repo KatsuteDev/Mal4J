@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeSort;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
@@ -22,8 +21,9 @@ public class TestUserAnimeListing {
     public void testStatus(){
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
-               .withStatus(AnimeStatus.Dropped)
-               .search();
+                .withStatus(AnimeStatus.Dropped)
+                .withFields(Fields.Anime.list_status)
+                .search();
         Assertions.assertEquals(AnimeStatus.Dropped, list.get(0).getStatus());
     }
 
@@ -31,8 +31,9 @@ public class TestUserAnimeListing {
     public void testSort(){
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
-               .sortBy(AnimeSort.UpdatedAt)
-               .search();
+                .sortBy(AnimeSort.UpdatedAt)
+                .withFields(Fields.Anime.list_status)
+                .search();
         Assertions.assertTrue(list.get(0).getUpdatedAt().getTime() > list.get(1).getUpdatedAt().getTime());
     }
 

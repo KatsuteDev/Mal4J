@@ -20,6 +20,7 @@ public class TestAnimeSuggestions {
     public void testAnimeSuggestions(){
         final List<Anime> suggestions =
             mal.getAnimeSuggestions()
+                .withNoFields()
                 .search();
         Assertions.assertNotNull(suggestions);
         Assertions.assertNotEquals(0, suggestions.size());

@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.*;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatistics;
 import com.kttdevelopment.mal4j.manga.RelatedManga;
@@ -17,7 +16,7 @@ public class TestAnime {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
-        anime = mal.getAnime(TestProvider.AltAnimeID);
+        anime = mal.getAnime(TestProvider.AltAnimeID, Fields.anime);
     }
 
     @Test

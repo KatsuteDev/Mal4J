@@ -20,7 +20,7 @@ public class TestAnimeSearch {
         final List<Anime> search =
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
-                .withAllFields()
+                .withNoFields()
                 .search();
         Assertions.assertEquals(TestProvider.AnimeID, search.get(0).getID());
         Assertions.assertNotEquals(1, search.size());
@@ -33,6 +33,7 @@ public class TestAnimeSearch {
                 .withQuery(TestProvider.AltAnimeQuery)
                 .withLimit(1)
                 .withOffset(1)
+                .withNoFields()
                 .search();
         Assertions.assertNotEquals(TestProvider.AnimeID, search.get(0).getID());
         Assertions.assertEquals(1, search.size());
@@ -56,6 +57,7 @@ public class TestAnimeSearch {
                 mal.getAnime()
                     .withQuery(TestProvider.NSFW_AnimeQuery)
                     .withLimit(1)
+                    .withNoFields()
                     .search();
             Assertions.assertEquals(0, search.size());
         }
@@ -64,9 +66,13 @@ public class TestAnimeSearch {
                 mal.getAnime()
                    .withQuery(TestProvider.NSFW_AnimeQuery)
                    .withLimit(1)
-                   .includeNSFW(true)
+                   .withNoFields()
+                   .includeNSFW()
                    .search();
-            Assertions.assertTrue(search.get(0).getID() == TestProvider.NSFW_AnimeID || search.get(0).getID() == TestProvider.AltNSFW_AnimeID);
+            Assertions.assertTrue(
+                search.get(0).getID() == TestProvider.NSFW_AnimeID || search.get(0).getID() == TestProvider.AltNSFW_AnimeID,
+                "NSFW Anime ID was supposed to be either " + TestProvider.NSFW_AnimeID + " or " + TestProvider.AltNSFW_AnimeID + " but was " + search.get(0).getID()
+            );
         }
     }
 
