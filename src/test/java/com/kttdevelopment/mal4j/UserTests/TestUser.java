@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.UserTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.user.User;
 import com.kttdevelopment.mal4j.user.UserAnimeStatistics;
 import org.junit.jupiter.api.*;
@@ -15,14 +14,14 @@ public class TestUser {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
-        user = mal.getMyself();
+        user = mal.getMyself(Fields.user);
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test @DisplayName("testUser() - not currently allowed by API")
     public void testUser(){
         Assertions.assertThrows(UnsupportedOperationException.class, () ->
-            Assertions.assertEquals(8316239, mal.getUser("KatsuteDev").getID())
+            Assertions.assertEquals(8316239, mal.getUser("KatsuteDev", Fields.NO_FIELDS).getID())
         );
     }
 

@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
 import com.kttdevelopment.mal4j.property.Priority;
@@ -52,7 +51,7 @@ public class TestAnimeListStatus {
     public void testDelete(){
         mal.deleteAnimeListing(TestProvider.AnimeID);
         Assertions.assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID));
-        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -82,7 +81,8 @@ public class TestAnimeListStatus {
             mal.getUserAnimeListing()
                 .withStatus(AnimeStatus.Watching)
                 .withLimit(1000)
-                .includeNSFW(true)
+                .withFields(Fields.Anime.list_status)
+                .includeNSFW()
                 .search();
 
         AnimeListStatus status = null;
@@ -103,6 +103,8 @@ public class TestAnimeListStatus {
             mal.getUserAnimeListing("KatsuteDev")
                 .withStatus(AnimeStatus.Watching)
                 .withLimit(1000)
+                .withFields(Fields.Anime.list_status)
+                .includeNSFW()
                 .search();
 
         AnimeListStatus status = null;
@@ -119,7 +121,7 @@ public class TestAnimeListStatus {
     @Test @Order(3)
     public void testGetFromAnime(){
         final AnimeListStatus status = mal
-            .getAnime(TestProvider.AnimeID)
+            .getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status)
             .getListStatus();
         testStatus(status);
     }

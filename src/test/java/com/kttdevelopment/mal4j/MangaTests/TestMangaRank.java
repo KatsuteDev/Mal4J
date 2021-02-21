@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.manga.MangaRanking;
 import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
 import com.kttdevelopment.mal4j.manga.property.MangaType;
@@ -23,6 +22,7 @@ public class TestMangaRank {
         final List<MangaRanking> ranking =
             mal.getMangaRanking(MangaRankingType.Manga)
                 .withLimit(1)
+                .withFields(Fields.Manga.rank, Fields.Manga.media_type)
                 .search();
         final MangaRanking first = ranking.get(0);
         Assertions.assertEquals(1,first.getRanking());

@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaSort;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
@@ -22,9 +21,10 @@ public class TestUserMangaListing {
     public void testStatus(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
-               .withStatus(MangaStatus.PlanToRead)
-               .withLimit(1)
-               .search();
+                .withStatus(MangaStatus.PlanToRead)
+                .withLimit(1)
+                .withFields(Fields.Manga.list_status)
+                .search();
         Assertions.assertEquals(MangaStatus.PlanToRead, list.get(0).getStatus());
     }
 
@@ -32,9 +32,10 @@ public class TestUserMangaListing {
     public void testSort(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
-               .sortBy(MangaSort.UpdatedAt)
-               .withLimit(2)
-               .search();
+                .sortBy(MangaSort.UpdatedAt)
+                .withLimit(2)
+                .withFields(Fields.Manga.list_status)
+                .search();
         Assertions.assertTrue(list.get(0).getUpdatedAt().getTime() > list.get(1).getUpdatedAt().getTime());
     }
 

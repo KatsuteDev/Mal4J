@@ -18,6 +18,7 @@
 
 package com.kttdevelopment.mal4j.query;
 
+import com.kttdevelopment.mal4j.Fields;
 import com.kttdevelopment.mal4j.MyAnimeList;
 
 import java.util.*;
@@ -28,8 +29,8 @@ import java.util.*;
  * @param <T> this
  * @param <R> response
  *
- * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
- * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
+ * @see com.kttdevelopment.mal4j.Fields#anime
+ * @see com.kttdevelopment.mal4j.Fields#manga
  * @since 1.0.0
  * @version 1.0.0
  * @author Ktt Development
@@ -47,8 +48,8 @@ abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<
      * @param field a field or comma separated fields that should be returned
      * @return query
      *
-     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
-     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
+     * @see com.kttdevelopment.mal4j.Fields#anime
+     * @see com.kttdevelopment.mal4j.Fields#manga
      * @see #withFields(String...)
      * @see #withFields(List)
      * @see #withAllFields()
@@ -70,8 +71,8 @@ abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<
      *
      * @return query
      *
-     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
-     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
+     * @see com.kttdevelopment.mal4j.Fields#anime
+     * @see com.kttdevelopment.mal4j.Fields#manga
      * @see #withField(String)
      * @see #withFields(List)
      * @see #withAllFields()
@@ -97,8 +98,8 @@ abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<
      *
      * @return query
      *
-     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
-     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
+     * @see com.kttdevelopment.mal4j.Fields#anime
+     * @see com.kttdevelopment.mal4j.Fields#manga
      * @see #withField(String)
      * @see #withFields(String...)
      * @see #withAllFields()
@@ -122,8 +123,8 @@ abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<
      *
      * @return query
      *
-     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_ANIME_FIELDS
-     * @see com.kttdevelopment.mal4j.MyAnimeList#ALL_MANGA_FIELDS
+     * @see com.kttdevelopment.mal4j.Fields#anime
+     * @see com.kttdevelopment.mal4j.Fields#manga
      * @see #withField(String)
      * @see #withFields(String...)
      * @see #withFields(List)
@@ -140,7 +141,7 @@ abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<
      *
      * @return query
      *
-     * @see com.kttdevelopment.mal4j.MyAnimeList#NO_FIELDS
+     * @see com.kttdevelopment.mal4j.Fields#NO_FIELDS
      * @see #withField(String)
      * @see #withFields(String...)
      * @see #withFields(List)
@@ -148,7 +149,7 @@ abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<
      * @since 1.0.0
      */
     public final T withNoFields(){
-        this.fields = Arrays.asList(MyAnimeList.NO_FIELDS);
+        this.fields = Arrays.asList(Fields.NO_FIELDS);
         return (T) this;
     }
 
