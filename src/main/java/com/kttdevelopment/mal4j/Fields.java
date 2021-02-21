@@ -545,7 +545,7 @@ public abstract class Fields {
      * @see User
      * @since 1.1.0
      */
-    public static String user = String.join(",",
+    public static final String user = String.join(",",
         User.birthday,
         User.timezone,
         User.anime_statistics,
