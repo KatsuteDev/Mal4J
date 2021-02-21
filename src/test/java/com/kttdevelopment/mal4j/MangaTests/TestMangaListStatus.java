@@ -20,7 +20,7 @@ public class TestMangaListStatus {
     }
 
     @AfterAll
-    public static void cleanup(){
+    public static void afterAll(){
         TestProvider.testRequireClientID();
 
         mal.deleteMangaListing(TestProvider.MangaID);
