@@ -47,6 +47,12 @@ public class TestAuthorization {
     }
 
     @Test
+    public void testNullURL(){
+        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeListAuthenticator.getAuthorizationURL(null, ""));
+        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeListAuthenticator.getAuthorizationURL("", null));
+    }
+
+    @Test
     public void testNullBuilder(){
         Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator.LocalServerBuilder(null, 5050));
     }
