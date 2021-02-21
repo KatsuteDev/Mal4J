@@ -14,6 +14,7 @@ module Mal4J {
     exports com.kttdevelopment.mal4j.property;
     exports com.kttdevelopment.mal4j.query;
     exports com.kttdevelopment.mal4j.user;
+    exports com.kttdevelopment.mal4j.user.property;
     exports com.kttdevelopment.mal4j;
 
 }
