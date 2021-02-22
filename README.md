@@ -17,6 +17,8 @@
         <a href="https://github.com/Katsute/Mal4J/issues">Issues</a>
         •
         <a href="https://github.com/Katsute/Mal4J/discussions">Discussions</a>
+        •
+        <a href="https://myanimelist.net/forum/?topicid=1897569">Forum Post</a>
     </p>
 </p>
 
