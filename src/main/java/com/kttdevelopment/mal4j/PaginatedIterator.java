@@ -45,13 +45,11 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
 
     @Override
     public synchronized final T next(){
-        if(hasNextItem()){
-            index++;
-            return list.get(index);
-        }else if(hasNextPage()){
+        if(hasNextItem())
+            return list.get(++index);
+        else if(hasNextPage()){
             nextPage();
-            index++;
-            return list.get(index);
+            return list.get(++index);
         }else
             throw new NoSuchElementException();
     }
