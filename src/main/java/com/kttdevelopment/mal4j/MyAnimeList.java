@@ -34,7 +34,11 @@ import java.util.List;
 /**
  * The MyAnimeList API interface, used to execute requests with the API from Java.
  * <br><br>
- * The {@link MyAnimeList} class can be created by authenticating with either {@link MyAnimeList#withOAuthToken(String)} or {@link MyAnimeList#withAuthorization(MyAnimeListAuthenticator)}.
+ * The {@link MyAnimeList} class can be created by authenticating with either:
+ * <ul>
+ *     <li>An oauth token using {@link #withOAuthToken(String)}</li>
+ *     <li>An authorization code and client id using {@link #withAuthorization(MyAnimeListAuthenticator)}.</li>
+ * </ul>
  *
  * @since 1.0.0
  * @version 1.0.0
@@ -69,6 +73,8 @@ public abstract class MyAnimeList {
      */
     @Deprecated
     public static final String ALL_USER_FIELDS = "birthday,time_zone,anime_statistics,is_supporter";
+
+    MyAnimeList(){ }
 
     /**
      * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshOAuthToken()}.

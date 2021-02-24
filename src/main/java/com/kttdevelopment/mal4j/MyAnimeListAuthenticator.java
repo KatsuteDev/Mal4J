@@ -35,7 +35,13 @@ import static com.kttdevelopment.mal4j.Json.*;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/authorization">https://myanimelist.net/apiconfig/references/authorization</a> <br>
- * Authenticator used to retrieve OAuth2 tokens given a client id and client secret.
+ * Authenticator is used to retrieve OAuth2 tokens given a client id and client secret.
+ * <br><br>
+ * MyAnimeList can be authenticated by with either:
+ * <ul>
+ *     <li>An authorization code using {@link #MyAnimeListAuthenticator(String, String, String, String)}.</li>
+ *     <li>A local server using {@link LocalServerBuilder}.</li>
+ * </ul>
  *
  * @since 1.0.0
  * @version 1.1.0
@@ -597,9 +603,9 @@ public final class MyAnimeListAuthenticator {
 // local server
 
     /**
-     * Returns if the code is allowed to open the client browser.
+     * Returns if the Java is allowed to open the client browser.
      *
-     * @return if code can open browser
+     * @return if Java can open the browser
      *
      * @since 1.0.0
      */

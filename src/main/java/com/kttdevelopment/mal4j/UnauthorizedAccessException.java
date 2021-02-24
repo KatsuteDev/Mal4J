@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j;
 
 /**
- * Thrown if the state was illegally modified.
+ * Thrown if the state parameter was illegally modified.
  *
  * @see MyAnimeListAuthenticator
  * @since 1.0.0
