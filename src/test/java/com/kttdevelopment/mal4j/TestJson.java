@@ -3,6 +3,7 @@ package com.kttdevelopment.mal4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -28,6 +29,7 @@ public class TestJson {
                 "\"strings\":\"string\",",
                 "\"str\\\"ingx\":\"str\\\"ing\",",
                 "\"slash\": \"\\/\\\\\",",
+                "\"\\u4f55\": \"\\u4f55\",",
                 "\"obj\": {" +
                     "\"k\": \"v\"" +
                 "}," +
@@ -38,7 +40,6 @@ public class TestJson {
                 "\"carr\": []" +
             "}"
         );
-
         final JsonObject json = (JsonObject) parse(map);
 
         Assertions.assertEquals(1.0, json.getDouble("double"));
@@ -57,6 +58,7 @@ public class TestJson {
         Assertions.assertEquals("string", json.getString("strings"));
         Assertions.assertEquals("str\"ing", json.getString("str\"ingx"));
         Assertions.assertEquals("/\\", json.getString("slash"));
+        Assertions.assertEquals("何", json.getString("何"));
         Assertions.assertEquals("v", json.getJsonObject("obj").getString("k"));
         Assertions.assertEquals(0, json.getJsonObject("cobj").size());
         Assertions.assertEquals("str", json.getStringArray("arr")[0]);
@@ -79,6 +81,7 @@ public class TestJson {
                 "\"string\",",
                 " \"str\\\"ingx\",",
                 "\"\\/\\\\\",",
+                "\"\\u4f55\"",
                 "{" +
                     "\"k\": \"v\"" +
                 "}," +
@@ -106,6 +109,7 @@ public class TestJson {
         Assertions.assertTrue(json.contains("string"));
         Assertions.assertTrue(json.contains("str\"ingx"));
         Assertions.assertTrue(json.contains("/\\"));
+        Assertions.assertTrue(json.contains("何"));
         Assertions.assertEquals("v", ((JsonObject) json.get(12)).getString("k"));
         Assertions.assertEquals(0, ((JsonObject) json.get(13)).size());
         Assertions.assertTrue(json.contains(List.of("str")));

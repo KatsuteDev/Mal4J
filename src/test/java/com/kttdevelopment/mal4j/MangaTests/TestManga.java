@@ -28,6 +28,7 @@ public class TestManga {
         Assertions.assertNotNull(manga.getMainPicture().getLargeURL());
         Assertions.assertNotNull(manga.getAlternativeTitles().getEnglish());
         Assertions.assertNotNull(manga.getAlternativeTitles().getJapanese());
+        Assertions.assertFalse(manga.getAlternativeTitles().getJapanese().startsWith("\\u"), "Japanese characters should not be returned as a literal \\u unicode string");
         Assertions.assertNotNull(manga.getAlternativeTitles().getSynonyms());
         Assertions.assertNotNull(manga.getStartDate());
         Assertions.assertNotNull(manga.getEndDate());

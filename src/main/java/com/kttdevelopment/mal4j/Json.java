@@ -19,9 +19,10 @@
 package com.kttdevelopment.mal4j;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.function.Function;
+import java.util.regex.*;
 
 /**
  * A massively simplified json parsing class. Supports the bare minimum read requirements for the REST API responses.
@@ -51,6 +52,10 @@ abstract class Json {
     // \\\\
     private static final Pattern escBackSlash =
         Pattern.compile("\\\\\\\\");
+
+    // (?<!\\)\\u([\da-f]{4})
+    private static final Pattern escUnicode =
+        Pattern.compile("(?<!\\\\)\\\\u([\\da-f]{4})");
 
     // ^\s*(?<!\\)"(?<key>.+(?<!\\)(?:\\\\)*)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType =
@@ -132,10 +137,11 @@ abstract class Json {
     }
 
     private static List<?> openArray(final BufferedReader reader) throws IOException{
-        final Matcher matcher = arrType.matcher("");
-        final Matcher escQuoteMatcher = escQuote.matcher("");
-        final Matcher escFwdSlashMatcher = escFwdSlash.matcher("");
-        final Matcher escBackSlashMatcher = escBackSlash.matcher("");
+        final Matcher matcher               = arrType.matcher("");
+        final Matcher escQuoteMatcher       = escQuote.matcher("");
+        final Matcher escFwdSlashMatcher    = escFwdSlash.matcher("");
+        final Matcher escBackSlashMatcher   = escBackSlash.matcher("");
+        final Matcher escUnicodeMatcher     = escUnicode.matcher("");
 
         final List<Object> list = new ArrayList<>();
         String ln;
@@ -161,12 +167,7 @@ abstract class Json {
                     list.add(null);
                 else if((raw = matcher.group("string")) != null)
                     list.add(
-                        escBackSlashMatcher.reset(
-                            escFwdSlashMatcher.reset(
-                                escQuoteMatcher.reset(raw)
-                                .replaceAll("\""))
-                            .replaceAll("/"))
-                        .replaceAll("\\\\")
+                        decodeString(escBackSlashMatcher, escFwdSlashMatcher, escQuoteMatcher, escUnicodeMatcher, raw)
                     );
                 else if(matcher.group("array") != null) // open new array
                     list.add(openArray(reader));
@@ -181,23 +182,18 @@ abstract class Json {
     }
 
     private static JsonObject openMap(final BufferedReader reader) throws IOException{
-        final Matcher matcher = mapType.matcher("");
-        final Matcher escQuoteMatcher = escQuote.matcher("");
-        final Matcher escFwdSlashMatcher = escFwdSlash.matcher("");
-        final Matcher escBackSlashMatcher = escBackSlash.matcher("");
+        final Matcher matcher               = arrType.matcher("");
+        final Matcher escQuoteMatcher       = escQuote.matcher("");
+        final Matcher escFwdSlashMatcher    = escFwdSlash.matcher("");
+        final Matcher escBackSlashMatcher   = escBackSlash.matcher("");
+        final Matcher escUnicodeMatcher     = escUnicode.matcher("");
 
         final JsonObject obj = new JsonObject();
         String ln;
         while((ln = reader.readLine()) != null){
             ln = ln.trim();
             if(matcher.reset(ln).matches()){
-                final String key =
-                    escBackSlashMatcher.reset(
-                        escFwdSlashMatcher.reset(
-                            escQuoteMatcher.reset(matcher.group("key"))
-                            .replaceAll("\""))
-                        .replaceAll("/"))
-                    .replaceAll("\\\\");
+                final String key = decodeString(escBackSlashMatcher, escFwdSlashMatcher, escQuoteMatcher, escUnicodeMatcher,matcher.group("key"));
                 String raw;
                 if((raw = matcher.group("double")) != null)
                     try{
@@ -218,12 +214,7 @@ abstract class Json {
                 else if((raw = matcher.group("string")) != null)
                     obj.set(
                         key,
-                        escBackSlashMatcher.reset(
-                            escFwdSlashMatcher.reset(
-                                escQuoteMatcher.reset(raw)
-                                .replaceAll("\""))
-                            .replaceAll("/"))
-                        .replaceAll("\\\\")
+                        decodeString(escBackSlashMatcher, escFwdSlashMatcher, escQuoteMatcher, escUnicodeMatcher, raw)
                     );
                 else if(matcher.group("array") != null) // open new array
                     obj.set(key, openArray(reader));
@@ -235,6 +226,19 @@ abstract class Json {
                 throw new JsonSyntaxException("Unexpected object value syntax: '" + ln + '\'');
         }
         throw new JsonSyntaxException("Object was missing closing character: '}'");
+    }
+
+    private static String decodeString(final Matcher escBackSlashMatcher, final Matcher escFwdSlashMatcher, final Matcher escQuoteMatcher, final Matcher unicodeMatcher, final String raw){
+        return
+            escBackSlashMatcher.reset(
+                escFwdSlashMatcher.reset(
+                    escQuoteMatcher.reset(
+                        unicodeMatcher.replaceAll(
+                            matchResult -> String.valueOf((char) Integer.parseInt(matchResult.group(1), 16))
+                        )
+                    ).replaceAll("\"")
+                ).replaceAll("/")
+            ).replaceAll("\\\\");
     }
 
     // objects

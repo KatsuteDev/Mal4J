@@ -67,7 +67,7 @@ public class TestAnimeListStatus {
             .priority(Priority.High)
             .timesRewatched(0)
             .rewatchValue(RewatchValue.VeryHigh)
-            .tags("ignore", "tags")
+            .tags("ignore", "なに")
             .comments("ignore comments")
             .update();
 
@@ -137,7 +137,7 @@ public class TestAnimeListStatus {
         Assertions.assertEquals(0, status.getTimesRewatched());
         Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
         Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains("なに"));
         Assertions.assertEquals("ignore comments", status.getComments());
         Assertions.assertNotNull(status.getUpdatedAt());
         Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
