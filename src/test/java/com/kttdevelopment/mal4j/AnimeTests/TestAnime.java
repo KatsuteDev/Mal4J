@@ -29,6 +29,7 @@ public class TestAnime {
         Assertions.assertNotNull(anime.getMainPicture().getLargeURL());
         Assertions.assertNotNull(anime.getAlternativeTitles().getEnglish());
         Assertions.assertNotNull(anime.getAlternativeTitles().getJapanese());
+        Assertions.assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u"), "Japanese characters should not be returned as a literal \\u unicode string");
         Assertions.assertNotNull(anime.getAlternativeTitles().getSynonyms());
         Assertions.assertNotNull(anime.getStartDate());
         Assertions.assertNotNull(anime.getEndDate());

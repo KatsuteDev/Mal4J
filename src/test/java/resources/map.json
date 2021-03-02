@@ -1,0 +1,26 @@
+{
+  "double": 1.0,
+  "doublen": -1.0,
+  "doubles":1.0,
+  "int": 1,
+  "intn": -1,
+  "ints":1,
+  "bool": true,
+  "bools":false,
+  "null": null,
+  "nulls":null,
+  "string": "string",
+  "strings":"string",
+  "str\"ingx":"str\"ing",
+  "slash\\": "\/\\",
+  "\u4f55": "\u4f55",
+  "\\u4f55": "\\u4f55",
+  "obj": {
+    "k": "v"
+  },
+  "cobj": {},
+  "arr": [
+    "str"
+  ],
+  "carr": []
+}

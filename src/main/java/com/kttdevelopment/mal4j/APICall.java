@@ -186,7 +186,7 @@ final class APICall {
             request.header(entry.getKey(), entry.getValue());
 
         request.header("Cache-Control", "no-cache, no-store, must-revalidate");
-        request.header("Accept", "application/json");
+        request.header("Accept", "application/json; charset=UTF-8");
 
         if(debug){
             System.out.println("\nCall:     " + URL);
@@ -203,7 +203,7 @@ final class APICall {
         final HttpResponse<String> response = HttpClient
             .newBuilder()
             .build()
-            .send(request.build(), HttpResponse.BodyHandlers.ofString());
+            .send(request.build(), HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
         final String body = response.body();
 
         if(debug)
