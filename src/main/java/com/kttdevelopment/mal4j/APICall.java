@@ -297,7 +297,7 @@ final class APICall {
                     baseURL,
                     method,
                     args
-                ).call(Json::parse);
+                ).call(Json::lparse);
             }catch(final IOException e){
                 throw new UncheckedIOException(e);
             }catch(final InterruptedException e){

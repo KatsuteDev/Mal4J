@@ -19,7 +19,6 @@
 package com.kttdevelopment.mal4j;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.*;
@@ -28,7 +27,7 @@ import java.util.regex.*;
  * A massively simplified json parsing class. Supports the bare minimum read requirements for the REST API responses.
  */
 @SuppressWarnings("SpellCheckingInspection")
-abstract class Json {
+class Json {
 
     /*
      * Notable issues:
@@ -41,21 +40,29 @@ abstract class Json {
     // (?<!\\)(?:\\\\)*"
     private static final Pattern nonEscQuote = Pattern.compile("(?<!\\\\)(?:\\\\\\\\)*\"");
 
-    // \\"
-    private static final Pattern escQuote =
-        Pattern.compile("\\\\\"");
-
-    // \\\/
-    private static final Pattern escFwdSlash =
-        Pattern.compile("\\\\/");
-
-    // \\\\
-    private static final Pattern escBackSlash =
-        Pattern.compile("\\\\\\\\");
-
     // (?<!\\)\\u([\da-f]{4})
     private static final Pattern escUnicode =
         Pattern.compile("(?<!\\\\)\\\\u([\\da-f]{4})");
+
+    private static final Function<MatchResult,String> unicodeReplacer = matchResult -> String.valueOf((char) Integer.parseInt(matchResult.group(1), 16));
+
+    // \\"|\\\/|\\\\
+    private static final Pattern escapedCharacters =
+        Pattern.compile("\\\\\"|\\\\/|\\\\\\\\");
+
+    private static final Function<MatchResult,String> escapedReplacer = matchResult -> {
+        final String chars = matchResult.group(0);
+        switch(chars){
+            case "\\\"":
+                return "\"";
+            case "\\/":
+                return "/";
+            case "\\\\":
+                return "\\\\"; // this needs to be \\ to return \ for some reason
+            default:
+                return chars;
+        }
+    };
 
     // ^\s*(?<!\\)"(?<key>.+(?<!\\)(?:\\\\)*)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern mapType =
@@ -76,6 +83,24 @@ abstract class Json {
     private static final Pattern newline =
         Pattern.compile("\\r?\\n");
 
+    //
+
+    private final Matcher splitMatcher = split.matcher("");
+    private final Matcher nonEscQuoteMatcher = nonEscQuote.matcher("");
+
+    private final Matcher arrayMatcher = arrType.matcher("");
+    private final Matcher mapMatcher = mapType.matcher("");
+
+    private final Matcher unicodeMatcher = escUnicode.matcher("");
+    private final Matcher escapedMatcher = escapedCharacters.matcher("");
+
+    Json(){ }
+
+    // required for lambda
+    static Object lparse(final String json){
+        return new Json().parse(json);
+    }
+
     /**
      * Returns json as a JsonObject or List. <b>Mutable</b>.
      *
@@ -84,24 +109,24 @@ abstract class Json {
      *
      * @see JsonObject
      */
-    static Object parse(final String json){
+    synchronized final Object parse(final String json){
         Objects.requireNonNull(json);
         final String flatJson = newline.matcher(json).replaceAll("");
 
         // split by symbols {}[], except within non-escaped quotes
         final StringBuilder OUT = new StringBuilder();
         int lastMatch = -1; // the index after the previous match
-        final Matcher matcher = split.matcher(flatJson);
-        final Matcher quotes = nonEscQuote.matcher("");
-        while(matcher.find()){ // while still contains line splitting symbol
-            final int index = matcher.end() - 1; // before the comma/split character
+        splitMatcher.reset(flatJson);
+        final Matcher quotes = nonEscQuoteMatcher.reset();
+        while(splitMatcher.find()){ // while still contains line splitting symbol
+            final int index = splitMatcher.end() - 1; // before the comma/split character
             final String after = flatJson.substring(index + 1);
             final long count = quotes.reset(after).results().count();
             if(count %2 == 0){ // even means symbol is not within quotes
                 if(lastMatch != -1) // if not first (no before content)
                     OUT.append(flatJson, lastMatch, index); // add content between last match and here
                 lastMatch = index + 1;
-                final char ch = matcher.group().charAt(0);
+                final char ch = splitMatcher.group().charAt(0);
                 switch(ch){ // determine where to break line
                     case '{':
                     case '[':
@@ -136,42 +161,34 @@ abstract class Json {
         }
     }
 
-    private static List<?> openArray(final BufferedReader reader) throws IOException{
-        final Matcher matcher               = arrType.matcher("");
-        final Matcher escQuoteMatcher       = escQuote.matcher("");
-        final Matcher escFwdSlashMatcher    = escFwdSlash.matcher("");
-        final Matcher escBackSlashMatcher   = escBackSlash.matcher("");
-        final Matcher escUnicodeMatcher     = escUnicode.matcher("");
-
+    private List<?> openArray(final BufferedReader reader) throws IOException{
         final List<Object> list = new ArrayList<>();
         String ln;
         while((ln = reader.readLine()) != null){ // while not closing tag
             ln = ln.trim();
-            if(matcher.reset(ln).matches()){
+            if(arrayMatcher.reset(ln).matches()){
                 String raw;
-                if((raw = matcher.group("double")) != null)
+                if((raw = arrayMatcher.group("double")) != null)
                     try{
                         list.add(Double.parseDouble(raw));
                     }catch(final NumberFormatException ignored){ // only occurs if too large
                         list.add(Long.parseLong(raw));
                     }
-                else if((raw = matcher.group("int")) != null)
+                else if((raw = arrayMatcher.group("int")) != null)
                     try{
                         list.add(Integer.parseInt(raw));
                     }catch(final NumberFormatException ignored){ // only occurs if too large
                         list.add(Long.parseLong(raw));
                     }
-                else if((raw = matcher.group("boolean")) != null)
+                else if((raw = arrayMatcher.group("boolean")) != null)
                     list.add(Boolean.parseBoolean(raw));
-                else if(matcher.group("null") != null)
+                else if(arrayMatcher.group("null") != null)
                     list.add(null);
-                else if((raw = matcher.group("string")) != null)
-                    list.add(
-                        decodeString(escBackSlashMatcher, escFwdSlashMatcher, escQuoteMatcher, escUnicodeMatcher, raw)
-                    );
-                else if(matcher.group("array") != null) // open new array
+                else if((raw = arrayMatcher.group("string")) != null)
+                    list.add(decodeString(raw));
+                else if(arrayMatcher.group("array") != null) // open new array
                     list.add(openArray(reader));
-                else if(matcher.group("map") != null) // open new map
+                else if(arrayMatcher.group("map") != null) // open new map
                     list.add(openMap(reader));
             }else if(arrClose.matcher(ln).matches())
                 return list;
@@ -181,44 +198,38 @@ abstract class Json {
         throw new JsonSyntaxException("Object was missing closing character: ']'");
     }
 
-    private static JsonObject openMap(final BufferedReader reader) throws IOException{
-        final Matcher matcher               = arrType.matcher("");
-        final Matcher escQuoteMatcher       = escQuote.matcher("");
-        final Matcher escFwdSlashMatcher    = escFwdSlash.matcher("");
-        final Matcher escBackSlashMatcher   = escBackSlash.matcher("");
-        final Matcher escUnicodeMatcher     = escUnicode.matcher("");
-
+    private JsonObject openMap(final BufferedReader reader) throws IOException{
         final JsonObject obj = new JsonObject();
         String ln;
         while((ln = reader.readLine()) != null){
             ln = ln.trim();
-            if(matcher.reset(ln).matches()){
-                final String key = decodeString(escBackSlashMatcher, escFwdSlashMatcher, escQuoteMatcher, escUnicodeMatcher,matcher.group("key"));
+            if(mapMatcher.reset(ln).matches()){
+                final String key = decodeString(mapMatcher.group("key"));
                 String raw;
-                if((raw = matcher.group("double")) != null)
+                if((raw = mapMatcher.group("double")) != null)
                     try{
                         obj.set(key, Double.parseDouble(raw));
                     }catch(final NumberFormatException ignored){ // only occurs if too large
                         obj.set(key, Long.parseLong(raw));
                     }
-                else if((raw = matcher.group("int")) != null)
+                else if((raw = mapMatcher.group("int")) != null)
                     try{
                         obj.set(key, Integer.parseInt(raw));
                     }catch(final NumberFormatException ignored){ // only occurs if too large
                         obj.set(key, Long.parseLong(raw));
                     }
-                else if((raw = matcher.group("boolean")) != null)
+                else if((raw = mapMatcher.group("boolean")) != null)
                     obj.set(key, Boolean.parseBoolean(raw));
-                else if(matcher.group("null") != null)
+                else if(mapMatcher.group("null") != null)
                     obj.set(key, null);
-                else if((raw = matcher.group("string")) != null)
+                else if((raw = mapMatcher.group("string")) != null)
                     obj.set(
                         key,
-                        decodeString(escBackSlashMatcher, escFwdSlashMatcher, escQuoteMatcher, escUnicodeMatcher, raw)
+                        decodeString(raw)
                     );
-                else if(matcher.group("array") != null) // open new array
+                else if(mapMatcher.group("array") != null) // open new array
                     obj.set(key, openArray(reader));
-                else if(matcher.group("map") != null) // open new map
+                else if(mapMatcher.group("map") != null) // open new map
                     obj.set(key, openMap(reader));
             }else if(mapClose.matcher(ln).matches())
                 return obj;
@@ -228,17 +239,12 @@ abstract class Json {
         throw new JsonSyntaxException("Object was missing closing character: '}'");
     }
 
-    private static String decodeString(final Matcher escBackSlashMatcher, final Matcher escFwdSlashMatcher, final Matcher escQuoteMatcher, final Matcher unicodeMatcher, final String raw){
-        return
-            escBackSlashMatcher.reset(
-                escFwdSlashMatcher.reset(
-                    escQuoteMatcher.reset(
-                        unicodeMatcher.replaceAll(
-                            matchResult -> String.valueOf((char) Integer.parseInt(matchResult.group(1), 16))
-                        )
-                    ).replaceAll("\"")
-                ).replaceAll("/")
-            ).replaceAll("\\\\");
+    private String decodeString(final String raw){
+        return escapedMatcher.reset(
+            unicodeMatcher.reset(
+                raw
+            ).replaceAll(unicodeReplacer)
+        ).replaceAll(escapedReplacer);
     }
 
     // objects

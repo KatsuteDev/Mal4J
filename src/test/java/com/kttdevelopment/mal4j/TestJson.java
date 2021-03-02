@@ -3,7 +3,10 @@ package com.kttdevelopment.mal4j;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.List;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -12,35 +15,10 @@ import static com.kttdevelopment.mal4j.Json.*;
 public class TestJson {
 
     @Test
-    public void testMap(){
-        final String map = String.join("",
-            "{",
-                "\"double\": 1.0,",
-                "\"doublen\": -1.0,",
-                "\"doubles\":1.0,",
-                "\"int\": 1,",
-                "\"intn\": -1,",
-                "\"ints\":1,",
-                "\"bool\": true,",
-                "\"bools\":false,",
-                "\"null\":null,",
-                "\"nulls\": null,",
-                "\"string\": \"string\",",
-                "\"strings\":\"string\",",
-                "\"str\\\"ingx\":\"str\\\"ing\",",
-                "\"slash\": \"\\/\\\\\",",
-                "\"\\u4f55\": \"\\u4f55\",",
-                "\"obj\": {" +
-                    "\"k\": \"v\"" +
-                "}," +
-                "\"cobj\": {}," +
-                "\"arr\": [" +
-                    "\"str\"" +
-                "]," +
-                "\"carr\": []" +
-            "}"
-        );
-        final JsonObject json = (JsonObject) parse(map);
+    public void testMap() throws IOException{
+        final String map = Files.readString(new File("src/test/java/resources/map.json").toPath()).replaceAll("\\r?\\n","");
+
+        final JsonObject json = (JsonObject) new Json().parse(map);
 
         Assertions.assertEquals(1.0, json.getDouble("double"));
         Assertions.assertEquals(-1.0, json.getDouble("doublen"));
@@ -57,8 +35,9 @@ public class TestJson {
         Assertions.assertEquals("string", json.getString("string"));
         Assertions.assertEquals("string", json.getString("strings"));
         Assertions.assertEquals("str\"ing", json.getString("str\"ingx"));
-        Assertions.assertEquals("/\\", json.getString("slash"));
+        Assertions.assertEquals("/\\", json.getString("slash\\"));
         Assertions.assertEquals("何", json.getString("何"));
+        Assertions.assertEquals("\\u4f55", json.getString("\\u4f55"));
         Assertions.assertEquals("v", json.getJsonObject("obj").getString("k"));
         Assertions.assertEquals(0, json.getJsonObject("cobj").size());
         Assertions.assertEquals("str", json.getStringArray("arr")[0]);
@@ -66,36 +45,10 @@ public class TestJson {
     }
 
     @Test
-    public void testArray(){
-        final String arr = String.join("",
-           "[",
-                " 1.0,",
-                " -1.0,",
-                "2.0,",
-                " 1,",
-                " -1,",
-                "2,",
-                "true,",
-                "false,",
-                "null,",
-                "\"string\",",
-                " \"str\\\"ingx\",",
-                "\"\\/\\\\\",",
-                "\"\\u4f55\"",
-                "{" +
-                    "\"k\": \"v\"" +
-                "}," +
-                "{}," +
-                "[" +
-                    "\"str\"" +
-                "]," +
-                "[]" +
-            "]"
-        );
+    public void testArray() throws IOException{
+        final String arr = Files.readString(new File("src/test/java/resources/arr.json").toPath()).replaceAll("\\r?\\n","");
 
-        // \/\\
-
-        final List<?> json = (List<?>) parse(arr);
+        final List<?> json = (List<?>) new Json().parse(arr);
 
         Assertions.assertTrue(json.contains(1.0));
         Assertions.assertTrue(json.contains(-1.0));
@@ -110,23 +63,24 @@ public class TestJson {
         Assertions.assertTrue(json.contains("str\"ingx"));
         Assertions.assertTrue(json.contains("/\\"));
         Assertions.assertTrue(json.contains("何"));
-        Assertions.assertEquals("v", ((JsonObject) json.get(12)).getString("k"));
-        Assertions.assertEquals(0, ((JsonObject) json.get(13)).size());
+        Assertions.assertTrue(json.contains("\\u4f55"));
+        Assertions.assertEquals("v", ((JsonObject) json.get(14)).getString("k"));
+        Assertions.assertEquals(0, ((JsonObject) json.get(15)).size());
         Assertions.assertTrue(json.contains(List.of("str")));
         Assertions.assertTrue(json.contains(List.of()));
     }
 
     @Test
     public void testMalformed(){
-        Assertions.assertThrows(JsonSyntaxException.class, () -> parse(""));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("?"));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("{"));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("["));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> new Json().parse(""));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> new Json().parse("?"));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> new Json().parse("{"));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> new Json().parse("["));
     }
 
     @Test
     public void testNewLine(){
-        Assertions.assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k"));
+        Assertions.assertEquals("v", ((JsonObject) new Json().parse("{\"k\":\n\"v\"\n}")).getString("k"));
     }
 
 }
