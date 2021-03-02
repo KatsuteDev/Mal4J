@@ -24,12 +24,16 @@ public class TestMangaListStatus {
     @Test @Order(100)
     public void cleanup(){ afterAll(); }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @AfterAll
     public static void afterAll(){
         if(cleanup) return; else cleanup = true;
         TestProvider.testRequireClientID();
 
         mal.deleteMangaListing(TestProvider.MangaID);
+
+        if(mal.getMyself().getID() != 8316239) return; // only update for Katsute
+
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
             .status(MangaStatus.PlanToRead)
             .score(0)

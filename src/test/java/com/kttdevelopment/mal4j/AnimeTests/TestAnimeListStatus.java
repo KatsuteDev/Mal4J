@@ -24,12 +24,16 @@ public class TestAnimeListStatus {
     @Test @Order(100)
     public void cleanup(){ afterAll(); }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @AfterAll
     public static void afterAll(){
         if(cleanup) return; else cleanup = true;
         TestProvider.testRequireClientID();
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
+
+        if(mal.getMyself().getID() != 8316239) return; // only update for Katsute
+
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
             .score(10)
