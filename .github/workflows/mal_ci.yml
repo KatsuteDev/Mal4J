@@ -18,7 +18,6 @@ jobs:
 
       - name: 🔐 Load OAuth Token
         run: |
-          mkdir src/test/java/resources
           echo ${{ secrets.MAL_OAUTH }} > src/test/java/resources/oauth.txt
 
       - name: ✔ Test with Maven
