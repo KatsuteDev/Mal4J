@@ -17,7 +17,7 @@ public class TestJson {
     public void testMap() throws IOException{
         final String map = Files.readString(new File("src/test/java/resources/map.json").toPath()).replaceAll("\\r?\\n","");
 
-        final JsonObject json = (JsonObject) Json.parse(map);
+        final JsonObject json = (JsonObject) parse(map);
 
         Assertions.assertEquals(1.0, json.getDouble("double"));
         Assertions.assertEquals(-1.0, json.getDouble("doublen"));
@@ -47,7 +47,7 @@ public class TestJson {
     public void testArray() throws IOException{
         final String arr = Files.readString(new File("src/test/java/resources/arr.json").toPath()).replaceAll("\\r?\\n","");
 
-        final List<?> json = (List<?>) Json.parse(arr);
+        final List<?> json = (List<?>) parse(arr);
 
         Assertions.assertTrue(json.contains(1.0));
         Assertions.assertTrue(json.contains(-1.0));
@@ -71,15 +71,15 @@ public class TestJson {
 
     @Test
     public void testMalformed(){
-        Assertions.assertThrows(JsonSyntaxException.class, () -> Json.parse(""));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> Json.parse("?"));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> Json.parse("{"));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> Json.parse("["));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> parse(""));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("?"));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("{"));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("["));
     }
 
     @Test
     public void testNewLine(){
-        Assertions.assertEquals("v", ((JsonObject) Json.parse("{\"k\":\n\"v\"\n}")).getString("k"));
+        Assertions.assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k"));
     }
 
 }
