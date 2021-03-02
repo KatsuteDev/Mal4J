@@ -94,11 +94,11 @@ class Json {
     private final Matcher unicodeMatcher = escUnicode.matcher("");
     private final Matcher escapedMatcher = escapedCharacters.matcher("");
 
-    Json(){ }
+    private Json(){ }
 
     // required for lambda
-    static Object lparse(final String json){
-        return new Json().parse(json);
+    static Object parse(final String json){
+        return new Json().parseJson(json);
     }
 
     /**
@@ -109,7 +109,7 @@ class Json {
      *
      * @see JsonObject
      */
-    synchronized final Object parse(final String json){
+    private synchronized Object parseJson(final String json){
         Objects.requireNonNull(json);
         final String flatJson = newline.matcher(json).replaceAll("");
 

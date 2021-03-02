@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class TestJson {
     public void testMap() throws IOException{
         final String map = Files.readString(new File("src/test/java/resources/map.json").toPath()).replaceAll("\\r?\\n","");
 
-        final JsonObject json = (JsonObject) new Json().parse(map);
+        final JsonObject json = (JsonObject) Json.parse(map);
 
         Assertions.assertEquals(1.0, json.getDouble("double"));
         Assertions.assertEquals(-1.0, json.getDouble("doublen"));
@@ -48,7 +47,7 @@ public class TestJson {
     public void testArray() throws IOException{
         final String arr = Files.readString(new File("src/test/java/resources/arr.json").toPath()).replaceAll("\\r?\\n","");
 
-        final List<?> json = (List<?>) new Json().parse(arr);
+        final List<?> json = (List<?>) Json.parse(arr);
 
         Assertions.assertTrue(json.contains(1.0));
         Assertions.assertTrue(json.contains(-1.0));
@@ -72,15 +71,15 @@ public class TestJson {
 
     @Test
     public void testMalformed(){
-        Assertions.assertThrows(JsonSyntaxException.class, () -> new Json().parse(""));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> new Json().parse("?"));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> new Json().parse("{"));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> new Json().parse("["));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> Json.parse(""));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> Json.parse("?"));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> Json.parse("{"));
+        Assertions.assertThrows(JsonSyntaxException.class, () -> Json.parse("["));
     }
 
     @Test
     public void testNewLine(){
-        Assertions.assertEquals("v", ((JsonObject) new Json().parse("{\"k\":\n\"v\"\n}")).getString("k"));
+        Assertions.assertEquals("v", ((JsonObject) Json.parse("{\"k\":\n\"v\"\n}")).getString("k"));
     }
 
 }
