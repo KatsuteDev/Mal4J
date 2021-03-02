@@ -13,14 +13,19 @@ import java.util.*;
 public class TestAnimeListStatus {
 
     private static MyAnimeList mal;
+    private static boolean cleanup = false;
 
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
 
+    @Test @Order(100)
+    public void cleanup(){ afterAll(); }
+
     @AfterAll
     public static void afterAll(){
+        if(cleanup) return; else cleanup = true;
         TestProvider.testRequireClientID();
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
@@ -67,8 +72,8 @@ public class TestAnimeListStatus {
             .priority(Priority.High)
             .timesRewatched(0)
             .rewatchValue(RewatchValue.VeryHigh)
-            .tags("ignore", "なに")
-            .comments("ignore comments")
+            .tags(TestProvider.testTags())
+            .comments(TestProvider.testComment)
             .update();
 
         testStatus(status);
@@ -136,14 +141,14 @@ public class TestAnimeListStatus {
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesRewatched());
         Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains("なに"));
-        Assertions.assertEquals("ignore comments", status.getComments());
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
+        Assertions.assertEquals(TestProvider.testComment, status.getComments());
         Assertions.assertNotNull(status.getUpdatedAt());
         Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
-    @Test
+    @Test @Order(4)
     public void testConsecutiveUpdates(){
         testDelete();
         testUpdate();
