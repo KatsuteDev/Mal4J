@@ -3,6 +3,7 @@ package com.kttdevelopment.mal4j.AnimeTests;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
+import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.property.Priority;
 import com.kttdevelopment.mal4j.anime.property.RewatchValue;
 import org.junit.jupiter.api.*;
@@ -153,6 +154,21 @@ public class TestAnimeListStatus {
         testDelete();
         testUpdate();
         testUpdate();
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
+    public void testEcchiNSFW(){
+        final List<AnimeListStatus> list =
+            mal.getUserAnimeListing()
+                .withLimit(1000)
+                .withFields(Fields.Anime.list_status)
+                .search();
+
+        for(final AnimeListStatus userAnimeListStatus : list)
+            if(userAnimeListStatus.getAnimePreview().getID() == TestProvider.AnimeID)
+                return;
+        Assertions.fail("Failed to find Anime with Ecchi genre");
     }
 
 }

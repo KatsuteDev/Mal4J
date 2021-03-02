@@ -1,6 +1,7 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
 import com.kttdevelopment.mal4j.*;
+import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
 import com.kttdevelopment.mal4j.property.Priority;
@@ -154,6 +155,21 @@ public class TestMangaListStatus {
         testDelete();
         testUpdate();
         testUpdate();
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
+    public void testEcchiNSFW(){
+        final List<MangaListStatus> list =
+            mal.getUserMangaListing()
+                .withLimit(1000)
+                .withFields(Fields.Manga.list_status)
+                .search();
+
+        for(final MangaListStatus userMangaListStatus : list)
+            if(userMangaListStatus.getMangaPreview().getID() == TestProvider.MangaID)
+                return;
+        Assertions.fail("Failed to find Anime with Ecchi genre");
     }
 
 }
