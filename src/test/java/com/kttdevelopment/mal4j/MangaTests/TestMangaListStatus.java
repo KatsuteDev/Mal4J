@@ -21,9 +21,12 @@ public class TestMangaListStatus {
 
     @AfterAll
     public static void afterAll(){
-        TestProvider.testRequireClientID();
+        if(mal == null) return;
 
         mal.deleteMangaListing(TestProvider.MangaID);
+
+        if(mal.getMyself().getID() != 8316239) return;
+
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
             .status(MangaStatus.PlanToRead)
             .score(0)
@@ -53,7 +56,7 @@ public class TestMangaListStatus {
     public void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
         Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
-        Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.updated_at).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -70,14 +73,14 @@ public class TestMangaListStatus {
             .priority(Priority.High)
             .timesReread(0)
             .rereadValue(RereadValue.VeryHigh)
-            .tags("ignore", "tags")
-            .comments("ignore comments")
+            .tags(TestProvider.testTags())
+            .comments(TestProvider.testComment)
             .update();
 
         testStatus(status);
     }
 
-    @Test @Order(3) @DisplayName("testGet(), #25 - Rereading status")
+    @Test @Order(3)
     public void testGet(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
@@ -87,19 +90,16 @@ public class TestMangaListStatus {
                 .includeNSFW()
                 .search();
 
-        MangaListStatus status = null;
-        for(final MangaListStatus userMangaListStatus : list)
-            if((status = userMangaListStatus).getMangaPreview().getID() == TestProvider.MangaID)
-                break;
-            else
-                status = null;
-        Assertions.assertNotNull(status);
-
-        testStatus(status);
+        for(final MangaListStatus listStatus : list)
+            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID){
+                testStatus(listStatus);
+                return;
+            }
+        Assertions.fail("Manga list status not found");
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    @Test @Order(3) @DisplayName("testGetUsername(), #25 - Rereading status")
+    @Test @Order(3)
     public void testGetUsername(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing("KatsuteDev")
@@ -109,15 +109,12 @@ public class TestMangaListStatus {
                 .includeNSFW()
                 .search();
 
-        MangaListStatus status = null;
-        for(final MangaListStatus userMangaListStatus : list)
-            if((status = userMangaListStatus).getMangaPreview().getID() == TestProvider.MangaID)
-                break;
-            else
-                status = null;
-        Assertions.assertNotNull(status);
-
-        testStatus(status);
+        for(final MangaListStatus listStatus : list)
+            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID){
+                testStatus(listStatus);
+                return;
+            }
+        Assertions.fail("User Manga list status not found");
     }
 
     @Test @Order(3)
@@ -137,18 +134,33 @@ public class TestMangaListStatus {
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesReread());
         Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue());
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains("tags"));
-        Assertions.assertEquals("ignore comments", status.getComments());
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
+        Assertions.assertEquals(TestProvider.testComment, status.getComments());
         Assertions.assertNotNull(status.getUpdatedAt());
         Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
-    @Test
+    @Test @Order(4)
     public void testConsecutiveUpdates(){
         testDelete();
         testUpdate();
         testUpdate();
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
+    public void testEcchiNSFW(){
+        final List<MangaListStatus> list =
+            mal.getUserMangaListing()
+                .withLimit(1000)
+                .withFields(Fields.Manga.list_status)
+                .search();
+
+        for(final MangaListStatus listStatus : list)
+            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID)
+                return;
+        Assertions.fail("Failed to find Manga with Ecchi genre");
     }
 
 }

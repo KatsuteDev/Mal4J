@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 // this tests only that code compiles
+@SuppressWarnings("unused")
 public class TestREADME {
 
     public void testSearchQueries(){
