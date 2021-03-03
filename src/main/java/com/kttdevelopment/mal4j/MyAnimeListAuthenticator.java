@@ -35,7 +35,13 @@ import static com.kttdevelopment.mal4j.Json.*;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/authorization">https://myanimelist.net/apiconfig/references/authorization</a> <br>
- * Authenticator used to retrieve OAuth2 tokens given a client id and client secret.
+ * Authenticator is used to retrieve OAuth2 tokens given a client id and client secret.
+ * <br><br>
+ * MyAnimeList can be authenticated by with either:
+ * <ul>
+ *     <li>An authorization code using {@link #MyAnimeListAuthenticator(String, String, String, String)}.</li>
+ *     <li>A local server using {@link LocalServerBuilder}.</li>
+ * </ul>
  *
  * @since 1.0.0
  * @version 1.1.0
@@ -159,6 +165,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_id client id
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
+     * @param redirectURI redirect URI
      * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
      * @throws BindException if port was blocked
      * @throws IOException if server could not be started
@@ -188,6 +195,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
      * @param openBrowser if the code should automatically open a browser window
+     * @param redirectURI redirect URI
      * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
      * @throws BindException if port was blocked
      * @throws IOException if server could not be started
@@ -217,6 +225,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret (optional)
      * @param port port to run the retrieval server
      * @param timeout how long in seconds that the local authentication server will live for
+     * @param redirectURI redirect URI
      * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
      * @throws BindException if port was blocked
      * @throws IOException if server could not be started
@@ -599,9 +608,9 @@ public final class MyAnimeListAuthenticator {
 // local server
 
     /**
-     * Returns if the code is allowed to open the client browser.
+     * Returns if Java has permission to open the client browser.
      *
-     * @return if code can open browser
+     * @return if Java can open the browser
      *
      * @since 1.0.0
      */

@@ -65,6 +65,14 @@ public abstract class Manga extends MangaPreview implements FullMediaItem<MangaT
 
     // additional methods
 
+    /**
+     * Returns this.
+     *
+     * @return Manga
+     *
+     * @see Manga
+     * @since 1.0.0
+     */
     @Override
     public final Manga getManga() {
         return this;
