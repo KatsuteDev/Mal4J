@@ -3,7 +3,6 @@ package com.kttdevelopment.mal4j.AnimeTests;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
-import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.property.Priority;
 import com.kttdevelopment.mal4j.anime.property.RewatchValue;
 import org.junit.jupiter.api.*;
@@ -14,25 +13,19 @@ import java.util.*;
 public class TestAnimeListStatus {
 
     private static MyAnimeList mal;
-    private static boolean cleanup = false;
 
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
 
-    @Test @Order(100)
-    public void cleanup(){ afterAll(); }
-
-    @SuppressWarnings("SpellCheckingInspection")
     @AfterAll
     public static void afterAll(){
-        if(cleanup) return; else cleanup = true;
-        TestProvider.testRequireClientID();
+        if(mal == null) return;
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
 
-        if(mal.getMyself().getID() != 8316239) return; // only update for Katsute
+        if(mal.getMyself().getID() != 8316239) return;
 
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
@@ -61,7 +54,7 @@ public class TestAnimeListStatus {
     public void testDelete(){
         mal.deleteAnimeListing(TestProvider.AnimeID);
         Assertions.assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID));
-        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.list_status).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -84,8 +77,7 @@ public class TestAnimeListStatus {
         testStatus(status);
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
-    @Test @Order(3) @DisplayName("testGet(), #25 - Rewatching status")
+    @Test @Order(3)
     public void testGet(){
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
@@ -95,19 +87,16 @@ public class TestAnimeListStatus {
                 .includeNSFW()
                 .search();
 
-        AnimeListStatus status = null;
-        for(final AnimeListStatus userAnimeListStatus : list)
-            if((status = userAnimeListStatus).getAnimePreview().getID() == TestProvider.AnimeID)
-                break;
-            else
-                status = null;
-        Assertions.assertNotNull(status);
-
-        testStatus(status);
+        for(final AnimeListStatus listStatus : list)
+            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID){
+                testStatus(listStatus);
+                return;
+            }
+        Assertions.fail("Anime list status not found");
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    @Test @Order(3) @DisplayName("testGetUsername(), #25 - Rewatching status")
+    @Test @Order(3)
     public void testGetUsername(){
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing("KatsuteDev")
@@ -117,15 +106,12 @@ public class TestAnimeListStatus {
                 .includeNSFW()
                 .search();
 
-        AnimeListStatus status = null;
-        for(final AnimeListStatus userAnimeListStatus : list)
-            if((status = userAnimeListStatus).getAnimePreview().getID() == TestProvider.AnimeID)
-                break;
-            else
-                status = null;
-        Assertions.assertNotNull(status);
-
-        testStatus(status);
+        for(final AnimeListStatus listStatus : list)
+            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID){
+                testStatus(listStatus);
+                return;
+            }
+        Assertions.fail("User Anime list status not found");
     }
 
     @Test @Order(3)
@@ -169,8 +155,8 @@ public class TestAnimeListStatus {
                 .withFields(Fields.Anime.list_status)
                 .search();
 
-        for(final AnimeListStatus userAnimeListStatus : list)
-            if(userAnimeListStatus.getAnimePreview().getID() == TestProvider.AnimeID)
+        for(final AnimeListStatus listStatus : list)
+            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID)
                 return;
         Assertions.fail("Failed to find Anime with Ecchi genre");
     }

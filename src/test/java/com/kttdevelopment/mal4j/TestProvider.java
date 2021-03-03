@@ -57,7 +57,7 @@ public abstract class TestProvider {
             if(mal.getAnime(AnimeID, Fields.NO_FIELDS) != null)
                 return;
         }
-        testRequireClientID(); // prevent CI from executing tests
+        testRequireClientID(); // prevent CI from trying to authenticate
         TestAuthorizationLocalServer.beforeAll(); // refresh old token
     }
 

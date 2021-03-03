@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
 import com.kttdevelopment.mal4j.*;
-import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
 import com.kttdevelopment.mal4j.property.Priority;
@@ -14,25 +13,19 @@ import java.util.*;
 public class TestMangaListStatus {
 
     private static MyAnimeList mal;
-    private static boolean cleanup = false;
 
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
 
-    @Test @Order(100)
-    public void cleanup(){ afterAll(); }
-
-    @SuppressWarnings("SpellCheckingInspection")
     @AfterAll
     public static void afterAll(){
-        if(cleanup) return; else cleanup = true;
-        TestProvider.testRequireClientID();
+        if(mal == null) return;
 
         mal.deleteMangaListing(TestProvider.MangaID);
 
-        if(mal.getMyself().getID() != 8316239) return; // only update for Katsute
+        if(mal.getMyself().getID() != 8316239) return;
 
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
             .status(MangaStatus.PlanToRead)
@@ -63,7 +56,7 @@ public class TestMangaListStatus {
     public void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
         Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
-        Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.updated_at).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -87,7 +80,7 @@ public class TestMangaListStatus {
         testStatus(status);
     }
 
-    @Test @Order(3) @DisplayName("testGet(), #25 - Rereading status")
+    @Test @Order(3)
     public void testGet(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
@@ -97,19 +90,16 @@ public class TestMangaListStatus {
                 .includeNSFW()
                 .search();
 
-        MangaListStatus status = null;
-        for(final MangaListStatus userMangaListStatus : list)
-            if((status = userMangaListStatus).getMangaPreview().getID() == TestProvider.MangaID)
-                break;
-            else
-                status = null;
-        Assertions.assertNotNull(status);
-
-        testStatus(status);
+        for(final MangaListStatus listStatus : list)
+            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID){
+                testStatus(listStatus);
+                return;
+            }
+        Assertions.fail("Manga list status not found");
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    @Test @Order(3) @DisplayName("testGetUsername(), #25 - Rereading status")
+    @Test @Order(3)
     public void testGetUsername(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing("KatsuteDev")
@@ -119,15 +109,12 @@ public class TestMangaListStatus {
                 .includeNSFW()
                 .search();
 
-        MangaListStatus status = null;
-        for(final MangaListStatus userMangaListStatus : list)
-            if((status = userMangaListStatus).getMangaPreview().getID() == TestProvider.MangaID)
-                break;
-            else
-                status = null;
-        Assertions.assertNotNull(status);
-
-        testStatus(status);
+        for(final MangaListStatus listStatus : list)
+            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID){
+                testStatus(listStatus);
+                return;
+            }
+        Assertions.fail("User Manga list status not found");
     }
 
     @Test @Order(3)
@@ -170,10 +157,10 @@ public class TestMangaListStatus {
                 .withFields(Fields.Manga.list_status)
                 .search();
 
-        for(final MangaListStatus userMangaListStatus : list)
-            if(userMangaListStatus.getMangaPreview().getID() == TestProvider.MangaID)
+        for(final MangaListStatus listStatus : list)
+            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID)
                 return;
-        Assertions.fail("Failed to find Anime with Ecchi genre");
+        Assertions.fail("Failed to find Manga with Ecchi genre");
     }
 
 }

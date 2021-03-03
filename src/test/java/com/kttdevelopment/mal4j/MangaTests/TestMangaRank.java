@@ -30,6 +30,7 @@ public class TestMangaRank {
         Assertions.assertEquals(MangaType.Manga, first.getMangaPreview().getType());
     }
 
+    @SuppressWarnings("EmptyMethod")
     @Test @DisplayName("#5 - Ranking") @Disabled
     public void testNSFW(){
         // difficult to test since NSFW is unlikely to be in top ranking
