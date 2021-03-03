@@ -19,7 +19,6 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.Fields;
-import com.kttdevelopment.mal4j.MyAnimeList;
 
 import java.util.*;
 
