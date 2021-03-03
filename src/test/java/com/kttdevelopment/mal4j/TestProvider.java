@@ -33,6 +33,14 @@ public abstract class TestProvider {
     public static final String NSFW_MangaQuery = "いただきっセーエキ";
     public static final long NSFW_MangaID = 49697;
 
+    // List
+
+    public static String[] testTags(){
+        return new String[]{"test_tag", "何"};
+    }
+
+    public static final String testComment = "if you see this then my test case has failed to run the cleanup method";
+
     //
 
     private static MyAnimeList mal;
@@ -49,7 +57,7 @@ public abstract class TestProvider {
             if(mal.getAnime(AnimeID, Fields.NO_FIELDS) != null)
                 return;
         }
-        testRequireClientID(); // prevent CI from executing tests
+        testRequireClientID(); // prevent CI from trying to authenticate
         TestAuthorizationLocalServer.beforeAll(); // refresh old token
     }
 

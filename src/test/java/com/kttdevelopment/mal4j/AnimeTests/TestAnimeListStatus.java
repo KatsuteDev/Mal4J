@@ -21,9 +21,12 @@ public class TestAnimeListStatus {
 
     @AfterAll
     public static void afterAll(){
-        TestProvider.testRequireClientID();
+        if(mal == null) return;
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
+
+        if(mal.getMyself().getID() != 8316239) return;
+
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
             .score(10)
@@ -51,7 +54,7 @@ public class TestAnimeListStatus {
     public void testDelete(){
         mal.deleteAnimeListing(TestProvider.AnimeID);
         Assertions.assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID));
-        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.list_status).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
     @Test @Order(2)
@@ -67,15 +70,14 @@ public class TestAnimeListStatus {
             .priority(Priority.High)
             .timesRewatched(0)
             .rewatchValue(RewatchValue.VeryHigh)
-            .tags("ignore", "なに")
-            .comments("ignore comments")
+            .tags(TestProvider.testTags())
+            .comments(TestProvider.testComment)
             .update();
 
         testStatus(status);
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
-    @Test @Order(3) @DisplayName("testGet(), #25 - Rewatching status")
+    @Test @Order(3)
     public void testGet(){
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
@@ -85,19 +87,16 @@ public class TestAnimeListStatus {
                 .includeNSFW()
                 .search();
 
-        AnimeListStatus status = null;
-        for(final AnimeListStatus userAnimeListStatus : list)
-            if((status = userAnimeListStatus).getAnimePreview().getID() == TestProvider.AnimeID)
-                break;
-            else
-                status = null;
-        Assertions.assertNotNull(status);
-
-        testStatus(status);
+        for(final AnimeListStatus listStatus : list)
+            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID){
+                testStatus(listStatus);
+                return;
+            }
+        Assertions.fail("Anime list status not found");
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    @Test @Order(3) @DisplayName("testGetUsername(), #25 - Rewatching status")
+    @Test @Order(3)
     public void testGetUsername(){
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing("KatsuteDev")
@@ -107,15 +106,12 @@ public class TestAnimeListStatus {
                 .includeNSFW()
                 .search();
 
-        AnimeListStatus status = null;
-        for(final AnimeListStatus userAnimeListStatus : list)
-            if((status = userAnimeListStatus).getAnimePreview().getID() == TestProvider.AnimeID)
-                break;
-            else
-                status = null;
-        Assertions.assertNotNull(status);
-
-        testStatus(status);
+        for(final AnimeListStatus listStatus : list)
+            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID){
+                testStatus(listStatus);
+                return;
+            }
+        Assertions.fail("User Anime list status not found");
     }
 
     @Test @Order(3)
@@ -136,18 +132,33 @@ public class TestAnimeListStatus {
         Assertions.assertEquals(Priority.High, status.getPriority());
         Assertions.assertEquals(0, status.getTimesRewatched());
         Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains("ignore"));
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains("なに"));
-        Assertions.assertEquals("ignore comments", status.getComments());
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
+        Assertions.assertEquals(TestProvider.testComment, status.getComments());
         Assertions.assertNotNull(status.getUpdatedAt());
         Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
-    @Test
+    @Test @Order(4)
     public void testConsecutiveUpdates(){
         testDelete();
         testUpdate();
         testUpdate();
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
+    public void testEcchiNSFW(){
+        final List<AnimeListStatus> list =
+            mal.getUserAnimeListing()
+                .withLimit(1000)
+                .withFields(Fields.Anime.list_status)
+                .search();
+
+        for(final AnimeListStatus listStatus : list)
+            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID)
+                return;
+        Assertions.fail("Failed to find Anime with Ecchi genre");
     }
 
 }

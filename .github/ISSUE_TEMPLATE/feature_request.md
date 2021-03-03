@@ -13,7 +13,8 @@ assignees: ''
 - [ ] I have checked that this feature does not already exist.
 - [ ] This feature request makes sense for the project.
 
-**Discussion Post:** *The link to the discussion post for this request. Optional.*
+**Discussion Post:** *The link to the discussion post for this request.*
+
 
 ### Feature
 *Explain your feature. Add any examples here.*
