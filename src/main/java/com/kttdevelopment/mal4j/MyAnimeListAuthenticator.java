@@ -603,7 +603,7 @@ public final class MyAnimeListAuthenticator {
 // local server
 
     /**
-     * Returns if the Java has permission to open the client browser.
+     * Returns if Java has permission to open the client browser.
      *
      * @return if Java can open the browser
      *
