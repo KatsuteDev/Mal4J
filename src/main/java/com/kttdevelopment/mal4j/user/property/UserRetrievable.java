@@ -30,7 +30,7 @@ import com.kttdevelopment.mal4j.user.User;
 public interface UserRetrievable {
 
     /**
-     * Returns the user.
+     * Returns the user. Note that this calls the API each time, it is suggested that you save this to a variable to prevent constantly calling the API.
      *
      * @return user
      *
