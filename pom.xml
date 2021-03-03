@@ -150,9 +150,9 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <additionalJOptions>
-                        <additionalJOption>-package</additionalJOption>
-                    </additionalJOptions>
+                    <additionalOptions>
+                        <additionalOption>-package</additionalOption>
+                    </additionalOptions>
                 </configuration>
             </plugin>
 
