@@ -23,20 +23,25 @@ package com.kttdevelopment.mal4j.manga.property;
  *
  * @see com.kttdevelopment.mal4j.manga.MangaPreview#getType()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.0
  * @author Ktt Development
  */
 @SuppressWarnings("SpellCheckingInspection")
 public enum MangaType {
 
-    Unknown ("unknown"),
-    Manga   ("manga"),
-    Novel   ("novel"),
-    OneShot ("one_shot"),
-    Doujin  ("doujinshi"),
-    Manhwa  ("manhwa"),
-    Manhua  ("manhua"),
-    OEL     ("oel");
+    Unknown     ("unknown"),
+    Manga       ("manga"),
+    /**
+     * @deprecated use {@link #LightNovel}
+     */
+    @Deprecated
+    Novel       ("novel"),
+    LightNovel  ("light_novel"),
+    OneShot     ("one_shot"),
+    Doujin      ("doujinshi"),
+    Manhwa      ("manhwa"),
+    Manhua      ("manhua"),
+    OEL         ("oel");
 
     private final String field;
 
