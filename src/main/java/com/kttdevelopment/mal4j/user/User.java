@@ -34,7 +34,7 @@ import java.util.Date;
  * @see MyAnimeList#getUser(String)
  * @see MyAnimeList#getUser(String, String...)
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.2.0
  * @author Ktt Development
  */
 public abstract class User implements IDN {
