@@ -64,4 +64,10 @@ public class TestUser {
         Assumptions.assumeTrue(user.getBirthday() != null, "User might not specify a birthday");
     }
 
+    @Test
+    public void testAnimeMangaListing(){
+        Assertions.assertNotEquals(0, user.getUserAnimeListing().withNoFields().search().size());
+        Assertions.assertNotEquals(0, user.getUserMangaListing().withNoFields().search().size());
+    }
+
 }
