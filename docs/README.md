@@ -11,4 +11,5 @@ Add this line to the top of `stylesheet.css`
 - `favicon.ico`
 - `glass.png`
 - `javadoc.scss`
+- `README.md`
 - `x.png`
