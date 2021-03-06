@@ -29,7 +29,7 @@ The seasons query returns Anime that is running in the current season, this incl
 
 ## NSFW is not working.
 
-For search queries make sure you also run `#includeNSFW()` in the query builder.
+For search queries make sure you also run [`#includeNSFW()`](https://mal4j.kttdevelopment.com/Mal4J/com/kttdevelopment/mal4j/query/NSFW.html#includeNSFW()) in the query builder.
 
 ## I can't get other users.
 
