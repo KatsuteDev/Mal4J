@@ -676,12 +676,9 @@ final class MyAnimeListImpl extends MyAnimeList{
         return getUser(username, (String[]) null);
     }
 
-    @SuppressWarnings("ConstantConditions")
     @Override
     public final User getUser(final String username, final String... fields){
         Objects.requireNonNull(username, "Username cannot be null");
-        if(!username.equals("@me"))
-            throw new UnsupportedOperationException("The MyAnimeList API currently only supports user @me");
         return asUser(this,
         handleResponse(
             () -> service.getUser(
