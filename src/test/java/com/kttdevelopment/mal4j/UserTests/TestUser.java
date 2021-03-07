@@ -17,14 +17,6 @@ public class TestUser {
         user = mal.getMyself(Fields.user);
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
-    @Test @DisplayName("testUser() - not currently allowed by API")
-    public void testUser(){
-        Assertions.assertThrows(UnsupportedOperationException.class, () ->
-            Assertions.assertEquals(8316239, mal.getUser("KatsuteDev", Fields.NO_FIELDS).getID())
-        );
-    }
-
     @Test
     public void testMyself(){
         Assertions.assertNotNull(user.getID());
