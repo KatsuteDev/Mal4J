@@ -678,8 +678,7 @@ public final class MyAnimeListAuthenticator {
                 body.getString("refresh_token")
             );
         else
-            throw new HttpException(response.URL(), response.code(), (body.getString("body") + ' ' + body.getString("error")).trim());
-
+            throw new HttpException(response.URL(), response.code(), body.getString("error").trim());
     }
 
     private static final class AuthHandler implements HttpHandler {

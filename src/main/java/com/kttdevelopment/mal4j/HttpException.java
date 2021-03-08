@@ -67,13 +67,4 @@ public class HttpException extends RuntimeException {
         return code;
     }
 
-    @Override
-    public String toString(){
-        return "HttpException{" +
-               "URL='" + URL + '\'' +
-               ", message='" + message + '\'' +
-               ", code=" + code +
-               '}';
-    }
-
 }
