@@ -21,6 +21,7 @@ public class TestIterator {
             .withLimit(100)
             .searchAll();
         Assertions.assertNotEquals(0, iterator.toList().size());
+        Assertions.assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID());
 
         final Anime first = iterator.next();
         Assertions.assertEquals(TestProvider.AnimeID, first.getID());
