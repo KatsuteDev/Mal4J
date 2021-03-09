@@ -44,7 +44,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * </ul>
  *
  * @since 1.0.0
- * @version 1.2.0
+ * @version 1.1.1
  * @author Ktt Development
  */
 public final class MyAnimeListAuthenticator {
