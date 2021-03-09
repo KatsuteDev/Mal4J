@@ -20,6 +20,7 @@ public class TestIterator {
             .withNoFields()
             .withLimit(100)
             .searchAll();
+        Assertions.assertNotEquals(0, iterator.toList().size());
 
         final Anime first = iterator.next();
         Assertions.assertEquals(TestProvider.AnimeID, first.getID());

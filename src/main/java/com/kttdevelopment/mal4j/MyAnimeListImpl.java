@@ -52,7 +52,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.User.*;
  * @see MyAnimeList
  * @see MyAnimeListService
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.1
  * @author Ktt Development
  */
 final class MyAnimeListImpl extends MyAnimeList{
@@ -761,7 +761,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             // handle first page
             nextOffset.set(offset);
-            firstPage = getNextPage();
+            list = firstPage = getNextPage();
             isFirstPage.set(true);
         }
 
@@ -790,7 +790,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                 if(response.getJsonObject("paging").containsKey("next")){
                     nextPageMatcher.reset(response.getJsonObject("paging").getString("next"));
                     if(nextPageMatcher.matches()){
-                        nextOffset.set(Integer.parseInt(nextPageMatcher.group(1)));
+                        final Integer b4 = nextOffset.get();
+                        nextOffset.set((b4 == null ? 0 : b4) + list.size());
                         return list;
                     }
                 }

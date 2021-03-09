@@ -26,16 +26,17 @@ import java.util.*;
  * @param <T> type
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.1
  * @author Ktt Development
  */
 public abstract class PaginatedIterator<T> implements Iterator<T> {
 
     private int index = -1; // thread safe by methods
-    private List<T> list = new ArrayList<>();
+    List<T> list = new ArrayList<>();
+    private int size;
 
     private boolean hasNextItem(){
-        return index+1 < list.size();
+        return index+1 < size;
     }
 
     @Override
@@ -65,6 +66,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
 
     private synchronized void nextPage(){
         list = getNextPage();
+        size = list.size();
         index = -1;
     }
 
