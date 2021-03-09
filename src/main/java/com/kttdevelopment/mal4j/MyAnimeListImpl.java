@@ -739,11 +739,6 @@ final class MyAnimeListImpl extends MyAnimeList{
     @SuppressWarnings("SpellCheckingInspection")
     private static class PagedIterator<T> extends PaginatedIterator<T> {
 
-        // ^\Qhttps://api.myanimelist.net/v2/\E.+?[?&]\Qoffset=\E(\d+)(?:&.*$|$)
-        private static final Pattern nextPageRegex = Pattern.compile("^\\Q" + MyAnimeListService.baseURL + "\\E.+?[?&]\\Qoffset=\\E(\\d+)(?:&.*$|$)");
-
-        private final Matcher nextPageMatcher = nextPageRegex.matcher("");
-
         private final Function<Integer,Response<JsonObject>> fullPageSupplier;
         private final Function<JsonObject,T> listAdapter;
 
@@ -788,12 +783,9 @@ final class MyAnimeListImpl extends MyAnimeList{
                     list.add(listAdapter.apply(data));
 
                 if(response.getJsonObject("paging").containsKey("next")){
-                    nextPageMatcher.reset(response.getJsonObject("paging").getString("next"));
-                    if(nextPageMatcher.matches()){
-                        final Integer b4 = nextOffset.get();
-                        nextOffset.set((b4 == null ? 0 : b4) + list.size());
-                        return list;
-                    }
+                    final Integer b4 = nextOffset.get();
+                    nextOffset.set((b4 == null ? 0 : b4) + list.size());
+                    return list;
                 }
                 nextOffset.set(-1);
 
