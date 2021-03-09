@@ -736,7 +736,6 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    @SuppressWarnings("SpellCheckingInspection")
     private static class PagedIterator<T> extends PaginatedIterator<T> {
 
         private final Function<Integer,Response<JsonObject>> fullPageSupplier;
@@ -757,6 +756,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             // handle first page
             nextOffset.set(offset);
             list = firstPage = getNextPage();
+            size = list == null ? 0 : list.size();
             isFirstPage.set(true);
         }
 
