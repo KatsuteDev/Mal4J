@@ -23,9 +23,9 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Katsute/Mal4J/actions?query=workflow%3ADeploy"><img title="Deploy" src="https://github.com/Katsute/Mal4J/workflows/Deploy/badge.svg"></a>
-    <a href="https://github.com/Katsute/Mal4J/actions?query=workflow%3A%22Java+CI%22"><img title="Java CI" src="https://github.com/Katsute/Mal4J/workflows/Java%20CI/badge.svg"></a>
-    <a href="https://github.com/Katsute/Mal4J/actions?query=workflow%3A%22MyAnimeList+CI%22"><img title="MyAnimeList CI" src="https://github.com/Katsute/Mal4J/workflows/MyAnimeList%20CI/badge.svg"></a>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/release.yml"><img title="Deploy" src="https://github.com/Katsute/Mal4J/workflows/Deploy/badge.svg"></a>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml"><img title="Java CI" src="https://github.com/Katsute/Mal4J/workflows/Java%20CI/badge.svg"></a>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml"><img title="MyAnimeList CI" src="https://github.com/Katsute/Mal4J/workflows/MyAnimeList%20CI/badge.svg"></a>
     <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><img title="Maven Central" src="https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j"></a>
     <a href="https://github.com/Katsute/Mal4J/releases"><img title="version" src="https://img.shields.io/github/v/release/Katsute/Mal4J"></a>
     <a href="https://github.com/Katsute/Mal4J/blob/main/LICENSE"><img title="license" src="https://img.shields.io/github/license/Katsute/Mal4J"></a>
