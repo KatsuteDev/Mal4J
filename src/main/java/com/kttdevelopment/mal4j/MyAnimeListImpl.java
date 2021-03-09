@@ -742,8 +742,6 @@ final class MyAnimeListImpl extends MyAnimeList{
         private final Function<JsonObject,T> listAdapter;
 
         private final AtomicReference<Integer> nextOffset = new AtomicReference<>();
-        private final List<T> firstPage;
-        private final AtomicReference<Boolean> isFirstPage = new AtomicReference<>(null);
 
         PagedIterator(
             final Integer offset,
@@ -755,9 +753,8 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             // handle first page
             nextOffset.set(offset);
-            list = firstPage = getNextPage();
+            list = getNextPage();
             size = list == null ? 0 : list.size();
-            isFirstPage.set(true);
         }
 
         @Override
@@ -767,30 +764,25 @@ final class MyAnimeListImpl extends MyAnimeList{
 
         @Override
         synchronized final List<T> getNextPage(){
-            if(isFirstPage.get() != null && isFirstPage.get()){
-                isFirstPage.set(false);
-                return firstPage;
-            }else{
-                final JsonObject response = handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));
+            final JsonObject response = handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));
 
-                if(response == null){
-                    nextOffset.set(-1);
-                    return null;
-                }
-
-                final List<T> list = new ArrayList<>();
-                for(final JsonObject data : response.getJsonArray("data"))
-                    list.add(listAdapter.apply(data));
-
-                if(response.getJsonObject("paging").containsKey("next")){
-                    final Integer b4 = nextOffset.get();
-                    nextOffset.set((b4 == null ? 0 : b4) + list.size());
-                    return list;
-                }
+            if(response == null){
                 nextOffset.set(-1);
+                return null;
+            }
 
+            final List<T> list = new ArrayList<>();
+            for(final JsonObject data : response.getJsonArray("data"))
+                list.add(listAdapter.apply(data));
+
+            if(response.getJsonObject("paging").containsKey("next")){
+                final Integer b4 = nextOffset.get();
+                nextOffset.set((b4 == null ? 0 : b4) + list.size());
                 return list;
             }
+            nextOffset.set(-1);
+
+            return list;
         }
 
     }
