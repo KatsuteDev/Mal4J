@@ -33,7 +33,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
 
     private int index = -1; // thread safe by methods
     List<T> list = new ArrayList<>();
-    private int size;
+    int size;
 
     private boolean hasNextItem(){
         return index+1 < size;
