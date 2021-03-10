@@ -52,7 +52,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.User.*;
  * @see MyAnimeList
  * @see MyAnimeListService
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.1.1
  * @author Ktt Development
  */
 final class MyAnimeListImpl extends MyAnimeList{
@@ -733,20 +733,12 @@ final class MyAnimeListImpl extends MyAnimeList{
 
     //
 
-    @SuppressWarnings("SpellCheckingInspection")
     private static class PagedIterator<T> extends PaginatedIterator<T> {
-
-        // ^\Qhttps://api.myanimelist.net/v2/\E.+?[?&]\Qoffset=\E(\d+)(?:&.*$|$)
-        private static final Pattern nextPageRegex = Pattern.compile("^\\Q" + MyAnimeListService.baseURL + "\\E.+?[?&]\\Qoffset=\\E(\\d+)(?:&.*$|$)");
-
-        private final Matcher nextPageMatcher = nextPageRegex.matcher("");
 
         private final Function<Integer,Response<JsonObject>> fullPageSupplier;
         private final Function<JsonObject,T> listAdapter;
 
         private final AtomicReference<Integer> nextOffset = new AtomicReference<>();
-        private final List<T> firstPage;
-        private final AtomicReference<Boolean> isFirstPage = new AtomicReference<>(null);
 
         PagedIterator(
             final Integer offset,
@@ -758,8 +750,8 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             // handle first page
             nextOffset.set(offset);
-            firstPage = getNextPage();
-            isFirstPage.set(true);
+            list = getNextPage();
+            size = list == null ? 0 : list.size();
         }
 
         @Override
@@ -769,32 +761,25 @@ final class MyAnimeListImpl extends MyAnimeList{
 
         @Override
         synchronized final List<T> getNextPage(){
-            if(isFirstPage.get() != null && isFirstPage.get()){
-                isFirstPage.set(false);
-                return firstPage;
-            }else{
-                final JsonObject response = handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));
+            final JsonObject response = handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));
 
-                if(response == null){
-                    nextOffset.set(-1);
-                    return null;
-                }
-
-                final List<T> list = new ArrayList<>();
-                for(final JsonObject data : response.getJsonArray("data"))
-                    list.add(listAdapter.apply(data));
-
-                if(response.getJsonObject("paging").containsKey("next")){
-                    nextPageMatcher.reset(response.getJsonObject("paging").getString("next"));
-                    if(nextPageMatcher.matches()){
-                        nextOffset.set(Integer.parseInt(nextPageMatcher.group(1)));
-                        return list;
-                    }
-                }
+            if(response == null){
                 nextOffset.set(-1);
+                return null;
+            }
 
+            final List<T> list = new ArrayList<>();
+            for(final JsonObject data : response.getJsonArray("data"))
+                list.add(listAdapter.apply(data));
+
+            if(response.getJsonObject("paging").containsKey("next")){
+                final Integer b4 = nextOffset.get();
+                nextOffset.set((b4 == null ? 0 : b4) + list.size());
                 return list;
             }
+            nextOffset.set(-1);
+
+            return list;
         }
 
     }
