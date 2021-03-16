@@ -35,7 +35,8 @@ class Json {
      */
 
     // [\{\}\[\],]
-    private static final Pattern split = Pattern.compile("[{}\\[\\],]");
+    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
+    private static final Pattern split = Pattern.compile("[\\{\\}\\[\\],]");
 
     // (?<!\\)(?:\\\\)*"
     private static final Pattern nonEscQuote = Pattern.compile("(?<!\\\\)(?:\\\\\\\\)*\"");
@@ -47,8 +48,9 @@ class Json {
     private static final Function<MatchResult,String> unicodeReplacer = matchResult -> String.valueOf((char) Integer.parseInt(matchResult.group(1), 16));
 
     // \\"|\\\/|\\\\
+    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
     private static final Pattern escapedCharacters =
-        Pattern.compile("\\\\\"|\\\\/|\\\\\\\\");
+        Pattern.compile("\\\\\"|\\\\\\/|\\\\\\\\");
 
     private static final Function<MatchResult,String> escapedReplacer = matchResult -> {
         final String chars = matchResult.group(0);
