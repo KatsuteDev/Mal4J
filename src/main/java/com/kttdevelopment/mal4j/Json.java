@@ -70,8 +70,9 @@ class Json {
     private static final Pattern mapType =
         Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+(?<!\\\\)(?:\\\\\\\\)*)\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*(?<!\\\\)(?:\\\\\\\\)*)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
     // ^\s*} *,?\s*$
+    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
     private static final Pattern mapClose =
-        Pattern.compile("^\\s*} *,?\\s*$");
+        Pattern.compile("^\\s*\\} *,?\\s*$");
 
     // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern arrType =
