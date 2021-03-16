@@ -21,4 +21,4 @@ jobs:
           echo ${{ secrets.MAL_OAUTH }} > src/test/java/resources/oauth.txt
 
       - name: ✔ Test with Maven
-        run: mvn test -fae
+        run: mvn test -fae --no-transfer-progress
