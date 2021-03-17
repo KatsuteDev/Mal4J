@@ -20,4 +20,4 @@ jobs:
           architecture: x64
 
       - name: ✔ Test with Maven
-        run: mvn test -fae
+        run: mvn test -fae --no-transfer-progress

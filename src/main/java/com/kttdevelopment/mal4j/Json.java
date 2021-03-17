@@ -35,7 +35,8 @@ class Json {
      */
 
     // [\{\}\[\],]
-    private static final Pattern split = Pattern.compile("[{}\\[\\],]");
+    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
+    private static final Pattern split = Pattern.compile("[\\{\\}\\[\\],]");
 
     // (?<!\\)(?:\\\\)*"
     private static final Pattern nonEscQuote = Pattern.compile("(?<!\\\\)(?:\\\\\\\\)*\"");
@@ -47,8 +48,9 @@ class Json {
     private static final Function<MatchResult,String> unicodeReplacer = matchResult -> String.valueOf((char) Integer.parseInt(matchResult.group(1), 16));
 
     // \\"|\\\/|\\\\
+    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
     private static final Pattern escapedCharacters =
-        Pattern.compile("\\\\\"|\\\\/|\\\\\\\\");
+        Pattern.compile("\\\\\"|\\\\\\/|\\\\\\\\");
 
     private static final Function<MatchResult,String> escapedReplacer = matchResult -> {
         final String chars = matchResult.group(0);
@@ -68,8 +70,9 @@ class Json {
     private static final Pattern mapType =
         Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+(?<!\\\\)(?:\\\\\\\\)*)\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*(?<!\\\\)(?:\\\\\\\\)*)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
     // ^\s*} *,?\s*$
+    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
     private static final Pattern mapClose =
-        Pattern.compile("^\\s*} *,?\\s*$");
+        Pattern.compile("^\\s*\\} *,?\\s*$");
 
     // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
     private static final Pattern arrType =
