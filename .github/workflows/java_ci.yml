@@ -1,7 +1,5 @@
 name: Java CI
-on:
-  push: {}
-  pull_request: {}
+on: [push]
 
 jobs:
   java_ci:
@@ -18,7 +16,7 @@ jobs:
       - name: ☕ Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1
         with:
-          version: ${ matrix.jdk }
+          version: ${{ matrix.jdk }}
           architecture: x64
 
       - name: ✔ Test with Maven
