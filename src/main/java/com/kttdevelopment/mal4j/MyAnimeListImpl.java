@@ -31,14 +31,11 @@ import com.kttdevelopment.mal4j.user.User;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.*;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.kttdevelopment.mal4j.Json.*;
 import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.Anime.*;
@@ -333,7 +330,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                 final JsonObject response = handleResponse(
                     () -> service.getUserAnimeListing(
                         auth,
-                        username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
@@ -356,7 +353,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                     offset,
                     offset -> service.getUserAnimeListing(
                         auth,
-                        username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
@@ -623,7 +620,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                 final JsonObject response = handleResponse(
                     () -> service.getUserMangaListing(
                         auth,
-                        username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
@@ -646,7 +643,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                     offset,
                     offset -> service.getUserMangaListing(
                         auth,
-                        username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
@@ -686,7 +683,7 @@ final class MyAnimeListImpl extends MyAnimeList{
         handleResponse(
             () -> service.getUser(
                 auth,
-                username.equals("@me") ? "@me" : URLEncoder.encode(username, StandardCharsets.UTF_8),
+                username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                 asFieldList(toCommaSeparatedString(fields), Fields.user)
             )
         ));
@@ -812,11 +809,11 @@ final class MyAnimeListImpl extends MyAnimeList{
 
             final StringBuilder SB = new StringBuilder();
             for(final String field : fields)
-                if(!field.isBlank())
+                if(!Java9.String.isBlank(field))
                     SB.append(field).append(',');
 
             final String str = SB.toString();
-            if(!str.isBlank())
+            if(!Java9.String.isBlank(str))
                 return str.substring(0, str.length() -1);
         }
         return null;

@@ -129,7 +129,7 @@ final class APICall {
         if(value == null)
             pathVars.remove(pathVar);
         else
-            pathVars.put(pathVar, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            pathVars.put(pathVar, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
@@ -141,7 +141,7 @@ final class APICall {
         if(value == null)
             queries.remove(query);
         else
-            queries.put(query, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            queries.put(query, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
@@ -162,7 +162,7 @@ final class APICall {
         if(value == null)
             fields.remove(field);
         else
-            fields.put(field, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            fields.put(field, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
@@ -176,7 +176,7 @@ final class APICall {
     final Response<String> call() throws IOException, InterruptedException{
         final String URL =
             baseURL +
-            pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group(1))) + // path args
+            Java9.Matcher.replaceAll(pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
             (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
 
         final HttpRequest.Builder request = HttpRequest.newBuilder();
