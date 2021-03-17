@@ -24,7 +24,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.*;
-import java.net.http.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
@@ -181,7 +180,7 @@ final class APICall {
 
         final HttpRequest.Builder request = HttpRequest.newBuilder();
 
-        request.uri(URI.create(blockedURI.matcher(URL).replaceAll(encoder)));
+        request.uri(URI.create(Java9.Matcher.replaceAll(blockedURI.matcher(URL),encoder)));
         request.method(method, HttpRequest.BodyPublishers.noBody());
         for(final Map.Entry<String, String> entry : headers.entrySet())
             request.header(entry.getKey(), entry.getValue());
@@ -210,7 +209,7 @@ final class APICall {
         if(debug)
             System.out.println("Response: " + body);
 
-        return new Response<>(URL, body, body, response.statusCode());
+        return new Response<String>(URL, body, body, response.statusCode());
     }
 
     final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException{
