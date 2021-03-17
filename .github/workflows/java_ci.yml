@@ -1,14 +1,16 @@
 name: Java CI
 on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  push: {}
+  pull_request: {}
 
 jobs:
   java_ci:
     name: Java CI
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [8, 9, 11, 14]
+      fail-fast: false
     steps:
       - name: 📦 Prepate Git Repo
         uses: actions/checkout@v2
@@ -16,7 +18,7 @@ jobs:
       - name: ☕ Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1
         with:
-          version: '11'
+          version: ${ matrix.jdk }
           architecture: x64
 
       - name: ✔ Test with Maven
