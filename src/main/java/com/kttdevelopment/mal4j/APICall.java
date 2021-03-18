@@ -104,7 +104,8 @@ final class APICall {
     private final Map<String,String> headers = new HashMap<>();
 
     // \{(.*?)\}
-    private static final Pattern pathArg = Pattern.compile("\\{(.*?)}");
+    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
+    private static final Pattern pathArg = Pattern.compile("\\{(.*?)\\}");
 
     private final Map<String,String> pathVars = new HashMap<>();
     private final Map<String,String> queries  = new HashMap<>();
