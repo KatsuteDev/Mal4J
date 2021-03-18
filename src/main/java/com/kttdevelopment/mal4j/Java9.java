@@ -17,6 +17,7 @@ abstract class Java9 {
             try{
                 return java.net.URLEncoder.encode(s, enc.name());
             }catch(final UnsupportedEncodingException e){
+                System.out.println("This should not occur, please report this issue.");
                 e.printStackTrace(); // shouldn't occur for case UTF-8
                 return s;
             }
@@ -30,6 +31,7 @@ abstract class Java9 {
             try{
                 return java.net.URLDecoder.decode(s, enc.name());
             }catch(final UnsupportedEncodingException e){
+                System.out.println("This should not occur, please report this issue.");
                 e.printStackTrace(); // shouldn't occur for case UTF-8
                 return s;
             }
