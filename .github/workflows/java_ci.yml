@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [8, 9, 11, 14]
+        jdk: [8, 9, 11, 16]
       fail-fast: false
     steps:
       - name: 📦 Prepate Git Repo

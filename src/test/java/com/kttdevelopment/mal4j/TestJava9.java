@@ -69,7 +69,7 @@ public class TestJava9 {
 
     private static String[] notBlank(){
         return new String[]{" abc ", " abc\u2022 "};
-    };
+    }
 
     @Test // jdk.java.lang.String.IsBlank
     public void testString(){
