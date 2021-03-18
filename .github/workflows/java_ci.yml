@@ -4,11 +4,10 @@ on: [push]
 jobs:
   java_ci:
     name: Java CI
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         jdk: [8, 9, 11, 16]
-        os: [macos-latest, ubuntu-latest, windows-latest]
       fail-fast: false
     steps:
       - name: 📦 Prepate Git Repo
