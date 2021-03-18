@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,16 +13,9 @@ import static com.kttdevelopment.mal4j.Json.*;
 @SuppressWarnings("SpellCheckingInspection")
 public class TestJson {
 
-    private static String mergeLines(final List<String> list){
-        final StringBuilder OUT = new StringBuilder();
-        for(final String s : list)
-            OUT.append(s);
-        return OUT.toString();
-    }
-
     @Test
     public void testMap() throws IOException{
-        final String map = mergeLines(Files.readAllLines(new File("src/test/java/resources/map.json").toPath(), StandardCharsets.UTF_8)).replaceAll("\\r?\\n","");
+        final String map = TestProvider.readFile(new File("src/test/java/resources/map.json")).replaceAll("\\r?\\n", "");
 
         final JsonObject json = (JsonObject) parse(map);
 
@@ -54,7 +45,7 @@ public class TestJson {
 
     @Test
     public void testArray() throws IOException{
-        final String arr = mergeLines(Files.readAllLines(new File("src/test/java/resources/arr.json").toPath(), StandardCharsets.UTF_8)).replaceAll("\\r?\\n","");
+        final String arr = TestProvider.readFile(new File("src/test/java/resources/arr.json")).replaceAll("\\r?\\n", "");
 
         final List<?> json = (List<?>) parse(arr);
 

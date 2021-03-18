@@ -90,7 +90,7 @@ public class TestJava9 {
         Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(matcher, null));
 
         Assertions.assertEquals(matcher.replaceAll("0"), Java9.Matcher.replaceAll(matcher, e -> "0"));
-        Assertions.assertEquals(" 012345678 ", Java9.Matcher.replaceAll(matcher, e -> String.valueOf(Integer.parseInt(e.group(1)) - 1)));
+        Assertions.assertEquals(" 012345678 ", Java9.Matcher.replaceAll(matcher, e -> String.valueOf(Integer.parseInt(e.group(0)) - 1)));
 
         // count
         Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.count(null));

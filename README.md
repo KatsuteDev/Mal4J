@@ -112,7 +112,7 @@ OpeningTheme[] op = anime.getOpeningThemes();
 ## Contributing
 
 **Local Tests**
-For local tests you must run the project using JDK 11 with Java 11 level syntax.
+For local tests you must run the project using JDK 11 with Java 11 level syntax. The `src/main/java9` folder should not be marked as a sources root.
 
 Run tests locally by adding a text file named `client.txt` that contains the client ID in the `src/test/java/resources` directory.
 
