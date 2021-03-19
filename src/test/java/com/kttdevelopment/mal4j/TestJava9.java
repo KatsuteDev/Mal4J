@@ -84,18 +84,21 @@ public class TestJava9 {
     @Test
     public void testMatcher(){
         // replaceAll
+        final String raw = " 123456789 ";
         final Matcher matcher = Pattern.compile("\\d").matcher(" 123456789 ");
 
-        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(null, null));
-        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(matcher, null));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(null, null, null));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(raw, null, null));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(raw,matcher, null));
 
-        Assertions.assertEquals(matcher.replaceAll("0"), Java9.Matcher.replaceAll(matcher, e -> "0"));
-        Assertions.assertEquals(" 012345678 ", Java9.Matcher.replaceAll(matcher, e -> String.valueOf(Integer.parseInt(e.group(0)) - 1)));
+        Assertions.assertEquals(matcher.replaceAll("0"), Java9.Matcher.replaceAll(raw, matcher, e -> "0"));
+        Assertions.assertEquals(" 012345678 ", Java9.Matcher.replaceAll(raw, matcher, e -> String.valueOf(Integer.parseInt(e.group(0)) - 1)));
 
         // count
         Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.count(null));
 
         Assertions.assertEquals(9, Java9.Matcher.count(Pattern.compile("\\d").matcher(" 123456789 ")));
+        Assertions.assertEquals(1, Java9.Matcher.count(Pattern.compile("\\d+").matcher(" 123456789 ")));
     }
 
 }

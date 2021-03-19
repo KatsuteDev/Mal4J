@@ -175,10 +175,10 @@ final class APICall {
     final Response<String> call() throws IOException{
         final String URL =
             baseURL +
-            Java9.Matcher.replaceAll(pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
+            Java9.Matcher.replaceAll(path, pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
             (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
 
-        final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(blockedURI.matcher(URL),encoder)).toURL().openConnection();
+        final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL),encoder)).toURL().openConnection();
         conn.setRequestMethod(method);
 
         for(final Map.Entry<String, String> entry : headers.entrySet())

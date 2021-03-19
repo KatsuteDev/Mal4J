@@ -13,6 +13,16 @@ abstract class Java9 {
 
     static class URLEncoder {
 
+        /**
+         * Encodes a string.
+         *
+         * @param s string to encode
+         * @param enc encoding
+         * @return encoded string
+         *
+         * @see Charset
+         * @see java.nio.charset.StandardCharsets
+         */
         static java.lang.String encode(final java.lang.String s, final Charset enc){
             try{
                 return java.net.URLEncoder.encode(s, enc.name());
@@ -27,6 +37,16 @@ abstract class Java9 {
 
     static class URLDecoder {
 
+        /**
+         * Decodes a string.
+         *
+         * @param s string to decode
+         * @param enc encoding
+         * @return decoded string
+         *
+         * @see Charset
+         * @see java.nio.charset.StandardCharsets
+         */
         static java.lang.String decode(final java.lang.String s, final Charset enc){
             try{
                 return java.net.URLDecoder.decode(s, enc.name());
@@ -44,6 +64,12 @@ abstract class Java9 {
         // [^\s\u1680]
         private static final Pattern nsp = Pattern.compile("[^\\s\\u1680]");
 
+        /**
+         * Returns if the string contains only whitespace.
+         *
+         * @param s string
+         * @return if string is blank
+         */
         static boolean isBlank(final java.lang.String s) {
             Objects.requireNonNull(s);
             return s.length() == 0 || !nsp.matcher(s).find();
@@ -53,8 +79,16 @@ abstract class Java9 {
 
     static class Matcher {
 
-        // replacer must not modify matcher
-        static java.lang.String replaceAll(final java.util.regex.Matcher matcher, final Function<MatchResult,java.lang.String> replacer) {
+        /**
+         * Replaces all using a function. Make sure that the function does not modify the matcher.
+         *
+         * @param str string used in matcher
+         * @param matcher matcher
+         * @param replacer replacement function
+         * @return replaced string
+         */
+        static java.lang.String replaceAll(final java.lang.String str, final java.util.regex.Matcher matcher, final Function<MatchResult,java.lang.String> replacer) {
+            Objects.requireNonNull(str);
             Objects.requireNonNull(matcher);
             Objects.requireNonNull(replacer);
             matcher.reset();
@@ -69,9 +103,15 @@ abstract class Java9 {
                 matcher.appendTail(sb);
                 return sb.toString();
             }
-            return matcher.toString();
+            return str;
         }
 
+        /**
+         * Returns match count.
+         *
+         * @param matcher matcher
+         * @return count
+         */
         static int count(final java.util.regex.Matcher matcher){
             Objects.requireNonNull(matcher);
             matcher.reset();

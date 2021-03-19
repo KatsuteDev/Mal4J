@@ -242,13 +242,11 @@ class Json {
         throw new JsonSyntaxException("Object was missing closing character: '}'");
     }
 
+    @SuppressWarnings("UnnecessaryLocalVariable")
     private String decodeString(final String raw){
-        return Java9.Matcher.replaceAll(escapedMatcher.reset(
-            Java9.Matcher.replaceAll(unicodeMatcher.reset(
-                raw
-                ), unicodeReplacer
-            )), escapedReplacer
-        );
+        final String unicodeEscape = Java9.Matcher.replaceAll(raw, unicodeMatcher.reset(raw), unicodeReplacer);
+        final String slashEscape   = Java9.Matcher.replaceAll(unicodeEscape, escapedMatcher.reset(unicodeEscape), escapedReplacer);
+        return slashEscape;
     }
 
     // objects
