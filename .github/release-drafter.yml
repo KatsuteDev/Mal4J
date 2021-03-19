@@ -14,7 +14,7 @@ categories:
       - "documentation"
   - title: "❌ Removed"
     labels:
-      - "depreciated"
+      - "deprecated"
   - title: "🐞 Bug Fixes"
     labels:
       - "bug"
