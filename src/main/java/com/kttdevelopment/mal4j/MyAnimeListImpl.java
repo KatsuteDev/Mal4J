@@ -49,7 +49,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.User.*;
  * @see MyAnimeList
  * @see MyAnimeListService
  * @since 1.0.0
- * @version 1.1.1
+ * @version 2.0.0
  * @author Ktt Development
  */
 final class MyAnimeListImpl extends MyAnimeList{

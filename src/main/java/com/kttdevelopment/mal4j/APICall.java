@@ -223,7 +223,7 @@ final class APICall {
         return new Response<>(URL, body, body, conn.getResponseCode());
     }
 
-    final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException{
+    final <T> Response<T> call(final Function<String,T> processor) throws IOException{
         final Response<String> response = call();
         final String body = response.body();
         return new Response<>(response.URL(), body, processor.apply(body), response.code());
@@ -311,8 +311,6 @@ final class APICall {
                 ).call(Json::parse);
             }catch(final IOException e){
                 throw new UncheckedIOException(e);
-            }catch(final InterruptedException e){
-                throw new RuntimeException(e);
             }
         }
 

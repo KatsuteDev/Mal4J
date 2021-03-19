@@ -44,7 +44,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * </ul>
  *
  * @since 1.0.0
- * @version 1.1.1
+ * @version 2.0.0
  * @author Ktt Development
  */
 public final class MyAnimeListAuthenticator {
@@ -677,8 +677,10 @@ public final class MyAnimeListAuthenticator {
                 body.getString("access_token"),
                 body.getString("refresh_token")
             );
-        else
-            throw new HttpException(response.URL(), response.code(), body.getString("error").trim());
+        else{
+            final String error = body.getString("error");
+            throw new HttpException(response.URL(), response.code(), error != null ? error.trim() : "");
+        }
     }
 
     private static final class AuthHandler implements HttpHandler {
