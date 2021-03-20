@@ -130,7 +130,7 @@
                             <!-- compile java9 to META-INF for JDK 9 -->
                             <release>9</release>
                             <compileSourceRoots>
-                                <compileSourceRoot>{project.basedir}/src/main/java9</compileSourceRoot>
+                                <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
                             </compileSourceRoots>
                             <multiReleaseOutput>true</multiReleaseOutput>
                         </configuration>
