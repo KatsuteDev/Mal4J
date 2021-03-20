@@ -60,38 +60,6 @@
                 </plugins>
             </build>
         </profile>
-        <profile>
-            <id>jdk9</id>
-            <activation>
-                <jdk>[9,)</jdk>
-            </activation>
-            <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-compiler-plugin</artifactId>
-                            <executions>
-                                <execution>
-                                    <id>compile-java-9</id>
-                                    <phase>compile</phase>
-                                    <goals>
-                                        <goal>compile</goal>
-                                    </goals>
-                                    <configuration>
-                                        <release>9</release>
-                                        <compileSourceRoots>
-                                            <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
-                                        </compileSourceRoots>
-                                        <multiReleaseOutput>true</multiReleaseOutput>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-            </build>
-        </profile>
     </profiles>
 
     <properties>
@@ -139,6 +107,35 @@
                     <source>1.8</source>
                     <target>1.8</target>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <!-- unsupported in jdk8 -->
+                                <exclude>module-info.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>base-compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <!-- compile java9 to META-INF for JDK 9 -->
+                            <release>9</release>
+                            <compileSourceRoots>
+                                <compileSourceRoot>{project.basedir}/src/main/java9</compileSourceRoot>
+                            </compileSourceRoots>
+                            <multiReleaseOutput>true</multiReleaseOutput>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
 
             <plugin>
@@ -174,6 +171,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.2.0</version>
+                <configuration>
+                    <additionalOptions>
+                        <additionalOption>-package</additionalOption>
+                    </additionalOptions>
+                    <!-- generate javadoc for /java and /java9 -->
+                    <sourcepath>${project.basedir}/src/main</sourcepath>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -182,11 +186,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <additionalOptions>
-                        <additionalOption>-package</additionalOption>
-                    </additionalOptions>
-                </configuration>
             </plugin>
 
             <!-- tests -->
