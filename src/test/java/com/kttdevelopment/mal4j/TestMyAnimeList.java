@@ -56,9 +56,4 @@ public class TestMyAnimeList {
         Assertions.assertThrows(NullPointerException.class, () -> mal.getUser(null));
     }
 
-    @Test
-    public void testNonAtMeUser(){
-        Assertions.assertThrows(UnsupportedOperationException.class, () -> mal.getUser("null"));
-    }
-
 }
