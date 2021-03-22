@@ -58,8 +58,8 @@ public class TestUser {
 
     @Test
     public void testAnimeMangaListing(){
-        Assertions.assertNotEquals(0, user.getUserAnimeListing().withNoFields().search().size());
-        Assertions.assertNotEquals(0, user.getUserMangaListing().withNoFields().search().size());
+        Assertions.assertNotEquals(0, user.getUserAnimeListing().withNoFields().withLimit(1).search().size());
+        Assertions.assertNotEquals(0, user.getUserMangaListing().withNoFields().withLimit(1).search().size());
     }
 
 }
