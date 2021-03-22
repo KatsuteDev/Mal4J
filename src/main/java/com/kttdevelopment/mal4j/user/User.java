@@ -20,6 +20,8 @@ package com.kttdevelopment.mal4j.user;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.property.IDN;
+import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
+import com.kttdevelopment.mal4j.query.UserMangaListQuery;
 
 import java.util.Date;
 
@@ -32,7 +34,7 @@ import java.util.Date;
  * @see MyAnimeList#getUser(String)
  * @see MyAnimeList#getUser(String, String...)
  * @since 1.0.0
- * @version 1.0.0
+ * @version 1.2.0
  * @author Ktt Development
  */
 public abstract class User implements IDN {
@@ -120,5 +122,29 @@ public abstract class User implements IDN {
      * @since 1.0.0
      */
     public abstract Boolean isSupporter();
+
+    /**
+     * Returns user Anime list.
+     *
+     * @return Anime listing
+     *
+     * @see UserAnimeListQuery
+     * @see MyAnimeList#getUserAnimeListing()
+     * @see MyAnimeList#getUserAnimeListing(String)
+     * @since 1.2.0
+     */
+    public abstract UserAnimeListQuery getUserAnimeListing();
+
+    /**
+     * Returns user Manga list.
+     *
+     * @return Manga listing
+     *
+     * @see UserMangaListQuery
+     * @see MyAnimeList#getUserMangaListing()
+     * @see MyAnimeList#getUserMangaListing(String)
+     * @since 1.2.0
+     */
+    public abstract UserMangaListQuery getUserMangaListing();
 
 }

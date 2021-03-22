@@ -17,14 +17,6 @@ public class TestUser {
         user = mal.getMyself(Fields.user);
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
-    @Test @DisplayName("testUser() - not currently allowed by API")
-    public void testUser(){
-        Assertions.assertThrows(UnsupportedOperationException.class, () ->
-            Assertions.assertEquals(8316239, mal.getUser("KatsuteDev", Fields.NO_FIELDS).getID())
-        );
-    }
-
     @Test
     public void testMyself(){
         Assertions.assertNotNull(user.getID());
@@ -62,6 +54,12 @@ public class TestUser {
     @Test // test does actually pass
     public void testBirthday(){
         Assumptions.assumeTrue(user.getBirthday() != null, "User might not specify a birthday");
+    }
+
+    @Test
+    public void testAnimeMangaListing(){
+        Assertions.assertNotEquals(0, user.getUserAnimeListing().withNoFields().withLimit(1).search().size());
+        Assertions.assertNotEquals(0, user.getUserMangaListing().withNoFields().withLimit(1).search().size());
     }
 
 }
