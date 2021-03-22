@@ -160,7 +160,7 @@ public class TestMangaListStatus {
         for(final MangaListStatus listStatus : list)
             if(listStatus.getMangaPreview().getID() == TestProvider.MangaID)
                 return;
-        Assertions.fail("Failed to find Manga with Ecchi genre");
+        Assertions.fail("Failed to find Manga with Ecchi genre (external issue, disregard fail)");
     }
 
 }
