@@ -14,7 +14,7 @@ public class TestAuthorizationLocalServer {
     public static void beforeAll() throws IOException{
         TestProvider.testRequireClientID();
 
-        final String clientId = Files.readString(TestProvider.client);
+        final String clientId = TestProvider.readFile(TestProvider.client);
         authenticator = new MyAnimeListAuthenticator.LocalServerBuilder(clientId, 5050).openBrowser().build();
         final MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);
 
@@ -24,7 +24,7 @@ public class TestAuthorizationLocalServer {
         Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search());
 
         // write stable OAuth
-        Files.write(TestProvider.oauth, authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
+        Files.write(TestProvider.oauth.toPath(), authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
     }
 
     @Test

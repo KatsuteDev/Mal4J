@@ -1,6 +1,5 @@
 name: MyAnimeList CI
-on:
-  workflow_dispatch: {}
+on: [workflow_dispatch]
 
 jobs:
   mal_ci:

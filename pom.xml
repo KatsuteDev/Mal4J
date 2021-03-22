@@ -6,7 +6,7 @@
 
     <groupId>com.kttdevelopment</groupId>
     <artifactId>mal4j</artifactId>
-    <version>1.2.0</version>
+    <version>2.0.0-SNAPSHOT</version>
 
     <profiles>
         <profile>
@@ -60,6 +60,43 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <!-- use profile so JDK8 can compile on CI -->
+            <id>jdk9</id>
+            <activation>
+                <jdk>[9,)</jdk>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>base-compile</id>
+                                    <phase>compile</phase>
+                                    <goals>
+                                        <goal>compile</goal>
+                                    </goals>
+                                    <configuration>
+                                        <jdkToolchain>
+                                            <version>[9,)</version>
+                                        </jdkToolchain>
+                                        <!-- compile java9 to META-INF for JDK 9 -->
+                                        <release>9</release>
+                                        <compileSourceRoots>
+                                            <compileSourceRoot>${project.basedir}/src/main/java9</compileSourceRoot>
+                                        </compileSourceRoots>
+                                        <multiReleaseOutput>true</multiReleaseOutput>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
     </profiles>
 
     <properties>
@@ -104,9 +141,24 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>default-compile</id>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                        <configuration>
+                            <excludes>
+                                <!-- unsupported in jdk8 -->
+                                <exclude>module-info.java</exclude>
+                            </excludes>
+                        </configuration>
+                    </execution>
+                    <!-- profile handles jdk9 -->
+                </executions>
             </plugin>
 
             <plugin>
@@ -117,6 +169,7 @@
                     <archive>
                         <manifestEntries>
                             <Built-By>Katsute</Built-By>
+                            <Multi-Release>true</Multi-Release>
                         </manifestEntries>
                     </archive>
                     <skip>true</skip>
@@ -141,6 +194,13 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
                 <version>3.2.0</version>
+                <configuration>
+                    <additionalOptions>
+                        <additionalOption>-package</additionalOption>
+                    </additionalOptions>
+                    <!-- generate javadoc for /java and /java9 -->
+                    <sourcepath>${project.basedir}/src/main</sourcepath>
+                </configuration>
                 <executions>
                     <execution>
                         <id>attach-javadocs</id>
@@ -149,11 +209,6 @@
                         </goals>
                     </execution>
                 </executions>
-                <configuration>
-                    <additionalOptions>
-                        <additionalOption>-package</additionalOption>
-                    </additionalOptions>
-                </configuration>
             </plugin>
 
             <!-- tests -->

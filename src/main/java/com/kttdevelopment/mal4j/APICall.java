@@ -24,7 +24,6 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.net.*;
-import java.net.http.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Function;
@@ -129,7 +128,7 @@ final class APICall {
         if(value == null)
             pathVars.remove(pathVar);
         else
-            pathVars.put(pathVar, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            pathVars.put(pathVar, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
@@ -141,7 +140,7 @@ final class APICall {
         if(value == null)
             queries.remove(query);
         else
-            queries.put(query, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            queries.put(query, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
@@ -162,7 +161,7 @@ final class APICall {
         if(value == null)
             fields.remove(field);
         else
-            fields.put(field, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            fields.put(field, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
@@ -173,21 +172,20 @@ final class APICall {
 
     private static final URIEncoder encoder = new URIEncoder();
 
-    final Response<String> call() throws IOException, InterruptedException{
+    final Response<String> call() throws IOException{
         final String URL =
             baseURL +
-            pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group(1))) + // path args
+            Java9.Matcher.replaceAll(path, pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
             (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
 
-        final HttpRequest.Builder request = HttpRequest.newBuilder();
+        final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL),encoder)).toURL().openConnection();
+        conn.setRequestMethod(method);
 
-        request.uri(URI.create(blockedURI.matcher(URL).replaceAll(encoder)));
-        request.method(method, HttpRequest.BodyPublishers.noBody());
         for(final Map.Entry<String, String> entry : headers.entrySet())
-            request.header(entry.getKey(), entry.getValue());
+            conn.setRequestProperty(entry.getKey(), entry.getValue());
 
-        request.header("Cache-Control", "no-cache, no-store, must-revalidate");
-        request.header("Accept", "application/json; charset=UTF-8");
+        conn.setRequestProperty("Cache-Control", "no-cache, no-store, must-revalidate");
+        conn.setRequestProperty("Accept", "application/json; charset=UTF-8");
 
         if(debug){
             System.out.println("\nCall:     " + URL);
@@ -198,22 +196,34 @@ final class APICall {
             final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
             if(debug)
                 System.out.println("Data:     " + data);
-            request.header("Content-Type", "application/x-www-form-urlencoded");
-            request.method(method, HttpRequest.BodyPublishers.ofString(data));
+            conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            conn.setRequestMethod(method);
+            conn.setDoOutput(true);
+            try(final DataOutputStream OUT = new DataOutputStream(conn.getOutputStream())){
+                OUT.writeBytes(data);
+                OUT.flush();
+            }
         }
-        final HttpResponse<String> response = HttpClient
-            .newBuilder()
-            .build()
-            .send(request.build(), HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-        final String body = response.body();
+
+        @SuppressWarnings("UnusedAssignment") // must be init, may be null by try catch fail
+        String body = "";
+        try(final BufferedReader IN = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))){
+            String buffer;
+            final StringBuilder OUT = new StringBuilder();
+            while((buffer = IN.readLine()) != null)
+                OUT.append(buffer);
+            body = OUT.toString();
+        }finally{
+            conn.disconnect();
+        }
 
         if(debug)
             System.out.println("Response: " + body);
 
-        return new Response<>(URL, body, body, response.statusCode());
+        return new Response<>(URL, body, body, conn.getResponseCode());
     }
 
-    final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException{
+    final <T> Response<T> call(final Function<String,T> processor) throws IOException{
         final Response<String> response = call();
         final String body = response.body();
         return new Response<>(response.URL(), body, processor.apply(body), response.code());
@@ -301,8 +311,6 @@ final class APICall {
                 ).call(Json::parse);
             }catch(final IOException e){
                 throw new UncheckedIOException(e);
-            }catch(final InterruptedException e){
-                throw new RuntimeException(e);
             }
         }
 
