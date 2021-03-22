@@ -93,9 +93,9 @@ public class TestManga {
         Assertions.assertNotNull(manga.getSerialization()[0].getName());
     }
     
-    @Test @DisplayName("#4 - Serialization Role") @Disabled
+    @Test @DisplayName("#4 - Serialization Role")
     public void testSerializationRole(){
-        Assertions.assertNotNull(manga.getSerialization()[0].getRole());
+        Assertions.assertNotNull(manga.getSerialization()[0].getRole(), "Failed to get serialization role for Manga (external issue, disregard fail)");
     }
 
 }
