@@ -12,14 +12,16 @@ This library offers ***ALL*** the features provided by the API and even some *un
 
 - Make sure that you are providing an auth token and not the client id.
 - Your token may be expired.
+- Your token is missing '`Bearer `'.
+- Your token may contain dangling whitespace.
 
 ## java.lang.UnsupportedClassVersionError
 
-This issue is caused by using an older, unsupported JDK. This library requires at least JDK 11.
+This issue is caused by using an older, unsupported JDK; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using v2.0.0+ of this library.
 
-## Will you update this library to support JDK 8?
+## Does this library support JDK 8 / JDK 11?
 
-The latest long-term-support version for Java Development Kit is 11. This library is modular in order to be compliant with JDK11 standards and will not be downgraded for this very reason (modules are not supported in JDK8).
+This project supports JDK 8 and JDK 11 modules.
 
 # API
 
