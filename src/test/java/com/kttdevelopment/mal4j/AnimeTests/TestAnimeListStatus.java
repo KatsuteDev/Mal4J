@@ -95,7 +95,6 @@ public class TestAnimeListStatus {
         Assertions.fail("Anime list status not found");
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(3)
     public void testGetUsername(){
         final List<AnimeListStatus> list =
@@ -158,7 +157,7 @@ public class TestAnimeListStatus {
         for(final AnimeListStatus listStatus : list)
             if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID)
                 return;
-        Assertions.fail("Failed to find Anime with Ecchi genre");
+        Assertions.fail("Failed to find Anime with Ecchi genre (external issue, disregard fail)");
     }
 
 }
