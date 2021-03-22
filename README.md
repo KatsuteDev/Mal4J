@@ -35,13 +35,13 @@
 
 # Overview
 
-Mal4J is a wrapper for the MyAnimeList API written for JDK 11 and simplifies many complex operations into an easy to use library.
+Mal4J is a wrapper for the MyAnimeList API written for JDK 8+ and simplifies many complex operations into an easy to use library.
 
 # [Setup](https://github.com/Katsute/Mal4J/blob/main/setup.md)
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
 
-**Mal4J requires at least JDK 11.**
+**Mal4J requires at least JDK 8.**
 
 ## Maven Central
 
