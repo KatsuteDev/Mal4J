@@ -7,8 +7,8 @@ Add this line to the top of `stylesheet.css`
 
 **Protected Files:**
 - `CNAME`
-- `FiraSans.ttf`
 - `favicon.ico`
+- `FiraSans.ttf`
 - `glass.png`
 - `javadoc.scss`
 - `README.md`
