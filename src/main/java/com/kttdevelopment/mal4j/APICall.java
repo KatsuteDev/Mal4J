@@ -20,8 +20,8 @@ package com.kttdevelopment.mal4j;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
+import java.lang.reflect.*;
 import java.lang.reflect.Proxy;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
@@ -93,8 +93,8 @@ final class APICall {
                         withHeader(((Header) annotation).value(), Objects.toString(arg));
                     else if(type == Query.class)
                         withQuery(((Query) annotation).value(), arg, ((Query) annotation).encoded());
-                    else if(type == Field.class)
-                        withField(((Field) annotation).value(), arg, ((Field) annotation).encoded());
+                    else if(type == APIStruct.Field.class)
+                        withField(((APIStruct.Field) annotation).value(), arg, ((APIStruct.Field) annotation).encoded());
                 }
             }
         }
@@ -167,18 +167,46 @@ final class APICall {
 
     // call
 
+    // initialize HTTPUrlConnection
+    static {
+        try{
+            final Field methods = HttpURLConnection.class.getDeclaredField("methods");
+
+            // allow variable modification
+            final Field modifiers = Field.class.getDeclaredField("modifiers");
+            modifiers.setAccessible(true);
+
+            modifiers.setInt(methods, methods.getModifiers() & ~Modifier.FINAL);
+            methods.setAccessible(true);
+
+            // add PATCH to methods array
+            final String[] nativeMethods = (String[]) methods.get(null);
+            final Set<String> newMethods = new HashSet<>(Arrays.asList(nativeMethods));
+            newMethods.add("PATCH");
+            methods.set(null /* static has no instance */, newMethods.toArray(new String[0]));
+
+            // revert field to static final and close access
+            modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
+            methods.setAccessible(false);
+            modifiers.setAccessible(false);
+        }catch(final NoSuchFieldException | IllegalAccessException e){
+            throw new IllegalStateException(e);
+        }
+    }
+
     // [{}|\\^\[\]`]
     private static final Pattern blockedURI = Pattern.compile("[{}|\\\\^\\[\\]`]");
 
     private static final URIEncoder encoder = new URIEncoder();
 
-    final Response<String> call() throws IOException{
+    @SuppressWarnings({"RedundantThrows"})
+    private Response<String> call() throws IOException, InterruptedException{
         final String URL =
             baseURL +
             Java9.Matcher.replaceAll(path, pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
             (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
 
-        final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL),encoder)).toURL().openConnection();
+        final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL), encoder)).toURL().openConnection();
         conn.setRequestMethod(method);
 
         for(final Map.Entry<String, String> entry : headers.entrySet())
@@ -220,10 +248,10 @@ final class APICall {
         if(debug)
             System.out.println("Response: " + body);
 
-        return new Response<>(URL, body, body, conn.getResponseCode());
+        return new APIStruct.Response<>(URL, body, body, conn.getResponseCode());
     }
 
-    final <T> Response<T> call(final Function<String,T> processor) throws IOException{
+    final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException{
         final Response<String> response = call();
         final String body = response.body();
         return new Response<>(response.URL(), body, processor.apply(body), response.code());

@@ -61,7 +61,7 @@
             </build>
         </profile>
         <profile>
-            <!-- use profile so JDK8 can compile on CI -->
+            <!-- JDK9 for modular -->
             <id>jdk9</id>
             <activation>
                 <jdk>[9,)</jdk>
@@ -74,15 +74,12 @@
                             <artifactId>maven-compiler-plugin</artifactId>
                             <executions>
                                 <execution>
-                                    <id>base-compile</id>
+                                    <id>compile-9</id>
                                     <phase>compile</phase>
                                     <goals>
                                         <goal>compile</goal>
                                     </goals>
                                     <configuration>
-                                        <jdkToolchain>
-                                            <version>[9,)</version>
-                                        </jdkToolchain>
                                         <!-- compile java9 to META-INF for JDK 9 -->
                                         <release>9</release>
                                         <compileSourceRoots>
@@ -140,10 +137,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
                 <executions>
                     <execution>
                         <id>default-compile</id>
@@ -151,13 +144,14 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
                             <excludes>
                                 <!-- unsupported in jdk8 -->
                                 <exclude>module-info.java</exclude>
                             </excludes>
                         </configuration>
                     </execution>
-                    <!-- profile handles jdk9 -->
                 </executions>
             </plugin>
 
@@ -199,7 +193,7 @@
                         <additionalOption>-package</additionalOption>
                     </additionalOptions>
                     <!-- generate javadoc for /java and /java9 -->
-                    <sourcepath>${project.basedir}/src/main</sourcepath>
+                    <sourcepath>${project.basedir}/src/main/java;${project.basedir}/src/main/java9</sourcepath>
                 </configuration>
                 <executions>
                     <execution>

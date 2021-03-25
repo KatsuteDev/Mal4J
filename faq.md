@@ -23,6 +23,10 @@ This issue is caused by using an older, unsupported JDK; this library requires a
 
 This project supports JDK 8 and JDK 11 modules.
 
+## WARNING: An illegal reflective access operation has occurred
+
+In order to make this library function on JDK 8-10, reflection is used in order to make PATCH requests work correctly. Please do not report this issue, it has already been resolved.
+
 # API
 
 ## Seasons query is returning Anime from other seasons.
