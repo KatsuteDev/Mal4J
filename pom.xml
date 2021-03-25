@@ -94,6 +94,39 @@
                 </pluginManagement>
             </build>
         </profile>
+        <profile>
+            <!-- JDK11 for java.net.http -->
+            <id>jdk11</id>
+            <activation>
+                <jdk>[11,)</jdk>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-compiler-plugin</artifactId>
+                            <executions>
+                                <execution>
+                                    <id>compile-11</id>
+                                    <phase>compile</phase>
+                                    <goals>
+                                        <goal>compile</goal>
+                                    </goals>
+                                    <configuration>
+                                        <release>11</release>
+                                        <compileSourceRoots>
+                                            <compileSourceRoot>${project.basedir}/src/main/java11</compileSourceRoot>
+                                        </compileSourceRoots>
+                                        <multiReleaseOutput>true</multiReleaseOutput>
+                                    </configuration>
+                                </execution>
+                            </executions>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
     </profiles>
 
     <properties>
@@ -137,6 +170,10 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
                 <executions>
                     <execution>
                         <id>default-compile</id>
@@ -144,8 +181,6 @@
                             <goal>compile</goal>
                         </goals>
                         <configuration>
-                            <source>1.8</source>
-                            <target>1.8</target>
                             <excludes>
                                 <!-- unsupported in jdk8 -->
                                 <exclude>module-info.java</exclude>
@@ -192,8 +227,8 @@
                     <additionalOptions>
                         <additionalOption>-package</additionalOption>
                     </additionalOptions>
-                    <!-- generate javadoc for /java and /java9 -->
-                    <sourcepath>${project.basedir}/src/main/java;${project.basedir}/src/main/java9</sourcepath>
+                    <!-- generate javadoc for /java and /java11 -->
+                    <sourcepath>${project.basedir}/src/main/java;${project.basedir}/src/main/java11</sourcepath>
                 </configuration>
                 <executions>
                     <execution>
