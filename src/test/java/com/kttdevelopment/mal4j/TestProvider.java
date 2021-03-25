@@ -53,14 +53,12 @@ public abstract class TestProvider {
     static final File client = new File("src/test/java/resources/client.txt");
     static final File oauth  = new File("src/test/java/resources/oauth.txt");
 
-    private static final boolean CI = true; // set to TRUE if you want to simulate CI tests
-
     static {
         APICall.debug = false;
     }
 
     public static void init() throws IOException{
-        if(oauth.exists() && !CI){ // use existing OAuth
+        if(oauth.exists()){ // use existing OAuth
             mal = MyAnimeList.withOAuthToken(strip(readFile(oauth)));
             if(mal.getAnime(AnimeID, Fields.NO_FIELDS) != null)
                 return;
@@ -70,7 +68,7 @@ public abstract class TestProvider {
     }
 
     public static void testRequireClientID(){
-        Assumptions.assumeTrue(client.exists() && !CI, "File with Client ID was missing, please create a file with the Client ID at: " + client.getAbsolutePath());
+        Assumptions.assumeTrue(client.exists(), "File with Client ID was missing, please create a file with the Client ID at: " + client.getAbsolutePath());
     }
 
     public static MyAnimeList getMyAnimeList(){

@@ -19,9 +19,9 @@ This library offers ***ALL*** the features provided by the API and even some *un
 
 This issue is caused by using an older, unsupported JDK; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using v2.0.0+ of this library.
 
-## Does this library support JDK 8 / JDK 11?
+## Does this library support JDK # ?
 
-This project supports JDK 8 and JDK 11 modules.
+This project supports JDK 8+ and JDK 9 modules.
 
 ## WARNING: An illegal reflective access operation has occurred
 
