@@ -59,6 +59,7 @@ public class TestMangaListStatus {
         Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
+    private static boolean passedUpdate = false;
     @Test @Order(2)
     public void testUpdate(){
         final Date now = new Date();
@@ -78,10 +79,13 @@ public class TestMangaListStatus {
             .update();
 
         testStatus(status);
+        passedUpdate = true;
     }
 
     @Test @Order(3)
     public void testGet(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
                 .withStatus(MangaStatus.Reading)
@@ -98,9 +102,10 @@ public class TestMangaListStatus {
         Assertions.fail("Manga list status not found");
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(3)
     public void testGetUsername(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
         final List<MangaListStatus> list =
             mal.getUserMangaListing("KatsuteDev")
                 .withStatus(MangaStatus.Reading)
@@ -119,6 +124,8 @@ public class TestMangaListStatus {
 
     @Test @Order(3)
     public void testGetFromManga(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
         final MangaListStatus status = mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus();
         testStatus(status);
     }
@@ -151,6 +158,8 @@ public class TestMangaListStatus {
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
     public void testEcchiNSFW(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
                 .withLimit(1000)

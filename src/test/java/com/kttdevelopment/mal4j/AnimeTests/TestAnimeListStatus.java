@@ -57,6 +57,7 @@ public class TestAnimeListStatus {
         Assertions.assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
+    private static boolean passedUpdate = false;
     @Test @Order(2)
     public void testUpdate(){
         final Date now = new Date();
@@ -75,10 +76,13 @@ public class TestAnimeListStatus {
             .update();
 
         testStatus(status);
+        passedUpdate = true;
     }
 
     @Test @Order(3)
     public void testGet(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
                 .withStatus(AnimeStatus.Watching)
@@ -97,6 +101,8 @@ public class TestAnimeListStatus {
 
     @Test @Order(3)
     public void testGetUsername(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing("KatsuteDev")
                 .withStatus(AnimeStatus.Watching)
@@ -115,6 +121,8 @@ public class TestAnimeListStatus {
 
     @Test @Order(3)
     public void testGetFromAnime(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
         final AnimeListStatus status = mal
             .getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status)
             .getListStatus();
@@ -148,6 +156,8 @@ public class TestAnimeListStatus {
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
     public void testEcchiNSFW(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
                 .withLimit(1000)
