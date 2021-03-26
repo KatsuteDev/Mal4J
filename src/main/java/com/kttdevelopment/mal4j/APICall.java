@@ -43,9 +43,9 @@ class APICall {
 
     static boolean debug = false;
 
-    protected final String method;
-    protected final String baseURL;
-    protected final String path;
+    private final String method;
+    private final String baseURL;
+    private final String path;
 
     /**
      * API call builder.
@@ -102,17 +102,17 @@ class APICall {
         }
     }
 
-    protected final Map<String,String> headers = new HashMap<>();
+    private final Map<String,String> headers = new HashMap<>();
 
     // \{(.*?)\}
     @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
-    protected static final Pattern pathArg = Pattern.compile("\\{(.*?)\\}");
+    private static final Pattern pathArg = Pattern.compile("\\{(.*?)\\}");
 
-    protected final Map<String,String> pathVars = new HashMap<>();
-    protected final Map<String,String> queries  = new HashMap<>();
+    private final Map<String,String> pathVars = new HashMap<>();
+    private final Map<String,String> queries  = new HashMap<>();
 
-    protected boolean formUrlEncoded = false;
-    protected final Map<String,String> fields = new HashMap<>();
+    private boolean formUrlEncoded = false;
+    private final Map<String,String> fields = new HashMap<>();
 
     final APICall withHeader(final String header, final String value){
         if(value == null)
@@ -228,7 +228,7 @@ class APICall {
     // initialize HTTPUrlConnection
     static {
         final String version = System.getProperty("java.version");
-        useNetHttp = Integer.parseInt(version.contains(".") ? version.substring(0, version.indexOf(".")) : version) >= 11;
+        useNetHttp = (version != null ? Integer.parseInt(version.contains(".") ? version.substring(0, version.indexOf(".")) : version) : 0) >= 11;
 
         if(!useNetHttp)
             try{
@@ -260,9 +260,9 @@ class APICall {
     }
 
     // [{}|\\^\[\]`]
-    protected static final Pattern blockedURI = Pattern.compile("[{}|\\\\^\\[\\]`]");
+    private static final Pattern blockedURI = Pattern.compile("[{}|\\\\^\\[\\]`]");
 
-    protected static final URIEncoder encoder = new URIEncoder();
+    private static final URIEncoder encoder = new URIEncoder();
 
     @SuppressWarnings("RedundantThrows")
     private APIStruct.Response<String> call() throws IOException, InterruptedException{
@@ -359,7 +359,7 @@ class APICall {
                 // response.responseCode()
                 code = (int) JDK11.HttpResponse_Code.invoke(HttpResponse_Instance);
 
-            }catch(final IllegalAccessException | InvocationTargetException e){
+            }catch(final IllegalAccessException | InvocationTargetException | ClassCastException e){
                 throw new IllegalStateException(e);
             }
         else{
@@ -410,7 +410,8 @@ class APICall {
     @Override
     public String toString(){
         return "APICall{" +
-               "method='" + method + '\'' +
+               "useNetHttp=" + useNetHttp +
+               ", method='" + method + '\'' +
                ", baseURL='" + baseURL + '\'' +
                ", headers=" + headers +
                ", path='" + path + '\'' +
