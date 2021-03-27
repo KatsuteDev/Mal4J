@@ -256,6 +256,10 @@ class APICall {
                 modifiers.setAccessible(false);
             }catch(final NoSuchFieldException | IllegalAccessException | NoSuchMethodException e){
                 throw new IllegalStateException(e);
+            }catch(final RuntimeException e){
+                throw e.getClass().getSimpleName().equals("InaccessibleObjectException")
+                    ? new IllegalStateException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+")
+                    : e;
             }
     }
 

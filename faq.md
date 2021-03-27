@@ -15,17 +15,27 @@ This library offers ***ALL*** the features provided by the API and even some *un
 - Your token is missing '`Bearer `'.
 - Your token may contain dangling whitespace.
 
-## java.lang.UnsupportedClassVersionError
-
-This issue is caused by using an older, unsupported JDK; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using v2.0.0+ of this library.
-
 ## Does this library support JDK # ?
 
 This project supports JDK 8+ and JDK 9 modules.
 
+## java.lang.UnsupportedClassVersionError
+
+This issue is caused by using an older, unsupported JDK; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using v2.0.0+ of this library.
+
 ## WARNING: An illegal reflective access operation has occurred
 
-In order to make this library function on JDK 8-10, reflection is used in order to make PATCH requests work correctly. Please do not report this issue, it has already been resolved.
+In order to make this library function on JDK 8-10, reflection is used in order to make PATCH requests work correctly. If you don't want this warning than either suppress it, downgrade to JDK 8, or upgrade to JDK 11.
+
+## java.lang.reflect.InaccessibleObjectException / java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+
+
+In order to make this library function on JDK 9-10, reflection is used in order to make PATCH request work correctly.
+
+To avoid this exception either:
+- Downgrade to JDK 8
+- Upgrade to JDK 11
+- Add `--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J` to VM options
+- Make the project not modular (remove `module-info.java`)
 
 # API
 

@@ -42,9 +42,9 @@
  */
 module Mal4J {
 
-    requires java.net.http;
     requires jdk.httpserver;
     requires java.desktop;
+    requires java.net.http;
 
     exports com.kttdevelopment.mal4j.anime;
     exports com.kttdevelopment.mal4j.anime.property;
