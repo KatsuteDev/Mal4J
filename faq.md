@@ -2,7 +2,7 @@
 
 ### Does this library support JDK # ?
 
-This project supports JDK 8+ and JDK 9 modules.
+This project supports Java 8+ and Java 9 modules.
 
 ### java.lang.UnsupportedClassVersionError
 
@@ -47,7 +47,7 @@ This library offers ***ALL*** the features provided by the API and even some *un
 
 ### Seasons query is returning Anime from other seasons.
 
-The seasons query returns Anime that is running in the current season, this includes Anime that may have started the season before and is still airing.
+The seasons query returns Anime that are airing in the current season, this includes Anime that may have started the season before and are still airing this season.
 
 ### NSFW is not working.
 
