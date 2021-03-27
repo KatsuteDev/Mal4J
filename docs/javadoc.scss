@@ -215,6 +215,14 @@ table{
     color: $color-dark !important;
 }
 
+.packagesSummary {
+    margin-top: 1rem !important;
+
+    > caption {
+        padding-top: 0 !important;
+    }
+}
+
 h1.bar {
     color: $color-white !important;
 }
