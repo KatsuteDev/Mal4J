@@ -202,12 +202,6 @@ table{
     }
 }
 
-.description, .details {
-    dl dt {
-        color: $color-dark !important;
-    }
-}
-
 .packageHierarchyLabel {
     color: $color-dark !important;
 }
@@ -243,8 +237,8 @@ footer {
 
 /* content */
 h{
-    &1, &2, &3, &4, &5, &6{
-        &.title{
+    &1, &2, &3, &4, &5, &6 {
+        &.title {
             color: $color-dark !important;
             text-decoration: none;
             font-weight: 300;
@@ -253,36 +247,35 @@ h{
     }
 }
 
-section[role="region"], div.contentContainer{
-    > ul.blockList > li.blockList {
-        &, &Last {
-            border-radius: 1rem;
-            padding: 1rem !important;
+section[role="region"] > ul.blockList > li.blockList,
+div.contentContainer > ul.blockList > li.blockList > ul.blockList > li.blockList {
+    &, &Last {
+        border-radius: 1rem;
+        padding: 1rem !important;
 
-            @extend .thin-header;
+        @extend .thin-header;
 
-            > h {
-                &1, &2, &3, &4, &5, &6{
-                    margin: -19px 0 0 0 !important;
-                    padding: 0 !important;
-                    color: $color-dark;
-                }
+        > h {
+            &1, &2, &3, &4, &5, &6{
+                margin: -19px 0 0 0 !important;
+                padding: 0 !important;
+                color: $color-dark;
             }
+        }
 
-            > ul.blockList {
-                &, &Last {
-                    margin: 1rem 0 0 0 !important;
+        > ul.blockList {
+            &, &Last {
+                margin: 1rem 0 0 0 !important;
 
-                    > li.blockList {
-                        padding: 0 1rem 1rem 1rem !important;
-                        margin: 0 !important;
+                > li.blockList {
+                    padding: 0 1rem 1rem 1rem !important;
+                    margin: 0 !important;
 
-                        > h {
-                            &1, &2, &3, &4, &5, &6 {
-                                margin: -19px -1rem 1rem -1rem !important;
-                                background-color: $color-dark !important;
-                                color: white !important;
-                            }
+                    > h {
+                        &1, &2, &3, &4, &5, &6 {
+                            margin: -19px -1rem 1rem -1rem !important;
+                            background-color: $color-dark !important;
+                            color: white !important;
                         }
                     }
                 }
@@ -293,6 +286,13 @@ section[role="region"], div.contentContainer{
 
 /* index/help */
 div.contentContainer{
+
+    .description, .details {
+        dl dt {
+            color: $color-dark !important;
+        }
+    }
+
     section[role="region"], div.block {
         @extend .thin-header;
     }
