@@ -143,17 +143,27 @@ table{
     border: 0px !important;
 
     caption{
-        span{
-            color: $color-white !important;
+        > span {
             background-color: $color-blue !important;
+        }
 
-            a[href], a[href]:visited{
-                color: $color-white !important;
-                transition: all .15s ease-in-out !important;
-                text-decoration: underline;
-                &:hover{
-                    color: $color-blue-lighter !important;
+        span{
+            color: white !important;
+
+            a[href] {
+                &, &:visited {
+                    color: white !important;
+                    transition: all .15s ease-in-out !important;
+                    text-decoration: underline;
                 }
+
+                &:hover {
+                    color: white !important;
+                }
+            }
+
+            :hover a {
+                color: white !important;
             }
         }
         padding-left: 0px !important;
@@ -184,20 +194,19 @@ table{
 }
 
 .memberSummary {
-    button {
-        &.activeTableTab, &.tableTab {
-            background-color: $color-blue !important;
-
-            color: $color-white !important;
-            transition: all .15s ease-in-out !important;
-            text-decoration: underline;
-            &:hover {
-                background-color: $color-blue-darker !important;
+    button, caption {
+        .activeTableTab, .tableTab {
+            > span {
+                transition: all .15s ease-in-out !important;
+                color: white !important;
             }
-
         }
-        &.activeTableTab {
+        .activeTableTab > span, .tableTab > span:hover {
             background-color: $color-blue-darker !important;
+        }
+        .tableTab > span {
+            background-color: $color-blue !important;
+            text-decoration: underline;
         }
     }
 }
