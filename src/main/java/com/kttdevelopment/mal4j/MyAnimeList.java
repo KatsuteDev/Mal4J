@@ -304,6 +304,8 @@ public abstract class MyAnimeList {
      */
     public abstract ForumTopicDetail getForumTopicDetail(final long id, final Integer limit, final Integer offset);
 
+    public abstract ForumTopicDetailPostQuery getForumTopicDetailPosts(final long id);
+
     //
 
     /**

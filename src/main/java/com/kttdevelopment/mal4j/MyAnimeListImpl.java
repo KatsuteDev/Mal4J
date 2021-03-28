@@ -407,6 +407,21 @@ final class MyAnimeListImpl extends MyAnimeList{
         return asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"));
     }
 
+    @Override // todo
+    public final ForumTopicDetailPostQuery getForumTopicDetailPosts(final long id){
+        return new ForumTopicDetailPostQuery() {
+            @Override
+            public final List<Post> search(){
+                return null;
+            }
+
+            @Override
+            public final PaginatedIterator<Post> searchAll(){
+                return null;
+            }
+        };
+    }
+
     @Override
     public final ForumSearchQuery getForumTopics(){
         return new ForumSearchQuery() {
