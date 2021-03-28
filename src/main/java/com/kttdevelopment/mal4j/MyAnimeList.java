@@ -41,38 +41,10 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 1.1.0
+ * @version 2.0.0
  * @author Ktt Development
  */
 public abstract class MyAnimeList {
-
-    /**
-     * Indicates that only default fields should be returned.
-     * @deprecated use {@link Fields#NO_FIELDS}
-     */
-    @Deprecated
-    public static final String[] NO_FIELDS = new String[0];
-
-    /**
-     * Returns all possible Anime fields.
-     * @deprecated use {@link Fields#anime}
-     */
-    @SuppressWarnings("SpellCheckingInspection") @Deprecated
-    public static final String ALL_ANIME_FIELDS = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_episodes,start_season,broadcast,source,average_episode_duration,rating,pictures,background,related_anime,related_manga,recommendations,studios,statistics,my_list_status{start_date,finish_date,priority,num_times_rewatched,rewatch_value,tags,comments},list_status{start_date,finish_date,priority,num_times_rewatched,rewatch_value,tags,comments},opening_themes,ending_themes";
-
-    /**
-     * Returns all possible Manga fields.
-     * @deprecated use {@link Fields#manga}
-     */
-    @Deprecated
-    public static final String ALL_MANGA_FIELDS = "id,title,main_picture,alternative_titles,start_date,end_date,synopsis,mean,rank,popularity,num_list_users,num_scoring_users,nsfw,created_at,updated_at,media_type,status,genres,num_volumes,num_chapters,authors{first_name,last_name},pictures,background,related_anime,related_manga,recommendations,serialization{name,role},my_list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments},list_status{start_date,finish_date,priority,num_times_reread,reread_value,tags,comments}";
-
-    /**
-     * Returns all possible User fields.
-     * @deprecated use {@link Fields#user}
-     */
-    @Deprecated
-    public static final String ALL_USER_FIELDS = "birthday,time_zone,anime_statistics,is_supporter";
 
     MyAnimeList(){ }
 
