@@ -26,6 +26,8 @@ public class TestUserMangaListing {
                 .withFields(Fields.Manga.list_status)
                 .search();
         Assertions.assertEquals(MangaStatus.PlanToRead, list.get(0).getStatus());
+
+        Assertions.assertNotEquals("{}", list.get(0).toString());
     }
 
     @Test

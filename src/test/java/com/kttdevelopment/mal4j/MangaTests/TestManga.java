@@ -98,4 +98,9 @@ public class TestManga {
         Assertions.assertNotNull(manga.getSerialization()[0].getRole(), "Failed to get serialization role for Manga (external issue, disregard fail)");
     }
 
+    @Test
+    public void testToString(){
+        Assertions.assertNotEquals("{}", manga.toString());
+    }
+
 }

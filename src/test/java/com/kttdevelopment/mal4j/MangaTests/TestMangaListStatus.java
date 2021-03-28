@@ -146,6 +146,8 @@ public class TestMangaListStatus {
         Assertions.assertEquals(TestProvider.testComment, status.getComments());
         Assertions.assertNotNull(status.getUpdatedAt());
         Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
+
+        Assertions.assertNotEquals("{}", status.toString());
     }
 
     @Test @Order(4)
