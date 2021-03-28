@@ -25,12 +25,12 @@ import com.kttdevelopment.mal4j.forum.*;
 import com.kttdevelopment.mal4j.forum.property.*;
 import com.kttdevelopment.mal4j.manga.*;
 import com.kttdevelopment.mal4j.manga.property.*;
+import com.kttdevelopment.mal4j.property.NSFW;
 import com.kttdevelopment.mal4j.property.*;
 import com.kttdevelopment.mal4j.query.*;
 import com.kttdevelopment.mal4j.user.UserAnimeStatistics;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 import java.text.*;
 import java.util.*;
 import java.util.function.Function;
@@ -93,8 +93,15 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "AnimeStatistics{" +
+                           "watching=" + watching +
+                           ", completed=" + completed +
+                           ", onHold=" + onHold +
+                           ", dropped=" + dropped +
+                           ", planToWatch=" + planToWatch +
+                           ", userCount=" + userCount +
+                           '}';
                 }
 
             };
@@ -121,8 +128,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public String toString(){
+                    return "Broadcast{" +
+                           "dayOfWeek=" + dayOfWeek +
+                           ", time=" + time +
+                           '}';
                 }
 
             };
@@ -149,8 +159,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "StartSeason{" +
+                           "year=" + year +
+                           ", season=" + season +
+                           '}';
                 }
 
             };
@@ -176,9 +189,13 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 // additional methods
 
+
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "Studio{" +
+                           "id=" + id +
+                           ", name='" + name + '\'' +
+                           '}';
                 }
 
             };
@@ -210,8 +227,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public String toString(){
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "OpeningTheme{" +
+                           "id=" + id +
+                           ", text='" + text + '\'' +
+                           '}';
                 }
 
             };
@@ -243,8 +263,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public String toString(){
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "EndingTheme{" +
+                           "id=" + id +
+                           ", text='" + text + '\'' +
+                           '}';
                 }
 
             };
@@ -482,8 +505,43 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "Anime{" +
+                           "id=" + id +
+                           ", title='" + title + '\'' +
+                           ", mainPicture=" + mainPicture +
+                           ", alternativeTitles=" + alternativeTitles +
+                           ", startDate=" + startDate +
+                           ", endDate=" + endDate +
+                           ", synopsis='" + synopsis + '\'' +
+                           ", meanRating=" + meanRating +
+                           ", rank=" + rank +
+                           ", popularity=" + popularity +
+                           ", usersListing=" + usersListing +
+                           ", usersScoring=" + usersScoring +
+                           ", nsfw=" + nsfw +
+                           ", genres=" + Arrays.toString(genres) +
+                           ", createdAt=" + createdAt +
+                           ", updatedAt=" + updatedAt +
+                           ", type=" + type +
+                           ", status=" + status +
+                           ", listStatus=" + listStatus +
+                           ", episodes=" + episodes +
+                           ", startSeason=" + startSeason +
+                           ", broadcast=" + broadcast +
+                           ", source=" + source +
+                           ", episodeLength=" + episodeLength +
+                           ", rating=" + rating +
+                           ", studios=" + Arrays.toString(studios) +
+                           ", pictures=" + Arrays.toString(pictures) +
+                           ", background='" + background + '\'' +
+                           ", relatedAnime=" + Arrays.toString(relatedAnime) +
+                           ", relatedManga=" + Arrays.toString(relatedManga) +
+                           ", recommendations=" + Arrays.toString(recommendations) +
+                           ", statistics=" + statistics +
+                           ", openingThemes=" + Arrays.toString(openingThemes) +
+                           ", endingThemes=" + Arrays.toString(endingThemes) +
+                           '}';
                 }
 
             };
@@ -592,8 +650,22 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "AnimeListStatus{" +
+                           "id=" + id +
+                           ", status=" + status +
+                           ", score=" + score +
+                           ", startDate=" + startDate +
+                           ", finishDate=" + finishDate +
+                           ", priority=" + priority +
+                           ", tags=" + Arrays.toString(tags) +
+                           ", comments='" + comments + '\'' +
+                           ", updatedAt=" + updatedAt +
+                           ", watchedEpisodes=" + watchedEpisodes +
+                           ", rewatching=" + rewatching +
+                           ", timesRewatched=" + timesRewatched +
+                           ", rewatchValue=" + rewatchValue +
+                           '}';
                 }
 
             };
@@ -701,8 +773,21 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "AnimeListStatus{" +
+                           "status=" + status +
+                           ", score=" + score +
+                           ", startDate=" + startDate +
+                           ", finishDate=" + finishDate +
+                           ", priority=" + priority +
+                           ", tags=" + Arrays.toString(tags) +
+                           ", comments='" + comments + '\'' +
+                           ", updatedAt=" + updatedAt +
+                           ", watchedEpisodes=" + watchedEpisodes +
+                           ", rewatching=" + rewatching +
+                           ", timesRewatched=" + timesRewatched +
+                           ", rewatchValue=" + rewatchValue +
+                           '}';
                 }
 
             };
@@ -891,8 +976,35 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public String toString(){
+                    return "AnimePreview{" +
+                           "id=" + id +
+                           ", title='" + title + '\'' +
+                           ", mainPicture=" + mainPicture +
+                           ", alternativeTitles=" + alternativeTitles +
+                           ", startDate=" + startDate +
+                           ", endDate=" + endDate +
+                           ", synopsis='" + synopsis + '\'' +
+                           ", meanRating=" + meanRating +
+                           ", rank=" + rank +
+                           ", popularity=" + popularity +
+                           ", usersListing=" + usersListing +
+                           ", usersScoring=" + usersScoring +
+                           ", nsfw=" + nsfw +
+                           ", genres=" + Arrays.toString(genres) +
+                           ", createdAt=" + createdAt +
+                           ", updatedAt=" + updatedAt +
+                           ", type=" + type +
+                           ", status=" + status +
+                           ", listStatus=" + listStatus +
+                           ", episodes=" + episodes +
+                           ", startSeason=" + startSeason +
+                           ", broadcast=" + broadcast +
+                           ", source=" + source +
+                           ", episodeLength=" + episodeLength +
+                           ", rating=" + rating +
+                           ", studios=" + Arrays.toString(studios) +
+                           '}';
                 }
 
             };
@@ -931,8 +1043,13 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final String toString(){
-                    return AutomatedToString(this);
+                    return "AnimeRanking{" +
+                           "anime=" + anime +
+                           ", ranking=" + ranking +
+                           ", previousRanking=" + previousRanking +
+                           '}';
                 }
+
             };
         }
 
@@ -962,8 +1079,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "AnimeRecommendation{" +
+                           "anime=" + anime +
+                           ", recommendations=" + recommendations +
+                           '}';
                 }
 
             };
@@ -1001,8 +1121,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "RelatedAnime{" +
+                           "anime=" + anime +
+                           ", relationType=" + relationType +
+                           ", relationTypeFormatted='" + relationTypeFormatted + '\'' +
+                           '}';
                 }
 
             };
@@ -1039,8 +1163,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "ForumTopicCreator{" +
+                           "id=" + id +
+                           ", name='" + name + '\'' +
+                           '}';
                 }
 
             };
@@ -1114,8 +1241,17 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "ForumTopic{" +
+                           "id=" + id +
+                           ", title='" + title + '\'' +
+                           ", createdAt=" + createdAt +
+                           ", createdBy=" + createdBy +
+                           ", posts=" + posts +
+                           ", lastPostedAt=" + lastPostedAt +
+                           ", lastPostedBy=" + lastPostedBy +
+                           ", locked=" + locked +
+                           '}';
                 }
 
             };
@@ -1159,8 +1295,13 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "Poll{" +
+                           "id=" + id +
+                           ", question='" + question + '\'' +
+                           ", isClosed=" + isClosed +
+                           ", options=" + Arrays.toString(options) +
+                           '}';
                 }
 
             };
@@ -1198,8 +1339,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "PollOption{" +
+                           "id=" + id +
+                           ", text='" + text + '\'' +
+                           ", votes=" + votes +
+                           '}';
                 }
 
             };
@@ -1237,8 +1382,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "PostAuthor{" +
+                           "id=" + id +
+                           ", name='" + name + '\'' +
+                           ", forumAvatarURL='" + forumAvatarURL + '\'' +
+                           '}';
                 }
 
             };
@@ -1282,8 +1431,13 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "ForumBoard{" +
+                           "id=" + id +
+                           ", title='" + title + '\'' +
+                           ", description='" + description + '\'' +
+                           ", subBoards=" + Arrays.toString(subBoards) +
+                           '}';
                 }
 
             };
@@ -1310,8 +1464,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "ForumCategory{" +
+                           "title='" + title + '\'' +
+                           ", forumBoards=" + Arrays.toString(forumBoards) +
+                           '}';
                 }
 
             };
@@ -1343,8 +1500,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "ForumSubBoard{" +
+                           "id=" + id +
+                           ", title='" + title + '\'' +
+                           '}';
                 }
 
             };
@@ -1377,8 +1537,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "ForumTopicDetail{" +
+                           "title='" + title + '\'' +
+                           ", posts=" + Arrays.toString(posts) +
+                           ", poll=" + poll +
+                           '}';
                 }
 
             };
@@ -1439,8 +1603,15 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "Post{" +
+                           "id=" + id +
+                           ", number=" + number +
+                           ", createdAt=" + createdAt +
+                           ", author=" + author +
+                           ", body='" + body + '\'' +
+                           ", signature='" + signature + '\'' +
+                           '}';
                 }
 
             };
@@ -1483,8 +1654,13 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "Author{" +
+                           "id=" + id +
+                           ", firstName='" + firstName + '\'' +
+                           ", lastName='" + lastName + '\'' +
+                           ", role='" + role + '\'' +
+                           '}';
                 }
 
             };
@@ -1517,8 +1693,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "Publisher{" +
+                           "id=" + id +
+                           ", name='" + name + '\'' +
+                           ", role='" + role + '\'' +
+                           '}';
                 }
 
             };
@@ -1717,8 +1897,37 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "Manga{" +
+                           "id=" + id +
+                           ", title='" + title + '\'' +
+                           ", mainPicture=" + mainPicture +
+                           ", alternativeTitles=" + alternativeTitles +
+                           ", startDate=" + startDate +
+                           ", endDate=" + endDate +
+                           ", synopsis='" + synopsis + '\'' +
+                           ", meanRating=" + meanRating +
+                           ", rank=" + rank +
+                           ", popularity=" + popularity +
+                           ", usersListing=" + usersListing +
+                           ", usersScoring=" + usersScoring +
+                           ", nsfw=" + nsfw +
+                           ", genres=" + Arrays.toString(genres) +
+                           ", createdAt=" + createdAt +
+                           ", updatedAt=" + updatedAt +
+                           ", type=" + type +
+                           ", status=" + status +
+                           ", listStatus=" + listStatus +
+                           ", volumes=" + volumes +
+                           ", chapters=" + chapters +
+                           ", authors=" + Arrays.toString(authors) +
+                           ", pictures=" + Arrays.toString(pictures) +
+                           ", background='" + background + '\'' +
+                           ", relatedAnime=" + Arrays.toString(relatedAnime) +
+                           ", relatedManga=" + Arrays.toString(relatedManga) +
+                           ", recommendations=" + Arrays.toString(recommendations) +
+                           ", serialization=" + Arrays.toString(serialization) +
+                           '}';
                 }
 
             };
@@ -1833,8 +2042,23 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "MangaListStatus{" +
+                           "id=" + id +
+                           ", status=" + status +
+                           ", score=" + score +
+                           ", startDate=" + startDate +
+                           ", finishDate=" + finishDate +
+                           ", priority=" + priority +
+                           ", tags=" + Arrays.toString(tags) +
+                           ", comments='" + comments + '\'' +
+                           ", updatedAt=" + updatedAt +
+                           ", volumesRead=" + volumesRead +
+                           ", chaptersRead=" + chaptersRead +
+                           ", rereading=" + rereading +
+                           ", timesReread=" + timesReread +
+                           ", rereadValue=" + rereadValue +
+                           '}';
                 }
 
             };
@@ -1947,8 +2171,22 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "MangaListStatus{" +
+                           "status=" + status +
+                           ", score=" + score +
+                           ", startDate=" + startDate +
+                           ", finishDate=" + finishDate +
+                           ", priority=" + priority +
+                           ", tags=" + Arrays.toString(tags) +
+                           ", comments='" + comments + '\'' +
+                           ", updatedAt=" + updatedAt +
+                           ", volumesRead=" + volumesRead +
+                           ", chaptersRead=" + chaptersRead +
+                           ", rereading=" + rereading +
+                           ", timesReread=" + timesReread +
+                           ", rereadValue=" + rereadValue +
+                           '}';
                 }
 
             };
@@ -2113,8 +2351,31 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "MangaPreview{" +
+                           "id=" + id +
+                           ", title='" + title + '\'' +
+                           ", mainPicture=" + mainPicture +
+                           ", alternativeTitles=" + alternativeTitles +
+                           ", startDate=" + startDate +
+                           ", endDate=" + endDate +
+                           ", synopsis='" + synopsis + '\'' +
+                           ", meanRating=" + meanRating +
+                           ", rank=" + rank +
+                           ", popularity=" + popularity +
+                           ", usersListing=" + usersListing +
+                           ", usersScoring=" + usersScoring +
+                           ", nsfw=" + nsfw +
+                           ", genres=" + Arrays.toString(genres) +
+                           ", createdAt=" + createdAt +
+                           ", updatedAt=" + updatedAt +
+                           ", type=" + type +
+                           ", status=" + status +
+                           ", listStatus=" + listStatus +
+                           ", volumes=" + volumes +
+                           ", chapters=" + chapters +
+                           ", authors=" + Arrays.toString(authors) +
+                           '}';
                 }
 
             };
@@ -2152,8 +2413,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "MangaRanking{" +
+                           "manga=" + manga +
+                           ", ranking=" + ranking +
+                           ", previousRanking=" + previousRanking +
+                           '}';
                 }
 
             };
@@ -2185,8 +2450,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "MangaRecommendation{" +
+                           "manga=" + manga +
+                           ", recommendations=" + recommendations +
+                           '}';
                 }
 
             };
@@ -2224,8 +2492,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "RelatedManga{" +
+                           "manga=" + manga +
+                           ", relationType=" + relationType +
+                           ", relationTypeFormatted='" + relationTypeFormatted + '\'' +
+                           '}';
                 }
 
             };
@@ -2321,7 +2593,18 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final String toString(){
-                    return AutomatedToString(this);
+                    return "User{" +
+                           "id=" + id +
+                           ", name='" + name + '\'' +
+                           ", picture='" + picture + '\'' +
+                           ", gender='" + gender + '\'' +
+                           ", birthday=" + birthday +
+                           ", location='" + location + '\'' +
+                           ", joinedAt=" + joinedAt +
+                           ", animeStatistics=" + animeStatistics +
+                           ", timezone='" + timezone + '\'' +
+                           ", supporter=" + supporter +
+                           '}';
                 }
 
             };
@@ -2428,7 +2711,22 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final String toString(){
-                    return AutomatedToString(this);
+                    return "UserAnimeStatistics{" +
+                           "watching=" + watching +
+                           ", completed=" + completed +
+                           ", onHold=" + onHold +
+                           ", dropped=" + dropped +
+                           ", planToWatch=" + planToWatch +
+                           ", items=" + items +
+                           ", daysWatching=" + daysWatching +
+                           ", daysCompleted=" + daysCompleted +
+                           ", daysOnHold=" + daysOnHold +
+                           ", daysDropped=" + daysDropped +
+                           ", days=" + days +
+                           ", episodesWatched=" + episodesWatched +
+                           ", timesRewatched=" + timesRewatched +
+                           ", meanScore=" + meanScore +
+                           '}';
                 }
 
             };
@@ -2465,8 +2763,12 @@ abstract class MyAnimeListAPIResponseMapping {
                 //
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "AlternativeTitles{" +
+                           "synonyms=" + Arrays.toString(synonyms) +
+                           ", english='" + english + '\'' +
+                           ", japanese='" + japanese + '\'' +
+                           '}';
                 }
 
             };
@@ -2493,8 +2795,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
-                public final String toString() {
-                    return AutomatedToString(this);
+                public final String toString(){
+                    return "Picture{" +
+                           "medium='" + medium + '\'' +
+                           ", large='" + large + '\'' +
+                           '}';
                 }
 
             };
@@ -2589,10 +2894,14 @@ abstract class MyAnimeListAPIResponseMapping {
             //
 
             @Override
-            public final String toString() {
-                return AutomatedToString(this);
+            public final String toString(){
+                return "Time{" +
+                       "hour=" + hour +
+                       ", hour12=" + hour12 +
+                       ", am=" + am +
+                       ", minute=" + minute +
+                       '}';
             }
-
         };
     }
 
@@ -2604,43 +2913,6 @@ abstract class MyAnimeListAPIResponseMapping {
         }catch (final NullPointerException ignored){
             return null;
         }
-    }
-
-    private static String AutomatedToString(final Object obj){
-        final Class<?> _class = obj.getClass();
-
-        final List<Field[]> fieldSets = new ArrayList<>();
-        fieldSets.add(_class.getDeclaredFields());
-
-        Class<?> _super = _class; // add inherited fields
-        while((_super = _super.getSuperclass()) != null)
-            fieldSets.add(_super.getDeclaredFields());
-
-        Collections.reverse(fieldSets);
-
-        final StringBuilder OUT = new StringBuilder();
-        OUT.append(_class.getSimpleName()).append('{');
-        for(final Field[] set : fieldSets){ // print all fields
-            for(final Field field : set){
-                if(!field.getName().contains("$"))
-                    try{
-                        final Object value = field.get(obj);
-                        OUT.append(field.getName()).append('=');
-                        if(value instanceof String)
-                            OUT.append('\'').append(value).append('\'');
-                        else if(value instanceof Object[])
-                            OUT.append(Arrays.toString((Object[]) value));
-                        else
-                            OUT.append(value);
-                        OUT.append(", ");
-                    }catch(final IllegalAccessException ignored){ }
-            }
-        }
-
-        if(OUT.toString().contains(", "))
-            OUT.delete(OUT.lastIndexOf(", "), OUT.length());
-        OUT.append('}');
-        return OUT.toString();
     }
 
 }

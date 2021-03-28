@@ -33,6 +33,7 @@ public class TestForumTopicDetail {
         Assertions.assertNotNull(post.getCreatedAt());
         Assertions.assertNotNull(post.getBody());
         Assertions.assertNotNull(post.getSignature());
+
         Assertions.assertSame(topic, post.getForumTopicDetail());
     }
 
@@ -42,12 +43,14 @@ public class TestForumTopicDetail {
         Assertions.assertNotNull(poll.getID());
         Assertions.assertNotNull(poll.getQuestion());
         Assertions.assertFalse(poll.isClosed());
+
         // options
         {
             final PollOption option = poll.getOptions()[0];
             Assertions.assertNotNull(option.getID());
             Assertions.assertNotNull(option.getText());
             Assertions.assertNotNull(option.getVotes());
+
             Assertions.assertSame(poll, option.getPoll());
         }
         Assertions.assertSame(topic, poll.getForumTopicDetail());
