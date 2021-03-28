@@ -2,7 +2,7 @@
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
 
-**Mal4J requires at least JDK 11.**
+**Mal4J requires at least JDK 8.**
 
 ## Maven Central
 
