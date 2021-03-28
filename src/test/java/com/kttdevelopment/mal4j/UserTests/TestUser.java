@@ -62,9 +62,4 @@ public class TestUser {
         Assertions.assertNotEquals(0, user.getUserMangaListing().withNoFields().withLimit(1).search().size());
     }
 
-    @Test
-    public void testToString(){
-        Assertions.assertNotEquals("{}", user.toString());
-    }
-
 }

@@ -103,9 +103,4 @@ public class TestAnime {
         Assertions.assertNotNull(statistics.getUserCount());
     }
 
-    @Test
-    public void testToString(){
-        Assertions.assertNotEquals("{}", anime.toString());
-    }
-
 }

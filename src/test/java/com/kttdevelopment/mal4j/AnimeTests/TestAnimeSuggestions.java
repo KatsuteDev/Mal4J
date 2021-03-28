@@ -24,8 +24,6 @@ public class TestAnimeSuggestions {
                 .search();
         Assertions.assertNotNull(suggestions);
         Assertions.assertNotEquals(0, suggestions.size());
-
-        Assertions.assertNotEquals("{}", suggestions.get(0).toString());
     }
 
 }

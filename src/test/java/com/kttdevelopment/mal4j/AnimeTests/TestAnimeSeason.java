@@ -32,8 +32,6 @@ public class TestAnimeSeason {
             anime.getStartSeason().getSeason() == Season.Summer || anime.getStartSeason().getSeason() == Season.Spring,
             "Anime start season was supposed to be either Summer or Spring but was " + anime.getStartSeason().getSeason().name()
         );
-
-        Assertions.assertNotEquals("{}", anime.toString());
     }
 
     @Test

@@ -24,8 +24,6 @@ public class TestAnimeSearch {
                 .search();
         Assertions.assertEquals(TestProvider.AnimeID, search.get(0).getID());
         Assertions.assertNotEquals(1, search.size());
-
-        Assertions.assertNotEquals("{}", search.get(0).toString());
     }
 
     @Test

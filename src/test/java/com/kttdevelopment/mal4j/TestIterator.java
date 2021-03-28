@@ -22,11 +22,9 @@ public class TestIterator {
             .searchAll();
         Assertions.assertNotEquals(0, iterator.toList().size());
         Assertions.assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID());
-        Assertions.assertNotEquals("{}", iterator.toString());
 
         final Anime first = iterator.next();
         Assertions.assertEquals(TestProvider.AnimeID, first.getID());
-        Assertions.assertNotEquals("{}", first.toString());
         iterator.forEachRemaining(animePreview -> Assertions.assertNotEquals(TestProvider.AnimeID, animePreview.getID()));
     }
 

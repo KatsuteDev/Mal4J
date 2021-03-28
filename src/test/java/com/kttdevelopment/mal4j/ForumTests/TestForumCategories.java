@@ -21,7 +21,6 @@ public class TestForumCategories {
     @Test
     public void testCategory(){
         Assertions.assertNotNull(category.getTitle());
-        Assertions.assertNotEquals("{}", category.toString());
     }
 
     @Test
@@ -30,8 +29,6 @@ public class TestForumCategories {
         Assertions.assertNotNull(board.getID());
         Assertions.assertNotNull(board.getTitle());
         Assertions.assertNotNull(board.getDescription());
-
-        Assertions.assertNotEquals("{}", board.toString());
 
         Assertions.assertEquals(category, board.getCategory());
     }
@@ -42,8 +39,6 @@ public class TestForumCategories {
         final ForumSubBoard subBoard = category.getForumBoards()[2].getSubBoards()[0];
         Assertions.assertNotNull(subBoard.getID());
         Assertions.assertNotNull(subBoard.getTitle());
-
-        Assertions.assertNotEquals("{}", subBoard.toString());
     }
 
 }

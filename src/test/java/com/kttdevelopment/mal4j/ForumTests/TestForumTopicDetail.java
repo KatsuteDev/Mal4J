@@ -23,8 +23,6 @@ public class TestForumTopicDetail {
     @Test
     public void testForumTopic(){
         Assertions.assertNotNull(topic.getTitle());
-
-        Assertions.assertNotEquals("{}", topic.toString());
     }
 
     @Test
@@ -36,8 +34,6 @@ public class TestForumTopicDetail {
         Assertions.assertNotNull(post.getBody());
         Assertions.assertNotNull(post.getSignature());
 
-        Assertions.assertNotEquals("{}", post.toString());
-
         Assertions.assertSame(topic, post.getForumTopicDetail());
     }
 
@@ -48,16 +44,12 @@ public class TestForumTopicDetail {
         Assertions.assertNotNull(poll.getQuestion());
         Assertions.assertFalse(poll.isClosed());
 
-        Assertions.assertNotEquals("{}", poll.toString());
-
         // options
         {
             final PollOption option = poll.getOptions()[0];
             Assertions.assertNotNull(option.getID());
             Assertions.assertNotNull(option.getText());
             Assertions.assertNotNull(option.getVotes());
-
-            Assertions.assertNotEquals("{}", option.toString());
 
             Assertions.assertSame(poll, option.getPoll());
         }

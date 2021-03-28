@@ -25,8 +25,6 @@ public class TestUserAnimeListing {
                 .withFields(Fields.Anime.list_status)
                 .search();
         Assertions.assertEquals(AnimeStatus.Dropped, list.get(0).getStatus());
-
-        Assertions.assertNotEquals("{}", list.get(0).toString());
     }
 
     @Test
