@@ -29,6 +29,7 @@ import java.security.*;
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Consumer;
 import java.util.zip.GZIPOutputStream;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -275,7 +276,7 @@ public final class MyAnimeListAuthenticator {
      */
     @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final int port, final boolean openBrowser, final long timeout, final String redirect_URI) throws IOException{
-        this(client_id, client_secret, port, null, openBrowser, timeout, redirect_URI);
+        this(client_id, client_secret, port, null, null, openBrowser, timeout, redirect_URI);
         System.out.println("The MyAnimeListAuthenticator server constructor is deprecated and likely to be removed in the future. Please use MyAnimeListAuthenticator.LocalServerBuilder for local servers instead.");
     }
 
@@ -285,6 +286,7 @@ public final class MyAnimeListAuthenticator {
         final String client_secret,
         final int port,
         final AuthResponseHandler handler,
+        final Consumer<String> urlCallback,
         final boolean openBrowser,
         final long timeout,
         final String redirect_URI
@@ -294,6 +296,7 @@ public final class MyAnimeListAuthenticator {
             client_id,
             port,
             handler,
+            urlCallback,
             openBrowser,
             timeout,
             redirect_URI
@@ -468,6 +471,7 @@ public final class MyAnimeListAuthenticator {
         private String redirect_URI = null;
 
         private AuthResponseHandler responseHandler = null;
+        private Consumer<String> urlCallback = null;
 
         /**
          * Instantiates a local server builder with a client id and port.
@@ -522,6 +526,8 @@ public final class MyAnimeListAuthenticator {
          * @since 1.1.0
          */
         public final LocalServerBuilder openBrowser(final boolean openBrowser){
+            if(!canOpenBrowser())
+                System.out.println("WARNING: System may not support openBrowser()");
             this.openBrowser = openBrowser;
             return this;
         }
@@ -567,6 +573,22 @@ public final class MyAnimeListAuthenticator {
         }
 
         /**
+         * Sets the auth URL callback method. Used to retrieve the URL that generates the authorization code. Runs in its own thread.
+         * <br>
+         * This method can be used to handle the auth URL in the case that the system doesn't support the {@link LocalServerBuilder#openBrowser()} method.
+         *
+         * @param consumer consumer
+         * @return builder
+         *
+         * @see Consumer
+         * @since 2.0.0
+         */
+        public final LocalServerBuilder setURLCallback(final Consumer<String> consumer){
+            this.urlCallback = consumer;
+            return this;
+        }
+
+        /**
          * Returns the built authenticator.
          *
          * @return authenticator
@@ -586,6 +608,7 @@ public final class MyAnimeListAuthenticator {
                 client_secret,
                 port,
                 responseHandler,
+                urlCallback,
                 openBrowser,
                 timeout,
                 redirect_URI
@@ -624,6 +647,7 @@ public final class MyAnimeListAuthenticator {
         final String client_id,
         final int port,
         final AuthResponseHandler responseHandler,
+        final Consumer<String> urlCallback,
         final boolean openBrowser,
         final long timeout,
         final String redirectURI
@@ -633,6 +657,9 @@ public final class MyAnimeListAuthenticator {
         final String verify = generatePKCECodeVerifier();
         final String state  = generateSha256(client_id + '&' + verify);
         final String url    = getAuthorizationURL(client_id, verify, redirectURI, state);
+
+        if(urlCallback != null)
+            new Thread(() -> urlCallback.accept(url)).start();
 
         // get auth call back from local server
         final ExecutorService exec = Executors.newSingleThreadExecutor();
@@ -646,7 +673,7 @@ public final class MyAnimeListAuthenticator {
 
         if(openBrowser)
             if(!canOpenBrowser())
-                System.out.println("Desktop is not supported on this operating system. Please go to this URL manually: " + url);
+                System.out.println("Desktop is not supported on this operating system. Please go to this URL manually: '" + url + "' or use a URL callback");
             else
                 try{ Desktop.getDesktop().browse(new URI(url));
                 }catch(final URISyntaxException ignored){

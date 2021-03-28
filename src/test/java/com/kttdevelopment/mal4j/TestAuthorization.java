@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
+import java.util.concurrent.atomic.AtomicReference;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class TestAuthorization {
@@ -19,6 +20,24 @@ public class TestAuthorization {
              Assertions.assertThrows(NullPointerException.class, () ->
                  new MyAnimeListAuthenticator.LocalServerBuilder(null, 5050).setTimeout(5).build())
          );
+    }
+
+    @Test
+    public void testURLCallback(){
+        final AtomicReference<String> str = new AtomicReference<>();
+        try{
+            new MyAnimeListAuthenticator
+                .LocalServerBuilder("cid", 5050)
+                .setURLCallback(str::set)
+                .setTimeout(2)
+                .build();
+        }catch(final Throwable ignored){ }
+        final String s = str.get();
+        Assertions.assertTrue(s.startsWith("https://myanimelist.net/v1/oauth2/authorize?response_type=code"), "Invalid callback URL: " + s);
+        Assertions.assertTrue(s.contains("&client_id=cid"), "Invalid callback URL: " + s);
+        Assertions.assertTrue(s.contains("&code_challenge="), "Invalid callback URL: " + s);
+        Assertions.assertTrue(s.contains("&code_challenge_method=plain"), "Invalid callback URL: " + s);
+        Assertions.assertTrue(s.contains("&state="), "Invalid callback URL: " + s);
     }
 
     @Test
