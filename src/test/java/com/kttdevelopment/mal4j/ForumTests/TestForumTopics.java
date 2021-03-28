@@ -95,7 +95,9 @@ public class TestForumTopics {
         // Assertions.assertEquals(post.getAuthor().getID(), post.getAuthor().getUser().getID()); // not yet implemented
         Assertions.assertNotNull(post.getBody());
         Assertions.assertNotNull(post.getSignature());
+
         Assertions.assertEquals(topic, post.getForumTopicDetail());
+
         final Poll poll = topic.getPoll();
         Assertions.assertNotNull(poll.getID());
         Assertions.assertNotNull(poll.getQuestion());
@@ -103,6 +105,7 @@ public class TestForumTopics {
         Assertions.assertNotNull(poll.getOptions()[0].getID());
         Assertions.assertNotNull(poll.getOptions()[1].getText());
         Assertions.assertNotNull(poll.getOptions()[0].getVotes());
+
         Assertions.assertEquals(topic, poll.getForumTopicDetail());
         Assertions.assertEquals(poll, poll.getOptions()[0].getPoll());
     }
