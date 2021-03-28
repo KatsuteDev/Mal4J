@@ -28,6 +28,7 @@ package com.kttdevelopment.mal4j;
  */
 public class UnauthorizedAccessException extends RuntimeException {
 
+    @SuppressWarnings("SameParameterValue")
     UnauthorizedAccessException(final String message){
         super(message);
     }

@@ -35,13 +35,13 @@
 
 # Overview
 
-Mal4J is a wrapper for the MyAnimeList API written for JDK 11 and simplifies many complex operations into an easy to use library.
+Mal4J is a wrapper for the MyAnimeList API written for JDK 8+ and simplifies many complex operations into an easy to use library.
 
 # [Setup](https://github.com/Katsute/Mal4J/blob/main/setup.md)
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
 
-**Mal4J requires at least JDK 11.**
+**Mal4J requires at least JDK 8.**
 
 ## Maven Central
 
@@ -111,11 +111,19 @@ OpeningTheme[] op = anime.getOpeningThemes();
 
 ## Contributing
 
-For devs running tests locally simply add a text file named `client.txt` that contains the client ID in the `src/test/java/resources` directory.
+### Local Tests
+
+For local tests you can use JDK8+, however only methods in the Java 8 API may be used. The `src/main/java9` and `src/main/java11` folders should not be marked as a source root.
+
+Run tests locally by adding a text file named `client.txt` that contains the client ID in the `src/test/java/resources` directory.
+
+Please note that the Client ID being used for tests must not have a client secret and must have an app redirect url of `http://localhost:5050`.
+
+### Remote Tests
 
 Devs running remote tests may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires a secret `MAL_OAUTH` which contains the OAuth token.
 
-Please note that the Client ID being used for tests must not have a client secret and must have an app redirect url of `http://localhost:5050`.
+---
 
 - Found a bug? Post it in [issues](https://github.com/Katsute/Mal4J/issues).
 - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/Katsute/Mal4J/discussions).

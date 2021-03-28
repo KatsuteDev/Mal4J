@@ -44,7 +44,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * </ul>
  *
  * @since 1.0.0
- * @version 1.1.1
+ * @version 2.0.0
  * @author Ktt Development
  */
 public final class MyAnimeListAuthenticator {
@@ -446,7 +446,7 @@ public final class MyAnimeListAuthenticator {
         Objects.requireNonNull(PKCE_code_challenge, "PKCE must not be null");
         return
             String.format(authUrl, client_id, PKCE_code_challenge) +
-            (redirect_URI != null ? String.format(redirectURI, URLEncoder.encode(redirect_URI, StandardCharsets.UTF_8)) : "") +
+            (redirect_URI != null ? String.format(redirectURI, Java9.URLEncoder.encode(redirect_URI, StandardCharsets.UTF_8)) : "") +
             (state != null ? String.format(authState, state) : "");
     }
 
@@ -677,8 +677,10 @@ public final class MyAnimeListAuthenticator {
                 body.getString("access_token"),
                 body.getString("refresh_token")
             );
-        else
-            throw new HttpException(response.URL(), response.code(), body.getString("error").trim());
+        else{
+            final String error = body.getString("error");
+            throw new HttpException(response.URL(), response.code(), error != null ? error.trim() : "");
+        }
     }
 
     private static final class AuthHandler implements HttpHandler {
@@ -691,8 +693,8 @@ public final class MyAnimeListAuthenticator {
                 if(pair.contains("=")){
                     final String[] kv = pair.split("=");
                     OUT.put(
-                            URLDecoder.decode(kv[0], StandardCharsets.UTF_8),
-                        kv.length == 2 ? URLDecoder.decode(kv[1], StandardCharsets.UTF_8) : null
+                        Java9.URLDecoder.decode(kv[0], StandardCharsets.UTF_8),
+                        kv.length == 2 ? Java9.URLDecoder.decode(kv[1], StandardCharsets.UTF_8) : null
                     );
                 }
             }

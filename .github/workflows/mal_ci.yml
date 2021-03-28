@@ -1,11 +1,15 @@
 name: MyAnimeList CI
-on:
-  workflow_dispatch: {}
+on: [workflow_dispatch]
 
 jobs:
   mal_ci:
     name: MyAnimeList CI
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [8, 11, 16]
+      fail-fast: false
+      max-parallel: 1
     steps:
       - name: 📦 Prepate Git Repo
         uses: actions/checkout@v2

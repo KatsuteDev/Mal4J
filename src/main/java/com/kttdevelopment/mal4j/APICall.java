@@ -20,12 +20,13 @@ package com.kttdevelopment.mal4j;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
-import java.net.*;
-import java.net.http.*;
+import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.net.HttpURLConnection;
+import java.net.URI;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.MatchResult;
@@ -38,7 +39,7 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
  * Represents an API call.
  */
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
-final class APICall {
+class APICall {
 
     static boolean debug = false;
 
@@ -94,8 +95,8 @@ final class APICall {
                         withHeader(((Header) annotation).value(), Objects.toString(arg));
                     else if(type == Query.class)
                         withQuery(((Query) annotation).value(), arg, ((Query) annotation).encoded());
-                    else if(type == Field.class)
-                        withField(((Field) annotation).value(), arg, ((Field) annotation).encoded());
+                    else if(type == APIStruct.Field.class)
+                        withField(((APIStruct.Field) annotation).value(), arg, ((APIStruct.Field) annotation).encoded());
                 }
             }
         }
@@ -129,7 +130,7 @@ final class APICall {
         if(value == null)
             pathVars.remove(pathVar);
         else
-            pathVars.put(pathVar, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            pathVars.put(pathVar, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
@@ -141,7 +142,7 @@ final class APICall {
         if(value == null)
             queries.remove(query);
         else
-            queries.put(query, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            queries.put(query, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
@@ -162,55 +163,246 @@ final class APICall {
         if(value == null)
             fields.remove(field);
         else
-            fields.put(field, encoded ? Objects.toString(value) : URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            fields.put(field, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
         return this;
     }
 
     // call
+
+    private static final boolean useNetHttp;
+
+    private static class JDK11 {
+
+        static Class<?> HttpRequest;
+            static Method HttpRequest_NewBuilder;
+
+        static Class<?> HttpRequestBuilder;
+            static Method HttpRequestBuilder_URI;
+            static Method HttpRequestBuilder_Method;
+            static Method HttpRequestBuilder_Header;
+                static Method BodyPublishers_NoBody;
+                static Method BodyPublishers_StringBody;
+            static Method HttpRequestBuilder_Build;
+
+        static Class<?> HttpClientBuilder;
+            static Method HttpClientBuilder_ConnectTimeout;
+            static Method HttpClientBuilder_Build;
+
+        static Class<?> HttpClient;
+            static Method HttpClient_NewBuilder;
+            static Method HttpClient_Send;
+                static Method BodyHandlers_StringBody;
+
+        static Method HttpResponse_Body;
+        static Method HttpResponse_Code;
+
+        static {
+            if(useNetHttp)
+                try{
+                    HttpRequest = Class.forName("java.net.http.HttpRequest");
+                        HttpRequest_NewBuilder = HttpRequest.getDeclaredMethod("newBuilder");
+                    HttpRequestBuilder = Class.forName("java.net.http.HttpRequest$Builder");
+                        HttpRequestBuilder_URI = HttpRequestBuilder.getDeclaredMethod("uri", URI.class);
+                        HttpRequestBuilder_Method = HttpRequestBuilder.getDeclaredMethod("method", String.class, Class.forName("java.net.http.HttpRequest$BodyPublisher"));
+                        HttpRequestBuilder_Header = HttpRequestBuilder.getDeclaredMethod("header", String.class, String.class);
+                            BodyPublishers_NoBody =  Class.forName("java.net.http.HttpRequest$BodyPublishers").getDeclaredMethod("noBody");
+                            BodyPublishers_StringBody =  Class.forName("java.net.http.HttpRequest$BodyPublishers").getDeclaredMethod("ofString", String.class);
+                        HttpRequestBuilder_Build = HttpRequestBuilder.getDeclaredMethod("build");
+                    HttpClientBuilder = Class.forName("java.net.http.HttpClient$Builder");
+                        HttpClientBuilder_ConnectTimeout = HttpClientBuilder.getDeclaredMethod("connectTimeout", Duration.class);
+                        HttpClientBuilder_Build = HttpClientBuilder.getDeclaredMethod("build");
+                    HttpClient = Class.forName("java.net.http.HttpClient");
+                        HttpClient_NewBuilder = HttpClient.getDeclaredMethod("newBuilder");
+                        HttpClient_Send = HttpClient.getDeclaredMethod("send", Class.forName("java.net.http.HttpRequest"), Class.forName("java.net.http.HttpResponse$BodyHandler"));
+                            BodyHandlers_StringBody =  Class.forName("java.net.http.HttpResponse$BodyHandlers").getDeclaredMethod("ofString", Charset.class);
+
+                    HttpResponse_Body = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("body");
+                    HttpResponse_Code = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("statusCode");
+                }catch(final ClassNotFoundException | NoSuchMethodException e){
+                    throw new IllegalStateException(e);
+                }
+        }
+
+    }
+
+    // initialize HTTPUrlConnection
+    static {
+        final String version = System.getProperty("java.version");
+        useNetHttp = (version != null ? Integer.parseInt(version.contains(".") ? version.substring(0, version.indexOf(".")) : version) : 0) >= 11;
+
+        if(!useNetHttp)
+            try{
+                final Method method = HttpURLConnection.class.getDeclaredMethod("setRequestMethod", String.class);
+                method.setAccessible(true);
+
+                final Field methods = HttpURLConnection.class.getDeclaredField("methods");
+
+                // allow variable modification
+                final Field modifiers = Field.class.getDeclaredField("modifiers");
+                modifiers.setAccessible(true);
+
+                modifiers.setInt(methods, methods.getModifiers() & ~Modifier.FINAL);
+                methods.setAccessible(true);
+
+                // add PATCH to methods array
+                final String[] nativeMethods = (String[]) methods.get(null);
+                final Set<String> newMethods = new HashSet<>(Arrays.asList(nativeMethods));
+                newMethods.add("PATCH");
+                methods.set(null , newMethods.toArray(new String[0]));
+
+                // revert field to static final and close access
+                modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
+                methods.setAccessible(false);
+                modifiers.setAccessible(false);
+            }catch(final NoSuchFieldException | IllegalAccessException | NoSuchMethodException e){
+                throw new IllegalStateException(e);
+            }catch(final RuntimeException e){
+                throw e.getClass().getSimpleName().equals("InaccessibleObjectException")
+                    ? new IllegalStateException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+")
+                    : e;
+            }
+    }
 
     // [{}|\\^\[\]`]
     private static final Pattern blockedURI = Pattern.compile("[{}|\\\\^\\[\\]`]");
 
     private static final URIEncoder encoder = new URIEncoder();
 
-    final Response<String> call() throws IOException, InterruptedException{
+    @SuppressWarnings("RedundantThrows")
+    private APIStruct.Response<String> call() throws IOException, InterruptedException{
         final String URL =
             baseURL +
-            pathArg.matcher(path).replaceAll(result -> pathVars.get(result.group(1))) + // path args
+            Java9.Matcher.replaceAll(path, pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
             (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
 
-        final HttpRequest.Builder request = HttpRequest.newBuilder();
-
-        request.uri(URI.create(blockedURI.matcher(URL).replaceAll(encoder)));
-        request.method(method, HttpRequest.BodyPublishers.noBody());
-        for(final Map.Entry<String, String> entry : headers.entrySet())
-            request.header(entry.getKey(), entry.getValue());
-
-        request.header("Cache-Control", "no-cache, no-store, must-revalidate");
-        request.header("Accept", "application/json; charset=UTF-8");
+        final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
 
         if(debug){
             System.out.println("\nCall:     " + URL);
             System.out.println("Method:   " + method);
+            if(formUrlEncoded)
+                System.out.println("Data:     " + data);
         }
 
-        if(formUrlEncoded){
-            final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
-            if(debug)
-                System.out.println("Data:     " + data);
-            request.header("Content-Type", "application/x-www-form-urlencoded");
-            request.method(method, HttpRequest.BodyPublishers.ofString(data));
+        String body;
+        int code;
+
+        if(useNetHttp)
+            try{
+                // final HttpRequest.Builder request = HttpRequest.newBuilder();
+                final Object HttpRequestBuilder_Instance = JDK11.HttpRequest_NewBuilder.invoke(null);
+
+                // request.uri(URI.create(blockedURI.matcher(URL).replaceAll(encoder)));
+                JDK11.HttpRequestBuilder_URI
+                    .invoke(HttpRequestBuilder_Instance,
+                        URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL),encoder))
+                    );
+                // request.method(method, HttpRequest.BodyPublishers.noBody());
+                JDK11.HttpRequestBuilder_Method
+                    .invoke(HttpRequestBuilder_Instance,
+                        method,
+                        JDK11.BodyPublishers_NoBody.invoke(null)
+                    );
+
+                for(final Map.Entry<String, String> entry : headers.entrySet())
+                    // request.header(entry.getKey(), entry.getValue());
+                    JDK11.HttpRequestBuilder_Header
+                        .invoke(HttpRequestBuilder_Instance,
+                            entry.getKey(),
+                            entry.getValue()
+                        );
+
+                // request.header("Cache-Control", "no-cache, no-store, must-revalidate");
+                JDK11.HttpRequestBuilder_Header
+                    .invoke(HttpRequestBuilder_Instance,
+                        "Cache-Control",
+                        "no-cache, no-store, must-revalidate"
+                    );
+
+                // request.header("Accept", "application/json; charset=UTF-8");
+                JDK11.HttpRequestBuilder_Header
+                    .invoke(HttpRequestBuilder_Instance,
+                        "Accept",
+                        "application/json; charset=UTF-8"
+                    );
+
+                if(formUrlEncoded){
+                    // request.header("Content-Type", "application/x-www-form-urlencoded");
+                    JDK11.HttpRequestBuilder_Header
+                        .invoke(HttpRequestBuilder_Instance,
+                            "Content-Type",
+                            "application/x-www-form-urlencoded"
+                        );
+
+                    // request.method(method, HttpRequest.BodyPublishers.ofString(data));
+                    JDK11.HttpRequestBuilder_Method
+                        .invoke(HttpRequestBuilder_Instance,
+                            method,
+                            JDK11.BodyPublishers_StringBody.invoke(null, data)
+                        );
+                }
+
+                // final HttpResponse<String> response = HttpClient
+                //      .newBuilder()
+                final Object HttpClientBuilder_Instance = JDK11.HttpClient_NewBuilder.invoke(null);
+                // .connectTimeout(Duration.ofSeconds(10))
+                JDK11.HttpClientBuilder_ConnectTimeout
+                    .invoke(HttpClientBuilder_Instance, Duration.ofSeconds(10));
+                // .build()
+                final Object HttpClient_Instance = JDK11.HttpClientBuilder_Build
+                    .invoke(HttpClientBuilder_Instance);
+                // .send(request.build(), HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+                final Object HttpResponse_Instance = JDK11.HttpClient_Send
+                    .invoke(HttpClient_Instance,
+                        JDK11.HttpRequestBuilder_Build.invoke(HttpRequestBuilder_Instance),
+                        JDK11.BodyHandlers_StringBody.invoke(null, StandardCharsets.UTF_8)
+                    );
+
+                // response.body()
+                body = (String) JDK11.HttpResponse_Body.invoke(HttpResponse_Instance);
+                // response.responseCode()
+                code = (int) JDK11.HttpResponse_Code.invoke(HttpResponse_Instance);
+
+            }catch(final IllegalAccessException | InvocationTargetException | ClassCastException e){
+                throw new IllegalStateException(e);
+            }
+        else{
+            final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL), encoder)).toURL().openConnection();
+
+            for(final Map.Entry<String, String> entry : headers.entrySet())
+                conn.setRequestProperty(entry.getKey(), entry.getValue());
+
+            conn.setRequestProperty("Cache-Control", "no-cache, no-store, must-revalidate");
+            conn.setRequestProperty("Accept", "application/json; charset=UTF-8");
+            conn.setConnectTimeout(10_000);
+            conn.setReadTimeout(10_000);
+
+            if(formUrlEncoded){
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setDoOutput(true);
+                try(final DataOutputStream OUT = new DataOutputStream(conn.getOutputStream())){
+                    OUT.writeBytes(data);
+                    OUT.flush();
+                }
+            }
+
+            try(final BufferedReader IN = new BufferedReader(new InputStreamReader(conn.getInputStream(), StandardCharsets.UTF_8))){
+                String buffer;
+                final StringBuilder OUT = new StringBuilder();
+                while((buffer = IN.readLine()) != null)
+                    OUT.append(buffer);
+                body = OUT.toString();
+            }finally{
+                conn.disconnect();
+            }
+
+            code = conn.getResponseCode();
         }
-        final HttpResponse<String> response = HttpClient
-            .newBuilder()
-            .build()
-            .send(request.build(), HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-        final String body = response.body();
 
         if(debug)
             System.out.println("Response: " + body);
 
-        return new Response<>(URL, body, body, response.statusCode());
+        return new APIStruct.Response<>(URL, body, body, code);
     }
 
     final <T> Response<T> call(final Function<String,T> processor) throws IOException, InterruptedException{
@@ -222,7 +414,8 @@ final class APICall {
     @Override
     public String toString(){
         return "APICall{" +
-               "method='" + method + '\'' +
+               "useNetHttp=" + useNetHttp +
+               ", method='" + method + '\'' +
                ", baseURL='" + baseURL + '\'' +
                ", headers=" + headers +
                ", path='" + path + '\'' +
@@ -290,7 +483,7 @@ final class APICall {
         }
 
         @Override
-        public Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable{
+        public final Object invoke(final Object proxy, final Method method, final Object[] args) throws Throwable{
             if(method.getDeclaringClass() != service)
                 return method.invoke(this, args);
             try{
@@ -301,8 +494,6 @@ final class APICall {
                 ).call(Json::parse);
             }catch(final IOException e){
                 throw new UncheckedIOException(e);
-            }catch(final InterruptedException e){
-                throw new RuntimeException(e);
             }
         }
 

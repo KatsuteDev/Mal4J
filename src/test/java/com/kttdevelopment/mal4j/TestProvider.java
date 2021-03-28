@@ -5,8 +5,11 @@ import org.junit.jupiter.api.Assumptions;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public abstract class TestProvider {
 
@@ -47,13 +50,16 @@ public abstract class TestProvider {
 
     //
 
-    static final Path client = new File("src/test/java/resources/client.txt").toPath();
-    static final Path oauth  = new File("src/test/java/resources/oauth.txt").toPath();
+    static final File client = new File("src/test/java/resources/client.txt");
+    static final File oauth  = new File("src/test/java/resources/oauth.txt");
+
+    static {
+        APICall.debug = false;
+    }
 
     public static void init() throws IOException{
-        APICall.debug = false;
-        if(oauth.toFile().exists()){ // use existing OAuth
-            mal = MyAnimeList.withOAuthToken(Files.readString(oauth).strip());
+        if(oauth.exists()){ // use existing OAuth
+            mal = MyAnimeList.withOAuthToken(strip(readFile(oauth)));
             if(mal.getAnime(AnimeID, Fields.NO_FIELDS) != null)
                 return;
         }
@@ -62,7 +68,7 @@ public abstract class TestProvider {
     }
 
     public static void testRequireClientID(){
-        Assumptions.assumeTrue(client.toFile().exists(), "File with Client ID was missing, please create a file with the Client ID at: " + client.toFile().getAbsolutePath());
+        Assumptions.assumeTrue(client.exists(), "File with Client ID was missing, please create a file with the Client ID at: " + client.getAbsolutePath());
     }
 
     public static MyAnimeList getMyAnimeList(){
@@ -74,6 +80,24 @@ public abstract class TestProvider {
             Assertions.fail();
             return null;
         }
+    }
+
+    // java 9
+
+    static String readFile(final File file) throws IOException{
+        final List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+
+        final StringBuilder OUT = new StringBuilder();
+        for(final String s : lines)
+            OUT.append(s);
+        return OUT.toString();
+    }
+
+    // ^(\s+)|(\s+)$
+    private static final Pattern dangling = Pattern.compile("^(\\s+)|(\\s+)$");
+
+    static String strip(final String s){
+        return dangling.matcher(s).replaceAll("");
     }
 
 }
