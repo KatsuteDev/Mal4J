@@ -52,6 +52,25 @@ $color-lighter      : #808080;
     }
 }
 
+::-webkit-scrollbar{
+    height: 8px;
+    width: 8px;
+
+    /* Track */
+    &-track {
+        background: $color-dark;
+    }
+
+    /* Handle */
+    &-thumb {
+        background: rgba(255,255,255,0.2);
+        border-radius: 5px;
+        &:hover{
+            background: rgba(255,255,255,0.35);
+        }
+    }
+}
+
 /* nav */
 nav[role="navigation"] {
     .topNav, .bottomNav {
@@ -98,28 +117,36 @@ nav[role="navigation"] {
     .subNav {
         color: $color-white;
         background-color: $color-dark !important;
-        ul.navList{
-            margin-top: 4px;
+        ul.navList {
+            margin: 0;
+            > li {
+                padding: 0 .5rem !important;
+            }
         }
     }
 
     > div.fixedNav > div.subNav {
-        ul.navListSearch input {
-            outline: none !important;
-            &#search {
-                border          : solid 1px #CCCCCC !important;
-                border-radius   : 4px;
-                background-image: url("glass.png") !important;
-                transition: all .15s ease-in-out, box-shadow .15s ease-in-out !important;
-                &:focus {
-                    border    : solid 1px $color-blue !important;
-                    box-shadow: 0 0 0 0.1rem rgba(148,187,226,.5) !important;
+        ul.navListSearch { 
+            > li {
+                padding: 0 .5rem !important;
+                > input {
+                    outline: none !important;
+                    &#search {
+                        border          : solid 1px #CCCCCC !important;
+                        border-radius   : 4px;
+                        background-image: url("glass.png") !important;
+                        transition: all .15s ease-in-out, box-shadow .15s ease-in-out !important;
+                        &:focus {
+                            border    : solid 1px $color-blue !important;
+                            box-shadow: 0 0 0 0.1rem rgba(148,187,226,.5) !important;
+                        }
+                    }
+                    &#reset {
+                        top: -5px !important;
+                        background-image: url("x.png") !important;
+                        background-color: transparent !important;
+                    }
                 }
-            }
-            &#reset {
-                top: -5px !important;
-                background-image: url("x.png") !important;
-                background-color: transparent !important;
             }
         }
     }
@@ -229,7 +256,7 @@ h1.bar {
 
 body {
     background-color: white !important;
-    margin-bottom: 120px !important;
+    margin-bottom: 30px !important;
 }
 /* background */
 
@@ -242,12 +269,20 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0px;
-    .legalCopy small {
-        color: #F3F2F1 !important;
-        visibility: hidden;
-        &::before {
-            visibility: visible;
-            content: "Copyright © Ktt Development 2021. All rights reserved";
+
+    .subNav, .bottomNav {
+        display: none;
+    }
+
+    p.legalCopy {
+        margin: .5rem !important;
+        > small {
+            color: #F3F2F1 !important;
+            visibility: hidden;
+            &::before {
+                visibility: visible;
+                content: "Copyright © Ktt Development 2021. All rights reserved";
+            }
         }
     }
 }
