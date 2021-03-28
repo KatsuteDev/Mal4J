@@ -492,11 +492,11 @@ public final class MyAnimeListAuthenticator {
         private final CountDownLatch latch;
         private final AuthResponseHandler handler;
 
-        public AuthHandler(final CountDownLatch latch){
+        private AuthHandler(final CountDownLatch latch){
             this(latch, defaultHandler);
         }
 
-        AuthHandler(final CountDownLatch latch, final AuthResponseHandler handler){
+        private AuthHandler(final CountDownLatch latch, final AuthResponseHandler handler){
             this.latch = latch;
             this.handler = handler == null ? defaultHandler : handler;
         }
