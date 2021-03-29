@@ -404,7 +404,46 @@ final class MyAnimeListImpl extends MyAnimeList{
         );
         if(response == null) return null;
 
-        return asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"));
+        return asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"), id);
+    }
+
+    @Override
+    public final ForumTopicDetailPostQuery getForumTopicDetailPostQuery(final long id){
+        return new ForumTopicDetailPostQuery() {
+
+            @Override
+            public final List<Post> search(){
+                final JsonObject response = handleResponse(
+                    () -> service.getForumBoard(
+                        auth,
+                        id,
+                        limit,
+                        offset
+                    )
+                );
+                if(response == null) return null;
+
+                final List<Post> posts = new ArrayList<>();
+                for(final JsonObject iterator : response.getJsonObject("data").getJsonArray("posts"))
+                    posts.add(asPost(MyAnimeListImpl.this, iterator, id));
+                return posts;
+            }
+
+            @Override
+            public final PaginatedIterator<Post> searchAll(){
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getForumBoard(
+                        auth,
+                        id,
+                        limit,
+                        offset
+                    ),
+                    iterator -> asPost(MyAnimeListImpl.this, iterator, id)
+                );
+            }
+
+        };
     }
 
     @Override
@@ -430,7 +469,7 @@ final class MyAnimeListImpl extends MyAnimeList{
 
                 final List<ForumTopic> topics = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    topics.add(asForumTopicDetail(MyAnimeListImpl.this, iterator));
+                    topics.add(asForumTopicDetail(MyAnimeListImpl.this, iterator, boardId, subboardId));
                 return topics;
             }
 
@@ -449,7 +488,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         topicUsername,
                         username
                     ),
-                    iterator -> asForumTopicDetail(MyAnimeListImpl.this, iterator)
+                    iterator -> asForumTopicDetail(MyAnimeListImpl.this, iterator, boardId, subboardId)
                 );
             }
 
@@ -766,7 +805,11 @@ final class MyAnimeListImpl extends MyAnimeList{
             }
 
             final List<T> list = new ArrayList<>();
-            for(final JsonObject data : response.getJsonArray("data"))
+            for(final JsonObject data :
+                response.get("data") instanceof JsonObject && response.getJsonObject("data").containsKey("posts") // post iterator support
+                ? response.getJsonObject("data").getJsonArray("posts")
+                : response.getJsonArray("data")
+            )
                 list.add(listAdapter.apply(data));
 
             if(response.getJsonObject("paging").containsKey("next")){

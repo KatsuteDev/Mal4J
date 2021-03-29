@@ -29,10 +29,31 @@ import java.util.Date;
  * Represents a forum topic's details.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.0.0
  * @author Ktt Development
  */
 public abstract class ForumTopic implements ID {
+
+    /**
+     * Returns the board id.
+     *
+     * @return board id
+     *
+     * @see #getSubBoardId()
+     * @since 2.0.0
+     */
+    public abstract Long getBoardID();
+
+    /**
+     * Returns the subboard id.
+     *
+     * @return subboard id
+     *
+     * @see #getBoardID()
+     * @since 2.0.0
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    public abstract Long getSubBoardId();
 
     /**
      * Returns the title of the topic.

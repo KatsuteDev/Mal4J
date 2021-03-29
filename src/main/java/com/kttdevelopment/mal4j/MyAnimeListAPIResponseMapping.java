@@ -1173,8 +1173,11 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumTopic asForumTopicDetail(final MyAnimeList mal, final JsonObject schema){
+        static ForumTopic asForumTopicDetail(final MyAnimeList mal, final JsonObject schema, final Long boardid, final Long subboardid){
             return new ForumTopic() {
+
+                private final Long boardID                  = boardid;
+                private final Long subBoardID               = subboardid;
 
                 private final Long id                       = requireNonNull(() -> schema.getLong("id"));
                 private final String title                  = requireNonNull(() -> schema.getString("title"));
@@ -1241,9 +1244,21 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
+                public final Long getBoardID(){
+                    return boardID;
+                }
+
+                @Override
+                public final Long getSubBoardId(){
+                    return subBoardID;
+                }
+
+                @Override
                 public final String toString(){
                     return "ForumTopic{" +
-                           "id=" + id +
+                           "boardID=" + boardID +
+                           ", subBoardID=" + subBoardID +
+                           ", id=" + id +
                            ", title='" + title + '\'' +
                            ", createdAt=" + createdAt +
                            ", createdBy=" + createdBy +
@@ -1510,9 +1525,10 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
-        static ForumTopicDetail asForumTopic(final MyAnimeList mal, final JsonObject schema){
+        static ForumTopicDetail asForumTopic(final MyAnimeList mal, final JsonObject schema, final long topicid){
             return new ForumTopicDetail() {
 
+                private final long id       = topicid;
                 private final String title  = requireNonNull(() -> schema.getString("title"));
                 private final Post[] posts  = requireNonNull(() -> adaptList(schema.getJsonArray("posts"), p -> asPost(mal, p, this), Post.class));
                 private final Poll poll     = requireNonNull(() -> asPoll(mal, schema.getJsonObject("poll"), this));
@@ -1537,6 +1553,11 @@ abstract class MyAnimeListAPIResponseMapping {
                 // additional methods
 
                 @Override
+                public final Long getID(){
+                    return id;
+                }
+
+                @Override
                 public final String toString(){
                     return "ForumTopicDetail{" +
                            "title='" + title + '\'' +
@@ -1548,6 +1569,7 @@ abstract class MyAnimeListAPIResponseMapping {
             };
         }
 
+        // make sure matches below
         static Post asPost(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
             return new Post() {
 
@@ -1600,6 +1622,75 @@ abstract class MyAnimeListAPIResponseMapping {
                 @Override
                 public final ForumTopicDetail getForumTopicDetail() {
                     return forumTopic;
+                }
+
+                @Override
+                public final String toString(){
+                    return "Post{" +
+                           "id=" + id +
+                           ", number=" + number +
+                           ", createdAt=" + createdAt +
+                           ", author=" + author +
+                           ", body='" + body + '\'' +
+                           ", signature='" + signature + '\'' +
+                           '}';
+                }
+
+            };
+        }
+
+        static Post asPost(final MyAnimeList mal, final JsonObject schema, final long ftdid){
+            return new Post() {
+
+                private final Long id           = requireNonNull(() -> schema.getLong("id"));
+                private final Integer number    = requireNonNull(() -> schema.getInt("number"));
+                private final Long createdAt    = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
+                private final PostAuthor author = requireNonNull(() -> asPostAuthor(mal, schema.getJsonObject("created_by")));
+                private final String body       = requireNonNull(() -> schema.getString("body"));
+                private final String signature  = requireNonNull(() -> schema.getString("signature"));
+
+                // API methods
+
+                @Override
+                public final Long getID() {
+                    return id;
+                }
+
+                @Override
+                public final Integer getNumber() {
+                    return number;
+                }
+
+                @Override
+                public final Date getCreatedAt(){
+                    return createdAt == null ? null : new Date(createdAt);
+                }
+
+                @Override
+                public final Long getCreatedAtEpochMillis() {
+                    return createdAt;
+                }
+
+                @Override
+                public final PostAuthor getAuthor() {
+                    return author;
+                }
+
+                @Override
+                public final String getBody() {
+                    return body;
+                }
+
+                @Override
+                public final String getSignature() {
+                    return signature;
+                }
+
+                // additional methods
+
+                @Override
+                public final ForumTopicDetail getForumTopicDetail() {
+                    return mal.getForumTopicDetail(ftdid);
                 }
 
                 @Override

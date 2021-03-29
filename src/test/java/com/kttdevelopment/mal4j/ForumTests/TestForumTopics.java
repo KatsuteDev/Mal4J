@@ -3,7 +3,6 @@ package com.kttdevelopment.mal4j.ForumTests;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.forum.*;
-import com.kttdevelopment.mal4j.forum.property.Poll;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class TestForumTopics {
             .withQuery("MyAnimeList API")
             .search();
         final ForumTopic topic = topics.get(0);
-        testForumTopicDetail(topic);
+        testForumTopic(topic);
     }
 
     @Test
@@ -46,7 +45,7 @@ public class TestForumTopics {
             .withTopicUsername("Myanimelist Redesign") // fixme
             .search();
         final ForumTopic topic = topics.get(0);
-        testForumTopicDetail(topic);
+        testForumTopic(topic);
     }
 
     @SuppressWarnings("SpellCheckingInspection")
@@ -57,7 +56,7 @@ public class TestForumTopics {
             .withUsername("Xinil")
             .search();
         final ForumTopic topic = topics.get(0);
-        testForumTopicDetail(topic);
+        testForumTopic(topic);
     }
 
     @Test
@@ -67,7 +66,9 @@ public class TestForumTopics {
             .withBoardId(5)
             .search();
         final ForumTopic topic = topics.get(0);
-        testForumTopicDetail(topic);
+        testForumTopic(topic);
+
+        Assertions.assertEquals(5, topic.getBoardID());
     }
 
     @Test
@@ -77,40 +78,12 @@ public class TestForumTopics {
             .withSubboardId(2)
             .search();
         final ForumTopic topic = topics.get(0);
-        testForumTopicDetail(topic);
+        testForumTopic(topic);
+
+        Assertions.assertEquals(2, topic.getSubBoardId());
     }
 
-    @Test
-    public void testPost(){
-        final ForumTopicDetail topic = mal.getForumTopicDetail(481);
-        Assertions.assertNotNull(topic.getTitle());
-        final Post post = topic.getPosts()[0];
-        Assertions.assertNotNull(post.getID());
-        Assertions.assertNotNull(post.getNumber());
-        Assertions.assertNotNull(post.getCreatedAt());
-        Assertions.assertNotNull(post.getCreatedAtEpochMillis());
-        Assertions.assertNotNull(post.getAuthor().getID());
-        Assertions.assertNotNull(post.getAuthor().getName());
-        Assertions.assertNotNull(post.getAuthor().getForumAvatarURL());
-        // Assertions.assertEquals(post.getAuthor().getID(), post.getAuthor().getUser().getID()); // not yet implemented
-        Assertions.assertNotNull(post.getBody());
-        Assertions.assertNotNull(post.getSignature());
-
-        Assertions.assertEquals(topic, post.getForumTopicDetail());
-
-        final Poll poll = topic.getPoll();
-        Assertions.assertNotNull(poll.getID());
-        Assertions.assertNotNull(poll.getQuestion());
-        Assertions.assertFalse(poll.isClosed());
-        Assertions.assertNotNull(poll.getOptions()[0].getID());
-        Assertions.assertNotNull(poll.getOptions()[1].getText());
-        Assertions.assertNotNull(poll.getOptions()[0].getVotes());
-
-        Assertions.assertEquals(topic, poll.getForumTopicDetail());
-        Assertions.assertEquals(poll, poll.getOptions()[0].getPoll());
-    }
-
-    private void testForumTopicDetail(final ForumTopic topic){
+    private void testForumTopic(final ForumTopic topic){
         Assertions.assertNotNull(topic.getID());
         Assertions.assertNotNull(topic.getTitle());
         Assertions.assertNotNull(topic.getCreatedAt());

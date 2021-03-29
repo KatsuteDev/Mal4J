@@ -269,6 +269,7 @@ public abstract class MyAnimeList {
      *
      * @see #getForumTopicDetail(long, Integer)
      * @see #getForumTopicDetail(long, Integer, Integer)
+     * @see #getForumTopicDetailPostQuery(long)
      * @since 1.0.0
      */
     public abstract ForumTopicDetail getForumTopicDetail(final long id);
@@ -284,6 +285,7 @@ public abstract class MyAnimeList {
      *
      * @see #getForumTopicDetail(long)
      * @see #getForumTopicDetail(long, Integer, Integer)
+     * @see #getForumTopicDetailPostQuery(long)
      * @since 1.0.0
      */
     public abstract ForumTopicDetail getForumTopicDetail(final long id, final Integer limit);
@@ -300,9 +302,24 @@ public abstract class MyAnimeList {
      *
      * @see #getForumTopicDetail(long)
      * @see #getForumTopicDetail(long, Integer)
+     * @see #getForumTopicDetailPostQuery(long)
      * @since 1.0.0
      */
     public abstract ForumTopicDetail getForumTopicDetail(final long id, final Integer limit, final Integer offset);
+
+    /**
+     * Returns a forum topic post query.
+     *
+     * @param id forum topic id
+     * @return post search
+     *
+     * @see #getForumTopicDetail(long)
+     * @see #getForumTopicDetail(long, Integer)
+     * @see #getForumTopicDetail(long, Integer, Integer)
+     * @see ForumTopicDetailPostQuery
+     * @since 2.0.0
+     */
+    public abstract ForumTopicDetailPostQuery getForumTopicDetailPostQuery(final long id);
 
     //
 
