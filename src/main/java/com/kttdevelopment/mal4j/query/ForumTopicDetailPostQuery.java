@@ -33,4 +33,12 @@ import com.kttdevelopment.mal4j.forum.Post;
  */
 public abstract class ForumTopicDetailPostQuery extends LimitOffsetQuery<ForumTopicDetailPostQuery,Post> {
 
+    /**
+     * Creates a forum topic detail post query. Applications do not use this constructor.
+     *
+     * @see MyAnimeList#getForumTopicDetailPostQuery(long)
+     * @since 2.0.0
+     */
+    public ForumTopicDetailPostQuery() { }
+
 }

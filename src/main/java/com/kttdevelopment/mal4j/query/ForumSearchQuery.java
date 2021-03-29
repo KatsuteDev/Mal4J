@@ -40,7 +40,14 @@ public abstract class ForumSearchQuery extends LimitOffsetQuery<ForumSearchQuery
     @SuppressWarnings("CanBeFinal")
     protected ForumSort sort = ForumSort.Recent;
     protected String topicUsername, username;
-    
+
+    /**
+     * Creates an forum search query. Applications do not use this constructor.
+     *
+     *
+     * @see MyAnimeList#getForumTopics()
+     * @since 1.0.0
+     */
     public ForumSearchQuery(){ }
 
     /**
