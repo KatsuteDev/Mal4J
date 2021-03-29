@@ -80,7 +80,7 @@ public class TestForumTopics {
         final ForumTopic topic = topics.get(0);
         testForumTopic(topic);
 
-        Assertions.assertEquals(2, topic.getSubBoardId());
+        Assertions.assertEquals(2, topic.getSubBoardID());
     }
 
     private void testForumTopic(final ForumTopic topic){

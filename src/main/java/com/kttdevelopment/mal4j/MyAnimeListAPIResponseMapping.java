@@ -1249,7 +1249,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 }
 
                 @Override
-                public final Long getSubBoardId(){
+                public final Long getSubBoardID(){
                     return subBoardID;
                 }
 

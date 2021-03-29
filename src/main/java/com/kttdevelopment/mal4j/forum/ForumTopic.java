@@ -39,7 +39,7 @@ public abstract class ForumTopic implements ID {
      *
      * @return board id
      *
-     * @see #getSubBoardId()
+     * @see #getSubBoardID()
      * @since 2.0.0
      */
     public abstract Long getBoardID();
@@ -53,7 +53,7 @@ public abstract class ForumTopic implements ID {
      * @since 2.0.0
      */
     @SuppressWarnings("SpellCheckingInspection")
-    public abstract Long getSubBoardId();
+    public abstract Long getSubBoardID();
 
     /**
      * Returns the title of the topic.
