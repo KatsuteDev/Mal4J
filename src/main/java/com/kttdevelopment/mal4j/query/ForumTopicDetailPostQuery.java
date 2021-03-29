@@ -18,8 +18,19 @@
 
 package com.kttdevelopment.mal4j.query;
 
+import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.forum.Post;
 
+/**
+ * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get</a> <br>
+ * Represents a forum topic detail post query.
+ *
+ * @see MyAnimeList#getForumTopicDetailPostQuery(long)
+ * @see LimitOffsetQuery
+ * @since 2.0.0
+ * @version 2.0.0
+ * @author Ktt Development
+ */
 public abstract class ForumTopicDetailPostQuery extends LimitOffsetQuery<ForumTopicDetailPostQuery,Post> {
 
 }
