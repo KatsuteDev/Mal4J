@@ -425,6 +425,7 @@ public final class MyAnimeListAuthenticator {
      *
      * @since 1.0.0
      */
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean canOpenBrowser(){
         return Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE);
     }
