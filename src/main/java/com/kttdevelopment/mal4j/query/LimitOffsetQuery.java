@@ -34,7 +34,7 @@ import java.util.List;
  * @author Ktt Development
  */
 @SuppressWarnings({"unchecked"})
-abstract class LimitOffsetQuery<T extends LimitOffsetQuery<T,R>,R> {
+public abstract class LimitOffsetQuery<T extends LimitOffsetQuery<T,R>,R> {
 
     protected Integer limit;
     protected Integer offset;

@@ -35,7 +35,7 @@ import java.util.*;
  * @author Ktt Development
  */
 @SuppressWarnings("unchecked")
-abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S extends Enum<?>> {
+public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S extends Enum<?>> {
 
     protected final long id;
 

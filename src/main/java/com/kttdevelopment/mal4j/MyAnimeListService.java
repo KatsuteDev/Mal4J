@@ -22,12 +22,9 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 import static com.kttdevelopment.mal4j.Json.*;
 
 /**
- * Represents the HTTP requests for MyAnimeList
+ * Represents the HTTP requests for MyAnimeList.
  *
  * @see MyAnimeList
- * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
  */
 @SuppressWarnings("DefaultAnnotationParam")
 interface MyAnimeListService {

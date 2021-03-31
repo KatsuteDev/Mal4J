@@ -35,7 +35,7 @@ import java.util.*;
  * @author Ktt Development
  */
 @SuppressWarnings({"unchecked", "UnusedReturnValue"})
-abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<T,R> {
+public abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffsetQuery<T,R> {
 
     protected List<String> fields = null;
 
