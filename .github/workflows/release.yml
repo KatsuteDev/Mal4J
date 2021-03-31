@@ -5,10 +5,31 @@ on:
     types: [published]
 
 jobs:
+  java_ci:
+    name: Java CI
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [8, 9, 11, 16]
+      fail-fast: false
+    steps:
+      - name: 📦 Prepate Git Repo
+        uses: actions/checkout@v2
+
+      - name: ☕ Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: ${{ matrix.jdk }}
+          architecture: x64
+
+      - name: ✔ Test with Maven
+        run: mvn test -fae --no-transfer-progress
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
     environment: Maven Central
+    needs: java_ci
     steps:
       - name: 📦 Prepate Git Repo
         uses: actions/checkout@v2
