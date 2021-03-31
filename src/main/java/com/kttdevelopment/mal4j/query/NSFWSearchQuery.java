@@ -29,9 +29,11 @@ package com.kttdevelopment.mal4j.query;
  * @version 1.0.0
  * @author Ktt Development
  */
-abstract class NSFWSearchQuery<T extends NSFWSearchQuery<T,R>,R> extends SearchQuery<T,R> implements NSFW<T> {
+public abstract class NSFWSearchQuery<T extends NSFWSearchQuery<T,R>,R> extends SearchQuery<T,R> implements NSFW<T> {
 
     protected Boolean nsfw;
+
+    NSFWSearchQuery(){ }
 
     @Override
     public final T includeNSFW(){

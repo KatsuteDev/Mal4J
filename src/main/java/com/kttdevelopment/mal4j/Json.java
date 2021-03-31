@@ -343,7 +343,7 @@ class Json {
     // exceptions
 
     /**
-     * Thrown then the json is malformed
+     * Thrown then the json is malformed.
      */
     static class JsonSyntaxException extends RuntimeException {
 

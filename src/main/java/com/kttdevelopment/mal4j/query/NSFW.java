@@ -28,7 +28,7 @@ package com.kttdevelopment.mal4j.query;
  * @version 1.0.0
  * @author Ktt Development
  */
-interface NSFW<T> {
+public interface NSFW<T> {
 
     /**
      * Sets query to also return NSFW results.

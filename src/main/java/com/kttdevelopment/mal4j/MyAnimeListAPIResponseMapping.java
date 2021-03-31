@@ -2709,6 +2709,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 // additional methods
 
+                @SuppressWarnings("SpellCheckingInspection")
                 @Override
                 public final String toString(){
                     return "UserAnimeStatistics{" +
