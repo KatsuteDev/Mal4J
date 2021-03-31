@@ -24,7 +24,7 @@ import com.kttdevelopment.mal4j.property.ID;
 import java.util.Date;
 
 /**
- * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get</a>
+ * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get</a> <br>
  *
  * Represents a forum topic's details.
  *
