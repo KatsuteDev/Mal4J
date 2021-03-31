@@ -25,23 +25,25 @@
 <p align="center">
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/release.yml"><img title="Deploy" src="https://github.com/Katsute/Mal4J/workflows/Deploy/badge.svg"></a>
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml"><img title="Java CI" src="https://github.com/Katsute/Mal4J/workflows/Java%20CI/badge.svg"></a>
-    <a href="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml"><img title="MyAnimeList CI" src="https://github.com/Katsute/Mal4J/workflows/MyAnimeList%20CI/badge.svg"></a>
     <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><img title="Maven Central" src="https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j"></a>
     <a href="https://github.com/Katsute/Mal4J/releases"><img title="version" src="https://img.shields.io/github/v/release/Katsute/Mal4J"></a>
     <a href="https://github.com/Katsute/Mal4J/blob/main/LICENSE"><img title="license" src="https://img.shields.io/github/license/Katsute/Mal4J"></a>
+    <br>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml"><img title="MyAnimeList CI" src="https://github.com/Katsute/Mal4J/workflows/MyAnimeList%20CI/badge.svg"></a>
+    <a href="https://myanimelist.net/"><img title="myanimelist.net" src="https://img.shields.io/website?label=myanimelist.net&logo=myanimelist&url=https%3A%2F%2Fmyanimelist.net%2F"></a>
 </p>
 
 ---
 
 # Overview
 
-Mal4J is a wrapper for the MyAnimeList API written for JDK 8+ and simplifies many complex operations into an easy to use library.
+Mal4J is a wrapper for the MyAnimeList API written for Java 8+ and simplifies many complex operations into an easy to use library.
 
 # [Setup](https://github.com/Katsute/Mal4J/blob/main/setup.md)
 
 Dependencies are hosted on Maven Central and compiled builds can be found in releases.
 
-**Mal4J requires at least JDK 8.**
+**Mal4J requires at least Java 8.**
 
 ## Maven Central
 
