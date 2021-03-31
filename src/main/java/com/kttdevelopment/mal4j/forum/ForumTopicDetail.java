@@ -19,6 +19,7 @@
 package com.kttdevelopment.mal4j.forum;
 
 import com.kttdevelopment.mal4j.forum.property.Poll;
+import com.kttdevelopment.mal4j.property.ID;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topics_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topics_get</a> <br>
@@ -27,10 +28,10 @@ import com.kttdevelopment.mal4j.forum.property.Poll;
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getForumTopicDetail(long)
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.0.0
  * @author Ktt Development
  */
-public abstract class ForumTopicDetail {
+public abstract class ForumTopicDetail implements ID {
 
     /**
      * Returns the topic title.
