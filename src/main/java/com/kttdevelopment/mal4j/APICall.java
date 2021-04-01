@@ -232,9 +232,6 @@ class APICall {
 
         if(!useNetHttp)
             try{
-                final Method method = HttpURLConnection.class.getDeclaredMethod("setRequestMethod", String.class);
-                method.setAccessible(true);
-
                 final Field methods = HttpURLConnection.class.getDeclaredField("methods");
 
                 // allow variable modification
@@ -254,7 +251,7 @@ class APICall {
                 modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
                 methods.setAccessible(false);
                 modifiers.setAccessible(false);
-            }catch(final NoSuchFieldException | IllegalAccessException | NoSuchMethodException e){
+            }catch(final NoSuchFieldException | IllegalAccessException e){
                 throw new IllegalStateException(e);
             }catch(final RuntimeException e){
                 throw e.getClass().getSimpleName().equals("InaccessibleObjectException")
@@ -376,6 +373,7 @@ class APICall {
             conn.setRequestProperty("Accept", "application/json; charset=UTF-8");
             conn.setConnectTimeout(10_000);
             conn.setReadTimeout(10_000);
+            conn.setRequestMethod(method);
 
             if(formUrlEncoded){
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
