@@ -6,7 +6,7 @@ This project supports Java 8+ and Java 9 modules.
 
 ### java.lang.UnsupportedClassVersionError
 
-This issue is caused by using an older, unsupported JDK; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using v2.0.0+ of this library.
+This issue is caused by using an older, unsupported Java version; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using at least version 2.0.0 of this library.
 
 ### WARNING: An illegal reflective access operation has occurred
 
