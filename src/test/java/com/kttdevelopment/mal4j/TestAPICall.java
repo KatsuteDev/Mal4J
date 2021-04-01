@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 import static com.kttdevelopment.mal4j.APIStruct.*;
 
@@ -27,24 +28,20 @@ public class TestAPICall {
 
     @Test
     public void testCall(){
-        final AtomicBoolean PASS = new AtomicBoolean();
+        final AtomicReference<String> method = new AtomicReference<>();
         final AtomicBoolean formENC = new AtomicBoolean();
         server.createContext("/", exchange -> {
-            switch(exchange.getRequestMethod().toUpperCase()){
-                case "POST":
-                    final StringBuilder SB = new StringBuilder();
-                    try (Reader reader = new BufferedReader(new InputStreamReader
-                      (exchange.getRequestBody(), StandardCharsets.UTF_8))) {
-                        int c;
-                        while ((c = reader.read()) != -1)
-                            SB.append((char) c);
-                    }
-                    formENC.set(SB.toString().equalsIgnoreCase("test=test"));
-                case "GET":
-                case "DELETE":
-                case "PATCH":
-                    PASS.set(true);
+            if(exchange.getRequestMethod().equalsIgnoreCase("POST")){
+                final StringBuilder SB = new StringBuilder();
+                try (Reader reader = new BufferedReader(new InputStreamReader
+                  (exchange.getRequestBody(), StandardCharsets.UTF_8))) {
+                    int c;
+                    while ((c = reader.read()) != -1)
+                        SB.append((char) c);
+                }
+                formENC.set(SB.toString().equalsIgnoreCase("test=test"));
             }
+            method.set(exchange.getRequestMethod().toUpperCase());
 
             exchange.sendResponseHeaders(200, "{}".length());
             try(final OutputStream OUT = exchange.getResponseBody()){
@@ -57,20 +54,20 @@ public class TestAPICall {
         final Call call = Call.create();
 
         Assertions.assertDoesNotThrow(call::GET);
-        Assertions.assertTrue(PASS.get(), "Failed to execute GET");
+        Assertions.assertEquals("GET", method.get());
 
-        PASS.set(false);
+        method.set(null);
         Assertions.assertDoesNotThrow(() -> call.POST("test"));
-        Assertions.assertTrue(PASS.get(), "Failed to execute POST");
+        Assertions.assertEquals("POST", method.get());
         Assertions.assertTrue(formENC.get());
 
-        PASS.set(false);
+        method.set(null);
         Assertions.assertDoesNotThrow(call::DELETE);
-        Assertions.assertTrue(PASS.get(), "Failed to execute DELETE");
+        Assertions.assertEquals("DELETE", method.get());
 
-        PASS.set(false);
+        method.set(null);
         Assertions.assertDoesNotThrow(call::PATCH);
-        Assertions.assertTrue(PASS.get(), "Failed to execute PATCH");
+        Assertions.assertEquals("PATCH", method.get());
     }
 
     @SuppressWarnings("UnusedReturnValue")
