@@ -1,3 +1,5 @@
+***Please follow the template.***
+
 ### Prerequisites
 *If **all** checks are not passed then the pull request will be closed.*
 - [ ] I have checked that no other similar pull request already exists.
@@ -10,7 +12,7 @@
 
 **Issue:** *The main issue(s) that this pull request fixes.*
 
-**Workflow Run:** *The link to the MyAnimeList CI workflow run for your branch. Required.*
+**Workflow Run:** *The link to the MyAnimeList CI workflow run for your branch. Check README for guide on remote tests.*
 
 ### Changes Made
 *List any changes made and/or other relevant issues.*

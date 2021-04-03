@@ -4,19 +4,23 @@
 
 This project supports Java 8+ and Java 9 modules.
 
-### java.lang.UnsupportedClassVersionError
-
-This issue is caused by using an older, unsupported Java version; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using at least version 2.0.0 of this library.
-
 ### WARNING: An illegal reflective access operation has occurred
 
 _(this warning does not affect the library in any way)_
 
-In order to make this library function on JDK 8-10, reflection is used in order to make PATCH requests work correctly. 
+In order to make this library function on JDK 8-10, reflection is used in order to make PATCH requests work correctly.
 
 If you don't want this warning then either:
 - Downgrade to JDK 8
 - Upgrade to JDK 11 or higher
+
+### java.lang.UnsupportedClassVersionError
+
+This issue is caused by using an older, unsupported Java version; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using at least version 2.0.0 of this library.
+
+### java.lang.NoSuchMethodError
+
+This issue may occur if you are using an android version that doesn't support the Java 8 API. If you still get this error please open a new issue.
 
 ### java.lang.reflect.InaccessibleObjectException / java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+
 
