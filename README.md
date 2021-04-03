@@ -2,7 +2,7 @@
     <a href="https://github.com/Katsute/Mal4J">
         <img src="https://raw.githubusercontent.com/Katsute/Mal4J/main/banner.png" alt="Mal4J - MyAnimeList for Java">
     </a>
-    <h3 align="center">Java wrapper for the official MyAnimeList API</h3>
+    <h3 align="center">Mal4J - Java wrapper for the official MyAnimeList API</h3>
     <p align="center">
         <a href="https://mal4j.kttdevelopment.com/">Docs</a>
         •
