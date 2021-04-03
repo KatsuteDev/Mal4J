@@ -6,12 +6,6 @@ contact_links:
   - name: Discussions
     url: https://github.com/Katsute/Mal4J/discussions
     about: Check here before posting an issue
-  - name: Feature Requests
-    url: https://github.com/Katsute/Mal4J/discussions/categories/feature-requests
-    about: Not quite sure about a feature request? You can discuss them here first
-  - name: MyAnimeList API
-    url: https://myanimelist.net/apiconfig/references/api/v2
-    about: The official MyAnimeList API documentation
   - name: Official MyAnimeList API Club
     url: https://myanimelist.net/clubs.php?cid=13727
     about: We do not maintain the MyAnimeList API, issues regarding the API itself should be posted in their official club
