@@ -49,6 +49,10 @@ This library offers ***ALL*** the features provided by the API and even some *un
 - Your token is missing '`Bearer `'.
 - Your token may contain dangling whitespace.
 
+### Incorrect date is returned.
+
+Java does not support null date fields; for Anime/Manga that is yet to start, an unknown month will be returned as January, and an unknown day will be returned as 1.
+
 ### Seasons query is returning Anime from other seasons.
 
 The seasons query returns Anime that are airing in the current season, this includes Anime that may have started the season before and are still airing this season.
