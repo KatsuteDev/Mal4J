@@ -235,7 +235,12 @@ class APICall {
                 final Field methods = HttpURLConnection.class.getDeclaredField("methods");
 
                 // allow variable modification
-                final Field modifiers = Field.class.getDeclaredField("modifiers");
+                Field modifiers;
+                try{
+                    modifiers = Field.class.getDeclaredField("modifiers");
+                }catch(final NoSuchFieldException ignored){ // android
+                    modifiers = Field.class.getDeclaredField("accessFlags");
+                }
                 modifiers.setAccessible(true);
 
                 modifiers.setInt(methods, methods.getModifiers() & ~Modifier.FINAL);
