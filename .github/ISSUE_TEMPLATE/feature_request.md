@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-***Please follow the template.***
+<!-- Please follow the template -->
 
 ### Prerequisites
 *If **all** checks are not passed then the feature request will be closed.*

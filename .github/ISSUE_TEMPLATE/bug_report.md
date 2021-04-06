@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-***Please follow the template.***
+<!-- Please follow the template -->
 
 ### Prerequisites
 *If **all** checks are not passed then the issue will be closed.*
@@ -20,15 +20,14 @@ assignees: ''
 **Operating System:** *Operating system name and version.*
 
 
+**Java Version:** *Java version.*
+
+
 **Release Version:** *Release version or branch commit where the issue occurred.*
 
 
 ### Issue
 *Explain your issue. Add any relevant code or stacktraces here.*
-
-
-### Expected Behavior
-*Explain what was supposed to happen.*
 
 
 ### Steps To Reproduce

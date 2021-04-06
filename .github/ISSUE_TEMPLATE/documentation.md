@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-***Please follow the template.***
+<!-- Please follow the template -->
 
 ### Prerequisites
 *If **all** checks are not passed then the issue will be closed.*
@@ -19,4 +19,4 @@ assignees: ''
 
 
 ### Issue
-*Explain your issue.*
+*Explain the issue.*

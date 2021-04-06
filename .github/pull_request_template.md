@@ -1,4 +1,4 @@
-***Please follow the template.***
+<!-- Please follow the template -->
 
 ### Prerequisites
 *If **all** checks are not passed then the pull request will be closed.*
