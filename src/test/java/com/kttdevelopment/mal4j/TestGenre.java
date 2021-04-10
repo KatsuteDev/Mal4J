@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.*;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.regex.Matcher;
@@ -56,7 +55,7 @@ public class TestGenre {
         while(matcher.find()){
             Assertions.assertEquals(
                 Integer.parseInt(matcher.group(1)), // expected ID
-                Objects.requireNonNull(Genre.asEnum(matcher.group(2))).getMangaGenreId(), //actual id
+                Objects.requireNonNull(Genre.asEnum(matcher.group(2))).getMangaGenreID(), //actual id
                 "MyAnimeList Manga Genre ID doesn't match Genre enum"
             );
         }

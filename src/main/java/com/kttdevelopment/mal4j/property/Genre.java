@@ -84,7 +84,7 @@ public enum Genre {
     }
 
     /**
-     * @deprecated Use {@link #getAnimeGenreID()} or {@link #getMangaGenreId()}
+     * @deprecated Use {@link #getAnimeGenreID()} or {@link #getMangaGenreID()}
      * @return id
      */
     @Deprecated
@@ -114,7 +114,7 @@ public enum Genre {
      *
      * @since 2.1.0
      */
-    public final int getMangaGenreId(){
+    public final int getMangaGenreID(){
         if(mangaGenreID == -1)
             throw new UnsupportedOperationException("There is no Manga genre ID for this genre. Try getAnimeGenreID()");
         return mangaGenreID;
