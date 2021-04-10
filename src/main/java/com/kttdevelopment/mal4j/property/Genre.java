@@ -20,7 +20,7 @@ package com.kttdevelopment.mal4j.property;
 
 /**
  * Represents a Genre. Genre IDs are different for Anime and Manga.
- *.
+ *
  * @since 1.0.0
  * @version 2.1.0
  * @author Ktt Development
