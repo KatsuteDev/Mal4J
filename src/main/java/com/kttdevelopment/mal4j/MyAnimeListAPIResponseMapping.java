@@ -290,7 +290,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
                 private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
                 private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.getString("nsfw")));
-                private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> Genre.asEnum(g.getInt("id")), Genre.class));
+                private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> Genre.asAnimeGenre(g.getInt("id")), Genre.class));
                 private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
                 private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
                 private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.getString("media_type")));
@@ -810,7 +810,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
                 private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
                 private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.getString("nsfw")));
-                private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> Genre.asEnum(g.getInt("id")), Genre.class));
+                private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> Genre.asAnimeGenre(g.getInt("id")), Genre.class));
                 private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
                 private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
                 private final AnimeType type        = requireNonNull(() -> AnimeType.asEnum(schema.getString("media_type")));
@@ -1812,7 +1812,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
                 private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
                 private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.getString("nsfw")));
-                private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> Genre.asEnum(g.getInt("id")), Genre.class));
+                private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> Genre.asMangaGenre(g.getInt("id")), Genre.class));
                 private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
                 private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
                 private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.getString("media_type")));
@@ -2300,7 +2300,7 @@ abstract class MyAnimeListAPIResponseMapping {
                 private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
                 private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
                 private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.getString("nsfw")));
-                private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> Genre.asEnum(g.getInt("id")), Genre.class));
+                private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> Genre.asMangaGenre(g.getInt("id")), Genre.class));
                 private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
                 private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
                 private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.getString("media_type")));
