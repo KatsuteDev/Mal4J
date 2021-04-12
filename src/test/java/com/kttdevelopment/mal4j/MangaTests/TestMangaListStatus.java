@@ -154,5 +154,22 @@ public class TestMangaListStatus {
         testUpdate();
         testUpdate();
     }
+    
+    @SuppressWarnings("SpellCheckingInspection")
+    @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
+    public void testEcchiNSFW(){
+        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+
+        final List<MangaListStatus> list =
+            mal.getUserMangaListing()
+                .withLimit(1000)
+                .withFields(Fields.Manga.list_status)
+                .search();
+
+        for(final MangaListStatus listStatus : list)
+            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID)
+                return;
+        Assertions.fail("Failed to find Manga with Ecchi genre (external issue, disregard fail)");
+    }
 
 }
