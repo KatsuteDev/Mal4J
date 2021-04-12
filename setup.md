@@ -46,7 +46,7 @@ This library has a simplified authentication method based of the MyAnimeList [au
 
 This library also supports OAuth token refresh.
 
-It is suggested that you save the OAuth key that is generated so you don't have to authenticate with MyAnimeList each time.
+It is suggested that you save the OAuth token that is generated so you don't have to authenticate with MyAnimeList each time.
 
 ### Authenticate using token
 
@@ -73,7 +73,7 @@ For developers using their own [authorization](https://myanimelist.net/apiconfig
     Typically this is where you would have a local server to process the request and retrieve the code from the query.
 
     ```java
-    String authorization_url = MyAnimeListAuthenticator.getAuthorizationURL("client_id",     "PKCE_code_challenge");
+    String authorization_url = MyAnimeListAuthenticator.getAuthorizationURL("client_id", "PKCE_code_challenge");
 
     MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
     ```
