@@ -72,9 +72,29 @@ public class TestJson {
     @Test
     public void testMalformed(){
         Assertions.assertThrows(JsonSyntaxException.class, () -> parse(""));
+        try{
+            parse("");
+        }catch(final JsonSyntaxException e){
+            Assertions.assertEquals("", e.getRaw());
+        }
         Assertions.assertThrows(JsonSyntaxException.class, () -> parse("?"));
+        try{
+            parse("?");
+        }catch(final JsonSyntaxException e){
+            Assertions.assertEquals("?", e.getRaw());
+        }
         Assertions.assertThrows(JsonSyntaxException.class, () -> parse("{"));
+        try{
+            parse("{");
+        }catch(final JsonSyntaxException e){
+            Assertions.assertEquals("{", e.getRaw());
+        }
         Assertions.assertThrows(JsonSyntaxException.class, () -> parse("["));
+        try{
+            parse("}");
+        }catch(final JsonSyntaxException e){
+            Assertions.assertEquals("}", e.getRaw());
+        }
     }
 
     @Test

@@ -152,19 +152,19 @@ class Json {
             if(line != null){
                 final String ln = line.trim();
                 if(ln.equals("{"))
-                    return openMap(IN);
+                    return openMap(IN, json);
                 else if(ln.equals("["))
-                    return openArray(IN);
+                    return openArray(IN, json);
                 else
-                    throw new JsonSyntaxException("Unexpected starting character: '" + ln + "' expected '{' or '['");
+                    throw new JsonSyntaxException("Unexpected starting character: '" + ln + "' expected '{' or '['", json);
             }else
-                throw new JsonSyntaxException("Json string was empty");
+                throw new JsonSyntaxException("Json string was empty", json);
         }catch(final IOException e){ // should never occur, but just in case:
             throw new UncheckedIOException(e);
         }
     }
 
-    private List<?> openArray(final BufferedReader reader) throws IOException{
+    private List<?> openArray(final BufferedReader reader, final String json) throws IOException{
         final List<Object> list = new ArrayList<>();
         String ln;
         while((ln = reader.readLine()) != null){ // while not closing tag
@@ -190,18 +190,18 @@ class Json {
                 else if((raw = arrayMatcher.group("string")) != null)
                     list.add(decodeString(raw));
                 else if(arrayMatcher.group("array") != null) // open new array
-                    list.add(openArray(reader));
+                    list.add(openArray(reader, raw));
                 else if(arrayMatcher.group("map") != null) // open new map
-                    list.add(openMap(reader));
+                    list.add(openMap(reader, raw));
             }else if(arrClose.matcher(ln).matches())
                 return list;
             else if(!Java9.String.isBlank(ln))
-                throw new JsonSyntaxException("Unexpected array value syntax: '" + ln + '\'');
+                throw new JsonSyntaxException("Unexpected array value syntax: '" + ln + '\'', json);
         }
-        throw new JsonSyntaxException("Object was missing closing character: ']'");
+        throw new JsonSyntaxException("Object was missing closing character: ']'", json);
     }
 
-    private JsonObject openMap(final BufferedReader reader) throws IOException{
+    private JsonObject openMap(final BufferedReader reader, final String json) throws IOException{
         final JsonObject obj = new JsonObject();
         String ln;
         while((ln = reader.readLine()) != null){
@@ -231,15 +231,15 @@ class Json {
                         decodeString(raw)
                     );
                 else if(mapMatcher.group("array") != null) // open new array
-                    obj.set(key, openArray(reader));
+                    obj.set(key, openArray(reader, json));
                 else if(mapMatcher.group("map") != null) // open new map
-                    obj.set(key, openMap(reader));
+                    obj.set(key, openMap(reader, json));
             }else if(mapClose.matcher(ln).matches())
                 return obj;
             else if(!Java9.String.isBlank(ln))
-                throw new JsonSyntaxException("Unexpected object value syntax: '" + ln + '\'');
+                throw new JsonSyntaxException("Unexpected object value syntax: '" + ln + '\'', json);
         }
-        throw new JsonSyntaxException("Object was missing closing character: '}'");
+        throw new JsonSyntaxException("Object was missing closing character: '}'", json);
     }
 
     @SuppressWarnings("UnnecessaryLocalVariable")
@@ -345,10 +345,17 @@ class Json {
     /**
      * Thrown then the json is malformed.
      */
-    static class JsonSyntaxException extends RuntimeException {
+    public static class JsonSyntaxException extends RuntimeException {
 
-        JsonSyntaxException(final String message){
+        private final String raw;
+
+        JsonSyntaxException(final String message, final String raw){
             super(message);
+            this.raw = raw;
+        }
+
+        public final String getRaw(){
+            return raw;
         }
 
     }
