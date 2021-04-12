@@ -5,6 +5,7 @@
  * <ul>
  *     <li>{@link com.kttdevelopment.mal4j.MyAnimeList}</li>
  *     <li>{@link com.kttdevelopment.mal4j.MyAnimeListAuthenticator}</li>
+ *     <li>{@link com.kttdevelopment.mal4j.MyAnimeListAuthenticator.LocalServerBuilder}</li>
  *     <li>{@link com.kttdevelopment.mal4j.Fields}</li>
  * </ul>
  *
