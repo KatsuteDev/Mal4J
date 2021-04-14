@@ -190,9 +190,9 @@ class Json {
                 else if((raw = arrayMatcher.group("string")) != null)
                     list.add(decodeString(raw));
                 else if(arrayMatcher.group("array") != null) // open new array
-                    list.add(openArray(reader, raw));
+                    list.add(openArray(reader, json));
                 else if(arrayMatcher.group("map") != null) // open new map
-                    list.add(openMap(reader, raw));
+                    list.add(openMap(reader, json));
             }else if(arrClose.matcher(ln).matches())
                 return list;
             else if(!Java9.String.isBlank(ln))
@@ -226,10 +226,7 @@ class Json {
                 else if(mapMatcher.group("null") != null)
                     obj.set(key, null);
                 else if((raw = mapMatcher.group("string")) != null)
-                    obj.set(
-                        key,
-                        decodeString(raw)
-                    );
+                    obj.set(key, decodeString(raw));
                 else if(mapMatcher.group("array") != null) // open new array
                     obj.set(key, openArray(reader, json));
                 else if(mapMatcher.group("map") != null) // open new map
@@ -343,7 +340,7 @@ class Json {
     // exceptions
 
     /**
-     * Thrown then the json is malformed.
+     * Thrown if the json is malformed.
      */
     public static class JsonSyntaxException extends RuntimeException {
 
@@ -354,6 +351,11 @@ class Json {
             this.raw = raw;
         }
 
+        /**
+         * Returns the raw string.
+         *
+         * @return raw string
+         */
         public final String getRaw(){
             return raw;
         }
