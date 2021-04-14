@@ -30,7 +30,3 @@ assignees: ''
 
 ### Steps To Reproduce
 *Explain how and/or when the error occurred.*
-
-
-### Any Additional Information
-*Any additional information related to the issue.*

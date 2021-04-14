@@ -19,7 +19,3 @@ assignees: ''
 
 ### Reason
 *Explain why you thing this feature should be added.*
-
-
-### Any Additional Information
-*Any additional information related to the feature.*
