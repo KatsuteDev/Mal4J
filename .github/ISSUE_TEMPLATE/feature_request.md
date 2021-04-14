@@ -7,8 +7,6 @@ assignees: ''
 
 ---
 
-<!-- Please follow the template -->
-
 ### Prerequisites
 *If **all** checks are not passed then the feature request will be closed.*
 - [ ] I have checked that no other similar feature request already exists.
@@ -21,3 +19,7 @@ assignees: ''
 
 ### Reason
 *Explain why you thing this feature should be added.*
+
+
+### Any Additional Information
+*Any additional information related to the feature.*

@@ -7,8 +7,6 @@ assignees: ''
 
 ---
 
-<!-- Please follow the template -->
-
 ### Prerequisites
 *If **all** checks are not passed then the issue will be closed.*
 - [ ] I have checked that no other similar issue already exists.
@@ -32,3 +30,7 @@ assignees: ''
 
 ### Steps To Reproduce
 *Explain how and/or when the error occurred.*
+
+
+### Any Additional Information
+*Any additional information related to the issue.*
