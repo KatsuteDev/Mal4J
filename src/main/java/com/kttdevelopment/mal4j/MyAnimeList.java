@@ -27,6 +27,7 @@ import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
 import com.kttdevelopment.mal4j.query.*;
 import com.kttdevelopment.mal4j.user.User;
+import com.kttdevelopment.mal4j.user.property.*;
 
 import java.io.UncheckedIOException;
 import java.util.List;

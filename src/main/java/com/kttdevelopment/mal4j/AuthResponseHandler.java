@@ -27,6 +27,7 @@ package com.kttdevelopment.mal4j;
  * @version 1.1.0
  * @author Ktt Development
  */
+@FunctionalInterface
 public interface AuthResponseHandler {
 
     /**
