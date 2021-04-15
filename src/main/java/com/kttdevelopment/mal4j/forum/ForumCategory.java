@@ -22,7 +22,6 @@ import com.kttdevelopment.mal4j.MyAnimeList;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_boards_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_boards_get</a> <br>
- *
  * Represents a forum category.
  *
  * @see MyAnimeList#getForumBoards()

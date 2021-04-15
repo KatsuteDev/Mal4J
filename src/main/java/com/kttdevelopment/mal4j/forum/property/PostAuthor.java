@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.property.IDN;
 import com.kttdevelopment.mal4j.user.property.UserRetrievable;
 
 /**
- * Returns the post's author.
+ * Represents a post's author.
  *
  * @see Post#getAuthor()
  * @since 1.0.0

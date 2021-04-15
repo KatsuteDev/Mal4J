@@ -24,7 +24,6 @@ import com.kttdevelopment.mal4j.anime.property.*;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_animelist_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_animelist_get</a> <br>
- *
  * Represents a user Anime list query.
  *
  * @see MyAnimeList#getUserAnimeListing()

@@ -23,7 +23,6 @@ import com.kttdevelopment.mal4j.property.ID;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topics_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topics_get</a> <br>
- *
  * Represents a forum topic.
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getForumTopicDetail(long)

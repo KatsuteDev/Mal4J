@@ -25,7 +25,6 @@ import java.util.Date;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get">https://myanimelist.net/apiconfig/references/api/v2#operation/forum_topic_get</a> <br>
- *
  * Represents a forum topic's details.
  *
  * @since 1.0.0
