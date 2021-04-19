@@ -23,8 +23,6 @@ public abstract class Affinity<T> {
 
     public abstract int getSharedCount();
 
-    public abstract float getAverageDiff();
-
     public abstract float getAffinity();
 
 }
