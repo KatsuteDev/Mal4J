@@ -148,28 +148,204 @@ public abstract class User implements IDN {
      */
     public abstract UserMangaListQuery getUserMangaListing();
 
+    /**
+     * Returns Anime affinity to authenticated user.
+     *
+     * @return Anime affinity
+     *
+     * @since 3.0.0
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(AffinityAlgorithm)
+     * @see #getAnimeAffinity(String, AffinityAlgorithm)
+     * @see #getAnimeAffinity(User, AffinityAlgorithm)
+     */
     public abstract AnimeAffinity getAnimeAffinity();
 
+    /**
+     * Returns Anime affinity to another user.
+     *
+     * @param username user to get affinity with
+     * @return Anime affinity
+     *
+     * @since 3.0.0
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(AffinityAlgorithm)
+     * @see #getAnimeAffinity(String, AffinityAlgorithm)
+     * @see #getAnimeAffinity(User, AffinityAlgorithm)
+     */
     public abstract AnimeAffinity getAnimeAffinity(final String username);
 
+    /**
+     * Returns Anime affinity to another user.
+     *
+     * @param user user to get affinity with
+     * @return Anime affinity
+     *
+     * @since 3.0.0
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(AffinityAlgorithm)
+     * @see #getAnimeAffinity(String, AffinityAlgorithm)
+     * @see #getAnimeAffinity(User, AffinityAlgorithm)
+     */
     public abstract AnimeAffinity getAnimeAffinity(final User user);
 
+    /**
+     * Returns Anime affinity to authenticated user.
+     *
+     * @param algorithm affinity algorithm to use
+     * @return Anime affinity
+     *
+     * @since 3.0.0
+     * @see AffinityAlgorithm
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(String, AffinityAlgorithm)
+     * @see #getAnimeAffinity(User, AffinityAlgorithm)
+     */
     public abstract AnimeAffinity getAnimeAffinity(final AffinityAlgorithm algorithm);
 
+    /**
+     * Returns Anime affinity to another user.
+     *
+     * @param username user to get affinity with
+     * @param algorithm affinity algorithm to use
+     * @return Anime affinity
+     *
+     * @since 3.0.0
+     * @see AffinityAlgorithm
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(AffinityAlgorithm)
+     * @see #getAnimeAffinity(User, AffinityAlgorithm)
+     */
     public abstract AnimeAffinity getAnimeAffinity(final String username, final AffinityAlgorithm algorithm);
 
+    /**
+     * Returns Anime affinity to another user.
+     *
+     * @param user user to get affinity with
+     * @param algorithm affinity algorithm to use
+     * @return Anime affinity
+     *
+     * @since 3.0.0
+     * @see AffinityAlgorithm
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(AffinityAlgorithm)
+     * @see #getAnimeAffinity(String, AffinityAlgorithm)
+     */
     public abstract AnimeAffinity getAnimeAffinity(final User user, final AffinityAlgorithm algorithm);
 
+    /**
+     * Returns Manga affinity to authenticated user.
+     *
+     * @return Manga affinity
+     *
+     * @since 3.0.0
+     * @see MangaAffinity
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(AffinityAlgorithm)
+     * @see #getMangaAffinity(String, AffinityAlgorithm)
+     * @see #getMangaAffinity(User, AffinityAlgorithm)
+     */
     public abstract MangaAffinity getMangaAffinity();
 
+    /**
+     * Returns Manga affinity to another user.
+     *
+     * @param username user to get affinity with
+     * @return Manga affinity
+     *
+     * @since 3.0.0
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(AffinityAlgorithm)
+     * @see #getMangaAffinity(String, AffinityAlgorithm)
+     * @see #getMangaAffinity(User, AffinityAlgorithm)
+     */
     public abstract MangaAffinity getMangaAffinity(final String username);
 
+    /**
+     * Returns Manga affinity to another user.
+     *
+     * @param user user to get affinity with
+     * @return Manga affinity
+     *
+     * @since 3.0.0
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(AffinityAlgorithm)
+     * @see #getMangaAffinity(String, AffinityAlgorithm)
+     * @see #getMangaAffinity(User, AffinityAlgorithm)
+     */
     public abstract MangaAffinity getMangaAffinity(final User user);
 
+    /**
+     * Returns Manga affinity to authenticated user.
+     *
+     * @param algorithm affinity algorithm to use
+     * @return Manga affinity
+     *
+     * @since 3.0.0
+     * @see AffinityAlgorithm
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(String, AffinityAlgorithm)
+     * @see #getMangaAffinity(User, AffinityAlgorithm)
+     */
     public abstract MangaAffinity getMangaAffinity(final AffinityAlgorithm algorithm);
 
+    /**
+     * Returns Manga affinity to another user.
+     *
+     * @param username user to get affinity with
+     * @param algorithm affinity algorithm to use
+     * @return Manga affinity
+     *
+     * @since 3.0.0
+     * @see AffinityAlgorithm
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(AffinityAlgorithm)
+     * @see #getMangaAffinity(User, AffinityAlgorithm)
+     */
     public abstract MangaAffinity getMangaAffinity(final String username, final AffinityAlgorithm algorithm);
 
+    /**
+     * Returns Manga affinity to another user.
+     *
+     * @param user user to get affinity with
+     * @param algorithm affinity algorithm to use
+     * @return Manga affinity
+     *
+     * @since 3.0.0
+     * @see AffinityAlgorithm
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(AffinityAlgorithm)
+     * @see #getMangaAffinity(String, AffinityAlgorithm)
+     */
     public abstract MangaAffinity getMangaAffinity(final User user, final AffinityAlgorithm algorithm);
 
 }

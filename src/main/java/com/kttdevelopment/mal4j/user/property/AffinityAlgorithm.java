@@ -17,9 +17,27 @@
  */
 package com.kttdevelopment.mal4j.user.property;
 
+/**
+ * Interface used to implement an affinity algorithm.
+ *
+ * @see MyAnimeListAffinityAlgorithm
+ * @since 3.0.0
+ * @version 3.0.0
+ * @author Ktt Development
+ */
 @FunctionalInterface
 public interface AffinityAlgorithm {
 
+    /**
+     * Returns affinity given two score sets from users.
+     * Scores are in the same corresponding order (ex: the score for the first shared Anime will be the first element in both arrays).
+     *
+     * @param a_scores scores from first user
+     * @param b_scores scores from second user
+     * @return affinity
+     *
+     * @since 3.0.0
+     */
     float getAffinity(int[] a_scores, int[] b_scores);
 
 }

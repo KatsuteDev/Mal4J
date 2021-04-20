@@ -17,6 +17,14 @@
  */
 package com.kttdevelopment.mal4j.user.property;
 
+/**
+ * MyAnimeList affinity algorithm (Pearson correlation coefficient).
+ *
+ * @see MyAnimeListAffinityAlgorithm
+ * @since 3.0.0
+ * @version 3.0.0
+ * @author Ktt Development
+ */
 public final class MyAnimeListAffinityAlgorithm implements AffinityAlgorithm{
 
     @Override

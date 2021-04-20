@@ -2686,7 +2686,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final AnimeAffinity getAnimeAffinity(){
-                    return getAnimeAffinity((String) null, null);
+                    return getAnimeAffinity("@me", null);
                 }
 
                 @Override
@@ -2701,7 +2701,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final AnimeAffinity getAnimeAffinity(final AffinityAlgorithm algorithm){
-                    return getAnimeAffinity((String) null, algorithm);
+                    return getAnimeAffinity("@me", algorithm);
                 }
 
                 @Override
@@ -2711,11 +2711,13 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final AnimeAffinity getAnimeAffinity(final String username, final AffinityAlgorithm algorithm){
+                    Objects.requireNonNull(username, "Username cannot be null");
+
                     final Map<Long,AnimeListStatus> allSelfScores = new HashMap<>();
                     getUserAnimeListing().includeNSFW().searchAll().forEachRemaining(e -> allSelfScores.put(e.getAnimePreview().getID(), e));
 
                     final Map<Long,AnimeListStatus> allOtherScores = new HashMap<>();
-                    mal.getUserAnimeListing(username == null ? "@me" : username).includeNSFW().searchAll().forEachRemaining(e -> allOtherScores.put(e.getAnimePreview().getID(), e));
+                    mal.getUserAnimeListing(username).includeNSFW().searchAll().forEachRemaining(e -> allOtherScores.put(e.getAnimePreview().getID(), e));
 
                     final SortedSet<Long> shared = new TreeSet<>();
                     allSelfScores.forEach((id, status) -> {
@@ -2776,7 +2778,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final MangaAffinity getMangaAffinity(){
-                    return getMangaAffinity((String) null, null);
+                    return getMangaAffinity("@me", null);
                 }
 
                 @Override
@@ -2791,7 +2793,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final MangaAffinity getMangaAffinity(final AffinityAlgorithm algorithm){
-                    return getMangaAffinity((String) null, algorithm);
+                    return getMangaAffinity("@me", algorithm);
                 }
 
                 @Override
@@ -2801,11 +2803,13 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final MangaAffinity getMangaAffinity(final String username, final AffinityAlgorithm algorithm){
+                    Objects.requireNonNull(username, "Username cannot be null");
+
                     final Map<Long,MangaListStatus> allSelfScores = new HashMap<>();
                     getUserMangaListing().includeNSFW().searchAll().forEachRemaining(e -> allSelfScores.put(e.getMangaPreview().getID(), e));
 
                     final Map<Long,MangaListStatus> allOtherScores = new HashMap<>();
-                    mal.getUserMangaListing(username == null ? "@me" : username).includeNSFW().searchAll().forEachRemaining(e -> allOtherScores.put(e.getMangaPreview().getID(), e));
+                    mal.getUserMangaListing(username).includeNSFW().searchAll().forEachRemaining(e -> allOtherScores.put(e.getMangaPreview().getID(), e));
 
                     final SortedSet<Long> shared = new TreeSet<>();
                     allSelfScores.forEach((id, status) -> {

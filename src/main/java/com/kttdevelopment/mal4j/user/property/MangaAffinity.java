@@ -19,6 +19,14 @@ package com.kttdevelopment.mal4j.user.property;
 
 import com.kttdevelopment.mal4j.manga.MangaPreview;
 
+/**
+ * Represents Manga affinity between two users.
+ *
+ * @see Affinity
+ * @since 3.0.0
+ * @version 3.0.0
+ * @author Ktt Development
+ */
 public abstract class MangaAffinity extends Affinity<MangaPreview> {
 
 }
