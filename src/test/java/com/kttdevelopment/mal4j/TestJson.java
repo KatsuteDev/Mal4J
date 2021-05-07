@@ -71,10 +71,19 @@ public class TestJson {
 
     @Test
     public void testMalformed(){
-        Assertions.assertThrows(JsonSyntaxException.class, () -> parse(""));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("?"));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("{"));
-        Assertions.assertThrows(JsonSyntaxException.class, () -> parse("["));
+        for(final String json : new String[]{"", "?", "{", "}", "[", "]", "{{", "}}", "[[", "]]", "{[", "[{", "}]", "]}", "{[}]", "[{]}"})
+            testException(json);
+    }
+
+    private static void testException(final String json){
+        boolean thrown = false;
+        try{
+            parse(json);
+        }catch(final JsonSyntaxException e){
+            Assertions.assertEquals(json, e.getRaw());
+            thrown = true;
+        }
+        Assertions.assertTrue(thrown, "Expected JsonSyntaxException for json: " + json);
     }
 
     @Test
