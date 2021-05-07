@@ -31,7 +31,7 @@ public class TestJson {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("mapProvider")
     public void testMap(final Object expected, final Object actual){
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(expected, actual, expected + " was missing");
     }
 
     @Test
@@ -83,7 +83,7 @@ public class TestJson {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("arrayProvider")
     public void testArray(final Object object){
-        Assertions.assertTrue(jsonArray.contains(object));
+        Assertions.assertTrue(jsonArray.contains(object), object + " was missing");
     }
 
     @Test

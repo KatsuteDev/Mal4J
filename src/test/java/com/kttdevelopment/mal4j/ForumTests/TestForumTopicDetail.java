@@ -25,7 +25,7 @@ public class TestForumTopicDetail {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("forumTopicProvider")
     public void testForumTopic(@SuppressWarnings("unused") final String method, final Function<ForumTopicDetail,Object> function){
-        Assertions.assertNotNull(function.apply(topic));
+        Assertions.assertNotNull(function.apply(topic), "Expected ForumTopicDetail#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")

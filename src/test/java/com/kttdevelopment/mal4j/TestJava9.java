@@ -21,12 +21,14 @@ public class TestJava9 {
         String enc1, enc2;
         Assertions.assertEquals(
             enc1 = URLEncoder.encode(string, StandardCharsets.UTF_8.name()),
-            enc2 = Java9.URLEncoder.encode(string, StandardCharsets.UTF_8)
+            enc2 = Java9.URLEncoder.encode(string, StandardCharsets.UTF_8),
+            '\'' + string + "' was not encoded correctly"
         );
         // decoder
         Assertions.assertEquals(
             URLDecoder.decode(enc1, StandardCharsets.UTF_8.name()),
-            Java9.URLDecoder.decode(enc2, StandardCharsets.UTF_8)
+            Java9.URLDecoder.decode(enc2, StandardCharsets.UTF_8),
+            '\'' + string + "' was not decoded correctly"
         );
     }
 
@@ -58,13 +60,13 @@ public class TestJava9 {
     @ParameterizedTest(name="[{index}] \"{0}\"")
     @ValueSource(strings={"", " ", "\t", " \t", "\t\n", " \t\n", "\u1680", " \u1680 "})
     public void testBlank(final String string){
-        Assertions.assertTrue(Java9.String.isBlank(string));
+        Assertions.assertTrue(Java9.String.isBlank(string), '\'' + string + "' was not blank");
     }
 
     @ParameterizedTest(name="[{index}] \"{0}\"")
     @ValueSource(strings={"abc", " abc ", "\u2022", " \u2022 "})
     public void testNotBlank(final String string){
-         Assertions.assertFalse(Java9.String.isBlank(string));
+         Assertions.assertFalse(Java9.String.isBlank(string), '\'' + string + "' was blank");
     }
 
     //

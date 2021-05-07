@@ -27,7 +27,7 @@ public class TestManga {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("mangaProvider")
     public void testManga(@SuppressWarnings("unused") final String method, final Function<Manga,Object> function){
-        Assertions.assertNotNull(function.apply(manga));
+        Assertions.assertNotNull(function.apply(manga), "Expected Manga#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")

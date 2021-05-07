@@ -26,7 +26,7 @@ public class TestUser {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("myselfProvider")
     public void testMyself(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
-        Assertions.assertNotNull(function.apply(user));
+        Assertions.assertNotNull(function.apply(user), "Expected User#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")

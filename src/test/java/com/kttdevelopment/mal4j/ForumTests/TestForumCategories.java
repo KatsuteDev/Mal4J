@@ -26,7 +26,7 @@ public class TestForumCategories {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("categoryProvider")
     public void testCategory(@SuppressWarnings("unused") final String method, final Function<ForumCategory,Object> function){
-        Assertions.assertNotNull(function.apply(category));
+        Assertions.assertNotNull(function.apply(category), "Expected ForumCategory#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")

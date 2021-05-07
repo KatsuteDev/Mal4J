@@ -27,7 +27,7 @@ public class TestAnime {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("animeProvider")
     public void testAnime(@SuppressWarnings("unused") final String method, final Function<Anime,Object> function){
-        Assertions.assertNotNull(function.apply(anime));
+        Assertions.assertNotNull(function.apply(anime), "Expected Anime#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")
