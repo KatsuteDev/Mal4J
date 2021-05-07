@@ -25,7 +25,7 @@ import java.util.Arrays;
  *
  * @see com.kttdevelopment.mal4j.anime.property.StartSeason
  * @since 1.0.0
- * @version 3.0.0
+ * @version 2.2.0
  * @author Ktt Development
  */
 public enum Season {
