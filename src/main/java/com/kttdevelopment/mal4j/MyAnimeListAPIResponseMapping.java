@@ -389,7 +389,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Genre[] getGenres() {
-                    return genres;
+                    return copyArray(genres, Genre.class);
                 }
 
                 @Override
@@ -459,12 +459,12 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Studio[] getStudios() {
-                    return studios;
+                    return copyArray(studios, Studio.class);
                 }
 
                 @Override
                 public final Picture[] getPictures() {
-                    return pictures;
+                    return copyArray(pictures, Picture.class);
                 }
 
                 @Override
@@ -474,17 +474,17 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final RelatedAnime[] getRelatedAnime() {
-                    return relatedAnime;
+                    return copyArray(relatedAnime, RelatedAnime.class);
                 }
 
                 @Override
                 public final RelatedManga[] getRelatedManga() {
-                    return relatedManga;
+                    return copyArray(relatedManga, RelatedManga.class);
                 }
 
                 @Override
                 public final AnimeRecommendation[] getRecommendations() {
-                    return recommendations;
+                    return copyArray(recommendations, AnimeRecommendation.class);
                 }
 
                 @Override
@@ -494,12 +494,12 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final OpeningTheme[] getOpeningThemes(){
-                    return openingThemes;
+                    return copyArray(openingThemes, OpeningTheme.class);
                 }
 
                 @Override
                 public final EndingTheme[] getEndingThemes(){
-                    return endingThemes;
+                    return copyArray(endingThemes, EndingTheme.class);
                 }
 
                 // additional methods
@@ -594,7 +594,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final String[] getTags() {
-                    return tags;
+                    return copyArray(tags, String.class);
                 }
 
                 @Override
@@ -717,7 +717,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final String[] getTags() {
-                    return tags;
+                    return copyArray(tags, String.class);
                 }
 
                 @Override
@@ -895,7 +895,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Genre[] getGenres() {
-                    return genres;
+                    return copyArray(genres, Genre.class);
                 }
 
                 @Override
@@ -965,7 +965,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Studio[] getStudios() {
-                    return studios;
+                    return copyArray(studios, Studio.class);
                 }
 
                 // additional methods
@@ -1299,7 +1299,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final PollOption[] getOptions() {
-                    return options;
+                    return copyArray(options, PollOption.class);
                 }
 
                 // additional methods
@@ -1435,7 +1435,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final ForumSubBoard[] getSubBoards() {
-                    return subBoards;
+                    return copyArray(subBoards, ForumSubBoard.class);
                 }
 
                 // additional methods
@@ -1473,7 +1473,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final ForumBoard[] getForumBoards() {
-                    return forumBoards;
+                    return copyArray(forumBoards, ForumBoard.class);
                 }
 
                 // additional methods
@@ -1542,7 +1542,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Post[] getPosts() {
-                    return posts;
+                    return copyArray(posts, Post.class);
                 }
 
                 @Override
@@ -1902,7 +1902,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Genre[] getGenres() {
-                    return genres;
+                    return copyArray(genres, Genre.class);
                 }
 
                 @Override
@@ -1952,12 +1952,12 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Author[] getAuthors() {
-                    return authors;
+                    return copyArray(authors, Author.class);
                 }
 
                 @Override
                 public final Picture[] getPictures() {
-                    return pictures;
+                    return copyArray(pictures, Picture.class);
                 }
 
                 @Override
@@ -1967,22 +1967,22 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final RelatedAnime[] getRelatedAnime() {
-                    return relatedAnime;
+                    return copyArray(relatedAnime, RelatedAnime.class);
                 }
 
                 @Override
                 public final RelatedManga[] getRelatedManga() {
-                    return relatedManga;
+                    return copyArray(relatedManga, RelatedManga.class);
                 }
 
                 @Override
                 public final MangaRecommendation[] getRecommendations() {
-                    return recommendations;
+                    return copyArray(recommendations, MangaRecommendation.class);
                 }
 
                 @Override
                 public final Publisher[] getSerialization() {
-                    return serialization;
+                    return copyArray(serialization, Publisher.class);
                 }
 
                 // additional methods
@@ -2072,7 +2072,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final String[] getTags() {
-                    return tags;
+                    return copyArray(tags, String.class);
                 }
 
                 @Override
@@ -2201,7 +2201,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final String[] getTags() {
-                    return tags;
+                    return copyArray(tags, String.class);
                 }
 
                 @Override
@@ -2381,7 +2381,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Genre[] getGenres() {
-                    return genres;
+                    return copyArray(genres, Genre.class);
                 }
 
                 @Override
@@ -2431,7 +2431,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final Author[] getAuthors() {
-                    return authors;
+                    return copyArray(authors, Author.class);
                 }
 
                 // additional methods
@@ -2839,7 +2839,7 @@ abstract class MyAnimeListAPIResponseMapping {
 
                 @Override
                 public final String[] getSynonyms() {
-                    return synonyms;
+                    return copyArray(synonyms, String.class);
                 }
 
                 @Override
@@ -2900,6 +2900,14 @@ abstract class MyAnimeListAPIResponseMapping {
     }
 
     //
+
+    private static <R> R[] copyArray(final R[] array, final Class<R> Class){
+        if(array == null) return null;
+
+        final R[] cp = (R[]) Array.newInstance(Class, array.length);
+        System.arraycopy(array, 0, cp, 0, array.length);
+        return cp;
+    }
 
     private static <R> R[] adaptList(final JsonObject[] list, final Function<JsonObject,R> adapter, final Class<R> Class){
         final List<R> li = new ArrayList<>();
