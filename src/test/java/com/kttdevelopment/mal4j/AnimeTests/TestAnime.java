@@ -108,7 +108,10 @@ public class TestAnime {
     public void testAnime(){
         Assertions.assertEquals(anime, anime.getAnime());
         Assertions.assertEquals(TestProvider.AltAnimeID, anime.getID());
+    }
 
+    @Test
+    public void testOpEdReference(){
         Assertions.assertSame(anime.getOpeningThemes()[0].getAnime(), anime);
         Assertions.assertSame(anime.getEndingThemes()[0].getAnime(), anime);
     }

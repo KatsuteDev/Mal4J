@@ -52,12 +52,12 @@ public class TestForumTopicDetail {
     }
 
     @Test
-    public void testPosts(){
+    public void testPostsReference(){
         Assertions.assertSame(topic, topic.getPosts()[0].getForumTopicDetail());
     }
 
     @Test
-    public void testPoll(){
+    public void testPollReference(){
         Assertions.assertSame(topic.getPoll(), topic.getPoll().getOptions()[0].getPoll());
         Assertions.assertSame(topic, topic.getPoll().getForumTopicDetail());
     }

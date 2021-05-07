@@ -46,7 +46,7 @@ public class TestForumCategories {
     }
 
     @Test
-    public void testForumBoard(){
+    public void testForumBoardReference(){
         Assertions.assertSame(category, category.getForumBoards()[2].getCategory());
         Assertions.assertSame(category.getForumBoards()[2] , category.getForumBoards()[2].getSubBoards()[2].getBoard());
     }
