@@ -61,11 +61,8 @@ public abstract class TestProvider {
     }
 
     public static void init() throws IOException{
-        if(oauth.exists()){ // use existing OAuth
-            mal = MyAnimeList.withOAuthToken(strip(readFile(oauth)));
-            if(mal.getAnime(AnimeID, Fields.NO_FIELDS) != null)
-                return;
-        }
+        if(oauth.exists() && (mal = MyAnimeList.withOAuthToken(strip(readFile(oauth)))).getAnime(AnimeID, Fields.NO_FIELDS) != null)
+            return; // skip if oauth exists and is usable
         testRequireClientID(); // prevent CI from trying to authenticate
         TestAuthorizationLocalServer.beforeAll(); // refresh old token
     }
@@ -88,10 +85,8 @@ public abstract class TestProvider {
     // java 9
 
     static String readFile(final File file) throws IOException{
-        final List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-
         final StringBuilder OUT = new StringBuilder();
-        for(final String s : lines)
+        for(final String s : Files.readAllLines(file.toPath(), StandardCharsets.UTF_8))
             OUT.append(s);
         return OUT.toString();
     }
