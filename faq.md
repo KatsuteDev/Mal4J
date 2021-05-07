@@ -22,7 +22,8 @@ This issue is caused by using an older, unsupported Java version; this library r
 
 This issue may occur if you are using an android version that doesn't support the Java 8 API. If you still get this error please open a new issue.
 
-### `java.lang.reflect.InaccessibleObjectException` / `java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+`
+### `java.lang.reflect.InaccessibleObjectException` / 
+### `java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+`
 
 In order to make this library function on JDK 9-10, reflection is used in order to make PATCH requests work correctly.
 
