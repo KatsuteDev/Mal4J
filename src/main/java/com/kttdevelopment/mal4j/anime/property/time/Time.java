@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.anime.property.time;
 
 /**
- * Represents the time on a clock.
+ * Represents the time.
  *
  * @see com.kttdevelopment.mal4j.anime.property.Broadcast
  * @since 1.0.0

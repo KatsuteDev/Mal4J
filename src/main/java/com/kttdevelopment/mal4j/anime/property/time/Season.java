@@ -25,7 +25,7 @@ import java.util.Arrays;
  *
  * @see com.kttdevelopment.mal4j.anime.property.StartSeason
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.2.0
  * @author Ktt Development
  */
 public enum Season {
@@ -51,7 +51,9 @@ public enum Season {
      * @since 1.0.0
      */
     public final String[] getMonths(){
-        return months;
+        final String[] copy = new String[months.length];
+        System.arraycopy(months, 0, copy, 0, months.length);
+        return copy;
     }
 
     /**

@@ -35,7 +35,7 @@
 
 # Overview
 
-Mal4J is a wrapper for the MyAnimeList API written for Java 8+ and simplifies many complex operations into an easy to use library.
+Mal4J is a modular wrapper for the MyAnimeList API written for Java 8+ and simplifies many complex operations into an easy to use library.
 
 # [Setup](https://github.com/Katsute/Mal4J/blob/main/setup.md)
 
@@ -113,7 +113,7 @@ OpeningTheme[] op = anime.getOpeningThemes();
 
 ### Local Tests
 
-For local tests you can use JDK8+, however only methods in the Java 8 API may be used. The `src/main/java9` and `src/main/java11` folders should not be marked as a source root.
+For local tests you can use Java 8+, however only methods in the Java 8 API may be used. The `src/main/java9` and `src/main/java11` folders should not be marked as a source root.
 
 Run tests locally by adding a text file named `client.txt` that contains the client ID in the `src/test/java/resources` directory.
 
