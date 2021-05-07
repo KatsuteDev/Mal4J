@@ -2,26 +2,35 @@ package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.mal4j.property.Genre;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import java.io.*;
 import java.net.URL;
-import java.util.Objects;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class TestGenre {
 
-    // \Qlabel_for_genre-\E(\d+)">([a-zA-Z]+)\Q</label>\E$
-    private static final Pattern label = Pattern.compile("\\Qlabel_for_genre-\\E(\\d+)\">([a-zA-Z]+)\\Q</label>\\E");
+    // \Qlabel_for_genre-\E(\d+)">([a-zA-Z\- ]+)\Q</label>\E$
+    @SuppressWarnings("SpellCheckingInspection")
+    private static final Pattern label = Pattern.compile("\\Qlabel_for_genre-\\E(\\d+)\">([a-zA-Z\\- ]+)\\Q</label>\\E");
+
+    private static Map<String,Integer> animeGenreIDs, mangaGenreIDs;
 
     @BeforeAll
-    public static void beforeAll(){
+    public static void beforeAll() throws IOException{
         Assumptions.assumeTrue(System.getProperty("java.version").charAt(0) != '9'); // SSL issue; OK to skip since other tests validate
+        animeGenreIDs = pullGenres("https://myanimelist.net/anime.php");
+        mangaGenreIDs = pullGenres("https://myanimelist.net/manga.php");
     }
 
     @Test
-    public void testAnimeGenres() throws IOException{
-        final URL url = new URL("https://myanimelist.net/anime.php");
+    private static Map<String,Integer> pullGenres(final String URL) throws IOException{
+        final URL url = new URL(URL);
+
+        final Map<String,Integer> map = new HashMap<>();
 
         final BufferedReader IN = new BufferedReader(new InputStreamReader(url.openStream()));
         final StringBuilder OUT = new StringBuilder();
@@ -33,36 +42,27 @@ public class TestGenre {
         final String raw = OUT.toString();
 
         final Matcher matcher = label.matcher(raw);
-        while(matcher.find()){
-            Assertions.assertEquals(
-                Integer.parseInt(matcher.group(1)), // expected ID
-                Objects.requireNonNull(Genre.asEnum(matcher.group(2))).getAnimeGenreID(), //actual id
-                "MyAnimeList Anime Genre ID doesn't match Genre enum"
-            );
-        }
+        while(matcher.find())
+            map.put(matcher.group(2), Integer.parseInt(matcher.group(1)));
+        return map;
     }
 
-    @Test
-    public void testMangaGenres() throws IOException{
-        final URL url = new URL("https://myanimelist.net/manga.php");
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @ParameterizedTest
+    @EnumSource(Genre.class)
+    public void testAnimeGenre(final Genre genre){
+        boolean hasAnimeID = false, hasMangaID = false;
+        try{ genre.getAnimeGenreID();
+            hasAnimeID = true;
+        }catch(final UnsupportedOperationException ignored){ }
+        try{ genre.getMangaGenreID();
+            hasMangaID = true;
+        }catch(final UnsupportedOperationException ignored){ }
 
-        final BufferedReader IN = new BufferedReader(new InputStreamReader(url.openStream()));
-        final StringBuilder OUT = new StringBuilder();
-        String ln;
-        while((ln = IN.readLine()) != null)
-            OUT.append(ln);
-        IN.close();
-
-        final String raw = OUT.toString();
-
-        final Matcher matcher = label.matcher(raw);
-        while(matcher.find()){
-            Assertions.assertEquals(
-                Integer.parseInt(matcher.group(1)), // expected ID
-                Objects.requireNonNull(Genre.asEnum(matcher.group(2))).getMangaGenreID(), //actual id
-                "MyAnimeList Manga Genre ID doesn't match Genre enum"
-            );
-        }
+        if(hasAnimeID)
+            Assertions.assertEquals(genre, Genre.asAnimeGenre(animeGenreIDs.get(genre.getName())));
+        if(hasMangaID)
+            Assertions.assertEquals(genre, Genre.asMangaGenre(mangaGenreIDs.get(genre.getName())));
     }
 
 }
