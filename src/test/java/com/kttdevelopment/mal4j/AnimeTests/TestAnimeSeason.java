@@ -60,7 +60,7 @@ public class TestAnimeSeason {
                 hasNSFW = true;
                 break;
             }
-        Assertions.assertTrue(hasNSFW, "Failed to find NSFW seasonal Anime (external issue, disregard fail)");
+        Assertions.assertTrue(hasNSFW, "Failed to find NSFW seasonal Anime (this is an external issue, ignore this)");
     }
 
 }

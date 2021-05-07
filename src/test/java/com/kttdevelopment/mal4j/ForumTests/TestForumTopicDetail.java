@@ -1,12 +1,14 @@
 package com.kttdevelopment.mal4j.ForumTests;
 
-import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.TestProvider;
+import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
-import com.kttdevelopment.mal4j.forum.Post;
-import com.kttdevelopment.mal4j.forum.property.Poll;
-import com.kttdevelopment.mal4j.forum.property.PollOption;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class TestForumTopicDetail {
 
@@ -20,40 +22,44 @@ public class TestForumTopicDetail {
         topic = mal.getForumTopicDetail(481);
     }
 
-    @Test
-    public void testForumTopic(){
-        Assertions.assertNotNull(topic.getTitle());
+    @ParameterizedTest(name="[{index}] {0}")
+    @MethodSource("forumTopicProvider")
+    public void testForumTopic(@SuppressWarnings("unused") final String method, final Function<ForumTopicDetail,Object> function){
+        Assertions.assertNotNull(function.apply(topic), "Expected ForumTopicDetail#" + method + " to not be null");
+    }
+
+    @SuppressWarnings("unused")
+    private static Stream<Arguments> forumTopicProvider(){
+        return new TestProvider.MethodStream<ForumTopicDetail>()
+            .add("Title", ForumTopicDetail::getTitle)
+            .add("Posts", ForumTopicDetail::getPosts)
+            .add("Posts[0]", topic -> topic.getPosts()[0])
+            .add("Posts#ID", topic -> topic.getPosts()[0].getID())
+            .add("Posts#Number", topic -> topic.getPosts()[0].getNumber())
+            .add("Posts#CreatedAt", topic -> topic.getPosts()[0].getCreatedAt())
+            .add("Posts#Body", topic -> topic.getPosts()[0].getBody())
+            .add("Posts#Signature", topic -> topic.getPosts()[0].getSignature())
+            .add("Poll", ForumTopicDetail::getPoll)
+            .add("Poll#ID", topic -> topic.getPoll().getID())
+            .add("Poll#Question", topic -> topic.getPoll().getQuestion())
+            .add("Poll#Closed", topic -> topic.getPoll().isClosed())
+            .add("Poll#PollOptions", topic -> topic.getPoll().getOptions())
+            .add("Poll#PollOptions[0]", topic -> topic.getPoll().getOptions()[0])
+            .add("Poll#PollOptions#ID", topic -> topic.getPoll().getOptions()[0].getID())
+            .add("Poll#PollOptions#Text", topic -> topic.getPoll().getOptions()[0].getText())
+            .add("Poll#PollOptions#Votes", topic -> topic.getPoll().getOptions()[0].getVotes())
+            .stream();
     }
 
     @Test
-    public void testPosts(){
-        final Post post = topic.getPosts()[0];
-        Assertions.assertNotNull(post.getID());
-        Assertions.assertNotNull(post.getNumber());
-        Assertions.assertNotNull(post.getCreatedAt());
-        Assertions.assertNotNull(post.getBody());
-        Assertions.assertNotNull(post.getSignature());
-
-        Assertions.assertSame(topic, post.getForumTopicDetail());
+    public void testPostsReference(){
+        Assertions.assertSame(topic, topic.getPosts()[0].getForumTopicDetail());
     }
 
     @Test
-    public void testPoll(){
-        final Poll poll = topic.getPoll();
-        Assertions.assertNotNull(poll.getID());
-        Assertions.assertNotNull(poll.getQuestion());
-        Assertions.assertFalse(poll.isClosed());
-
-        // options
-        {
-            final PollOption option = poll.getOptions()[0];
-            Assertions.assertNotNull(option.getID());
-            Assertions.assertNotNull(option.getText());
-            Assertions.assertNotNull(option.getVotes());
-
-            Assertions.assertSame(poll, option.getPoll());
-        }
-        Assertions.assertSame(topic, poll.getForumTopicDetail());
+    public void testPollReference(){
+        Assertions.assertSame(topic.getPoll(), topic.getPoll().getOptions()[0].getPoll());
+        Assertions.assertSame(topic, topic.getPoll().getForumTopicDetail());
     }
 
     @Test

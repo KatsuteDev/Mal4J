@@ -1,90 +1,139 @@
 package com.kttdevelopment.mal4j;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 import static com.kttdevelopment.mal4j.Json.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class TestJson {
 
-    @Test
-    public void testMap() throws IOException{
+    private static JsonObject jsonObject;
+    private static List<?> jsonArray;
+
+    @BeforeAll
+    public static void beforeAll() throws IOException{
         final String map = TestProvider.readFile(new File("src/test/java/resources/map.json")).replaceAll("\\r?\\n", "");
+        jsonObject = (JsonObject) parse(map);
 
-        final JsonObject json = (JsonObject) parse(map);
-
-        Assertions.assertEquals(1.0, json.getDouble("double"));
-        Assertions.assertEquals(-1.0, json.getDouble("doublen"));
-        Assertions.assertEquals(1.0, json.getDouble("doubles"));
-        Assertions.assertEquals(1, json.getInt("int"));
-        Assertions.assertEquals(-1,  json.getInt("intn"));
-        Assertions.assertEquals(1, json.getInt("ints"));
-        Assertions.assertTrue(json.getBoolean("bool"));
-        Assertions.assertFalse(json.getBoolean("bools"));
-        Assertions.assertNull(json.get("null"));
-        Assertions.assertTrue(json.containsKey("null"));
-        Assertions.assertNull(json.get("nulls"));
-        Assertions.assertTrue(json.containsKey("nulls"));
-        Assertions.assertEquals("string", json.getString("string"));
-        Assertions.assertEquals("string", json.getString("strings"));
-        Assertions.assertEquals("str\"ing", json.getString("str\"ingx"));
-        Assertions.assertEquals("/\\", json.getString("slash\\"));
-        Assertions.assertEquals("何", json.getString("何"));
-        Assertions.assertEquals("\\u4f55", json.getString("\\u4f55"));
-        Assertions.assertEquals("v", json.getJsonObject("obj").getString("k"));
-        Assertions.assertEquals(0, json.getJsonObject("cobj").size());
-        Assertions.assertEquals("str", json.getStringArray("arr")[0]);
-        Assertions.assertEquals(0, json.getJsonArray("carr").length);
-    }
-
-    @Test
-    public void testArray() throws IOException{
         final String arr = TestProvider.readFile(new File("src/test/java/resources/arr.json")).replaceAll("\\r?\\n", "");
+        jsonArray = (List<?>) parse(arr);
+    }
 
-        final List<?> json = (List<?>) parse(arr);
+    // map
 
-        Assertions.assertTrue(json.contains(1.0));
-        Assertions.assertTrue(json.contains(-1.0));
-        Assertions.assertTrue(json.contains(2.0));
-        Assertions.assertTrue(json.contains(1));
-        Assertions.assertTrue(json.contains(-1));
-        Assertions.assertTrue(json.contains(2));
-        Assertions.assertTrue(json.contains(true));
-        Assertions.assertTrue(json.contains(false));
-        Assertions.assertTrue(json.contains(null));
-        Assertions.assertTrue(json.contains("string"));
-        Assertions.assertTrue(json.contains("str\"ingx"));
-        Assertions.assertTrue(json.contains("/\\"));
-        Assertions.assertTrue(json.contains("何"));
-        Assertions.assertTrue(json.contains("\\u4f55"));
-        Assertions.assertEquals("v", ((JsonObject) json.get(14)).getString("k"));
-        Assertions.assertEquals(0, ((JsonObject) json.get(15)).size());
-        Assertions.assertTrue(json.contains(new ArrayList<String>(){{ add("str"); }}));
-        Assertions.assertTrue(json.contains(new ArrayList<String>()));
+    @ParameterizedTest(name="[{index}] {0}")
+    @MethodSource("mapProvider")
+    public void testMap(final Object expected, final Object actual){
+        Assertions.assertEquals(expected, actual, expected + " was missing");
     }
 
     @Test
-    public void testMalformed(){
-        for(final String json : new String[]{"", "?", "{", "}", "[", "]", "{{", "}}", "[[", "]]", "{[", "[{", "}]", "]}", "{[}]", "[{]}"})
-            testException(json);
+    public void testMapNull(){
+        Assertions.assertNull(jsonObject.get("null"));
+        Assertions.assertTrue(jsonObject.containsKey("null"));
+        Assertions.assertNull(jsonObject.get("nulls"));
+        Assertions.assertTrue(jsonObject.containsKey("nulls"));
     }
 
-    private static void testException(final String json){
-        boolean thrown = false;
-        try{
-            parse(json);
-        }catch(final JsonSyntaxException e){
-            Assertions.assertEquals(json, e.getRaw());
-            thrown = true;
-        }
-        Assertions.assertTrue(thrown, "Expected JsonSyntaxException for json: " + json);
+    @Test
+    public void testMapBoolean(){
+        Assertions.assertTrue(jsonObject.getBoolean("bool"));
+        Assertions.assertFalse(jsonObject.getBoolean("bools"));
     }
+
+    @Test
+    public void testMapMap(){
+        Assertions.assertEquals("v", jsonObject.getJsonObject("obj").getString("k"));
+        Assertions.assertEquals(0, jsonObject.getJsonObject("cobj").size());
+    }
+
+    @Test
+    public void testMapArray(){
+        Assertions.assertEquals("str", jsonObject.getStringArray("arr")[0]);
+        Assertions.assertEquals(0, jsonObject.getJsonArray("carr").length);
+    }
+
+    @SuppressWarnings("unused")
+    private static Stream<Arguments> mapProvider(){
+        return new TestProvider.ObjectStream()
+            .add(1.0, jsonObject.getDouble("double"))
+            .add(-1.0, jsonObject.getDouble("doublen"))
+            .add(1.0, jsonObject.getDouble("doubles"))
+            .add(1, jsonObject.getInt("int"))
+            .add(-1, jsonObject.getInt("intn"))
+            .add(1, jsonObject.getInt("ints"))
+            .add("string", jsonObject.getString("string"))
+            .add("string", jsonObject.getString("strings"))
+            .add("str\"ing", jsonObject.getString("str\"ingx"))
+            .add("/\\", jsonObject.getString("slash\\"))
+            .add("何", jsonObject.getString("何"))
+            .add("\\u4f55", jsonObject.getString("\\u4f55"))
+            .stream();
+    }
+
+    // array
+
+    @ParameterizedTest(name="[{index}] {0}")
+    @MethodSource("arrayProvider")
+    public void testArray(final Object object){
+        Assertions.assertTrue(jsonArray.contains(object), object + " was missing");
+    }
+
+    @Test
+    public void testArrayMap(){
+        Assertions.assertEquals("v", ((JsonObject) jsonArray.get(14)).getString("k"));
+    }
+
+    @Test
+    public void testArrayEmptyMap(){
+        Assertions.assertEquals(0, ((JsonObject) jsonArray.get(15)).size());
+    }
+
+    @SuppressWarnings("unused")
+    private static Stream<Arguments> arrayProvider(){
+        return new TestProvider.ObjectStream()
+            .add(1.0)
+            .add(1.0)
+            .add(-1.0)
+            .add(2.0)
+            .add(1)
+            .add(-1)
+            .add(2)
+            .add(true)
+            .add(false)
+            .add((Object) null)
+            .add("string")
+            .add("str\"ingx")
+            .add("/\\")
+            .add("何")
+            .add("\\u4f55")
+            .add(new ArrayList<String>(){{ add("str"); }})
+            .add(new ArrayList<String>())
+            .stream();
+    }
+
+    // malformed
+
+    @ParameterizedTest(name="[{index}] {0}")
+    @ValueSource(strings={"", "?", "{", "}", "[", "]", "{{", "}}", "[[", "]]", "{[", "[{", "}]", "]}", "{[}]", "[{]}"})
+    public void testMalformed(final String string){
+        try{
+            parse(string);
+        }catch(final JsonSyntaxException e){
+            Assertions.assertEquals(string, e.getRaw(), "Raw exception json did not match input json");
+            return;
+        }
+        Assertions.fail("Expected JsonSyntaxException for: \"" + string + '"');
+    }
+
+    // newline
 
     @Test
     public void testNewLine(){
