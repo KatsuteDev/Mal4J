@@ -167,7 +167,7 @@ public class TestAnimeListStatus {
         for(final AnimeListStatus listStatus : list)
             if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID)
                 return;
-        Assertions.fail("Failed to find Anime with Ecchi genre (external issue, disregard fail)");
+        Assertions.fail("Failed to find Anime with Ecchi genre (this is an external issue, ignore this)");
     }
 
 }

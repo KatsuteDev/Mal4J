@@ -27,7 +27,7 @@ public class TestAnimeRank {
         final AnimeRanking first = ranking.get(0);
         Assertions.assertEquals(1, first.getRanking());
         Assertions.assertEquals(AnimeType.Movie, first.getAnimePreview().getType());
-        Assertions.assertNotNull(first.getPreviousRank(), "Failed to get previous rank for Anime (external issue? disregard fail)");
+        Assertions.assertNotNull(first.getPreviousRank(), "Failed to get previous rank for Anime (this is an external issue, ignore this)");
     }
 
     @SuppressWarnings("EmptyMethod")
