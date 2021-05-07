@@ -2,11 +2,17 @@ package com.kttdevelopment.mal4j.UserTests;
 
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.user.User;
-import com.kttdevelopment.mal4j.user.UserAnimeStatistics;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class TestUser {
 
+    @SuppressWarnings("FieldCanBeLocal")
     private static MyAnimeList mal;
     private static User user;
 
@@ -17,38 +23,41 @@ public class TestUser {
         user = mal.getMyself(Fields.user);
     }
 
-    @Test
-    public void testMyself(){
-        Assertions.assertNotNull(user.getID());
-        Assertions.assertNotNull(user.getName());
-        Assertions.assertNotNull(user.getPictureURL());
-        Assertions.assertNotNull(user.getGender());
-        Assertions.assertNotNull(user.getLocation());
-        Assertions.assertNotNull(user.getJoinedAt());
-        Assertions.assertNotNull(user.getJoinedAtEpochMillis());
-        Assertions.assertNotNull(user.getTimeZone());
-        Assertions.assertFalse(user.isSupporter());
+    @ParameterizedTest(name="[{index}] {0}")
+    @MethodSource("myselfProvider")
+    public void testMyself(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
+        Assertions.assertNotNull(function.apply(user));
     }
 
-    @Test
-    public void testStatistics(){
-        final UserAnimeStatistics statistics = user.getAnimeStatistics();
-        Assertions.assertNotNull(statistics.getItemsWatching());
-        Assertions.assertNotNull(statistics.getItemsCompleted());
-        Assertions.assertNotNull(statistics.getDaysOnHold());
-        Assertions.assertNotNull(statistics.getItemsPlanToWatch());
-        Assertions.assertNotNull(statistics.getItemsDropped());
-        Assertions.assertNotNull(statistics.getItemsOnHold());
-        Assertions.assertNotNull(statistics.getItems());
-        Assertions.assertNotNull(statistics.getDaysWatched());
-        Assertions.assertNotNull(statistics.getDaysWatching());
-        Assertions.assertNotNull(statistics.getDaysCompleted());
-        Assertions.assertNotNull(statistics.getDaysOnHold());
-        Assertions.assertNotNull(statistics.getDaysDropped());
-        Assertions.assertNotNull(statistics.getDays());
-        Assertions.assertNotNull(statistics.getEpisodes());
-        Assertions.assertNotNull(statistics.getTimesRewatched());
-        Assertions.assertNotNull(statistics.getMeanScore());
+    @SuppressWarnings("unused")
+    private static Stream<Arguments> myselfProvider(){
+        return new TestProvider.MethodStream<User>()
+            .add("ID", User::getID)
+            .add("Name", User::getName)
+            .add("PictureURL", User::getPictureURL)
+            .add("Gender", User::getGender)
+            .add("Location", User::getLocation)
+            .add("JoinedAt", User::getJoinedAt)
+            .add("JoinedAtEpoch", User::getJoinedAtEpochMillis)
+            .add("TimeZone", User::getTimeZone)
+            .add("Supporter", User::isSupporter)
+            .add("Statistics", User::getAnimeStatistics)
+            .add("Statistics#ItemsWatching", user -> user.getAnimeStatistics().getItemsWatching())
+            .add("Statistics#ItemsCompleted", user -> user.getAnimeStatistics().getItemsCompleted())
+            .add("Statistics#ItemsOnHold", user -> user.getAnimeStatistics().getItemsOnHold())
+            .add("Statistics#ItemsPTW", user -> user.getAnimeStatistics().getItemsPlanToWatch())
+            .add("Statistics#ItemsDropped", user -> user.getAnimeStatistics().getItemsDropped())
+            .add("Statistics#Items", user -> user.getAnimeStatistics().getItems())
+            .add("Statistics#DaysWatching", user -> user.getAnimeStatistics().getDaysWatching())
+            .add("Statistics#DaysWatched", user -> user.getAnimeStatistics().getDaysWatched())
+            .add("Statistics#DaysCompleted", user -> user.getAnimeStatistics().getDaysCompleted())
+            .add("Statistics#DaysOnHold", user -> user.getAnimeStatistics().getDaysOnHold())
+            .add("Statistics#DaysDropped", user -> user.getAnimeStatistics().getDaysDropped())
+            .add("Statistics#Days", user -> user.getAnimeStatistics().getDays())
+            .add("Statistics#Episodes", user -> user.getAnimeStatistics().getEpisodes())
+            .add("Statistics#TimesRewatched", user -> user.getAnimeStatistics().getTimesRewatched())
+            .add("Statistics#MeanScore", user -> user.getAnimeStatistics().getMeanScore())
+            .stream();
     }
 
     @Test // test does actually pass
@@ -57,9 +66,13 @@ public class TestUser {
     }
 
     @Test
-    public void testAnimeMangaListing(){
-        Assertions.assertNotEquals(0, user.getUserAnimeListing().withNoFields().withLimit(1).search().size());
-        Assertions.assertNotEquals(0, user.getUserMangaListing().withNoFields().withLimit(1).search().size());
+    public void testAnimeListing(){
+        Assertions.assertDoesNotThrow(() -> user.getUserAnimeListing().withNoFields().withLimit(1).search());
+    }
+
+    @Test
+    public void testMangaListing(){
+        Assertions.assertDoesNotThrow(() -> user.getUserMangaListing().withNoFields().withLimit(1).search());
     }
 
 }

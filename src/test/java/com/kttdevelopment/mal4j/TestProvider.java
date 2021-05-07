@@ -2,14 +2,17 @@ package com.kttdevelopment.mal4j;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
+import org.junit.jupiter.params.provider.Arguments;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public abstract class TestProvider {
 
@@ -98,6 +101,43 @@ public abstract class TestProvider {
 
     static String strip(final String s){
         return dangling.matcher(s).replaceAll("");
+    }
+
+    //
+
+    public static final class MethodStream<T> {
+
+        private final List<Arguments> args = new ArrayList<>();
+
+        public final MethodStream<T> add(final Function<T,Object> function){
+            args.add(Arguments.of(function));
+            return this;
+        }
+
+        public final MethodStream<T> add(final String method, final Function<T,Object> function){
+            args.add(Arguments.of(method, function));
+            return this;
+        }
+
+        public final Stream<Arguments> stream(){
+            return args.stream();
+        }
+
+    }
+
+    public static final class ObjectStream {
+
+        private final List<Arguments> args = new ArrayList<>();
+
+        public final ObjectStream add(final Object... object){
+            args.add(Arguments.of(object));
+            return this;
+        }
+
+        public final Stream<Arguments> stream(){
+            return args.stream();
+        }
+
     }
 
 }

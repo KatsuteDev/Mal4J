@@ -2,9 +2,14 @@ package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.*;
-import com.kttdevelopment.mal4j.anime.property.AnimeStatistics;
 import com.kttdevelopment.mal4j.manga.RelatedManga;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class TestAnime {
 
@@ -19,62 +24,98 @@ public class TestAnime {
         anime = mal.getAnime(TestProvider.AltAnimeID, Fields.anime);
     }
 
+    @ParameterizedTest(name="[{index}] {0}")
+    @MethodSource("animeProvider")
+    public void testAnime(@SuppressWarnings("unused") final String method, final Function<Anime,Object> function){
+        Assertions.assertNotNull(function.apply(anime));
+    }
+
+    @SuppressWarnings("unused")
+    private static Stream<Arguments> animeProvider(){
+        return new TestProvider.MethodStream<Anime>()
+            .add("Title", Anime::getTitle)
+            .add("MainPicture", Anime::getMainPicture)
+            .add("MainPicture#MediumURL", anime -> anime.getMainPicture().getMediumURL())
+            .add("MainPicture#LargeURL", anime -> anime.getMainPicture().getLargeURL())
+            .add("AlternativeTitles", Anime::getAlternativeTitles)
+            .add("AlternativeTitles#English", anime -> anime.getAlternativeTitles().getEnglish())
+            .add("AlternativeTitles#Japanese", anime -> anime.getAlternativeTitles().getJapanese())
+            .add("AlternativeTitles#Synonyms", anime -> anime.getAlternativeTitles().getSynonyms())
+            .add("StartDate", Anime::getStartDate)
+            .add("EndDate", Anime::getEndDate)
+            .add("Synopsis", Anime::getSynopsis)
+            .add("MeanRating", Anime::getMeanRating)
+            .add("Rank", Anime::getRank)
+            .add("Popularity", Anime::getPopularity)
+            .add("UserListingCount", Anime::getUserListingCount)
+            .add("UserScoringCount", Anime::getUserScoringCount)
+            .add("NSFW", Anime::getNSFW)
+            .add("Genres", Anime::getGenres)
+            .add("Genres[0]", anime -> anime.getGenres()[0])
+            .add("CreatedAt", Anime::getCreatedAt)
+            .add("CreatedAtEpoch", Anime::getCreatedAtEpochMillis)
+            .add("UpdatedAt", Anime::getUpdatedAt)
+            .add("UpdatedAtEpoch", Anime::getUpdatedAtEpochMillis)
+            .add("Type", Anime::getType)
+            .add("Status", Anime::getStatus)
+            .add("Episodes", Anime::getEpisodes)
+            .add("StartSeason", Anime::getStartSeason)
+            .add("StartSeason#Season", anime -> anime.getStartSeason().getSeason())
+            .add("StartSeason#Year", anime -> anime.getStartSeason().getYear())
+            .add("Broadcast", Anime::getBroadcast)
+            .add("Broadcast#DayOfWeek", anime -> anime.getBroadcast().getDayOfWeek())
+            .add("Broadcast#StartTime", anime -> anime.getBroadcast().getStartTime())
+            .add("Source", Anime::getSource)
+            .add("AverageEpisodeLen", Anime::getAverageEpisodeLength)
+            .add("Rating", Anime::getRating)
+            .add("Studios", Anime::getStudios)
+            .add("Studios[0]", anime -> anime.getStudios()[0])
+            .add("Studios#ID", anime -> anime.getStudios()[0].getID())
+            .add("Studios#Name", anime -> anime.getStudios()[0].getName())
+            .add("Pictures", Anime::getPictures)
+            .add("Pictures[0]", anime -> anime.getPictures()[0])
+            .add("Pictures#MediumURL", anime -> anime.getPictures()[0].getMediumURL())
+            .add("Pictures#LargeURL", anime -> anime.getPictures()[0].getLargeURL())
+            .add("Background", Anime::getBackground)
+            .add("OpeningThemes", Anime::getOpeningThemes)
+            .add("OpeningThemes[0]", anime -> anime.getOpeningThemes()[0])
+            .add("OpeningThemes#ID", anime -> anime.getOpeningThemes()[0].getID())
+            .add("OpeningThemes#Text", anime -> anime.getOpeningThemes()[0].getText())
+            .add("EndingThemes", Anime::getEndingThemes)
+            .add("EndingThemes[0]", anime -> anime.getEndingThemes()[0])
+            .add("EndingThemes#ID", anime -> anime.getEndingThemes()[0].getID())
+            .add("EndingThemes#Text", anime -> anime.getEndingThemes()[0].getText())
+            .add("RelatedAnime", Anime::getRelatedAnime)
+            .add("RelatedAnime[0]", anime -> anime.getRelatedAnime()[0])
+            .add("RelatedAnime#AnimePreview", anime -> anime.getRelatedAnime()[0].getAnimePreview().getID())
+            .add("RelatedAnime#RelationType", anime -> anime.getRelatedAnime()[0].getRelationType())
+            .add("RelatedAnime#RelationTypeFormat", anime -> anime.getRelatedAnime()[0].getRelationTypeFormat())
+            .add("Recommendations", Anime::getRecommendations)
+            .add("Recommendations[0]", anime -> anime.getRecommendations()[0])
+            .add("Recommendations#AnimePreview", anime -> anime.getRecommendations()[0].getAnimePreview().getID())
+            .add("Recommendations#Recommendations", anime -> anime.getRecommendations()[0].getRecommendations())
+            .add("Statistics", Anime::getStatistics)
+            .add("Statistics#Completed", anime -> anime.getStatistics().getCompleted())
+            .add("Statistics#Dropped", anime -> anime.getStatistics().getDropped())
+            .add("Statistics#OnHold", anime -> anime.getStatistics().getOnHold())
+            .add("Statistics#PTW", anime -> anime.getStatistics().getPlanToWatch())
+            .add("Statistics#Watching", anime -> anime.getStatistics().getWatching())
+            .add("Statistics#UserCount", anime -> anime.getStatistics().getUserCount())
+            .stream();
+    }
+
     @Test
     public void testAnime(){
         Assertions.assertEquals(anime, anime.getAnime());
-
         Assertions.assertEquals(TestProvider.AltAnimeID, anime.getID());
-        Assertions.assertNotNull(anime.getTitle());
-        Assertions.assertNotNull(anime.getMainPicture().getMediumURL());
-        Assertions.assertNotNull(anime.getMainPicture().getLargeURL());
-        Assertions.assertNotNull(anime.getAlternativeTitles().getEnglish());
-        Assertions.assertNotNull(anime.getAlternativeTitles().getJapanese());
-        Assertions.assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u"), "Japanese characters should not be returned as a literal \\u unicode string");
-        Assertions.assertNotNull(anime.getAlternativeTitles().getSynonyms());
-        Assertions.assertNotNull(anime.getStartDate());
-        Assertions.assertNotNull(anime.getEndDate());
-        Assertions.assertNotNull(anime.getSynopsis());
-        Assertions.assertNotNull(anime.getMeanRating());
-        Assertions.assertNotNull(anime.getRank());
-        Assertions.assertNotNull(anime.getPopularity());
-        Assertions.assertNotNull(anime.getUserListingCount());
-        Assertions.assertNotNull(anime.getUserScoringCount());
-        Assertions.assertNotNull(anime.getNSFW());
-        Assertions.assertNotNull(anime.getGenres()[0]);
-        Assertions.assertNotNull(anime.getGenres()[0].getName());
-        Assertions.assertNotNull(anime.getCreatedAt());
-        Assertions.assertNotNull(anime.getCreatedAtEpochMillis());
-        Assertions.assertNotNull(anime.getUpdatedAt());
-        Assertions.assertNotNull(anime.getUpdatedAtEpochMillis());
-        Assertions.assertNotNull(anime.getType());
-        Assertions.assertNotNull(anime.getStatus());
-        Assertions.assertNotNull(anime.getEpisodes());
-        Assertions.assertNotNull(anime.getStartSeason().getSeason());
-        Assertions.assertNotNull(anime.getStartSeason().getYear());
-        Assertions.assertNotNull(anime.getBroadcast().getDayOfWeek());
-        Assertions.assertNotNull(anime.getBroadcast().getStartTime());
-        Assertions.assertNotNull(anime.getSource());
-        Assertions.assertNotNull(anime.getAverageEpisodeLength());
-        Assertions.assertNotNull(anime.getRating());
-        Assertions.assertNotNull(anime.getStudios()[0].getID());
-        Assertions.assertNotNull(anime.getStudios()[0].getName());
-        Assertions.assertNotNull(anime.getPictures()[0].getMediumURL());
-        Assertions.assertNotNull(anime.getPictures()[0].getLargeURL());
-        Assertions.assertNotNull(anime.getBackground());
-        Assertions.assertNotNull(anime.getOpeningThemes()[0].getID());
-        Assertions.assertNotNull(anime.getOpeningThemes()[0].getText());
+
         Assertions.assertSame(anime.getOpeningThemes()[0].getAnime(), anime);
-        Assertions.assertNotNull(anime.getEndingThemes()[0].getID());
-        Assertions.assertNotNull(anime.getEndingThemes()[0].getText());
         Assertions.assertSame(anime.getEndingThemes()[0].getAnime(), anime);
     }
 
     @Test
-    public void testRelatedAnime(){
-        final RelatedAnime relatedAnime = anime.getRelatedAnime()[0];
-        Assertions.assertNotNull(relatedAnime.getAnimePreview().getID());
-        Assertions.assertNotNull(relatedAnime.getRelationType());
-        Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
+    public void testJapaneseEncoding(){
+        Assertions.assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u"), "Japanese characters should not be returned as a literal \\u unicode string");
     }
 
     @Test @DisplayName("Anime may not have related Manga") @Disabled
@@ -83,24 +124,6 @@ public class TestAnime {
         Assertions.assertNotNull(relatedManga.getMangaPreview().getID());
         Assertions.assertNotNull(relatedManga.getRelationType());
         Assertions.assertNotNull(relatedManga.getRelationTypeFormat());
-    }
-
-    @Test
-    public void testRecommendations(){
-        final AnimeRecommendation recommendation = anime.getRecommendations()[0];
-        Assertions.assertNotNull(recommendation.getAnimePreview().getID());
-        Assertions.assertNotNull(recommendation.getRecommendations());
-    }
-
-    @Test
-    public void testStatistics(){
-        final AnimeStatistics statistics = anime.getStatistics();
-        Assertions.assertNotNull(statistics.getCompleted());
-        Assertions.assertNotNull(statistics.getDropped());
-        Assertions.assertNotNull(statistics.getOnHold());
-        Assertions.assertNotNull(statistics.getPlanToWatch());
-        Assertions.assertNotNull(statistics.getWatching());
-        Assertions.assertNotNull(statistics.getUserCount());
     }
 
 }
