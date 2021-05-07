@@ -1,6 +1,6 @@
 # General
 
-### Does this library support JDK # ?
+### Does this library support Java # ?
 
 This project supports Java 8+ and Java 9 modules.
 
@@ -14,15 +14,15 @@ If you don't want this warning then either:
 - Downgrade to JDK 8
 - Upgrade to JDK 11 or higher
 
-### java.lang.UnsupportedClassVersionError
+### `java.lang.UnsupportedClassVersionError`
 
-This issue is caused by using an older, unsupported Java version; this library requires at least JDK 8. If you are using JDK 8 and still get this error, make sure you are using at least version 2.0.0 of this library.
+This issue is caused by using an older, unsupported Java version; this library requires at least Java 8.
 
-### java.lang.NoSuchMethodError
+### `java.lang.NoSuchMethodError`
 
 This issue may occur if you are using an android version that doesn't support the Java 8 API. If you still get this error please open a new issue.
 
-### java.lang.reflect.InaccessibleObjectException / java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+
+### `java.lang.reflect.InaccessibleObjectException` / `java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+`
 
 In order to make this library function on JDK 9-10, reflection is used in order to make PATCH requests work correctly.
 
@@ -36,7 +36,7 @@ To avoid this exception either:
 
 ### Are their any rate limits?
 
-The MyAnimeList API currently has no rate limit in place so requests must be sent at your own discretion. Note that this Java library is currently operating at maximum efficiency, using only one request per method.
+The MyAnimeList API currently has no rate limit in place so requests must be sent at your own discretion.
 
 ### What does this library offer in comparison to the Official API?
 

@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.manga.property;
 
 /**
- * Represents the type of medium the Manga is.
+ * Represents the type of medium a Manga is.
  *
  * @see com.kttdevelopment.mal4j.manga.MangaPreview#getType()
  * @since 1.0.0

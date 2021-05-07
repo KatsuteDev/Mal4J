@@ -111,7 +111,7 @@ public final class MyAnimeListAuthenticator {
      *
      * @param client_id client id
      * @param client_secret client secret, null if application has none
-     * @param authorization_code authorization code
+     * @param authorization_code authorization code (<b>not</b> your authorization URL)
      * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request

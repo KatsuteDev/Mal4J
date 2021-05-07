@@ -1,0 +1,25 @@
+name: Generate Javadoc
+on: [workflow_dispatch]
+
+jobs:
+  javadoc:
+    name: Generate Javadoc
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Prepate Git Repo
+        uses: actions/checkout@v2
+
+      - name: ☕ Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1
+        with:
+          version: 11
+          architecture: x64
+
+      - name: 📦 Package with Maven
+        run: mvn package -Dmaven.test.skip=true
+
+      - name: 📦 Upload Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: javadoc
+          path: target/*-javadoc.jar

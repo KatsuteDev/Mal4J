@@ -239,6 +239,7 @@ class APICall {
                 try{
                     modifiers = Field.class.getDeclaredField("modifiers");
                 }catch(final NoSuchFieldException ignored){ // android
+                    //noinspection JavaReflectionMemberAccess
                     modifiers = Field.class.getDeclaredField("accessFlags");
                 }
                 modifiers.setAccessible(true);

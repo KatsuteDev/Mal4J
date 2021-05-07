@@ -25,7 +25,6 @@ import com.kttdevelopment.mal4j.manga.property.MangaStatus;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get</a> <br>
- *
  * Represents a user Manga list query.
  *
  * @see MyAnimeList#getUserMangaListing()
