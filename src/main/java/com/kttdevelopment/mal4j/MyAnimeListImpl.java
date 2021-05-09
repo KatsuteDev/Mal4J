@@ -34,8 +34,9 @@ import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.atomic.*;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 
 import static com.kttdevelopment.mal4j.Json.*;
 import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.Anime.*;
@@ -825,6 +826,8 @@ final class MyAnimeListImpl extends MyAnimeList{
     }
 
     //
+    
+    private static final String inverted = "(?:^%s$|(?<=\\w){%s}|(?:^|,)%s{.*?}|,%s|(?<={)%s,)";
 
     /**
      * Handles how fields are finally sent to the server.
@@ -857,6 +860,28 @@ final class MyAnimeListImpl extends MyAnimeList{
                 return str.substring(0, str.length() -1);
         }
         return null;
+    }
+
+    private static String toFields(final String defaultFields, final boolean inverted, final String... fields){
+        if(fields == null)
+            return !inverted ? defaultFields : "";
+        else if(fields.length == 0)
+            return !inverted ? "" : defaultFields;
+
+        if(!inverted){
+            final StringBuilder OUT = new StringBuilder();
+            for(final String field : fields)
+                if(!Java9.String.isBlank((field)))
+                    OUT.append(field).append(',');
+
+            final String str = OUT.toString();
+            return str.substring(0, str.length() - 1); // it is asserted that the length is at least 1
+        }else{
+            String buffer = defaultFields;
+            for(final String field : fields)
+                buffer = buffer.replaceAll(MyAnimeListImpl.inverted.replace("%s", Pattern.quote(field)), "");
+            return buffer;
+        }
     }
 
     private static String asISO8601(final Long millis){
