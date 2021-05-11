@@ -475,7 +475,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             }
 
             @Override
-            public synchronized final PaginatedIterator<ForumTopic> searchAll(){
+            public final PaginatedIterator<ForumTopic> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getForumTopics(
