@@ -65,13 +65,14 @@ public class TestMyAnimeList {
     @ParameterizedTest
     @ValueSource(strings={"%s", "%s,%s", "a,%s", "a{%s}", "%s{a}", "a{%s}", "a{a,%s}", "a{%s,a}"})
     public void testInvertedRegex(final String raw){
+        final String sf = "[%s]: '%s' should not have contained '%s'";
         final String inv = raw.replaceAll(inverted, "");
-        Assertions.assertFalse(inv.contains("%s"));
-        Assertions.assertFalse(inv.contains("{}"));
-        Assertions.assertFalse(inv.contains("{,"));
-        Assertions.assertFalse(inv.contains(",}"));
-        Assertions.assertFalse(inv.startsWith(","));
-        Assertions.assertFalse(inv.endsWith(","));
+        Assertions.assertFalse(inv.contains("%s"), String.format(sf, raw, inv, "%s"));
+        Assertions.assertFalse(inv.contains("{}"), String.format(sf, raw, inv, "{}"));
+        Assertions.assertFalse(inv.contains("{,"), String.format(sf, raw, inv, "{,"));
+        Assertions.assertFalse(inv.contains(",}"), String.format(sf, raw, inv, ",}"));
+        Assertions.assertFalse(inv.startsWith(","), String.format(sf, raw, inv, ",$"));
+        Assertions.assertFalse(inv.endsWith(","), String.format(sf, raw, inv, "^,"));
     }
 
 }
