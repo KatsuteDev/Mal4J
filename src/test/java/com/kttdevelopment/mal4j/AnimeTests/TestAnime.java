@@ -2,7 +2,6 @@ package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.*;
-import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.RelatedManga;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,7 +13,6 @@ import java.util.stream.Stream;
 
 public class TestAnime {
 
-    @SuppressWarnings("FieldCanBeLocal")
     private static MyAnimeList mal;
     private static Anime anime;
 

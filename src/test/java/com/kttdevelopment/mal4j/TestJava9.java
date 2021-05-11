@@ -45,6 +45,7 @@ public class TestJava9 {
         return sb.toString();
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Test
     public void testNullEncoder(){
         Assertions.assertThrows(NullPointerException.class, () -> Java9.URLEncoder.encode("Hello World", null));
