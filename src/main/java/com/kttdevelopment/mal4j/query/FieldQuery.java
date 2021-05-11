@@ -31,7 +31,7 @@ import java.util.*;
  * @see com.kttdevelopment.mal4j.Fields#anime
  * @see com.kttdevelopment.mal4j.Fields#manga
  * @since 1.0.0
- * @version 1.1.0
+ * @version 2.2.0
  * @author Ktt Development
  */
 @SuppressWarnings({"unchecked", "UnusedReturnValue"})
