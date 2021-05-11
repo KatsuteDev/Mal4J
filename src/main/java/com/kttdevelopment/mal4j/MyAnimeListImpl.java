@@ -861,9 +861,9 @@ final class MyAnimeListImpl extends MyAnimeList{
      * @return comma separated fields
      */
     private static String convertFields(final String defaultFields, final String... fields){
-        if(fields == null || fields.length == 0)
+        if(fields == null || (fields.length == 1 && fields[0].equals(Fields.INVERTED)))
             return defaultFields;
-        else if(fields.length == 1 && fields[0].equals(Fields.INVERTED))
+        else if(fields.length == 0)
             return "";
         
         boolean inverted = false;
