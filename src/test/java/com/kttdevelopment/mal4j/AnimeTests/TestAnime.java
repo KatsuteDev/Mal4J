@@ -2,6 +2,7 @@ package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.*;
+import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.RelatedManga;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -119,6 +120,26 @@ public class TestAnime {
     @Test
     public void testJapaneseEncoding(){
         Assertions.assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u"), "Japanese characters should not be returned as a literal \\u unicode string");
+    }
+
+    @Test
+    public void testFields(){
+        final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes);
+        Assertions.assertNotNull(anime.getEpisodes());
+        Assertions.assertNull(anime.getRating());
+    }
+
+    @Test
+    public void testInvertedFields(){
+        final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes, Fields.INVERTED);
+        Assertions.assertNull(anime.getEpisodes());
+        Assertions.assertNotNull(anime.getRating());
+    }
+
+    @Test
+    public void testInvertedFieldsOnly(){
+        final Anime manga = mal.getAnime(TestProvider.AnimeID, Fields.INVERTED);
+        Assertions.assertNull(manga.getEpisodes());
     }
 
     @Test @DisplayName("Anime may not have related Manga") @Disabled

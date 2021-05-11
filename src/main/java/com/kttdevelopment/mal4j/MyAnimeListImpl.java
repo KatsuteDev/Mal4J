@@ -50,7 +50,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.User.*;
  * @see MyAnimeList
  * @see MyAnimeListService
  * @since 1.0.0
- * @version 2.0.0
+ * @version 2.2.0
  * @author Ktt Development
  */
 final class MyAnimeListImpl extends MyAnimeList{
@@ -94,7 +94,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     )
                 );
@@ -115,7 +115,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     ),
                     iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
@@ -136,7 +136,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getAnime(
                 auth,
                 id,
-                asFieldList(toCommaSeparatedString(fields), Fields.anime)
+                convertFields(Fields.anime, fields)
             )
         ));
     }
@@ -153,7 +153,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType.field(),
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     )
                 );
@@ -174,7 +174,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType.field(),
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     ),
                     iterator -> asAnimeRanking(MyAnimeListImpl.this, iterator)
@@ -197,7 +197,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     )
                 );
@@ -220,7 +220,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     ),
                     iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
@@ -241,7 +241,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         auth,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     )
                 );
@@ -261,7 +261,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         auth,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     ),
                     iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
@@ -336,7 +336,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     )
                 );
@@ -359,7 +359,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.anime),
+                        convertFields(Fields.anime, fields),
                         nsfw
                     ),
                     iterator -> asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
@@ -508,7 +508,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.manga),
+                        convertFields(Fields.manga, fields),
                         nsfw
                     )
                 );
@@ -529,7 +529,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         query,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.manga),
+                        convertFields(Fields.manga, fields),
                         nsfw
                     ),
                     iterator -> asManga(MyAnimeListImpl.this, iterator.getJsonObject("node"))
@@ -551,7 +551,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getManga(
                 auth,
                 id,
-                asFieldList(toCommaSeparatedString(fields), Fields.manga)
+                convertFields(Fields.manga, fields)
             )
         ));
     }
@@ -568,7 +568,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType != null ? rankingType.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.manga),
+                        convertFields(Fields.manga, fields),
                         nsfw
                     )
                 );
@@ -589,7 +589,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         rankingType != null ? rankingType.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.manga),
+                        convertFields(Fields.manga, fields),
                         nsfw
                     ),
                     iterator -> asMangaRanking(MyAnimeListImpl.this, iterator)
@@ -665,7 +665,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.manga),
+                        convertFields(Fields.manga, fields),
                         nsfw
                     )
                 );
@@ -688,7 +688,7 @@ final class MyAnimeListImpl extends MyAnimeList{
                         sort != null ? sort.field() : null,
                         limit,
                         offset,
-                        asFieldList(toCommaSeparatedString(fields), Fields.manga),
+                        convertFields(Fields.manga, fields),
                         nsfw
                     ),
                     iterator -> asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
@@ -721,7 +721,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             () -> service.getUser(
                 auth,
                 username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
-                asFieldList(toCommaSeparatedString(fields), Fields.user)
+                convertFields(Fields.user, fields)
             )
         ));
     }
@@ -826,21 +826,6 @@ final class MyAnimeListImpl extends MyAnimeList{
     }
 
     //
-    
-    private static final String inverted = "(?:^%s$|(?<=\\w){%s}|(?:^|,)%s{.*?}|,%s|(?<={)%s,)";
-
-    /**
-     * Handles how fields are finally sent to the server.
-     *
-     * Current behavior sends all if fields are null and none if an empty array is supplied
-     *
-     * @param fields comma separated fields
-     * @param fieldsIfNull fallback fields
-     * @return fields
-     */
-    private static String asFieldList(final String fields, final String fieldsIfNull){
-        return fields == null ? fieldsIfNull : fields;
-    }
 
     private static String toCommaSeparatedString(final List<String> fields){
         return toCommaSeparatedString(fields == null ? null : fields.toArray(new String[0]));
@@ -862,12 +847,33 @@ final class MyAnimeListImpl extends MyAnimeList{
         return null;
     }
 
-    private static String toFields(final String defaultFields, final boolean inverted, final String... fields){
-        if(fields == null)
-            return !inverted ? defaultFields : "";
-        else if(fields.length == 0)
-            return !inverted ? "" : defaultFields;
+    private static final String inverted = "^%s$|^%s(?=,)|(?<=\\w)\\{%s}|(?:^|,)%s\\{.*?}|,%s|(?<=\\{)%s,";
 
+    private static String convertFields(final String defaultFields, final List<String> fields){
+        return convertFields(defaultFields, fields.toArray(new String[0]));
+    }
+
+    /**
+     * Converts field array to comma separated string
+     *
+     * @param defaultFields default fields
+     * @param fields fields
+     * @return comma separated fields
+     */
+    private static String convertFields(final String defaultFields, final String... fields){
+        if(fields == null || fields.length == 0)
+            return defaultFields;
+        else if(fields.length == 1 && fields[0].equals(Fields.INVERTED))
+            return "";
+        
+        boolean inverted = false;
+        for(final String field : fields){
+            if(field.equals(Fields.INVERTED)){
+                inverted = true;
+                break;
+            }
+        }
+        
         if(!inverted){
             final StringBuilder OUT = new StringBuilder();
             for(final String field : fields)
@@ -878,7 +884,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             return str.substring(0, str.length() - 1); // it is asserted that the length is at least 1
         }else{
             String buffer = defaultFields;
-            for(final String field : fields)
+            for(final String field : fields) // remove fields that are specified
                 buffer = buffer.replaceAll(MyAnimeListImpl.inverted.replace("%s", Pattern.quote(field)), "");
             return buffer;
         }

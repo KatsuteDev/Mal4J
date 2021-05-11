@@ -1,6 +1,10 @@
 package com.kttdevelopment.mal4j;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import java.util.regex.Pattern;
 
 public class TestMyAnimeList {
 
@@ -54,6 +58,20 @@ public class TestMyAnimeList {
     @Test
     public void testNullUser(){
         Assertions.assertThrows(NullPointerException.class, () -> mal.getUser(null));
+    }
+
+    private static final String inverted = "^%s$|^%s(?=,)|(?<=\\w)\\{%s}|(?:^|,)%s\\{.*?}|,%s|(?<=\\{)%s,";
+
+    @ParameterizedTest
+    @ValueSource(strings={"%s", "%s,%s", "a,%s", "a{%s}", "%s{a}", "a{%s}", "a{a,%s}", "a{%s,a}"})
+    public void testInvertedRegex(final String raw){
+        final String inv = raw.replaceAll(inverted, "");
+        Assertions.assertFalse(inv.contains("%s"));
+        Assertions.assertFalse(inv.contains("{}"));
+        Assertions.assertFalse(inv.contains("{,"));
+        Assertions.assertFalse(inv.contains(",}"));
+        Assertions.assertFalse(inv.startsWith(","));
+        Assertions.assertFalse(inv.endsWith(","));
     }
 
 }
