@@ -27,6 +27,3 @@ assignees: ''
 ### Issue
 *Explain your issue. Add any relevant code or stacktraces here.*
 
-
-### Steps To Reproduce
-*Explain how and/or when the error occurred.*

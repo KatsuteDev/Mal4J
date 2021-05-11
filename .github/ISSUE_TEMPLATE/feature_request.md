@@ -18,4 +18,5 @@ assignees: ''
 
 
 ### Reason
-*Explain why you thing this feature should be added.*
+*Explain why you think this feature should be added.*
+
