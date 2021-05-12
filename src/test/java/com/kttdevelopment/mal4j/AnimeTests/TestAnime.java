@@ -137,7 +137,7 @@ public class TestAnime {
     @Test
     public void testInvertedFieldsOnly(){
         final Anime manga = mal.getAnime(TestProvider.AnimeID, Fields.INVERTED);
-        Assertions.assertNull(manga.getEpisodes());
+        Assertions.assertNotNull(manga.getEpisodes());
     }
 
     @Test @DisplayName("Anime may not have related Manga") @Disabled
