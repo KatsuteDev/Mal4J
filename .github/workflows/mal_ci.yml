@@ -12,7 +12,7 @@ jobs:
       max-parallel: 1
     steps:
       - name: 📦 Prepate Git Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: ☕ Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1
