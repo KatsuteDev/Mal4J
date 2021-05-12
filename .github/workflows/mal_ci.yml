@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v2.3.4
 
       - name: ☕ Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1
+        uses: AdoptOpenJDK/install-jdk@v1.1.1
         with:
           version: ${{ matrix.jdk }}
           architecture: x64
