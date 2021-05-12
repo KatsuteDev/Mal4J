@@ -22,7 +22,7 @@ package com.kttdevelopment.mal4j;
  * This fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
  * @since 1.1.0
- * @version 1.1.0
+ * @version 2.2.0
  * @author Ktt Development
  */
 public abstract class Fields {
@@ -33,6 +33,13 @@ public abstract class Fields {
      * @since 1.1.0
      */
     public static final String[] NO_FIELDS = new String[0];
+
+    /**
+     * Indicates that all fields except the ones supplied should be returned. Add this to the fields parameter.
+     *
+     * @since 2.2.0
+     */
+    public static final String INVERTED = "%INVERTED_MODIFIER%"; // this field should never equal an existing MAL field
 
     // shared
 

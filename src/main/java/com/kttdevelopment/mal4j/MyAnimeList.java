@@ -123,7 +123,7 @@ public abstract class MyAnimeList {
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      * @param id Anime id
-     * @param fields a comma separated string or a string array of the fields that should be returned
+     * @param fields a string array of the fields that should be returned
      * @return Anime
      *
      * @see Anime
@@ -368,7 +368,7 @@ public abstract class MyAnimeList {
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      * @param id Manga id
-     * @param fields a comma separated string or a string array of the fields that should be returned
+     * @param fields a string array of the fields that should be returned
      * @return Manga
      *
      * @see Manga
@@ -474,7 +474,7 @@ public abstract class MyAnimeList {
     /**
      * Returns the authenticated user.
      *
-     * @param fields a comma separated string or a string array of the fields that should be returned
+     * @param fields a string array of the fields that should be returned
      * @return user
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
@@ -505,7 +505,7 @@ public abstract class MyAnimeList {
      * Returns a user given their username.
      *
      * @param username username
-     * @param fields a comma separated string or a string array of the fields that should be returned
+     * @param fields a string array of the fields that should be returned
      * @return user
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
