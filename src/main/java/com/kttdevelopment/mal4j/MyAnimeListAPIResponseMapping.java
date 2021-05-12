@@ -44,6 +44,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * @see MyAnimeListImpl
  */
 @SuppressWarnings({"unused","unchecked","ConstantConditions"})
+@Deprecated
 abstract class MyAnimeListAPIResponseMapping {
 
     static abstract class Anime {

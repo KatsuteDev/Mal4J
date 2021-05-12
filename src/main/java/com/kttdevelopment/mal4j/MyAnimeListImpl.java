@@ -39,10 +39,10 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import static com.kttdevelopment.mal4j.Json.*;
-import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.Anime.*;
-import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.Forum.*;
-import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.Manga.*;
-import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.User.*;
+import static com.kttdevelopment.mal4j.MyAnimeListSchema_Anime.*;
+import static com.kttdevelopment.mal4j.MyAnimeListSchema_Forum.*;
+import static com.kttdevelopment.mal4j.MyAnimeListSchema_Manga.*;
+import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
 
 /**
  * Implements the {@link MyAnimeList} interface with the {@link MyAnimeListService}.
@@ -891,11 +891,11 @@ final class MyAnimeListImpl extends MyAnimeList{
     }
 
     private static String asISO8601(final Long millis){
-        return millis == null ? null : new SimpleDateFormat(MyAnimeListAPIResponseMapping.ISO8601).format(new Date(millis));
+        return millis == null ? null : new SimpleDateFormat(MyAnimeListSchema.ISO8601).format(new Date(millis));
     }
 
     private static String asYMD(final Long millis){
-        return millis == null ? null : new SimpleDateFormat(MyAnimeListAPIResponseMapping.YMD).format(new Date(millis));
+        return millis == null ? null : new SimpleDateFormat(MyAnimeListSchema.YMD).format(new Date(millis));
     }
 
 }
