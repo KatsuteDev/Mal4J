@@ -14,7 +14,7 @@ jobs:
       fail-fast: false
     steps:
       - name: 📦 Prepate Git Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: ☕ Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1
@@ -32,7 +32,7 @@ jobs:
     needs: java_ci
     steps:
       - name: 📦 Prepate Git Repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2.3.4
 
       - name: 🔐 Import GPG key
         uses: crazy-max/ghaction-import-gpg@v3
