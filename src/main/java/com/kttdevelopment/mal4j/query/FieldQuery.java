@@ -31,7 +31,7 @@ import java.util.*;
  * @see com.kttdevelopment.mal4j.Fields#anime
  * @see com.kttdevelopment.mal4j.Fields#manga
  * @since 1.0.0
- * @version 1.1.0
+ * @version 2.2.0
  * @author Ktt Development
  */
 @SuppressWarnings({"unchecked", "UnusedReturnValue"})
@@ -52,6 +52,8 @@ public abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffse
      * @see #withFields(String...)
      * @see #withFields(List)
      * @see #withAllFields()
+     * @see #invertFields()
+     * @see #invertFields(boolean)
      * @see #withNoFields()
      * @since 1.0.0
      */
@@ -77,6 +79,8 @@ public abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffse
      * @see #withField(String)
      * @see #withFields(List)
      * @see #withAllFields()
+     * @see #invertFields()
+     * @see #invertFields(boolean)
      * @see #withNoFields()
      * @since 1.0.0
      */
@@ -104,6 +108,8 @@ public abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffse
      * @see #withField(String)
      * @see #withFields(String...)
      * @see #withAllFields()
+     * @see #invertFields()
+     * @see #invertFields(boolean)
      * @see #withNoFields()
      * @since 1.0.0
      */
@@ -129,11 +135,55 @@ public abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffse
      * @see #withField(String)
      * @see #withFields(String...)
      * @see #withFields(List)
+     * @see #invertFields()
+     * @see #invertFields(boolean)
      * @see #withNoFields()
      * @since 1.0.0
      */
     public final T withAllFields(){
         this.fields = null;
+        return (T) this;
+    }
+
+    /**
+     * Makes the query return all except the fields provided.
+     *
+     * @return query
+     *
+     * @see #withField(String)
+     * @see #withFields(String...)
+     * @see #withFields(List)
+     * @see #withAllFields()
+     * @see #invertFields(boolean)
+     * @see #withNoFields()
+     * @since 2.2.0
+     */
+    public final T invertFields(){
+        return withField(Fields.INVERTED);
+    }
+
+    /**
+     * Makes the query return all except the fields provided.
+     *
+     * @param inverted whether the fields should be inverted or not
+     * @return query
+     *
+     * @see #withField(String)
+     * @see #withFields(String...)
+     * @see #withFields(List)
+     * @see #withAllFields()
+     * @see #invertFields()
+     * @see #withNoFields()
+     * @since 2.2.0
+     */
+    public final T invertFields(final boolean inverted){
+        if(inverted)
+            return withField(Fields.INVERTED);
+        else if(fields != null){
+            fields.remove(Fields.INVERTED);
+            if(fields.isEmpty())
+                fields = null;
+        }
         return (T) this;
     }
 
@@ -147,6 +197,8 @@ public abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffse
      * @see #withFields(String...)
      * @see #withFields(List)
      * @see #withAllFields()
+     * @see #invertFields()
+     * @see #invertFields(boolean)
      * @since 1.0.0
      */
     public final T withNoFields(){

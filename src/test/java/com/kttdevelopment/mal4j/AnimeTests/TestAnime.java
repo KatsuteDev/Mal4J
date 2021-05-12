@@ -13,7 +13,6 @@ import java.util.stream.Stream;
 
 public class TestAnime {
 
-    @SuppressWarnings("FieldCanBeLocal")
     private static MyAnimeList mal;
     private static Anime anime;
 
@@ -119,6 +118,26 @@ public class TestAnime {
     @Test
     public void testJapaneseEncoding(){
         Assertions.assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u"), "Japanese characters should not be returned as a literal \\u unicode string");
+    }
+
+    @Test
+    public void testFields(){
+        final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes);
+        Assertions.assertNotNull(anime.getEpisodes());
+        Assertions.assertNull(anime.getRating());
+    }
+
+    @Test
+    public void testInvertedFields(){
+        final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes, Fields.INVERTED);
+        Assertions.assertNull(anime.getEpisodes());
+        Assertions.assertNotNull(anime.getRating());
+    }
+
+    @Test
+    public void testInvertedFieldsOnly(){
+        final Anime manga = mal.getAnime(TestProvider.AnimeID, Fields.INVERTED);
+        Assertions.assertNotNull(manga.getEpisodes());
     }
 
     @Test @DisplayName("Anime may not have related Manga") @Disabled
