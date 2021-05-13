@@ -24,7 +24,7 @@ package com.kttdevelopment.mal4j;
  * @version 2.2.0
  * @author Ktt Development
  */
-public final class JsonSyntaxException extends RuntimeException {
+public class JsonSyntaxException extends RuntimeException {
 
     private final String raw;
 
