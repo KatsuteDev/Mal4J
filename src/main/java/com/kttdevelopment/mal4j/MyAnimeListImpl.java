@@ -32,17 +32,16 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
 import static com.kttdevelopment.mal4j.Json.*;
-import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.Anime.*;
-import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.Forum.*;
-import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.Manga.*;
-import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.User.*;
+import static com.kttdevelopment.mal4j.MyAnimeListSchema_Anime.*;
+import static com.kttdevelopment.mal4j.MyAnimeListSchema_Forum.*;
+import static com.kttdevelopment.mal4j.MyAnimeListSchema_Manga.*;
+import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
 
 /**
  * Implements the {@link MyAnimeList} interface with the {@link MyAnimeListService}.
@@ -53,7 +52,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListAPIResponseMapping.User.*;
  * @version 2.2.0
  * @author Ktt Development
  */
-final class MyAnimeListImpl extends MyAnimeList{
+final class MyAnimeListImpl extends MyAnimeList {
 
     private transient String auth;
     private MyAnimeListAuthenticator authenticator;
@@ -284,8 +283,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                         status != null ? status.field() : null,
                         rewatching,
                         score,
-                        asYMD(startDate),
-                        asYMD(finishDate),
+                        MyAnimeListSchema.asYMD(startDate),
+                        MyAnimeListSchema.asYMD(finishDate),
                         watchedEpisodes,
                         priority.value(),
                         timesRewatched,
@@ -612,8 +611,8 @@ final class MyAnimeListImpl extends MyAnimeList{
                         status != null ? status.field() : null,
                         rereading,
                         score,
-                        asYMD(startDate),
-                        asYMD(finishDate),
+                        MyAnimeListSchema.asYMD(startDate),
+                        MyAnimeListSchema.asYMD(finishDate),
                         volumesRead,
                         chaptersRead,
                         priority.value(),
@@ -761,8 +760,8 @@ final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public String toString(){
-        return "MyAnimeListImpl{" +
+    public final String toString(){
+        return "MyAnimeList{" +
                "authenticator=" + authenticator +
                ", service=" + service +
                '}';
@@ -839,10 +838,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             for(final String field : fields)
                 if(!Java9.String.isBlank(field))
                     SB.append(field).append(',');
-
-            final String str = SB.toString();
-            if(!Java9.String.isBlank(str))
-                return str.substring(0, str.length() -1);
+            return SB.toString().endsWith(",") ? SB.deleteCharAt(SB.length()-1).toString() : "";
         }
         return null;
     }
@@ -875,27 +871,13 @@ final class MyAnimeListImpl extends MyAnimeList{
         }
         
         if(!inverted){
-            final StringBuilder OUT = new StringBuilder();
-            for(final String field : fields)
-                if(!Java9.String.isBlank((field)))
-                    OUT.append(field).append(',');
-
-            final String str = OUT.toString();
-            return str.substring(0, str.length() - 1); // it is asserted that the length is at least 1
+            return toCommaSeparatedString(fields);
         }else{
             String buffer = defaultFields;
             for(final String field : fields) // remove fields that are specified
                 buffer = buffer.replaceAll(MyAnimeListImpl.inverted.replace("%s", Pattern.quote(field)), "");
             return buffer;
         }
-    }
-
-    private static String asISO8601(final Long millis){
-        return millis == null ? null : new SimpleDateFormat(MyAnimeListAPIResponseMapping.ISO8601).format(new Date(millis));
-    }
-
-    private static String asYMD(final Long millis){
-        return millis == null ? null : new SimpleDateFormat(MyAnimeListAPIResponseMapping.YMD).format(new Date(millis));
     }
 
 }
