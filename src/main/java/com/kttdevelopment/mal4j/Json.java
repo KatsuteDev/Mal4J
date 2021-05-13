@@ -337,29 +337,4 @@ class Json {
 
     }
 
-    // exceptions
-
-    /**
-     * Thrown if the json is malformed.
-     */
-    public static class JsonSyntaxException extends RuntimeException {
-
-        private final String raw;
-
-        JsonSyntaxException(final String message, final String raw){
-            super(message);
-            this.raw = raw;
-        }
-
-        /**
-         * Returns the raw string.
-         *
-         * @return raw string
-         */
-        public final String getRaw(){
-            return raw;
-        }
-
-    }
-
 }
