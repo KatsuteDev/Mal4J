@@ -20,7 +20,7 @@ public class TestUser {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
-        user = mal.getMyself(Fields.user);
+        user = mal.getAuthenticatedUser(Fields.user);
     }
 
     @ParameterizedTest(name="[{index}] {0}")

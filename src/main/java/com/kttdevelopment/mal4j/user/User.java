@@ -29,8 +29,8 @@ import java.util.Date;
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_get</a> <br>
  * Represents a user.
  *
- * @see MyAnimeList#getMyself()
- * @see MyAnimeList#getMyself(String[])
+ * @see MyAnimeList#getAuthenticatedUser()
+ * @see MyAnimeList#getAuthenticatedUser(String...)
  * @see MyAnimeList#getUser(String)
  * @see MyAnimeList#getUser(String, String...)
  * @since 1.0.0

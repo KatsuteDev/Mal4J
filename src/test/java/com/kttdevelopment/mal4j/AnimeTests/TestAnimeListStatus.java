@@ -25,7 +25,7 @@ public class TestAnimeListStatus {
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
 
-        if(mal.getMyself().getID() != 8316239) return;
+        if(mal.getAuthenticatedUser().getID() != 8316239) return;
 
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
