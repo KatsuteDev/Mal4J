@@ -463,7 +463,7 @@ public abstract class MyAnimeList {
     /**
      * Returns the authenticated user.
      *
-     * @return user
+     * @return authenticated user
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
@@ -477,7 +477,7 @@ public abstract class MyAnimeList {
      * Returns the authenticated user.
      *
      * @param fields a string array of the fields that should be returned
-     * @return user
+     * @return authenticated user
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
