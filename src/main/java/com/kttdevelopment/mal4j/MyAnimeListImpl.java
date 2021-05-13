@@ -53,7 +53,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  * @version 2.2.0
  * @author Ktt Development
  */
-final class MyAnimeListImpl extends MyAnimeList{
+final class MyAnimeListImpl extends MyAnimeList {
 
     private transient String auth;
     private MyAnimeListAuthenticator authenticator;
@@ -761,8 +761,8 @@ final class MyAnimeListImpl extends MyAnimeList{
     }
 
     @Override
-    public String toString(){
-        return "MyAnimeListImpl{" +
+    public final String toString(){
+        return "MyAnimeList{" +
                "authenticator=" + authenticator +
                ", service=" + service +
                '}';
@@ -839,10 +839,7 @@ final class MyAnimeListImpl extends MyAnimeList{
             for(final String field : fields)
                 if(!Java9.String.isBlank(field))
                     SB.append(field).append(',');
-
-            final String str = SB.toString();
-            if(!Java9.String.isBlank(str))
-                return str.substring(0, str.length() -1);
+            return SB.toString().endsWith(",") ? SB.deleteCharAt(SB.length()-1).toString() : "";
         }
         return null;
     }
@@ -875,27 +872,13 @@ final class MyAnimeListImpl extends MyAnimeList{
         }
         
         if(!inverted){
-            final StringBuilder OUT = new StringBuilder();
-            for(final String field : fields)
-                if(!Java9.String.isBlank((field)))
-                    OUT.append(field).append(',');
-
-            final String str = OUT.toString();
-            return str.substring(0, str.length() - 1); // it is asserted that the length is at least 1
+            return toCommaSeparatedString(fields);
         }else{
             String buffer = defaultFields;
             for(final String field : fields) // remove fields that are specified
                 buffer = buffer.replaceAll(MyAnimeListImpl.inverted.replace("%s", Pattern.quote(field)), "");
             return buffer;
         }
-    }
-
-    private static String asISO8601(final Long millis){
-        return millis == null ? null : new SimpleDateFormat(MyAnimeListSchema.ISO8601).format(new Date(millis));
-    }
-
-    private static String asYMD(final Long millis){
-        return millis == null ? null : new SimpleDateFormat(MyAnimeListSchema.YMD).format(new Date(millis));
     }
 
 }

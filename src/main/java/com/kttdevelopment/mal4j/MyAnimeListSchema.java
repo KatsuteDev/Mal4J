@@ -23,6 +23,7 @@ import com.kttdevelopment.mal4j.anime.property.time.Time;
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -52,9 +53,9 @@ abstract class MyAnimeListSchema {
 
     //
 
-    static final String YMD = "yyyy-MM-dd";
-    static final String YM  = "yyyy-MM";
-    static final String Y   = "yyyy";
+    private static final String YMD = "yyyy-MM-dd";
+    private static final String YM  = "yyyy-MM";
+    private static final String Y   = "yyyy";
 
     protected static Long parseDate(final String date){
         if(date == null) return null;
@@ -67,8 +68,12 @@ abstract class MyAnimeListSchema {
         }
     }
 
+    static String asYMD(final Long millis){
+        return millis == null ? null : new SimpleDateFormat(MyAnimeListSchema.YMD).format(new Date(millis));
+    }
+
     @SuppressWarnings("SpellCheckingInspection")
-    static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ssXXX";
+    private static final String ISO8601 = "yyyy-MM-dd'T'HH:mm:ssXXX";
 
     protected static Long parseISO8601(final String timestamp){
         if(timestamp == null) return null;
@@ -78,6 +83,10 @@ abstract class MyAnimeListSchema {
         }catch(final ParseException ignored){
             return null;
         }
+    }
+
+    static String asISO8601(final Long millis){
+        return millis == null ? null : new SimpleDateFormat(MyAnimeListSchema.ISO8601).format(new Date(millis));
     }
 
     //

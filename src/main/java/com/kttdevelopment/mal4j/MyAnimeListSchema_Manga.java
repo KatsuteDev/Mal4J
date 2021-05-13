@@ -24,10 +24,9 @@ import com.kttdevelopment.mal4j.manga.property.*;
 import com.kttdevelopment.mal4j.property.*;
 import com.kttdevelopment.mal4j.query.MangaListUpdate;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
-final class MyAnimeListSchema_Manga extends MyAnimeListSchema {
+abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     
     static Author asAuthor(final MyAnimeList mal, final JsonObject schema){
         return new Author() {
@@ -341,13 +340,22 @@ final class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         };
     }
 
-    // todo: handle null manga id
-    static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final MangaPreview manga_preview){
+    static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final long manga_id){
+        return asMangaListStatus(mal, schema, manga_id, null);
+    }
+
+    static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final MangaPreview mangaPreview){
+        return asMangaListStatus(mal, schema, null, Objects.requireNonNull(mangaPreview, "Manga preview must not be null"));
+    }
+
+    private static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final MangaPreview manga_preview){
+        if(manga_id == null && manga_preview == null)
+            throw new NullPointerException("Manga id and manga preview must not be both null");
         return new MangaListStatus() {
 
-            private final MangaPreview manga = manga_preview;
-
+            private final MangaPreview manga        = manga_preview;
             private final Long id                   = manga_id;
+
             private final MangaStatus status        = requireNonNull(() -> MangaStatus.asEnum(schema.getString("status")));
             private final Integer score             = requireNonNull(() -> schema.getInt("score"));
             private final Long startDate            = requireNonNull(() -> parseDate(schema.getString("start_date")));
@@ -448,7 +456,7 @@ final class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final MangaListUpdate edit(){
-                return mal.updateMangaListing(id);
+                return mal.updateMangaListing(id != null ? id : manga.getID());
             }
 
             @Override
@@ -628,7 +636,7 @@ final class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // additional methods
 
             @Override
-            public final com.kttdevelopment.mal4j.manga.Manga getManga() {
+            public final Manga getManga() {
                 return mal.getManga(id);
             }
 
@@ -690,7 +698,7 @@ final class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final com.kttdevelopment.mal4j.manga.Manga getManga() {
+            public final Manga getManga() {
                 return mal.getManga(manga.getID());
             }
 
@@ -727,7 +735,7 @@ final class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // additional methods
 
             @Override
-            public final com.kttdevelopment.mal4j.manga.Manga getManga() {
+            public final Manga getManga() {
                 return mal.getManga(manga.getID());
             }
 
@@ -769,7 +777,7 @@ final class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final com.kttdevelopment.mal4j.manga.Manga getManga() {
+            public final Manga getManga() {
                 return mal.getManga(manga.getID());
             }
 

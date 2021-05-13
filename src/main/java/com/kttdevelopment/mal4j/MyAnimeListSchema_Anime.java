@@ -25,10 +25,9 @@ import com.kttdevelopment.mal4j.manga.RelatedManga;
 import com.kttdevelopment.mal4j.property.*;
 import com.kttdevelopment.mal4j.query.AnimeListUpdate;
 
-import java.util.Arrays;
-import java.util.Date;
+import java.util.*;
 
-final class MyAnimeListSchema_Anime extends MyAnimeListSchema {
+abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     
     static AnimeStatistics asAnimeStatistics(final MyAnimeList mal, final JsonObject schema){
         return new AnimeStatistics() {
@@ -529,13 +528,23 @@ final class MyAnimeListSchema_Anime extends MyAnimeListSchema {
         };
     }
 
+    static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final long anime_id){
+        return asAnimeListStatus(mal, schema, anime_id, null);
+    }
+
+    static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final AnimePreview anime_preview){
+        return asAnimeListStatus(mal, schema, null, Objects.requireNonNull(anime_preview, "Anime preview must not be null"));
+    }
+
     @SuppressWarnings("SpellCheckingInspection")
-    static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final Long anime_id, final AnimePreview anime_preview) {
+    private static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final Long anime_id, final AnimePreview anime_preview) {
+        if(anime_id == null && anime_preview == null)
+            throw new NullPointerException("Anime id and anime preview must not both be null");
         return new AnimeListStatus() {
 
-            private final AnimePreview anime = anime_preview;
-            
+            private final AnimePreview anime        = anime_preview;
             private final Long id                   = anime_id;
+
             private final AnimeStatus status        = requireNonNull(() -> AnimeStatus.asEnum(schema.getString("status")));
             private final Integer score             = requireNonNull(() -> schema.getInt("score"));
             private final Long startDate            = requireNonNull(() -> parseDate(schema.getString("start_date")));
@@ -630,7 +639,7 @@ final class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeListUpdate edit(){
-                return mal.updateAnimeListing(id);
+                return mal.updateAnimeListing(id != null ? id : anime.getID());
             }
 
             @Override
