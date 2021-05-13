@@ -25,7 +25,7 @@ public class TestMangaListStatus {
 
         mal.deleteMangaListing(TestProvider.MangaID);
 
-        if(mal.getMyself().getID() != 8316239) return;
+        if(mal.getAuthenticatedUser().getID() != 8316239) return;
 
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
             .status(MangaStatus.PlanToRead)

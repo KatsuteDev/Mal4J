@@ -463,19 +463,50 @@ public abstract class MyAnimeList {
     /**
      * Returns the authenticated user.
      *
+     * @return authenticated user
+     * @throws HttpException if request failed
+     * @throws UncheckedIOException if client failed to execute request
+     *
+     * @see User
+     * @see #getAuthenticatedUser(String...)
+     * @since 2.2.0
+     */
+    public abstract User getAuthenticatedUser();
+
+    /**
+     * Returns the authenticated user.
+     *
+     * @param fields a string array of the fields that should be returned
+     * @return authenticated user
+     * @throws HttpException if request failed
+     * @throws UncheckedIOException if client failed to execute request
+     *
+     * @see User
+     * @see #getAuthenticatedUser()
+     * @see Fields#user
+     * @since 2.2.0
+     */
+    public abstract User getAuthenticatedUser(final String... fields);
+
+    /**
+     * Returns the authenticated user.
+     *
+     * @deprecated use {@link #getAuthenticatedUser()} instead
      * @return user
      * @throws HttpException if request failed
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User
-     * @see #getMyself(String[])
+     * @see #getMyself(String...)
      * @since 1.0.0
      */
+    @Deprecated
     public abstract User getMyself();
 
     /**
      * Returns the authenticated user.
      *
+     * @deprecated use {@link #getAuthenticatedUser(String...)} instead
      * @param fields a string array of the fields that should be returned
      * @return user
      * @throws HttpException if request failed
@@ -486,6 +517,7 @@ public abstract class MyAnimeList {
      * @see Fields#user
      * @since 1.0.0
      */
+    @Deprecated
     public abstract User getMyself(final String... fields);
 
     /**
