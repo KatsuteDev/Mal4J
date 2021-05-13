@@ -698,11 +698,21 @@ final class MyAnimeListImpl extends MyAnimeList {
     }
 
     @Override
-    public final User getMyself(){
+    public final User getAuthenticatedUser(){
         return getUser("@me", (String[]) null);
     }
 
     @Override
+    public final User getAuthenticatedUser(final String... fields){
+        return getUser("@me", fields);
+    }
+
+    @Override @Deprecated
+    public final User getMyself(){
+        return getUser("@me", (String[]) null);
+    }
+
+    @Override @Deprecated
     public final User getMyself(final String... fields){
         return getUser("@me", fields);
     }
