@@ -25,6 +25,7 @@ import com.kttdevelopment.mal4j.user.UserAnimeStatistics;
 
 import java.util.Date;
 
+@SuppressWarnings("unused")
 abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
     
     static User asUser(final MyAnimeList mal, final JsonObject schema){

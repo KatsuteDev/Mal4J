@@ -32,7 +32,6 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
@@ -284,8 +283,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                         status != null ? status.field() : null,
                         rewatching,
                         score,
-                        asYMD(startDate),
-                        asYMD(finishDate),
+                        MyAnimeListSchema.asYMD(startDate),
+                        MyAnimeListSchema.asYMD(finishDate),
                         watchedEpisodes,
                         priority.value(),
                         timesRewatched,
@@ -612,8 +611,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                         status != null ? status.field() : null,
                         rereading,
                         score,
-                        asYMD(startDate),
-                        asYMD(finishDate),
+                        MyAnimeListSchema.asYMD(startDate),
+                        MyAnimeListSchema.asYMD(finishDate),
                         volumesRead,
                         chaptersRead,
                         priority.value(),

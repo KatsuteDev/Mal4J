@@ -26,6 +26,7 @@ import com.kttdevelopment.mal4j.query.MangaListUpdate;
 
 import java.util.*;
 
+@SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     
     static Author asAuthor(final MyAnimeList mal, final JsonObject schema){

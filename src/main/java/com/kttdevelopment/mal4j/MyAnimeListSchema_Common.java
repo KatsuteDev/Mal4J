@@ -22,6 +22,7 @@ import com.kttdevelopment.mal4j.property.Picture;
 
 import java.util.Arrays;
 
+@SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
 
     static AlternativeTitles asAlternativeTitles(final MyAnimeList mal, final Json.JsonObject schema){

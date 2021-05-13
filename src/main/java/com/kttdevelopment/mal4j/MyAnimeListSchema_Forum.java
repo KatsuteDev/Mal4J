@@ -25,6 +25,7 @@ import com.kttdevelopment.mal4j.user.User;
 import java.util.Arrays;
 import java.util.Date;
 
+@SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     
     static ForumTopicCreator asForumTopicCreator(final MyAnimeList mal, final JsonObject schema){
