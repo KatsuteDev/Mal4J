@@ -21,8 +21,9 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/Katsute/Mal4J/actions/workflows/release.yml"><img alt="Deploy" src="https://github.com/Katsute/Mal4J/workflows/Deploy/badge.svg"></a>
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml"><img alt="Java CI" src="https://github.com/Katsute/Mal4J/workflows/Java%20CI/badge.svg"></a>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/codeql.yml"><img alt="CodeQL" src="https://github.com/Katsute/Mal4J/actions/workflows/codeql.yml/badge.svg"></a>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/release.yml"><img alt="Deploy" src="https://github.com/Katsute/Mal4J/workflows/Deploy/badge.svg"></a>
     <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j"></a>
     <a href="https://github.com/Katsute/Mal4J/releases"><img alt="version" src="https://img.shields.io/github/v/release/Katsute/Mal4J"></a>
     <a href="https://github.com/Katsute/Mal4J/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/github/license/Katsute/Mal4J"></a>
@@ -117,7 +118,7 @@ For local tests you can use Java 8+, however only methods in the Java 8 API may 
 
 Run tests locally by adding a text file named `client.txt` that contains the client ID in the `src/test/java/resources` directory.
 
-Please note that the Client ID being used for tests must not have a client secret and must have an app redirect url of `http://localhost:5050`.
+Please note that the client ID being used for tests must not have a client secret and must have an app redirect url of `http://localhost:5050`.
 
 ### Remote Tests
 
