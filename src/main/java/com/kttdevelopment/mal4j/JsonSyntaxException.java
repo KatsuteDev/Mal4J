@@ -37,6 +37,7 @@ public class JsonSyntaxException extends RuntimeException {
      * Returns the raw string.
      *
      * @return raw string
+     * @since 2.2.0
      */
     public final String getRaw(){
         return raw;
