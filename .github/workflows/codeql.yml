@@ -17,7 +17,7 @@ jobs:
       - name: ☕ Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1.1.1
         with:
-          version: ${{ matrix.jdk }}
+          version: 11
           architecture: x64
 
       - name: 📦 Compile with Maven
