@@ -19,7 +19,58 @@
 package com.kttdevelopment.mal4j.user.property;
 
 import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.user.User;
 
-public abstract class AnimeAffinity extends Affinity<AnimePreview> {
+/**
+ * Represents an Anime affinity.
+ *
+ * @see User#getAnimeAffinity()
+ * @see User#getAnimeAffinity(String)
+ * @see User#getAnimeAffinity(User)
+ * @since 2.2.0
+ * @version 2.2.0
+ * @author Ktt Development
+ */
+public abstract class AnimeAffinity {
+
+    /**
+     * Returns shared Anime. Use {@link AnimePreview#getAnime()} to get all fields.
+     *
+     * @return shared Anime
+     *
+     * @see AnimePreview
+     * @since 2.2.0
+     */
+    public abstract AnimePreview[] getShared();
+
+    /**
+     * Returns amount of Anime shared.
+     *
+     * @return shared Anime count
+     *
+     * @since 2.2.0
+     */
+    public abstract int getSharedCount();
+
+    /**
+     * Returns affinity using MyAnimeList affinity algorithm.
+     *
+     * @return affinity as a float (100% = 1f; 50% = .5f)
+     *
+     * @see MyAnimeListAffinityAlgorithm
+     * @since 2.2.0
+     */
+    public abstract float getAffinity();
+
+    /**
+     * Returns affinity using a custom {@link AffinityAlgorithm}.
+     *
+     * @param algorithm {@link AffinityAlgorithm}
+     * @return affinity as a float
+     *
+     * @see AffinityAlgorithm
+     * @since 2.2.0
+     */
+    public abstract float getAffinity(final AffinityAlgorithm algorithm);
 
 }

@@ -18,9 +18,26 @@
 
 package com.kttdevelopment.mal4j.user.property;
 
+/**
+ * The affinity algorithm returns a affinity score based on the shared scores between two people.
+ *
+ * @see MyAnimeListAffinityAlgorithm
+ * @since 2.2.0
+ * @version 2.2.0
+ * @author Ktt Development
+ */
 @FunctionalInterface
 public interface AffinityAlgorithm {
 
+    /**
+     * Returns affinity between two linked score sets.
+     *
+     * @param a_scores shared scores for first user (in same order as second user)
+     * @param b_scores shared scores for second user (in same order as first user)
+     * @return affinity
+     *
+     * @since 2.2.0
+     */
     float getAffinity(int[] a_scores, int[] b_scores);
 
 }

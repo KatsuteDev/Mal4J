@@ -18,8 +18,27 @@
 
 package com.kttdevelopment.mal4j.user.property;
 
+/**
+ * The MyAnimeList affinity algorithm.
+ * <br>
+ * <a href="https://en.wikipedia.org/wiki/Pearson_correlation_coefficient#For_a_sample">Pearson Correlation Coefficient (sample)</a>
+ *
+ * @see AffinityAlgorithm
+ * @since 2.2.0
+ * @version 2.2.0
+ * @author Ktt Development
+ */
 public final class MyAnimeListAffinityAlgorithm implements AffinityAlgorithm {
 
+    /**
+     * Returns affinity between two linked score sets.
+     *
+     * @param a_scores shared scores for first user (in same order as second user)
+     * @param b_scores shared scores for second user (in same order as first user)
+     * @return affinity as a float (100% = 1f; 50% = .5f)
+     *
+     * @since 2.2.0
+     */
     @Override
     public final float getAffinity(final int[] a_scores, final int[] b_scores){
         final int len = a_scores.length;

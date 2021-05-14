@@ -193,6 +193,15 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                         return Objects.requireNonNull(algorithm, "Affinity algorithm can not be null").getAffinity(Arrays.copyOf(a_scores, sharedCount), Arrays.copyOf(b_scores, sharedCount));
                     }
 
+                    @Override
+                    public final String toString(){
+                        return "AnimeAffinity{" +
+                               "sharedCount=" + sharedCount +
+                               ", selfScores=" + Arrays.toString(a_scores) +
+                               ", otherScores=" + Arrays.toString(b_scores) +
+                               '}';
+                    }
+
                 };
             }
 
@@ -270,6 +279,15 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     @Override
                     public final float getAffinity(final AffinityAlgorithm algorithm){
                         return Objects.requireNonNull(algorithm, "Affinity algorithm can not be null").getAffinity(Arrays.copyOf(a_scores, sharedCount), Arrays.copyOf(b_scores, sharedCount));
+                    }
+
+                    @Override
+                    public final String toString(){
+                        return "MangaAffinity{" +
+                               "sharedCount=" + sharedCount +
+                               ", selfScores=" + Arrays.toString(a_scores) +
+                               ", otherScores=" + Arrays.toString(b_scores) +
+                               '}';
                     }
 
                 };
