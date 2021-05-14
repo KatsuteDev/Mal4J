@@ -20,13 +20,13 @@ package com.kttdevelopment.mal4j;
 import com.kttdevelopment.mal4j.Json.JsonObject;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
-import com.kttdevelopment.mal4j.anime.property.*;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.MangaPreview;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
 import com.kttdevelopment.mal4j.user.User;
 import com.kttdevelopment.mal4j.user.UserAnimeStatistics;
+import com.kttdevelopment.mal4j.user.property.*;
 
 import java.util.*;
 

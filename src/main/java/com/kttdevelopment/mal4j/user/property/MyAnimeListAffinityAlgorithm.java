@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.kttdevelopment.mal4j.anime.property;
+package com.kttdevelopment.mal4j.user.property;
 
 public final class MyAnimeListAffinityAlgorithm implements AffinityAlgorithm {
 
@@ -28,11 +28,21 @@ public final class MyAnimeListAffinityAlgorithm implements AffinityAlgorithm {
         else if(len == 0)
             return 0f;
 
+        Integer diff = null;
+        boolean sameDiff = true;
+        int a, b;
         int x_sum = 0, y_sum = 0;
         for(int i = 0; i < len; i++){
-            x_sum += a_scores[i];
-            y_sum += b_scores[i];
+            x_sum += a = a_scores[i];
+            y_sum += b = b_scores[i];
+
+            if(diff != null && sameDiff && diff != a - b)
+                sameDiff = false;
+            diff = a - b;
         }
+
+        if(sameDiff) // edge case
+            return 1f;
 
         final double x_mean = x_sum / (double) len;
         final double y_mean = y_sum / (double) len;

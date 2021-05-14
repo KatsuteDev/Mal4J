@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.kttdevelopment.mal4j.anime.property;
+package com.kttdevelopment.mal4j.user.property;
 
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 

@@ -19,8 +19,8 @@
 package com.kttdevelopment.mal4j.user;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.anime.property.AnimeAffinity;
-import com.kttdevelopment.mal4j.anime.property.MangaAffinity;
+import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
+import com.kttdevelopment.mal4j.user.property.MangaAffinity;
 import com.kttdevelopment.mal4j.property.IDN;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;

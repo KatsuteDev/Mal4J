@@ -16,10 +16,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.kttdevelopment.mal4j.anime.property;
+package com.kttdevelopment.mal4j.user.property;
 
-import com.kttdevelopment.mal4j.manga.MangaPreview;
+abstract class Affinity<T> {
 
-public abstract class MangaAffinity extends Affinity<MangaPreview> {
+    public abstract T[] getShared();
+
+    public abstract int getSharedCount();
+
+    public abstract float getAffinity();
+
+    public abstract float getAffinity(final AffinityAlgorithm algorithm);
 
 }

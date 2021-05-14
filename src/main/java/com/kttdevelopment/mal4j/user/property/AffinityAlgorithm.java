@@ -16,16 +16,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.kttdevelopment.mal4j.anime.property;
+package com.kttdevelopment.mal4j.user.property;
 
-abstract class Affinity<T> {
+@FunctionalInterface
+public interface AffinityAlgorithm {
 
-    public abstract T[] getShared();
-
-    public abstract int getSharedCount();
-
-    public abstract float getAffinity();
-
-    public abstract float getAffinity(final AffinityAlgorithm algorithm);
+    float getAffinity(int[] a_scores, int[] b_scores);
 
 }
