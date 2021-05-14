@@ -19,6 +19,8 @@
 package com.kttdevelopment.mal4j.user;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
+import com.kttdevelopment.mal4j.anime.property.AnimeAffinity;
+import com.kttdevelopment.mal4j.anime.property.MangaAffinity;
 import com.kttdevelopment.mal4j.property.IDN;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
@@ -146,5 +148,17 @@ public abstract class User implements IDN {
      * @since 1.2.0
      */
     public abstract UserMangaListQuery getUserMangaListing();
+
+    public abstract AnimeAffinity getAnimeAffinity();
+
+    public abstract AnimeAffinity getAnimeAffinity(final String username);
+
+    public abstract AnimeAffinity getAnimeAffinity(final User user);
+
+    public abstract MangaAffinity getMangaAffinity();
+
+    public abstract MangaAffinity getMangaAffinity(final String username);
+
+    public abstract MangaAffinity getMangaAffinity(final User user);
 
 }

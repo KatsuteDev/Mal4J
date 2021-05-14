@@ -371,7 +371,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Genre[] getGenres() {
-                return copyArray(genres, Genre.class);
+                return Arrays.copyOf(genres, genres.length);
             }
 
             @Override
@@ -441,12 +441,12 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Studio[] getStudios() {
-                return copyArray(studios, Studio.class);
+                return Arrays.copyOf(studios, studios.length);
             }
 
             @Override
             public final Picture[] getPictures() {
-                return copyArray(pictures, Picture.class);
+                return Arrays.copyOf(pictures, pictures.length);
             }
 
             @Override
@@ -456,17 +456,17 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final RelatedAnime[] getRelatedAnime() {
-                return copyArray(relatedAnime, RelatedAnime.class);
+                return Arrays.copyOf(relatedAnime, relatedAnime.length);
             }
 
             @Override
             public final RelatedManga[] getRelatedManga() {
-                return copyArray(relatedManga, RelatedManga.class);
+                return Arrays.copyOf(relatedManga, relatedManga.length);
             }
 
             @Override
             public final AnimeRecommendation[] getRecommendations() {
-                return copyArray(recommendations, AnimeRecommendation.class);
+                return Arrays.copyOf(recommendations, recommendations.length);
             }
 
             @Override
@@ -476,12 +476,12 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final OpeningTheme[] getOpeningThemes(){
-                return copyArray(openingThemes, OpeningTheme.class);
+                return Arrays.copyOf(openingThemes, openingThemes.length);
             }
 
             @Override
             public final EndingTheme[] getEndingThemes(){
-                return copyArray(endingThemes, EndingTheme.class);
+                return Arrays.copyOf(endingThemes, endingThemes.length);
             }
 
             // additional methods
@@ -588,7 +588,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final String[] getTags() {
-                return copyArray(tags, String.class);
+                return Arrays.copyOf(tags, tags.length);
             }
 
             @Override
@@ -767,7 +767,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Genre[] getGenres() {
-                return copyArray(genres, Genre.class);
+                return Arrays.copyOf(genres, genres.length);
             }
 
             @Override
@@ -837,7 +837,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Studio[] getStudios() {
-                return copyArray(studios, Studio.class);
+                return Arrays.copyOf(studios, studios.length);
             }
 
             // additional methods

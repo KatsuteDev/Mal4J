@@ -30,6 +30,7 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema {
 
+    @Deprecated
     protected static <R> R[] copyArray(final R[] array, final Class<R> Class){
         if(array == null) return null;
 
