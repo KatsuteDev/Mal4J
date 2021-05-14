@@ -119,28 +119,32 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
             @Override
             public final AnimeAffinity getAnimeAffinity(){
-                return getAnimeAffinity(mal.getAuthenticatedUser(Fields.NO_FIELDS));
-            }
-
-            @Override
-            public final AnimeAffinity getAnimeAffinity(final String username){
-                return getAnimeAffinity(mal.getUser(username, Fields.NO_FIELDS));
+                return getAnimeAffinity(mal.getAuthenticatedUser(Fields.NO_FIELDS).getName());
             }
 
             @Override
             public final AnimeAffinity getAnimeAffinity(final User user){
-                Objects.requireNonNull(user, "User can not be null");
+                return getAnimeAffinity(Objects.requireNonNull(user, "User can not be null").getName());
+            }
+
+            @Override
+            public final AnimeAffinity getAnimeAffinity(final String username){
+                Objects.requireNonNull(username, "Username can not be null");
 
                 final Map<Long,AnimeListStatus> selfListings = new HashMap<>();
                 getUserAnimeListing()
                     .includeNSFW()
+                    .withFields(Fields.Anime.list_status)
+                    .withLimit(1000)
                     .searchAll()
                     .forEachRemaining(
                         e -> selfListings.put(e.getAnimePreview().getID(), e)
                     );
                 final Map<Long,AnimeListStatus> otherListings = new HashMap<>();
-                user.getUserAnimeListing()
+                mal.getUserAnimeListing(username)
                     .includeNSFW()
+                    .withFields(Fields.Anime.list_status)
+                    .withLimit(1000)
                     .searchAll()
                     .forEachRemaining(e -> {
                         final Long id = e.getAnimePreview().getID();
@@ -186,7 +190,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
                     @Override
                     public final float getAffinity(final AffinityAlgorithm algorithm){
-                        return algorithm.getAffinity(Arrays.copyOf(a_scores, sharedCount), Arrays.copyOf(b_scores, sharedCount));
+                        return Objects.requireNonNull(algorithm, "Affinity algorithm can not be null").getAffinity(Arrays.copyOf(a_scores, sharedCount), Arrays.copyOf(b_scores, sharedCount));
                     }
 
                 };
@@ -194,28 +198,32 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
             @Override
             public final MangaAffinity getMangaAffinity(){
-                return getMangaAffinity(mal.getAuthenticatedUser(Fields.NO_FIELDS));
-            }
-
-            @Override
-            public final MangaAffinity getMangaAffinity(final String username){
-                return getMangaAffinity(mal.getUser(username, Fields.NO_FIELDS));
+                return getMangaAffinity(mal.getAuthenticatedUser(Fields.NO_FIELDS).getName());
             }
 
             @Override
             public final MangaAffinity getMangaAffinity(final User user){
-                Objects.requireNonNull(user, "User can not be null");
+                return getMangaAffinity(Objects.requireNonNull(user, "User can not be null").getName());
+            }
+
+            @Override
+            public final MangaAffinity getMangaAffinity(final String username){
+                Objects.requireNonNull(username, "Username can not be null");
 
                 final Map<Long,MangaListStatus> selfListings = new HashMap<>();
                 getUserMangaListing()
                     .includeNSFW()
+                    .withFields(Fields.Manga.list_status)
+                    .withLimit(1000)
                     .searchAll()
                     .forEachRemaining(
                         e -> selfListings.put(e.getMangaPreview().getID(), e)
                     );
                 final Map<Long,MangaListStatus> otherListings = new HashMap<>();
-                user.getUserMangaListing()
+                mal.getUserMangaListing(username)
                     .includeNSFW()
+                    .withFields(Fields.Manga.list_status)
+                    .withLimit(1000)
                     .searchAll()
                     .forEachRemaining(e -> {
                         final Long id = e.getMangaPreview().getID();
@@ -261,7 +269,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
                     @Override
                     public final float getAffinity(final AffinityAlgorithm algorithm){
-                        return algorithm.getAffinity(Arrays.copyOf(a_scores, sharedCount), Arrays.copyOf(b_scores, sharedCount));
+                        return Objects.requireNonNull(algorithm, "Affinity algorithm can not be null").getAffinity(Arrays.copyOf(a_scores, sharedCount), Arrays.copyOf(b_scores, sharedCount));
                     }
 
                 };

@@ -856,7 +856,7 @@ final class MyAnimeListImpl extends MyAnimeList {
     private static final String inverted = "^%s$|^%s(?=,)|(?<=\\w)\\{%s}|(?:^|,)%s\\{.*?}|,%s|(?<=\\{)%s,";
 
     private static String convertFields(final String defaultFields, final List<String> fields){
-        return convertFields(defaultFields, fields.toArray(new String[0]));
+        return convertFields(defaultFields, fields == null ? null : fields.toArray(new String[0]));
     }
 
     /**
