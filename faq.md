@@ -65,3 +65,7 @@ For search queries make sure you also run [`#includeNSFW()`](https://mal4j.kttde
 ### I can't get other users.
 
 Currently the MyAnimeList API does not allow you to check users other than yourself.
+
+### `list_status` / `my_list_status` field isn't working.
+
+For some requests `my_list_status` field may be required instead of `list_status` or vice-versa. Try using the other field if responses are null.
