@@ -137,9 +137,10 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .withFields(Fields.Anime.list_status)
                     .withLimit(1000)
                     .searchAll()
-                    .forEachRemaining(
-                        e -> selfListings.put(e.getAnimePreview().getID(), e)
-                    );
+                    .forEachRemaining(e -> {
+                        if(e.getScore() != null && e.getScore() > 0)
+                            selfListings.put(e.getAnimePreview().getID(), e);
+                    });
                 final Map<Long,AnimeListStatus> otherListings = new HashMap<>();
                 mal.getUserAnimeListing(username)
                     .includeNSFW()
@@ -225,9 +226,10 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .withFields(Fields.Manga.list_status)
                     .withLimit(1000)
                     .searchAll()
-                    .forEachRemaining(
-                        e -> selfListings.put(e.getMangaPreview().getID(), e)
-                    );
+                    .forEachRemaining(e -> {
+                        if(e.getScore() != null && e.getScore() > 0)
+                            selfListings.put(e.getMangaPreview().getID(), e);
+                    });
                 final Map<Long,MangaListStatus> otherListings = new HashMap<>();
                 mal.getUserMangaListing(username)
                     .includeNSFW()

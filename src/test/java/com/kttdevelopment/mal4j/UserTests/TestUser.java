@@ -87,6 +87,12 @@ public class TestUser {
         final AnimeAffinity affinity = user.getAnimeAffinity("Xinil");
         Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount());
         Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
+
+        //System.out.println(affinity.getShared().length);
+        //System.out.println(affinity.getAffinity());
+        //for(final AnimePreview animePreview : affinity.getShared()){
+        //    System.out.println(animePreview.getTitle());
+        //}
     }
 
     @SuppressWarnings("SpellCheckingInspection")
