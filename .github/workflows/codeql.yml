@@ -1,5 +1,5 @@
 name: CodeQL
-on: [push]
+on: [push, pull_request]
 
 jobs:
   codeql:
