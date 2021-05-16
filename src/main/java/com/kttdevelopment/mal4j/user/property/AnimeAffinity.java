@@ -34,7 +34,7 @@ import com.kttdevelopment.mal4j.user.User;
 public abstract class AnimeAffinity {
 
     /**
-     * Returns shared Anime. Use {@link AnimePreview#getAnime()} to get all fields.
+     * Returns shared Anime. Use {@link AnimePreview#getAnime()} to get all fields. Only includes Anime that have a score.
      *
      * @return shared Anime
      *

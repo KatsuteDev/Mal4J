@@ -138,7 +138,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .withLimit(1000)
                     .searchAll()
                     .forEachRemaining(e -> {
-                        if(e.getScore() != null && e.getScore() > 0)
+                        if(e.getScore() != null && e.getScore() > 0) // if rated
                             selfListings.put(e.getAnimePreview().getID(), e);
                     });
                 final Map<Long,AnimeListStatus> otherListings = new HashMap<>();
@@ -149,7 +149,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .searchAll()
                     .forEachRemaining(e -> {
                         final Long id = e.getAnimePreview().getID();
-                        if(selfListings.containsKey(id))
+                        if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
                             otherListings.put(id, e);
                     });
 
@@ -227,7 +227,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .withLimit(1000)
                     .searchAll()
                     .forEachRemaining(e -> {
-                        if(e.getScore() != null && e.getScore() > 0)
+                        if(e.getScore() != null && e.getScore() > 0) // if rated
                             selfListings.put(e.getMangaPreview().getID(), e);
                     });
                 final Map<Long,MangaListStatus> otherListings = new HashMap<>();
@@ -238,7 +238,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .searchAll()
                     .forEachRemaining(e -> {
                         final Long id = e.getMangaPreview().getID();
-                        if(selfListings.containsKey(id))
+                        if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
                             otherListings.put(id, e);
                     });
 

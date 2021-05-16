@@ -150,6 +150,7 @@ public abstract class User implements IDN {
     public abstract UserMangaListQuery getUserMangaListing();
 
     /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
      * Returns Anime affinity with authenticated user.
      *
      * @return Anime affinity
@@ -162,6 +163,7 @@ public abstract class User implements IDN {
     public abstract AnimeAffinity getAnimeAffinity();
 
     /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
      * Returns Anime affinity with a user.
      *
      * @param username username
@@ -175,6 +177,7 @@ public abstract class User implements IDN {
     public abstract AnimeAffinity getAnimeAffinity(final String username);
 
     /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
      * Returns Anime affinity with a user.
      *
      * @param user user
@@ -188,6 +191,7 @@ public abstract class User implements IDN {
     public abstract AnimeAffinity getAnimeAffinity(final User user);
 
     /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
      * Returns Manga affinity with authenticated user.
      *
      * @return Manga affinity
@@ -200,6 +204,7 @@ public abstract class User implements IDN {
     public abstract MangaAffinity getMangaAffinity();
 
     /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
      * Returns Manga affinity with a user.
      *
      * @param username username
@@ -213,6 +218,7 @@ public abstract class User implements IDN {
     public abstract MangaAffinity getMangaAffinity(final String username);
 
     /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
      * Returns Manga affinity with a user.
      *
      * @param user user

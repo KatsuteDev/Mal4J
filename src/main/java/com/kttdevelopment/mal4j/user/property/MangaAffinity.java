@@ -34,7 +34,7 @@ import com.kttdevelopment.mal4j.user.User;
 public abstract class MangaAffinity {
 
     /**
-     * Returns shared Manga. Use {@link MangaPreview#getManga()} to get all fields.
+     * Returns shared Manga. Use {@link MangaPreview#getManga()} to get all fields. Only include Manga that has a score.
      *
      * @return shared Manga
      *
