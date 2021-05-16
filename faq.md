@@ -65,3 +65,9 @@ For search queries make sure you also run [`#includeNSFW()`](https://mal4j.kttde
 ### I can't get other users.
 
 Currently the MyAnimeList API does not allow you to check users other than yourself.
+
+### Affinity is not working correctly.
+
+*This feature is experimental.*
+
+The affinity method requires that both users have their Anime/Manga list public.
