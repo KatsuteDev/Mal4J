@@ -1,5 +1,6 @@
 name: MyAnimeList CI
 on: [workflow_dispatch]
+permissions: read-all
 
 jobs:
   mal_ci:

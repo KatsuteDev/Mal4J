@@ -1,5 +1,13 @@
 name: CodeQL
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - '**.java'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.java'
+permissions: read-all
 
 jobs:
   codeql:
@@ -22,6 +30,6 @@ jobs:
 
       - name: 📦 Compile with Maven
         run: mvn compile -Dmaven.test.skip=true --no-transfer-progress
-          
+
       - name: ✔ Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v1

@@ -1,5 +1,13 @@
 name: Java CI
-on: [push]
+on:
+  push:
+    paths:
+      - '**.java'
+  pull_request:
+    branches: [main]
+    paths:
+      - '**.java'
+permissions: read-all
 
 jobs:
   java_ci:
