@@ -8,6 +8,7 @@ jobs:
   codeql:
     name: CodeQL
     runs-on: ubuntu-latest
+    if: github.event != 'push' && github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
     steps:
       - name: 📦 Prepate Git Repo
         uses: actions/checkout@v2.3.4
