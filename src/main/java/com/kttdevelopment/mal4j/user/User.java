@@ -36,7 +36,7 @@ import java.util.Date;
  * @see MyAnimeList#getUser(String)
  * @see MyAnimeList#getUser(String, String...)
  * @since 1.0.0
- * @version 2.2.0
+ * @version 2.3.0
  * @author Ktt Development
  */
 public abstract class User implements IDN {
@@ -158,7 +158,7 @@ public abstract class User implements IDN {
      * @see AnimeAffinity
      * @see #getAnimeAffinity(String)
      * @see #getAnimeAffinity(User)
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract AnimeAffinity getAnimeAffinity();
 
@@ -172,7 +172,7 @@ public abstract class User implements IDN {
      * @see AnimeAffinity
      * @see #getAnimeAffinity()
      * @see #getAnimeAffinity(User)
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract AnimeAffinity getAnimeAffinity(final String username);
 
@@ -199,7 +199,7 @@ public abstract class User implements IDN {
      * @see MangaAffinity
      * @see #getMangaAffinity(String)
      * @see #getMangaAffinity(User)
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract MangaAffinity getMangaAffinity();
 
@@ -213,7 +213,7 @@ public abstract class User implements IDN {
      * @see MangaAffinity
      * @see #getMangaAffinity()
      * @see #getMangaAffinity(User)
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract MangaAffinity getMangaAffinity(final String username);
 
@@ -227,7 +227,7 @@ public abstract class User implements IDN {
      * @see MangaAffinity
      * @see #getMangaAffinity()
      * @see #getMangaAffinity(String)
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract MangaAffinity getMangaAffinity(final User user);
 
