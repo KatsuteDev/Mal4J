@@ -30,15 +30,6 @@ import java.util.function.Supplier;
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema {
 
-    protected static <R> R[] copyArray(final R[] array, final Class<R> Class){
-        if(array == null) return null;
-
-        @SuppressWarnings("unchecked")
-        final R[] cp = (R[]) Array.newInstance(Class, array.length);
-        System.arraycopy(array, 0, cp, 0, array.length);
-        return cp;
-    }
-
     protected static <R> R[] adaptList(final JsonObject[] list, final Function<JsonObject,R> adapter, final Class<R> Class){
         if(list == null) return null;
 

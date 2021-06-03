@@ -51,9 +51,7 @@ public enum Season {
      * @since 1.0.0
      */
     public final String[] getMonths(){
-        final String[] copy = new String[months.length];
-        System.arraycopy(months, 0, copy, 0, months.length);
-        return copy;
+        return Arrays.copyOf(months, months.length);
     }
 
     /**

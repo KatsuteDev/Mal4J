@@ -232,9 +232,15 @@ class APICall {
 
         if(!useNetHttp)
             try{
-                final Field methods = HttpURLConnection.class.getDeclaredField("methods");
+                Field methods;
 
-                // allow variable modification
+                try{
+                    methods = HttpURLConnection.class.getDeclaredField("methods");
+                }catch(final NoSuchFieldException ignored){ // fix Google randomly breaking code for no reason
+                    //noinspection JavaReflectionMemberAccess
+                    methods = HttpURLConnection.class.getDeclaredField("PERMITTED_USER_METHODS");
+                }
+
                 Field modifiers;
                 try{
                     modifiers = Field.class.getDeclaredField("modifiers");

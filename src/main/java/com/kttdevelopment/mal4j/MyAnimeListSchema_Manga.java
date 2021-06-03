@@ -219,7 +219,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Genre[] getGenres() {
-                return copyArray(genres, Genre.class);
+                return genres != null ? Arrays.copyOf(genres, genres.length) : null;
             }
 
             @Override
@@ -269,12 +269,12 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Author[] getAuthors() {
-                return copyArray(authors, Author.class);
+                return authors != null ? Arrays.copyOf(authors, authors.length) : null;
             }
 
             @Override
             public final Picture[] getPictures() {
-                return copyArray(pictures, Picture.class);
+                return pictures != null ? Arrays.copyOf(pictures, pictures.length) : null;
             }
 
             @Override
@@ -284,22 +284,22 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final RelatedAnime[] getRelatedAnime() {
-                return copyArray(relatedAnime, RelatedAnime.class);
+                return relatedAnime != null ? Arrays.copyOf(relatedAnime, relatedAnime.length) : null;
             }
 
             @Override
             public final RelatedManga[] getRelatedManga() {
-                return copyArray(relatedManga, RelatedManga.class);
+                return relatedManga != null ? Arrays.copyOf(relatedManga, relatedManga.length) : null;
             }
 
             @Override
             public final MangaRecommendation[] getRecommendations() {
-                return copyArray(recommendations, MangaRecommendation.class);
+                return recommendations != null ? Arrays.copyOf(recommendations, recommendations.length) : null;
             }
 
             @Override
             public final Publisher[] getSerialization() {
-                return copyArray(serialization, Publisher.class);
+                return serialization != null ? Arrays.copyOf(serialization, serialization.length) : null;
             }
 
             // additional methods
@@ -400,7 +400,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final String[] getTags() {
-                return copyArray(tags, String.class);
+                return tags != null ? Arrays.copyOf(tags, tags.length) : null;
             }
 
             @Override
@@ -581,7 +581,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Genre[] getGenres() {
-                return copyArray(genres, Genre.class);
+                return genres != null ? Arrays.copyOf(genres, genres.length) : null;
             }
 
             @Override
@@ -631,7 +631,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Author[] getAuthors() {
-                return copyArray(authors, Author.class);
+                return authors != null ? Arrays.copyOf(authors, authors.length) : null;
             }
 
             // additional methods
