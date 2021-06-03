@@ -27,8 +27,8 @@ import com.kttdevelopment.mal4j.user.User;
  * @see User#getAnimeAffinity()
  * @see User#getAnimeAffinity(String)
  * @see User#getAnimeAffinity(User)
- * @since 2.2.0
- * @version 2.2.0
+ * @since 2.3.0
+ * @version 2.3.0
  * @author Ktt Development
  */
 public abstract class AnimeAffinity {
@@ -39,7 +39,7 @@ public abstract class AnimeAffinity {
      * @return shared Anime
      *
      * @see AnimePreview
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract AnimePreview[] getShared();
 
@@ -48,7 +48,7 @@ public abstract class AnimeAffinity {
      *
      * @return shared Anime count
      *
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract int getSharedCount();
 
@@ -58,7 +58,7 @@ public abstract class AnimeAffinity {
      * @return affinity as a float (100% = 1f; 50% = .5f)
      *
      * @see MyAnimeListAffinityAlgorithm
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract float getAffinity();
 
@@ -69,7 +69,7 @@ public abstract class AnimeAffinity {
      * @return affinity as a float
      *
      * @see AffinityAlgorithm
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract float getAffinity(final AffinityAlgorithm algorithm);
 

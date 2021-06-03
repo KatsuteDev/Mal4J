@@ -186,7 +186,7 @@ public abstract class User implements IDN {
      * @see AnimeAffinity
      * @see #getAnimeAffinity()
      * @see #getAnimeAffinity(String)
-     * @since 2.2.0
+     * @since 2.3.0
      */
     public abstract AnimeAffinity getAnimeAffinity(final User user);
 
