@@ -36,7 +36,7 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
 
             @Override
             public final String[] getSynonyms() {
-                return Arrays.copyOf(synonyms, synonyms.length);
+                return synonyms != null ? Arrays.copyOf(synonyms, synonyms.length) : null;
             }
 
             @Override

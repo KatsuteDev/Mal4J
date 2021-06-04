@@ -32,7 +32,6 @@
     <a href="https://myanimelist.net/"><img alt="myanimelist.net" src="https://img.shields.io/website?label=myanimelist.net&logo=myanimelist&url=https%3A%2F%2Fmyanimelist.net%2F"></a>
 </p>
 
----
 
 # Overview
 
@@ -59,7 +58,7 @@ Mal4J is a standalone library and requires no additional dependencies.
 
 # Features
 
-### Search Queries
+### 🔎 Search Queries
 
 Easily search through MyAnimeList with search, ranking, seasonal, and suggestion queries; returning only selected or all fields.
 
@@ -74,7 +73,7 @@ List<Anime> search =
         .search();
 ```
 
-### List Modification
+### 📋 List Modification
 Easily update your Anime and Manga listings through update methods.
 
 ```java
@@ -93,7 +92,7 @@ MangaListStatus status =
         .update();
 ```
 
-### Structured Objects
+### 📦 Structured Objects
 
 **All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, statistics, and even some *undocumented* fields are accessible in this library. Effortlessly retrieve any and all information you need.
 
@@ -107,8 +106,6 @@ RelatedAnime[] relatedAnime = anime.getRelatedAnime();
 AnimeRecommendation[] recs = anime.getRecommendations();
 OpeningTheme[] op = anime.getOpeningThemes();
 ```
-
----
 
 ## Contributing
 
@@ -130,7 +127,7 @@ Devs running remote tests may do so by running the `MyAnimeList CI` workflow man
 
 - Found a bug? Post it in [issues](https://github.com/Katsute/Mal4J/issues).
 - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/Katsute/Mal4J/discussions).
-- Want to further expand our project or site? [Fork](https://github.com/Katsute/Mal4j/fork) this repository and submit a pull.
+- Want to further expand our project or site? [Fork](https://github.com/Katsute/Mal4J/fork) this repository and submit a [pull request](https://github.com/Katsute/Mal4J/pulls).
 
 ## Disclaimer
 - [@Katsute](https://github.com/Katsute) and [Ktt&nbsp;Development](https://github.com/Ktt-Development) are not affiliated with MyAnimeList.

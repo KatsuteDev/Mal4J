@@ -18,6 +18,8 @@ Mal4J is a standalone library and requires no additional dependencies.
 
 The below method is massively simplified, for a more detailed explanation on OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
 
+If you want to quickly generate a token you can use this [python script](https://gitlab.com/-/snippets/2039434).
+
 ## 1. Create new Client ID
 
   - In order to use the MyAnimeList API you must retrieve your own client ID.

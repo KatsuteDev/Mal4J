@@ -191,7 +191,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
             @Override
             public final PollOption[] getOptions() {
-                return Arrays.copyOf(options, options.length);
+                return options != null ? Arrays.copyOf(options, options.length) : null;
             }
 
             // additional methods
@@ -329,7 +329,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
             @Override
             public final ForumSubBoard[] getSubBoards() {
-                return Arrays.copyOf(subBoards, subBoards.length);
+                return subBoards != null ? Arrays.copyOf(subBoards, subBoards.length) : null;
             }
 
             // additional methods
@@ -367,7 +367,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
             @Override
             public final ForumBoard[] getForumBoards() {
-                return Arrays.copyOf(forumBoards, forumBoards.length);
+                return forumBoards != null ? Arrays.copyOf(forumBoards, forumBoards.length) : null;
             }
 
             // additional methods
@@ -437,7 +437,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
             @Override
             public final Post[] getPosts() {
-                return Arrays.copyOf(posts, posts.length);
+                return posts != null ? Arrays.copyOf(posts, posts.length) : null;
             }
 
             @Override
