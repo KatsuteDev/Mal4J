@@ -60,7 +60,7 @@ It is suggested that you save the OAuth token that is generated so you don't hav
 
 ### Authenticate with client id using OAuth 2.0
 
-For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the [`MyAnimeListAuthenticator`](https://mal4j.kttdevelopment.com/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html) to generate an OAuth token from a client id and PKCE code challenge.
+For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the [`MyAnimeListAuthenticator`](https://mal4j.katsute.dev/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html) to generate an OAuth token from a client id and PKCE code challenge.
 
   - The URL to obtain the authorization code can be generated using [`MyAnimeListAuthenticator#getAuthorizationURL(String,String)`](https://mal4j.kttdevelopment.com/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html#getAuthorizationURL(java.lang.String,java.lang.String)).
 
