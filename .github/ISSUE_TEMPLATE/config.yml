@@ -3,6 +3,9 @@ contact_links:
   - name: Known Issues
     about: Certain issues are caused by the MyAnimeList API and not this library, check here for a list of those issues
     url: https://github.com/Katsute/Mal4J/discussions/136
+  - name: Documentation
+    about: Check the documentation before posting an issue
+	url: https://mal4j.katsute.dev
   - name: FAQ
     about: Check frequently asked questions before posting an issue
     url: https://github.com/Katsute/Mal4J/blob/main/faq.md
