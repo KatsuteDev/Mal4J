@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.ForumTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
 import org.junit.jupiter.api.*;
@@ -25,7 +26,7 @@ public class TestForumTopicDetail {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("forumTopicProvider")
     public void testForumTopic(@SuppressWarnings("unused") final String method, final Function<ForumTopicDetail,Object> function){
-        Assertions.assertNotNull(function.apply(topic), "Expected ForumTopicDetail#" + method + " to not be null");
+        Assertions.assertNotNull(function.apply(topic), Workflow.errorSupplier("Expected ForumTopicDetail#" + method + " to not be null"));
     }
 
     @SuppressWarnings("unused")
@@ -53,19 +54,24 @@ public class TestForumTopicDetail {
 
     @Test
     public void testPostsReference(){
-        Assertions.assertSame(topic, topic.getPosts()[0].getForumTopicDetail());
+        Assertions.assertSame(topic, topic.getPosts()[0].getForumTopicDetail(),
+                              Workflow.errorSupplier("Expected ForumTopicDetail#getPosts#getForumTopicDetail to return self topic reference"));
     }
 
     @Test
     public void testPollReference(){
-        Assertions.assertSame(topic.getPoll(), topic.getPoll().getOptions()[0].getPoll());
-        Assertions.assertSame(topic, topic.getPoll().getForumTopicDetail());
+        Assertions.assertSame(topic.getPoll(), topic.getPoll().getOptions()[0].getPoll(),
+                              Workflow.errorSupplier("Expected ForumTopicDetail#getPoll#GetOptions#getPoll to return self poll reference"));
+        Assertions.assertSame(topic, topic.getPoll().getForumTopicDetail(),
+                              Workflow.errorSupplier("Expected ForumTopicDetail#getPoll#getForumTopicDetail to return self topic reference"));
     }
 
     @Test
     public void testPostLimitOffset(){
-        Assertions.assertEquals(5, mal.getForumTopicDetail(481, 5).getPosts().length);
-        Assertions.assertEquals(6, mal.getForumTopicDetail(481, 5, 5).getPosts()[0].getNumber());
+        Assertions.assertEquals(5, mal.getForumTopicDetail(481, 5).getPosts().length,
+                                Workflow.errorSupplier("Expected post count to match"));
+        Assertions.assertEquals(6, mal.getForumTopicDetail(481, 5, 5).getPosts()[0].getNumber(),
+                                Workflow.errorSupplier("Expected post number to match"));
     }
 
 }

@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.*;
 import com.kttdevelopment.mal4j.manga.RelatedManga;
@@ -26,7 +27,8 @@ public class TestAnime {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("animeProvider")
     public void testAnime(@SuppressWarnings("unused") final String method, final Function<Anime,Object> function){
-        Assertions.assertNotNull(function.apply(anime), "Expected Anime#" + method + " to not be null");
+        Assertions.assertNotNull(function.apply(anime),
+                                 Workflow.errorSupplier("Expected Anime#" + method + " to not be null"));
     }
 
     @SuppressWarnings("unused")
@@ -105,47 +107,60 @@ public class TestAnime {
 
     @Test
     public void testAnime(){
-        Assertions.assertEquals(anime, anime.getAnime());
-        Assertions.assertEquals(TestProvider.AltAnimeID, anime.getID());
+        Assertions.assertEquals(anime, anime.getAnime(),
+                                Workflow.errorSupplier("Expected Anime#getAnime() to return self reference"));
+        Assertions.assertEquals(TestProvider.AltAnimeID, anime.getID(),
+                                Workflow.errorSupplier("Expected Anime#getID() to match test ID"));
     }
 
     @Test
     public void testOpEdReference(){
-        Assertions.assertSame(anime.getOpeningThemes()[0].getAnime(), anime);
-        Assertions.assertSame(anime.getEndingThemes()[0].getAnime(), anime);
+        Assertions.assertSame(anime.getOpeningThemes()[0].getAnime(), anime,
+                              Workflow.errorSupplier("Expected Anime#getOpeningThemes#getAnime() to return self reference"));
+        Assertions.assertSame(anime.getEndingThemes()[0].getAnime(), anime,
+                              Workflow.errorSupplier("Expected Anime#getOpeningThemes#getAnime() to return self reference"));
     }
 
     @Test
     public void testJapaneseEncoding(){
-        Assertions.assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u"), "Japanese characters should not be returned as a literal \\u unicode string");
+        Assertions.assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u"),
+                               Workflow.errorSupplier("Japanese characters should not be returned as a literal \\u unicode string"));
     }
 
     @Test
     public void testFields(){
         final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes);
-        Assertions.assertNotNull(anime.getEpisodes());
-        Assertions.assertNull(anime.getRating());
+        Assertions.assertNotNull(anime.getEpisodes(),
+                                 Workflow.errorSupplier("Expected field to not be null"));
+        Assertions.assertNull(anime.getRating(),
+                              Workflow.errorSupplier("Expected field to be null"));
     }
 
     @Test
     public void testInvertedFields(){
         final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes, Fields.INVERTED);
-        Assertions.assertNull(anime.getEpisodes());
-        Assertions.assertNotNull(anime.getRating());
+        Assertions.assertNull(anime.getEpisodes(),
+                              Workflow.errorSupplier("Expected field to be null"));
+        Assertions.assertNotNull(anime.getRating(),
+                                 Workflow.errorSupplier("Expected field to not be null"));
     }
 
     @Test
     public void testInvertedFieldsOnly(){
         final Anime manga = mal.getAnime(TestProvider.AnimeID, Fields.INVERTED);
-        Assertions.assertNotNull(manga.getEpisodes());
+        Assertions.assertNotNull(manga.getEpisodes(),
+                                 Workflow.errorSupplier("Expected field to not be null"));
     }
 
     @Test @DisplayName("Anime may not have related Manga") @Disabled
     public void testRelatedManga(){
         final RelatedManga relatedManga = anime.getRelatedManga()[0];
-        Assertions.assertNotNull(relatedManga.getMangaPreview().getID());
-        Assertions.assertNotNull(relatedManga.getRelationType());
-        Assertions.assertNotNull(relatedManga.getRelationTypeFormat());
+        Assertions.assertNotNull(relatedManga.getMangaPreview().getID(),
+                                 Workflow.errorSupplier("Expected Anime#getRelatedManga#getMangaPreview#getID to not be null"));
+        Assertions.assertNotNull(relatedManga.getRelationType(),
+                                 Workflow.errorSupplier("Expected Anime#getRelatedManga#getRelationType to not be null"));
+        Assertions.assertNotNull(relatedManga.getRelationTypeFormat(),
+                                 Workflow.errorSupplier("Expected Anime#getRelatedManga#getRelationTypeFormat to not be null"));
     }
 
 }

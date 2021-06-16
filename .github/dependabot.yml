@@ -6,7 +6,7 @@ updates:
   reviewers: [Katsute]
   schedule:
     interval: daily
-    time: '07:00'
+    time: '09:00'
     timezone: US/Eastern
   open-pull-requests-limit: 99
 
@@ -16,6 +16,6 @@ updates:
   reviewers: [Katsute]
   schedule:
     interval: daily
-    time: '07:00'
+    time: '09:00'
     timezone: US/Eastern
   open-pull-requests-limit: 99

@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j;
 
+import com.kttdevelopment.jcore.Workflow;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.provider.Arguments;
@@ -68,7 +69,8 @@ public abstract class TestProvider {
     }
 
     public static void testRequireClientID(){
-        Assumptions.assumeTrue(client.exists(), "File with Client ID was missing, please create a file with the Client ID at: " + client.getAbsolutePath());
+        Assumptions.assumeTrue(client.exists(),
+                               Workflow.warningSupplier("File with Client ID was missing, please create a file with the Client ID at: " + client.getAbsolutePath()));
     }
 
     public static MyAnimeList getMyAnimeList(){
