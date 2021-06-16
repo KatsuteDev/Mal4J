@@ -2,6 +2,8 @@ version: 2
 updates:
 - package-ecosystem: github-actions
   directory: "/"
+  labels: [dependencies]
+  reviewers: [Katsute]
   schedule:
     interval: daily
     time: '07:00'
@@ -10,6 +12,8 @@ updates:
 
 - package-ecosystem: maven
   directory: "/"
+  labels: [dependencies]
+  reviewers: [Katsute]
   schedule:
     interval: daily
     time: '07:00'
