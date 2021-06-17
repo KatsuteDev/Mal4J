@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.ForumTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.forum.*;
 import org.junit.jupiter.api.*;
@@ -26,7 +27,8 @@ public class TestForumCategories {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("categoryProvider")
     public void testCategory(@SuppressWarnings("unused") final String method, final Function<ForumCategory,Object> function){
-        Assertions.assertNotNull(function.apply(category), "Expected ForumCategory#" + method + " to not be null");
+        Assertions.assertNotNull(function.apply(category),
+                                 Workflow.errorSupplier("Expected ForumCategory#" + method + " to not be null"));
     }
 
     @SuppressWarnings("unused")
@@ -46,9 +48,15 @@ public class TestForumCategories {
     }
 
     @Test
+    public void testForumCategoryReference(){
+        Assertions.assertSame(category, category.getForumBoards()[2].getCategory(),
+                              Workflow.errorSupplier("Expected ForumCategory#getForumBoards#getCategory to return self category reference"));
+    }
+
+    @Test
     public void testForumBoardReference(){
-        Assertions.assertSame(category, category.getForumBoards()[2].getCategory());
-        Assertions.assertSame(category.getForumBoards()[2] , category.getForumBoards()[2].getSubBoards()[2].getBoard());
+        Assertions.assertSame(category.getForumBoards()[2] , category.getForumBoards()[2].getSubBoards()[2].getBoard(),
+                              Workflow.errorSupplier("Expected ForumCategory#ForumBoards#getSubBoards#GetBoard to return self board reference"));
     }
 
 }

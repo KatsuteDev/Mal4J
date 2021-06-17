@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j;
 
+import com.kttdevelopment.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.io.IOException;
@@ -19,9 +20,11 @@ public class TestAuthorizationLocalServer {
         final MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);
 
         // test refresh token
-        Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search());
+        Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search(),
+                                 Workflow.errorSupplier("Expected query to not be null"));
         mal.refreshOAuthToken();
-        Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search());
+         Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search(),
+                                  Workflow.errorSupplier("Expected query to not be null"));
 
         // write stable OAuth
         Files.write(TestProvider.oauth.toPath(), authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
@@ -30,9 +33,12 @@ public class TestAuthorizationLocalServer {
     @Test
     public void testToken(){
         final AccessToken token = authenticator.getAccessToken();
-        Assertions.assertTrue(token.getTimeUntilExpires() < 2_764_800);
-        Assertions.assertTrue(token.getExpiry().getTime() - (System.currentTimeMillis()/1000) < 2_764_800);
-        Assertions.assertFalse(token.isExpired());
+        Assertions.assertTrue(token.getTimeUntilExpires() < 2_764_800,
+                              Workflow.errorSupplier("Expected expiry to be 31 days"));
+        Assertions.assertTrue(token.getExpiry().getTime() - (System.currentTimeMillis()/1000) < 2_764_800,
+                              Workflow.errorSupplier("Expected expiry to be 31 days from now"));
+        Assertions.assertFalse(token.isExpired(),
+                               Workflow.errorSupplier("Expected token to not be expired"));
     }
 
 

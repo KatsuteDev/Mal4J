@@ -1,10 +1,10 @@
-<p align="center">
-    <a href="https://github.com/Katsute/Mal4J">
+<div align="center">
+    <a href="https://github.com/Katsute/Mal4J#readme">
         <img src="https://raw.githubusercontent.com/Katsute/Mal4J/main/banner.png" alt="Mal4J - MyAnimeList for Java">
     </a>
-    <h3 align="center">Mal4J - Java wrapper for the official MyAnimeList API</h3>
-    <p align="center">
-        <a href="https://mal4j.kttdevelopment.com/">Docs</a>
+    <h3>Mal4J - Java wrapper for the official MyAnimeList API</h3>
+    <div>
+        <a href="https://mal4j.katsute.dev/">Docs</a>
         •
         <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
         •
@@ -17,10 +17,10 @@
         <a href="https://github.com/Katsute/Mal4J/discussions">Discussions</a>
         •
         <a href="https://myanimelist.net/forum/?topicid=1897569">Forum Post</a>
-    </p>
-</p>
+    </div>
+</div>
 
-<p align="center">
+<div align="center">
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml"><img alt="Java CI" src="https://github.com/Katsute/Mal4J/workflows/Java%20CI/badge.svg"></a>
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/codeql.yml"><img alt="CodeQL" src="https://github.com/Katsute/Mal4J/actions/workflows/codeql.yml/badge.svg"></a>
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/release.yml"><img alt="Deploy" src="https://github.com/Katsute/Mal4J/workflows/Deploy/badge.svg"></a>
@@ -30,7 +30,7 @@
     <br>
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml"><img alt="MyAnimeList CI" src="https://github.com/Katsute/Mal4J/workflows/MyAnimeList%20CI/badge.svg"></a>
     <a href="https://myanimelist.net/"><img alt="myanimelist.net" src="https://img.shields.io/website?label=myanimelist.net&logo=myanimelist&url=https%3A%2F%2Fmyanimelist.net%2F"></a>
-</p>
+</div>
 
 
 # Overview

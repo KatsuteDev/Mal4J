@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j;
 
+import com.kttdevelopment.jcore.Workflow;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,13 +23,13 @@ public class TestJava9 {
         Assertions.assertEquals(
             enc1 = URLEncoder.encode(string, StandardCharsets.UTF_8.name()),
             enc2 = Java9.URLEncoder.encode(string, StandardCharsets.UTF_8),
-            '\'' + string + "' was not encoded correctly"
+            Workflow.errorSupplier('\'' + string + "' was not encoded correctly")
         );
         // decoder
         Assertions.assertEquals(
             URLDecoder.decode(enc1, StandardCharsets.UTF_8.name()),
             Java9.URLDecoder.decode(enc2, StandardCharsets.UTF_8),
-            '\'' + string + "' was not decoded correctly"
+            Workflow.errorSupplier('\'' + string + "' was not decoded correctly")
         );
     }
 
@@ -48,26 +49,28 @@ public class TestJava9 {
     @SuppressWarnings("ConstantConditions")
     @Test
     public void testNullEncoder(){
-        Assertions.assertThrows(NullPointerException.class, () -> Java9.URLEncoder.encode("Hello World", null));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.URLEncoder.encode("Hello World", null),
+                                Workflow.errorSupplier("Expected URLEncoder with null encoder to throw a NullPointerException"));
     }
 
     //
 
     @Test
     public void testBlankNull(){
-        Assertions.assertThrows(NullPointerException.class, () -> Java9.String.isBlank(null));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.String.isBlank(null),
+                                Workflow.errorSupplier("Expected isBlank with null string to throw a NullPointerException"));
     }
 
     @ParameterizedTest(name="[{index}] \"{0}\"")
     @ValueSource(strings={"", " ", "\t", " \t", "\t\n", " \t\n", "\u1680", " \u1680 "})
     public void testBlank(final String string){
-        Assertions.assertTrue(Java9.String.isBlank(string), '\'' + string + "' was not blank");
+        Assertions.assertTrue(Java9.String.isBlank(string), Workflow.errorSupplier('\'' + string + "' was not blank"));
     }
 
     @ParameterizedTest(name="[{index}] \"{0}\"")
     @ValueSource(strings={"abc", " abc ", "\u2022", " \u2022 "})
     public void testNotBlank(final String string){
-         Assertions.assertFalse(Java9.String.isBlank(string), '\'' + string + "' was blank");
+         Assertions.assertFalse(Java9.String.isBlank(string), Workflow.errorSupplier('\'' + string + "' was blank"));
     }
 
     //
@@ -78,18 +81,26 @@ public class TestJava9 {
         final String raw = " 123456789 ";
         final Matcher matcher = Pattern.compile("\\d").matcher(" 123456789 ");
 
-        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(null, null, null));
-        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(raw, null, null));
-        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(raw,matcher, null));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(null, null, null),
+                                Workflow.errorSupplier("Expected replaceAll with null string to throw a NullPointerException"));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(raw, null, null),
+                                Workflow.errorSupplier("Expected replaceAll with null matcher to throw a NullPointerException"));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.replaceAll(raw,matcher, null),
+                                Workflow.errorSupplier("Expected replaceAll with null replacer to throw a NullPointerException"));
 
-        Assertions.assertEquals(matcher.replaceAll("0"), Java9.Matcher.replaceAll(raw, matcher, e -> "0"));
-        Assertions.assertEquals(" 012345678 ", Java9.Matcher.replaceAll(raw, matcher, e -> String.valueOf(Integer.parseInt(e.group(0)) - 1)));
+        Assertions.assertEquals(matcher.replaceAll("0"), Java9.Matcher.replaceAll(raw, matcher, e -> "0"),
+                                Workflow.errorSupplier("Expected replaceAll matcher to match native replaceAll"));
+        Assertions.assertEquals(" 012345678 ", Java9.Matcher.replaceAll(raw, matcher, e -> String.valueOf(Integer.parseInt(e.group(0)) - 1)),
+                                Workflow.errorSupplier("Expected replaceAll matcher to work"));
 
         // count
-        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.count(null));
+        Assertions.assertThrows(NullPointerException.class, () -> Java9.Matcher.count(null),
+                                Workflow.errorSupplier("Expected count with null matcher to throw a NullPointerException"));
 
-        Assertions.assertEquals(9, Java9.Matcher.count(Pattern.compile("\\d").matcher(" 123456789 ")));
-        Assertions.assertEquals(1, Java9.Matcher.count(Pattern.compile("\\d+").matcher(" 123456789 ")));
+        Assertions.assertEquals(9, Java9.Matcher.count(Pattern.compile("\\d").matcher(" 123456789 ")) ,
+                                Workflow.errorSupplier("Expected count regex to match"));
+        Assertions.assertEquals(1, Java9.Matcher.count(Pattern.compile("\\d+").matcher(" 123456789 ")),
+                                Workflow.errorSupplier("Expected count regex to match"));
     }
 
 }

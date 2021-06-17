@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.UserTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.manga.MangaPreview;
@@ -32,7 +33,8 @@ public class TestUser {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("myselfProvider")
     public void testMyself(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
-        Assertions.assertNotNull(function.apply(user), "Expected User#" + method + " to not be null");
+        Assertions.assertNotNull(function.apply(user),
+                                 Workflow.errorSupplier("Expected User#" + method + " to not be null"));
     }
 
     @SuppressWarnings("unused")
@@ -68,17 +70,20 @@ public class TestUser {
 
     @Test // test does actually pass
     public void testBirthday(){
-        Assumptions.assumeTrue(user.getBirthday() != null, "User might not specify a birthday");
+        Assumptions.assumeTrue(user.getBirthday() != null,
+                               Workflow.warningSupplier("User might not specify a birthday"));
     }
 
     @Test
     public void testAnimeListing(){
-        Assertions.assertDoesNotThrow(() -> user.getUserAnimeListing().withNoFields().withLimit(1).search());
+        Assertions.assertDoesNotThrow(() -> user.getUserAnimeListing().withNoFields().withLimit(1).search(),
+                                      Workflow.errorSupplier("Expected User#getUserAnimeListing to not throw an exception"));
     }
 
     @Test
     public void testMangaListing(){
-        Assertions.assertDoesNotThrow(() -> user.getUserMangaListing().withNoFields().withLimit(1).search());
+        Assertions.assertDoesNotThrow(() -> user.getUserMangaListing().withNoFields().withLimit(1).search(),
+                                      Workflow.errorSupplier("Expected User#getUserMangaListing to not throw an exception"));
     }
 
     @SuppressWarnings("SpellCheckingInspection")

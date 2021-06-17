@@ -13,10 +13,10 @@ jobs:
         jdk: [8, 9, 11, 16]
       fail-fast: false
     steps:
-      - name: 📦 Prepate Git Repo
+      - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
 
-      - name: ☕ Install OpenJDK
+      - name: 📚 Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1.1.1
         with:
           version: ${{ matrix.jdk }}
@@ -31,19 +31,19 @@ jobs:
     environment: Maven Central
     needs: java_ci
     steps:
-      - name: 📦 Prepate Git Repo
+      - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
 
       - name: 🔐 Import GPG key
-        uses: crazy-max/ghaction-import-gpg@v3
+        uses: crazy-max/ghaction-import-gpg@v3.1.0
         with:
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: ☕ Install OpenJDK
+      - name: 📚 Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1.1.1
         with:
-          version: '11'
+          version: 11
           architecture: x64
 
       - name: 🚀 Deploy to Maven
