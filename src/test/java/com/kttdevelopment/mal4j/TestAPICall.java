@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.sun.net.httpserver.HttpServer;
 import org.junit.jupiter.api.*;
 
@@ -53,21 +54,29 @@ public class TestAPICall {
 
         final Call call = Call.create();
 
-        Assertions.assertDoesNotThrow(call::GET);
-        Assertions.assertEquals("GET", method.get());
+        Assertions.assertDoesNotThrow(call::GET,
+                                      Workflow.errorSupplier("Expected GET to not throw"));
+        Assertions.assertEquals("GET", method.get(),
+                                Workflow.errorSupplier("Expected GET method"));
 
         method.set(null);
-        Assertions.assertDoesNotThrow(() -> call.POST("test"));
-        Assertions.assertEquals("POST", method.get());
-        Assertions.assertTrue(formENC.get());
+        Assertions.assertDoesNotThrow(() -> call.POST("test"),
+                                      Workflow.errorSupplier("Expected POST to not throw"));
+        Assertions.assertEquals("POST", method.get(),
+                                Workflow.errorSupplier("Expected POST method"));
+        Assertions.assertTrue(formENC.get(), Workflow.errorSupplier("Expected form to be encoded"));
 
         method.set(null);
-        Assertions.assertDoesNotThrow(call::DELETE);
-        Assertions.assertEquals("DELETE", method.get());
+        Assertions.assertDoesNotThrow(call::DELETE,
+                                      Workflow.errorSupplier("Expected DELETE to not throw"));
+        Assertions.assertEquals("DELETE", method.get(),
+                                Workflow.errorSupplier("Expected DELETE method"));
 
         method.set(null);
-        Assertions.assertDoesNotThrow(call::PATCH);
-        Assertions.assertEquals("PATCH", method.get());
+        Assertions.assertDoesNotThrow(call::PATCH,
+                                      Workflow.errorSupplier("Expected PATCH to not throw"));
+        Assertions.assertEquals("PATCH", method.get(),
+                                Workflow.errorSupplier("Expected PATCH method"));
     }
 
     @SuppressWarnings("UnusedReturnValue")

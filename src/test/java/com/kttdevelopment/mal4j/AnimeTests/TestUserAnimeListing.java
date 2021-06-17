@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeSort;
@@ -25,7 +26,8 @@ public class TestUserAnimeListing {
                 .withFields(Fields.Anime.list_status)
                 .withLimit(1)
                 .search();
-        Assertions.assertEquals(AnimeStatus.Dropped, list.get(0).getStatus());
+        Assertions.assertEquals(AnimeStatus.Dropped, list.get(0).getStatus(),
+                                Workflow.errorSupplier("Expected listing status to match"));
     }
 
     @Test
@@ -36,7 +38,8 @@ public class TestUserAnimeListing {
                 .withFields(Fields.Anime.list_status)
                 .withLimit(2)
                 .search();
-        Assertions.assertTrue(list.get(0).getUpdatedAt().getTime() > list.get(1).getUpdatedAt().getTime());
+        Assertions.assertTrue(list.get(0).getUpdatedAt().getTime() > list.get(1).getUpdatedAt().getTime(),
+                              Workflow.errorSupplier("Expected listing status to be sorted"));
     }
 
 }

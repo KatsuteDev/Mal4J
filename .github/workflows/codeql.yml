@@ -10,10 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event == 'pull_request' || github.actor != 'dependabot[bot]'
     steps:
-      - name: 📦 Prepate Git Repo
+      - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
 
-      - name: 📦 Initialize CodeQL
+      - name: 📚 Install CodeQL
         uses: github/codeql-action/init@v1
         with:
           languages: java

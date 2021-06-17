@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
@@ -27,10 +28,11 @@ public class TestAnimeSeason {
                 .withField(Fields.Anime.start_season)
                 .search();
         final AnimePreview anime = season.get(0);
-        Assertions.assertEquals(2019, anime.getStartSeason().getYear());
+        Assertions.assertEquals(2019, anime.getStartSeason().getYear(),
+                                Workflow.errorSupplier("Expected year to match"));
         Assertions.assertTrue(
             anime.getStartSeason().getSeason() == Season.Summer || anime.getStartSeason().getSeason() == Season.Spring,
-            "Anime start season was supposed to be either Summer or Spring but was " + anime.getStartSeason().getSeason().name()
+            Workflow.errorSupplier("Anime start season was supposed to be either Summer or Spring but was " + anime.getStartSeason().getSeason().name())
         );
     }
 
@@ -44,7 +46,8 @@ public class TestAnimeSeason {
                 .search();
         final AnimePreview first = season.get(0);
         final AnimePreview second = season.get(1);
-        Assertions.assertTrue(first.getUserScoringCount() > second.getUserScoringCount());
+        Assertions.assertTrue(first.getUserScoringCount() > second.getUserScoringCount(),
+                              Workflow.errorSupplier("Expected season to be sorted"));
     }
 
     @Test
@@ -60,7 +63,8 @@ public class TestAnimeSeason {
                 hasNSFW = true;
                 break;
             }
-        Assertions.assertTrue(hasNSFW, "Failed to find NSFW seasonal Anime (this is an external issue, ignore this)");
+        Assertions.assertTrue(hasNSFW,
+                              Workflow.errorSupplier("Failed to find NSFW seasonal Anime (this is an external issue, ignore this)"));
     }
 
 }

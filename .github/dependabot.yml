@@ -2,16 +2,20 @@ version: 2
 updates:
 - package-ecosystem: github-actions
   directory: "/"
+  labels: [dependencies]
+  reviewers: [Katsute]
   schedule:
     interval: daily
-    time: '07:00'
+    time: '09:00'
     timezone: US/Eastern
   open-pull-requests-limit: 99
 
 - package-ecosystem: maven
   directory: "/"
+  labels: [dependencies]
+  reviewers: [Katsute]
   schedule:
     interval: daily
-    time: '07:00'
+    time: '09:00'
     timezone: US/Eastern
   open-pull-requests-limit: 99

@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.Anime;
 import org.junit.jupiter.api.*;
@@ -22,8 +23,10 @@ public class TestAnimeSearch {
                 .withQuery(TestProvider.AnimeQuery)
                 .withNoFields()
                 .search();
-        Assertions.assertEquals(TestProvider.AnimeID, search.get(0).getID());
-        Assertions.assertNotEquals(1, search.size());
+        Assertions.assertEquals(TestProvider.AnimeID, search.get(0).getID(),
+                                Workflow.errorSupplier("Expected first search ID to match"));
+        Assertions.assertNotEquals(1, search.size(),
+                                   Workflow.errorSupplier("Expected search to return more than 1"));
     }
 
     @Test
@@ -35,8 +38,10 @@ public class TestAnimeSearch {
                 .withOffset(1)
                 .withNoFields()
                 .search();
-        Assertions.assertNotEquals(TestProvider.AnimeID, search.get(0).getID());
-        Assertions.assertEquals(1, search.size());
+        Assertions.assertNotEquals(TestProvider.AnimeID, search.get(0).getID(),
+                                   Workflow.errorSupplier("Expected first search ID to not match"));
+        Assertions.assertEquals(1, search.size(),
+                                Workflow.errorSupplier("Expected search to return only 1"));
     }
 
     @Test
@@ -47,7 +52,8 @@ public class TestAnimeSearch {
                 .withLimit(1)
                 .withNoFields()
                 .search();
-        Assertions.assertNull(search.get(0).getType());
+        Assertions.assertNull(search.get(0).getType(),
+                              Workflow.errorSupplier("Expected type to be null"));
     }
 
     @Test
@@ -59,7 +65,8 @@ public class TestAnimeSearch {
                     .withLimit(1)
                     .withNoFields()
                     .search();
-            Assertions.assertEquals(0, search.size());
+            Assertions.assertEquals(0, search.size(),
+                                    Workflow.errorSupplier("Expected search to return 0"));
         }
         {
             final List<Anime> search =
@@ -71,7 +78,7 @@ public class TestAnimeSearch {
                    .search();
             Assertions.assertTrue(
                 search.get(0).getID() == TestProvider.NSFW_AnimeID || search.get(0).getID() == TestProvider.AltNSFW_AnimeID,
-                "NSFW Anime ID was supposed to be either " + TestProvider.NSFW_AnimeID + " or " + TestProvider.AltNSFW_AnimeID + " but was " + search.get(0).getID()
+                Workflow.errorSupplier("NSFW Anime ID was supposed to be either " + TestProvider.NSFW_AnimeID + " or " + TestProvider.AltNSFW_AnimeID + " but was " + search.get(0).getID())
             );
         }
     }

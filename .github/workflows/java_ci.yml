@@ -14,10 +14,10 @@ jobs:
         jdk: [8, 9, 11, 16]
       fail-fast: false
     steps:
-      - name: 📦 Prepate Git Repo
+      - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
 
-      - name: ☕ Install OpenJDK
+      - name: 📚 Install OpenJDK
         uses: AdoptOpenJDK/install-jdk@v1.1.1
         with:
           version: ${{ matrix.jdk }}

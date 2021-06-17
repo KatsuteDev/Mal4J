@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
@@ -19,6 +20,7 @@ public class TestAnimeListStatus {
         mal = TestProvider.getMyAnimeList();
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     @AfterAll
     public static void afterAll(){
         if(mal == null) return;
@@ -39,22 +41,33 @@ public class TestAnimeListStatus {
             .comments("")
             .update();
 
-        Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
-        Assertions.assertEquals(10, status.getScore());
-        Assertions.assertEquals(24, status.getWatchedEpisodes());
-        Assertions.assertFalse(status.isRewatching());
-        Assertions.assertEquals(Priority.Low, status.getPriority());
-        Assertions.assertEquals(0, status.getTimesRewatched());
-        Assertions.assertEquals(RewatchValue.None, status.getRewatchValue());
-        Assertions.assertEquals(0, status.getTags().length);
-        Assertions.assertEquals("", status.getComments());
+        Assertions.assertEquals(AnimeStatus.Completed, status.getStatus(),
+                                Workflow.errorSupplier("Expected status to match"));
+        Assertions.assertEquals(10, status.getScore(),
+                                Workflow.errorSupplier("Expected score to match"));
+        Assertions.assertEquals(24, status.getWatchedEpisodes(),
+                                Workflow.errorSupplier("Expected episodes to match"));
+        Assertions.assertFalse(status.isRewatching(),
+                               Workflow.errorSupplier("Expected rewatching to be false"));
+        Assertions.assertEquals(Priority.Low, status.getPriority(),
+                                Workflow.errorSupplier("Expected priority to match"));
+        Assertions.assertEquals(0, status.getTimesRewatched(),
+                                Workflow.errorSupplier("Expected times rewatched to match"));
+        Assertions.assertEquals(RewatchValue.None, status.getRewatchValue(),
+                                Workflow.errorSupplier("Expected rewatch value to match"));
+        Assertions.assertEquals(0, status.getTags().length,
+                                Workflow.errorSupplier("Expected tags to match"));
+        Assertions.assertEquals("", status.getComments(),
+                                Workflow.errorSupplier("Expected comments to match"));
     }
 
     @Test @Order(1)
     public void testDelete(){
         mal.deleteAnimeListing(TestProvider.AnimeID);
-        Assertions.assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID));
-        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID),
+                                      Workflow.errorSupplier("Deleting a deleted listing should not throw an exception"));
+        Assertions.assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status).getListStatus().getUpdatedAtEpochMillis(),
+                              Workflow.errorSupplier("Expected a deleted listing to be null"));
     }
 
     private static boolean passedUpdate = false;
@@ -81,7 +94,8 @@ public class TestAnimeListStatus {
 
     @Test @Order(3)
     public void testGet(){
-        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+        Assertions.assertTrue(passedUpdate,
+                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
@@ -96,12 +110,13 @@ public class TestAnimeListStatus {
                 testStatus(listStatus);
                 return;
             }
-        Assertions.fail("Anime list status not found");
+        Assertions.fail(Workflow.errorSupplier("Anime list status not found"));
     }
 
     @Test @Order(3)
     public void testGetUsername(){
-        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+        Assertions.assertTrue(passedUpdate,
+                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing("KatsuteDev")
@@ -116,12 +131,13 @@ public class TestAnimeListStatus {
                 testStatus(listStatus);
                 return;
             }
-        Assertions.fail("User Anime list status not found");
+        Assertions.fail(Workflow.errorSupplier("User Anime list status not found"));
     }
 
     @Test @Order(3)
     public void testGetFromAnime(){
-        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+        Assertions.assertTrue(passedUpdate,
+                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
         final AnimeListStatus status = mal
             .getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status)
@@ -129,21 +145,36 @@ public class TestAnimeListStatus {
         testStatus(status);
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
     private void testStatus(final AnimeListStatus status){
-        Assertions.assertEquals(AnimeStatus.Completed, status.getStatus());
-        Assertions.assertEquals(10, status.getScore());
-        Assertions.assertEquals(24, status.getWatchedEpisodes());
-        Assertions.assertTrue(status.isRewatching());
-        Assertions.assertNotNull(status.getStartDate());
-        Assertions.assertNotNull(status.getFinishDate());
-        Assertions.assertEquals(Priority.High, status.getPriority());
-        Assertions.assertEquals(0, status.getTimesRewatched());
-        Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
-        Assertions.assertEquals(TestProvider.testComment, status.getComments());
-        Assertions.assertNotNull(status.getUpdatedAt());
-        Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
+        Assertions.assertEquals(AnimeStatus.Completed, status.getStatus(),
+                                Workflow.errorSupplier("Expected status to match"));
+        Assertions.assertEquals(10, status.getScore(),
+                                Workflow.errorSupplier("Expected score to match"));
+        Assertions.assertEquals(24, status.getWatchedEpisodes(),
+                                Workflow.errorSupplier(("Expected episodes watched to match")));
+        Assertions.assertTrue(status.isRewatching(),
+                              Workflow.errorSupplier("Expected rewatching to be true"));
+        Assertions.assertNotNull(status.getStartDate(),
+                                 Workflow.errorSupplier("Expected start date to not be null"));
+        Assertions.assertNotNull(status.getFinishDate(),
+                                 Workflow.errorSupplier("Expected finish date to not be null"));
+        Assertions.assertEquals(Priority.High, status.getPriority(),
+                                Workflow.errorSupplier("Expected priority to match"));
+        Assertions.assertEquals(0, status.getTimesRewatched(),
+                                Workflow.errorSupplier("Expected times rewatched to match"));
+        Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue(),
+                                Workflow.errorSupplier("Expected rewatch value to match"));
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]),
+                              Workflow.errorSupplier("Expected tags to match"));
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]),
+                              Workflow.errorSupplier("Expected tags to match"));
+        Assertions.assertEquals(TestProvider.testComment, status.getComments(),
+                                Workflow.errorSupplier("Expected comment to match"));
+        Assertions.assertNotNull(status.getUpdatedAt(),
+                                 Workflow.errorSupplier("Expected updated at to not be null"));
+        Assertions.assertNotNull(status.getUpdatedAtEpochMillis(),
+                                 Workflow.errorSupplier("Expected updated at millis to not be null"));
     }
 
     @Test @Order(4)
@@ -156,7 +187,8 @@ public class TestAnimeListStatus {
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
     public void testEcchiNSFW(){
-        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+        Assertions.assertTrue(passedUpdate,
+                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
@@ -167,7 +199,7 @@ public class TestAnimeListStatus {
         for(final AnimeListStatus listStatus : list)
             if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID)
                 return;
-        Assertions.fail("Failed to find Anime with Ecchi genre (this is an external issue, ignore this)");
+        Assertions.fail(Workflow.errorSupplier("Failed to find Anime with Ecchi genre (this is an external issue, ignore this)"));
     }
 
 }
