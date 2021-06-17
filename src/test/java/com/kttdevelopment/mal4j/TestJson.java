@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j;
 
+import com.kttdevelopment.jcore.Workflow;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.*;
@@ -31,33 +32,44 @@ public class TestJson {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("mapProvider")
     public void testMap(final Object expected, final Object actual){
-        Assertions.assertEquals(expected, actual, expected + " was missing");
+        Assertions.assertEquals(expected, actual,
+                                Workflow.errorSupplier(expected + " was missing"));
     }
 
     @Test
     public void testMapNull(){
-        Assertions.assertNull(jsonObject.get("null"));
-        Assertions.assertTrue(jsonObject.containsKey("null"));
-        Assertions.assertNull(jsonObject.get("nulls"));
-        Assertions.assertTrue(jsonObject.containsKey("nulls"));
+        Assertions.assertNull(jsonObject.get("null"),
+                              Workflow.errorSupplier("Expected json['null'] to be null"));
+        Assertions.assertTrue(jsonObject.containsKey("null"),
+                              Workflow.errorSupplier("Expected json['null'] to exist"));
+        Assertions.assertNull(jsonObject.get("nulls"),
+                              Workflow.errorSupplier("Expected json['nulls'] to be null"));
+        Assertions.assertTrue(jsonObject.containsKey("nulls"),
+                              Workflow.errorSupplier("Expected json['nulls'] to exist"));
     }
 
     @Test
     public void testMapBoolean(){
-        Assertions.assertTrue(jsonObject.getBoolean("bool"));
-        Assertions.assertFalse(jsonObject.getBoolean("bools"));
+        Assertions.assertTrue(jsonObject.getBoolean("bool"),
+                              Workflow.errorSupplier("Expected json['bool'] to be true"));
+        Assertions.assertFalse(jsonObject.getBoolean("bools"),
+                               Workflow.errorSupplier("Expected json['bools'] to be false"));
     }
 
     @Test
     public void testMapMap(){
-        Assertions.assertEquals("v", jsonObject.getJsonObject("obj").getString("k"));
-        Assertions.assertEquals(0, jsonObject.getJsonObject("cobj").size());
+        Assertions.assertEquals("v", jsonObject.getJsonObject("obj").getString("k"),
+                                Workflow.errorSupplier("Expected json['obj']['k'] to be 'v'"));
+        Assertions.assertEquals(0, jsonObject.getJsonObject("cobj").size(),
+                                Workflow.errorSupplier("Exepected json['obj'] to be {}"));
     }
 
     @Test
     public void testMapArray(){
-        Assertions.assertEquals("str", jsonObject.getStringArray("arr")[0]);
-        Assertions.assertEquals(0, jsonObject.getJsonArray("carr").length);
+        Assertions.assertEquals("str", jsonObject.getStringArray("arr")[0],
+                                Workflow.errorSupplier("Expected json['arr'][0] to be 'str'"));
+        Assertions.assertEquals(0, jsonObject.getJsonArray("carr").length,
+                                Workflow.errorSupplier("Expected json['carr'] to be []"));
     }
 
     @SuppressWarnings("unused")
@@ -83,17 +95,20 @@ public class TestJson {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("arrayProvider")
     public void testArray(final Object object){
-        Assertions.assertTrue(jsonArray.contains(object), object + " was missing");
+        Assertions.assertTrue(jsonArray.contains(object),
+                              Workflow.errorSupplier(object + " was missing"));
     }
 
     @Test
     public void testArrayMap(){
-        Assertions.assertEquals("v", ((JsonObject) jsonArray.get(14)).getString("k"));
+        Assertions.assertEquals("v", ((JsonObject) jsonArray.get(14)).getString("k"),
+                                Workflow.errorSupplier("Expected json[14]['k'] to be 'v'"));
     }
 
     @Test
     public void testArrayEmptyMap(){
-        Assertions.assertEquals(0, ((JsonObject) jsonArray.get(15)).size());
+        Assertions.assertEquals(0, ((JsonObject) jsonArray.get(15)).size(),
+                                Workflow.errorSupplier("Expected json[15] to be []"));
     }
 
     @SuppressWarnings("unused")
@@ -127,17 +142,19 @@ public class TestJson {
         try{
             parse(string);
         }catch(final JsonSyntaxException e){
-            Assertions.assertEquals(string, e.getRaw(), "Raw exception json did not match input json");
+            Assertions.assertEquals(string, e.getRaw(),
+                                    Workflow.errorSupplier("Raw exception json did not match input json"));
             return;
         }
-        Assertions.fail("Expected JsonSyntaxException for: \"" + string + '"');
+        Assertions.fail(Workflow.errorSupplier("Expected JsonSyntaxException for: \"" + string + '"'));
     }
 
     // newline
 
     @Test
     public void testNewLine(){
-        Assertions.assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k"));
+        Assertions.assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k"),
+                                Workflow.errorSupplier("Expected json['k'] to be 'v' for a json with new lines"));
     }
 
 }

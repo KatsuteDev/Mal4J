@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.RelatedAnime;
 import com.kttdevelopment.mal4j.manga.Manga;
@@ -26,7 +27,8 @@ public class TestManga {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("mangaProvider")
     public void testManga(@SuppressWarnings("unused") final String method, final Function<Manga,Object> function){
-        Assertions.assertNotNull(function.apply(manga), "Expected Manga#" + method + " to not be null");
+        Assertions.assertNotNull(function.apply(manga),
+                                 Workflow.errorSupplier("Expected Manga#" + method + " to not be null"));
     }
 
     @SuppressWarnings("unused")
@@ -89,41 +91,52 @@ public class TestManga {
 
     @Test
     public void testManga(){
-        Assertions.assertEquals(manga, manga.getManga());
-        Assertions.assertEquals(TestProvider.MangaID, manga.getID());
+        Assertions.assertEquals(manga, manga.getManga(),
+                                Workflow.errorSupplier("Expected Manga#getManga() to return self reference"));
+        Assertions.assertEquals(TestProvider.MangaID, manga.getID(),
+                                Workflow.errorSupplier("Expected Manga#getID() to match test ID"));
     }
 
     @Test
     public void testJapaneseEncoding(){
-        Assertions.assertFalse(manga.getAlternativeTitles().getJapanese().startsWith("\\u"), "Japanese characters should not be returned as a literal \\u unicode string");
+        Assertions.assertFalse(manga.getAlternativeTitles().getJapanese().startsWith("\\u"),
+                               Workflow.errorSupplier("Japanese characters should not be returned as a literal \\u unicode string"));
     }
 
     @Test
     public void testFields(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes);
-        Assertions.assertNotNull(manga.getVolumes());
-        Assertions.assertNull(manga.getChapters());
+        Assertions.assertNotNull(manga.getVolumes(),
+                                 Workflow.errorSupplier("Expected field to not be null"));
+        Assertions.assertNull(manga.getChapters(),
+                              Workflow.errorSupplier("Expected field to be null"));
     }
 
     @Test
     public void testInvertedFields(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes, Fields.INVERTED);
-        Assertions.assertNull(manga.getVolumes());
-        Assertions.assertNotNull(manga.getChapters());
+        Assertions.assertNull(manga.getVolumes(),
+                              Workflow.errorSupplier("Expected field to be null"));
+        Assertions.assertNotNull(manga.getChapters(),
+                                 Workflow.errorSupplier("Expected field to not be null"));
     }
 
     @Test
     public void testInvertedFieldsOnly(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.INVERTED);
-        Assertions.assertNotNull(manga.getVolumes());
+        Assertions.assertNotNull(manga.getVolumes(),
+                                 Workflow.errorSupplier("Expected field to be null"));
     }
 
     @Test @DisplayName("Manga may not have related Anime") @Disabled
     public void testRelatedAnime(){
         final RelatedAnime relatedAnime = manga.getRelatedAnime()[0];
-        Assertions.assertNotNull(relatedAnime.getAnimePreview().getID());
-        Assertions.assertNotNull(relatedAnime.getRelationType());
-        Assertions.assertNotNull(relatedAnime.getRelationTypeFormat());
+        Assertions.assertNotNull(relatedAnime.getAnimePreview().getID(),
+                                 Workflow.errorSupplier("Expected Manga#getRelatedAnime#getID to not be null"));
+        Assertions.assertNotNull(relatedAnime.getRelationType(),
+                                 Workflow.errorSupplier("Expected Manga#getRelatedAnime#getRelationType to not be null"));
+        Assertions.assertNotNull(relatedAnime.getRelationTypeFormat(),
+                                 Workflow.errorSupplier("Expected Manga#getRelatedAnime#getRelationTypeFormat to not be null"));
     }
 
 }

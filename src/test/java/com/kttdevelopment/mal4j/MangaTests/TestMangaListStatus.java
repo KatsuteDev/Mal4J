@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
@@ -40,23 +41,35 @@ public class TestMangaListStatus {
             .comments("")
             .update();
 
-        Assertions.assertEquals(MangaStatus.PlanToRead, status.getStatus());
-        Assertions.assertEquals(0, status.getScore());
-        Assertions.assertEquals(0, status.getVolumesRead());
-        Assertions.assertEquals(0, status.getChaptersRead());
-        Assertions.assertFalse(status.isRereading());
-        Assertions.assertEquals(Priority.Low, status.getPriority());
-        Assertions.assertEquals(0, status.getTimesReread());
-        Assertions.assertEquals(RereadValue.None, status.getRereadValue());
-        Assertions.assertEquals(0, status.getTags().length);
-        Assertions.assertEquals("", status.getComments());
+        Assertions.assertEquals(MangaStatus.PlanToRead, status.getStatus(),
+                                Workflow.errorSupplier("Expected status to match"));
+        Assertions.assertEquals(0, status.getScore(),
+                                Workflow.errorSupplier("Expected score to match"));
+        Assertions.assertEquals(0, status.getVolumesRead(),
+                                Workflow.errorSupplier("Expected volumes read to match"));
+        Assertions.assertEquals(0, status.getChaptersRead(),
+                                Workflow.errorSupplier("Expected chapters read to match"));
+        Assertions.assertFalse(status.isRereading(),
+                               Workflow.errorSupplier("Expected rereading to be false"));
+        Assertions.assertEquals(Priority.Low, status.getPriority(),
+                                Workflow.errorSupplier("Expected priority to match"));
+        Assertions.assertEquals(0, status.getTimesReread(),
+                                Workflow.errorSupplier("Expected times reread to match"));
+        Assertions.assertEquals(RereadValue.None, status.getRereadValue(),
+                                Workflow.errorSupplier("Expected reread value to match"));
+        Assertions.assertEquals(0, status.getTags().length,
+                                Workflow.errorSupplier("Expected tags to match"));
+        Assertions.assertEquals("", status.getComments(),
+                                Workflow.errorSupplier("Expected comments to match"));
     }
 
     @Test @Order(1)
     public void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
-        Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
-        Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis());
+        Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID),
+                                      Workflow.errorSupplier("Deleting a deleted listing should not throw an exception"));
+        Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis(),
+                              Workflow.errorSupplier("Expected a deleted listing to be null"));
     }
 
     private static boolean passedUpdate = false;
@@ -84,7 +97,8 @@ public class TestMangaListStatus {
 
     @Test @Order(3)
     public void testGet(){
-        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+        Assertions.assertTrue(passedUpdate,
+                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
@@ -99,12 +113,13 @@ public class TestMangaListStatus {
                 testStatus(listStatus);
                 return;
             }
-        Assertions.fail("Manga list status not found");
+        Assertions.fail(Workflow.errorSupplier("Manga list status not found"));
     }
 
     @Test @Order(3)
     public void testGetUsername(){
-        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+        Assertions.assertTrue(passedUpdate,
+                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing("KatsuteDev")
@@ -119,33 +134,49 @@ public class TestMangaListStatus {
                 testStatus(listStatus);
                 return;
             }
-        Assertions.fail("User Manga list status not found");
+        Assertions.fail(Workflow.errorSupplier("User Manga list status not found"));
     }
 
     @Test @Order(3)
     public void testGetFromManga(){
-        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+        Assertions.assertTrue(passedUpdate,
+                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
         final MangaListStatus status = mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus();
         testStatus(status);
     }
 
     private void testStatus(final MangaListStatus status){
-        Assertions.assertEquals(MangaStatus.Completed, status.getStatus());
-        Assertions.assertEquals(10, status.getScore());
-        Assertions.assertEquals(8, status.getVolumesRead());
-        Assertions.assertEquals(49, status.getChaptersRead());
-        Assertions.assertTrue(status.isRereading());
-        Assertions.assertNotNull(status.getStartDate());
-        Assertions.assertNotNull(status.getFinishDate());
-        Assertions.assertEquals(Priority.High, status.getPriority());
-        Assertions.assertEquals(0, status.getTimesReread());
-        Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue());
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
-        Assertions.assertEquals(TestProvider.testComment, status.getComments());
-        Assertions.assertNotNull(status.getUpdatedAt());
-        Assertions.assertNotNull(status.getUpdatedAtEpochMillis());
+        Assertions.assertEquals(MangaStatus.Completed, status.getStatus(),
+                                Workflow.errorSupplier("Expected status to match"));
+        Assertions.assertEquals(10, status.getScore(),
+                                Workflow.errorSupplier("Expected score to match"));
+        Assertions.assertEquals(8, status.getVolumesRead(),
+                                Workflow.errorSupplier("Expected volumes read to match"));
+        Assertions.assertEquals(49, status.getChaptersRead(),
+                                Workflow.errorSupplier("Expected chapters read to match"));
+        Assertions.assertTrue(status.isRereading(),
+                              Workflow.errorSupplier("Expected rereading to be true"));
+        Assertions.assertNotNull(status.getStartDate(),
+                                 Workflow.errorSupplier("Expected start date to not be null"));
+        Assertions.assertNotNull(status.getFinishDate(),
+                                 Workflow.errorSupplier("Expected finish data to not be null"));
+        Assertions.assertEquals(Priority.High, status.getPriority(),
+                                Workflow.errorSupplier("Expected priority to match"));
+        Assertions.assertEquals(0, status.getTimesReread(),
+                                Workflow.errorSupplier("Expected times reread to match"));
+        Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue(),
+                                Workflow.errorSupplier("Expected reread value to match"));
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]),
+                              Workflow.errorSupplier("Expected tags to match"));
+        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]),
+                              Workflow.errorSupplier("Expected tags to match"));
+        Assertions.assertEquals(TestProvider.testComment, status.getComments(),
+                                Workflow.errorSupplier("Expected comments to match"));
+        Assertions.assertNotNull(status.getUpdatedAt(),
+                                 Workflow.errorSupplier("Expected updated at to not be null"));
+        Assertions.assertNotNull(status.getUpdatedAtEpochMillis(),
+                                 Workflow.errorSupplier("Expected updated at millis to not be null"));
     }
 
     @Test @Order(4)
@@ -158,7 +189,8 @@ public class TestMangaListStatus {
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
     public void testEcchiNSFW(){
-        Assertions.assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
+        Assertions.assertTrue(passedUpdate,
+                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
@@ -169,7 +201,7 @@ public class TestMangaListStatus {
         for(final MangaListStatus listStatus : list)
             if(listStatus.getMangaPreview().getID() == TestProvider.MangaID)
                 return;
-        Assertions.fail("Failed to find Manga with Ecchi genre (this is an external issue, ignore this)");
+        Assertions.fail(Workflow.errorSupplier("Failed to find Manga with Ecchi genre (this is an external issue, ignore this)"));
     }
 
 }

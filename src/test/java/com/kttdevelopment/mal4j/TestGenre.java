@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.property.Genre;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -60,9 +61,11 @@ public class TestGenre {
         }catch(final UnsupportedOperationException ignored){ }
 
         if(hasAnimeID)
-            Assertions.assertEquals(genre, Genre.asAnimeGenre(animeGenreIDs.get(genre.getName())));
+            Assertions.assertEquals(genre, Genre.asAnimeGenre(animeGenreIDs.get(genre.getName())),
+                                    Workflow.errorSupplier("Expected Anime genre ID to match web ID"));
         if(hasMangaID)
-            Assertions.assertEquals(genre, Genre.asMangaGenre(mangaGenreIDs.get(genre.getName())));
+            Assertions.assertEquals(genre, Genre.asMangaGenre(mangaGenreIDs.get(genre.getName())),
+                                    Workflow.errorSupplier("Expected Manga genre ID to match web ID"));
     }
 
 }

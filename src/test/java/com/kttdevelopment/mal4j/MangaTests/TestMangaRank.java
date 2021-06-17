@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
+import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.manga.MangaRanking;
 import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
@@ -25,9 +26,12 @@ public class TestMangaRank {
                 .withFields(Fields.Manga.rank, Fields.Manga.media_type)
                 .search();
         final MangaRanking first = ranking.get(0);
-        Assertions.assertEquals(1,first.getRanking());
-        Assertions.assertEquals(MangaType.Manga, first.getMangaPreview().getType());
-        Assertions.assertNotNull(first.getPreviousRank(), "Failed to get previous rank for Anime (this is an external issue, ignore this)");
+        Assertions.assertEquals(1, first.getRanking(),
+                                Workflow.errorSupplier("Expected first ranking to be 1"));
+        Assertions.assertEquals(MangaType.Manga, first.getMangaPreview().getType(),
+                                Workflow.errorSupplier("Expected ranking type to match"));
+        Assertions.assertNotNull(first.getPreviousRank(),
+                                 Workflow.errorSupplier("Failed to get previous rank for Manga (this is an external issue, ignore this)"));
     }
 
     @SuppressWarnings("EmptyMethod")
