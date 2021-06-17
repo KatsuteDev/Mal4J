@@ -69,8 +69,7 @@ public abstract class TestProvider {
     }
 
     public static void testRequireClientID(){
-        Assumptions.assumeTrue(client.exists(),
-                               Workflow.warningSupplier("File with Client ID was missing, please create a file with the Client ID at: " + client.getAbsolutePath()));
+        Assumptions.assumeTrue(client.exists(), "File with Client ID was missing, please create a file with the Client ID at: " + client.getAbsolutePath());
     }
 
     public static MyAnimeList getMyAnimeList(){
