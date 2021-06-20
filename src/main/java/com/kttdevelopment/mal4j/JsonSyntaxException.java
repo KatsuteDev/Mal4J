@@ -21,7 +21,7 @@ package com.kttdevelopment.mal4j;
  * Thrown if the Json is malformed.
  *
  * @since 1.0.0
- * @version 2.2.0
+ * @version 2.2.1
  * @author Ktt Development
  */
 public final class JsonSyntaxException extends RuntimeException {

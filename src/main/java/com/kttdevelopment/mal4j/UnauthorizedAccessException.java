@@ -23,7 +23,7 @@ package com.kttdevelopment.mal4j;
  *
  * @see MyAnimeListAuthenticator
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.2.1
  * @author Ktt Development
  */
 public final class UnauthorizedAccessException extends RuntimeException {
