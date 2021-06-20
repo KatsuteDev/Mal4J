@@ -7,7 +7,7 @@ package com.kttdevelopment.mal4j;
  * @version 2.2.1
  * @author Ktt Development
  */
-public class AndroidCompatibilityException extends RuntimeException {
+public final class AndroidCompatibilityException extends RuntimeException {
 
     AndroidCompatibilityException(final String message){
         super(message);
