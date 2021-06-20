@@ -25,7 +25,7 @@ package com.kttdevelopment.mal4j;
  * @version 1.1.1
  * @author Ktt Development
  */
-public class HttpException extends RuntimeException {
+public final class HttpException extends RuntimeException {
 
     private final String URL, message;
     private final int code;
