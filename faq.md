@@ -14,18 +14,14 @@ If you don't want this warning then either:
 - Downgrade to JDK 8
 - Upgrade to JDK 11 or higher
 
-### `java.lang.UnsupportedClassVersionError`
+### `UnsupportedClassVersionError`
 
 This issue is caused by using an older, unsupported Java version; this library requires at least Java 8.
 
-### `com.kttdevelopment.mal4j.AndroidCompatibilityException`
-### `java.lang.ClassNotFoundException`
-### `java.lang.NoSuchMethodError`
-
+### `AndroidCompatibilityException` / `ClassNotFoundException` / `NoSuchMethodError`
 This issue may occur due to Android incompatibilities (blame Google), please open a new issue if this happens.
 
-### `java.lang.reflect.InaccessibleObjectException` / 
-### `java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+`
+### `InaccessibleObjectException` / `IllegalStateException: Reflect module is not accessible in JDK 9+`
 
 In order to make this library function on JDK 9-10, reflection is used in order to make PATCH requests work correctly.
 
