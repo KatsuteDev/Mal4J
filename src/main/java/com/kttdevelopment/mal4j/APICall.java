@@ -248,7 +248,7 @@ class APICall {
                                 //noinspection JavaReflectionMemberAccess
                                 methods = HttpURLConnection.class.getDeclaredField("methodTokens");
                             }catch(final NoSuchFieldException ignored3){
-                                throw new AndroidCompatibilityException("The current Android version is not compatible with this library, please report this issue");
+                                throw new AndroidCompatibilityException("The current Android version is not compatible with this library; no field 'methods'");
                             }
                         }
                     }
@@ -266,7 +266,7 @@ class APICall {
                             modifiers = Class.forName("java.lang.reflect.ArtField").getDeclaredField("accessFlags");
                         }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
                             // Android API 1 (1.0) [NOT SUPPORTED]
-                            throw new AndroidCompatibilityException("The current Android version is not compatible with this library, please report this issue");
+                            throw new AndroidCompatibilityException("The current Android version is not compatible with this library; no field 'modifiers'");
                         }
                     }
                 }
