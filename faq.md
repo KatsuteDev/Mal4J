@@ -18,9 +18,11 @@ If you don't want this warning then either:
 
 This issue is caused by using an older, unsupported Java version; this library requires at least Java 8.
 
+### `com.kttdevelopment.mal4j.AndroidCompatibilityException`
+### `java.lang.ClassNotFoundException`
 ### `java.lang.NoSuchMethodError`
 
-This issue may occur if you are using an android version that doesn't support the Java 8 API. If you still get this error please open a new issue.
+This issue may occur due to Android incompatibilities (blame Google), please open a new issue if this happens.
 
 ### `java.lang.reflect.InaccessibleObjectException` / 
 ### `java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+`

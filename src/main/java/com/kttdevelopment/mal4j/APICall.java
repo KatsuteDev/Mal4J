@@ -20,8 +20,8 @@ package com.kttdevelopment.mal4j;
 
 import java.io.*;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.*;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.nio.charset.Charset;
@@ -233,23 +233,46 @@ class APICall {
         if(!useNetHttp)
             try{
                 Field methods;
-
-                try{
+                try{ // Standard Java implementation and Android API 23+ (6.0+)
                     methods = HttpURLConnection.class.getDeclaredField("methods");
-                }catch(final NoSuchFieldException ignored){ // fix Google randomly breaking code for no reason
-                    //noinspection JavaReflectionMemberAccess
-                    methods = HttpURLConnection.class.getDeclaredField("PERMITTED_USER_METHODS");
+                }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
+                    try{ // Android API 13-22 (3.2 - 5.1.1)
+                        //noinspection JavaReflectionMemberAccess
+                        methods = HttpURLConnection.class.getDeclaredField("PERMITTED_USER_METHODS");
+                    }catch(final NoSuchFieldException ignored1){
+                        try{ // Android API 9-12 (2.3 - 3.1)
+                            //noinspection SpellCheckingInspection
+                            methods = Class.forName("libcore.net.http.HttpURLConnectionImpl").getDeclaredField("PERMITTED_USER_METHODS");
+                        }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
+                            try{ // Android API 1-8 (1 - 2.2.3)
+                                //noinspection JavaReflectionMemberAccess
+                                methods = HttpURLConnection.class.getDeclaredField("methodTokens");
+                            }catch(final NoSuchFieldException ignored3){
+                                throw new AndroidCompatibilityException("The current Android version is not compatible with this library, please report this issue");
+                            }
+                        }
+                    }
                 }
 
                 Field modifiers;
-                try{
+                try{ // Standard Java implementation
                     modifiers = Field.class.getDeclaredField("modifiers");
-                }catch(final NoSuchFieldException ignored){ // android
-                    //noinspection JavaReflectionMemberAccess
-                    modifiers = Field.class.getDeclaredField("accessFlags");
+                }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
+                    try{ // Android API 2-17 (1.1 - 4.2.2) & Android API 26+ (8.0+)
+                        //noinspection JavaReflectionMemberAccess
+                        modifiers = Field.class.getDeclaredField("accessFlags");
+                    }catch(final NoSuchFieldException ignored1){
+                        try{ // Android API 18-25 (4.3 - 7.1.2)
+                            modifiers = Class.forName("java.lang.reflect.ArtField").getDeclaredField("accessFlags");
+                        }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
+                            // Android API 1 (1.0) [NOT SUPPORTED]
+                            throw new AndroidCompatibilityException("The current Android version is not compatible with this library, please report this issue");
+                        }
+                    }
                 }
                 modifiers.setAccessible(true);
 
+                // remove FINAL from field
                 modifiers.setInt(methods, methods.getModifiers() & ~Modifier.FINAL);
                 methods.setAccessible(true);
 
@@ -259,11 +282,11 @@ class APICall {
                 newMethods.add("PATCH");
                 methods.set(null , newMethods.toArray(new String[0]));
 
-                // revert field to static final and close access
+                // set field to FINAL
                 modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
                 methods.setAccessible(false);
                 modifiers.setAccessible(false);
-            }catch(final NoSuchFieldException | IllegalAccessException e){
+            }catch(final IllegalAccessException e){
                 throw new IllegalStateException(e);
             }catch(final RuntimeException e){
                 throw e.getClass().getSimpleName().equals("InaccessibleObjectException")
