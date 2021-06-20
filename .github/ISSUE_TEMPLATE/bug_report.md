@@ -18,7 +18,7 @@ assignees: ''
 **Operating System:** *Operating system name and version.*
 
 
-**Java Version:** *Java version.*
+**Java Version:** *Java or Android API version.*
 
 
 **Release Version:** *Release version or branch commit where the issue occurred.*
