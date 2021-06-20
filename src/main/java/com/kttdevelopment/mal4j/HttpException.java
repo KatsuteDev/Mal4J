@@ -22,7 +22,7 @@ package com.kttdevelopment.mal4j;
  * Thrown if the server does not return a 200 OK response.
  *
  * @since 1.0.0
- * @version 1.1.1
+ * @version 2.2.1
  * @author Ktt Development
  */
 public final class HttpException extends RuntimeException {
