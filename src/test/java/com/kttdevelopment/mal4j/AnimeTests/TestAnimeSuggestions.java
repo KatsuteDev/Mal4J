@@ -4,6 +4,7 @@ import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.anime.Anime;
+import com.kttdevelopment.mal4j.anime.AnimePreview;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class TestAnimeSuggestions {
 
     @Test
     public void testAnimeSuggestions(){
-        final List<Anime> suggestions =
+        final List<AnimePreview> suggestions =
             mal.getAnimeSuggestions()
                 .withNoFields()
                 .search();

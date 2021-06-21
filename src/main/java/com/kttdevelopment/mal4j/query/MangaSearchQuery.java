@@ -20,6 +20,7 @@ package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.manga.Manga;
+import com.kttdevelopment.mal4j.manga.MangaPreview;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get</a> <br>
@@ -31,7 +32,7 @@ import com.kttdevelopment.mal4j.manga.Manga;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class MangaSearchQuery extends NSFWSearchQuery<MangaSearchQuery,Manga> {
+public abstract class MangaSearchQuery extends NSFWSearchQuery<MangaSearchQuery,MangaPreview> {
 
     /**
      * Creates a Manga search query. Applications do not use this constructor.
