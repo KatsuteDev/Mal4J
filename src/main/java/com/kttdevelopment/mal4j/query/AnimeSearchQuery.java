@@ -31,7 +31,7 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
  * @version 1.0.0
  * @author Ktt Development
  */
-public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery, AnimePreview> {
+public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery,AnimePreview> {
 
     /**
      * Creates an Anime search query. Applications do not use this constructor.

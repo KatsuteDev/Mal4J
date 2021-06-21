@@ -19,7 +19,6 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.MangaPreview;
 
 /**

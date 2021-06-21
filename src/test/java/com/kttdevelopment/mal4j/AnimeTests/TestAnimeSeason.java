@@ -2,7 +2,6 @@ package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
-import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.mal4j.anime.property.time.Season;

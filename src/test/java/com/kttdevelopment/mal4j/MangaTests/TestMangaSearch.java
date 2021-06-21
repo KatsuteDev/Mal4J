@@ -3,7 +3,6 @@ package com.kttdevelopment.mal4j.MangaTests;
 import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
-import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.MangaPreview;
 import org.junit.jupiter.api.*;
 
