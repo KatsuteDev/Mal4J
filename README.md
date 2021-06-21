@@ -19,7 +19,7 @@
         <a href="https://myanimelist.net/forum/?topicid=1897569">Forum Post</a>
     </div>
 </div>
-
+<br>
 <div align="center">
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml"><img alt="Java CI" src="https://github.com/Katsute/Mal4J/workflows/Java%20CI/badge.svg"></a>
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/codeql.yml"><img alt="CodeQL" src="https://github.com/Katsute/Mal4J/actions/workflows/codeql.yml/badge.svg"></a>
@@ -64,7 +64,7 @@ Easily search through MyAnimeList with search, ranking, seasonal, and suggestion
 
 ```java
 MyAnimeList mal = MyAnimeList.withOAuthToken("");
-List<Anime> search =
+List<AnimePreview> search =
     mal.getAnime()
         .withQuery("さくら荘のペットな彼女")
         .withLimit(1)

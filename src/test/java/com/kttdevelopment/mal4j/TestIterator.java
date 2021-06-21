@@ -1,7 +1,7 @@
 package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.jcore.Workflow;
-import com.kttdevelopment.mal4j.anime.Anime;
+import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.forum.Post;
 import org.junit.jupiter.api.*;
 
@@ -16,7 +16,7 @@ public class TestIterator {
 
     @Test
     public void testIterator(){
-        final PaginatedIterator<Anime> iterator = mal
+        final PaginatedIterator<AnimePreview> iterator = mal
             .getAnime()
             .withQuery(TestProvider.AnimeQuery)
             .withNoFields()
@@ -27,7 +27,7 @@ public class TestIterator {
         Assertions.assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID(),
                                 Workflow.errorSupplier("Expected first iterator to match test ID"));
 
-        final Anime first = iterator.next();
+        final AnimePreview first = iterator.next();
         Assertions.assertEquals(TestProvider.AnimeID, first.getID());
         iterator.forEachRemaining(animePreview -> Assertions.assertNotEquals(TestProvider.AnimeID, animePreview.getID(),
                                                                              Workflow.errorSupplier("Expected subsequent iterator to not match test ID")));
