@@ -2,7 +2,6 @@ package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
-import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
@@ -22,7 +21,7 @@ public class TestAnimeSeason {
 
     @Test
     public void testSeason(){
-        final List<Anime> season =
+        final List<AnimePreview> season =
             mal.getAnimeSeason(2019, Season.Summer)
                 .withLimit(1)
                 .withField(Fields.Anime.start_season)
@@ -38,7 +37,7 @@ public class TestAnimeSeason {
 
     @Test
     public void testSort(){
-        final List<Anime> season =
+        final List<AnimePreview> season =
             mal.getAnimeSeason(2020, Season.Winter)
                 .withLimit(2)
                 .sortBy(AnimeSeasonSort.Users)
@@ -52,13 +51,13 @@ public class TestAnimeSeason {
 
     @Test
     public void testNSFW(){
-        final List<Anime> season =
+        final List<AnimePreview> season =
             mal.getAnimeSeason(2014, Season.Winter)
                 .includeNSFW(true)
                 .withFields(Fields.Anime.nsfw)
                 .search();
         boolean hasNSFW = false;
-        for(final Anime animePreview : season)
+        for(final AnimePreview animePreview : season)
             if(animePreview.getNSFW() != NSFW.White){
                 hasNSFW = true;
                 break;
