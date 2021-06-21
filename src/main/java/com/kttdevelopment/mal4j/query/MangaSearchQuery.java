@@ -28,7 +28,7 @@ import com.kttdevelopment.mal4j.manga.MangaPreview;
  * @see MyAnimeList#getManga()
  * @see SearchQuery
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.2.1
  * @author Ktt Development
  */
 public abstract class MangaSearchQuery extends NSFWSearchQuery<MangaSearchQuery,MangaPreview> {

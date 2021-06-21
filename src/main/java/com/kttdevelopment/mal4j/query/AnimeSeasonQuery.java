@@ -30,7 +30,7 @@ import com.kttdevelopment.mal4j.anime.property.time.Season;
  * @see MyAnimeList#getAnimeSeason(int, Season)
  * @see FieldQuery
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.2.1
  * @author Ktt Development
  */
 public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,AnimePreview> implements NSFW<AnimeSeasonQuery> {
