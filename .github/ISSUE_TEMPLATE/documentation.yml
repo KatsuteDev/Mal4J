@@ -1,6 +1,5 @@
 name: Documentation Issue
 description: Report a documentation issue
-title: 'Documentation Bug: '
 labels: [bug, documentation]
 assignees: []
 body:
@@ -26,6 +25,8 @@ body:
         Release version or branch commit where the issue occured. Do not write 'latest'.
       placeholder: |
         ex: 2.2.0, 3cdf1c8
+    validations:
+      required: true
 
   - type: input
     id: location
