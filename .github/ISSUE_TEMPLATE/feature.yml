@@ -1,7 +1,7 @@
 name: Feature Request
-about: Suggest a new feature
-title: ''
-labels: feature request
+description: Suggest a new feature
+title: 'Feature Request: '
+labels: [feature request]
 assignees: []
 body:
   - type: checkboxes
@@ -10,15 +10,15 @@ body:
       label: Prerequisites
       description: |
         *If **all** checks are not passed then the issue will be closed.*
-    options:
-      - label: I have checked that no other similar feature request already exists.
-        required: true
-      - label: This feature request makes sense for the project.
-        required: true
-      - label: I have checked that this feature does not already exist.
-        required: true
-      - label: I am running the latest release version.
-        required: true
+      options:
+        - label: I have checked that no other similar feature request already exists.
+          required: true
+        - label: This feature request makes sense for the project.
+          required: true
+        - label: I have checked that this feature does not already exist.
+          required: true
+        - label: I am running the latest release version.
+          required: true
 
   - type: textarea
     id: feature
