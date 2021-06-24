@@ -34,7 +34,7 @@ body:
       description: |
         Provide a link to the version or the name of the class that has the documentation issue.
       placeholder: |
-        ex: https://mal4j.katsute.dev/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html, MyAnimeList
+        ex: MyAnimeList, https://mal4j.katsute.dev/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html
     validations:
       required: true
 
