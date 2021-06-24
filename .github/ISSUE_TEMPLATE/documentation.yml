@@ -1,7 +1,7 @@
 name: Documentation Issue
-about: Report a documentation issue
-title: ''
-labels: bug, documentation
+description: Report a documentation issue
+title: 'Documentation Bug: '
+labels: [bug, documentation]
 assignees: []
 body:
   - type: checkboxes
@@ -10,13 +10,13 @@ body:
       label: Prerequisites
       description: |
         *If **all** checks are not passed then the issue will be closed.*
-    options:
-      - label: I have checked that no other similar issue already exists.
-        required: true
-      - label: I have checked that this issue is actually a bug and not a feature.
-        required: true
-      - label: I am using the latest [documentation](https://mal4j.katsute.dev/).
-        required: true
+      options:
+        - label: I have checked that no other similar issue already exists.
+          required: true
+        - label: I have checked that this issue is actually a bug and not a feature.
+          required: true
+        - label: I am using the latest [documentation](https://mal4j.katsute.dev/).
+          required: true
 
   - type: input
     id: version

@@ -1,7 +1,7 @@
 name: Bug Report
-about: Report a bug
-title: ''
-labels: bug
+description: Report a bug
+title: 'Bug: '
+labels: [bug]
 assignees: []
 body:
   - type: checkboxes
@@ -10,17 +10,17 @@ body:
       label: Prerequisites
       description: |
         *If **all** checks are not passed then the issue will be closed.*
-    options:
-      - label: I have checked that no other similar issue already exists.
-        required: true
-      - label: I have checked that this issue is actually a bug and not a feature.
-        required: true
-      - label: I have checked the [documentation](https://mal4j.katsute.dev/).
-        required: true
-      - label: I have checked the [FAQ](https://github.com/Katsute/Mal4J/blob/main/faq.md).
-        required: true
-      - label: I am running the latest release version.
-        required: true
+      options:
+        - label: I have checked that no other similar issue already exists.
+          required: true
+        - label: I have checked that this issue is actually a bug and not a feature.
+          required: true
+        - label: I have checked the [documentation](https://mal4j.katsute.dev/).
+          required: true
+        - label: I have checked the [FAQ](https://github.com/Katsute/Mal4J/blob/main/faq.md).
+          required: true
+        - label: I am running the latest release version.
+          required: true
 
   - type: input
     id: os
@@ -30,8 +30,8 @@ body:
         Operating system name and version.
       placeholder: |
         ex: Windows 10, Android 11
-      validations:
-        required: true
+    validations:
+      required: true
 
   - type: dropdown
     id: java
