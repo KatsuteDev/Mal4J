@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Reporting an issue on GitHub app.
-    about: The GitHub mobile app doesn't yet support issue forms, you must open in a browser instead
-    url: https://github.com/Katsute/Mal4J/issues
+    about: You must use a browser to use issue forms
+    url: https://github.com/Katsute/Mal4J/issues/new/choose
   - name: Known Issues
     about: Certain issues are caused by the MyAnimeList API and not this library, check here for a list of those issues
     url: https://github.com/Katsute/Mal4J/discussions/136
