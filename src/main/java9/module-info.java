@@ -45,6 +45,7 @@ module Mal4J {
 
     requires jdk.httpserver;
     requires java.desktop;
+    requires java.logging;
 
     exports com.kttdevelopment.mal4j.anime;
     exports com.kttdevelopment.mal4j.anime.property;
