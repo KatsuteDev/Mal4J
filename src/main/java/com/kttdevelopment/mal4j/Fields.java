@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ package com.kttdevelopment.mal4j;
  *
  * @since 1.1.0
  * @version 2.2.1
- * @author Ktt Development
+ * @author Katsute
  */
 public abstract class Fields {
 
@@ -52,7 +52,7 @@ public abstract class Fields {
      * @see Manga
      * @since 1.1.0
      * @version 2.2.1
-     * @author Ktt Development
+     * @author Katsute
      */
     static class Common {
 
@@ -113,7 +113,7 @@ public abstract class Fields {
          * @see Manga.MyListStatus
          * @since 1.1.0
          * @version 2.2.1
-         * @author Ktt Development
+         * @author Katsute
          */
         static class ListStatus {
 
@@ -141,7 +141,7 @@ public abstract class Fields {
      * @see #anime
      * @since 1.1.0
      * @version 2.2.1
-     * @author Ktt Development
+     * @author Katsute
      */
     public static class Anime extends Common {
 
@@ -177,7 +177,7 @@ public abstract class Fields {
          * @see MyListStatus
          * @since 1.1.0
          * @version 2.2.1
-         * @author Ktt Development
+         * @author Katsute
          */
         @SuppressWarnings("SpellCheckingInspection")
         public static class ListStatus extends Common.ListStatus {
@@ -198,7 +198,7 @@ public abstract class Fields {
          * @see ListStatus
          * @since 1.1.0
          * @version 2.2.1
-         * @author Ktt Development
+         * @author Katsute
          */
         public static class MyListStatus extends ListStatus {
 
@@ -314,7 +314,7 @@ public abstract class Fields {
      * @see #manga
      * @since 1.1.0
      * @version 2.2.1
-     * @author Ktt Development
+     * @author Katsute
      */
     public static class Manga extends Common {
 
@@ -334,7 +334,7 @@ public abstract class Fields {
          * @see Manga.MyListStatus
          * @since 1.1.0
          * @version 2.2.1
-         * @author Ktt Development
+         * @author Katsute
          */
         public static class ListStatus extends Common.ListStatus {
 
@@ -354,7 +354,7 @@ public abstract class Fields {
          * @see Manga.ListStatus
          * @since 1.1.0
          * @version 2.2.1
-         * @author Ktt Development
+         * @author Katsute
          */
         public static class MyListStatus extends Manga.ListStatus {
 
@@ -425,7 +425,7 @@ public abstract class Fields {
          * @see #authors(String...)
          * @since 1.1.0
          * @version 2.2.1
-         * @author Ktt Development
+         * @author Katsute
          */
         public static class Authors {
 
@@ -472,7 +472,7 @@ public abstract class Fields {
          * @see #serialization(String...)
          * @since 1.1.0
          * @version 2.2.1
-         * @author Ktt Development
+         * @author Katsute
          */
         public static class Serialization {
 
@@ -558,7 +558,7 @@ public abstract class Fields {
      * @see #user
      * @since 1.1.0
      * @version 2.2.1
-     * @author Ktt Development
+     * @author Katsute
      */
     public static class User {
 

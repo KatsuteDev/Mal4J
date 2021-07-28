@@ -128,5 +128,5 @@ Devs running remote tests may do so by running the `MyAnimeList CI` workflow man
 - Want to further expand our project or site? [Fork](https://github.com/Katsute/Mal4J/fork) this repository and submit a [pull request](https://github.com/Katsute/Mal4J/pulls).
 
 ## Disclaimer
-- [@Katsute](https://github.com/Katsute) and [Ktt&nbsp;Development](https://github.com/Ktt-Development) are not affiliated with MyAnimeList.
+- [@Katsute](https://github.com/Katsute) is not affiliated with MyAnimeList.
 - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).

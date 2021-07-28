@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  * @see MediaItem
  * @since 1.0.0
  * @version 1.0.0
- * @author Ktt Development
+ * @author Katsute
  */
 public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeType,AnimeAirStatus,AnimeListStatus> {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,7 +33,7 @@ import com.kttdevelopment.mal4j.manga.RelatedManga;
  * @see MediaItem
  * @since 1.0.0
  * @version 1.0.0
- * @author Ktt Development
+ * @author Katsute
  */
 public interface FullMediaItem<MediaType extends Enum<?>,Status extends Enum<?>,ListStatus extends com.kttdevelopment.mal4j.property.ListStatus<?>,Recommendation extends com.kttdevelopment.mal4j.property.Recommendation,Statistics extends com.kttdevelopment.mal4j.property.Statistics> extends MediaItem<MediaType,Status,ListStatus> {
 
