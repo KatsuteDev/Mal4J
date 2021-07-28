@@ -2,9 +2,9 @@
     <a href="https://github.com/Katsute/Mal4J#readme">
         <img src="https://raw.githubusercontent.com/Katsute/Mal4J/main/banner.png" alt="Mal4J - MyAnimeList for Java">
     </a>
-    <h3>Mal4J - Java wrapper for the official MyAnimeList API</h3>
+    <h3>Java wrapper for the official MyAnimeList API</h3>
     <div>
-        <a href="https://mal4j.katsute.dev/">Docs</a>
+        <a href="https://docs.katsute.dev/mal4j">Docs</a>
         •
         <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
         •
@@ -21,17 +21,16 @@
 </div>
 <br>
 <div align="center">
-    <a href="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml"><img alt="Java CI" src="https://github.com/Katsute/Mal4J/workflows/Java%20CI/badge.svg"></a>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml"><img alt="Java CI" src="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml/badge.svg"></a>
     <a href="https://github.com/Katsute/Mal4J/actions/workflows/codeql.yml"><img alt="CodeQL" src="https://github.com/Katsute/Mal4J/actions/workflows/codeql.yml/badge.svg"></a>
-    <a href="https://github.com/Katsute/Mal4J/actions/workflows/release.yml"><img alt="Deploy" src="https://github.com/Katsute/Mal4J/workflows/Deploy/badge.svg"></a>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/release.yml"><img alt="Deploy" src="https://github.com/Katsute/Mal4J/actions/workflows/release.yml/badge.svg"></a>
     <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j"></a>
     <a href="https://github.com/Katsute/Mal4J/releases"><img alt="version" src="https://img.shields.io/github/v/release/Katsute/Mal4J"></a>
     <a href="https://github.com/Katsute/Mal4J/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/github/license/Katsute/Mal4J"></a>
     <br>
-    <a href="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml"><img alt="MyAnimeList CI" src="https://github.com/Katsute/Mal4J/workflows/MyAnimeList%20CI/badge.svg"></a>
+    <a href="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml"><img alt="MyAnimeList CI" src="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml/badge.svg"></a>
     <a href="https://myanimelist.net/"><img alt="myanimelist.net" src="https://img.shields.io/website?label=myanimelist.net&logo=myanimelist&url=https%3A%2F%2Fmyanimelist.net%2F"></a>
 </div>
-
 
 # Overview
 
@@ -52,7 +51,6 @@ Compiled binaries can be found on Maven Central → [![Maven Central](https://im
 For projects built locally, jars can be found in releases → [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
 
 Mal4J is a standalone library and requires no additional dependencies.
-
 
 ### More information on further stages of the setup can be found [here](https://github.com/Katsute/Mal4J/blob/main/setup.md).
 
