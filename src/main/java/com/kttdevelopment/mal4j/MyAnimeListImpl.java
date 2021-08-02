@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  * @see MyAnimeListService
  * @since 1.0.0
  * @version 2.2.0
- * @author Ktt Development
+ * @author Katsute
  */
 final class MyAnimeListImpl extends MyAnimeList {
 
