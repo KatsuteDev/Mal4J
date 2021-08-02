@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.*;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -42,6 +43,10 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 class APICall {
 
     static boolean debug = false;
+
+    private static boolean PATCH_ENABLED = false;
+
+    private static final String PATCH_DISABLED = "The current Android version is not fully compatible with this library; PATCH methods will be disabled";
 
     private final String method;
     private final String baseURL;
@@ -218,6 +223,8 @@ class APICall {
 
                     HttpResponse_Body = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("body");
                     HttpResponse_Code = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("statusCode");
+
+                    PATCH_ENABLED = true;
                 }catch(final ClassNotFoundException | NoSuchMethodException e){
                     throw new IllegalStateException(e);
                 }
@@ -232,7 +239,7 @@ class APICall {
 
         if(!useNetHttp)
             try{
-                Field methods;
+                Field methods = null;
                 try{ // Standard Java implementation and Android API 23+ (6.0+)
                     methods = HttpURLConnection.class.getDeclaredField("methods");
                 }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
@@ -248,46 +255,56 @@ class APICall {
                                 //noinspection JavaReflectionMemberAccess
                                 methods = HttpURLConnection.class.getDeclaredField("methodTokens");
                             }catch(final NoSuchFieldException ignored3){
-                                throw new AndroidCompatibilityException("The current Android version is not compatible with this library; no field 'methods'");
+                                Logger.getGlobal().warning(PATCH_DISABLED);
                             }
                         }
                     }
                 }
 
-                Field modifiers;
-                try{ // Standard Java implementation
-                    modifiers = Field.class.getDeclaredField("modifiers");
-                }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
-                    try{ // Android API 2-17 (1.1 - 4.2.2) & Android API 26+ (8.0+)
-                        //noinspection JavaReflectionMemberAccess
-                        modifiers = Field.class.getDeclaredField("accessFlags");
-                    }catch(final NoSuchFieldException ignored1){
-                        try{ // Android API 18-25 (4.3 - 7.1.2)
-                            modifiers = Class.forName("java.lang.reflect.ArtField").getDeclaredField("accessFlags");
-                        }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
-                            // Android API 1 (1.0) [NOT SUPPORTED]
-                            throw new AndroidCompatibilityException("The current Android version is not compatible with this library; no field 'modifiers'");
+                if(methods != null){
+                    Field modifiers = null;
+
+                    try{ // Standard Java implementation
+                        modifiers = Field.class.getDeclaredField("modifiers");
+                    }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
+                        try{ // Android API 2-17 (1.1 - 4.2.2) & Android API 26+ (8.0+)
+                            //noinspection JavaReflectionMemberAccess
+                            modifiers = Field.class.getDeclaredField("accessFlags");
+                        }catch(final NoSuchFieldException ignored1){
+                            try{ // Android API 18-25 (4.3 - 7.1.2)
+                                modifiers = Class.forName("java.lang.reflect.ArtField").getDeclaredField("accessFlags");
+                            }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
+                                // Android API 1 (1.0) [NOT SUPPORTED]
+                                Logger.getGlobal().warning(PATCH_DISABLED);
+                            }
+                        }
+                    }
+
+                    if(modifiers != null){
+                        modifiers.setAccessible(true);
+
+                        try{
+                            // remove FINAL from field
+                            modifiers.setInt(methods, methods.getModifiers() & ~Modifier.FINAL);
+                            methods.setAccessible(true);
+
+                            // add PATCH to methods array
+                            final String[] nativeMethods = (String[]) methods.get(null);
+                            final Set<String> newMethods = new HashSet<>(Arrays.asList(nativeMethods));
+                            newMethods.add("PATCH");
+                            methods.set(null, newMethods.toArray(new String[0]));
+
+                            // set field to FINAL
+                            modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
+                            methods.setAccessible(false);
+                            modifiers.setAccessible(false);
+
+                            PATCH_ENABLED = true;
+                        }catch(final IllegalAccessException e){
+                            throw new IllegalStateException(e);
                         }
                     }
                 }
-                modifiers.setAccessible(true);
-
-                // remove FINAL from field
-                modifiers.setInt(methods, methods.getModifiers() & ~Modifier.FINAL);
-                methods.setAccessible(true);
-
-                // add PATCH to methods array
-                final String[] nativeMethods = (String[]) methods.get(null);
-                final Set<String> newMethods = new HashSet<>(Arrays.asList(nativeMethods));
-                newMethods.add("PATCH");
-                methods.set(null , newMethods.toArray(new String[0]));
-
-                // set field to FINAL
-                modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
-                methods.setAccessible(false);
-                modifiers.setAccessible(false);
-            }catch(final IllegalAccessException e){
-                throw new IllegalStateException(e);
             }catch(final RuntimeException e){
                 throw e.getClass().getSimpleName().equals("InaccessibleObjectException")
                     ? new IllegalStateException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+")
@@ -399,6 +416,9 @@ class APICall {
                 throw new IllegalStateException(e);
             }
         else{
+            if(method.equalsIgnoreCase("PATCH") && !PATCH_ENABLED)
+                throw new AndroidCompatibilityException(PATCH_DISABLED);
+
             final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL), encoder)).toURL().openConnection();
 
             for(final Map.Entry<String, String> entry : headers.entrySet())

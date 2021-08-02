@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,6 +22,7 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Objects;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.regex.*;
 
 /**
@@ -45,7 +46,7 @@ abstract class Java9 {
             try{
                 return java.net.URLEncoder.encode(s, enc.name());
             }catch(final UnsupportedEncodingException e){
-                System.out.println("This should not occur, please report this issue.");
+                Logger.getGlobal().severe("This should not occur, please report this issue.");
                 e.printStackTrace(); // shouldn't occur for case UTF-8
                 return s;
             }
@@ -69,7 +70,7 @@ abstract class Java9 {
             try{
                 return java.net.URLDecoder.decode(s, enc.name());
             }catch(final UnsupportedEncodingException e){
-                System.out.println("This should not occur, please report this issue.");
+                Logger.getGlobal().severe("This should not occur, please report this issue.");
                 e.printStackTrace(); // shouldn't occur for case UTF-8
                 return s;
             }

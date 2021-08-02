@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,6 +30,7 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 import java.util.zip.GZIPOutputStream;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -45,8 +46,8 @@ import static com.kttdevelopment.mal4j.Json.*;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.0.0
- * @author Ktt Development
+ * @version 2.3.0
+ * @author Katsute
  */
 public final class MyAnimeListAuthenticator {
 
@@ -247,7 +248,7 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeListAuthenticator
      * @since 1.1.0
      * @version 1.1.0
-     * @author Ktt Development
+     * @author Katsute
      */
     public static final class LocalServerBuilder {
 
@@ -315,7 +316,7 @@ public final class MyAnimeListAuthenticator {
          */
         public final LocalServerBuilder openBrowser(final boolean openBrowser){
             if(!canOpenBrowser())
-                System.out.println("WARNING: System may not support openBrowser()");
+                Logger.getGlobal().warning("System may not support openBrowser()");
             this.openBrowser = openBrowser;
             return this;
         }
@@ -462,7 +463,7 @@ public final class MyAnimeListAuthenticator {
 
         if(openBrowser)
             if(!canOpenBrowser())
-                System.out.println("Desktop is not supported on this operating system. Please go to this URL manually: '" + url + "' or use a URL callback");
+                Logger.getGlobal().severe("Desktop is not supported on this operating system. Please go to this URL manually: '" + url + "' or use a URL callback");
             else
                 try{ Desktop.getDesktop().browse(new URI(url));
                 }catch(final URISyntaxException ignored){
