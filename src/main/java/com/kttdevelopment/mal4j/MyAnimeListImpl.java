@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  * @see MyAnimeListService
  * @since 1.0.0
  * @version 2.2.0
- * @author Ktt Development
+ * @author Katsute
  */
 final class MyAnimeListImpl extends MyAnimeList {
 
@@ -86,7 +86,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return new AnimeSearchQuery() {
 
             @Override
-            public final List<Anime> search(){
+            public final List<AnimePreview> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnime(
                         auth,
@@ -99,14 +99,14 @@ final class MyAnimeListImpl extends MyAnimeList {
                 );
                 if(response == null) return null;
 
-                final List<Anime> anime = new ArrayList<>();
+                final List<AnimePreview> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<Anime> searchAll(){
+            public final PaginatedIterator<AnimePreview> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnime(
@@ -117,7 +117,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
         };
@@ -187,7 +187,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return new AnimeSeasonQuery(year, Objects.requireNonNull(season, "Season cannot be null")) {
 
             @Override
-            public final List<Anime> search(){
+            public final List<AnimePreview> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeSeason(
                         auth,
@@ -202,14 +202,14 @@ final class MyAnimeListImpl extends MyAnimeList {
                 );
                 if(response == null) return null;
 
-                final List<Anime> anime = new ArrayList<>();
+                final List<AnimePreview> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<Anime> searchAll(){
+            public final PaginatedIterator<AnimePreview> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnimeSeason(
@@ -222,7 +222,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
 
@@ -234,7 +234,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return new AnimeSuggestionQuery() {
 
             @Override
-            public final List<Anime> search(){
+            public final List<AnimePreview> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeSuggestions(
                         auth,
@@ -246,14 +246,14 @@ final class MyAnimeListImpl extends MyAnimeList {
                 );
                 if(response == null) return null;
 
-                final List<Anime> anime = new ArrayList<>();
+                final List<AnimePreview> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<Anime> searchAll(){
+            public final PaginatedIterator<AnimePreview> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnimeSuggestions(
@@ -263,7 +263,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
 
@@ -500,7 +500,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return new MangaSearchQuery() {
 
             @Override
-            public final List<Manga> search(){
+            public final List<MangaPreview> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getManga(
                         auth,
@@ -513,14 +513,14 @@ final class MyAnimeListImpl extends MyAnimeList {
                 );
                 if(response == null) return null;
 
-                final List<Manga> manga = new ArrayList<>();
+                final List<MangaPreview> manga = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
-                    manga.add(asManga(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    manga.add(asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return manga;
             }
 
             @Override
-            public final PaginatedIterator<Manga> searchAll(){
+            public final PaginatedIterator<MangaPreview> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getManga(
@@ -531,7 +531,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.manga, fields),
                         nsfw
                     ),
-                    iterator -> asManga(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
 

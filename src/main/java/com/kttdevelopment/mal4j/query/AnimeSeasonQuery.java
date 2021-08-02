@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.anime.Anime;
+import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
 
@@ -30,10 +30,10 @@ import com.kttdevelopment.mal4j.anime.property.time.Season;
  * @see MyAnimeList#getAnimeSeason(int, Season)
  * @see FieldQuery
  * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
+ * @version 2.2.1
+ * @author Katsute
  */
-public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime> implements NSFW<AnimeSeasonQuery> {
+public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,AnimePreview> implements NSFW<AnimeSeasonQuery> {
 
     protected final int year;
     protected final Season season;

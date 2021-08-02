@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,10 @@ package com.kttdevelopment.mal4j;
  *
  * @see MyAnimeListAuthenticator
  * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
+ * @version 2.2.1
+ * @author Katsute
  */
-public class UnauthorizedAccessException extends RuntimeException {
+public final class UnauthorizedAccessException extends RuntimeException {
 
     @SuppressWarnings("SameParameterValue")
     UnauthorizedAccessException(final String message){

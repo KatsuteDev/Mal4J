@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.anime.Anime;
+import com.kttdevelopment.mal4j.anime.AnimePreview;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get</a> <br>
@@ -28,10 +28,10 @@ import com.kttdevelopment.mal4j.anime.Anime;
  * @see MyAnimeList#getAnime()
  * @see SearchQuery
  * @since 1.0.0
- * @version 1.0.0
- * @author Ktt Development
+ * @version 2.2.1
+ * @author Katsute
  */
-public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery,Anime> {
+public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery,AnimePreview> {
 
     /**
      * Creates an Anime search query. Applications do not use this constructor.

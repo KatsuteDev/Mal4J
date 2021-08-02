@@ -1,0 +1,87 @@
+name: Bug Report
+description: Report a bug
+labels: [bug]
+assignees: []
+body:
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Prerequisites
+      description: |
+        *If **all** checks are not passed then the issue will be closed.*
+      options:
+        - label: I have checked that no other similar issue already exists.
+          required: true
+        - label: I have checked that this issue is actually a bug and not a feature.
+          required: true
+        - label: I have checked the [documentation](https://mal4j.katsute.dev/).
+          required: true
+        - label: I have checked the [FAQ](https://github.com/Katsute/Mal4J/blob/main/faq.md).
+          required: true
+        - label: I am running the latest release version.
+          required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      description: |
+        Operating system name and version.
+      placeholder: |
+        ex: Windows 10, Android 11
+    validations:
+      required: true
+
+  - type: dropdown
+    id: java
+    attributes:
+      label: Java Runtime
+      description: |
+        The type of Java runtime that is running the code.
+      options:
+        - Java
+        - Android
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: java-version
+    attributes:
+      label: Java Version
+      description: |
+        Java version.
+      placeholder: |
+        ex: Java 11, Android API 30
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Release Version
+      description: |
+        Release version or branch commit where the issue occured. Do not write 'latest'.
+      placeholder: |
+        ex: 2.2.0, 3cdf1c8
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: Issue
+      description: |
+        Explain your issue, add any relevant stacktraces here.
+    validations:
+      required: true
+
+  - type: textarea
+    id: code
+    attributes:
+      label: Code
+      description: |
+        (optional) Add any relevant code so we can try and replicate the issue. Make sure to remove your token.
+      render: Java
+    validations:
+      required: false

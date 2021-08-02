@@ -1,0 +1,33 @@
+name: Sinon
+on:
+  workflow_dispatch: { }
+  label:
+    types: [created, edited, deleted]
+  issues:
+    types: [opened, edited, closed, reopened, transferred, assigned]
+  issue_comment:
+    types: [created]
+  pull_request:
+    branches: [main]
+    types: [opened, edited, closed, reopened, ready_for_review]
+  release:
+    types: [created, published]
+
+jobs:
+  sinon:
+    name: Sinon
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: |
+      github.repository_owner == 'Katsute' &&
+      github.actor != 'Sinon-bot' &&
+      github.actor != 'dependabot[bot]' &&
+      github.actor != 'dependabot-preview[bot]'
+    steps:
+      - name: 📤 Checkout Repository
+        uses: actions/checkout@v2.3.4
+
+      - name: ✔ Handle Event
+        uses: Katsute/Sinon-bot@main
+        with:
+          token: ${{ secrets.SINON }}

@@ -2,7 +2,7 @@ package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
-import com.kttdevelopment.mal4j.anime.Anime;
+import com.kttdevelopment.mal4j.anime.AnimePreview;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -18,7 +18,7 @@ public class TestAnimeSearch {
 
     @Test
     public void testSearch(){
-        final List<Anime> search =
+        final List<AnimePreview> search =
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
                 .withNoFields()
@@ -31,7 +31,7 @@ public class TestAnimeSearch {
 
     @Test
     public void testOffsetLimit(){
-        final List<Anime> search =
+        final List<AnimePreview> search =
             mal.getAnime()
                 .withQuery(TestProvider.AltAnimeQuery)
                 .withLimit(1)
@@ -46,7 +46,7 @@ public class TestAnimeSearch {
 
     @Test
     public void testFields(){
-        final List<Anime> search =
+        final List<AnimePreview> search =
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
                 .withLimit(1)
@@ -59,7 +59,7 @@ public class TestAnimeSearch {
     @Test
     public void testNSFW(){
         {
-            final List<Anime> search =
+            final List<AnimePreview> search =
                 mal.getAnime()
                     .withQuery(TestProvider.NSFW_AnimeQuery)
                     .withLimit(1)
@@ -69,7 +69,7 @@ public class TestAnimeSearch {
                                     Workflow.errorSupplier("Expected search to return 0"));
         }
         {
-            final List<Anime> search =
+            final List<AnimePreview> search =
                 mal.getAnime()
                    .withQuery(TestProvider.NSFW_AnimeQuery)
                    .withLimit(1)

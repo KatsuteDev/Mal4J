@@ -14,16 +14,14 @@ If you don't want this warning then either:
 - Downgrade to JDK 8
 - Upgrade to JDK 11 or higher
 
-### `java.lang.UnsupportedClassVersionError`
+### `UnsupportedClassVersionError`
 
 This issue is caused by using an older, unsupported Java version; this library requires at least Java 8.
 
-### `java.lang.NoSuchMethodError`
+### `AndroidCompatibilityException` / `ClassNotFoundException` / `NoSuchMethodError`
+This issue may occur due to Android incompatibilities (blame Google), please open a new issue if this happens.
 
-This issue may occur if you are using an android version that doesn't support the Java 8 API. If you still get this error please open a new issue.
-
-### `java.lang.reflect.InaccessibleObjectException` / 
-### `java.lang.IllegalStateException: Reflect module is not accessible in JDK 9+`
+### `InaccessibleObjectException` / `IllegalStateException: Reflect module is not accessible in JDK 9+`
 
 In order to make this library function on JDK 9-10, reflection is used in order to make PATCH requests work correctly.
 
@@ -60,7 +58,7 @@ The seasons query returns Anime that are airing in the current season, this incl
 
 ### NSFW is not working.
 
-For search queries make sure you also run [`#includeNSFW()`](https://mal4j.katsute.dev/Mal4J/com/kttdevelopment/mal4j/query/NSFW.html#includeNSFW()) in the query builder.
+For search queries make sure you also run [`#includeNSFW()`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/query/NSFW.html#includeNSFW()) in the query builder.
 
 ### I can't get other users.
 

@@ -1,0 +1,49 @@
+name: Documentation Issue
+description: Report a documentation issue
+labels: [bug, documentation]
+assignees: []
+body:
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Prerequisites
+      description: |
+        *If **all** checks are not passed then the issue will be closed.*
+      options:
+        - label: I have checked that no other similar issue already exists.
+          required: true
+        - label: I have checked that this issue is actually a bug and not a feature.
+          required: true
+        - label: I am using the latest [documentation](https://mal4j.katsute.dev/).
+          required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Release Version
+      description: |
+        Release version or branch commit where the issue occured. Do not write 'latest'.
+      placeholder: |
+        ex: 2.2.0, 3cdf1c8
+    validations:
+      required: true
+
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: |
+        Provide a link to the version or the name of the class that has the documentation issue.
+      placeholder: |
+        ex: MyAnimeList, https://mal4j.katsute.dev/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html
+    validations:
+      required: true
+
+  - type: textarea
+    id: issue
+    attributes:
+      label: Issue
+      description: |
+        Explain your issue, add any relevant stacktraces here.
+    validations:
+      required: true

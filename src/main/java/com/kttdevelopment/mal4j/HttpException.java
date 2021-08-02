@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,10 +22,10 @@ package com.kttdevelopment.mal4j;
  * Thrown if the server does not return a 200 OK response.
  *
  * @since 1.0.0
- * @version 1.1.1
- * @author Ktt Development
+ * @version 2.2.1
+ * @author Katsute
  */
-public class HttpException extends RuntimeException {
+public final class HttpException extends RuntimeException {
 
     private final String URL, message;
     private final int code;
