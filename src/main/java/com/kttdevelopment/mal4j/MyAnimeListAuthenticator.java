@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021 Katsute
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -47,7 +47,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  *
  * @since 1.0.0
  * @version 2.3.0
- * @author Ktt Development
+ * @author Katsute
  */
 public final class MyAnimeListAuthenticator {
 
@@ -248,7 +248,7 @@ public final class MyAnimeListAuthenticator {
      * @see MyAnimeListAuthenticator
      * @since 1.1.0
      * @version 1.1.0
-     * @author Ktt Development
+     * @author Katsute
      */
     public static final class LocalServerBuilder {
 
