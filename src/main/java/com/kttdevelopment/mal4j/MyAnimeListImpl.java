@@ -25,6 +25,7 @@ import com.kttdevelopment.mal4j.anime.property.time.Season;
 import com.kttdevelopment.mal4j.forum.*;
 import com.kttdevelopment.mal4j.manga.*;
 import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
+import com.kttdevelopment.mal4j.property.ExperimentalFeature;
 import com.kttdevelopment.mal4j.query.*;
 import com.kttdevelopment.mal4j.user.User;
 
@@ -35,6 +36,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -49,7 +51,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  * @see MyAnimeList
  * @see MyAnimeListService
  * @since 1.0.0
- * @version 2.2.0
+ * @version 2.3.0
  * @author Katsute
  */
 final class MyAnimeListImpl extends MyAnimeList {
@@ -77,6 +79,32 @@ final class MyAnimeListImpl extends MyAnimeList {
         if(authenticator == null)
             throw new UnsupportedOperationException("OAuth token refresh can only be used with authorization");
         this.auth = authenticator.refreshAccessToken().getToken();
+    }
+
+    //
+
+    // features that are no longer experimental (make sure to deprecate)
+    @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
+    private final List<ExperimentalFeature> nativeFeatures = Arrays.asList();
+
+    // experimental features that are enabled
+    private final List<ExperimentalFeature> enabledFeatures = new ArrayList<>();
+
+    @SuppressWarnings("SameParameterValue")
+    final void checkExperimentalFeatureEnabled(final ExperimentalFeature feature) {
+        if(nativeFeatures.contains(feature) || enabledFeatures.contains(feature))
+            return;
+
+        // in the future this should throw an exception
+        Logger.getGlobal().warning("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
+    }
+
+    @Override
+    public final void enableExperimentalFeature(final ExperimentalFeature feature){
+        if(nativeFeatures.contains(feature))
+            Logger.getGlobal().info("The feature " + feature.name() + " is no longer an experimental feature, you do not have to enable it anymore");
+        else if(!enabledFeatures.contains(feature))
+            enabledFeatures.add(feature);
     }
 
     //

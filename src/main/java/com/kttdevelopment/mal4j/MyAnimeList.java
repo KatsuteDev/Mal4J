@@ -27,6 +27,7 @@ import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
 import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.MangaRanking;
 import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
+import com.kttdevelopment.mal4j.property.ExperimentalFeature;
 import com.kttdevelopment.mal4j.query.*;
 import com.kttdevelopment.mal4j.user.User;
 
@@ -43,7 +44,7 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.0.0
+ * @version 2.3.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
@@ -90,6 +91,18 @@ public abstract class MyAnimeList {
      * @since 1.0.0
      */
     public abstract void refreshOAuthToken();
+
+    // experimental
+
+    /**
+     * Enables an experimental feature.
+     *
+     * @param feature feature to enable
+     *
+     * @see ExperimentalFeature
+     * @since 2.3.0
+     */
+    public abstract void enableExperimentalFeature(final ExperimentalFeature feature);
 
     // anime
 
