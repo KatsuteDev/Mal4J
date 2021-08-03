@@ -1,6 +1,6 @@
 package com.kttdevelopment.mal4j;
 
-import com.kttdevelopment.jcore.Workflow;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

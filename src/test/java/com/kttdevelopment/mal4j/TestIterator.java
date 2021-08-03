@@ -1,6 +1,6 @@
 package com.kttdevelopment.mal4j;
 
-import com.kttdevelopment.jcore.Workflow;
+import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.forum.Post;
 import org.junit.jupiter.api.*;
