@@ -476,11 +476,13 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final OpeningTheme[] getOpeningThemes(){
+                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.OP_ED_THEMES);
                 return openingThemes != null ? Arrays.copyOf(openingThemes, openingThemes.length) : null;
             }
 
             @Override
             public final EndingTheme[] getEndingThemes(){
+                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.OP_ED_THEMES);
                 return endingThemes != null ? Arrays.copyOf(endingThemes, endingThemes.length) : null;
             }
 
