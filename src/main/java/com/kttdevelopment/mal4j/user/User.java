@@ -19,6 +19,8 @@
 package com.kttdevelopment.mal4j.user;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
+import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
+import com.kttdevelopment.mal4j.user.property.MangaAffinity;
 import com.kttdevelopment.mal4j.property.IDN;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
@@ -34,7 +36,7 @@ import java.util.Date;
  * @see MyAnimeList#getUser(String)
  * @see MyAnimeList#getUser(String, String...)
  * @since 1.0.0
- * @version 1.2.0
+ * @version 2.3.0
  * @author Katsute
  */
 public abstract class User implements IDN {
@@ -146,5 +148,87 @@ public abstract class User implements IDN {
      * @since 1.2.0
      */
     public abstract UserMangaListQuery getUserMangaListing();
+
+    /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
+     * Returns Anime affinity with authenticated user.
+     *
+     * @return Anime affinity
+     *
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(User)
+     * @since 2.3.0
+     */
+    public abstract AnimeAffinity getAnimeAffinity();
+
+    /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
+     * Returns Anime affinity with a user.
+     *
+     * @param username username
+     * @return Anime affinity
+     *
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(User)
+     * @since 2.3.0
+     */
+    public abstract AnimeAffinity getAnimeAffinity(final String username);
+
+    /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
+     * Returns Anime affinity with a user.
+     *
+     * @param user user
+     * @return Anime affinity
+     *
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(String)
+     * @since 2.3.0
+     */
+    public abstract AnimeAffinity getAnimeAffinity(final User user);
+
+    /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
+     * Returns Manga affinity with authenticated user.
+     *
+     * @return Manga affinity
+     *
+     * @see MangaAffinity
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(User)
+     * @since 2.3.0
+     */
+    public abstract MangaAffinity getMangaAffinity();
+
+    /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
+     * Returns Manga affinity with a user.
+     *
+     * @param username username
+     * @return Manga affinity
+     *
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(User)
+     * @since 2.3.0
+     */
+    public abstract MangaAffinity getMangaAffinity(final String username);
+
+    /**
+     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
+     * Returns Manga affinity with a user.
+     *
+     * @param user user
+     * @return Manga affinity
+     *
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(String)
+     * @since 2.3.0
+     */
+    public abstract MangaAffinity getMangaAffinity(final User user);
 
 }

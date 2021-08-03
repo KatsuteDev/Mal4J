@@ -18,12 +18,18 @@
 package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.mal4j.Json.JsonObject;
+import com.kttdevelopment.mal4j.anime.AnimeListStatus;
+import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.manga.MangaListStatus;
+import com.kttdevelopment.mal4j.manga.MangaPreview;
+import com.kttdevelopment.mal4j.property.ExperimentalFeature;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
 import com.kttdevelopment.mal4j.user.User;
 import com.kttdevelopment.mal4j.user.UserAnimeStatistics;
+import com.kttdevelopment.mal4j.user.property.*;
 
-import java.util.Date;
+import java.util.*;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
@@ -110,6 +116,186 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
             @Override
             public final UserMangaListQuery getUserMangaListing(){
                 return mal.getUserMangaListing(name);
+            }
+
+            @Override
+            public final AnimeAffinity getAnimeAffinity(){
+                return getAnimeAffinity(mal.getAuthenticatedUser(Fields.NO_FIELDS).getName());
+            }
+
+            @Override
+            public final AnimeAffinity getAnimeAffinity(final User user){
+                return getAnimeAffinity(Objects.requireNonNull(user, "User can not be null").getName());
+            }
+
+            @Override
+            public final AnimeAffinity getAnimeAffinity(final String username){
+                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.AFFINITY);
+                Objects.requireNonNull(username, "Username can not be null");
+
+                final Map<Long,AnimeListStatus> selfListings = new HashMap<>();
+                getUserAnimeListing()
+                    .includeNSFW()
+                    .withFields(Fields.Anime.list_status)
+                    .withLimit(1000)
+                    .searchAll()
+                    .forEachRemaining(e -> {
+                        if(e.getScore() != null && e.getScore() > 0) // if rated
+                            selfListings.put(e.getAnimePreview().getID(), e);
+                    });
+                final Map<Long,AnimeListStatus> otherListings = new HashMap<>();
+                mal.getUserAnimeListing(username)
+                    .includeNSFW()
+                    .withFields(Fields.Anime.list_status)
+                    .withLimit(1000)
+                    .searchAll()
+                    .forEachRemaining(e -> {
+                        final Long id = e.getAnimePreview().getID();
+                        if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
+                            otherListings.put(id, e);
+                    });
+
+                final int len = otherListings.size();
+                final AnimePreview[] shared = new AnimePreview[len];
+                final int[] selfScores      = new int[len];
+                final int[] otherScores     = new int[len];
+
+                int index = 0;
+                for(final Map.Entry<Long,AnimeListStatus> otherListing : otherListings.entrySet()){
+                    final AnimeListStatus selfListing = selfListings.get(otherListing.getKey());
+                    shared[index]       = selfListing.getAnimePreview();
+                    selfScores[index]   = selfListing.getScore();
+                    otherScores[index]  = otherListing.getValue().getScore();
+                    index++;
+                }
+
+                return new AnimeAffinity() {
+
+                    private final int sharedCount = len;
+                    private final AnimePreview[] sharedPreviews = shared;
+                    private final int[] a_scores = selfScores;
+                    private final int[] b_scores = otherScores;
+
+                    @Override
+                    public final AnimePreview[] getShared(){
+                        return Arrays.copyOf(sharedPreviews, sharedCount);
+                    }
+
+                    @Override
+                    public final int getSharedCount(){
+                        return sharedCount;
+                    }
+
+                    @Override
+                    public final float getAffinity(){
+                        return getAffinity(new MyAnimeListAffinityAlgorithm());
+                    }
+
+                    @Override
+                    public final float getAffinity(final AffinityAlgorithm algorithm){
+                        return Objects.requireNonNull(algorithm, "Affinity algorithm can not be null").getAffinity(Arrays.copyOf(a_scores, sharedCount), Arrays.copyOf(b_scores, sharedCount));
+                    }
+
+                    @Override
+                    public final String toString(){
+                        return "AnimeAffinity{" +
+                               "sharedCount=" + sharedCount +
+                               ", selfScores=" + Arrays.toString(a_scores) +
+                               ", otherScores=" + Arrays.toString(b_scores) +
+                               '}';
+                    }
+
+                };
+            }
+
+            @Override
+            public final MangaAffinity getMangaAffinity(){
+                return getMangaAffinity(mal.getAuthenticatedUser(Fields.NO_FIELDS).getName());
+            }
+
+            @Override
+            public final MangaAffinity getMangaAffinity(final User user){
+                return getMangaAffinity(Objects.requireNonNull(user, "User can not be null").getName());
+            }
+
+            @Override
+            public final MangaAffinity getMangaAffinity(final String username){
+                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.AFFINITY);
+                Objects.requireNonNull(username, "Username can not be null");
+
+                final Map<Long,MangaListStatus> selfListings = new HashMap<>();
+                getUserMangaListing()
+                    .includeNSFW()
+                    .withFields(Fields.Manga.list_status)
+                    .withLimit(1000)
+                    .searchAll()
+                    .forEachRemaining(e -> {
+                        if(e.getScore() != null && e.getScore() > 0) // if rated
+                            selfListings.put(e.getMangaPreview().getID(), e);
+                    });
+                final Map<Long,MangaListStatus> otherListings = new HashMap<>();
+                mal.getUserMangaListing(username)
+                    .includeNSFW()
+                    .withFields(Fields.Manga.list_status)
+                    .withLimit(1000)
+                    .searchAll()
+                    .forEachRemaining(e -> {
+                        final Long id = e.getMangaPreview().getID();
+                        if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
+                            otherListings.put(id, e);
+                    });
+
+                final int len = otherListings.size();
+                final MangaPreview[] shared = new MangaPreview[len];
+                final int[] selfScores      = new int[len];
+                final int[] otherScores     = new int[len];
+
+                int index = 0;
+                for(final Map.Entry<Long,MangaListStatus> otherListing : otherListings.entrySet()){
+                    final MangaListStatus selfListing = selfListings.get(otherListing.getKey());
+                    shared[index]       = selfListing.getMangaPreview();
+                    selfScores[index]   = selfListing.getScore();
+                    otherScores[index]  = otherListing.getValue().getScore();
+                    index++;
+                }
+
+                return new MangaAffinity() {
+
+                    private final int sharedCount = len;
+                    private final MangaPreview[] sharedPreviews = shared;
+                    private final int[] a_scores = selfScores;
+                    private final int[] b_scores = otherScores;
+
+                    @Override
+                    public final MangaPreview[] getShared(){
+                        return Arrays.copyOf(sharedPreviews, sharedCount);
+                    }
+
+                    @Override
+                    public final int getSharedCount(){
+                        return sharedCount;
+                    }
+
+                    @Override
+                    public final float getAffinity(){
+                        return getAffinity(new MyAnimeListAffinityAlgorithm());
+                    }
+
+                    @Override
+                    public final float getAffinity(final AffinityAlgorithm algorithm){
+                        return Objects.requireNonNull(algorithm, "Affinity algorithm can not be null").getAffinity(Arrays.copyOf(a_scores, sharedCount), Arrays.copyOf(b_scores, sharedCount));
+                    }
+
+                    @Override
+                    public final String toString(){
+                        return "MangaAffinity{" +
+                               "sharedCount=" + sharedCount +
+                               ", selfScores=" + Arrays.toString(a_scores) +
+                               ", otherScores=" + Arrays.toString(b_scores) +
+                               '}';
+                    }
+
+                };
             }
 
             @Override
