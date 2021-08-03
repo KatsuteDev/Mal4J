@@ -1,6 +1,6 @@
 package com.kttdevelopment.mal4j.ForumTests;
 
-import com.kttdevelopment.jcore.Workflow;
+import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.forum.*;
 import org.junit.jupiter.api.*;
