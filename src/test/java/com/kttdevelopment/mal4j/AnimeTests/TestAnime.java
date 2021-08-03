@@ -1,6 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import com.kttdevelopment.jcore.Workflow;
+import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.*;
 import com.kttdevelopment.mal4j.manga.RelatedManga;

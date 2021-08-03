@@ -255,8 +255,8 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.kttdevelopment</groupId>
-            <artifactId>jCore</artifactId>
+            <groupId>dev.katsute</groupId>
+            <artifactId>jcore</artifactId>
             <version>1.0.0</version>
             <scope>test</scope>
         </dependency>
