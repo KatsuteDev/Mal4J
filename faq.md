@@ -67,3 +67,9 @@ Currently the MyAnimeList API does not allow you to check users other than yours
 ### `list_status` / `my_list_status` field isn't working.
 
 For some requests `my_list_status` field may be required instead of `list_status` or vice-versa. Try using the other field if responses are null.
+
+### Affinity is not working correctly.
+
+*This feature is experimental.*
+
+The affinity method requires that both users have their Anime/Manga list public.

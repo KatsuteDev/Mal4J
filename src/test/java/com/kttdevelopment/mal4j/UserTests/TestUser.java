@@ -2,12 +2,18 @@ package com.kttdevelopment.mal4j.UserTests;
 
 import com.kttdevelopment.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
+import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.manga.MangaPreview;
 import com.kttdevelopment.mal4j.user.User;
+import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
+import com.kttdevelopment.mal4j.user.property.MangaAffinity;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.function.ThrowingSupplier;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -78,6 +84,38 @@ public class TestUser {
     public void testMangaListing(){
         Assertions.assertDoesNotThrow(() -> user.getUserMangaListing().withNoFields().withLimit(1).search(),
                                       Workflow.errorSupplier("Expected User#getUserMangaListing to not throw an exception"));
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Test
+    public void testAnimeAffinity(){
+        final AnimeAffinity affinity = user.getAnimeAffinity("Xinil");
+        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount());
+        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    @Test
+    public void testMangaAffinity(){
+        final MangaAffinity affinity = user.getMangaAffinity("Xinil");
+        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount());
+        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
+    }
+
+    @ParameterizedTest(name = "[{index}] {0}")
+    @MethodSource("nullAffinityProvider")
+    public void testNullAffinity(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
+        Assertions.assertThrows(NullPointerException.class, () -> function.apply(user));
+    }
+
+    @SuppressWarnings("unused")
+    private static Stream<Arguments> nullAffinityProvider(){
+        return new TestProvider.MethodStream<User>()
+            .add("User#getAnimeAffinity(String)", user -> user.getAnimeAffinity((String) null))
+            .add("User#getAnimeAffinity(User)", user -> user.getAnimeAffinity((User) null))
+            .add("User#getMangaAffinity(String)", user -> user.getMangaAffinity((String) null))
+            .add("User#getMangaAffinity(User)", user -> user.getMangaAffinity((User) null))
+            .stream();
     }
 
 }

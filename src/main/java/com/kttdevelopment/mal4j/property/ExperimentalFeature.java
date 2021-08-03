@@ -19,6 +19,7 @@
 package com.kttdevelopment.mal4j.property;
 
 import com.kttdevelopment.mal4j.anime.Anime;
+import com.kttdevelopment.mal4j.user.User;
 
 /**
  * Represents experimental or undocumented features. If a feature is @deprecated it is no longer experimental, and you do not have to enable it.
@@ -34,6 +35,16 @@ public enum ExperimentalFeature {
      * @see Anime#getOpeningThemes()
      * @see Anime#getEndingThemes()
      */
-    OP_ED_THEMES
+    OP_ED_THEMES,
+
+    /**
+     * @see User#getAnimeAffinity()
+     * @see User#getAnimeAffinity(User)
+     * @see User#getAnimeAffinity(String)
+     * @see User#getMangaAffinity()
+     * @see User#getMangaAffinity(User)
+     * @see User#getMangaAffinity(String)
+     */
+    AFFINITY
 
 }
