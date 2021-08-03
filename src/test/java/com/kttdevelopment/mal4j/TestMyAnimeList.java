@@ -27,6 +27,12 @@ public class TestMyAnimeList {
     }
 
     @Test
+    public void testInvalidToken(){
+        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withOAuthToken("Bearer invalid").getAnime(TestProvider.AnimeID),
+                                Workflow.errorSupplier("Expected invalid token to throw InvalidTokenException"));
+    }
+
+    @Test
     public void testNullAuthenticator(){
         Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withAuthorization(null),
                                 Workflow.errorSupplier("Expected MyAnimeList#withAuthorizaton with null authenticator to throw a NullPointerException"));

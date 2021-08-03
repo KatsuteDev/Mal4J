@@ -72,6 +72,7 @@ public abstract class LimitOffsetQuery<T extends LimitOffsetQuery<T,R>,R> {
      *
      * @return search listings
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @since 1.0.0
@@ -83,6 +84,7 @@ public abstract class LimitOffsetQuery<T extends LimitOffsetQuery<T,R>,R> {
      *
      * @return search iterable
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @since 1.0.0
