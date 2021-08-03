@@ -22,6 +22,7 @@ import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.MangaPreview;
+import com.kttdevelopment.mal4j.property.ExperimentalFeature;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
 import com.kttdevelopment.mal4j.user.User;
@@ -129,6 +130,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
             @Override
             public final AnimeAffinity getAnimeAffinity(final String username){
+                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.AFFINITY);
                 Objects.requireNonNull(username, "Username can not be null");
 
                 final Map<Long,AnimeListStatus> selfListings = new HashMap<>();
@@ -218,6 +220,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
             @Override
             public final MangaAffinity getMangaAffinity(final String username){
+                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.AFFINITY);
                 Objects.requireNonNull(username, "Username can not be null");
 
                 final Map<Long,MangaListStatus> selfListings = new HashMap<>();
