@@ -28,6 +28,7 @@ public class TestMyAnimeList {
 
     @Test
     public void testInvalidToken(){
+        Assumptions.assumeTrue(System.getProperty("java.version").charAt(0) != '9'); // SSL issue
         Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withOAuthToken("Bearer invalid").getAnime(TestProvider.AnimeID),
                                 Workflow.errorSupplier("Expected invalid token to throw InvalidTokenException"));
     }
