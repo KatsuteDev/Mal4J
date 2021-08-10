@@ -72,4 +72,5 @@ For some requests `my_list_status` field may be required instead of `list_status
 
 *This feature is experimental.*
 
-The affinity method requires that both users have their Anime/Manga list public.
+ - The affinity method requires that both users have their Anime/Manga list public.
+ - The affinity method may take several minutes to complete depending on the amount of listings.
