@@ -32,7 +32,7 @@ public class TestMyAnimeList {
         Assumptions.assumeTrue(
             !System.getenv().containsKey("CI") ||
             System.getProperty("java.version").charAt(0) != '9'
-        );
+        , Workflow.warningSupplier("Skipped test on Java 9 CI due to SSL issue"));
 
         Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withOAuthToken("Bearer invalid").getAnime(TestProvider.AnimeID),
                                 Workflow.errorSupplier("Expected invalid token to throw InvalidTokenException"));
