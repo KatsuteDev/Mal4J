@@ -89,8 +89,8 @@ public class TestUser {
     @Test
     public void testAnimeAffinity(){
         final AnimeAffinity affinity = user.getAnimeAffinity("Xinil");
-        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount());
-        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
+        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount(), Workflow.errorSupplier("Expected affinity shared count to match"));
+        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity, Workflow.errorSupplier("Expected affinity to throw an exception"));
     }
 
     @SuppressWarnings("BusyWait")
@@ -98,22 +98,22 @@ public class TestUser {
     public void testAnimeAffinityCallback(){
         final AtomicBoolean passed = new AtomicBoolean(false);
         user.getAnimeAffinity((affinity) -> {
-            Assertions.assertNotNull(affinity);
+            Assertions.assertNotNull(affinity, Workflow.errorSupplier("Expected self affinity to not be null"));
             passed.set(true);
         });
 
         Assertions.assertTimeout(Duration.ofMinutes(1), () -> {
             while(!passed.get())
                 Thread.sleep(5000);
-        });
+        }, Workflow.errorSupplier("Expected callback to return"));
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
     public void testMangaAffinity(){
         final MangaAffinity affinity = user.getMangaAffinity("Xinil");
-        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount());
-        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
+        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount(), Workflow.errorSupplier("Expected affinity shared count to match"));
+        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity, Workflow.errorSupplier("Expected affinity to throw an exception"));
     }
 
     @SuppressWarnings("BusyWait")
@@ -121,20 +121,20 @@ public class TestUser {
     public void testMangaAffinityCallback(){
         final AtomicBoolean passed = new AtomicBoolean(false);
         user.getMangaAffinity((affinity) -> {
-            Assertions.assertNotNull(affinity);
+            Assertions.assertNotNull(affinity, Workflow.errorSupplier("Expected self affinity to not be null"));
             passed.set(true);
         });
 
         Assertions.assertTimeout(Duration.ofMinutes(1), () -> {
             while(!passed.get())
                 Thread.sleep(5000);
-        });
+        }, Workflow.errorSupplier("Expected callback to return"));
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
     @MethodSource("nullAffinityProvider")
     public void testNullAffinity(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
-        Assertions.assertThrows(NullPointerException.class, () -> function.apply(user));
+        Assertions.assertThrows(NullPointerException.class, () -> function.apply(user), Workflow.errorSupplier("Expected " + method + " with null to throw NullPointerException"));
     }
 
     @SuppressWarnings("unused")
