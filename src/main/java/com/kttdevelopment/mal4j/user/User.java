@@ -175,7 +175,7 @@ public abstract class User implements IDN {
      * <br>
      * <i>This may take several minutes to complete depending on the amount of listings.</i>
      * <br><br>
-     * Calculates Anime affinity and returns it to the callback.
+     * Calculates Anime affinity with authenticated user and returns it to the callback.
      *
      * @param callback callback method
      *
@@ -214,7 +214,7 @@ public abstract class User implements IDN {
      * <br>
      * <i>This may take several minutes to complete depending on the amount of listings.</i>
      * <br><br>
-     * Calculates Anime affinity and returns it to the callback.
+     * Calculates Anime affinity with a user and returns it to the callback.
      *
      * @param username username
      * @param callback callback method
@@ -254,7 +254,7 @@ public abstract class User implements IDN {
      * <br>
      * <i>This may take several minutes to complete depending on the amount of listings.</i>
      * <br><br>
-     * Calculates Anime affinity and returns it to the callback.
+     * Calculates Anime affinity with a user and returns it to the callback.
      *
      * @param user user
      * @param callback callback method
@@ -293,7 +293,7 @@ public abstract class User implements IDN {
      * <br>
      * <i>This may take several minutes to complete depending on the amount of listings.</i>
      * <br><br>
-     * Calculates Manga affinity and returns it to the callback.
+     * Calculates Manga affinity with authenticated user and returns it to the callback.
      *
      * @param callback callback method
      *
@@ -332,7 +332,7 @@ public abstract class User implements IDN {
      * <br>
      * <i>This may take several minutes to complete depending on the amount of listings.</i>
      * <br><br>
-     * Calculates Manga affinity and returns it to the callback.
+     * Calculates Manga affinity with a user and returns it to the callback.
      *
      * @param username username
      * @param callback callback method
@@ -372,7 +372,7 @@ public abstract class User implements IDN {
      * <br>
      * <i>This may take several minutes to complete depending on the amount of listings.</i>
      * <br><br>
-     * Calculates Manga affinity and returns it to the callback.
+     * Calculates Manga affinity with a user and returns it to the callback.
      *
      * @param user user
      * @param callback callback method
