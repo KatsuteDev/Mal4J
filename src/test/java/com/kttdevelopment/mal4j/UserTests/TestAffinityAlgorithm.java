@@ -54,6 +54,7 @@ public class TestAffinityAlgorithm {
             .stream();
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static float round(float num, int places){
         float scale = (float) Math.pow(10, places);
         return Math.round(num * scale) / scale;

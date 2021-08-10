@@ -2,8 +2,6 @@ package com.kttdevelopment.mal4j.UserTests;
 
 import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
-import com.kttdevelopment.mal4j.manga.MangaPreview;
 import com.kttdevelopment.mal4j.user.User;
 import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
 import com.kttdevelopment.mal4j.user.property.MangaAffinity;
@@ -13,7 +11,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.function.Consumer;
+import java.time.Duration;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -94,12 +93,42 @@ public class TestUser {
         Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
     }
 
+    @SuppressWarnings("BusyWait")
+    @Test
+    public void testAnimeAffinityCallback(){
+        final AtomicBoolean passed = new AtomicBoolean(false);
+        user.getAnimeAffinity((affinity) -> {
+            Assertions.assertNotNull(affinity);
+            passed.set(true);
+        });
+
+        Assertions.assertTimeout(Duration.ofMinutes(1), () -> {
+            while(!passed.get())
+                Thread.sleep(5000);
+        });
+    }
+
     @SuppressWarnings("SpellCheckingInspection")
     @Test
     public void testMangaAffinity(){
         final MangaAffinity affinity = user.getMangaAffinity("Xinil");
         Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount());
         Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
+    }
+
+    @SuppressWarnings("BusyWait")
+    @Test
+    public void testMangaAffinityCallback(){
+        final AtomicBoolean passed = new AtomicBoolean(false);
+        user.getMangaAffinity((affinity) -> {
+            Assertions.assertNotNull(affinity);
+            passed.set(true);
+        });
+
+        Assertions.assertTimeout(Duration.ofMinutes(1), () -> {
+            while(!passed.get())
+                Thread.sleep(5000);
+        });
     }
 
     @ParameterizedTest(name = "[{index}] {0}")

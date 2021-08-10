@@ -66,6 +66,7 @@ abstract class Java9 {
          * @see Charset
          * @see java.nio.charset.StandardCharsets
          */
+        @SuppressWarnings("SameParameterValue")
         static java.lang.String decode(final java.lang.String s, final Charset enc){
             try{
                 return java.net.URLDecoder.decode(s, enc.name());

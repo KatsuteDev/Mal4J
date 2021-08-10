@@ -30,6 +30,7 @@ import com.kttdevelopment.mal4j.user.UserAnimeStatistics;
 import com.kttdevelopment.mal4j.user.property.*;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
@@ -124,8 +125,18 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
             }
 
             @Override
+            public final void getAnimeAffinity(final Consumer<AnimeAffinity> callback){
+                new Thread(() -> callback.accept(getAnimeAffinity())).start();
+            }
+
+            @Override
             public final AnimeAffinity getAnimeAffinity(final User user){
                 return getAnimeAffinity(Objects.requireNonNull(user, "User can not be null").getName());
+            }
+
+            @Override
+            public final void getAnimeAffinity(final User user, final Consumer<AnimeAffinity> callback){
+                new Thread(() -> callback.accept(getAnimeAffinity(user))).start();
             }
 
             @Override
@@ -143,13 +154,18 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                         if(e.getScore() != null && e.getScore() > 0) // if rated
                             selfListings.put(e.getAnimePreview().getID(), e);
                     });
+
                 final Map<Long,AnimeListStatus> otherListings = new HashMap<>();
-                mal.getUserAnimeListing(username)
-                    .includeNSFW()
-                    .withFields(Fields.Anime.list_status)
-                    .withLimit(1000)
-                    .searchAll()
-                    .forEachRemaining(e -> {
+
+                if(mal.getAuthenticatedUser().getName().equals(username))
+                    otherListings.putAll(selfListings);
+                else
+                    mal.getUserAnimeListing(username)
+                        .includeNSFW()
+                        .withFields(Fields.Anime.list_status)
+                        .withLimit(1000)
+                        .searchAll()
+                        .forEachRemaining(e -> {
                         final Long id = e.getAnimePreview().getID();
                         if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
                             otherListings.put(id, e);
@@ -209,13 +225,28 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
             }
 
             @Override
+            public final void getAnimeAffinity(final String username, final Consumer<AnimeAffinity> callback){
+                new Thread(() -> callback.accept(getAnimeAffinity(username))).start();
+            }
+
+            @Override
             public final MangaAffinity getMangaAffinity(){
                 return getMangaAffinity(mal.getAuthenticatedUser(Fields.NO_FIELDS).getName());
             }
 
             @Override
+            public final void getMangaAffinity(final Consumer<MangaAffinity> callback){
+                new Thread(() -> callback.accept(getMangaAffinity())).start();
+            }
+
+            @Override
             public final MangaAffinity getMangaAffinity(final User user){
                 return getMangaAffinity(Objects.requireNonNull(user, "User can not be null").getName());
+            }
+
+            @Override
+            public final void getMangaAffinity(final User user, final Consumer<MangaAffinity> callback){
+                new Thread(() -> callback.accept(getMangaAffinity(user))).start();
             }
 
             @Override
@@ -233,13 +264,18 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                         if(e.getScore() != null && e.getScore() > 0) // if rated
                             selfListings.put(e.getMangaPreview().getID(), e);
                     });
+
                 final Map<Long,MangaListStatus> otherListings = new HashMap<>();
-                mal.getUserMangaListing(username)
-                    .includeNSFW()
-                    .withFields(Fields.Manga.list_status)
-                    .withLimit(1000)
-                    .searchAll()
-                    .forEachRemaining(e -> {
+
+                if(mal.getAuthenticatedUser().getName().equals(username))
+                    otherListings.putAll(selfListings);
+                else
+                    mal.getUserMangaListing(username)
+                        .includeNSFW()
+                        .withFields(Fields.Manga.list_status)
+                        .withLimit(1000)
+                        .searchAll()
+                        .forEachRemaining(e -> {
                         final Long id = e.getMangaPreview().getID();
                         if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
                             otherListings.put(id, e);
@@ -296,6 +332,11 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     }
 
                 };
+            }
+
+            @Override
+            public final void getMangaAffinity(final String username, final Consumer<MangaAffinity> callback){
+                new Thread(() -> callback.accept(getMangaAffinity(username))).start();
             }
 
             @Override
