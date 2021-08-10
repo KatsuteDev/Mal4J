@@ -22,7 +22,12 @@ public class TestGenre {
 
     @BeforeAll
     public static void beforeAll() throws IOException{
-        Assumptions.assumeTrue(System.getProperty("java.version").charAt(0) != '9'); // SSL issue; OK to skip since other tests validate
+        // SSL issue; Skip test on Java 9 CI
+        Assumptions.assumeTrue(
+            !System.getenv().containsKey("CI") ||
+            System.getProperty("java.version").charAt(0) != '9'
+        );
+
         animeGenreIDs = pullGenres("https://myanimelist.net/anime.php");
         mangaGenreIDs = pullGenres("https://myanimelist.net/manga.php");
     }
