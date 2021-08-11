@@ -26,6 +26,7 @@ import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
 
 import java.util.Date;
+import java.util.function.Consumer;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_get</a> <br>
@@ -39,6 +40,7 @@ import java.util.Date;
  * @version 2.3.0
  * @author Katsute
  */
+@SuppressWarnings("GrazieInspection")
 public abstract class User implements IDN {
 
     /**
@@ -150,85 +152,239 @@ public abstract class User implements IDN {
     public abstract UserMangaListQuery getUserMangaListing();
 
     /**
-     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
-     * Returns Anime affinity with authenticated user.
+     * <b>This is a thread blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Anime affinity with authenticated user.
      *
      * @return Anime affinity
      *
      * @see AnimeAffinity
+     * @see #getAnimeAffinity(Consumer)
      * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(String, Consumer)
      * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(User, Consumer)
      * @since 2.3.0
      */
     public abstract AnimeAffinity getAnimeAffinity();
 
     /**
-     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
-     * Returns Anime affinity with a user.
+     * <b>This is a non-blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Anime affinity with authenticated user and returns it to the callback.
+     *
+     * @param callback callback method
+     *
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(String, Consumer)
+     * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(User, Consumer)
+     * @since 2.3.0
+     */
+    public abstract void getAnimeAffinity(final Consumer<AnimeAffinity> callback);
+
+    /**
+     * <b>This is a thread blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Anime affinity with a user.
      *
      * @param username username
      * @return Anime affinity
      *
      * @see AnimeAffinity
      * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(Consumer)
+     * @see #getAnimeAffinity(String, Consumer)
      * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(User, Consumer)
      * @since 2.3.0
      */
     public abstract AnimeAffinity getAnimeAffinity(final String username);
 
     /**
-     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
-     * Returns Anime affinity with a user.
+     * <b>This is a non-blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Anime affinity with a user and returns it to the callback.
+     *
+     * @param username username
+     * @param callback callback method
+     *
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(Consumer)
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(User)
+     * @see #getAnimeAffinity(User, Consumer)
+     * @since 2.3.0
+     */
+    public abstract void getAnimeAffinity(final String username, final Consumer<AnimeAffinity> callback);
+
+    /**
+     * <b>This is a thread blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Anime affinity with a user.
      *
      * @param user user
      * @return Anime affinity
      *
      * @see AnimeAffinity
      * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(Consumer)
      * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(String, Consumer)
+     * @see #getAnimeAffinity(User, Consumer)
      * @since 2.3.0
      */
     public abstract AnimeAffinity getAnimeAffinity(final User user);
 
     /**
-     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
-     * Returns Manga affinity with authenticated user.
+     * <b>This is a non-blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Anime affinity with a user and returns it to the callback.
+     *
+     * @param user user
+     * @param callback callback method
+     *
+     * @see AnimeAffinity
+     * @see #getAnimeAffinity()
+     * @see #getAnimeAffinity(Consumer)
+     * @see #getAnimeAffinity(String)
+     * @see #getAnimeAffinity(String, Consumer)
+     * @see #getAnimeAffinity(User)
+     * @since 2.3.0
+     */
+    public abstract void getAnimeAffinity(final User user, final Consumer<AnimeAffinity> callback);
+
+    /**
+     * <b>This is a thread blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Manga affinity with authenticated user.
      *
      * @return Manga affinity
      *
      * @see MangaAffinity
+     * @see #getMangaAffinity(Consumer)
      * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(String, Consumer)
      * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(User, Consumer)
      * @since 2.3.0
      */
     public abstract MangaAffinity getMangaAffinity();
 
     /**
-     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
-     * Returns Manga affinity with a user.
+     * <b>This is a non-blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Manga affinity with authenticated user and returns it to the callback.
+     *
+     * @param callback callback method
+     *
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(String, Consumer)
+     * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(User, Consumer)
+     * @since 2.3.0
+     */
+    public abstract void getMangaAffinity(final Consumer<MangaAffinity> callback);
+
+    /**
+     * <b>This is a thread blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Manga affinity with a user.
      *
      * @param username username
      * @return Manga affinity
      *
      * @see MangaAffinity
      * @see #getMangaAffinity()
+     * @see #getMangaAffinity(Consumer)
+     * @see #getMangaAffinity(String, Consumer)
      * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(User, Consumer)
      * @since 2.3.0
      */
     public abstract MangaAffinity getMangaAffinity(final String username);
 
     /**
-     * <b>This process may take several minutes to complete.</b> It is suggested that you store this in a variable instead of calling this multiple times. <br>
-     * Returns Manga affinity with a user.
+     * <b>This is a non-blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Manga affinity with a user and returns it to the callback.
+     *
+     * @param username username
+     * @param callback callback method
+     *
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(Consumer)
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(User)
+     * @see #getMangaAffinity(User, Consumer)
+     * @since 2.3.0
+     */
+    public abstract void getMangaAffinity(final String username, final Consumer<MangaAffinity> callback);
+
+    /**
+     * <b>This is a thread blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Manga affinity with a user.
      *
      * @param user user
      * @return Manga affinity
      *
      * @see MangaAffinity
      * @see #getMangaAffinity()
+     * @see #getMangaAffinity(Consumer)
      * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(String, Consumer)
+     * @see #getMangaAffinity(User, Consumer)
      * @since 2.3.0
      */
     public abstract MangaAffinity getMangaAffinity(final User user);
+
+    /**
+     * <b>This is a non-blocking method.</b>
+     * <br>
+     * <i>This may take several minutes to complete depending on the amount of listings.</i>
+     * <br><br>
+     * Calculates Manga affinity with a user and returns it to the callback.
+     *
+     * @param user user
+     * @param callback callback method
+     *
+     * @see MangaAffinity
+     * @see #getMangaAffinity()
+     * @see #getMangaAffinity(Consumer)
+     * @see #getMangaAffinity(String)
+     * @see #getMangaAffinity(String, Consumer)
+     * @see #getMangaAffinity(User)
+     * @since 2.3.0
+     */
+    public abstract void getMangaAffinity(final User user, final Consumer<MangaAffinity> callback);
 
 }

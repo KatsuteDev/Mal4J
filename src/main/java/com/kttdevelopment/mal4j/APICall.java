@@ -44,6 +44,7 @@ class APICall {
 
     static boolean debug = false;
 
+    @SuppressWarnings("CanBeFinal")
     private static boolean PATCH_ENABLED = false;
 
     private static final String PATCH_DISABLED = "The current Android version is not fully compatible with this library; PATCH methods will be disabled";

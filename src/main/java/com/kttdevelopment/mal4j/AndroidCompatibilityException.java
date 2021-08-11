@@ -9,6 +9,7 @@ package com.kttdevelopment.mal4j;
  */
 public final class AndroidCompatibilityException extends RuntimeException {
 
+    @SuppressWarnings("SameParameterValue")
     AndroidCompatibilityException(final String message){
         super(message);
     }

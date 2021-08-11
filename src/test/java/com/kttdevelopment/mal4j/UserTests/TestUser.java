@@ -2,8 +2,6 @@ package com.kttdevelopment.mal4j.UserTests;
 
 import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
-import com.kttdevelopment.mal4j.manga.MangaPreview;
 import com.kttdevelopment.mal4j.user.User;
 import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
 import com.kttdevelopment.mal4j.user.property.MangaAffinity;
@@ -13,7 +11,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.function.Consumer;
+import java.time.Duration;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -90,22 +89,52 @@ public class TestUser {
     @Test
     public void testAnimeAffinity(){
         final AnimeAffinity affinity = user.getAnimeAffinity("Xinil");
-        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount());
-        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
+        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount(), Workflow.errorSupplier("Expected affinity shared count to match"));
+        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity, Workflow.errorSupplier("Expected affinity to throw an exception"));
+    }
+
+    @SuppressWarnings("BusyWait")
+    @Test
+    public void testAnimeAffinityCallback(){
+        final AtomicBoolean passed = new AtomicBoolean(false);
+        user.getAnimeAffinity((affinity) -> {
+            Assertions.assertNotNull(affinity, Workflow.errorSupplier("Expected self affinity to not be null"));
+            passed.set(true);
+        });
+
+        Assertions.assertTimeout(Duration.ofMinutes(1), () -> {
+            while(!passed.get())
+                Thread.sleep(5000);
+        }, Workflow.errorSupplier("Expected callback to return"));
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
     public void testMangaAffinity(){
         final MangaAffinity affinity = user.getMangaAffinity("Xinil");
-        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount());
-        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
+        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount(), Workflow.errorSupplier("Expected affinity shared count to match"));
+        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity, Workflow.errorSupplier("Expected affinity to throw an exception"));
+    }
+
+    @SuppressWarnings("BusyWait")
+    @Test
+    public void testMangaAffinityCallback(){
+        final AtomicBoolean passed = new AtomicBoolean(false);
+        user.getMangaAffinity((affinity) -> {
+            Assertions.assertNotNull(affinity, Workflow.errorSupplier("Expected self affinity to not be null"));
+            passed.set(true);
+        });
+
+        Assertions.assertTimeout(Duration.ofMinutes(1), () -> {
+            while(!passed.get())
+                Thread.sleep(5000);
+        }, Workflow.errorSupplier("Expected callback to return"));
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
     @MethodSource("nullAffinityProvider")
     public void testNullAffinity(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
-        Assertions.assertThrows(NullPointerException.class, () -> function.apply(user));
+        Assertions.assertThrows(NullPointerException.class, () -> function.apply(user), Workflow.errorSupplier("Expected " + method + " with null to throw NullPointerException"));
     }
 
     @SuppressWarnings("unused")
