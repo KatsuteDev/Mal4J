@@ -445,6 +445,8 @@ class APICall {
                 while((buffer = IN.readLine()) != null)
                     OUT.append(buffer);
                 body = OUT.toString();
+            }catch(final IOException ignored){
+                body = "{}";
             }finally{
                 conn.disconnect();
             }

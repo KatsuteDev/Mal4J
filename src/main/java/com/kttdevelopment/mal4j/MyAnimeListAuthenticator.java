@@ -115,6 +115,7 @@ public final class MyAnimeListAuthenticator {
      * @param authorization_code authorization code (<b>not</b> your authorization URL)
      * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
@@ -163,6 +164,7 @@ public final class MyAnimeListAuthenticator {
      *
      * @return updated access token
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see AccessToken
@@ -494,6 +496,8 @@ public final class MyAnimeListAuthenticator {
                 body.getString("access_token"),
                 body.getString("refresh_token")
             );
+        else if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED)
+            throw new InvalidTokenException("The OAuth token provided is either invalid or expired");
         else{
             final String error = body.getString("error");
             throw new HttpException(response.URL(), response.code(), error != null ? error.trim() : "");

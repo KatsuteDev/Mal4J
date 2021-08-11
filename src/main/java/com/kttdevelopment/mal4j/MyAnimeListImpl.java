@@ -780,6 +780,8 @@ final class MyAnimeListImpl extends MyAnimeList {
 
             if(response.code() == HttpURLConnection.HTTP_OK)
                 return response;
+            else if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED)
+                throw new InvalidTokenException("The OAuth token provided is either invalid or expired");
             else
                 try{
                     throw new HttpException(response.URL(), response.code(), (((JsonObject) response.body()).getString("message") + ' ' + ((JsonObject) response.body()).getString("error")).trim());
