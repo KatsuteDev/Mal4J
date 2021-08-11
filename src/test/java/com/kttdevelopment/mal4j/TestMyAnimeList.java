@@ -27,6 +27,18 @@ public class TestMyAnimeList {
     }
 
     @Test
+    public void testInvalidToken(){
+        // SSL issue; Skip test on Java 9 CI
+        Assumptions.assumeTrue(
+            !System.getenv().containsKey("CI") ||
+            System.getProperty("java.version").charAt(0) != '9'
+        , Workflow.warningSupplier("Skipped test on Java 9 CI due to SSL issue"));
+
+        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withOAuthToken("Bearer invalid").getAnime(TestProvider.AnimeID),
+                                Workflow.errorSupplier("Expected invalid token to throw InvalidTokenException"));
+    }
+
+    @Test
     public void testNullAuthenticator(){
         Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withAuthorization(null),
                                 Workflow.errorSupplier("Expected MyAnimeList#withAuthorizaton with null authenticator to throw a NullPointerException"));

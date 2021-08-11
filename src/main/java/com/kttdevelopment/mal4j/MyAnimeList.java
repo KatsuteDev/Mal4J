@@ -122,6 +122,7 @@ public abstract class MyAnimeList {
      * Returns the full Anime details given an ID.
      *
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      * @param id Anime id
      * @return Anime
@@ -136,6 +137,7 @@ public abstract class MyAnimeList {
      * Returns Anime details requested in the fields given an ID.
      *
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      * @param id Anime id
      * @param fields a string array of the fields that should be returned
@@ -218,6 +220,7 @@ public abstract class MyAnimeList {
      * Removes an Anime listing.
      *
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      * @param id Anime id
      *
@@ -265,6 +268,7 @@ public abstract class MyAnimeList {
      *
      * @return forum boards
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see ForumCategory
@@ -280,6 +284,7 @@ public abstract class MyAnimeList {
      * @param id forum topic id
      * @return forum topic
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see #getForumTopicDetail(long, Integer)
@@ -296,6 +301,7 @@ public abstract class MyAnimeList {
      * @param limit post limit
      * @return forum topic
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see #getForumTopicDetail(long)
@@ -313,6 +319,7 @@ public abstract class MyAnimeList {
      * @param offset post offset
      * @return forum topic
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see #getForumTopicDetail(long)
@@ -367,6 +374,7 @@ public abstract class MyAnimeList {
      * Returns the full Manga details given an ID.
      *
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      * @param id Manga id
      * @return Manga
@@ -381,6 +389,7 @@ public abstract class MyAnimeList {
      * Returns Manga details requested in the fields given an ID.
      *
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      * @param id Manga id
      * @param fields a string array of the fields that should be returned
@@ -431,6 +440,7 @@ public abstract class MyAnimeList {
      * Removes a Manga listing.
      *
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      * @param id Manga id
      *
@@ -478,6 +488,7 @@ public abstract class MyAnimeList {
      *
      * @return authenticated user
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User
@@ -492,6 +503,7 @@ public abstract class MyAnimeList {
      * @param fields a string array of the fields that should be returned
      * @return authenticated user
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User
@@ -507,6 +519,7 @@ public abstract class MyAnimeList {
      * @deprecated use {@link #getAuthenticatedUser()} instead
      * @return user
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User
@@ -523,6 +536,7 @@ public abstract class MyAnimeList {
      * @param fields a string array of the fields that should be returned
      * @return user
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
      * @see User
@@ -539,6 +553,7 @@ public abstract class MyAnimeList {
      * @param username username
      * @return user
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      * @throws NullPointerException if username is null
      *
@@ -555,6 +570,7 @@ public abstract class MyAnimeList {
      * @param fields a string array of the fields that should be returned
      * @return user
      * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      * @throws NullPointerException if username is null
      *
