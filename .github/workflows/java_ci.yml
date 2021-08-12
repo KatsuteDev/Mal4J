@@ -6,9 +6,75 @@ on:
 permissions: read-all
 
 jobs:
-  java_ci:
-    name: Java CI
+  build:
+    name: Compile (Java ${{ matrix.jdk }})
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        jdk: [8, 9, 11, 16]
+      fail-fast: false
+    steps:
+      - name: 📤 Checkout Repository
+        uses: actions/checkout@v2.3.4
+
+      - name: 📚 Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1.1.1
+        with:
+          version: ${{ matrix.jdk }}
+          architecture: x64
+
+      - name: 📤 Load Cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: ✔ Compile with Maven
+        run: mvn package -DskipTests --no-transfer-progress
+
+  codeql:
+    name: Compile (Java ${{ matrix.jdk }})
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      matrix:
+        jdk: [11]
+      fail-fast: false
+    steps:
+      - name: 📤 Checkout Repository
+        uses: actions/checkout@v2.3.4
+
+      - name: 📚 Install CodeQL
+        uses: github/codeql-action/init@v1.0.11
+        with:
+          languages: java
+
+      - name: 📚 Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1.1.1
+        with:
+          version: ${{ matrix.jdk }}
+          architecture: x64
+
+      - name: 📤 Load Cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+
+      - name: ✔ Compile with Maven
+        run: mvn package -DskipTests --no-transfer-progress
+
+      - name: ✔ Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1.0.11
+
+  test:
+    name: Test (Java ${{ matrix.jdk }})
+    runs-on: ubuntu-latest
+    needs: codeql
     strategy:
       matrix:
         jdk: [8, 9, 11, 16]
