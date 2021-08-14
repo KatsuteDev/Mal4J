@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: ✔ Compile with Maven
-        run: mvn package -DskipTests --no-transfer-progress
+        run: mvn compile -DskipTests --no-transfer-progress
 
   codeql:
     name: CodeQL (Java ${{ matrix.jdk }})
