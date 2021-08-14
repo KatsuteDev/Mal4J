@@ -5,10 +5,10 @@
 - [ ] I have checked that no sensitive information is exposed.
 - [ ] Build compiles.
 - [ ] Build passes test cases.
-- [ ] I have added/modified documentation (check if not applicable).
-- [ ] I have added/modified test cases (check if not applicable).
+- [ ] I have added/modified documentation.
+- [ ] I have added/modified test cases.
 
-**Workflow Run:** *The link to the MyAnimeList CI workflow run for your branch. Check README for guide on remote tests.*
+**Workflow Run:** *The link to the MyAnimeList CI workflow run for your branch. Check [README](https://github.com/Katsute/Mal4J#remote-tests) for guide on remote tests.*
 
 
 ### Changes Made
