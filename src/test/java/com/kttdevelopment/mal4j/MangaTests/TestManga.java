@@ -1,9 +1,9 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.RelatedAnime;
 import com.kttdevelopment.mal4j.manga.Manga;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

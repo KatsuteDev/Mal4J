@@ -1,14 +1,15 @@
 package com.kttdevelopment.mal4j;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.property.Genre;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 
 import java.io.*;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
