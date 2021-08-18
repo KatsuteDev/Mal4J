@@ -1,6 +1,6 @@
 blank_issues_enabled: false
 contact_links:
-  - name: Reporting an issue on GitHub app.
+  - name: Reporting an issue on the GitHub app
     about: You must use a browser to use issue forms
     url: https://github.com/Katsute/Mal4J/discussions/198
   - name: Known Issues
