@@ -1,12 +1,12 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import com.kttdevelopment.mal4j.property.Genre;
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
-import com.kttdevelopment.mal4j.property.Priority;
 import com.kttdevelopment.mal4j.anime.property.RewatchValue;
+import com.kttdevelopment.mal4j.property.Genre;
+import com.kttdevelopment.mal4j.property.Priority;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.*;

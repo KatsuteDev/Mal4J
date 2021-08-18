@@ -1,12 +1,12 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
-import com.kttdevelopment.mal4j.property.Genre;
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
-import com.kttdevelopment.mal4j.property.Priority;
 import com.kttdevelopment.mal4j.manga.property.RereadValue;
+import com.kttdevelopment.mal4j.property.Genre;
+import com.kttdevelopment.mal4j.property.Priority;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.*;

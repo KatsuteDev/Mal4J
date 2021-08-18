@@ -1,9 +1,9 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.manga.MangaPreview;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.List;

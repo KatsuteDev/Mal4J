@@ -1,9 +1,9 @@
 package com.kttdevelopment.mal4j.ForumTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
-import com.kttdevelopment.mal4j.forum.*;
+import com.kttdevelopment.mal4j.forum.ForumTopic;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.List;

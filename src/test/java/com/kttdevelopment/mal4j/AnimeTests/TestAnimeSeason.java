@@ -1,11 +1,11 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
 import com.kttdevelopment.mal4j.property.NSFW;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.List;

@@ -1,10 +1,10 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.manga.MangaRanking;
 import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
 import com.kttdevelopment.mal4j.manga.property.MangaType;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.List;

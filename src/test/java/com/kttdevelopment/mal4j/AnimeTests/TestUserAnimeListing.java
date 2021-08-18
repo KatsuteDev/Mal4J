@@ -1,10 +1,10 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeSort;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
