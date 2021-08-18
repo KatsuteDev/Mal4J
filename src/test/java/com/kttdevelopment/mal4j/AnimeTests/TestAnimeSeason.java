@@ -55,15 +55,18 @@ public class TestAnimeSeason {
             mal.getAnimeSeason(2014, Season.Winter)
                 .includeNSFW(true)
                 .withFields(Fields.Anime.nsfw)
+                .withLimit(100)
                 .search();
         boolean hasNSFW = false;
-        for(final AnimePreview animePreview : season)
+        for(final AnimePreview animePreview : season){
             if(animePreview.getNSFW() != NSFW.White){
                 hasNSFW = true;
                 break;
             }
+        }
+
         Assertions.assertTrue(hasNSFW,
-                              Workflow.errorSupplier("Failed to find NSFW seasonal Anime (this is an external issue, ignore this)"));
+                              Workflow.errorSupplier("Failed to find NSFW seasonal Anime"));
     }
 
 }

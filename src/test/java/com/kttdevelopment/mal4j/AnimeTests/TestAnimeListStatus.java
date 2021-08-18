@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
+import com.kttdevelopment.mal4j.property.Genre;
 import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
@@ -194,12 +195,14 @@ public class TestAnimeListStatus {
             mal.getUserAnimeListing()
                 .withLimit(1000)
                 .withFields(Fields.Anime.list_status)
+                .withFields(Fields.Anime.genres)
                 .search();
 
-        for(final AnimeListStatus listStatus : list)
-            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID)
+        for(final AnimeListStatus status : list)
+            if(Arrays.asList(status.getAnimePreview().getGenres()).contains(Genre.Ecchi))
                 return;
-        Assertions.fail(Workflow.errorSupplier("Failed to find Anime with Ecchi genre (this is an external issue, ignore this)"));
+
+        Assertions.fail(Workflow.errorSupplier("Failed to find Anime with Ecchi genre"));
     }
 
 }

@@ -1,5 +1,7 @@
 package com.kttdevelopment.mal4j.MangaTests;
 
+import com.kttdevelopment.mal4j.manga.MangaRanking;
+import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
 import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.RelatedAnime;
@@ -9,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
