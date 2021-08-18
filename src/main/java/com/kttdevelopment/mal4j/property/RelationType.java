@@ -23,7 +23,7 @@ package com.kttdevelopment.mal4j.property;
  *
  * @see RelatedMedia#getRelationType()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.4.0
  * @author Katsute
  */
 public enum RelationType {
@@ -72,10 +72,8 @@ public enum RelationType {
     }
 
     @Override
-    public String toString() {
-        return "RelationType{" +
-                "field='" + field + '\'' +
-                '}';
+    public final String toString() {
+        return name();
     }
 
 }
