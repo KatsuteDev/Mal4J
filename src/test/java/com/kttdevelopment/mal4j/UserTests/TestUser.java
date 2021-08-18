@@ -1,10 +1,10 @@
 package com.kttdevelopment.mal4j.UserTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.user.User;
 import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
 import com.kttdevelopment.mal4j.user.property.MangaAffinity;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.function.ThrowingSupplier;
 import org.junit.jupiter.params.ParameterizedTest;

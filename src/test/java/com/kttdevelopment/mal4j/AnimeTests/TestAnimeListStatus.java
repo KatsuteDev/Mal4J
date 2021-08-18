@@ -1,11 +1,12 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
 import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
-import com.kttdevelopment.mal4j.property.Priority;
 import com.kttdevelopment.mal4j.anime.property.RewatchValue;
+import com.kttdevelopment.mal4j.property.Genre;
+import com.kttdevelopment.mal4j.property.Priority;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.*;
@@ -194,12 +195,14 @@ public class TestAnimeListStatus {
             mal.getUserAnimeListing()
                 .withLimit(1000)
                 .withFields(Fields.Anime.list_status)
+                .withFields(Fields.Anime.genres)
                 .search();
 
-        for(final AnimeListStatus listStatus : list)
-            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID)
+        for(final AnimeListStatus status : list)
+            if(Arrays.asList(status.getAnimePreview().getGenres()).contains(Genre.Ecchi))
                 return;
-        Assertions.fail(Workflow.errorSupplier("Failed to find Anime with Ecchi genre (this is an external issue, ignore this)"));
+
+        Assertions.fail(Workflow.errorSupplier("Failed to find Anime with Ecchi genre"));
     }
 
 }

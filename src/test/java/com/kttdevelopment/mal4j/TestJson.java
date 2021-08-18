@@ -7,7 +7,8 @@ import org.junit.jupiter.params.provider.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static com.kttdevelopment.mal4j.Json.*;

@@ -1,8 +1,8 @@
 package com.kttdevelopment.mal4j;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.forum.Post;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 public class TestIterator {

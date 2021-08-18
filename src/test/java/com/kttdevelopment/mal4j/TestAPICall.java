@@ -1,7 +1,7 @@
 package com.kttdevelopment.mal4j;
 
-import dev.katsute.jcore.Workflow;
 import com.sun.net.httpserver.HttpServer;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.io.*;

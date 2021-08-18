@@ -1,11 +1,11 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
-import dev.katsute.jcore.Workflow;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
 import com.kttdevelopment.mal4j.property.NSFW;
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.util.List;
@@ -55,15 +55,18 @@ public class TestAnimeSeason {
             mal.getAnimeSeason(2014, Season.Winter)
                 .includeNSFW(true)
                 .withFields(Fields.Anime.nsfw)
+                .withLimit(100)
                 .search();
         boolean hasNSFW = false;
-        for(final AnimePreview animePreview : season)
+        for(final AnimePreview animePreview : season){
             if(animePreview.getNSFW() != NSFW.White){
                 hasNSFW = true;
                 break;
             }
+        }
+
         Assertions.assertTrue(hasNSFW,
-                              Workflow.errorSupplier("Failed to find NSFW seasonal Anime (this is an external issue, ignore this)"));
+                              Workflow.errorSupplier("Failed to find NSFW seasonal Anime"));
     }
 
 }
