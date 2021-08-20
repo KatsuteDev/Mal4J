@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Katsute
+ * Copyright (C) 2021 Katsute <https://github.com/Katsute>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,11 +19,11 @@
 package com.kttdevelopment.mal4j.user;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
-import com.kttdevelopment.mal4j.user.property.MangaAffinity;
 import com.kttdevelopment.mal4j.property.IDN;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
+import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
+import com.kttdevelopment.mal4j.user.property.MangaAffinity;
 
 import java.util.Date;
 import java.util.function.Consumer;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Katsute
+ * Copyright (C) 2021 Katsute <https://github.com/Katsute>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,10 +19,7 @@
 package com.kttdevelopment.mal4j.manga;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.manga.property.Author;
-import com.kttdevelopment.mal4j.manga.property.MangaPublishStatus;
-import com.kttdevelopment.mal4j.manga.property.MangaRetrievable;
-import com.kttdevelopment.mal4j.manga.property.MangaType;
+import com.kttdevelopment.mal4j.manga.property.*;
 import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**

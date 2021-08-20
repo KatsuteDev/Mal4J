@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Katsute
+ * Copyright (C) 2021 Katsute <https://github.com/Katsute>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,8 @@ import java.nio.charset.Charset;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.logging.Logger;
-import java.util.regex.*;
+import java.util.regex.MatchResult;
+import java.util.regex.Pattern;
 
 /**
  * Brings Java 9 features down to Java 8.
