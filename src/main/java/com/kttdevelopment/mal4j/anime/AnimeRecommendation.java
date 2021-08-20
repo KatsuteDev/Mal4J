@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Katsute
+ * Copyright (C) 2021 Katsute <https://github.com/Katsute>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,7 +18,8 @@
 
 package com.kttdevelopment.mal4j.anime;
 
-import com.kttdevelopment.mal4j.anime.property.*;
+import com.kttdevelopment.mal4j.anime.property.AnimePreviewRetrievable;
+import com.kttdevelopment.mal4j.anime.property.AnimeRetrievable;
 import com.kttdevelopment.mal4j.property.Recommendation;
 
 /**

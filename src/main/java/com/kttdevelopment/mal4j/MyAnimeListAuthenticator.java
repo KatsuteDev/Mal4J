@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Katsute
+ * Copyright (C) 2021 Katsute <https://github.com/Katsute>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,8 @@ import com.kttdevelopment.mal4j.APIStruct.Response;
 import com.sun.net.httpserver.*;
 
 import java.awt.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
