@@ -37,6 +37,7 @@ jobs:
     name: CodeQL (Java ${{ matrix.jdk }})
     runs-on: ubuntu-latest
     needs: build
+    if: github.event == 'pull_request' || github.actor != 'dependabot[bot]'
     strategy:
       matrix:
         jdk: [11]
