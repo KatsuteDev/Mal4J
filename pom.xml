@@ -257,7 +257,7 @@
         <dependency>
             <groupId>dev.katsute</groupId>
             <artifactId>jcore</artifactId>
-            <version>1.0.0</version>
+            <version>1.1.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
