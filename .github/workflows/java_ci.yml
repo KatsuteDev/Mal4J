@@ -18,11 +18,28 @@ jobs:
 
       - name: ☕ Install Java
         uses: actions/setup-java@v2.3.0
+        if: matrix.jdk != '9'
         with:
           architecture: x64
           distribution: temurin
           java-version: ${{ matrix.jdk }}
           cache: maven
+
+      - name: 📚 Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1.1.1
+        if: matrix.jdk == '9'
+        with:
+          version: ${{ matrix.jdk }}
+          architecture: x64
+
+      - name: 📤 Load Cache
+        uses: actions/cache@v2.1.6
+        if: matrix.jdk == '9'
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: ✔ Compile with Maven
         run: mvn compile -DskipTests --no-transfer-progress
@@ -73,11 +90,28 @@ jobs:
 
       - name: ☕ Install Java
         uses: actions/setup-java@v2.3.0
+        if: matrix.jdk != '9'
         with:
           architecture: x64
           distribution: temurin
           java-version: ${{ matrix.jdk }}
           cache: maven
+
+      - name: 📚 Install OpenJDK
+        uses: AdoptOpenJDK/install-jdk@v1.1.1
+        if: matrix.jdk == '9'
+        with:
+          version: ${{ matrix.jdk }}
+          architecture: x64
+
+      - name: 📤 Load Cache
+        uses: actions/cache@v2.1.6
+        if: matrix.jdk == '9'
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
 
       - name: ✔ Test with Maven
         run: mvn test -fae --no-transfer-progress
