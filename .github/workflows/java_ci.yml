@@ -16,19 +16,13 @@ jobs:
       - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
 
-      - name: 📚 Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1.1.1
+      - name: ☕ Install Java
+        uses: actions/setup-java@v2.3.0
         with:
-          version: ${{ matrix.jdk }}
           architecture: x64
-
-      - name: 📤 Load Cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          distribution: temurin
+          java-version: ${{ matrix.jdk }}
+          cache: maven
 
       - name: ✔ Compile with Maven
         run: mvn compile -DskipTests --no-transfer-progress
@@ -51,19 +45,13 @@ jobs:
         with:
           languages: java
 
-      - name: 📚 Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1.1.1
+      - name: ☕ Install Java
+        uses: actions/setup-java@v2.3.0
         with:
-          version: ${{ matrix.jdk }}
           architecture: x64
-
-      - name: 📤 Load Cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          distribution: temurin
+          java-version: ${{ matrix.jdk }}
+          cache: maven
 
       - name: ✔ Compile with Maven
         run: mvn compile -DskipTests --no-transfer-progress
@@ -83,19 +71,13 @@ jobs:
       - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
 
-      - name: 📚 Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1.1.1
+      - name: ☕ Install Java
+        uses: actions/setup-java@v2.3.0
         with:
-          version: ${{ matrix.jdk }}
           architecture: x64
-
-      - name: 📤 Load Cache
-        uses: actions/cache@v2.1.6
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          distribution: temurin
+          java-version: ${{ matrix.jdk }}
+          cache: maven
 
       - name: ✔ Test with Maven
         run: mvn test -fae --no-transfer-progress
