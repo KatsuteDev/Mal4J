@@ -49,10 +49,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     if: github.event == 'pull_request' || github.actor != 'dependabot[bot]'
-    strategy:
-      matrix:
-        jdk: [11]
-      fail-fast: false
     steps:
       - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
@@ -67,7 +63,7 @@ jobs:
         with:
           architecture: x64
           distribution: temurin
-          java-version: ${{ matrix.jdk }}
+          java-version: 11
           cache: maven
 
       - name: ✔ Compile with Maven
