@@ -15,11 +15,12 @@ jobs:
       - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
 
-      - name: 📚 Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1.1.1
+      - name: ☕ Install Java
+        uses: actions/setup-java@v2.3.0
         with:
-          version: ${{ matrix.jdk }}
           architecture: x64
+          distribution: temurin
+          java-version: ${{ matrix.jdk }}
 
       - name: 🔐 Load OAuth Token
         run: |
