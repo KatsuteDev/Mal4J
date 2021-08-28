@@ -417,9 +417,6 @@ class APICall {
                 throw new IllegalStateException(e);
             }
         else{
-            if(method.equalsIgnoreCase("PATCH") && !PATCH_ENABLED)
-                throw new AndroidCompatibilityException(PATCH_DISABLED);
-
             final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL), encoder)).toURL().openConnection();
 
             for(final Map.Entry<String, String> entry : headers.entrySet())
@@ -429,7 +426,14 @@ class APICall {
             conn.setRequestProperty("Accept", "application/json; charset=UTF-8");
             conn.setConnectTimeout(10_000);
             conn.setReadTimeout(10_000);
-            conn.setRequestMethod(method);
+
+            if(!method.equalsIgnoreCase("PATCH") || PATCH_ENABLED)
+                conn.setRequestMethod(method);
+            else{
+                // MyAnimeList API supports `X-HTTP-Method-Override`
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+            }
 
             if(formUrlEncoded){
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

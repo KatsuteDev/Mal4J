@@ -100,6 +100,7 @@ public enum Genre {
      *
      * @since 2.1.0
      */
+    @SuppressWarnings("UnusedReturnValue")
     public final int getAnimeGenreID(){
         if(animeGenreID == -1)
             throw new UnsupportedOperationException("There is no Anime genre ID for this genre. Try getMangaGenreID()");
@@ -114,6 +115,7 @@ public enum Genre {
      *
      * @since 2.1.0
      */
+    @SuppressWarnings("UnusedReturnValue")
     public final int getMangaGenreID(){
         if(mangaGenreID == -1)
             throw new UnsupportedOperationException("There is no Manga genre ID for this genre. Try getAnimeGenreID()");

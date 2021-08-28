@@ -9,6 +9,7 @@ package com.kttdevelopment.mal4j;
  */
 public final class InvalidTokenException extends RuntimeException {
 
+    @SuppressWarnings("SameParameterValue")
     InvalidTokenException(final String message){
         super(message);
     }
