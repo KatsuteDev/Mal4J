@@ -22,8 +22,8 @@ import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.*;
-import java.net.HttpURLConnection;
-import java.net.URI;
+import java.lang.reflect.Proxy;
+import java.net.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
@@ -43,11 +43,6 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 class APICall {
 
     static boolean debug = false;
-
-    @SuppressWarnings("CanBeFinal")
-    private static boolean PATCH_ENABLED = false;
-
-    private static final String PATCH_DISABLED = "The current Android version is not fully compatible with this library; PATCH methods will be disabled";
 
     private final String method;
     private final String baseURL;
@@ -224,8 +219,6 @@ class APICall {
 
                     HttpResponse_Body = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("body");
                     HttpResponse_Code = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("statusCode");
-
-                    PATCH_ENABLED = true;
                 }catch(final ClassNotFoundException | NoSuchMethodException e){
                     throw new IllegalStateException(e);
                 }
@@ -233,7 +226,7 @@ class APICall {
 
     }
 
-    // initialize HTTPUrlConnection
+    // try to initialize HTTPUrlConnection
     static {
         final String version = System.getProperty("java.version");
         useNetHttp = (version != null ? Integer.parseInt(version.contains(".") ? version.substring(0, version.indexOf(".")) : version) : 0) >= 11;
@@ -255,9 +248,7 @@ class APICall {
                             try{ // Android API 1-8 (1 - 2.2.3)
                                 //noinspection JavaReflectionMemberAccess
                                 methods = HttpURLConnection.class.getDeclaredField("methodTokens");
-                            }catch(final NoSuchFieldException ignored3){
-                                Logger.getGlobal().warning(PATCH_DISABLED);
-                            }
+                            }catch(final NoSuchFieldException ignored3){ }
                         }
                     }
                 }
@@ -276,7 +267,6 @@ class APICall {
                                 modifiers = Class.forName("java.lang.reflect.ArtField").getDeclaredField("accessFlags");
                             }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
                                 // Android API 1 (1.0) [NOT SUPPORTED]
-                                Logger.getGlobal().warning(PATCH_DISABLED);
                             }
                         }
                     }
@@ -295,21 +285,16 @@ class APICall {
                             newMethods.add("PATCH");
                             methods.set(null, newMethods.toArray(new String[0]));
 
-                            // set field to FINAL
+                            // reset field to FINAL
                             modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
                             methods.setAccessible(false);
                             modifiers.setAccessible(false);
-
-                            PATCH_ENABLED = true;
-                        }catch(final IllegalAccessException e){
-                            throw new IllegalStateException(e);
-                        }
+                        }catch(final IllegalAccessException ignored){ }
                     }
                 }
             }catch(final RuntimeException e){
-                throw e.getClass().getSimpleName().equals("InaccessibleObjectException")
-                    ? new IllegalStateException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+")
-                    : e;
+                if(e.getClass().getSimpleName().equals("InaccessibleObjectException"))
+                    throw new IllegalStateException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+");
             }
     }
 
@@ -427,9 +412,10 @@ class APICall {
             conn.setConnectTimeout(10_000);
             conn.setReadTimeout(10_000);
 
-            if(!method.equalsIgnoreCase("PATCH") || PATCH_ENABLED)
+            // set request method
+            try{
                 conn.setRequestMethod(method);
-            else{
+            }catch(final ProtocolException ignored){
                 // MyAnimeList API supports `X-HTTP-Method-Override`
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("X-HTTP-Method-Override", "PATCH");
