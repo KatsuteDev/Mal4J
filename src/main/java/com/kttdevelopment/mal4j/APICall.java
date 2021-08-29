@@ -368,10 +368,10 @@ class APICall {
                 conn.setRequestMethod(method);
             else{
                 try{
-                    method_field.setAccessible(true);
-                    method_field.set(conn, "PATCH"); // set method field in connection
-
-                    if(!conn.getRequestMethod().equalsIgnoreCase("PATCH")){ // https
+                    if(!(conn instanceof HttpsURLConnectionImpl)){
+                        method_field.setAccessible(true);
+                        method_field.set(conn, "PATCH"); // set method field in connection
+                    }else{ // https
                         delegate_field.setAccessible(true);
                         method_field.set(delegate_field.get(conn), "PATCH"); // set method field inside delegate class
                     }
