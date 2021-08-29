@@ -6,7 +6,7 @@ package com.kttdevelopment.mal4j;
  * Thrown if the Android version is not compatible with a genuine Java runtime.
  *
  * @since 2.2.1
- * @version 2.3.0
+ * @version 2.4.0
  * @author Katsute
  */
 @Deprecated
