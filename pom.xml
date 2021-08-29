@@ -241,6 +241,13 @@
     </build>
 
     <dependencies>
+        <!-- android tests -->
+        <dependency>
+            <groupId>org.apache.bcel</groupId>
+            <artifactId>bcel</artifactId>
+            <version>6.5.0</version>
+            <scope>test</scope>
+        </dependency>
         <!-- tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
