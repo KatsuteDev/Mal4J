@@ -33,7 +33,9 @@
 
 # Overview
 
-Mal4J is a modular wrapper for the MyAnimeList API written for Java 8+ and simplifies many complex operations into an easy to use library.
+Mal4J is a modular wrapper for the MyAnimeList API written for Java 8+ and most* Android versions.
+
+<small>* all versions except 1, 2, 5, 9</small>
 
 # [Setup](https://github.com/Katsute/Mal4J/blob/main/setup.md)
 

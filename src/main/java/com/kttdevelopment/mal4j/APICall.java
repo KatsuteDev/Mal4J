@@ -18,6 +18,8 @@
 
 package com.kttdevelopment.mal4j;
 
+import sun.net.www.protocol.https.HttpsURLConnectionImpl;
+
 import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -43,11 +45,6 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 class APICall {
 
     static boolean debug = false;
-
-    @SuppressWarnings("CanBeFinal")
-    private static boolean PATCH_ENABLED = false;
-
-    private static final String PATCH_DISABLED = "The current Android version is not fully compatible with this library; PATCH methods will be disabled";
 
     private final String method;
     private final String baseURL;
@@ -175,6 +172,11 @@ class APICall {
 
     // call
 
+    private static final String PATCH_DISABLED = "The current Android version is not fully compatible with this library; PATCH methods will be disabled";
+
+    private static Field delegate_field = null;
+    private static Field method_field   = null;
+
     private static final boolean useNetHttp;
 
     private static class JDK11 {
@@ -224,8 +226,6 @@ class APICall {
 
                     HttpResponse_Body = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("body");
                     HttpResponse_Code = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("statusCode");
-
-                    PATCH_ENABLED = true;
                 }catch(final ClassNotFoundException | NoSuchMethodException e){
                     throw new IllegalStateException(e);
                 }
@@ -238,79 +238,16 @@ class APICall {
         final String version = System.getProperty("java.version");
         useNetHttp = (version != null ? Integer.parseInt(version.contains(".") ? version.substring(0, version.indexOf(".")) : version) : 0) >= 11;
 
-        if(!useNetHttp)
-            try{
-                Field methods = null;
-                try{ // Standard Java implementation and Android API 23+ (6.0+)
-                    methods = HttpURLConnection.class.getDeclaredField("methods");
-                }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
-                    try{ // Android API 13-22 (3.2 - 5.1.1)
-                        //noinspection JavaReflectionMemberAccess
-                        methods = HttpURLConnection.class.getDeclaredField("PERMITTED_USER_METHODS");
-                    }catch(final NoSuchFieldException ignored1){
-                        try{ // Android API 9-12 (2.3 - 3.1)
-                            //noinspection SpellCheckingInspection
-                            methods = Class.forName("libcore.net.http.HttpURLConnectionImpl").getDeclaredField("PERMITTED_USER_METHODS");
-                        }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
-                            try{ // Android API 1-8 (1 - 2.2.3)
-                                //noinspection JavaReflectionMemberAccess
-                                methods = HttpURLConnection.class.getDeclaredField("methodTokens");
-                            }catch(final NoSuchFieldException ignored3){
-                                Logger.getGlobal().warning(PATCH_DISABLED);
-                            }
-                        }
-                    }
-                }
-
-                if(methods != null){
-                    Field modifiers = null;
-
-                    try{ // Standard Java implementation
-                        modifiers = Field.class.getDeclaredField("modifiers");
-                    }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
-                        try{ // Android API 2-17 (1.1 - 4.2.2) & Android API 26+ (8.0+)
-                            //noinspection JavaReflectionMemberAccess
-                            modifiers = Field.class.getDeclaredField("accessFlags");
-                        }catch(final NoSuchFieldException ignored1){
-                            try{ // Android API 18-25 (4.3 - 7.1.2)
-                                modifiers = Class.forName("java.lang.reflect.ArtField").getDeclaredField("accessFlags");
-                            }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
-                                // Android API 1 (1.0) [NOT SUPPORTED]
-                                Logger.getGlobal().warning(PATCH_DISABLED);
-                            }
-                        }
-                    }
-
-                    if(modifiers != null){
-                        modifiers.setAccessible(true);
-
-                        try{
-                            // remove FINAL from field
-                            modifiers.setInt(methods, methods.getModifiers() & ~Modifier.FINAL);
-                            methods.setAccessible(true);
-
-                            // add PATCH to methods array
-                            final String[] nativeMethods = (String[]) methods.get(null);
-                            final Set<String> newMethods = new HashSet<>(Arrays.asList(nativeMethods));
-                            newMethods.add("PATCH");
-                            methods.set(null, newMethods.toArray(new String[0]));
-
-                            // set field to FINAL
-                            modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
-                            methods.setAccessible(false);
-                            modifiers.setAccessible(false);
-
-                            PATCH_ENABLED = true;
-                        }catch(final IllegalAccessException e){
-                            throw new IllegalStateException(e);
-                        }
-                    }
-                }
-            }catch(final RuntimeException e){
-                throw e.getClass().getSimpleName().equals("InaccessibleObjectException")
+        try{
+            method_field = HttpURLConnection.class.getDeclaredField("method");
+            delegate_field = HttpsURLConnectionImpl.class.getDeclaredField("delegate");
+        }catch(final NoSuchFieldException ignored){
+            Logger.getGlobal().warning(PATCH_DISABLED);
+        }catch(final RuntimeException e){
+            throw e.getClass().getSimpleName().equals("InaccessibleObjectException")
                     ? new IllegalStateException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+")
                     : e;
-            }
+        }
     }
 
     // [{}|\\^\[\]`]
@@ -417,9 +354,6 @@ class APICall {
                 throw new IllegalStateException(e);
             }
         else{
-            if(method.equalsIgnoreCase("PATCH") && !PATCH_ENABLED)
-                throw new AndroidCompatibilityException(PATCH_DISABLED);
-
             final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL), encoder)).toURL().openConnection();
 
             for(final Map.Entry<String, String> entry : headers.entrySet())
@@ -429,7 +363,25 @@ class APICall {
             conn.setRequestProperty("Accept", "application/json; charset=UTF-8");
             conn.setConnectTimeout(10_000);
             conn.setReadTimeout(10_000);
-            conn.setRequestMethod(method);
+
+            if(!method.equalsIgnoreCase("PATCH"))
+                conn.setRequestMethod(method);
+            else{
+                try{
+                    method_field.setAccessible(true);
+                    method_field.set(conn, "PATCH"); // set method field in connection
+
+                    if(!conn.getRequestMethod().equalsIgnoreCase("PATCH")){ // https
+                        delegate_field.setAccessible(true);
+                        method_field.set(delegate_field.get(conn), "PATCH"); // set method field inside delegate class
+                    }
+                }catch(final IllegalAccessException e){
+                    throw new IllegalStateException(e);
+                }finally{
+                    method_field.setAccessible(false);
+                    delegate_field.setAccessible(false);
+                }
+            }
 
             if(formUrlEncoded){
                 conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");

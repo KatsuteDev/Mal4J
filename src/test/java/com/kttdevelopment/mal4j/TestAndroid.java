@@ -48,6 +48,7 @@ public class TestAndroid {
         //
 
         Assumptions.assumeTrue(doesNotThrow(() -> getField(classes, "java.net.HttpURLConnection", "method")), Workflow.warningSupplier("Failed to use HttpURLConnection on Android " + i));
+        Assumptions.assumeTrue(doesNotThrow(() -> getField(classes, "sun.net.www.protocol.https.HttpsURLConnectionImpl", "delegate")), Workflow.warningSupplier("Failed to use HttpsURLConnectionImpl on Android " + i));
     }
 
     private static <T> boolean doesNotThrow(final ThrowingSupplier<T> supplier){
