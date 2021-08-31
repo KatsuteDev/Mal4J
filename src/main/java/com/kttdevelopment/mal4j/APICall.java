@@ -171,30 +171,31 @@ class APICall {
 
     private static final boolean useNetHttp;
 
+    @SuppressWarnings("FieldCanBeLocal")
     private static class JDK11 {
 
-        static Class<?> HttpRequest;
-            static Method HttpRequest_NewBuilder;
+        private static Class<?> HttpRequest;
+            private static Method HttpRequest_NewBuilder;
 
-        static Class<?> HttpRequestBuilder;
-            static Method HttpRequestBuilder_URI;
-            static Method HttpRequestBuilder_Method;
-            static Method HttpRequestBuilder_Header;
-                static Method BodyPublishers_NoBody;
-                static Method BodyPublishers_StringBody;
-            static Method HttpRequestBuilder_Build;
+        private static Class<?> HttpRequestBuilder;
+            private static Method HttpRequestBuilder_URI;
+            private static Method HttpRequestBuilder_Method;
+            private static Method HttpRequestBuilder_Header;
+                private static Method BodyPublishers_NoBody;
+                private static Method BodyPublishers_StringBody;
+            private static Method HttpRequestBuilder_Build;
 
-        static Class<?> HttpClientBuilder;
-            static Method HttpClientBuilder_ConnectTimeout;
-            static Method HttpClientBuilder_Build;
+        private static Class<?> HttpClientBuilder;
+            private static Method HttpClientBuilder_ConnectTimeout;
+            private static Method HttpClientBuilder_Build;
 
-        static Class<?> HttpClient;
-            static Method HttpClient_NewBuilder;
-            static Method HttpClient_Send;
-                static Method BodyHandlers_StringBody;
+        private static Class<?> HttpClient;
+            private static Method HttpClient_NewBuilder;
+            private static Method HttpClient_Send;
+                private static Method BodyHandlers_StringBody;
 
-        static Method HttpResponse_Body;
-        static Method HttpResponse_Code;
+        private static Method HttpResponse_Body;
+        private static Method HttpResponse_Code;
 
         static {
             if(useNetHttp)
