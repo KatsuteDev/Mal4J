@@ -83,7 +83,7 @@ public class TestAnimeListStatus {
             .episodesWatched(24)
             .rewatching(true)
             .priority(Priority.High)
-            .timesRewatched(0)
+            .timesRewatched(1)
             .rewatchValue(RewatchValue.VeryHigh)
             .tags(TestProvider.testTags())
             .comments(TestProvider.testComment)
@@ -162,7 +162,7 @@ public class TestAnimeListStatus {
                                  Workflow.errorSupplier("Expected finish date to not be null"));
         Assertions.assertEquals(Priority.High, status.getPriority(),
                                 Workflow.errorSupplier("Expected priority to match"));
-        Assertions.assertEquals(0, status.getTimesRewatched(),
+        Assertions.assertEquals(1, status.getTimesRewatched(),
                                 Workflow.errorSupplier("Expected times rewatched to match"));
         Assertions.assertEquals(RewatchValue.VeryHigh, status.getRewatchValue(),
                                 Workflow.errorSupplier("Expected rewatch value to match"));
