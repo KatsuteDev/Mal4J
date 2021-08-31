@@ -86,7 +86,7 @@ public class TestMangaListStatus {
             .chaptersRead(49)
             .rereading(true)
             .priority(Priority.High)
-            .timesReread(0)
+            .timesReread(1)
             .rereadValue(RereadValue.VeryHigh)
             .tags(TestProvider.testTags())
             .comments(TestProvider.testComment)
@@ -164,7 +164,7 @@ public class TestMangaListStatus {
                                  Workflow.errorSupplier("Expected finish data to not be null"));
         Assertions.assertEquals(Priority.High, status.getPriority(),
                                 Workflow.errorSupplier("Expected priority to match"));
-        Assertions.assertEquals(0, status.getTimesReread(),
+        Assertions.assertEquals(1, status.getTimesReread(),
                                 Workflow.errorSupplier("Expected times reread to match"));
         Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue(),
                                 Workflow.errorSupplier("Expected reread value to match"));
