@@ -40,7 +40,6 @@ import java.util.function.Consumer;
  * @version 2.3.0
  * @author Katsute
  */
-@SuppressWarnings("GrazieInspection")
 public abstract class User implements IDN {
 
     /**
