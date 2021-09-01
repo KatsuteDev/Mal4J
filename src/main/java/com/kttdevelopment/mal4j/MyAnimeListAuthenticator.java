@@ -38,7 +38,7 @@ import static com.kttdevelopment.mal4j.Json.*;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/authorization">https://myanimelist.net/apiconfig/references/authorization</a> <br>
- * Authenticator is used to retrieve OAuth2 tokens given a client id and client secret.
+ * The authenticator is used to retrieve OAuth2 tokens given a client id and client secret.
  * <br><br>
  * MyAnimeList can be authenticated by with either:
  * <ul>
@@ -50,6 +50,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * @version 2.3.0
  * @author Katsute
  */
+@SuppressWarnings("GrazieInspection")
 public final class MyAnimeListAuthenticator {
 
     // required fields

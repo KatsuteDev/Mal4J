@@ -126,7 +126,7 @@ class Json {
             final String after = flatJson.substring(index + 1);
             final long count = Java9.Matcher.count(quotes.reset(after));
             if(count %2 == 0){ // even means symbol is not within quotes
-                if(lastMatch != -1) // if not first (no before content)
+                if(lastMatch != -1) // if not first (no content before this)
                     OUT.append(flatJson, lastMatch, index); // add content between last match and here
                 lastMatch = index + 1;
                 final char ch = splitMatcher.group().charAt(0);

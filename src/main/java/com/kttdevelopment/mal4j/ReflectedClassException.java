@@ -25,6 +25,7 @@ package com.kttdevelopment.mal4j;
  * @version 2.4.0
  * @author Katsute
  */
+@SuppressWarnings("SameParameterValue")
 public final class ReflectedClassException extends RuntimeException {
 
     ReflectedClassException(){ }

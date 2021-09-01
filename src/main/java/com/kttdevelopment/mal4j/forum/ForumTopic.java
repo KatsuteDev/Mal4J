@@ -31,6 +31,7 @@ import java.util.Date;
  * @version 2.0.0
  * @author Katsute
  */
+@SuppressWarnings("GrazieInspection")
 public abstract class ForumTopic implements ID {
 
     /**

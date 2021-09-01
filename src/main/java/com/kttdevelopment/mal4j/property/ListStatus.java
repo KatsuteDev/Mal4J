@@ -107,6 +107,7 @@ public interface ListStatus<Status extends Enum<?>> {
      * @see #getUpdatedAtEpochMillis()
      * @since 1.0.0
      */
+    @SuppressWarnings("GrazieInspection")
     Date getUpdatedAt();
 
     /**
@@ -117,6 +118,7 @@ public interface ListStatus<Status extends Enum<?>> {
      * @see #getUpdatedAt()
      * @since 1.0.0
      */
+    @SuppressWarnings("GrazieInspection")
     Long getUpdatedAtEpochMillis();
 
 }
