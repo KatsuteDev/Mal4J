@@ -19,17 +19,20 @@
 package com.kttdevelopment.mal4j;
 
 /**
- * Thrown if the token is either invalid or expired.
+ * Thrown if a reflected class throws an exception.
  *
- * @since 2.3.0
- * @version 2.3.0
+ * @since 2.4.0
+ * @version 2.4.0
  * @author Katsute
  */
-public final class InvalidTokenException extends RuntimeException {
+public final class ReflectedClassException extends RuntimeException {
 
-    @SuppressWarnings("SameParameterValue")
-    InvalidTokenException(final String message){
-        super(message);
-    }
+    ReflectedClassException(){ }
+
+    ReflectedClassException(final String message){ super(message); }
+
+    ReflectedClassException(final String message, final Throwable cause){ super(message, cause); }
+
+    ReflectedClassException(final Throwable cause){ super(cause); }
 
 }

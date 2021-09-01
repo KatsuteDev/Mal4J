@@ -19,17 +19,20 @@
 package com.kttdevelopment.mal4j;
 
 /**
- * Thrown if the token is either invalid or expired.
+ * Thrown if an exception occurs in a static initializer.
  *
- * @since 2.3.0
- * @version 2.3.0
+ * @since 2.4.0
+ * @version 2.4.0
  * @author Katsute
  */
-public final class InvalidTokenException extends RuntimeException {
+public final class StaticInitializerException extends RuntimeException {
 
-    @SuppressWarnings("SameParameterValue")
-    InvalidTokenException(final String message){
-        super(message);
-    }
+    StaticInitializerException(){ }
+
+    StaticInitializerException(final String message){ super(message); }
+
+    StaticInitializerException(final String message, final Throwable cause){ super(message, cause); }
+
+    StaticInitializerException(final Throwable cause){ super(cause); }
 
 }

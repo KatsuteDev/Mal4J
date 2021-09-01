@@ -61,7 +61,7 @@ class APICall {
     }
 
     /**
-     * API call from annotated interface method.
+     * API calls from annotated interface method.
      *
      * @param baseURL base url
      * @param method method
@@ -220,7 +220,7 @@ class APICall {
                     HttpResponse_Body = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("body");
                     HttpResponse_Code = Class.forName("java.net.http.HttpResponse").getDeclaredMethod("statusCode");
                 }catch(final ClassNotFoundException | NoSuchMethodException e){
-                    throw new IllegalStateException(e);
+                    throw new StaticInitializerException("Failed to initialize HttpClient, please report this to the maintainers of Mal4J", e);
                 }
         }
 
@@ -294,7 +294,7 @@ class APICall {
                 }
             }catch(final RuntimeException e){
                 if(e.getClass().getSimpleName().equals("InaccessibleObjectException"))
-                    throw new IllegalStateException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+");
+                    throw new StaticInitializerException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+", e);
             }
     }
 
@@ -399,7 +399,7 @@ class APICall {
                 code = (int) JDK11.HttpResponse_Code.invoke(HttpResponse_Instance);
 
             }catch(final IllegalAccessException | InvocationTargetException | ClassCastException e){
-                throw new IllegalStateException(e);
+                throw new ReflectedClassException("Failed to use reflected HttpClient, please report this to the maintainers of Mal4J", e);
             }
         else{
             final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL), encoder)).toURL().openConnection();

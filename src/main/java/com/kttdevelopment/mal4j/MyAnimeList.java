@@ -44,7 +44,7 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.3.0
+ * @version 2.4.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
@@ -56,7 +56,7 @@ public abstract class MyAnimeList {
      *
      * @param token OAuth token, Ex: 'Bearer oauth2token'
      * @throws NullPointerException if token is null
-     * @throws IllegalArgumentException if token doesn't start with 'Bearer'
+     * @throws InvalidTokenException if token doesn't start with 'Bearer'
      *
      * @return MyAnimeList
      *
@@ -86,7 +86,7 @@ public abstract class MyAnimeList {
     /**
      * Refreshes the OAuth token. Only works with {@link #withAuthorization(MyAnimeListAuthenticator)}.
      *
-     * @throws UnsupportedOperationException if the object was not created with an authenticator
+     * @throws UnsupportedOperationException if this wasn't created with an authenticator.
      *
      * @since 1.0.0
      */

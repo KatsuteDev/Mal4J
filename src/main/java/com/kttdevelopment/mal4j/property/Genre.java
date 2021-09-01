@@ -22,7 +22,7 @@ package com.kttdevelopment.mal4j.property;
  * Represents a Genre. Genre IDs are different for Anime and Manga.
  *
  * @since 1.0.0
- * @version 2.1.0
+ * @version 2.4.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
@@ -95,7 +95,7 @@ public enum Genre {
     /**
      * Returns the genre ID for Anime.
      *
-     * @throws UnsupportedOperationException if there is no ID associated with this genre for Anime
+     * @throws NullPointerException if there is no ID associated with this genre for Anime
      * @return Anime genre ID
      *
      * @since 2.1.0
@@ -103,14 +103,14 @@ public enum Genre {
     @SuppressWarnings("UnusedReturnValue")
     public final int getAnimeGenreID(){
         if(animeGenreID == -1)
-            throw new UnsupportedOperationException("There is no Anime genre ID for this genre. Try getMangaGenreID()");
+            throw new NullPointerException("There is no Anime genre ID for genre " + name + ". Try getMangaGenreID()");
         return animeGenreID;
     }
 
     /**
      * Returns the genre ID for Manga.
      *
-     * @throws UnsupportedOperationException if there is no ID associated with this genre for Manga
+     * @throws NullPointerException if there is no ID associated with this genre for Manga
      * @return Manga genre ID
      *
      * @since 2.1.0
@@ -118,7 +118,7 @@ public enum Genre {
     @SuppressWarnings("UnusedReturnValue")
     public final int getMangaGenreID(){
         if(mangaGenreID == -1)
-            throw new UnsupportedOperationException("There is no Manga genre ID for this genre. Try getAnimeGenreID()");
+            throw new NullPointerException("There is no Manga genre ID for genre " + name + ". Try getAnimeGenreID()");
         return mangaGenreID;
     }
 

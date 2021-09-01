@@ -159,7 +159,7 @@ class Json {
                     throw new JsonSyntaxException("Unexpected starting character: '" + ln + "' expected '{' or '['", json);
             }else
                 throw new JsonSyntaxException("Json string was empty", json);
-        }catch(final IOException e){ // should never occur, but just in case:
+        }catch(final IOException e){ // any exceptions caused by reader
             throw new UncheckedIOException(e);
         }
     }

@@ -250,7 +250,7 @@ public final class MyAnimeListAuthenticator {
      *
      * @see MyAnimeListAuthenticator
      * @since 1.1.0
-     * @version 1.1.0
+     * @version 2.4.0
      * @author Katsute
      */
     public static final class LocalServerBuilder {
@@ -614,7 +614,7 @@ public final class MyAnimeListAuthenticator {
         try{
             digest = MessageDigest.getInstance("SHA-256");
         }catch(final NoSuchAlgorithmException e){ // should NEVER occur
-            throw new RuntimeException(e);
+            throw new RuntimeException("An exception that should not have been thrown has been thrown, please report this to the maintainers of Mal4J", e);
         }
 
         final byte[] encodedHash        = digest.digest(str.getBytes(StandardCharsets.UTF_8));
