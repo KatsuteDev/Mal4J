@@ -49,6 +49,7 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaR
      *
      * @since 1.0.0
      */
+    @SuppressWarnings("GrazieInspection")
     public abstract Integer getVolumesRead();
 
     /**
@@ -58,6 +59,7 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaR
      *
      * @since 1.0.0
      */
+    @SuppressWarnings("GrazieInspection")
     public abstract Integer getChaptersRead();
 
     /**

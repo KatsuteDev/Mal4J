@@ -64,7 +64,7 @@ final class MyAnimeListImpl extends MyAnimeList {
     MyAnimeListImpl(final String auth){
         Objects.requireNonNull(auth, "OAuth token cannot be null");
         if(!auth.startsWith("Bearer "))
-            throw new IllegalArgumentException("Oauth token should start with 'Bearer'");
+            throw new InvalidTokenException("Oauth token should start with 'Bearer'");
         this.auth = auth;
     }
 

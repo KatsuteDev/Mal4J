@@ -30,7 +30,7 @@ public class TestAffinityAlgorithm {
 
     @Test
     public void testMismatchAffinity(){
-        Assertions.assertThrows(IllegalStateException.class, () -> algorithm.getAffinity(new int[0], new int[1]), Workflow.errorSupplier("Expected mismatch affinity arrays to throw an exception"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> algorithm.getAffinity(new int[0], new int[1]), Workflow.errorSupplier("Expected mismatch affinity arrays to throw an exception"));
     }
 
     @SuppressWarnings("unused")

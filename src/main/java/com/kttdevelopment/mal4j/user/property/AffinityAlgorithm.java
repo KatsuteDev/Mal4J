@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.user.property;
 
 /**
- * The affinity algorithm returns a affinity score based on the shared scores between two people.
+ * The affinity algorithm returns an affinity score based on the shared scores between two people.
  *
  * @see MyAnimeListAffinityAlgorithm
  * @since 2.3.0

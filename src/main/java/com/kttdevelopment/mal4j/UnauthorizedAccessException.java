@@ -26,6 +26,7 @@ package com.kttdevelopment.mal4j;
  * @version 2.2.1
  * @author Katsute
  */
+@SuppressWarnings("GrazieInspection")
 public final class UnauthorizedAccessException extends RuntimeException {
 
     @SuppressWarnings("SameParameterValue")

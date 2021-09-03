@@ -19,14 +19,13 @@
 package com.kttdevelopment.mal4j.manga.property;
 
 /**
- * Represents a Anime listings rewatch value.
+ * Represents a Manga listing's reread value.
  *
  * @see com.kttdevelopment.mal4j.query.MangaListUpdate#rereadValue(RereadValue)
  * @since 1.0.0
  * @version 1.0.0
  * @author Katsute
  */
-@SuppressWarnings("SpellCheckingInspection")
 public enum RereadValue {
 
     None        (0),

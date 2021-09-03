@@ -52,6 +52,7 @@ public abstract class Post implements ID {
      * @see #getCreatedAtEpochMillis()
      * @since 1.0.0
      */
+    @SuppressWarnings("GrazieInspection")
     public abstract Date getCreatedAt();
 
     /**
@@ -62,6 +63,7 @@ public abstract class Post implements ID {
      * @see #getCreatedAt()
      * @since 1.0.0
      */
+    @SuppressWarnings("GrazieInspection")
     public abstract Long getCreatedAtEpochMillis();
 
     /**

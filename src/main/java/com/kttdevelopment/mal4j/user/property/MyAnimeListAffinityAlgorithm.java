@@ -25,7 +25,7 @@ package com.kttdevelopment.mal4j.user.property;
  *
  * @see AffinityAlgorithm
  * @since 2.3.0
- * @version 2.3.0
+ * @version 2.4.0
  * @author Ktt Development
  */
 public final class MyAnimeListAffinityAlgorithm implements AffinityAlgorithm {
@@ -36,6 +36,7 @@ public final class MyAnimeListAffinityAlgorithm implements AffinityAlgorithm {
      * @param a_scores shared scores for first user (in same order as second user)
      * @param b_scores shared scores for second user (in same order as first user)
      * @return affinity as a float (100% = 1f; 50% = .5f)
+     * @throws IllegalArgumentException if array lengths are not the same
      *
      * @since 2.3.0
      */
@@ -43,7 +44,7 @@ public final class MyAnimeListAffinityAlgorithm implements AffinityAlgorithm {
     public final float getAffinity(final int[] a_scores, final int[] b_scores){
         final int len = a_scores.length;
         if(len != b_scores.length)
-            throw new IllegalStateException("Both arrays must be of the same length");
+            throw new IllegalArgumentException("Both arrays must be of the same length, argument 1 was of length " + a_scores.length + " while argument 2 was of length " + b_scores.length);
         else if(len == 0)
             return 0f;
 
