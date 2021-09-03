@@ -29,7 +29,7 @@ package com.kttdevelopment.mal4j.anime.property.time;
 public abstract class Time {
 
     /**
-     * Returns the hour on a 24 hour clock (0-23).
+     * Returns the hour on a 24-hour clock (0-23).
      *
      * @return hour
      *
@@ -38,7 +38,7 @@ public abstract class Time {
     public abstract Integer getHour();
 
     /**
-     * Returns the hour on a 12 hour clock (1-12).
+     * Returns the hour on a 12-hour clock (1-12).
      *
      * @return hour
      *

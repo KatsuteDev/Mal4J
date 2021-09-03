@@ -77,9 +77,9 @@ public final class AccessToken {
     }
 
     /**
-     * Returns if the token is expired.
+     * Returns if the token used is expired.
      *
-     * @return if token is expired
+     * @return if the token used is expired
      *
      * @see #getTimeUntilExpires()
      * @since 1.0.0

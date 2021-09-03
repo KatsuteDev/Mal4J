@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.property.FullMediaItem;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get</a> <br>
- * Represents an Manga's full details.
+ * Represents a Manga's full details.
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getManga(long)
  * @see com.kttdevelopment.mal4j.MyAnimeList#getManga(long, String...)

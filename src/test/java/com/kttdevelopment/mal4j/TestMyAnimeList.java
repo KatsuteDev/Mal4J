@@ -22,7 +22,7 @@ public class TestMyAnimeList {
 
     @Test
     public void testNoBearerToken(){
-        Assertions.assertThrows(IllegalArgumentException.class, () -> MyAnimeList.withOAuthToken("x"),
+        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withOAuthToken("x"),
                                 Workflow.errorSupplier("Expected MyAnimeList#withOAuthToken with invalid token to throw an IllegalArgumentException"));
     }
 
