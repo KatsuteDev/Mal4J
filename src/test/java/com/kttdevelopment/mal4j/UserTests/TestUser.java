@@ -70,7 +70,7 @@ public class TestUser {
     @Test // test does actually pass
     public void testBirthday(){
         Assumptions.assumeTrue(user.getBirthday() != null,
-                               Workflow.warningSupplier("User might not specify a birthday"));
+                               Workflow.warningSupplier("Test skipped (user probably didn't set a birthday)"));
     }
 
     @Test

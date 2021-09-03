@@ -31,7 +31,7 @@ public class TestAnimeRank {
         Assertions.assertEquals(AnimeType.Movie, first.getAnimePreview().getType(),
                                 Workflow.errorSupplier("Expected ranking type to match"));
         Assertions.assertNotNull(first.getPreviousRank(),
-                                 Workflow.errorSupplier("Failed to get previous rank for Anime (this is an external issue, ignore this)"));
+                                 Workflow.warningSupplier("Failed to get previous rank for Anime (this is an external issue, ignore this)"));
     }
 
     @SuppressWarnings("EmptyMethod")
