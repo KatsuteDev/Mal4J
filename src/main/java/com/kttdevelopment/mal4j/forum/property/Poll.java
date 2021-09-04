@@ -51,6 +51,7 @@ public abstract class Poll implements ID {
      *
      * @since 1.0.0
      */
+    @SuppressWarnings("GrazieInspection")
     public abstract Boolean isClosed();
 
     /**

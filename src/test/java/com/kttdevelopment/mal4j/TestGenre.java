@@ -57,14 +57,14 @@ public class TestGenre {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     @ParameterizedTest
     @EnumSource(Genre.class)
-    public void testAnimeGenre(final Genre genre){
+    public void testGenre(final Genre genre){
         boolean hasAnimeID = false, hasMangaID = false;
         try{ genre.getAnimeGenreID();
             hasAnimeID = true;
-        }catch(final UnsupportedOperationException ignored){ }
+        }catch(final NullPointerException ignored){ }
         try{ genre.getMangaGenreID();
             hasMangaID = true;
-        }catch(final UnsupportedOperationException ignored){ }
+        }catch(final NullPointerException ignored){ }
 
         if(hasAnimeID)
             Assertions.assertEquals(genre, Genre.asAnimeGenre(animeGenreIDs.get(genre.getName())),

@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j;
 
 /**
- * This fields class holds all possible fields for a request. Usable in any methods that ask for fields.
+ * The fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
  * @since 1.1.0
  * @version 2.2.1
@@ -41,6 +41,7 @@ public abstract class Fields {
      *
      * @since 2.2.0
      */
+    @SuppressWarnings("GrazieInspection")
     public static final String INVERTED = "%INVERTED_MODIFIER%"; // this field should never equal an existing MAL field
 
     // shared

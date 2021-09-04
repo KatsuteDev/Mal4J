@@ -16,27 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.kttdevelopment.mal4j.user.property;
-
-import com.kttdevelopment.mal4j.user.User;
+package com.kttdevelopment.mal4j;
 
 /**
- * Indicates that a User can be retrieved from the object.
+ * Thrown if an exception occurs in a static initializer.
  *
- * @since 1.0.0
- * @version 1.0.0
+ * @since 2.4.0
+ * @version 2.4.0
  * @author Katsute
  */
-public interface UserRetrievable {
+public final class StaticInitializerException extends RuntimeException {
 
-    /**
-     * Returns the user. Note that this calls the API each time, it's suggested that you save this to a variable to prevent constantly calling the API.
-     *
-     * @return user
-     *
-     * @see User
-     * @since 1.0.0
-     */
-    User getUser();
+    StaticInitializerException(){ }
+
+    StaticInitializerException(final String message){ super(message); }
+
+    StaticInitializerException(final String message, final Throwable cause){ super(message, cause); }
+
+    StaticInitializerException(final Throwable cause){ super(cause); }
 
 }

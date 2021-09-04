@@ -42,7 +42,7 @@ public abstract class ForumSearchQuery extends LimitOffsetQuery<ForumSearchQuery
     protected String topicUsername, username;
 
     /**
-     * Creates an forum search query. Applications do not use this constructor.
+     * Creates a forum search query. Applications do not use this constructor.
      *
      *
      * @see MyAnimeList#getForumTopics()

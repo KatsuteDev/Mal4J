@@ -31,7 +31,7 @@ import com.kttdevelopment.mal4j.manga.Manga;
 public interface MangaRetrievable {
 
     /**
-     * Returns the Manga. Note that this calls the API each time, it is suggested that you save this to a variable to prevent constantly calling the API.
+     * Returns the Manga. Note that this calls the API each time, it's suggested that you save this to a variable to prevent constantly calling the API.
      *
      * @return Manga
      *

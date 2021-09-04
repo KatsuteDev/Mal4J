@@ -31,7 +31,7 @@ import com.kttdevelopment.mal4j.anime.Anime;
 public interface AnimeRetrievable {
 
     /**
-     * Returns the Anime. Note that this calls the API each time, it is suggested that you save this to a variable to prevent constantly calling the API.
+     * Returns the Anime. Note that this calls the API each time, it's suggested that you save this to a variable to prevent constantly calling the API.
      *
      * @return Anime
      *

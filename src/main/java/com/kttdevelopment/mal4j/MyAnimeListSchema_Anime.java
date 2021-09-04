@@ -27,7 +27,7 @@ import com.kttdevelopment.mal4j.query.AnimeListUpdate;
 
 import java.util.*;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "ConstantConditions"})
 abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     
     static AnimeStatistics asAnimeStatistics(final MyAnimeList mal, final JsonObject schema){

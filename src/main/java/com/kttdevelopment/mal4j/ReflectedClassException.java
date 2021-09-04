@@ -16,27 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package com.kttdevelopment.mal4j.user.property;
-
-import com.kttdevelopment.mal4j.user.User;
+package com.kttdevelopment.mal4j;
 
 /**
- * Indicates that a User can be retrieved from the object.
+ * Thrown if a reflected class throws an exception.
  *
- * @since 1.0.0
- * @version 1.0.0
+ * @since 2.4.0
+ * @version 2.4.0
  * @author Katsute
  */
-public interface UserRetrievable {
+@SuppressWarnings("SameParameterValue")
+public final class ReflectedClassException extends RuntimeException {
 
-    /**
-     * Returns the user. Note that this calls the API each time, it's suggested that you save this to a variable to prevent constantly calling the API.
-     *
-     * @return user
-     *
-     * @see User
-     * @since 1.0.0
-     */
-    User getUser();
+    ReflectedClassException(){ }
+
+    ReflectedClassException(final String message){ super(message); }
+
+    ReflectedClassException(final String message, final Throwable cause){ super(message, cause); }
+
+    ReflectedClassException(final Throwable cause){ super(cause); }
 
 }
