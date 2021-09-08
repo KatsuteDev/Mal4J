@@ -76,7 +76,6 @@ jobs:
     name: Test (Java ${{ matrix.jdk }})
     runs-on: ubuntu-latest
     needs: codeql
-    if: ${{ success() }}
     strategy:
       matrix:
         jdk: [8, 9, 11, 16]
