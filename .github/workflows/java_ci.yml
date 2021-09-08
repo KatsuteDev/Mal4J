@@ -25,12 +25,14 @@ jobs:
           java-version: ${{ matrix.jdk }}
           cache: maven
 
-      - name: 📚 Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1.1.1
+      - name: ☕ Install Java
+        uses: actions/setup-java@v2.3.0
         if: matrix.jdk == '9'
         with:
-          version: ${{ matrix.jdk }}
           architecture: x64
+          distribution: adopt
+          java-version: ${{ matrix.jdk }}
+          cache: maven
 
       - name: 📤 Load Cache
         uses: actions/cache@v2.1.6
@@ -93,12 +95,14 @@ jobs:
           java-version: ${{ matrix.jdk }}
           cache: maven
 
-      - name: 📚 Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1.1.1
+      - name: ☕ Install Java
+        uses: actions/setup-java@v2.3.0
         if: matrix.jdk == '9'
         with:
-          version: ${{ matrix.jdk }}
           architecture: x64
+          distribution: adopt
+          java-version: ${{ matrix.jdk }}
+          cache: maven
 
       - name: 📤 Load Cache
         uses: actions/cache@v2.1.6
