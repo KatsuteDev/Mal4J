@@ -34,18 +34,6 @@ jobs:
           java-version: ${{ matrix.jdk }}
           cache: maven
 
-      - name: 📤 Load Cache
-        uses: actions/cache@v2.1.6
-        if: matrix.jdk == '9'
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-
-      - name: ✔ Compile with Maven
-        run: mvn compile -DskipTests --no-transfer-progress
-
   codeql:
     name: CodeQL (Java 11)
     runs-on: ubuntu-latest
@@ -103,15 +91,6 @@ jobs:
           distribution: adopt
           java-version: ${{ matrix.jdk }}
           cache: maven
-
-      - name: 📤 Load Cache
-        uses: actions/cache@v2.1.6
-        if: matrix.jdk == '9'
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
 
       - name: ✔ Test with Maven
         run: mvn test -fae --no-transfer-progress
