@@ -23,12 +23,6 @@ public class TestGenre {
 
     @BeforeAll
     public static void beforeAll() throws IOException{
-        // SSL issue; Skip test on Java 9 CI
-        Assumptions.assumeTrue(
-            !System.getenv().containsKey("CI") ||
-            System.getProperty("java.version").charAt(0) != '9'
-        , Workflow.warningSupplier("Skipped test on Java 9 CI due to SSL issue"));
-
         animeGenreIDs = pullGenres("https://myanimelist.net/anime.php");
         mangaGenreIDs = pullGenres("https://myanimelist.net/manga.php");
     }
