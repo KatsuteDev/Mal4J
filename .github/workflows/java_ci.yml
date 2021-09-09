@@ -68,7 +68,7 @@ jobs:
     needs: codeql
     strategy:
       matrix:
-        jdk: [8, 9, 11, 16]
+        jdk: [8, 11, 16]
       fail-fast: false
     steps:
       - name: 📤 Checkout Repository
@@ -76,19 +76,9 @@ jobs:
 
       - name: ☕ Install Java
         uses: actions/setup-java@v2.3.0
-        if: matrix.jdk != '9'
         with:
           architecture: x64
           distribution: temurin
-          java-version: ${{ matrix.jdk }}
-          cache: maven
-
-      - name: ☕ Install Java
-        uses: actions/setup-java@v2.3.0
-        if: matrix.jdk == '9'
-        with:
-          architecture: x64
-          distribution: adopt
           java-version: ${{ matrix.jdk }}
           cache: maven
 
