@@ -34,6 +34,9 @@ jobs:
           java-version: ${{ matrix.jdk }}
           cache: maven
 
+      - name: ✔ Compile with Maven
+        run: mvn compile -DskipTests --no-transfer-progress
+
   codeql:
     name: CodeQL (Java 11)
     runs-on: ubuntu-latest
