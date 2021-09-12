@@ -25,21 +25,14 @@ jobs:
           java-version: ${{ matrix.jdk }}
           cache: maven
 
-      - name: 📚 Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1.1.1
+      - name: ☕ Install Java
+        uses: actions/setup-java@v2.3.0
         if: matrix.jdk == '9'
         with:
-          version: ${{ matrix.jdk }}
           architecture: x64
-
-      - name: 📤 Load Cache
-        uses: actions/cache@v2.1.6
-        if: matrix.jdk == '9'
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
+          distribution: adopt
+          java-version: ${{ matrix.jdk }}
+          cache: maven
 
       - name: ✔ Compile with Maven
         run: mvn compile -DskipTests --no-transfer-progress
@@ -48,7 +41,7 @@ jobs:
     name: CodeQL (Java 11)
     runs-on: ubuntu-latest
     needs: build
-    if: github.event == 'pull_request' || github.actor != 'dependabot[bot]'
+    if: github.event_name == 'pull_request' || github.actor != 'dependabot[bot]'
     steps:
       - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
@@ -78,7 +71,7 @@ jobs:
     needs: codeql
     strategy:
       matrix:
-        jdk: [8, 9, 11, 16]
+        jdk: [8, 11, 16]
       fail-fast: false
     steps:
       - name: 📤 Checkout Repository
@@ -86,28 +79,11 @@ jobs:
 
       - name: ☕ Install Java
         uses: actions/setup-java@v2.3.0
-        if: matrix.jdk != '9'
         with:
           architecture: x64
           distribution: temurin
           java-version: ${{ matrix.jdk }}
           cache: maven
-
-      - name: 📚 Install OpenJDK
-        uses: AdoptOpenJDK/install-jdk@v1.1.1
-        if: matrix.jdk == '9'
-        with:
-          version: ${{ matrix.jdk }}
-          architecture: x64
-
-      - name: 📤 Load Cache
-        uses: actions/cache@v2.1.6
-        if: matrix.jdk == '9'
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
 
       - name: ✔ Test with Maven
         run: mvn test -fae --no-transfer-progress

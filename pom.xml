@@ -208,7 +208,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>3.3.0</version>
+                <version>3.3.1</version>
                 <configuration>
                     <additionalOptions>
                         <additionalOption>-public</additionalOption>
@@ -257,7 +257,7 @@
         <dependency>
             <groupId>dev.katsute</groupId>
             <artifactId>jcore</artifactId>
-            <version>1.1.0</version>
+            <version>1.2.0</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
