@@ -17,10 +17,10 @@
  */
 package com.kttdevelopment.mal4j;
 
-import com.kttdevelopment.mal4j.property.AlternativeTitles;
-import com.kttdevelopment.mal4j.property.Picture;
+import com.kttdevelopment.mal4j.property.*;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
@@ -89,6 +89,58 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
                        "medium='" + medium + '\'' +
                        ", large='" + large + '\'' +
                        '}';
+            }
+
+        };
+    }
+
+    static Genre asGenre(final MyAnimeList mal, final Json.JsonObject schema, final boolean animeGenre){
+        return new Genre() {
+
+            private final Integer id = requireNonNull(() -> schema.getInt("id"));
+            private final String name = requireNonNull(() -> schema.getString("name"));
+            private final boolean isAnimeGenre = animeGenre;
+
+            // API methods
+
+            @Override
+            public final int getID(){
+                if(id == null)
+                    throw new NullPointerException("There is no such ID for this genre");
+                return id;
+            }
+
+            @Override
+            public final String getName(){
+                return name;
+            }
+
+            // additional methods
+
+            @Override
+            public final boolean isAnimeGenre(){
+                return isAnimeGenre;
+            }
+
+            @Override
+            public final boolean isMangaGenre(){
+                return !isAnimeGenre;
+            }
+
+            @Override
+            public final String toString(){
+                return "Genre{" +
+                       "id=" + id +
+                       ", name='" + name + '\'' +
+                       ", isAnimeGenre=" + isAnimeGenre +
+                       '}';
+            }
+
+            @Override
+            public boolean equals(final Object o){
+                if(this == o) return true;
+                if(o == null || getClass() != o.getClass()) return false;
+                return Objects.equals(name, ((Genre) o).getName());
             }
 
         };

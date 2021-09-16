@@ -18,39 +18,26 @@
 
 package com.kttdevelopment.mal4j.property;
 
-import java.util.Objects;
-
 /**
  * Represents a Genre.
  *
- * @since 1.0.0
+ * @since 2.4.0
  * @version 2.4.0
  * @author Katsute
  */
-public final class Genre {
-
-    private final int id;
-    private final String name;
-    private final boolean isAnimeGenre;
-
-    Genre(final int id, final String name, final boolean isAnimeGenre){
-        this.id = id;
-        this.name = name;
-        this.isAnimeGenre = isAnimeGenre;
-    }
+public abstract class Genre {
 
     /**
      * Returns the genre ID for the Anime or Manga. Note that Anime and Manga may not share the same IDs. Use {@link #isAnimeGenre()} or {@link #isMangaGenre()} to get type.
      *
+     * @throws NullPointerException if ID is null
      * @return id
      *
      * @see #isAnimeGenre()
      * @see #isMangaGenre()
      * @since 2.4.0
      */
-    public final int getID(){
-        return id;
-    }
+    public abstract int getID();
 
     /**
      * Returns the name of the Genre.
@@ -59,9 +46,7 @@ public final class Genre {
      *
      * @since 2.4.0
      */
-    public final String getName(){
-        return name;
-    }
+    public abstract String getName();
 
     /**
      * Returns if the genre ID is for an Anime.
@@ -70,9 +55,7 @@ public final class Genre {
      *
      * @since 2.4.0
      */
-    public final boolean isAnimeGenre(){
-        return isAnimeGenre;
-    }
+    public abstract boolean isAnimeGenre();
 
     /**
      * Returns if the genre ID is for a Manga.
@@ -81,20 +64,6 @@ public final class Genre {
      *
      * @since 2.4.0
      */
-    public final boolean isMangaGenre(){
-        return !isAnimeGenre;
-    }
-
-    @Override
-    public final String toString(){
-        return getName();
-    }
-
-    @Override
-    public final boolean equals(final Object o){
-        if(this == o) return true;
-        if(o == null || getClass() != o.getClass()) return false;
-        return Objects.equals(name, ((Genre) o).name);
-    }
+    public abstract boolean isMangaGenre();
 
 }
