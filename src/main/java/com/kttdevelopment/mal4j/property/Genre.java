@@ -49,7 +49,7 @@ public abstract class Genre {
     public abstract String getName();
 
     /**
-     * Returns if the genre ID is for an Anime.
+     * Returns if the genre is for an Anime.
      *
      * @return if is Anime genre
      *
@@ -58,7 +58,7 @@ public abstract class Genre {
     public abstract boolean isAnimeGenre();
 
     /**
-     * Returns if the genre ID is for a Manga.
+     * Returns if the genre is for a Manga.
      *
      * @return if is Manga genre
      *

@@ -9,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.Arrays;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -54,6 +53,10 @@ public class TestAnime {
             .add("NSFW", Anime::getNSFW)
             .add("Genres", Anime::getGenres)
             .add("Genres[0]", anime -> anime.getGenres()[0])
+            .add("Genres[0]#ID", anime -> anime.getGenres()[0].getID())
+            .add("Genres[0]#Name", anime -> anime.getGenres()[0].getName())
+            .add("Genres[0]#isAnimeGenre", anime -> anime.getGenres()[0].isAnimeGenre())
+            .add("Genres[0]#isMangaGenre", anime -> anime.getGenres()[0].isMangaGenre())
             .add("CreatedAt", Anime::getCreatedAt)
             .add("CreatedAtEpoch", Anime::getCreatedAtEpochMillis)
             .add("UpdatedAt", Anime::getUpdatedAt)

@@ -137,7 +137,7 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
             }
 
             @Override
-            public boolean equals(final Object o){
+            public final boolean equals(final Object o){
                 if(this == o) return true;
                 if(o == null || getClass() != o.getClass()) return false;
                 return Objects.equals(name, ((Genre) o).getName());
