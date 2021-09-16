@@ -2,6 +2,8 @@ name: MyAnimeList CI
 on: [workflow_dispatch]
 permissions: read-all
 
+concurrency: mal-test
+
 jobs:
   mal_ci:
     name: MyAnimeList CI
