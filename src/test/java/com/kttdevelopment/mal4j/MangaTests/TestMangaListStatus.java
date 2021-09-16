@@ -201,8 +201,9 @@ public class TestMangaListStatus {
                 .search();
 
         for(final MangaListStatus status : list)
-            if(Arrays.asList(status.getMangaPreview().getGenres()).contains(Genre.Ecchi))
-                return;
+            for(final Genre genre : status.getMangaPreview().getGenres())
+                if(genre.getName().equalsIgnoreCase("ecchi"))
+                    return;
 
         //noinspection ConstantConditions
         Assumptions.assumeTrue(false, Workflow.warningSupplier("Failed to find Manga with Ecchi genre (this is a data issue, disregard)"));
