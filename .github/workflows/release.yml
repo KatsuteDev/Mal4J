@@ -9,7 +9,6 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     environment: Maven Central
-    needs: test
     steps:
       - name: 📤 Checkout Repository
         uses: actions/checkout@v2.3.4
