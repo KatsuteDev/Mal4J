@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [8, 9, 11, 16]
+        jdk: [8, 9, 11, 17]
       fail-fast: false
     steps:
       - name: 📤 Checkout Repository
@@ -71,7 +71,7 @@ jobs:
     needs: codeql
     strategy:
       matrix:
-        jdk: [8, 11, 16]
+        jdk: [8, 11, 17]
       fail-fast: false
     steps:
       - name: 📤 Checkout Repository
