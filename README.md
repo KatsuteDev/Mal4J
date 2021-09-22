@@ -130,7 +130,7 @@ Please note that the client ID being used for tests must not have a client secre
 
 Devs running remote tests may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires a secret `MAL_OAUTH` which contains the OAuth token (ex: `Bearer <oauth token>`).
 
-**Known test failures:** See [#136](https://github.com/KatsuteDev/Mal4J/discussions/136)
+**Known test failures:** See [**⚠ External Issues**](https://github.com/Katsute/Mal4J/projects/10)
 
 ---
 
