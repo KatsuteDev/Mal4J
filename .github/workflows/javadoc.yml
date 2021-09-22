@@ -14,10 +14,10 @@ jobs:
         with:
           architecture: x64
           distribution: temurin
-          java-version: 11
+          java-version: 17
 
       - name: 📦 Package with Maven
-        run: mvn package -Dmaven.test.skip=true
+        run: mvn package -DskipTests --no-transfer-progress
 
       - name: 🚀 Upload Artifact
         uses: actions/upload-artifact@v2
