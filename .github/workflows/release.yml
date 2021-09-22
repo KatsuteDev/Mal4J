@@ -18,7 +18,7 @@ jobs:
         with:
           architecture: x64
           distribution: temurin
-          java-version: 11
+          java-version: 17
 
       - name: 🚀 Deploy to GitHub Packages
         run: mvn deploy -B -P github

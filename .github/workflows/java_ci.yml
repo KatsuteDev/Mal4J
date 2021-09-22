@@ -6,11 +6,11 @@ on:
 
 jobs:
   build:
-    name: Compile (Java ${{ matrix.jdk }})
+    name: Compile (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [8, 9, 11, 16]
+        java: [8, 9, 11, 17]
       fail-fast: false
     steps:
       - name: 📤 Checkout Repository
@@ -18,27 +18,27 @@ jobs:
 
       - name: ☕ Install Java
         uses: actions/setup-java@v2.3.0
-        if: matrix.jdk != '9'
+        if: matrix.java != '9'
         with:
           architecture: x64
           distribution: temurin
-          java-version: ${{ matrix.jdk }}
+          java-version: ${{ matrix.java }}
           cache: maven
 
       - name: ☕ Install Java
         uses: actions/setup-java@v2.3.0
-        if: matrix.jdk == '9'
+        if: matrix.java == '9'
         with:
           architecture: x64
           distribution: adopt
-          java-version: ${{ matrix.jdk }}
+          java-version: ${{ matrix.java }}
           cache: maven
 
       - name: ✔ Compile with Maven
         run: mvn compile -DskipTests --no-transfer-progress
 
   codeql:
-    name: CodeQL (Java 11)
+    name: CodeQL (Java 17)
     runs-on: ubuntu-latest
     needs: build
     if: github.event_name == 'pull_request' || github.actor != 'dependabot[bot]'
@@ -56,7 +56,7 @@ jobs:
         with:
           architecture: x64
           distribution: temurin
-          java-version: 11
+          java-version: 17
           cache: maven
 
       - name: ✔ Compile with Maven
@@ -66,12 +66,12 @@ jobs:
         uses: github/codeql-action/analyze@v1
 
   test:
-    name: Test (Java ${{ matrix.jdk }})
+    name: Test (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
     needs: codeql
     strategy:
       matrix:
-        jdk: [8, 11, 16]
+        java: [8, 11, 17]
       fail-fast: false
     steps:
       - name: 📤 Checkout Repository
@@ -82,7 +82,7 @@ jobs:
         with:
           architecture: x64
           distribution: temurin
-          java-version: ${{ matrix.jdk }}
+          java-version: ${{ matrix.java }}
           cache: maven
 
       - name: ✔ Test with Maven
