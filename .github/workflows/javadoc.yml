@@ -17,7 +17,7 @@ jobs:
           java-version: 17
 
       - name: 📦 Package with Maven
-        run: mvn package -Dmaven.test.skip=true
+        run: mvn package -DskipTests --no-transfer-progress
 
       - name: 🚀 Upload Artifact
         uses: actions/upload-artifact@v2

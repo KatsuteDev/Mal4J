@@ -1,16 +1,17 @@
 name: MyAnimeList CI
 on: [workflow_dispatch]
+
 permissions: read-all
 
 concurrency: mal-test
 
 jobs:
   mal_ci:
-    name: MyAnimeList CI
+    name: MyAnimeList CI (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        jdk: [8, 11, 17]
+        java: [8, 11, 17]
       fail-fast: false
       max-parallel: 1
     steps:
@@ -22,7 +23,7 @@ jobs:
         with:
           architecture: x64
           distribution: temurin
-          java-version: ${{ matrix.jdk }}
+          java-version: ${{ matrix.java }}
 
       - name: 🔐 Load OAuth Token
         run: |
