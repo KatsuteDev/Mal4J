@@ -24,7 +24,7 @@ jobs:
         with:
           architecture: x64
           distribution: temurin
-          java-version: 11
+          java-version: 17
 
       - name: 🚀 Deploy to Maven
         run: mvn -B deploy -f pom.xml -s settings.xml -P deploy
