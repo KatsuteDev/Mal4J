@@ -8,6 +8,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     environment: Maven Central
     steps:
       - name: 📤 Checkout Repository

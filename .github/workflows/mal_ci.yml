@@ -9,6 +9,7 @@ jobs:
   mal_ci:
     name: MyAnimeList CI (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     strategy:
       matrix:
         java: [8, 11, 17]
