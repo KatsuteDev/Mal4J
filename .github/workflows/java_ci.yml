@@ -25,7 +25,7 @@ jobs:
           java-version: ${{ matrix.java }}
           cache: maven
 
-      - name: ☕ Install Java
+      - name: ☕ Install Java 9
         uses: actions/setup-java@v2.3.0
         if: matrix.java == '9'
         with:
