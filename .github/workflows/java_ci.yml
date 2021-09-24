@@ -41,6 +41,7 @@ jobs:
   codeql:
     name: CodeQL (Java 17)
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: build
     if: github.event_name == 'pull_request' || github.actor != 'dependabot[bot]'
     steps:
@@ -69,6 +70,7 @@ jobs:
   test:
     name: Test (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: codeql
     strategy:
       matrix:
