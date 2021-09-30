@@ -21,7 +21,7 @@ jobs:
           passphrase: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: ☕ Install Java
-        uses: actions/setup-java@v2.3.0
+        uses: actions/setup-java@v2.3.1
         with:
           architecture: x64
           distribution: temurin
