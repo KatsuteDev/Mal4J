@@ -212,6 +212,10 @@
                 <configuration>
                     <additionalOptions>
                         <additionalOption>-public</additionalOption>
+                        <!-- fix h1 not working properly -->
+                        <additionalOption>-Xdoclint:-html</additionalOption>
+                        <!-- suppress missing documentation -->
+                        <additionalOption>-Xdoclint:-missing</additionalOption>
                     </additionalOptions>
                     <!-- generate javadoc for /java and /java11 -->
                     <sourcepath>${project.basedir}/src/main/java;${project.basedir}/src/main/java11</sourcepath>
