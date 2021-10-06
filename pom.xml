@@ -61,6 +61,26 @@
             </build>
         </profile>
         <profile>
+            <id>jdk8</id>
+            <activation>
+                <jdk>(,8]</jdk>
+            </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.apache.maven.plugins</groupId>
+                            <artifactId>maven-javadoc-plugin</artifactId>
+                            <version>3.3.1</version>
+                            <configuration>
+                                <skip>true</skip>
+                            </configuration>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
+        </profile>
+        <profile>
             <!-- JDK9 for modular -->
             <id>jdk9</id>
             <activation>
@@ -211,6 +231,7 @@
                 <version>3.3.1</version>
                 <configuration>
                     <additionalOptions>
+                        <additionalOption>-public</additionalOption>
                         <!-- fix h1 not working properly -->
                         <additionalOption>-Xdoclint:-html</additionalOption>
                         <!-- suppress missing documentation -->
