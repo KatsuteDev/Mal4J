@@ -211,7 +211,6 @@
                 <version>3.3.1</version>
                 <configuration>
                     <additionalOptions>
-                        <additionalOption>-public</additionalOption>
                         <!-- fix h1 not working properly -->
                         <additionalOption>-Xdoclint:-html</additionalOption>
                         <!-- suppress missing documentation -->
