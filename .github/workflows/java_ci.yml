@@ -8,3 +8,5 @@ jobs:
   java_ci:
     name: Java CI
     uses: Katsute/Workflows/.github/workflows/java.ci.yml@main
+    with:
+      package: true
