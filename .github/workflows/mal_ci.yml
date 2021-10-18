@@ -17,7 +17,7 @@ jobs:
       max-parallel: 1
     steps:
       - name: 📤 Checkout Repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v2.3.5
 
       - name: ☕ Install Java
         uses: actions/setup-java@v2.3.1
