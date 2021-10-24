@@ -116,6 +116,8 @@ public final class MyAnimeListAuthenticator {
 
     /**
      * Creates a MyAnimeListAuthenticator.
+     * <br>
+     * If you used a redirect URI to generate your authorization code you must use {@link #MyAnimeListAuthenticator(String, String, String, String, String)}.
      *
      * @param client_id client id
      * @param client_secret client secret, null if application has none
