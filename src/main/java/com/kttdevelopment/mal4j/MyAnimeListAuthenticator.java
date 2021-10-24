@@ -534,7 +534,7 @@ public final class MyAnimeListAuthenticator {
             throw new InvalidTokenException("The OAuth token provided is either invalid or expired");
         else{
             final String error = body.getString("error");
-            throw new HttpException(response.URL(), response.code(), error != null ? error.trim() : "");
+            throw new HttpException(response.URL(), response.code(), error != null ? error.trim() : response.raw());
         }
     }
 
