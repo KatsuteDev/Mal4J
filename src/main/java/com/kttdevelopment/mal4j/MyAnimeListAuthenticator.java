@@ -32,6 +32,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -47,7 +48,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.3.0
+ * @version 2.5.0
  * @author Katsute
  */
 @SuppressWarnings("GrazieInspection")
@@ -64,6 +65,9 @@ public final class MyAnimeListAuthenticator {
     // optional fields
     private static final String authState   = "&state=%s";
     private static final String redirectURI = "&redirect_uri=%s";
+
+    // [\w\-.~]*
+    private static final Pattern allowedPKCE = Pattern.compile("[\\w\\-.~]*");
 
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
 
@@ -129,7 +133,9 @@ public final class MyAnimeListAuthenticator {
         Objects.requireNonNull(authorization_code, "Authorization code must not be null");
         Objects.requireNonNull(PKCE_code_challenge, "PKCE code challenge must not be null");
         if(PKCE_code_challenge.length() < 43 || PKCE_code_challenge.length() > 128)
-            throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters");
+            throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters, was " + PKCE_code_challenge.length() + " characters");
+        else if(!allowedPKCE.matcher(PKCE_code_challenge).matches())
+            throw new IllegalArgumentException("PKCE code challenge contains illegal characters, only a-z , A-Z , 0-9 , _ , . , - , and ~ are allowed");
 
         this.client_id          = client_id;
         this.client_secret      = client_secret;
