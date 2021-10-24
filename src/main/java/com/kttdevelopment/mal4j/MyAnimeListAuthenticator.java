@@ -108,7 +108,8 @@ public final class MyAnimeListAuthenticator {
                 client_secret,
                 "authorization_code",
                 authorizationCode,
-                pkce
+                pkce,
+                redirect_URI
             )
         );
     }
@@ -124,11 +125,33 @@ public final class MyAnimeListAuthenticator {
      * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
+     * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(String, String, String, String, String)
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
     @SuppressWarnings("SpellCheckingInspection")
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge){
+        this(client_id, client_secret, authorization_code, PKCE_code_challenge, null);
+    }
+
+    /**
+     * Creates a MyAnimeListAuthenticator.
+     *
+     * @param client_id client id
+     * @param client_secret client secret, null if application has none
+     * @param authorization_code authorization code (<b>not</b> your authorization URL)
+     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
+     * @param redirect_uri redirect URI, required if used to generate authorization_code
+     * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
+     * @throws UncheckedIOException if client failed to execute request
+     *
+     * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(String, String, String, String)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 2.5.0
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge, final String redirect_uri){
         Objects.requireNonNull(client_id, "Client ID must not be null");
         Objects.requireNonNull(authorization_code, "Authorization code must not be null");
         Objects.requireNonNull(PKCE_code_challenge, "PKCE code challenge must not be null");
@@ -148,7 +171,8 @@ public final class MyAnimeListAuthenticator {
                 client_secret,
                 "authorization_code",
                 authorization_code,
-                PKCE_code_challenge
+                PKCE_code_challenge,
+                redirect_uri
             )
         );
     }
