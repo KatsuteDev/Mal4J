@@ -7,4 +7,4 @@ jobs:
     uses: Katsute/Workflows/.github/workflows/java.package.yml@main
     with:
       artifact-name: javadoc
-      artifact-path: "'target/*-javadoc.jar'"
+      artifact-path: target/*-javadoc.jar
