@@ -43,7 +43,8 @@ interface MyAnimeListAuthenticationService {
         @Field("client_secret") final String client_secret,
         @Field("grant_type")    final String grant_type,
         @Field("code")          final String auth_code,
-        @Field("code_verifier") final String code_verifier
+        @Field("code_verifier") final String code_verifier,
+        @Field("redirect_uri")  final String redirect_uri
     );
 
     @Endpoint(method="POST", value="token")
