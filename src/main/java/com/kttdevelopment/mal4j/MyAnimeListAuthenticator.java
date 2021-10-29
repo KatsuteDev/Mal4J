@@ -32,6 +32,7 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -47,7 +48,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.3.0
+ * @version 2.5.0
  * @author Katsute
  */
 @SuppressWarnings("GrazieInspection")
@@ -64,6 +65,9 @@ public final class MyAnimeListAuthenticator {
     // optional fields
     private static final String authState   = "&state=%s";
     private static final String redirectURI = "&redirect_uri=%s";
+
+    // [\w\-.~]*
+    private static final Pattern allowedPKCE = Pattern.compile("[\\w\\-.~]*");
 
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
 
@@ -104,13 +108,16 @@ public final class MyAnimeListAuthenticator {
                 client_secret,
                 "authorization_code",
                 authorizationCode,
-                pkce
+                pkce,
+                redirect_URI
             )
         );
     }
 
     /**
      * Creates a MyAnimeListAuthenticator.
+     * <br>
+     * If you used a redirect URI to generate your authorization code you must use {@link #MyAnimeListAuthenticator(String, String, String, String, String)}.
      *
      * @param client_id client id
      * @param client_secret client secret, null if application has none
@@ -120,16 +127,40 @@ public final class MyAnimeListAuthenticator {
      * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
      *
+     * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(String, String, String, String, String)
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
     @SuppressWarnings("SpellCheckingInspection")
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge){
+        this(client_id, client_secret, authorization_code, PKCE_code_challenge, null);
+    }
+
+    /**
+     * Creates a MyAnimeListAuthenticator.
+     *
+     * @param client_id client id
+     * @param client_secret client secret, null if application has none
+     * @param authorization_code authorization code (<b>not</b> your authorization URL)
+     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
+     * @param redirect_uri redirect URI, required if used to generate authorization_code
+     * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
+     * @throws UncheckedIOException if client failed to execute request
+     *
+     * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(String, String, String, String)
+     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
+     * @since 2.5.0
+     */
+    @SuppressWarnings("SpellCheckingInspection")
+    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge, final String redirect_uri){
         Objects.requireNonNull(client_id, "Client ID must not be null");
         Objects.requireNonNull(authorization_code, "Authorization code must not be null");
         Objects.requireNonNull(PKCE_code_challenge, "PKCE code challenge must not be null");
         if(PKCE_code_challenge.length() < 43 || PKCE_code_challenge.length() > 128)
-            throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters");
+            throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters, was " + PKCE_code_challenge.length() + " characters");
+        else if(!allowedPKCE.matcher(PKCE_code_challenge).matches())
+            throw new IllegalArgumentException("PKCE code challenge contains illegal characters, only a-z , A-Z , 0-9 , _ , . , - , and ~ are allowed");
 
         this.client_id          = client_id;
         this.client_secret      = client_secret;
@@ -142,7 +173,8 @@ public final class MyAnimeListAuthenticator {
                 client_secret,
                 "authorization_code",
                 authorization_code,
-                PKCE_code_challenge
+                PKCE_code_challenge,
+                redirect_uri
             )
         );
     }
@@ -502,7 +534,7 @@ public final class MyAnimeListAuthenticator {
             throw new InvalidTokenException("The OAuth token provided is either invalid or expired");
         else{
             final String error = body.getString("error");
-            throw new HttpException(response.URL(), response.code(), error != null ? error.trim() : "");
+            throw new HttpException(response.URL(), response.code(), error != null ? error.trim() : response.raw());
         }
     }
 

@@ -99,6 +99,10 @@ public class TestAuthorization {
                                 Workflow.errorSupplier("Expected a PKCE of less than 43 chars to throw an IllegalArgumentException"));
         Assertions.assertThrows(IllegalArgumentException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "129xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
                                 Workflow.errorSupplier("Expected a PKCE of more than 128 chars to throw an IllegalArgumentException"));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx%7E"),
+                                Workflow.errorSupplier("Expected a PKCE with invalid character % to throw an IllegalArgumentException"));
+        Assertions.assertThrows(InvalidTokenException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY0123456789-_.~"),
+                                Workflow.errorSupplier("Expected a valid PKCE to not throw an IllegalArgumentException"));
     }
 
 }

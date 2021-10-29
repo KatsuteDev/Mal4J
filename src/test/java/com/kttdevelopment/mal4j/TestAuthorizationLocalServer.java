@@ -41,5 +41,14 @@ public class TestAuthorizationLocalServer {
                                Workflow.errorSupplier("Expected token to not be expired"));
     }
 
+    @Test
+    public void testRedirectURI() throws IOException{
+        final String clientId = TestProvider.readFile(TestProvider.client);
+        Assertions.assertDoesNotThrow(() -> new MyAnimeListAuthenticator.LocalServerBuilder(clientId, 5050)
+                                            .setRedirectURI("http://localhost:5050")
+                                            .openBrowser()
+                                            .build(),
+                                      Workflow.errorSupplier("Expected redirect URI to validate token"));
+    }
 
 }
