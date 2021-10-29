@@ -7,46 +7,12 @@ on:
 jobs:
   deploy:
     name: Deploy
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    environment: Maven Central
-    steps:
-      - name: 📤 Checkout Repository
-        uses: actions/checkout@v2.3.5
-
-      - name: ☕ Install Java
-        uses: actions/setup-java@v2.3.1
-        with:
-          architecture: x64
-          distribution: temurin
-          java-version: 11
-
-      - name: 🚀 Deploy to GitHub Packages
-        run: mvn deploy -B -P github
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 🚀 Deploy to GitHub Releases
-        uses: AButler/upload-release-assets@v2.0
-        with:
-          files: 'target/*.jar'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: 📚 Setup Apache Maven Central
-        uses: actions/setup-java@v2.3.0
-        with:
-          architecture: x64
-          distribution: temurin
-          java-version: 11
-          server-id: ossrh
-          server-username: MAVEN_USERNAME
-          server-password: MAVEN_CENTRAL_TOKEN
-          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
-
-      - name: 🚀 Deploy to Maven Central
-        run: mvn deploy -B -P ossrh
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_CENTRAL_TOKEN: ${{ secrets.OSSRH_TOKEN }}
-          MAVEN_GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+    uses: Katsute/Workflows/.github/workflows/java.deploy.yml@main
+    with:
+      environment: Maven Central
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}
+      maven-username: ${{ secrets.OSSRH_USERNAME }}
+      maven-password: ${{ secrets.OSSRH_TOKEN }}
+      gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+      gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
