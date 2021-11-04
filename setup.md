@@ -1,18 +1,10 @@
 # Installation
 
-Dependencies are hosted on Maven Central and compiled builds can be found in releases.
+Mal4J requires at least Java 8. No additional dependencies/libraries are required.
 
-**Mal4J requires at least Java 8.**
+Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) and the [releases](https://github.com/Katsute/Mal4J/releases) tab.
 
-## Maven Central
-
-Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j)
-
-## Local
-
-For projects built locally, jars can be found in releases → [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
-
-Mal4J is a standalone library and requires no additional dependencies.
+[![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
 
 # API setup
 
