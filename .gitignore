@@ -3,3 +3,5 @@ target
 *.iml
 
 /src/test/java/resources/*.txt
+/anime-list-*.txt
+/manga-list-*.txt

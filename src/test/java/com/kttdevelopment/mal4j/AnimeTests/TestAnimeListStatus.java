@@ -9,6 +9,10 @@ import com.kttdevelopment.mal4j.property.Priority;
 import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -17,8 +21,12 @@ public class TestAnimeListStatus {
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    public static void beforeAll() throws IOException{
         mal = TestProvider.getMyAnimeList();
+
+        final String file = "anime-list-" + System.currentTimeMillis() + ".txt";
+        System.out.println("Running Anime list tests, saving backup of current list to '" + file + '\'');
+        Files.write(new File(file).toPath(), mal.getAnime(TestProvider.AnimeID).getListStatus().toString().getBytes(StandardCharsets.UTF_8));
     }
 
     @SuppressWarnings("SpellCheckingInspection")
@@ -60,6 +68,12 @@ public class TestAnimeListStatus {
                                 Workflow.errorSupplier("Expected tags to match"));
         Assertions.assertEquals("", status.getComments(),
                                 Workflow.errorSupplier("Expected comments to match"));
+    }
+
+    @Test @Order(0)
+    public void testMinimalUpdate(){
+        Assertions.assertDoesNotThrow(() -> mal.updateAnimeListing(TestProvider.AnimeID).score(10).update(),
+                                      Workflow.errorSupplier("Updating a listing with only a score should not throw an exception"));
     }
 
     @Test @Order(1)
