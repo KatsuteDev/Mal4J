@@ -51,7 +51,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  * @see MyAnimeList
  * @see MyAnimeListService
  * @since 1.0.0
- * @version 2.3.0
+ * @version 2.5.1
  * @author Katsute
  */
 final class MyAnimeListImpl extends MyAnimeList {
@@ -314,9 +314,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                         MyAnimeListSchema.asYMD(startDate),
                         MyAnimeListSchema.asYMD(finishDate),
                         watchedEpisodes,
-                        priority.value(),
+                        priority != null ? priority.value() : null,
                         timesRewatched,
-                        rewatchValue.value(),
+                        rewatchValue != null ? rewatchValue.value() : null,
                         toCommaSeparatedString(tags),
                         comments
                     )
@@ -643,9 +643,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                         MyAnimeListSchema.asYMD(finishDate),
                         volumesRead,
                         chaptersRead,
-                        priority.value(),
+                        priority != null ? priority.value() : null,
                         timesReread,
-                        rereadValue.value(),
+                        rereadValue != null ? rereadValue.value() : null,
                         toCommaSeparatedString(tags),
                         comments
                     )
