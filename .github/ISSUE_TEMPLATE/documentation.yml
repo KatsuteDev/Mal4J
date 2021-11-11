@@ -14,19 +14,6 @@ body:
           required: true
         - label: I have checked that this issue is actually a bug and not a feature.
           required: true
-        - label: I am using the latest [documentation](https://mal4j.katsute.dev/).
-          required: true
-
-  - type: input
-    id: version
-    attributes:
-      label: Release Version
-      description: |
-        Release version or branch commit where the issue occured. Do not write 'latest'.
-      placeholder: |
-        ex: 2.2.0, 3cdf1c8
-    validations:
-      required: true
 
   - type: input
     id: location
@@ -44,6 +31,6 @@ body:
     attributes:
       label: Issue
       description: |
-        Explain your issue, add any relevant stacktraces here.
+        Explain your issue.
     validations:
       required: true

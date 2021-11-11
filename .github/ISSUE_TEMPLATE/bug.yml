@@ -22,8 +22,6 @@ body:
           required: true
         - label: I have checked the [FAQ](https://github.com/Katsute/Mal4J/blob/main/faq.md).
           required: true
-        - label: I am running the latest release version.
-          required: true
 
   - type: input
     id: os
