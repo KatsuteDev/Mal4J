@@ -14,7 +14,7 @@ body:
           required: true
         - label: I have checked that this issue is actually a bug and not a feature.
           required: true
-        - label: I have checked that there are no other similar [discussions](https://github.com/Katsute/Mal4J/discussions).
+        - label: I have checked [discussions](https://github.com/Katsute/Mal4J/discussions).
           required: true
         - label: I have checked the [documentation](https://mal4j.katsute.dev/).
           required: true
