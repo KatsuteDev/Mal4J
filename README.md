@@ -85,6 +85,7 @@ List<AnimePreview> search =
 ```
 
 ### 📋 List Modification
+
 Easily update your Anime and Manga listings through update methods.
 
 ```java
@@ -128,7 +129,7 @@ Code generated with GitHub Copilot is **strictly prohibited** on this repository
 - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/Katsute/Mal4J/discussions).
 - Want to further expand our project or site? [Fork](https://github.com/Katsute/Mal4J/fork) this repository and submit a [pull request](https://github.com/Katsute/Mal4J/pulls).
 
-Tests will modify list status for <https://myanimelist.net/anime/13759> and <https://myanimelist.net/manga/28107>, make sure you fix your ratings after the test runs.
+Tests will modify list status for <https://myanimelist.net/anime/13759> and <https://myanimelist.net/manga/28107>, make sure you fix your ratings after the test runs. The test cases will create a backup of your list in the 'anime-list.txt' and 'manga-list.txt' files.
 
 Ignore test failures for these known issues: [**⚠ External Issues**](https://github.com/Katsute/Mal4J/projects/10)
 
