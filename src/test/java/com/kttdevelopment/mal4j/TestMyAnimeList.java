@@ -11,7 +11,7 @@ public class TestMyAnimeList {
 
     @BeforeAll
     public static void beforeAll(){
-        mal = MyAnimeList.withOAuthToken("Bearer null");
+        mal = MyAnimeList.withToken("Bearer null");
     }
 
     // auth parameter tests
@@ -24,19 +24,19 @@ public class TestMyAnimeList {
 
     @Test
     public void testNullToken(){
-        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withOAuthToken(null),
+        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withToken(null),
                                 Workflow.errorSupplier("Expected MyAnimeList#withOAuthToken with null token to throw a NullPointerException"));
     }
 
     @Test
     public void testNoBearerToken(){
-        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withOAuthToken("x"),
+        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withToken("x"),
                                 Workflow.errorSupplier("Expected MyAnimeList#withOAuthToken with invalid token to throw an IllegalArgumentException"));
     }
 
     @Test
     public void testInvalidToken(){
-        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withOAuthToken("Bearer invalid").getAnime(TestProvider.AnimeID),
+        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withToken("Bearer invalid").getAnime(TestProvider.AnimeID),
                                 Workflow.errorSupplier("Expected invalid token to throw InvalidTokenException"));
     }
 

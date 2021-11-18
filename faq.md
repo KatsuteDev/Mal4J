@@ -41,9 +41,11 @@ The MyAnimeList API currently has no rate limit in place so requests must be sen
 
 This library offers ***ALL*** the features provided by the API and even some *undocumented* fields.
 
-### My auth token doesn't work.
+### My client id / auth token doesn't work.
 
-- Make sure that you are providing an auth token and not the client id.
+- Make sure you are using the correct authentication method
+    - For client id use: [`#withClientID`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withClientID(java.lang.String)
+    - For token use: [`#withToken`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String)
 - Your token may be expired.
 - Your token is missing '`Bearer `'.
 - Your token may contain dangling whitespace.

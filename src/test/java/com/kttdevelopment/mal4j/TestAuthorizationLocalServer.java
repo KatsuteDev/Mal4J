@@ -22,7 +22,7 @@ public class TestAuthorizationLocalServer {
         // test refresh token
         Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search(),
                                  Workflow.errorSupplier("Expected query to not be null"));
-        mal.refreshOAuthToken();
+        mal.refreshToken();
          Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search(),
                                   Workflow.errorSupplier("Expected query to not be null"));
 

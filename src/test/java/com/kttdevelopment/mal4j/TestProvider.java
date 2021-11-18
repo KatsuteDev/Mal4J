@@ -81,7 +81,7 @@ public abstract class TestProvider {
                 (mal = MyAnimeList.withClientID(strip(readFile(client)))) != null) // and client id was valid
                 || // OR
                 (hasToken && (!hasClient || preferTokenAuth) && // if has token file or both but prefers token file
-                (mal = MyAnimeList.withOAuthToken(strip(readFile(token)))) != null) // and token was valid
+                (mal = MyAnimeList.withToken(strip(readFile(token)))) != null) // and token was valid
             )
         ){
             isTokenAuth = hasClient && hasToken // if has both

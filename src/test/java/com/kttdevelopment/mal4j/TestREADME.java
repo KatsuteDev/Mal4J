@@ -16,7 +16,7 @@ import java.util.List;
 public class TestREADME {
 
     public void testSearchQueries(){
-        MyAnimeList mal = MyAnimeList.withOAuthToken("");
+        MyAnimeList mal = MyAnimeList.withToken("");
         List<AnimePreview> search =
             mal.getAnime()
                 .withQuery("さくら荘のペットな彼女")
@@ -27,7 +27,7 @@ public class TestREADME {
     }
 
     public void testListModification(){
-        MyAnimeList mal = MyAnimeList.withOAuthToken("");
+        MyAnimeList mal = MyAnimeList.withToken("");
         MangaListStatus status =
             mal.updateMangaListing(28107)
                 .status(MangaStatus.Reading)
@@ -43,7 +43,7 @@ public class TestREADME {
     }
 
     public void testStructuredObjects(){
-        MyAnimeList mal = MyAnimeList.withOAuthToken("");
+        MyAnimeList mal = MyAnimeList.withToken("");
         Anime anime = mal.getAnime(13759);
 
         String ja = anime.getAlternativeTitles().getJapanese();
@@ -55,11 +55,15 @@ public class TestREADME {
 
     // setup
 
-    public void testAdvancedOAuth(){
-        MyAnimeList mal = MyAnimeList.withOAuthToken("oauth_token");
+    public void testClient(){
+        MyAnimeList mal = MyAnimeList.withClientID("client_id");
     }
 
-    public void testClientAuth(){
+    public void testToken(){
+        MyAnimeList mal = MyAnimeList.withToken("Bearer oauth_token");
+    }
+
+    public void testOAuth2(){
         String authorization_url = MyAnimeListAuthenticator.getAuthorizationURL("client_id", "PKCE_code_challenge");
 
         MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));

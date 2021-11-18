@@ -74,7 +74,7 @@ See [setup](https://github.com/Katsute/Mal4J/blob/main/setup.md) for steps to au
 Easily search through MyAnimeList with search, ranking, seasonal, and suggestion queries; returning only selected or all fields.
 
 ```java
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withToken("");
 List<AnimePreview> search =
     mal.getAnime()
         .withQuery("さくら荘のペットな彼女")
@@ -89,7 +89,7 @@ List<AnimePreview> search =
 Easily update your Anime and Manga listings through update methods.
 
 ```java
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withToken("");
 MangaListStatus status =
     mal.updateMangaListing(28107)
         .status(MangaStatus.Reading)
@@ -109,7 +109,7 @@ MangaListStatus status =
 **All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, statistics, and even some *undocumented* fields are accessible in this library. Effortlessly retrieve any and all information you need.
 
 ```java
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withToken("");
 Anime anime = mal.getAnime(13759);
 
 String ja = anime.getAlternativeTitles().getJapanese();
