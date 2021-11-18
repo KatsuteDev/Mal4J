@@ -7,11 +7,12 @@ concurrency: mal-test
 
 jobs:
   mal_ci:
-    name: MyAnimeList CI (Java ${{ matrix.java }})
+    name: MyAnimeList CI [${{ matrix.auth }}] (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     strategy:
       matrix:
+        auth: ["Client", "Token"]
         java: [8, 11, 17]
       fail-fast: false
       max-parallel: 1
@@ -26,9 +27,15 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java }}
 
-      - name: 🔐 Load OAuth Token
+      - name: 🔐 Load Client ID
+        if: matrix.auth == 'Client'
         run: |
-          echo ${{ secrets.MAL_OAUTH }} > src/test/java/resources/oauth.txt
+          echo ${{ secrets.MAL_CLIENT }} > src/test/java/resources/client.txt
+
+      - name: 🔐 Load OAuth Token
+        if: matrix.auth == 'Token'
+        run: |
+          echo ${{ secrets.MAL_TOKEN }} > src/test/java/resources/token.txt
 
       - name: ✔ Test with Maven
         run: mvn test -fae --no-transfer-progress

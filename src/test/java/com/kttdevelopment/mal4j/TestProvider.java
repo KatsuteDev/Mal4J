@@ -1,11 +1,11 @@
 package com.kttdevelopment.mal4j;
 
+import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.provider.Arguments;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -50,11 +50,17 @@ public abstract class TestProvider {
     //
 
     private static MyAnimeList mal;
+    private static boolean isTokenAuth = false;
 
-    //
+    public static void requireToken(){
+        Assumptions.assumeTrue(isTokenAuth, "Test requires a token");
+    }
 
     static final File client = new File("src/test/java/resources/client.txt");
-    static final File oauth  = new File("src/test/java/resources/oauth.txt");
+    static final File token  = new File("src/test/java/resources/token.txt");
+
+    private static final boolean hasClient = client.exists();
+    private static final boolean hasToken  = token.exists();
 
     static {
         APICall.debug = false;
@@ -63,15 +69,33 @@ public abstract class TestProvider {
             System.out.println("\u001b[41;1m" + "\n                    WARNING: DEBUG MODE IS ON\n\n" + "\u001b[0m");
     }
 
+    // this value should be TRUE if you are committing this file
+    private static final boolean preferTokenAuth = true; // preferred auth when both files exist
+
+    @SuppressWarnings("GrazieInspection")
     public static void init() throws IOException{
-        if(oauth.exists() && (mal = MyAnimeList.withOAuthToken(strip(readFile(oauth)))).getAnime(AnimeID, Fields.NO_FIELDS) != null)
-            return; // skip if oauth exists and is usable
-        testRequireClientID(); // prevent CI from trying to authenticate
-        TestAuthorizationLocalServer.beforeAll(); // refresh old token
+        if(
+            (hasClient || hasToken) && // if has client or token file
+            (
+                (hasClient && (!hasToken || !preferTokenAuth) && // if has client file or both but prefers client file
+                (mal = MyAnimeList.withClientID(strip(readFile(client)))) != null) // and client id was valid
+                || // OR
+                (hasToken && (!hasClient || preferTokenAuth) && // if has token file or both but prefers token file
+                (mal = MyAnimeList.withToken(strip(readFile(token)))) != null) // and token was valid
+            )
+        ){
+            isTokenAuth = hasClient && hasToken // if has both
+                        ? preferTokenAuth // use preferred
+                        : hasToken; // use token if exists, otherwise use client
+            return; // authenticated successfully
+        }
+
+        requireHuman(); // prevent CI from trying to authenticate
+        TestAuthorizationLocalServer.beforeAll(); // create token
     }
 
-    public static void testRequireClientID(){
-        Assumptions.assumeTrue(client.exists(), "File with Client ID was missing, please create a file with the Client ID at: " + client.getAbsolutePath());
+    public static void requireHuman(){ // skip test on CI
+        Assumptions.assumeFalse("true".equals(System.getenv("CI")), "Test requires a human, CI testing not supported");
     }
 
     public static MyAnimeList getMyAnimeList(){
@@ -79,8 +103,10 @@ public abstract class TestProvider {
             init();
             return mal;
         }catch(final IOException e){
-            e.printStackTrace();
-            Assertions.fail();
+            final StringWriter sw = new StringWriter();
+            final PrintWriter pw = new PrintWriter(sw);
+            e.printStackTrace(pw);
+            Assertions.fail(Workflow.errorSupplier(sw.toString()));
             return null;
         }
     }
