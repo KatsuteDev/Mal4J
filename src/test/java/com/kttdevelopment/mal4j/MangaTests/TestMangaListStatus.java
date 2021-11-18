@@ -33,6 +33,7 @@ public class TestMangaListStatus {
     @AfterAll
     public static void afterAll(){
         if(mal == null) return;
+        TestProvider.requireToken();
 
         mal.deleteMangaListing(TestProvider.MangaID);
 

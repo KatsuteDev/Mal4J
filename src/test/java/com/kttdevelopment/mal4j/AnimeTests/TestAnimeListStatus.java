@@ -34,6 +34,7 @@ public class TestAnimeListStatus {
     @AfterAll
     public static void afterAll(){
         if(mal == null) return;
+        TestProvider.requireToken();
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
 
