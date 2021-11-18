@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: Reporting an issue on the GitHub app
     about: You must use a browser to use issue forms
-    url: https://github.com/Katsute/Mal4J/discussions/198
+    url: https://github.com/KatsuteDev/Mal4J/discussions/198
   - name: Official MyAnimeList API Club
     url: https://myanimelist.net/clubs.php?cid=13727
     about: We do not maintain the MyAnimeList API, issues regarding the API itself should be posted in their official club

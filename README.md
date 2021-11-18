@@ -1,6 +1,6 @@
 <div align="center">
-    <a href="https://github.com/Katsute/Mal4J#readme">
-        <img src="https://raw.githubusercontent.com/Katsute/Mal4J/main/banner.png" alt="Mal4J - MyAnimeList for Java">
+    <a href="https://github.com/KatsuteDev/Mal4J#readme">
+        <img src="https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/banner.png" alt="Mal4J - MyAnimeList for Java">
     </a>
     <h3>Java wrapper for the official MyAnimeList API</h3>
     <div>
@@ -8,13 +8,13 @@
         •
         <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
         •
-        <a href="https://github.com/Katsute/Mal4J/blob/main/setup.md#readme">Setup</a>
+        <a href="https://github.com/KatsuteDev/Mal4J/blob/main/setup.md#readme">Setup</a>
         •
-        <a href="https://github.com/Katsute/Mal4J/blob/main/faq.md#readme">FAQ</a>
+        <a href="https://github.com/KatsuteDev/Mal4J/blob/main/faq.md#readme">FAQ</a>
         •
-        <a href="https://github.com/Katsute/Mal4J/issues">Issues</a>
+        <a href="https://github.com/KatsuteDev/Mal4J/issues">Issues</a>
         •
-        <a href="https://github.com/Katsute/Mal4J/discussions">Discussions</a>
+        <a href="https://github.com/KatsuteDev/Mal4J/discussions">Discussions</a>
         •
         <a href="https://myanimelist.net/forum/?topicid=1897569">Forum Post</a>
     </div>
@@ -23,11 +23,11 @@
 <br>
 
 <div align="center">
-    <a href="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml"><img alt="Java CI" src="https://github.com/Katsute/Mal4J/actions/workflows/java_ci.yml/badge.svg"></a>
-    <a href="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml"><img alt="MyAnimeList CI" src="https://github.com/Katsute/Mal4J/actions/workflows/mal_ci.yml/badge.svg"></a>
+    <a href="https://github.com/KatsuteDev/Mal4J/actions/workflows/java_ci.yml"><img alt="Java CI" src="https://github.com/KatsuteDev/Mal4J/actions/workflows/java_ci.yml/badge.svg"></a>
+    <a href="https://github.com/KatsuteDev/Mal4J/actions/workflows/mal_ci.yml"><img alt="MyAnimeList CI" src="https://github.com/KatsuteDev/Mal4J/actions/workflows/mal_ci.yml/badge.svg"></a>
     <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j"></a>
-    <a href="https://github.com/Katsute/Mal4J/releases"><img alt="version" src="https://img.shields.io/github/v/release/Katsute/Mal4J"></a>
-    <a href="https://github.com/Katsute/Mal4J/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/github/license/Katsute/Mal4J"></a>
+    <a href="https://github.com/KatsuteDev/Mal4J/releases"><img alt="version" src="https://img.shields.io/github/v/release/KatsuteDev/Mal4J"></a>
+    <a href="https://github.com/KatsuteDev/Mal4J/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/github/license/KatsuteDev/Mal4J"></a>
 </div>
 
 <br>
@@ -36,7 +36,7 @@
     <table>
         <thead>
             <tr>
-                <th>❗ ❗ This repository will be moving to <a href="https://github.com/KatsuteDev/Mal4J">KatsuteDev/Mal4J</a> soon, more information in this <a href="https://github.com/Katsute/Mal4J/discussions/230">discussion post</a></th>
+                <th>❗ ❗ This repository will be moving to <a href="https://github.com/KatsuteDev/Mal4J">KatsuteDev/Mal4J</a> soon, more information in this <a href="https://github.com/KatsuteDev/Mal4J/discussions/230">discussion post</a></th>
             </tr>
         </thead>
     </table>
@@ -59,11 +59,11 @@ Mal4J is a modular wrapper for the MyAnimeList API written for Java 8+ and simpl
 
 Mal4J requires at least Java 8. No additional dependencies/libraries are required.
 
-Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) and the [releases](https://github.com/Katsute/Mal4J/releases) tab.
+Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) and the [releases](https://github.com/KatsuteDev/Mal4J/releases) tab.
 
-[![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
+[![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) [![Releases](https://img.shields.io/github/v/release/KatsuteDev/Mal4J)](https://github.com/KatsuteDev/Mal4J/releases)
 
-See [setup](https://github.com/Katsute/Mal4J/blob/main/setup.md#readme) for steps to authenticate and actually use this library.
+See [setup](https://github.com/KatsuteDev/Mal4J/blob/main/setup.md#readme) for steps to authenticate and actually use this library.
 
 <p align="right">(<a href="#readme">back to top</a>)</p>
 
@@ -125,13 +125,13 @@ OpeningTheme[] op = anime.getOpeningThemes();
 
 Code generated with GitHub Copilot is **strictly prohibited** on this repository. Do not bother sending pulls if you use this service.
 
-- Found a bug? Post it in [issues](https://github.com/Katsute/Mal4J/issues).
-- Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/Katsute/Mal4J/discussions).
-- Want to further expand our project or site? [Fork](https://github.com/Katsute/Mal4J/fork) this repository and submit a [pull request](https://github.com/Katsute/Mal4J/pulls).
+- Found a bug? Post it in [issues](https://github.com/KatsuteDev/Mal4J/issues).
+- Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/KatsuteDev/Mal4J/discussions).
+- Want to further expand our project or site? [Fork](https://github.com/KatsuteDev/Mal4J/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/Mal4J/pulls).
 
 Tests will modify list status for <https://myanimelist.net/anime/13759> and <https://myanimelist.net/manga/28107>, make sure you fix your ratings after the test runs. The test cases will create a backup of your list in the 'anime-list.txt' and 'manga-list.txt' files.
 
-Ignore test failures for these known issues: [**⚠ External Issues**](https://github.com/Katsute/Mal4J/projects/10)
+Ignore test failures for these known issues: [**⚠ External Issues**](https://github.com/KatsuteDev/Mal4J/projects/10)
 
 ### Running Tests Locally
 
@@ -151,7 +151,7 @@ Devs running remote tests may do so by running the `MyAnimeList CI` workflow man
 
 ### License
 
-This library is released under the [GNU General Public License (GPL) v2.0](https://github.com/Katsute/Mal4J/blob/main/LICENSE).
+This library is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Mal4J/blob/main/LICENSE).
 
 ### Disclaimer
 
