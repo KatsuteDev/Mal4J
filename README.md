@@ -30,18 +30,6 @@
     <a href="https://github.com/KatsuteDev/Mal4J/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/github/license/KatsuteDev/Mal4J"></a>
 </div>
 
-<br>
-
-<div align="center">
-    <table>
-        <thead>
-            <tr>
-                <th>❗ ❗ This repository will be moving to <a href="https://github.com/KatsuteDev/Mal4J">KatsuteDev/Mal4J</a> soon, more information in this <a href="https://github.com/KatsuteDev/Mal4J/discussions/230">discussion post</a></th>
-            </tr>
-        </thead>
-    </table>
-</div>
-
 # Overview
 
 Mal4J is a modular wrapper for the MyAnimeList API written for Java 8+ and simplifies many complex operations into an easy to use library.
