@@ -83,10 +83,15 @@ final class MyAnimeListImpl extends MyAnimeList {
     }
 
     @Override
-    public synchronized final void refreshOAuthToken(){
+    public synchronized final void refreshToken(){
         if(authenticator == null)
             throw new UnsupportedOperationException("OAuth token refresh can only be used with authorization");
         this.token = authenticator.refreshAccessToken().getToken();
+    }
+
+    @Override
+    public synchronized final void refreshOAuthToken(){
+        refreshToken();
     }
 
     //
