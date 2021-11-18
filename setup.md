@@ -39,7 +39,7 @@ Four different ways to authenticate with MyAnimeList:
  - [Authenticate using client ID](#authenticate-using-client-id)
  - [Authenticate using token](#authenticate-using-token)
  - [Authenticate using OAuth 2.0](#authenticate-using-oauth-20)
- - [Authenticate with using a local server](#authenticate-using-a-local-server)
+ - [Authenticate using a local server](#authenticate-using-a-local-server)
 
 ### Authenticate using client ID
 
