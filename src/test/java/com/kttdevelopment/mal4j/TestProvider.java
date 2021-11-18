@@ -75,7 +75,7 @@ public abstract class TestProvider {
     @SuppressWarnings("GrazieInspection")
     public static void init() throws IOException{
         if(
-            hasClient || hasToken && // if has client or token file
+            (hasClient || hasToken) && // if has client or token file
             (
                 (hasClient && (!hasToken || !preferTokenAuth) && // if has client file or both but prefers client file
                 (mal = MyAnimeList.withClientID(strip(readFile(client)))) != null) // and client id was valid
