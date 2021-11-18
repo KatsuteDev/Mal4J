@@ -39,12 +39,13 @@ import java.util.List;
  * <br><br>
  * The {@link MyAnimeList} class can be created by authenticating with either:
  * <ul>
- *     <li>An oauth token using {@link #withOAuthToken(String)}</li>
+ *     <li>A client ID using {@link #withClientID(String)}</li>
+ *     <li>An OAuth token using {@link #withOAuthToken(String)}</li>
  *     <li>An authorization code and client id using {@link #withAuthorization(MyAnimeListAuthenticator)}.</li>
  * </ul>
  *
  * @since 1.0.0
- * @version 2.4.0
+ * @version 2.6.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
@@ -52,19 +53,35 @@ public abstract class MyAnimeList {
     MyAnimeList(){ }
 
     /**
+     * Creates an interface with a client ID. Only public read operations are allowed, for write and user operations use {@link #withOAuthToken(String)} or {@link #withAuthorization(MyAnimeListAuthenticator)}. Client secret is not required if your application has one.
+     *
+     * @param client_id client id
+     * @return MyAnimeList
+     * @throws NullPointerException if client ID is null
+     *
+     * @see #withOAuthToken(String)
+     * @see #withAuthorization(MyAnimeListAuthenticator)
+     */
+    @SuppressWarnings("GrazieInspection")
+    public static MyAnimeList withClientID(final String client_id){
+        return new MyAnimeListImpl(client_id, false);
+    }
+
+    /**
      * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshOAuthToken()}.
      *
      * @param token OAuth token, Ex: 'Bearer oauth2token'
+     * @return MyAnimeList
      * @throws NullPointerException if token is null
      * @throws InvalidTokenException if token doesn't start with 'Bearer'
      *
-     * @return MyAnimeList
      *
+     * @see #withClientID(String)
      * @see #withAuthorization(MyAnimeListAuthenticator)
      * @since 1.0.0
      */
     public static MyAnimeList withOAuthToken(final String token){
-        return new MyAnimeListImpl(token);
+        return new MyAnimeListImpl(token, true);
     }
 
     /**
@@ -74,6 +91,7 @@ public abstract class MyAnimeList {
      * @return MyAnimeList
      * @throws NullPointerException if authenticator is null
      *
+     * @see #withClientID(String)
      * @see #withOAuthToken(String)
      * @see #refreshOAuthToken()
      * @see MyAnimeListAuthenticator
@@ -121,11 +139,11 @@ public abstract class MyAnimeList {
     /**
      * Returns the full Anime details given an ID.
      *
+     * @param id Anime id
+     * @return Anime
      * @throws HttpException if request failed
      * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
-     * @param id Anime id
-     * @return Anime
      *
      * @see Anime
      * @see #getAnime(long)
@@ -136,12 +154,12 @@ public abstract class MyAnimeList {
     /**
      * Returns Anime details requested in the fields given an ID.
      *
-     * @throws HttpException if request failed
-     * @throws InvalidTokenException if token is invalid or expired
-     * @throws UncheckedIOException if client failed to execute request
      * @param id Anime id
      * @param fields a string array of the fields that should be returned
      * @return Anime
+     * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
+     * @throws UncheckedIOException if client failed to execute request
      *
      * @see Anime
      * @see #getAnime()
@@ -219,10 +237,10 @@ public abstract class MyAnimeList {
     /**
      * Removes an Anime listing.
      *
+     * @param id Anime id
      * @throws HttpException if request failed
      * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
-     * @param id Anime id
      *
      * @see #updateAnimeListing(long)
      * @see #getUserAnimeListing()
@@ -373,11 +391,11 @@ public abstract class MyAnimeList {
     /**
      * Returns the full Manga details given an ID.
      *
+     * @param id Manga id
+     * @return Manga
      * @throws HttpException if request failed
      * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
-     * @param id Manga id
-     * @return Manga
      *
      * @see Manga
      * @see #getManga(long)
@@ -388,12 +406,12 @@ public abstract class MyAnimeList {
     /**
      * Returns Manga details requested in the fields given an ID.
      *
-     * @throws HttpException if request failed
-     * @throws InvalidTokenException if token is invalid or expired
-     * @throws UncheckedIOException if client failed to execute request
      * @param id Manga id
      * @param fields a string array of the fields that should be returned
      * @return Manga
+     * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is invalid or expired
+     * @throws UncheckedIOException if client failed to execute request
      *
      * @see Manga
      * @see #getManga()
@@ -439,10 +457,10 @@ public abstract class MyAnimeList {
     /**
      * Removes a Manga listing.
      *
+     * @param id Manga id
      * @throws HttpException if request failed
      * @throws InvalidTokenException if token is invalid or expired
      * @throws UncheckedIOException if client failed to execute request
-     * @param id Manga id
      *
      * @see #updateMangaListing(long)
      * @see #getUserMangaListing()

@@ -51,34 +51,46 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  * @see MyAnimeList
  * @see MyAnimeListService
  * @since 1.0.0
- * @version 2.5.1
+ * @version 2.6.0
  * @author Katsute
  */
 final class MyAnimeListImpl extends MyAnimeList {
 
-    private transient String auth;
+    private transient String token = null;
+    private transient String client_id = null;
+    private final boolean isTokenAuth;
+
     private MyAnimeListAuthenticator authenticator;
 
     private final MyAnimeListService service = MyAnimeListService.create();
 
-    MyAnimeListImpl(final String auth){
-        Objects.requireNonNull(auth, "OAuth token cannot be null");
-        if(!auth.startsWith("Bearer "))
-            throw new InvalidTokenException("Oauth token should start with 'Bearer'");
-        this.auth = auth;
+    MyAnimeListImpl(final String token){
+        this(token, true);
+    }
+
+    MyAnimeListImpl(final String token_or_client, final boolean isToken){
+        Objects.requireNonNull(token_or_client, (isToken ? "OAuth token" : "Client ID") + " can not be null");
+        this.isTokenAuth = isToken;
+        if(isToken){
+            if(!token.startsWith("Bearer "))
+                throw new InvalidTokenException("OAuth token should start with 'Bearer'");
+            this.token = token_or_client;
+        }else
+            this.client_id = token_or_client;
     }
 
     MyAnimeListImpl(final MyAnimeListAuthenticator authenticator){
         Objects.requireNonNull(authenticator, "Authenticator cannot be null");
         this.authenticator = authenticator;
-        this.auth = authenticator.getAccessToken().getToken();
+        this.token = authenticator.getAccessToken().getToken();
+        this.isTokenAuth = true;
     }
 
     @Override
     public synchronized final void refreshOAuthToken(){
         if(authenticator == null)
             throw new UnsupportedOperationException("OAuth token refresh can only be used with authorization");
-        this.auth = authenticator.refreshAccessToken().getToken();
+        this.token = authenticator.refreshAccessToken().getToken();
     }
 
     //
@@ -117,7 +129,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<AnimePreview> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnime(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         query,
                         limit,
                         offset,
@@ -138,7 +151,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnime(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         query,
                         limit,
                         offset,
@@ -161,7 +175,8 @@ final class MyAnimeListImpl extends MyAnimeList {
         return asAnime(this,
         handleResponse(
             () -> service.getAnime(
-                auth,
+                isTokenAuth ? token : null,
+                !isTokenAuth ? client_id : null,
                 id,
                 convertFields(Fields.anime, fields)
             )
@@ -176,7 +191,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<AnimeRanking> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeRanking(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         rankingType.field(),
                         limit,
                         offset,
@@ -197,7 +213,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnimeRanking(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         rankingType.field(),
                         limit,
                         offset,
@@ -218,7 +235,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<AnimePreview> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeSeason(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         year,
                         season.field(),
                         sort != null ? sort.field() : null,
@@ -241,7 +259,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnimeSeason(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         year,
                         season.field(),
                         sort != null ? sort.field() : null,
@@ -265,7 +284,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<AnimePreview> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeSuggestions(
-                        auth,
+                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create a MyAnimeList object with either an Authenticator or Token"),
                         limit,
                         offset,
                         convertFields(Fields.anime, fields),
@@ -285,7 +304,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnimeSuggestions(
-                        auth,
+                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         limit,
                         offset,
                         convertFields(Fields.anime, fields),
@@ -306,7 +325,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             public synchronized final AnimeListStatus update(){
                 final JsonObject response = handleResponse(
                     () -> service.updateAnimeListing(
-                        auth,
+                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         id,
                         status != null ? status.field() : null,
                         rewatching,
@@ -334,7 +353,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         try{
             handleVoidResponse(
                 () -> service.deleteAnimeListing(
-                    auth,
+                    Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                     (int) id
                 )
             );
@@ -357,7 +376,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<AnimeListStatus> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getUserAnimeListing(
-                        auth,
+                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
@@ -380,7 +399,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getUserAnimeListing(
-                        auth,
+                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
@@ -400,7 +419,9 @@ final class MyAnimeListImpl extends MyAnimeList {
     public final List<ForumCategory> getForumBoards(){
         final JsonObject response = handleResponse(
             () -> service.getForumBoards(
-                auth)
+                isTokenAuth ? token : null,
+                !isTokenAuth ? client_id : null
+            )
         );
         if(response == null) return null;
 
@@ -424,7 +445,8 @@ final class MyAnimeListImpl extends MyAnimeList {
     public final ForumTopicDetail getForumTopicDetail(final long id, final Integer limit, final Integer offset){
         final JsonObject response = handleResponse(
             () -> service.getForumBoard(
-                auth,
+                isTokenAuth ? token : null,
+                !isTokenAuth ? client_id : null,
                 id,
                 limit,
                 offset
@@ -443,7 +465,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<Post> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getForumBoard(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         id,
                         limit,
                         offset
@@ -462,7 +485,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getForumBoard(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         id,
                         limit,
                         offset
@@ -482,7 +506,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<ForumTopic> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getForumTopics(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         boardId,
                         subboardId,
                         limit,
@@ -506,7 +531,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getForumTopics(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         boardId,
                         subboardId,
                         limit,
@@ -531,7 +557,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<MangaPreview> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getManga(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         query,
                         limit,
                         offset,
@@ -552,7 +579,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getManga(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         query,
                         limit,
                         offset,
@@ -576,7 +604,8 @@ final class MyAnimeListImpl extends MyAnimeList {
         return asManga(this,
         handleResponse(
             () -> service.getManga(
-                auth,
+                isTokenAuth ? token : null,
+                !isTokenAuth ? client_id : null,
                 id,
                 convertFields(Fields.manga, fields)
             )
@@ -591,7 +620,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<MangaRanking> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getMangaRanking(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         rankingType != null ? rankingType.field() : null,
                         limit,
                         offset,
@@ -612,7 +642,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getMangaRanking(
-                        auth,
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         rankingType != null ? rankingType.field() : null,
                         limit,
                         offset,
@@ -634,7 +665,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             public synchronized final MangaListStatus update(){
                 final JsonObject response = handleResponse(
                     () -> service.updateMangaListing(
-                        auth,
+                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         id,
                         status != null ? status.field() : null,
                         rereading,
@@ -663,7 +694,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         try{
             handleVoidResponse(
                 () -> service.deleteMangaListing(
-                    auth,
+                    Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                     id
                 )
             );
@@ -686,7 +717,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<MangaListStatus> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getUserMangaListing(
-                        auth,
+                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
@@ -709,7 +740,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getUserMangaListing(
-                        auth,
+                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
@@ -756,7 +787,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return asUser(this,
         handleResponse(
             () -> service.getUser(
-                auth,
+                Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                 username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                 convertFields(Fields.user, fields)
             )
