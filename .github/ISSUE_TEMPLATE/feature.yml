@@ -12,7 +12,7 @@ body:
       options:
         - label: I have checked that no other similar feature request already exists.
           required: true
-        - label: I have checked [discussions](https://github.com/Katsute/Mal4J/discussions).
+        - label: I have checked [discussions](https://github.com/KatsuteDev/Mal4J/discussions).
           required: true
         - label: This feature request makes sense for the project.
           required: true
