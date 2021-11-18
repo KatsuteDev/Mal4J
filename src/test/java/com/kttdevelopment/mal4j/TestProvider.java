@@ -74,26 +74,24 @@ public abstract class TestProvider {
 
     @SuppressWarnings("GrazieInspection")
     public static void init() throws IOException{
-        if(hasClient || hasToken){ // if has client or token file
-            if(
+        if(
+            hasClient || hasToken && // if has client or token file
+            (
                 (hasClient && (!hasToken || !preferTokenAuth) && // if has client file or both but prefers client file
                 (mal = MyAnimeList.withClientID(strip(readFile(client)))) != null) // and client id was valid
                 || // OR
                 (hasToken && (!hasClient || preferTokenAuth) && // if has token file or both but prefers token file
                 (mal = MyAnimeList.withOAuthToken(strip(readFile(token)))) != null) // and token was valid
-            ){
-                isTokenAuth = hasClient && hasToken // if has both
-                            ? preferTokenAuth // use preferred
-                            : hasToken; // use token if exists, otherwise use client
-                return; // authenticated successfully
-            }
-
-            requireHuman(); // prevent CI from trying to authenticate
-            TestAuthorizationLocalServer.beforeAll(); // create token
+            )
+        ){
+            isTokenAuth = hasClient && hasToken // if has both
+                        ? preferTokenAuth // use preferred
+                        : hasToken; // use token if exists, otherwise use client
             return; // authenticated successfully
         }
-        // failed to authenticate
-        Assertions.fail(Workflow.errorSupplier("Failed to authenticate with MyAnimeList, client or token file is missing or the value is invalid"));
+
+        requireHuman(); // prevent CI from trying to authenticate
+        TestAuthorizationLocalServer.beforeAll(); // create token
     }
 
     public static void requireHuman(){ // skip test on CI
