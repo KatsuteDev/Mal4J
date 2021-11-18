@@ -38,7 +38,14 @@ This library also supports OAuth token refresh.
 
 It is suggested that you save the OAuth token that is generated so you don't have to authenticate with MyAnimeList each time.
 
-### Authenticate using client
+Four different ways to authenticate with MyAnimeList:
+
+ - [Authenticate using client](#authenticate-using-client-id)
+ - [Authenticate using token](#authenticate-using-token)
+ - [Authenticate using OAuth 2.0](#authenticate-using-oauth-20)
+ - [Authenticate with using a local server](#authenticate-using-a-local-server)
+
+### Authenticate using client ID
 
  - Simply use the client ID for your application. Client secret is not required, even if your application has one.
 
@@ -48,7 +55,7 @@ It is suggested that you save the OAuth token that is generated so you don't hav
 
    This authentication method only grants access to public data and READ operations.
 
-   If you want to view users, or view or change anime/manga lists you must authenticate with a [token](#authenticate-using-token) or with [oauth 2.0](#authenticate-with-client-id-using-oauth-20)
+   If you want to view users, or view or change anime/manga lists you must authenticate with a [token](#authenticate-using-token) or with [oauth 2.0](#authenticate-using-oauth-20)
 
 ### Authenticate using token
 
@@ -58,7 +65,7 @@ It is suggested that you save the OAuth token that is generated so you don't hav
     MyAnimeList mal = MyAnimeList.withToken("Bearer oauth_token");
     ```
 
-### Authenticate with client id using OAuth 2.0
+### Authenticate using OAuth 2.0
 
 The below method is massively simplified, for a more detailed explanation on OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
 
@@ -86,7 +93,7 @@ For developers using their own [authorization](https://myanimelist.net/apiconfig
 
 The above methods is massively simplified, for a more detailed guide on how OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
 
-### Authenticate with client id using a local server
+### Authenticate with using a local server
 
   - For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html).
 

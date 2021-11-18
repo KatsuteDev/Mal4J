@@ -20,7 +20,7 @@ body:
           required: true
         - label: I have checked the [known issues](https://github.com/Katsute/Mal4J/projects/10) for this library.
           required: true
-        - label: I have checked the [FAQ](https://github.com/Katsute/Mal4J/blob/main/faq.md).
+        - label: I have checked the [FAQ](https://github.com/Katsute/Mal4J/blob/main/faq.md#readme).
           required: true
 
   - type: input

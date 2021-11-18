@@ -16,7 +16,7 @@ import java.util.List;
 public class TestREADME {
 
     public void testSearchQueries(){
-        MyAnimeList mal = MyAnimeList.withToken("");
+        MyAnimeList mal = MyAnimeList.withClientID("");
         List<AnimePreview> search =
             mal.getAnime()
                 .withQuery("さくら荘のペットな彼女")
@@ -43,7 +43,7 @@ public class TestREADME {
     }
 
     public void testStructuredObjects(){
-        MyAnimeList mal = MyAnimeList.withToken("");
+        MyAnimeList mal = MyAnimeList.withClientID("");
         Anime anime = mal.getAnime(13759);
 
         String ja = anime.getAlternativeTitles().getJapanese();
