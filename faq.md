@@ -2,7 +2,7 @@
 
 ### Does this library support Java # ?
 
-This project supports Java 8+ and Java 9 modules.
+This project supports Java 8+ and Java 9+ modules.
 
 ### WARNING: An illegal reflective access operation has occurred
 
@@ -44,8 +44,8 @@ This library offers ***ALL*** the features provided by the API and even some *un
 ### My client id / auth token doesn't work.
 
 - Make sure you are using the correct authentication method
-    - For client id use: [`#withClientID`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withClientID(java.lang.String)
-    - For token use: [`#withToken`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String)
+    - For client id use: [`#withClientID`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withClientID(java.lang.String))
+    - For token use: [`#withToken`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String))
 - Your token may be expired.
 - Your token is missing '`Bearer `'.
 - Your token may contain dangling whitespace.
@@ -65,6 +65,10 @@ For search queries make sure you also run [`#includeNSFW()`](https://docs.katsut
 ### I can't get other users.
 
 Currently the MyAnimeList API does not allow you to check users other than yourself.
+
+### I can't get or modify my Anime/Manga lists.
+
+In order to write or read private data you must authenticate using a [token](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String)) or with an [authenticator](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withAuthorization(com.kttdevelopment.mal4j.MyAnimeListAuthenticator)).
 
 ### `list_status` / `my_list_status` field isn't working.
 
