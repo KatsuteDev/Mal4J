@@ -1,24 +1,12 @@
 # Installation
 
-Dependencies are hosted on Maven Central and compiled builds can be found in releases.
+Mal4J requires at least Java 8. No additional dependencies/libraries are required.
 
-**Mal4J requires at least Java 8.**
+Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) and the [releases](https://github.com/Katsute/Mal4J/releases) tab.
 
-## Maven Central
-
-Compiled binaries can be found on Maven Central → [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j)
-
-## Local
-
-For projects built locally, jars can be found in releases → [![Releases](https://img.shields.io/github/v/release/KatsuteDev/Mal4J)](https://github.com/KatsuteDev/Mal4J/releases)
-
-Mal4J is a standalone library and requires no additional dependencies.
+[![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
 
 # API setup
-
-The below method is massively simplified, for a more detailed explanation on OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
-
-If you want to quickly generate a token you can use this [python script](https://gitlab.com/-/snippets/2039434).
 
 ## 1. Create new Client ID
 
@@ -26,7 +14,7 @@ If you want to quickly generate a token you can use this [python script](https:/
 
     You can create a new Client ID at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
 
-    ![Create ID](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/setup_1.png)
+    ![Create ID](https://raw.githubusercontent.com/Katsute/Mal4J/main/setup_1.png)
 
 ## 2. Register application
 
@@ -34,31 +22,50 @@ If you want to quickly generate a token you can use this [python script](https:/
 
     For users using local server authentication ([below](#authenticate-with-client-id-using-a-local-server)) set this to `http://localhost:5050` or whatever port you are using (port must be between `1` - `65535`).
 
-    ![Register application](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/setup_2.png)
+    ![Register application](https://raw.githubusercontent.com/Katsute/Mal4J/main/setup_2.png)
 
 ## 3. Retrieve Client ID
 
   - Copy **client ID** and **client secret** (if the application has a client secret), this will be used to generate an authorization code.
 
-    ![Copy client id and client secret](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/setup_3.png)
+    ![Copy client id and client secret](https://raw.githubusercontent.com/Katsute/Mal4J/main/setup_3.png)
 
 ## 4. Authentication
 
 This library has a simplified authentication method based of the MyAnimeList [authorization documentation](https://myanimelist.net/apiconfig/references/authorization#client-registration). You can implement your own authentication methods or use the ones provided here.
 
-This library also supports OAuth token refresh.
+Four different ways to authenticate with MyAnimeList:
 
-It is suggested that you save the OAuth token that is generated so you don't have to authenticate with MyAnimeList each time.
+ - [Authenticate using client ID](#authenticate-using-client-id)
+ - [Authenticate using token](#authenticate-using-token)
+ - [Authenticate using OAuth 2.0](#authenticate-using-oauth-20)
+ - [Authenticate using a local server](#authenticate-using-a-local-server)
+
+### Authenticate using client ID
+
+ - Simply use the client ID for your application. Client secret is not required, even if your application has one.
+
+   ```java
+   MyAnimeList mal = MyAnimeList.withClientID("client_id");
+   ```
+
+   This authentication method only grants access to public data and READ operations.
+
+   If you want to view users, or view or change anime/manga lists you must authenticate with a [token](#authenticate-using-token) or with [oauth 2.0](#authenticate-using-oauth-20)
 
 ### Authenticate using token
 
   - For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#client-registration) you can simply use the OAuth token that you generate.
 
     ```java
-    MyAnimeList mal = MyAnimeList.withOAuthToken("oauth_token");
+    MyAnimeList mal = MyAnimeList.withToken("Bearer oauth_token");
     ```
 
-### Authenticate with client id using OAuth 2.0
+### Authenticate using OAuth 2.0
+
+The below method is massively simplified, for a more detailed explanation on OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
+
+If you want to quickly generate a token you can use this [python script](https://gitlab.com/-/snippets/2039434).
 
 For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html) to generate an OAuth token from a client id and PKCE code challenge.
 
@@ -80,7 +87,11 @@ For developers using their own [authorization](https://myanimelist.net/apiconfig
     MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
     ```
 
-### Authenticate with client id using a local server
+    It is suggested that you save the OAuth token that is generated so you don't have to authenticate with MyAnimeList each time.
+
+The above methods is massively simplified, for a more detailed guide on how OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
+
+### Authenticate using a local server
 
   - For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html).
 
@@ -95,7 +106,3 @@ For developers using their own [authorization](https://myanimelist.net/apiconfig
     ```java
     MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator.LocalServerBuilder("client_id", "client_secret", 5050).openBrowser().build());
     ```
-
-<hr>
-
-The above methods are massively simplified, for a more detailed guide on how OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).

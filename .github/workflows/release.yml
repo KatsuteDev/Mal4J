@@ -7,12 +7,35 @@ on:
 jobs:
   deploy:
     name: Deploy
-    uses: Katsute/Workflows/.github/workflows/java.deploy.yml@main
-    with:
-      environment: Maven Central
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
-      maven-username: ${{ secrets.OSSRH_USERNAME }}
-      maven-password: ${{ secrets.OSSRH_TOKEN }}
-      gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-      gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    environment: Maven Central
+    steps:
+      - name: 📤 Checkout Repository
+        uses: actions/checkout@v2.4.0
+
+      - name: 🔐 Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v3.2.0
+        with:
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: ☕ Install Java
+        uses: actions/setup-java@v2.3.1
+        with:
+          architecture: x64
+          distribution: temurin
+          java-version: 11
+
+      - name: 🚀 Deploy to Maven
+        run: mvn -B deploy -f pom.xml -s settings.xml -P deploy
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+
+      - name: 🚀 Deploy to Releases
+        uses: AButler/upload-release-assets@v2.0
+        with:
+          files: 'target/*.jar'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}

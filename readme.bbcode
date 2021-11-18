@@ -11,7 +11,7 @@ Mal4J is a wrapper for the MyAnimeList API written for Java 8 and simplifies man
 Easily search through MyAnimeList with search, ranking, seasonal, and suggestion queries; returning only selected or all fields.
 
 [code]
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withClientID("");
 List<AnimePreview> search =
     mal.getAnime()
         .withQuery("さくら荘のペットな彼女")
@@ -25,7 +25,7 @@ List<AnimePreview> search =
 Easily update your Anime and Manga listings through update methods.
 
 [code]
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withToken("");
 MangaListStatus status =
     mal.updateMangaListing(28107)
         .status(MangaStatus.Reading)
@@ -44,7 +44,7 @@ MangaListStatus status =
 [b]All[/b] information provided in the [url=https://myanimelist.net/apiconfig/references/api/v2]MyAnimeList API[/url] including Anime, Manga, forums, genres, pictures, statistics, and even some [i]undocumented[/i] fields are accessible in this library. Effortlessly retrieve any and all information you need.
 
 [code]
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withClientID("");
 Anime anime = mal.getAnime(13759);
 
 String ja = anime.getAlternativeTitles().getJapanese();

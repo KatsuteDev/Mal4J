@@ -21,14 +21,26 @@ public class TestAnimeSeason {
 
     @Test
     public void testSeason(){
+        final int year = 2019;
         final List<AnimePreview> season =
-            mal.getAnimeSeason(2019, Season.Summer)
-                .withLimit(1)
+            mal.getAnimeSeason(year, Season.Summer)
                 .withField(Fields.Anime.start_season)
                 .search();
-        final AnimePreview anime = season.get(0);
-        Assertions.assertEquals(2019, anime.getStartSeason().getYear(),
-                                Workflow.errorSupplier("Expected year to match"));
+
+        int thisYear = 0;
+        int otherYear = 0;
+
+        AnimePreview anime = null;
+        for(final AnimePreview iterator : season)
+            if(iterator.getStartSeason().getYear() == year){
+                thisYear++;
+                anime = iterator;
+            }else
+                otherYear++;
+
+        Assertions.assertTrue(thisYear > otherYear, Workflow.errorSupplier("Expected seasonal search to return mostly from selected year (search contained mostly results from other years)"));
+
+        Assertions.assertNotNull(anime, Workflow.errorSupplier("Expected seasonal search to return an Anime from selected year"));
         Assertions.assertTrue(
             anime.getStartSeason().getSeason() == Season.Summer || anime.getStartSeason().getSeason() == Season.Spring,
             Workflow.errorSupplier("Anime start season was supposed to be either Summer or Spring but was " + anime.getStartSeason().getSeason().name())

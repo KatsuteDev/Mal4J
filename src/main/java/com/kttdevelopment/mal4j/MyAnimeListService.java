@@ -40,6 +40,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="anime")
     Response<JsonObject> getAnime(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Query("q")                                 final String search,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset,
@@ -50,6 +51,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="anime/{anime_id}")
     Response<JsonObject> getAnime(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Path(value = "anime_id")                   final Long anime_id,
         @Query(value = "fields", encoded = true)    final String fields
     );
@@ -57,6 +59,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="anime/ranking")
     Response<JsonObject> getAnimeRanking(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Query("ranking_type")                      final String ranking_type,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset,
@@ -67,6 +70,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="anime/season/{year}/{season}")
     Response<JsonObject> getAnimeSeason(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Path(value = "year")                       final Integer year,
         @Path(value = "season")                     final String season,
         @Query("sort")                              final String ranking_type,
@@ -129,12 +133,14 @@ interface MyAnimeListService {
 
     @Endpoint(method="GET", value="forum/boards")
     Response<JsonObject> getForumBoards(
-        @Header("Authorization") final String token
+        @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id
     );
 
     @Endpoint(method="GET", value="forum/topic/{topic_id}")
     Response<JsonObject> getForumBoard(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Path(value = "topic_id")                   final Long topic_id,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset
@@ -144,6 +150,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="forum/topics")
     Response<JsonObject> getForumTopics(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Query("board_id")                          final Long board_id,
         @Query("subboard_id")                       final Long subboard_id,
         @Query("limit")                             final Integer limit,
@@ -159,6 +166,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="manga")
     Response<JsonObject> getManga(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Query("q")                                 final String search,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset,
@@ -169,6 +177,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="manga/{manga_id}")
     Response<JsonObject> getManga(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Path(value = "manga_id")                   final Long manga_id,
         @Query(value = "fields", encoded = true)    final String fields
     );
@@ -176,6 +185,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="manga/ranking")
     Response<JsonObject> getMangaRanking(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Query("ranking_type")                      final String ranking_type,
         @Query("limit")                             final Integer limit,
         @Query("offset")                            final Integer offset,
