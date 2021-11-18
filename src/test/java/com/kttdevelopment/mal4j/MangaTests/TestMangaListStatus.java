@@ -23,6 +23,7 @@ public class TestMangaListStatus {
     @BeforeAll
     public static void beforeAll() throws IOException{
         mal = TestProvider.getMyAnimeList();
+        TestProvider.requireToken();
 
         final String file = "manga-list-" + System.currentTimeMillis() + ".txt";
         System.out.println("Running Manga list tests, saving backup of current list to '" + file + '\'');

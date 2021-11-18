@@ -133,7 +133,7 @@ interface MyAnimeListService {
 
     @Endpoint(method="GET", value="forum/boards")
     Response<JsonObject> getForumBoards(
-        @Header("Authorization") final String token,
+        @Header("Authorization")                    final String token,
         @Header("X-MAL-CLIENT-ID")                  final String client_id
     );
 

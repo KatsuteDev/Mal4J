@@ -64,15 +64,11 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     private final MyAnimeListService service = MyAnimeListService.create();
 
-    MyAnimeListImpl(final String token){
-        this(token, true);
-    }
-
     MyAnimeListImpl(final String token_or_client, final boolean isToken){
         Objects.requireNonNull(token_or_client, (isToken ? "OAuth token" : "Client ID") + " can not be null");
         this.isTokenAuth = isToken;
         if(isToken){
-            if(!token.startsWith("Bearer "))
+            if(!token_or_client.startsWith("Bearer "))
                 throw new InvalidTokenException("OAuth token should start with 'Bearer'");
             this.token = token_or_client;
         }else

@@ -13,7 +13,7 @@ public class TestAuthorizationLocalServer {
 
     @BeforeAll // test token & refresh
     public static void beforeAll() throws IOException{
-        TestProvider.testRequireClientID();
+        TestProvider.requireHuman();
 
         final String clientId = TestProvider.readFile(TestProvider.client);
         authenticator = new MyAnimeListAuthenticator.LocalServerBuilder(clientId, 5050).openBrowser().build();
@@ -27,7 +27,7 @@ public class TestAuthorizationLocalServer {
                                   Workflow.errorSupplier("Expected query to not be null"));
 
         // write stable OAuth
-        Files.write(TestProvider.oauth.toPath(), authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
+        Files.write(TestProvider.token.toPath(), authenticator.getAccessToken().getToken().getBytes(StandardCharsets.UTF_8));
     }
 
     @Test

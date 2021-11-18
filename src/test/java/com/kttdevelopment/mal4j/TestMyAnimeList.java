@@ -14,6 +14,14 @@ public class TestMyAnimeList {
         mal = MyAnimeList.withOAuthToken("Bearer null");
     }
 
+    // auth parameter tests
+
+    @Test
+    public void testNullClientID(){
+        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withClientID(null),
+                                Workflow.errorSupplier("Expected MyAnimeList#withClientID with null client ID to throw a NullPointerException"));
+    }
+
     @Test
     public void testNullToken(){
         Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withOAuthToken(null),
@@ -37,6 +45,8 @@ public class TestMyAnimeList {
         Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withAuthorization(null),
                                 Workflow.errorSupplier("Expected MyAnimeList#withAuthorizaton with null authenticator to throw a NullPointerException"));
     }
+
+    // null parameter tests
 
     @Test
     public void testNullAnimeRanking(){
@@ -73,6 +83,8 @@ public class TestMyAnimeList {
         Assertions.assertThrows(NullPointerException.class, () -> mal.getUser(null),
                                 Workflow.errorSupplier("Expected MyAnimeList#getUser of null user to throw a NullPointerException"));
     }
+
+    // inverted field test
 
     private static final String inverted = "^%s$|^%s(?=,)|(?<=\\w)\\{%s}|(?:^|,)%s\\{.*?}|,%s|(?<=\\{)%s,";
 

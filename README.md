@@ -143,7 +143,7 @@ Please note that the client ID being used for tests must not have a client secre
 
 ### Running Tests Remotely
 
-Devs running remote tests may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires a secret `MAL_OAUTH` which contains the OAuth token (ex: `Bearer <oauth token>`).
+Devs running remote tests may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
 
 <p align="right">(<a href="#readme">back to top</a>)</p>
 
