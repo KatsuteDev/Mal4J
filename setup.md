@@ -14,7 +14,7 @@ Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact
 
     You can create a new Client ID at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
 
-    ![Create ID](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/setup_1.png)
+    ![Create ID](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/assets/setup_1.png)
 
 ## 2. Register application
 
@@ -22,13 +22,13 @@ Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact
 
     For users using local server authentication ([below](#authenticate-with-client-id-using-a-local-server)) set this to `http://localhost:5050` or whatever port you are using (port must be between `1` - `65535`).
 
-    ![Register application](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/setup_2.png)
+    ![Register application](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/assets/setup_2.png)
 
 ## 3. Retrieve Client ID
 
   - Copy **client ID** and **client secret** (if the application has a client secret), this will be used to generate an authorization code.
 
-    ![Copy client id and client secret](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/setup_3.png)
+    ![Copy client id and client secret](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/assets/setup_3.png)
 
 ## 4. Authentication
 

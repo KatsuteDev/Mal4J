@@ -1,6 +1,6 @@
 <div align="center">
     <a href="https://github.com/KatsuteDev/Mal4J#readme">
-        <img src="https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/banner.png" alt="Mal4J - MyAnimeList for Java">
+        <img src="https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/assets/banner.png" alt="Mal4J - MyAnimeList for Java">
     </a>
     <h3>Java wrapper for the official MyAnimeList API</h3>
     <div>
