@@ -8,9 +8,9 @@
         •
         <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
         •
-        <a href="https://github.com/Katsute/Mal4J/blob/main/setup.md">Setup</a>
+        <a href="https://github.com/Katsute/Mal4J/blob/main/setup.md#readme">Setup</a>
         •
-        <a href="https://github.com/Katsute/Mal4J/blob/main/faq.md">FAQ</a>
+        <a href="https://github.com/Katsute/Mal4J/blob/main/faq.md#readme">FAQ</a>
         •
         <a href="https://github.com/Katsute/Mal4J/issues">Issues</a>
         •
@@ -63,7 +63,7 @@ Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact
 
 [![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) [![Releases](https://img.shields.io/github/v/release/Katsute/Mal4J)](https://github.com/Katsute/Mal4J/releases)
 
-See [setup](https://github.com/Katsute/Mal4J/blob/main/setup.md) for steps to authenticate and actually use this library.
+See [setup](https://github.com/Katsute/Mal4J/blob/main/setup.md#readme) for steps to authenticate and actually use this library.
 
 <p align="right">(<a href="#readme">back to top</a>)</p>
 
@@ -74,7 +74,7 @@ See [setup](https://github.com/Katsute/Mal4J/blob/main/setup.md) for steps to au
 Easily search through MyAnimeList with search, ranking, seasonal, and suggestion queries; returning only selected or all fields.
 
 ```java
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withClientID("");
 List<AnimePreview> search =
     mal.getAnime()
         .withQuery("さくら荘のペットな彼女")
@@ -89,7 +89,7 @@ List<AnimePreview> search =
 Easily update your Anime and Manga listings through update methods.
 
 ```java
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withToken("");
 MangaListStatus status =
     mal.updateMangaListing(28107)
         .status(MangaStatus.Reading)
@@ -109,7 +109,7 @@ MangaListStatus status =
 **All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, statistics, and even some *undocumented* fields are accessible in this library. Effortlessly retrieve any and all information you need.
 
 ```java
-MyAnimeList mal = MyAnimeList.withOAuthToken("");
+MyAnimeList mal = MyAnimeList.withClientID("");
 Anime anime = mal.getAnime(13759);
 
 String ja = anime.getAlternativeTitles().getJapanese();
@@ -143,7 +143,7 @@ Please note that the client ID being used for tests must not have a client secre
 
 ### Running Tests Remotely
 
-Devs running remote tests may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires a secret `MAL_OAUTH` which contains the OAuth token (ex: `Bearer <oauth token>`).
+Devs running remote tests may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
 
 <p align="right">(<a href="#readme">back to top</a>)</p>
 

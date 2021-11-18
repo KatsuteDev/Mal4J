@@ -23,6 +23,7 @@ public class TestAnimeListStatus {
     @BeforeAll
     public static void beforeAll() throws IOException{
         mal = TestProvider.getMyAnimeList();
+        TestProvider.requireToken();
 
         final String file = "anime-list-" + System.currentTimeMillis() + ".txt";
         System.out.println("Running Anime list tests, saving backup of current list to '" + file + '\'');
@@ -33,6 +34,7 @@ public class TestAnimeListStatus {
     @AfterAll
     public static void afterAll(){
         if(mal == null) return;
+        TestProvider.requireToken();
 
         mal.deleteAnimeListing(TestProvider.AnimeID);
 

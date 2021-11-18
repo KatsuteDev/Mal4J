@@ -26,6 +26,7 @@ public class TestUser {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
+        TestProvider.requireToken();
         user = mal.getAuthenticatedUser(Fields.user);
     }
 
