@@ -34,13 +34,9 @@ Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact
 
 This library has a simplified authentication method based of the MyAnimeList [authorization documentation](https://myanimelist.net/apiconfig/references/authorization#client-registration). You can implement your own authentication methods or use the ones provided here.
 
-This library also supports OAuth token refresh.
-
-It is suggested that you save the OAuth token that is generated so you don't have to authenticate with MyAnimeList each time.
-
 Four different ways to authenticate with MyAnimeList:
 
- - [Authenticate using client](#authenticate-using-client-id)
+ - [Authenticate using client ID](#authenticate-using-client-id)
  - [Authenticate using token](#authenticate-using-token)
  - [Authenticate using OAuth 2.0](#authenticate-using-oauth-20)
  - [Authenticate with using a local server](#authenticate-using-a-local-server)
@@ -91,9 +87,11 @@ For developers using their own [authorization](https://myanimelist.net/apiconfig
     MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
     ```
 
+    It is suggested that you save the OAuth token that is generated so you don't have to authenticate with MyAnimeList each time.
+
 The above methods is massively simplified, for a more detailed guide on how OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
 
-### Authenticate with using a local server
+### Authenticate using a local server
 
   - For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html).
 
