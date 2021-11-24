@@ -21,6 +21,7 @@ public class TestAnimeListStatus {
 
     @BeforeAll
     public static void beforeAll() throws Throwable{
+        TestProvider.requireAuth();
         mal = TestProvider.getMyAnimeList();
 
         TestProvider.requireToken(() -> {
