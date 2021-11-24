@@ -48,7 +48,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.5.0
+ * @version 2.7.0
  * @author Katsute
  */
 @SuppressWarnings("GrazieInspection")
@@ -659,6 +659,13 @@ public final class MyAnimeListAuthenticator {
             hexString.append(hex);
         }
         return hexString.toString();
+    }
+
+//
+    
+    @Override
+    public final String toString(){
+        return "MyAnimeListAuthenticator{}";
     }
 
 }
