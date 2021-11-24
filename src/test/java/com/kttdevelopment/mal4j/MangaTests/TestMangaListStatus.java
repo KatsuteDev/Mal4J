@@ -10,6 +10,7 @@ import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
@@ -20,7 +21,7 @@ public class TestMangaListStatus {
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll() throws Throwable{
+    public static void beforeAll() throws IOException{
         mal = TestProvider.getMyAnimeList();
         TestProvider.requireToken();
 
