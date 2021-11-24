@@ -546,7 +546,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
         return new AnimeListStatus() {
 
             private final AnimePreview anime        = anime_preview;
-            private final Long id                   = anime_id;
+            private final Long id                   = anime_id != null ? anime_id : anime_preview.getID();
 
             private final AnimeStatus status        = requireNonNull(() -> AnimeStatus.asEnum(schema.getString("status")));
             private final Integer score             = requireNonNull(() -> schema.getInt("score"));
