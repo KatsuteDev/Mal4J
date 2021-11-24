@@ -106,7 +106,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             setFormatter(new Formatter() { // custom formatter to remove timestamp
                 @Override
                 public String format(final LogRecord record){
-                    return record.getLevel() + ": " + record.getMessage();
+                    return record.getLevel() + ": " + record.getMessage() + "\r\n";
                 }
             });
         }});
