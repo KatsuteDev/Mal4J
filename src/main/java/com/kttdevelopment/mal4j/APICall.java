@@ -41,8 +41,6 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 class APICall {
 
-    static boolean debug = false;
-
     private final String method;
     private final String baseURL;
     private final String path;
@@ -312,11 +310,23 @@ class APICall {
 
         final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
 
-        if(debug){
-            System.out.println("\nCall:     " + URL);
-            System.out.println("Method:   " + method);
-            if(formUrlEncoded)
-                System.out.println("Data:     " + data);
+        {
+            Logging.debug();
+            Logging.debug("-- BEGIN CONNECTION ------------------------------");
+            Logging.debug("▼ Request");
+            Logging.debug('\t' + "URL: " + URL);
+            Logging.debug('\t' + "Method: " + method.toUpperCase());
+
+            if(!headers.entrySet().isEmpty()){
+                Logging.debug('\t' + "▼ Headers");
+                for(final Map.Entry<String, String> entry : headers.entrySet())
+                    Logging.debug("\t\t" + entry.getKey() + ": " + entry.getValue());
+            }
+
+            if(formUrlEncoded){
+                Logging.debug('\t' + "Body:");
+                Logging.debug("\t\t" + data);
+            }
         }
 
         String body;
@@ -445,8 +455,13 @@ class APICall {
             code = conn.getResponseCode();
         }
 
-        if(debug)
-            System.out.println("Response: " + body);
+        {
+            Logging.debug("▼ Response");
+            Logging.debug('\t' + "Code: " + code);
+            Logging.debug('\t' + "Body:");
+            Logging.debug("\t\t" + body);
+            Logging.debug("-- END CONNECTION --------------------------------");
+        }
 
         return new APIStruct.Response<>(URL, body, body, code);
     }
@@ -458,7 +473,7 @@ class APICall {
     }
 
     @Override
-    public String toString(){
+    public final String toString(){
         return "APICall{" +
                "useNetHttp=" + useNetHttp +
                ", method='" + method + '\'' +
