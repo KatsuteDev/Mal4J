@@ -1,8 +1,7 @@
 package com.kttdevelopment.mal4j;
 
-import java.util.*;
+import java.util.HashSet;
 import java.util.logging.*;
-import java.util.logging.Formatter;
 
 /**
  * Used for logging operating.

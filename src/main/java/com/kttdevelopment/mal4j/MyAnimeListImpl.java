@@ -36,8 +36,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
-import java.util.logging.Formatter;
-import java.util.logging.*;
 import java.util.regex.Pattern;
 
 import static com.kttdevelopment.mal4j.Json.*;
