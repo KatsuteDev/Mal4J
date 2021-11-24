@@ -60,7 +60,7 @@ public abstract class MyAnimeList {
      * @since 2.7.0
      */
     public static void setDebug(final boolean debug){
-        APICall.setDebug(debug);
+        Logging.setDebug(debug);
     }
 
 //

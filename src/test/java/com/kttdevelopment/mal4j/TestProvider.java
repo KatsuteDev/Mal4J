@@ -63,7 +63,7 @@ public abstract class TestProvider {
     private static final boolean hasToken  = token.exists();
 
     static {
-        final boolean debug = true;
+        final boolean debug = false; // this value should be FALSE if you are committing this file
         MyAnimeList.setDebug(debug);
         //noinspection ConstantConditions
         if(debug)

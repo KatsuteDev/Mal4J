@@ -41,35 +41,6 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 class APICall {
 
-// debugger
-
-    private static boolean debug = false;
-
-    static void setDebug(final boolean debug){
-        APICall.debug = debug;
-    }
-
-    // secret masking
-
-    private static final transient List<String> secrets = new ArrayList<>();
-
-    static void addMask(final String secret){
-        if(secret != null)
-            secrets.add(secret);
-    }
-
-    private static String mask(final String string){
-        if(string == null) return "";
-
-        String buffer = string;
-        for(final String secret : secrets)
-            buffer = buffer.replace(secret, "***");
-
-        return buffer;
-    }
-
-//
-
     private final String method;
     private final String baseURL;
     private final String path;
@@ -339,22 +310,22 @@ class APICall {
 
         final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
 
-        if(debug){
-            System.out.println();
-            System.out.println("-- BEGIN CONNECTION ------------------------------");
-            System.out.println("▼ Request");
-            System.out.println('\t' + "URL: " + mask(URL));
-            System.out.println('\t' + "Method: " + method.toUpperCase());
+        {
+            Logging.debug();
+            Logging.debug("-- BEGIN CONNECTION ------------------------------");
+            Logging.debug("▼ Request");
+            Logging.debug('\t' + "URL: " + URL);
+            Logging.debug('\t' + "Method: " + method.toUpperCase());
 
             if(!headers.entrySet().isEmpty()){
-                System.out.println('\t' + "▼ Headers");
+                Logging.debug('\t' + "▼ Headers");
                 for(final Map.Entry<String, String> entry : headers.entrySet())
-                    System.out.println("\t\t" + entry.getKey() + ": " + mask(entry.getValue()));
+                    Logging.debug("\t\t" + entry.getKey() + ": " + entry.getValue());
             }
 
             if(formUrlEncoded){
-                System.out.println('\t' + "Body:");
-                System.out.println("\t\t" + mask(data));
+                Logging.debug('\t' + "Body:");
+                Logging.debug("\t\t" + data);
             }
         }
 
@@ -484,12 +455,12 @@ class APICall {
             code = conn.getResponseCode();
         }
 
-        if(debug){
-            System.out.println("▼ Response");
-            System.out.println('\t' + "Code: " + code);
-            System.out.println('\t' + "Body:");
-            System.out.println("\t\t" + mask(body));
-            System.out.println("-- END CONNECTION --------------------------------");
+        {
+            Logging.debug("▼ Response");
+            Logging.debug('\t' + "Code: " + code);
+            Logging.debug('\t' + "Body:");
+            Logging.debug("\t\t" + body);
+            Logging.debug("-- END CONNECTION --------------------------------");
         }
 
         return new APIStruct.Response<>(URL, body, body, code);
