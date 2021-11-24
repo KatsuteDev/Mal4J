@@ -21,14 +21,13 @@ public class TestMangaListStatus {
 
     @BeforeAll
     public static void beforeAll() throws Throwable{
-        TestProvider.requireToken(() -> {
-            mal = TestProvider.getMyAnimeList();
+        mal = TestProvider.getMyAnimeList();
 
+        TestProvider.requireToken(() -> {
             final String file = "manga-list-" + System.currentTimeMillis() + ".txt";
             System.out.println("Running Manga list tests, saving backup of current list to '" + file + '\'');
             Files.write(new File(file).toPath(), mal.getManga(TestProvider.MangaID).getListStatus().toString().getBytes(StandardCharsets.UTF_8));
         });
-
     }
 
     @AfterAll
