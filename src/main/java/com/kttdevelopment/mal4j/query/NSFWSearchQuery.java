@@ -41,6 +41,7 @@ public abstract class NSFWSearchQuery<T extends NSFWSearchQuery<T,R>,R> extends 
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public final T includeNSFW(final boolean nsfw){
         this.nsfw = nsfw;
         return (T) this;
