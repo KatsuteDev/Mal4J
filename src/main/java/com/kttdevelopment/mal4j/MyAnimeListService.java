@@ -120,6 +120,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="users/{user_name}/animelist")
     Response<JsonObject> getUserAnimeListing(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,
@@ -224,6 +225,7 @@ interface MyAnimeListService {
     @Endpoint(method="GET", value="users/{user_name}/mangalist")
     Response<JsonObject> getUserMangaListing(
         @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Path(value = "user_name", encoded = true)  final String username,
         @Query("status")                            final String status,
         @Query("sort")                              final String sort,

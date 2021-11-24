@@ -379,7 +379,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<AnimeListStatus> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getUserAnimeListing(
-                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
@@ -402,7 +403,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getUserAnimeListing(
-                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
@@ -720,7 +722,8 @@ final class MyAnimeListImpl extends MyAnimeList {
             public final List<MangaListStatus> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getUserMangaListing(
-                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
@@ -743,7 +746,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getUserMangaListing(
-                        Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
                         username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
