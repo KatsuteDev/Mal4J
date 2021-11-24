@@ -16,9 +16,9 @@ abstract class Logging {
     static{
         logger.setUseParentHandlers(false);
         logger.addHandler(new ConsoleHandler(){{
-            setFormatter(new Formatter() { // custom formatter to remove timestamp
+            setFormatter(new Formatter(){
                 @Override
-                public String format(final LogRecord record){
+                public final String format(final LogRecord record){
                     return record.getLevel() + ": " + record.getMessage() + "\r\n";
                 }
             });
