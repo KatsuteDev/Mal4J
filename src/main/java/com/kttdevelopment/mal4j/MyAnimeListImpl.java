@@ -36,8 +36,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
-import java.util.logging.Formatter;
-import java.util.logging.*;
 import java.util.regex.Pattern;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -74,6 +72,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             this.token = token_or_client;
         }else
             this.client_id = token_or_client;
+        Logging.addMask(token_or_client);
     }
 
     MyAnimeListImpl(final MyAnimeListAuthenticator authenticator){
@@ -81,6 +80,8 @@ final class MyAnimeListImpl extends MyAnimeList {
         this.authenticator = authenticator;
         this.token = authenticator.getAccessToken().getToken();
         this.isTokenAuth = true;
+        Logging.addMask(this.token);
+        Logging.addMask(authenticator.getAccessToken().getRefreshToken());
     }
 
     @Override
@@ -93,27 +94,6 @@ final class MyAnimeListImpl extends MyAnimeList {
     @Override
     public synchronized final void refreshOAuthToken(){
         refreshToken();
-    }
-
-// dedicated logger
-
-    @SuppressWarnings("SpellCheckingInspection")
-    private static final Logger logger = Logger.getLogger("com.kttdevelopment.mal4j");
-
-    static{
-        logger.setUseParentHandlers(false); // prevent sending message twice
-        logger.addHandler(new ConsoleHandler(){{
-            setFormatter(new Formatter() { // custom formatter to remove timestamp
-                @Override
-                public String format(final LogRecord record){
-                    return record.getLevel() + ": " + record.getMessage() + "\r\n";
-                }
-            });
-        }});
-    }
-
-    static Logger getLogger(){
-        return logger;
     }
 
 // experimental features
@@ -131,13 +111,13 @@ final class MyAnimeListImpl extends MyAnimeList {
             return;
 
         // in the future this should throw an exception
-        getLogger().warning("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
+        Logging.getLogger().warning("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
     }
 
     @Override
     public final void enableExperimentalFeature(final ExperimentalFeature feature){
         if(nativeFeatures.contains(feature))
-            getLogger().warning("The feature " + feature.name() + " is no longer an experimental feature, you do not have to enable it anymore");
+            Logging.getLogger().warning("The feature " + feature.name() + " is no longer an experimental feature, you do not have to enable it anymore");
         else if(!enabledFeatures.contains(feature))
             enabledFeatures.add(feature);
     }

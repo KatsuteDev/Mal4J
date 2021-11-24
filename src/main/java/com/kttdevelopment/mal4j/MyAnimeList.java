@@ -45,10 +45,25 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.6.0
+ * @version 2.7.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
+
+// debug
+
+    /**
+     * Enables/disable connection debugging.
+     *
+     * @param debug debug
+     *
+     * @since 2.7.0
+     */
+    public static void setDebug(final boolean debug){
+        Logging.setDebug(debug);
+    }
+
+//
 
     MyAnimeList(){ }
 
@@ -61,6 +76,7 @@ public abstract class MyAnimeList {
      *
      * @see #withToken(String)
      * @see #withAuthorization(MyAnimeListAuthenticator)
+     * @since 2.6.0
      */
     @SuppressWarnings("GrazieInspection")
     public static MyAnimeList withClientID(final String client_id){
@@ -96,8 +112,8 @@ public abstract class MyAnimeList {
      *
      * @see #withClientID(String)
      * @see #withAuthorization(MyAnimeListAuthenticator)
-     * @since 1.0.0
      * @see #withToken(String)
+     * @since 1.0.0
      */
     @Deprecated
     public static MyAnimeList withOAuthToken(final String token){

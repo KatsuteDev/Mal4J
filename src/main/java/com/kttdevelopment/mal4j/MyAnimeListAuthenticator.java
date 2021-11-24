@@ -156,6 +156,11 @@ public final class MyAnimeListAuthenticator {
         Objects.requireNonNull(client_id, "Client ID must not be null");
         Objects.requireNonNull(authorization_code, "Authorization code must not be null");
         Objects.requireNonNull(PKCE_code_challenge, "PKCE code challenge must not be null");
+
+        Logging.addMask(client_id);
+        Logging.addMask(client_secret);
+        Logging.addMask(authorization_code);
+
         if(PKCE_code_challenge.length() < 43 || PKCE_code_challenge.length() > 128)
             throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters, was " + PKCE_code_challenge.length() + " characters");
         else if(!allowedPKCE.matcher(PKCE_code_challenge).matches())
@@ -204,7 +209,7 @@ public final class MyAnimeListAuthenticator {
      * @since 1.0.0
      */
     public final AccessToken refreshAccessToken(){
-        return token = parseToken(authService
+        token = parseToken(authService
             .refreshToken(
                 client_id,
                 client_secret,
@@ -214,6 +219,9 @@ public final class MyAnimeListAuthenticator {
                 token.getRefreshToken()
             )
         );
+        Logging.addMask(token.getToken());
+        Logging.addMask(token.getRefreshToken());
+        return token;
     }
 
 // URL
@@ -351,7 +359,7 @@ public final class MyAnimeListAuthenticator {
          */
         public final LocalServerBuilder openBrowser(final boolean openBrowser){
             if(!canOpenBrowser())
-                MyAnimeListImpl.getLogger().warning("System does not support openBrowser()");
+                Logging.getLogger().warning("System does not support openBrowser()");
             this.openBrowser = openBrowser;
             return this;
         }
@@ -498,7 +506,7 @@ public final class MyAnimeListAuthenticator {
 
         if(openBrowser)
             if(!canOpenBrowser())
-                MyAnimeListImpl.getLogger().severe("Desktop is not supported on this operating system. Please go to this URL manually: '" + url + "' or use a URL callback");
+                Logging.getLogger().severe("Desktop is not supported on this operating system. Please go to this URL manually: '" + url + "' or use a URL callback");
             else
                 try{ Desktop.getDesktop().browse(new URI(url));
                 }catch(final URISyntaxException ignored){
