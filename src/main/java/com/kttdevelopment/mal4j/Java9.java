@@ -22,7 +22,6 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Objects;
 import java.util.function.Function;
-import java.util.logging.Logger;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 
@@ -47,7 +46,7 @@ abstract class Java9 {
             try{
                 return java.net.URLEncoder.encode(s, enc.name());
             }catch(final UnsupportedEncodingException e){
-                Logger.getGlobal().severe("This should not occur, please report this issue.");
+                MyAnimeListImpl.getLogger().severe("This should not occur, please report this issue.");
                 e.printStackTrace(); // shouldn't occur for case UTF-8
                 return s;
             }
@@ -72,7 +71,7 @@ abstract class Java9 {
             try{
                 return java.net.URLDecoder.decode(s, enc.name());
             }catch(final UnsupportedEncodingException e){
-                Logger.getGlobal().severe("This should not occur, please report this issue.");
+                MyAnimeListImpl.getLogger().severe("This should not occur, please report this issue.");
                 e.printStackTrace(); // shouldn't occur for case UTF-8
                 return s;
             }

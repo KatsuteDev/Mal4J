@@ -36,7 +36,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
-import java.util.logging.Logger;
+import java.util.logging.Formatter;
+import java.util.logging.*;
 import java.util.regex.Pattern;
 
 import static com.kttdevelopment.mal4j.Json.*;
@@ -51,7 +52,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  * @see MyAnimeList
  * @see MyAnimeListService
  * @since 1.0.0
- * @version 2.6.0
+ * @version 2.7.0
  * @author Katsute
  */
 final class MyAnimeListImpl extends MyAnimeList {
@@ -94,7 +95,28 @@ final class MyAnimeListImpl extends MyAnimeList {
         refreshToken();
     }
 
-    //
+// dedicated logger
+
+    @SuppressWarnings("SpellCheckingInspection")
+    private static final Logger logger = Logger.getLogger("com.kttdevelopment.mal4j");
+
+    static{
+        logger.setUseParentHandlers(false); // prevent sending message twice
+        logger.addHandler(new ConsoleHandler(){{
+            setFormatter(new Formatter() { // custom formatter to remove timestamp
+                @Override
+                public String format(final LogRecord record){
+                    return record.getLevel() + ": " + record.getMessage();
+                }
+            });
+        }});
+    }
+
+    static Logger getLogger(){
+        return logger;
+    }
+
+// experimental features
 
     // features that are no longer experimental (make sure to deprecate)
     @SuppressWarnings("ArraysAsListWithZeroOrOneArgument")
@@ -109,18 +131,18 @@ final class MyAnimeListImpl extends MyAnimeList {
             return;
 
         // in the future this should throw an exception
-        Logger.getGlobal().warning("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
+        getLogger().warning("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
     }
 
     @Override
     public final void enableExperimentalFeature(final ExperimentalFeature feature){
         if(nativeFeatures.contains(feature))
-            Logger.getGlobal().info("The feature " + feature.name() + " is no longer an experimental feature, you do not have to enable it anymore");
+            getLogger().warning("The feature " + feature.name() + " is no longer an experimental feature, you do not have to enable it anymore");
         else if(!enabledFeatures.contains(feature))
             enabledFeatures.add(feature);
     }
 
-    //
+// provider
 
     @Override
     public final AnimeSearchQuery getAnime(){
@@ -795,7 +817,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         ));
     }
 
-    //
+// handle response
     
     private static void handleVoidResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
         handleResponseCodes(supplier);
@@ -839,7 +861,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                '}';
     }
 
-    //
+// iterator
 
     private static class PagedIterator<T> extends PaginatedIterator<T> {
 
@@ -896,7 +918,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     }
 
-    //
+// formatter
 
     private static String toCommaSeparatedString(final List<String> fields){
         return toCommaSeparatedString(fields == null ? null : fields.toArray(new String[0]));
