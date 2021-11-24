@@ -662,7 +662,7 @@ public final class MyAnimeListAuthenticator {
     }
 
 //
-    
+
     @Override
     public final String toString(){
         return "MyAnimeListAuthenticator{}";
