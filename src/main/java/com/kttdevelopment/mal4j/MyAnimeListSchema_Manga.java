@@ -355,7 +355,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         return new MangaListStatus() {
 
             private final MangaPreview manga        = manga_preview;
-            private final Long id                   = manga_id;
+            private final Long id                   = manga_id != null ? manga_id : manga_preview.getID();
 
             private final MangaStatus status        = requireNonNull(() -> MangaStatus.asEnum(schema.getString("status")));
             private final Integer score             = requireNonNull(() -> schema.getInt("score"));
