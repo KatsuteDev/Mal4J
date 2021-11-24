@@ -143,6 +143,11 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
                 return Objects.equals(name, ((Genre) o).getName());
             }
 
+            @Override
+            public final int hashCode(){
+                return Objects.hash(name);
+            }
+
         };
     }
 
