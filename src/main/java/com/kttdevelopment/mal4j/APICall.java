@@ -41,7 +41,16 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 class APICall {
 
-    static boolean debug = false;
+// debugger
+
+    private static boolean debug = false;
+
+    static void setDebug(final boolean debug){
+        APICall.debug = debug;
+    }
+
+    // secret masking
+
     private static final transient List<String> secrets = new ArrayList<>();
 
     static void addMask(final String secret){

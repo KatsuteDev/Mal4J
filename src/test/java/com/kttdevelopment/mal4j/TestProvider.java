@@ -63,9 +63,10 @@ public abstract class TestProvider {
     private static final boolean hasToken  = token.exists();
 
     static {
-        APICall.debug = true;
+        final boolean debug = true;
+        MyAnimeList.setDebug(debug);
         //noinspection ConstantConditions
-        if(APICall.debug)
+        if(debug)
             System.out.println("\u001b[41;1m" + "\n                    WARNING: DEBUG MODE IS ON\n\n" + "\u001b[0m");
     }
 
