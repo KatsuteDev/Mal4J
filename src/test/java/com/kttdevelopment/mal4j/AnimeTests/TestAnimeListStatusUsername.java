@@ -21,10 +21,9 @@ public class TestAnimeListStatusUsername {
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing("KatsuteDev")
                 .withLimit(1)
-                .withFields(Fields.Anime.list_status, Fields.Anime.my_list_status)
+                .withFields(Fields.Anime.list_status)
                 .includeNSFW()
                 .search();
-        System.out.println(list);
 
         Assertions.assertNotEquals(0, list.size(), Workflow.errorSupplier("User Anime list status not found"));
     }
