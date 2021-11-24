@@ -156,6 +156,11 @@ public final class MyAnimeListAuthenticator {
         Objects.requireNonNull(client_id, "Client ID must not be null");
         Objects.requireNonNull(authorization_code, "Authorization code must not be null");
         Objects.requireNonNull(PKCE_code_challenge, "PKCE code challenge must not be null");
+
+        APICall.addMask(client_id, "CLIENT ID");
+        APICall.addMask(client_secret, "CLIENT SECRET");
+        APICall.addMask(authorization_code, "AUTHORIZATION CODE");
+
         if(PKCE_code_challenge.length() < 43 || PKCE_code_challenge.length() > 128)
             throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters, was " + PKCE_code_challenge.length() + " characters");
         else if(!allowedPKCE.matcher(PKCE_code_challenge).matches())

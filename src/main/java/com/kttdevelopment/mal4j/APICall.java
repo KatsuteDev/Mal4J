@@ -42,6 +42,28 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 class APICall {
 
     static boolean debug = false;
+    private static final transient Map<String,String> masks = new HashMap<>();
+
+    static void addMask(final String secret){
+        addMask(secret, null);
+    }
+
+    static void addMask(final String secret, final String mask){
+        if(secret != null)
+            APICall.masks.put(secret, mask != null ? mask : "***");
+    }
+
+    private static String mask(final String string){
+        if(string == null) return "";
+
+        String buffer = string;
+        for(final Map.Entry<String, String> entry : masks.entrySet())
+            buffer= buffer.replace(entry.getKey(), '<' + entry.getValue() + '>');
+
+        return buffer;
+    }
+
+//
 
     private final String method;
     private final String baseURL;
@@ -316,18 +338,18 @@ class APICall {
             System.out.println();
             System.out.println("-- BEGIN CONNECTION ------------------------------");
             System.out.println("▼ Request");
-            System.out.println('\t' + "URL: " + URL);
+            System.out.println('\t' + "URL: " + mask(URL));
             System.out.println('\t' + "Method: " + method.toUpperCase());
 
             if(!headers.entrySet().isEmpty()){
                 System.out.println('\t' + "▼ Headers");
                 for(final Map.Entry<String, String> entry : headers.entrySet())
-                    System.out.println("\t\t" + entry.getKey() + ": " + entry.getValue());
+                    System.out.println("\t\t" + entry.getKey() + ": " + mask(entry.getValue()));
             }
 
             if(formUrlEncoded){
                 System.out.println('\t' + "Body:");
-                System.out.println("\t\t" + data);
+                System.out.println("\t\t" + mask(data));
             }
         }
 
@@ -461,7 +483,7 @@ class APICall {
             System.out.println("▼ Response");
             System.out.println('\t' + "Code: " + code);
             System.out.println('\t' + "Body:");
-            System.out.println("\t\t" + body);
+            System.out.println("\t\t" + mask(body));
             System.out.println("-- END CONNECTION --------------------------------");
         }
 

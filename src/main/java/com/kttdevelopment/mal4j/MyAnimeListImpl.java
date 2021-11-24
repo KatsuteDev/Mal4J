@@ -74,6 +74,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             this.token = token_or_client;
         }else
             this.client_id = token_or_client;
+        APICall.addMask(token_or_client, isToken ? "TOKEN" : "CLIENT ID");
     }
 
     MyAnimeListImpl(final MyAnimeListAuthenticator authenticator){
@@ -81,6 +82,8 @@ final class MyAnimeListImpl extends MyAnimeList {
         this.authenticator = authenticator;
         this.token = authenticator.getAccessToken().getToken();
         this.isTokenAuth = true;
+        APICall.addMask(this.token, "TOKEN");
+        APICall.addMask(authenticator.getAccessToken().getRefreshToken(), "REFRESH TOKEN");
     }
 
     @Override
