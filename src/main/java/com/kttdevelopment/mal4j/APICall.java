@@ -313,10 +313,22 @@ class APICall {
         final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
 
         if(debug){
-            System.out.println("\nCall:     " + URL);
-            System.out.println("Method:   " + method);
-            if(formUrlEncoded)
-                System.out.println("Data:     " + data);
+            System.out.println();
+            System.out.println("-- BEGIN CONNECTION ------------------------------");
+            System.out.println("▼ Request");
+            System.out.println('\t' + "URL: " + URL);
+            System.out.println('\t' + "Method: " + method.toUpperCase());
+
+            if(!headers.entrySet().isEmpty()){
+                System.out.println('\t' + "▼ Headers");
+                for(final Map.Entry<String, String> entry : headers.entrySet())
+                    System.out.println("\t\t" + entry.getKey() + ": " + entry.getValue());
+            }
+
+            if(formUrlEncoded){
+                System.out.println('\t' + "Body:");
+                System.out.println("\t\t" + data);
+            }
         }
 
         String body;
@@ -445,8 +457,13 @@ class APICall {
             code = conn.getResponseCode();
         }
 
-        if(debug)
-            System.out.println("Response: " + body);
+        if(debug){
+            System.out.println("▼ Response");
+            System.out.println('\t' + "Code: " + code);
+            System.out.println('\t' + "Body:");
+            System.out.println("\t\t" + body);
+            System.out.println("-- END CONNECTION --------------------------------");
+        }
 
         return new APIStruct.Response<>(URL, body, body, code);
     }
@@ -458,7 +475,7 @@ class APICall {
     }
 
     @Override
-    public String toString(){
+    public final String toString(){
         return "APICall{" +
                "useNetHttp=" + useNetHttp +
                ", method='" + method + '\'' +

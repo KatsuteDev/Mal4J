@@ -63,7 +63,7 @@ public abstract class TestProvider {
     private static final boolean hasToken  = token.exists();
 
     static {
-        APICall.debug = false;
+        APICall.debug = true;
         //noinspection ConstantConditions
         if(APICall.debug)
             System.out.println("\u001b[41;1m" + "\n                    WARNING: DEBUG MODE IS ON\n\n" + "\u001b[0m");
