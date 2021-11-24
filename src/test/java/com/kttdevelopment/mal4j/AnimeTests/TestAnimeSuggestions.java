@@ -14,8 +14,8 @@ public class TestAnimeSuggestions {
 
     @BeforeAll
     public static void beforeAll(){
-        mal = TestProvider.getMyAnimeList();
         TestProvider.requireToken();
+        mal = TestProvider.getMyAnimeList();
     }
 
     @Test

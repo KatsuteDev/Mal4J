@@ -22,12 +22,11 @@ public class TestAnimeListStatus {
     @BeforeAll
     public static void beforeAll() throws Throwable{
         mal = TestProvider.getMyAnimeList();
+        TestProvider.requireToken();
 
-        TestProvider.requireToken(() -> {
-            final String file = "anime-list-" + System.currentTimeMillis() + ".txt";
-            System.out.println("Running Anime list tests, saving backup of current list to '" + file + '\'');
-            Files.write(new File(file).toPath(), mal.getAnime(TestProvider.AnimeID).getListStatus().toString().getBytes(StandardCharsets.UTF_8));
-        });
+        final String file = "anime-list-" + System.currentTimeMillis() + ".txt";
+        System.out.println("Running Anime list tests, saving backup of current list to '" + file + '\'');
+        Files.write(new File(file).toPath(), mal.getAnime(TestProvider.AnimeID).getListStatus().toString().getBytes(StandardCharsets.UTF_8));
     }
 
     @SuppressWarnings("SpellCheckingInspection")
@@ -74,14 +73,12 @@ public class TestAnimeListStatus {
 
     @Test @Order(0)
     public void testMinimalUpdate(){
-        TestProvider.requireToken();
         Assertions.assertDoesNotThrow(() -> mal.updateAnimeListing(TestProvider.AnimeID).score(10).update(),
                                       Workflow.errorSupplier("Updating a listing with only a score should not throw an exception"));
     }
 
     @Test @Order(1)
     public void testDelete(){
-        TestProvider.requireToken();
         mal.deleteAnimeListing(TestProvider.AnimeID);
         Assertions.assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID),
                                       Workflow.errorSupplier("Deleting a deleted listing should not throw an exception"));
@@ -92,7 +89,6 @@ public class TestAnimeListStatus {
     private static boolean passedUpdate = false;
     @Test @Order(2)
     public void testUpdate(){
-        TestProvider.requireToken();
         final Date now = new Date();
         final AnimeListStatus status = mal.updateAnimeListing(TestProvider.AnimeID)
             .status(AnimeStatus.Completed)
@@ -114,7 +110,6 @@ public class TestAnimeListStatus {
 
     @Test @Order(3)
     public void testGet(){
-        TestProvider.requireToken();
         Assertions.assertTrue(passedUpdate,
                               Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
@@ -157,7 +152,6 @@ public class TestAnimeListStatus {
 
     @Test @Order(3)
     public void testGetFromAnime(){
-        TestProvider.requireToken();
         Assertions.assertTrue(passedUpdate,
                               Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
@@ -201,7 +195,6 @@ public class TestAnimeListStatus {
 
     @Test @Order(4)
     public void testConsecutiveUpdates(){
-        TestProvider.requireToken();
         testDelete();
         testUpdate();
         testUpdate();
@@ -210,7 +203,6 @@ public class TestAnimeListStatus {
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5)
     public void testEcchiNSFW(){
-        TestProvider.requireToken();
         Assertions.assertTrue(passedUpdate,
                               Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 

@@ -22,12 +22,11 @@ public class TestMangaListStatus {
     @BeforeAll
     public static void beforeAll() throws Throwable{
         mal = TestProvider.getMyAnimeList();
+        TestProvider.requireToken();
 
-        TestProvider.requireToken(() -> {
-            final String file = "manga-list-" + System.currentTimeMillis() + ".txt";
-            System.out.println("Running Manga list tests, saving backup of current list to '" + file + '\'');
-            Files.write(new File(file).toPath(), mal.getManga(TestProvider.MangaID).getListStatus().toString().getBytes(StandardCharsets.UTF_8));
-        });
+        final String file = "manga-list-" + System.currentTimeMillis() + ".txt";
+        System.out.println("Running Manga list tests, saving backup of current list to '" + file + '\'');
+        Files.write(new File(file).toPath(), mal.getManga(TestProvider.MangaID).getListStatus().toString().getBytes(StandardCharsets.UTF_8));
     }
 
     @AfterAll
@@ -76,14 +75,12 @@ public class TestMangaListStatus {
 
     @Test @Order(0)
     public void testMinimalUpdate(){
-        TestProvider.requireToken();
         Assertions.assertDoesNotThrow(() -> mal.updateMangaListing(TestProvider.MangaID).score(10).update(),
                                       Workflow.errorSupplier("Updating a listing with only a score should not throw an exception"));
     }
 
     @Test @Order(1)
     public void testDelete(){
-        TestProvider.requireToken();
         mal.deleteMangaListing(TestProvider.MangaID);
         Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID),
                                       Workflow.errorSupplier("Deleting a deleted listing should not throw an exception"));
@@ -94,7 +91,6 @@ public class TestMangaListStatus {
     private static boolean passedUpdate = false;
     @Test @Order(2)
     public void testUpdate(){
-        TestProvider.requireToken();
         final Date now = new Date();
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
             .status(MangaStatus.Completed)
@@ -117,7 +113,6 @@ public class TestMangaListStatus {
 
     @Test @Order(3)
     public void testGet(){
-        TestProvider.requireToken();
         Assertions.assertTrue(passedUpdate,
                               Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
@@ -160,7 +155,6 @@ public class TestMangaListStatus {
 
     @Test @Order(3)
     public void testGetFromManga(){
-        TestProvider.requireToken();
         Assertions.assertTrue(passedUpdate,
                               Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 
@@ -203,7 +197,6 @@ public class TestMangaListStatus {
 
     @Test @Order(4)
     public void testConsecutiveUpdates(){
-        TestProvider.requireToken();
         testDelete();
         testUpdate();
         testUpdate();
@@ -212,7 +205,6 @@ public class TestMangaListStatus {
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5)
     public void testEcchiNSFW(){
-        TestProvider.requireToken();
         Assertions.assertTrue(passedUpdate,
                               Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
 

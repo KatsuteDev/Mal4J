@@ -56,11 +56,6 @@ public abstract class TestProvider {
         Assumptions.assumeTrue(isTokenAuth, "Test requires a token");
     }
 
-    public static void requireToken(final ThrowingRunnable runnable) throws Throwable{
-        if(isTokenAuth)
-            runnable.run();
-    }
-
     static final File client = new File("src/test/java/resources/client.txt");
     static final File token  = new File("src/test/java/resources/token.txt");
 
