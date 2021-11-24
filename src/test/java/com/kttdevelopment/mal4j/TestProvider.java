@@ -61,10 +61,6 @@ public abstract class TestProvider {
             runnable.run();
     }
 
-    public static void requireAuth(){
-        Assumptions.assumeTrue(hasClient || hasToken, "Test requires auth");
-    }
-
     static final File client = new File("src/test/java/resources/client.txt");
     static final File token  = new File("src/test/java/resources/token.txt");
 
