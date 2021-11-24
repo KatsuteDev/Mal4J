@@ -31,7 +31,6 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import java.util.zip.GZIPOutputStream;
 
@@ -352,7 +351,7 @@ public final class MyAnimeListAuthenticator {
          */
         public final LocalServerBuilder openBrowser(final boolean openBrowser){
             if(!canOpenBrowser())
-                Logger.getGlobal().warning("System may not support openBrowser()");
+                MyAnimeListImpl.getLogger().warning("System does not support openBrowser()");
             this.openBrowser = openBrowser;
             return this;
         }
@@ -499,7 +498,7 @@ public final class MyAnimeListAuthenticator {
 
         if(openBrowser)
             if(!canOpenBrowser())
-                Logger.getGlobal().severe("Desktop is not supported on this operating system. Please go to this URL manually: '" + url + "' or use a URL callback");
+                MyAnimeListImpl.getLogger().severe("Desktop is not supported on this operating system. Please go to this URL manually: '" + url + "' or use a URL callback");
             else
                 try{ Desktop.getDesktop().browse(new URI(url));
                 }catch(final URISyntaxException ignored){
