@@ -204,7 +204,7 @@ public class TestMangaListStatus {
     }
     
     @SuppressWarnings("SpellCheckingInspection")
-    @Test @Order(5) @DisplayName("testEcchiNSFW(), #90 - Ecchi as NSFW")
+    @Test @Order(5)
     public void testEcchiNSFW(){
         Assertions.assertTrue(passedUpdate,
                               Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));

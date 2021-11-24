@@ -38,7 +38,7 @@ public class TestAnimeRank {
     }
 
     @SuppressWarnings("EmptyMethod")
-    @Test @DisplayName("#5 - Ranking") @Disabled
+    @Test @Disabled
     public void testNSFW(){
         // difficult to test since NSFW is unlikely to be in top ranking
     }
