@@ -42,23 +42,19 @@ import static com.kttdevelopment.mal4j.APIStruct.*;
 class APICall {
 
     static boolean debug = false;
-    private static final transient Map<String,String> masks = new HashMap<>();
+    private static final transient List<String> secrets = new ArrayList<>();
 
     static void addMask(final String secret){
-        addMask(secret, null);
-    }
-
-    static void addMask(final String secret, final String mask){
         if(secret != null)
-            APICall.masks.put(secret, mask != null ? mask : "***");
+            secrets.add(secret);
     }
 
     private static String mask(final String string){
         if(string == null) return "";
 
         String buffer = string;
-        for(final Map.Entry<String, String> entry : masks.entrySet())
-            buffer= buffer.replace(entry.getKey(), '<' + entry.getValue() + '>');
+        for(final String secret : secrets)
+            buffer = buffer.replace(secret, "***");
 
         return buffer;
     }

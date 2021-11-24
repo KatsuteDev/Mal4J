@@ -157,9 +157,9 @@ public final class MyAnimeListAuthenticator {
         Objects.requireNonNull(authorization_code, "Authorization code must not be null");
         Objects.requireNonNull(PKCE_code_challenge, "PKCE code challenge must not be null");
 
-        APICall.addMask(client_id, "CLIENT ID");
-        APICall.addMask(client_secret, "CLIENT SECRET");
-        APICall.addMask(authorization_code, "AUTHORIZATION CODE");
+        APICall.addMask(client_id);
+        APICall.addMask(client_secret);
+        APICall.addMask(authorization_code);
 
         if(PKCE_code_challenge.length() < 43 || PKCE_code_challenge.length() > 128)
             throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters, was " + PKCE_code_challenge.length() + " characters");
@@ -209,7 +209,7 @@ public final class MyAnimeListAuthenticator {
      * @since 1.0.0
      */
     public final AccessToken refreshAccessToken(){
-        return token = parseToken(authService
+        token = parseToken(authService
             .refreshToken(
                 client_id,
                 client_secret,
@@ -219,6 +219,9 @@ public final class MyAnimeListAuthenticator {
                 token.getRefreshToken()
             )
         );
+        APICall.addMask(token.getToken());
+        APICall.addMask(token.getRefreshToken());
+        return token;
     }
 
 // URL
