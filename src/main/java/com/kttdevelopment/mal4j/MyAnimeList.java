@@ -53,7 +53,7 @@ public abstract class MyAnimeList {
 // debug
 
     /**
-     * Enables/disable connection debugging.
+     * Enable/disable connection debugging.
      *
      * @param debug debug
      *
