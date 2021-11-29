@@ -61,11 +61,12 @@ public final class AccessToken {
      * Returns the refresh token.
      *
      * @return refresh token
+     * @throws NullPointerException if the refresh token is missing
      *
      * @since 1.0.0
      */
     public final String getRefreshToken(){
-        return refresh_token;
+        return Objects.requireNonNull(refresh_token, "Access token is missing refresh token");
     }
 
     /**
@@ -78,8 +79,7 @@ public final class AccessToken {
      * @since 1.0.0
      */
     public final Date getExpiry(){
-        Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date");
-        return new Date(expiry_in_seconds * 1000);
+        return new Date(Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date") * 1000);
     }
 
     /**
@@ -93,8 +93,7 @@ public final class AccessToken {
      * @since 1.0.0
      */
     public final long getTimeUntilExpires(){
-        Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date");
-        return expiry_in_seconds - (System.currentTimeMillis() / 1000); // when the token expires - now in seconds
+        return Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date") - (System.currentTimeMillis() / 1000); // when the token expires - now in seconds
     }
 
     /**
