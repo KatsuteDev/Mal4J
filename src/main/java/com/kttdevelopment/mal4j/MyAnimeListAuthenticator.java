@@ -183,6 +183,60 @@ public final class MyAnimeListAuthenticator {
         );
     }
 
+    @SuppressWarnings("SpellCheckingInspection")
+    private MyAnimeListAuthenticator(
+        final String client_id,
+        final String client_secret,
+        final String authorization_code,
+        final String PKCE,
+        final String redirectURI,
+        final String token,
+        final String refresh_token,
+        final Long expiry
+    ){
+        /* check null */ {
+            Objects.requireNonNull(client_id, "Client ID must not be null");
+            Objects.requireNonNull(authorization_code, "Authorization code must not be null");
+            Objects.requireNonNull(PKCE, "PKCE code challenge must not be null");
+        }
+
+        Logging.addMask(client_id);
+        Logging.addMask(client_secret);
+        Logging.addMask(authorization_code);
+        Logging.addMask(token);
+        Logging.addMask(refresh_token);
+
+        final int PKCE_len = PKCE.length();
+        if(PKCE_len < 43 || PKCE_len > 128)
+            throw new IllegalArgumentException("PKCE code challenge must be between 43 and 128 characters, was " + PKCE_len + " characters");
+        else if(!allowedPKCE.matcher(PKCE).matches())
+            throw new IllegalArgumentException("PKCE code challenge contains illegal characters, only a-z , A-Z , 0-9 , _ , . , - , and ~ are allowed");
+
+        this.client_id = client_id;
+        this.client_secret = client_secret;
+        this.authorizationCode = authorization_code;
+        this.pkce = PKCE;
+    }
+
+// retrieval methods
+
+    public final String getClientID(){
+        return client_id;
+    }
+
+    public final String getClientSecret(){
+        return client_secret;
+    }
+
+    public final String getAuthorizationCode(){
+        return authorizationCode;
+    }
+
+    @SuppressWarnings("SpellCheckingInspection")
+    public final String getPKCE(){
+        return pkce;
+    }
+
 // access token
 
     /**
@@ -283,6 +337,75 @@ public final class MyAnimeListAuthenticator {
             String.format(authUrl, client_id, PKCE_code_challenge) +
             (redirect_URI != null ? String.format(redirectURI, Java9.URLEncoder.encode(redirect_URI, StandardCharsets.UTF_8)) : "") +
             (state != null ? String.format(authState, state) : "");
+    }
+
+// builder methods
+
+    public static final class Builder{
+
+        @SuppressWarnings("SpellCheckingInspection")
+        private final String client_id, client_secret, authorization_code, pkce;
+        private String redirect_uri = null;
+
+        private String token = null;
+        private String refresh_token = null;
+        private Long expiry = null;
+
+        public Builder(final String client_id, final String authorization_code, final String PKCE_code_challenge){
+            this(client_id, null, authorization_code, PKCE_code_challenge);
+        }
+
+        public Builder(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge){
+            this.client_id          = client_id;
+            this.client_secret      = client_secret;
+            this.authorization_code = authorization_code;
+            this.pkce               = PKCE_code_challenge;
+        }
+
+        public final Builder withRedirectURI(final String redirect_uri){
+            this.redirect_uri = redirect_uri;
+            return this;
+        }
+
+        public final Builder withToken(final String token){
+            this.token = token;
+            return this;
+        }
+
+        public final Builder withToken(final String token, final String refresh_token){
+            this.token = token;
+            this.refresh_token = refresh_token;
+            return this;
+        }
+
+        public final Builder withToken(final String token, final String refresh_token, final long expiry){
+            this.token = token;
+            this.refresh_token = refresh_token;
+            this.expiry = expiry;
+            return this;
+        }
+
+        public final Builder withToken(final String token, final String refresh_token, final Date expiry){
+            return withToken(token, refresh_token, expiry.getTime()/1000);
+        }
+
+        public final MyAnimeListAuthenticator build(){
+            return new MyAnimeListAuthenticator(
+                client_id,
+                client_secret,
+                authorization_code,
+                pkce,
+                redirect_uri
+            );
+        }
+
+        @Override
+        public final String toString(){
+            return "MyAnimeListAuthenticator.Builder{" +
+                   "redirect_uri='" + redirect_uri + '\'' +
+                   '}';
+        }
+
     }
 
     /**
@@ -448,8 +571,8 @@ public final class MyAnimeListAuthenticator {
         }
 
         @Override
-        public String toString(){
-            return "LocalServerBuilder{" +
+        public final String toString(){
+            return "MyAnimeListAuthenticator.LocalServerBuilder{" +
                    "port=" + port +
                    ", openBrowser=" + openBrowser +
                    ", timeout=" + timeout +
@@ -488,7 +611,7 @@ public final class MyAnimeListAuthenticator {
         Objects.requireNonNull(client_id, "Client ID must not be null");
 
         final String verify = generatePKCECodeVerifier();
-        final String state  = generateSha256(client_id + '&' + verify);
+        final String state  = generateSHA256(client_id + '&' + verify);
         final String url    = getAuthorizationURL(client_id, verify, redirectURI, state);
 
         if(urlCallback != null)
@@ -649,7 +772,7 @@ public final class MyAnimeListAuthenticator {
         return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
     }
 
-    private static String generateSha256(final String str){
+    private static String generateSHA256(final String str){
         final MessageDigest digest;
         try{
             digest = MessageDigest.getInstance("SHA-256");

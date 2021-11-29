@@ -19,20 +19,22 @@
 package com.kttdevelopment.mal4j;
 
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Represents an OAuth2 authentication body.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.7.0
  * @author Katsute
  */
 public final class AccessToken {
 
     private final String token_type;
-    private final long expiry;
+    private final Long expiry; // in seconds
     private transient final String access_token, refresh_token;
 
+    @Deprecated
     AccessToken(final String token_type, final long expires_in, final String access_token, final String refresh_token){
         this.token_type     = token_type;
         this.expiry         = (System.currentTimeMillis()/1000) + expires_in;
@@ -40,9 +42,21 @@ public final class AccessToken {
         this.refresh_token  = refresh_token;
     }
 
+    AccessToken(
+        final String token_type,
+        final String access_token,
+        final String refresh_token,
+        final Long expiry
+    ){
+        this.token_type     = Objects.requireNonNull(token_type,"Token type can not be null");
+        this.access_token   = Objects.requireNonNull(access_token, "Access token can not be null");
+        this.refresh_token  = refresh_token;
+        this.expiry         = expiry;
+    }
+
     /**
      * Returns token with token type. Ex: 'Bearer oauth2token'
-     * '
+     *
      * @return token
      *
      * @since 1.0.0
@@ -60,7 +74,8 @@ public final class AccessToken {
      * @since 1.0.0
      */
     public final Date getExpiry(){
-        return new Date(expiry);
+        Objects.requireNonNull(expiry, "Access token is missing expiry date");
+        return new Date(expiry * 1000);
     }
 
     /**
@@ -73,6 +88,7 @@ public final class AccessToken {
      * @since 1.0.0
      */
     public final long getTimeUntilExpires(){
+        Objects.requireNonNull(expiry, "Access token is missing expiry date");
         return expiry - (System.currentTimeMillis()/1000);
     }
 
@@ -100,7 +116,7 @@ public final class AccessToken {
     }
 
     @Override
-    public String toString(){
+    public final String toString(){
         return "AccessToken{" +
                "token_type='" + token_type + '\'' +
                ", expires=" + expiry +
