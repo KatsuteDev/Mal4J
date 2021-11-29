@@ -31,27 +31,19 @@ import java.util.Objects;
 public final class AccessToken {
 
     private final String token_type;
-    private final Long expiry; // in seconds
+    private final Long expiry_in_seconds; // when the token expires in seconds since epoch
     private transient final String access_token, refresh_token;
-
-    @Deprecated
-    AccessToken(final String token_type, final long expires_in, final String access_token, final String refresh_token){
-        this.token_type     = token_type;
-        this.expiry         = (System.currentTimeMillis()/1000) + expires_in;
-        this.access_token   = access_token;
-        this.refresh_token  = refresh_token;
-    }
 
     AccessToken(
         final String token_type,
         final String access_token,
         final String refresh_token,
-        final Long expiry
+        final Long expires_in
     ){
-        this.token_type     = Objects.requireNonNull(token_type,"Token type can not be null");
-        this.access_token   = Objects.requireNonNull(access_token, "Access token can not be null");
-        this.refresh_token  = refresh_token;
-        this.expiry         = expiry;
+        this.token_type        = Objects.requireNonNull(token_type,"Token type can not be null");
+        this.access_token      = Objects.requireNonNull(access_token, "Access token can not be null");
+        this.refresh_token     = refresh_token;
+        this.expiry_in_seconds = (System.currentTimeMillis() / 1000) + expires_in; // now in seconds + time until expiry in seconds
     }
 
     /**
@@ -66,45 +58,6 @@ public final class AccessToken {
     }
 
     /**
-     * Returns expiry date.
-     *
-     * @return expiry date
-     *
-     * @see #getTimeUntilExpires()
-     * @since 1.0.0
-     */
-    public final Date getExpiry(){
-        Objects.requireNonNull(expiry, "Access token is missing expiry date");
-        return new Date(expiry * 1000);
-    }
-
-    /**
-     * Returns how long until the token expires in seconds.
-     *
-     * @return time until expiry
-     *
-     * @see #getExpiry()
-     * @see #isExpired()
-     * @since 1.0.0
-     */
-    public final long getTimeUntilExpires(){
-        Objects.requireNonNull(expiry, "Access token is missing expiry date");
-        return expiry - (System.currentTimeMillis()/1000);
-    }
-
-    /**
-     * Returns if the token used is expired.
-     *
-     * @return if the token used is expired
-     *
-     * @see #getTimeUntilExpires()
-     * @since 1.0.0
-     */
-    public final boolean isExpired(){
-        return getTimeUntilExpires() <= 0;
-    }
-
-    /**
      * Returns the refresh token.
      *
      * @return refresh token
@@ -115,11 +68,53 @@ public final class AccessToken {
         return refresh_token;
     }
 
+    /**
+     * Returns expiry date.
+     *
+     * @return expiry date
+     * @throws NullPointerException if the expiry date is missing
+     *
+     * @see #getTimeUntilExpires()
+     * @since 1.0.0
+     */
+    public final Date getExpiry(){
+        Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date");
+        return new Date(expiry_in_seconds * 1000);
+    }
+
+    /**
+     * Returns how long until the token expires in seconds.
+     *
+     * @return time until expiry
+     * @throws NullPointerException if the expiry date is missing
+     *
+     * @see #getExpiry()
+     * @see #isExpired()
+     * @since 1.0.0
+     */
+    public final long getTimeUntilExpires(){
+        Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date");
+        return expiry_in_seconds - (System.currentTimeMillis() / 1000); // when the token expires - now in seconds
+    }
+
+    /**
+     * Returns if the token used is expired.
+     *
+     * @return if the token used is expired
+     * @throws NullPointerException if the expiry date is missing
+     *
+     * @see #getTimeUntilExpires()
+     * @since 1.0.0
+     */
+    public final boolean isExpired(){
+        return getTimeUntilExpires() <= 0;
+    }
+
     @Override
     public final String toString(){
         return "AccessToken{" +
                "token_type='" + token_type + '\'' +
-               ", expires=" + expiry +
+               ", expires=" + expiry_in_seconds +
                '}';
     }
 

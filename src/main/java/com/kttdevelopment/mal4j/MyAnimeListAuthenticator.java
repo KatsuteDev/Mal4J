@@ -656,9 +656,9 @@ public final class MyAnimeListAuthenticator {
         if(response.code() == HttpURLConnection.HTTP_OK)
             return new AccessToken(
                 body.getString("token_type"),
-                body.getLong("expires_in"),
                 body.getString("access_token"),
-                body.getString("refresh_token")
+                body.getString("refresh_token"),
+                body.getLong("expires_in")
             );
         else if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED)
             throw new InvalidTokenException("The OAuth token provided is either invalid or expired");
@@ -784,9 +784,7 @@ public final class MyAnimeListAuthenticator {
         final StringBuilder hexString   = new StringBuilder(2 * encodedHash.length);
         for(final byte hash : encodedHash){
             final String hex = Integer.toHexString(0xff & hash);
-            if(hex.length() == 1)
-                hexString.append('0');
-            hexString.append(hex);
+            hexString.append(hex.length() == 1 ? '0' : hex);
         }
         return hexString.toString();
     }
