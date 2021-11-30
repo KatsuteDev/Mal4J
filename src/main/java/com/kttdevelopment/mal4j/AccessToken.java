@@ -22,8 +22,10 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Represents an OAuth2 authentication body.
+ * Represents an access token.
  *
+ * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(Authorization)
+ * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(Authorization, AccessToken)
  * @since 1.0.0
  * @version 2.7.0
  * @author Katsute
@@ -34,6 +36,18 @@ public final class AccessToken {
     private final Long expiry_in_seconds; // when the token expires in seconds since epoch
     private transient final String access_token, refresh_token;
 
+    public AccessToken(final String access_token){
+        this("Bearer", access_token, null, null);
+    }
+
+    public AccessToken(final String access_token, final String refresh_token){
+        this("Bearer", access_token, refresh_token, null);
+    }
+
+    public AccessToken(final String access_token, final String refresh_token, final long expiry_in_seconds){
+        this("Bearer", access_token, refresh_token, expiry_in_seconds);
+    }
+
     AccessToken(
         final String token_type,
         final String access_token,
@@ -43,7 +57,11 @@ public final class AccessToken {
         this.token_type        = Objects.requireNonNull(token_type,"Token type can not be null");
         this.access_token      = Objects.requireNonNull(access_token, "Access token can not be null");
         this.refresh_token     = refresh_token;
-        this.expiry_in_seconds = (System.currentTimeMillis() / 1000) + expires_in; // now in seconds + time until expiry in seconds
+
+        this.expiry_in_seconds =
+            expires_in != null
+                ? (System.currentTimeMillis() / 1000) + expires_in // now in seconds + time until expiry in seconds
+                : null;
     }
 
     /**
@@ -66,7 +84,7 @@ public final class AccessToken {
      * @since 1.0.0
      */
     public final String getRefreshToken(){
-        return Objects.requireNonNull(refresh_token, "Access token is missing refresh token");
+        return refresh_token;
     }
 
     /**

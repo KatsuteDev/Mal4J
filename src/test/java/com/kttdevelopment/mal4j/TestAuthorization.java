@@ -85,7 +85,7 @@ public class TestAuthorization {
 
     @Test
     public void testNull(){
-        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator(null, null, null, null),
+        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator((String) null, null, null, null),
                                 Workflow.errorSupplier("Expected MyAnimeListAuthenticator with null client ID to throw a NullPointerException"));
         Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator("?", null, null, null),
                                 Workflow.errorSupplier("Expected MyAnimeListAuthenticator with null authorization code to throw a NullPointerException"));

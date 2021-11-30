@@ -81,7 +81,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         this.token = authenticator.getAccessToken().getToken();
         this.isTokenAuth = true;
         Logging.addMask(this.token);
-        Logging.addMask(authenticator.getAccessToken().getRefreshToken());
+        Logging.addMask(() -> authenticator.getAccessToken().getRefreshToken());
     }
 
     @Override

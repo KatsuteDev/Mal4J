@@ -64,6 +64,11 @@ abstract class Logging {
             secrets.add(secret);
     }
 
+    static void addMask(final ThrowingSupplier<String> runnable){
+        try{ addMask(runnable.get());
+        }catch(final Throwable ignored){}
+    }
+
     static void debug(){
         System.out.println();
     }
@@ -78,6 +83,12 @@ abstract class Logging {
 
             System.out.println(buffer);
         }
+    }
+
+    interface ThrowingSupplier<R> {
+
+        R get() throws Throwable;
+
     }
 
 }
