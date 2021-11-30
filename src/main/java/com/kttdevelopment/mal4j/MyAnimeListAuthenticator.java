@@ -674,9 +674,10 @@ public final class MyAnimeListAuthenticator {
 // generator methods
 
     public static String generatePKCE(final int length){
+        final SecureRandom random = new SecureRandom();
         byte[] codeVerifier = new byte[length];
-        new SecureRandom().nextBytes(codeVerifier);
-        return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
+        random.nextBytes(codeVerifier);
+        return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier).substring(0, length);
     }
 
     private static String generateSHA256(final String str){

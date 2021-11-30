@@ -85,24 +85,56 @@ public class TestAuthorization {
 
     @Test
     public void testNull(){
-        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator((String) null, null, null, null),
-                                Workflow.errorSupplier("Expected MyAnimeListAuthenticator with null client ID to throw a NullPointerException"));
-        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator("?", null, null, null),
-                                Workflow.errorSupplier("Expected MyAnimeListAuthenticator with null authorization code to throw a NullPointerException"));
+        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator(null));
     }
 
     @Test
     public void testPKCE(){
-        Assertions.assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator("?", null, "?", null),
+        Assertions.assertThrows(NullPointerException.class, () -> new Authorization("?", null, "?", null),
                                 Workflow.errorSupplier("Expected MyAnimeListAuthenticator with null PKCe to throw a NullPointerException"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "42xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Authorization("?", null, "?", "42xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
                                 Workflow.errorSupplier("Expected a PKCE of less than 43 chars to throw an IllegalArgumentException"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "129xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Authorization("?", null, "?", "129xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
                                 Workflow.errorSupplier("Expected a PKCE of more than 128 chars to throw an IllegalArgumentException"));
-        Assertions.assertThrows(IllegalArgumentException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx%7E"),
+        Assertions.assertThrows(IllegalArgumentException.class, () -> new Authorization("?", null, "?", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx%7E"),
                                 Workflow.errorSupplier("Expected a PKCE with invalid character % to throw an IllegalArgumentException"));
-        Assertions.assertThrows(InvalidTokenException.class, () -> new MyAnimeListAuthenticator("?", null, "?", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY0123456789-_.~"),
+        Assertions.assertDoesNotThrow(() -> new Authorization("?", null, "?", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY0123456789-_.~"),
                                 Workflow.errorSupplier("Expected a valid PKCE to not throw an IllegalArgumentException"));
+    }
+
+    @Test
+    public void testPKCEGeneration(){
+        Assertions.assertEquals(0, MyAnimeListAuthenticator.generatePKCE(0).length());
+        Assertions.assertEquals(1, MyAnimeListAuthenticator.generatePKCE(1).length());
+        Assertions.assertEquals(100, MyAnimeListAuthenticator.generatePKCE(100).length());
+    }
+
+    @Test
+    public void testAuthorization(){
+        Assertions.assertThrows(NullPointerException.class, () -> new Authorization(null, null, null, null));
+        Assertions.assertThrows(NullPointerException.class, () -> new Authorization("client_id", null, null, null));
+        Assertions.assertThrows(NullPointerException.class, () -> new Authorization("client_id", null, "client_secret", null));
+        Assertions.assertDoesNotThrow(() -> new Authorization("client_id", null, "client_secret", "43xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"));
+    }
+
+    @SuppressWarnings("ResultOfMethodCallIgnored")
+    @Test
+    public void testAccessToken(){
+        Assertions.assertDoesNotThrow(() -> new AccessToken("token"));
+        Assertions.assertDoesNotThrow(() -> new AccessToken("token", "refresh_token"));
+        Assertions.assertDoesNotThrow(() -> new AccessToken("token", "refresh_token", -1L));
+        Assertions.assertThrows(NullPointerException.class, () -> new AccessToken(null));
+
+        Assertions.assertThrows(NullPointerException.class, () -> new AccessToken("token").getRefreshToken());
+    }
+
+    @Test
+    public void testAccessTokenExpiry(){
+        Assertions.assertThrows(NullPointerException.class, () -> new AccessToken("token").getExpiry());
+        Assertions.assertThrows(NullPointerException.class, () -> new AccessToken("token").getTimeUntilExpires());
+        Assertions.assertThrows(NullPointerException.class, () -> new AccessToken("token").isExpired());
+        Assertions.assertEquals(1000L, new AccessToken("token", "refresh_token", 1000L).getTimeUntilExpires());
+        Assertions.assertTrue((new AccessToken("token", "refresh_token", 1000L).getExpiry().getTime()/1000)-(System.currentTimeMillis()/1000) <= 1000);
     }
 
 }

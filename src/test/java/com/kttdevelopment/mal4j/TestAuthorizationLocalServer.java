@@ -35,7 +35,7 @@ public class TestAuthorizationLocalServer {
         final AccessToken token = authenticator.getAccessToken();
         Assertions.assertTrue(token.getTimeUntilExpires() < 2_764_800,
                               Workflow.errorSupplier("Expected expiry to be 31 days"));
-        Assertions.assertTrue(token.getExpiry().getTime() - (System.currentTimeMillis()/1000) < 2_764_800,
+        Assertions.assertTrue((token.getExpiry().getTime()/1000) - (System.currentTimeMillis()/1000) < 2_764_800,
                               Workflow.errorSupplier("Expected expiry to be 31 days from now"));
         Assertions.assertFalse(token.isExpired(),
                                Workflow.errorSupplier("Expected token to not be expired"));
