@@ -55,7 +55,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  */
 final class MyAnimeListImpl extends MyAnimeList {
 
-    private transient String token = null;
+    private transient String token     = null;
     private transient String client_id = null;
     private final boolean isTokenAuth;
 

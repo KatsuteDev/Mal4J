@@ -39,12 +39,14 @@ public final class Authorization {
     private final String client_id, client_secret, authorization_code, pkce, redirect_uri;
 
     /**
-     * Creates authorization from client ID.
+     * Creates authorization from client ID. <code>authorization_code</code> is different from the authorization URL, do not use the URL by mistake.
      *
      * @param client_id client id <b>(required)</b>
      * @param client_secret client secret <b>(optional)</b>
      * @param authorization_code authorization code <b>(required)</b>
      * @param PKCE PKCE code challenge used to generate authorization code <b>(required)</b>
+     * @throws NullPointerException if missing required value
+     * @throws IllegalArgumentException if invalid PKCE
      *
      * @see #Authorization(String, String, String, String, String)
      * @since 2.7.0
@@ -55,13 +57,15 @@ public final class Authorization {
     }
 
     /**
-     * Creates authorization from client ID.
+     * Creates authorization from client ID. <code>authorization_code</code> is different from the authorization URL, do not use the URL by mistake.
      *
      * @param client_id client id <b>(required)</b>
      * @param client_secret client secret <b>(optional)</b>
      * @param authorization_code authorization code <b>(required)</b>
      * @param PKCE PKCE code challenge used to generate authorization code <b>(required)</b>
      * @param redirect_uri redirect uri <b>(optional, required if used to generate authorization code)</b>
+     * @throws NullPointerException if missing required value
+     * @throws IllegalArgumentException if invalid PKCE
      *
      * @see #Authorization(String, String, String, String)
      * @since 2.7.0
@@ -79,6 +83,11 @@ public final class Authorization {
             Logging.addMask(client_secret);
             Logging.addMask(authorization_code);
             Logging.addMask(PKCE);
+        }
+
+        /* validate authorization */ {
+            if(authorization_code.startsWith("https://") || authorization_code.startsWith("http://") || authorization_code.startsWith("www."))
+                Logging.getLogger().warning("Authorization code looks like a URL, make sure you are passing the authorization code and not the authorization URL");
         }
 
         /* validate PKCE */ {

@@ -152,10 +152,36 @@ public final class MyAnimeListAuthenticator {
         this(new Authorization(client_id, client_secret, authorization_code, PKCE_code_challenge, redirect_uri), null);
     }
 
+    /**
+     * Creates an authenticator.
+     *
+     * @param authorization authorization
+     * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is expired or invalid
+     * @throws UncheckedIOException if client failed to execute request
+     *
+     * @see Authorization
+     * @see #MyAnimeListAuthenticator(Authorization)
+     * @since 2.7.0
+     */
     public MyAnimeListAuthenticator(final Authorization authorization){
         this(authorization, null);
     }
 
+    /**
+     * Creates an authenticator.
+     *
+     * @param authorization authorization
+     * @param token token (optional, use an existing access token)
+     * @throws HttpException if request failed
+     * @throws InvalidTokenException if token is expired or invalid
+     * @throws UncheckedIOException if client failed to execute request
+     *
+     * @see Authorization
+     * @see AccessToken
+     * @see #MyAnimeListAuthenticator(Authorization)
+     * @since 2.7.0
+     */
     public MyAnimeListAuthenticator(final Authorization authorization, final AccessToken token){
         Objects.requireNonNull(authorization, "Authorization must not be null");
         this.authorization = authorization;
@@ -200,7 +226,7 @@ public final class MyAnimeListAuthenticator {
     }
 
     /**
-     * Refreshes the access token.
+     * Refreshes the access token. This does not refresh the token inside the MyAnimeList object, you must use {@link MyAnimeList#refreshToken()} instead.
      *
      * @return updated access token
      * @throws HttpException if request failed
@@ -233,8 +259,8 @@ public final class MyAnimeListAuthenticator {
     /**
      * Returns the authorization URL for a client id.
      *
-     * @param client_id client id. <i>required</i>
-     * @param PKCE_code_challenge PKCE code challenge. <i>required</i>
+     * @param client_id client id <b>(required)</b>
+     * @param PKCE_code_challenge PKCE code challenge <b>(required)</b>
      * @return authorization URL
      * @throws NullPointerException if client ID or PKCE is null
      *
@@ -250,9 +276,9 @@ public final class MyAnimeListAuthenticator {
     /**
      * Returns the authorization URL for a client id.
      *
-     * @param client_id client id. <i>required</i>
-     * @param PKCE_code_challenge PKCE code challenge. <i>required</i>
-     * @param redirect_URI preregistered URI, only needed if you want to select a specific application redirect URI. <i>optional</i>
+     * @param client_id client id <b>(required)</b>
+     * @param PKCE_code_challenge PKCE code challenge <b>(required)</b>
+     * @param redirect_URI preregistered URI, only needed if you want to select a specific application redirect URI <b>(optional)</b>
      * @return authorization URL
      * @throws NullPointerException if client ID or PKCE is null
      *
@@ -268,10 +294,10 @@ public final class MyAnimeListAuthenticator {
     /**
      * Returns the authorization URL for a client id.
      *
-     * @param client_id client id. <i>required</i>
-     * @param PKCE_code_challenge PKCE code challenge. <i>required</i>
-     * @param redirect_URI preregistered URI, only needed if you want to select a specific application redirect URI. <i>optional</i>
-     * @param state 0Auth2 state. <i>optional</i>
+     * @param client_id client id <b>(required)</b>
+     * @param PKCE_code_challenge PKCE code challenge <b>(required)</b>
+     * @param redirect_URI preregistered URI, only needed if you want to select a specific application redirect URI <b>(optional)</b>
+     * @param state 0Auth2 state <b>(optional)</b>
      * @return authorization URL
      * @throws NullPointerException if client ID or PKCE is null
      *
@@ -480,9 +506,8 @@ public final class MyAnimeListAuthenticator {
         return Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE);
     }
 
-    // [authorization, PKCE verify]
     @SuppressWarnings({"ResultOfMethodCallIgnored", "SpellCheckingInspection"})
-    private static String[] authenticateWithLocalServer(
+    private static String[/* [authorization, PKCE verify] */ ] authenticateWithLocalServer(
         final String client_id,
         final int port,
         final AuthResponseHandler responseHandler,
@@ -493,7 +518,7 @@ public final class MyAnimeListAuthenticator {
     ) throws IOException{
         Objects.requireNonNull(client_id, "Client ID must not be null");
 
-        final String verify = generatePKCECodeVerifier();
+        final String verify = generatePKCE(128);
         final String state  = generateSHA256(client_id + '&' + verify);
         final String url    = getAuthorizationURL(client_id, verify, redirectURI, state);
 
@@ -648,10 +673,9 @@ public final class MyAnimeListAuthenticator {
 
 // generator methods
 
-    private static String generatePKCECodeVerifier(){
-        final SecureRandom secureRandom = new SecureRandom();
-        byte[] codeVerifier = new byte[64];
-        secureRandom.nextBytes(codeVerifier);
+    public static String generatePKCE(final int length){
+        byte[] codeVerifier = new byte[length];
+        new SecureRandom().nextBytes(codeVerifier);
         return Base64.getUrlEncoder().withoutPadding().encodeToString(codeVerifier);
     }
 
@@ -674,9 +698,13 @@ public final class MyAnimeListAuthenticator {
 
 //
 
+
     @Override
     public final String toString(){
-        return "MyAnimeListAuthenticator{}";
+        return "MyAnimeListAuthenticator{" +
+               "authorization=" + authorization +
+               ", token=" + token +
+               '}';
     }
 
 }
