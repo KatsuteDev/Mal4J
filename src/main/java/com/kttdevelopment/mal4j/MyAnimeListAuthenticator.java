@@ -66,7 +66,6 @@ public final class MyAnimeListAuthenticator {
 
     private final MyAnimeListAuthenticationService authService = MyAnimeListAuthenticationService.create();
 
-    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private final Authorization authorization;
     private AccessToken token;
 
@@ -222,8 +221,10 @@ public final class MyAnimeListAuthenticator {
                 token.getRefreshToken()
             )
         );
-        Logging.addMask(token.getToken());
+
+        Logging.addMask(token::getToken);
         Logging.addMask(token::getRefreshToken);
+
         return token;
     }
 

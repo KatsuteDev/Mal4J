@@ -36,14 +36,38 @@ public final class AccessToken {
     private final Long expiry_in_seconds; // when the token expires in seconds since epoch
     private transient final String access_token, refresh_token;
 
+    /**
+     * Creates an access token from a token.
+     *
+     * @param access_token access token
+     *
+     * @since 2.7.0
+     */
     public AccessToken(final String access_token){
         this("Bearer", access_token, null, null);
     }
 
+    /**
+     * Creates an access token from a token and refresh token.
+     *
+     * @param access_token access token
+     * @param refresh_token refresh token
+     *
+     * @since 2.7.0
+     */
     public AccessToken(final String access_token, final String refresh_token){
         this("Bearer", access_token, refresh_token, null);
     }
 
+    /**
+     * Creates an access token with expiry from a token and refresh token.
+     *
+     * @param access_token access token
+     * @param refresh_token refresh token
+     * @param expiry_in_seconds when the token expires as seconds since EPOCH
+     *
+     * @since 2.7.0
+     */
     public AccessToken(final String access_token, final String refresh_token, final long expiry_in_seconds){
         this("Bearer", access_token, refresh_token, expiry_in_seconds);
     }
@@ -76,7 +100,7 @@ public final class AccessToken {
     }
 
     /**
-     * Returns the refresh token.
+     * Returns the refresh token or null.
      *
      * @return refresh token
      * @throws NullPointerException if the refresh token is missing
@@ -84,7 +108,7 @@ public final class AccessToken {
      * @since 1.0.0
      */
     public final String getRefreshToken(){
-        return refresh_token;
+        return Objects.requireNonNull(refresh_token, "Refresh token is missing");
     }
 
     /**
