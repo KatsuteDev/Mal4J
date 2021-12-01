@@ -10,14 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 final class TestAuthorization {
 
     @SuppressWarnings("SpellCheckingInspection")
-    private static final String PKCE = "43xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
+    private static final String PKCE = "PKCExxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx";
 
     @SuppressWarnings("SpellCheckingInspection")
     @Nested
     final class TestConstructor {
 
         @Test
-        public void testValidAuthorization(){
+        public final void testValidAuthorization(){
             assertDoesNotThrow(
                 () -> new Authorization("client_id", "client_secret", "authorization_code", PKCE),
                 errorSupplier("Expected valid authorization to not throw an exception")
@@ -25,7 +25,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testValidAuthorizationRedirectURI(){
+        public final void testValidAuthorizationRedirectURI(){
             assertDoesNotThrow(
                 () -> new Authorization("client_id", "client_secret", "authorization_code", PKCE, "redirect_uri"),
                 errorSupplier("Expected valid authorization to not throw an exception")
@@ -33,7 +33,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testValidAuthorizationNullClientSecret(){
+        public final void testValidAuthorizationNullClientSecret(){
             assertDoesNotThrow(
                 () -> new Authorization("client_id", null, "authorization_code", PKCE),
                 errorSupplier("Expected valid authorization to not throw an exception")
@@ -41,7 +41,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testNullClientID(){
+        public final void testNullClientID(){
             assertThrows(
                 NullPointerException.class,
                 () -> new Authorization(null, null, null, null),
@@ -50,7 +50,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testNullAuthorizationCode(){
+        public final void testNullAuthorizationCode(){
             assertThrows(
                 NullPointerException.class,
                 () -> new Authorization("client_id", null, null, null),
@@ -59,7 +59,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testNullPKCE(){
+        public final void testNullPKCE(){
             assertThrows(
                 NullPointerException.class,
                 () -> new Authorization("client_id", null, "authorization_code", null),
@@ -68,7 +68,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testShortPKCE(){
+        public final void testShortPKCE(){
             assertThrows(
                 IllegalArgumentException.class,
                 () -> new Authorization("client_id", null, "authorization_code", "42xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
@@ -77,7 +77,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testLongPKCE(){
+        public final void testLongPKCE(){
             assertThrows(
                 IllegalArgumentException.class,
                 () -> new Authorization("client_id", null, "authorization_code", "129xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"),
@@ -86,7 +86,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testInvalidPKCE(){
+        public final void testInvalidPKCE(){
             assertThrows(
                 IllegalArgumentException.class,
                 () -> new Authorization("client_id", null, "authorization_code", "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx%7E"),
@@ -95,7 +95,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testValidPKCE(){
+        public final void testValidPKCE(){
             assertDoesNotThrow(
                 () -> new Authorization("client_id", null, "authorization_code", "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY0123456789-_.~"),
                 errorSupplier("Expected valid PKCE to not throw an exception")
@@ -108,7 +108,7 @@ final class TestAuthorization {
     final class TestClientID {
 
         @Test
-        public void testClientID(){
+        public final void testClientID(){
             assertEquals(
                 "token", new Authorization("token", null, "authorization_code", PKCE).getClientID(),
                 errorSupplier("Expected client id to match")
@@ -121,7 +121,7 @@ final class TestAuthorization {
     final class TestClientSecret {
 
         @Test
-        public void testClientSecret(){
+        public final void testClientSecret(){
             assertEquals(
                 "client_secret", new Authorization("token", "client_secret", "authorization_code", PKCE).getClientSecret(),
                 errorSupplier("Expected client secret to match")
@@ -129,7 +129,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testNullClientSecret(){
+        public final void testNullClientSecret(){
             assertNull(
                 new Authorization("token", null, "authorization_code", PKCE).getClientSecret(),
                 errorSupplier("Expected client secret to be null")
@@ -142,7 +142,7 @@ final class TestAuthorization {
     final class TestAuthorizationCode {
 
         @Test
-        public void testAuthorizationCode(){
+        public final void testAuthorizationCode(){
             assertEquals(
                 "authorization_code", new Authorization("token", null, "authorization_code", PKCE).getAuthorizationCode(),
                 errorSupplier("Expected authorization code to match")
@@ -156,7 +156,7 @@ final class TestAuthorization {
 
         @SuppressWarnings("SpellCheckingInspection")
         @Test
-        public void testPKCE(){
+        public final void testPKCE(){
             assertEquals(
                 PKCE, new Authorization("token", null, "authorization_code", PKCE).getPKCE(),
                 errorSupplier("Expected PKCE to match")
@@ -169,7 +169,7 @@ final class TestAuthorization {
     final class TestRedirectURI {
 
         @Test
-        public void testRedirectURI(){
+        public final void testRedirectURI(){
             assertEquals(
                 "redirect_uri", new Authorization("token", "client_secret", "authorization_code", PKCE, "redirect_uri").getRedirectURI(),
                 errorSupplier("Expected redirect uri to match")
@@ -177,7 +177,7 @@ final class TestAuthorization {
         }
 
         @Test
-        public void testNullRedirectURI(){
+        public final void testNullRedirectURI(){
             assertNull(
                 new Authorization("token", null, "authorization_code", PKCE).getRedirectURI(),
                 errorSupplier("Expected redirect uri to be null")

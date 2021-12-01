@@ -1,5 +1,6 @@
 package com.kttdevelopment.mal4j;
 
+import com.kttdevelopment.mal4j.auth.TestLocalServerToken;
 import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
@@ -56,8 +57,8 @@ public abstract class TestProvider {
         Assumptions.assumeTrue(isTokenAuth, "Test requires a token");
     }
 
-    static final File client = new File("src/test/java/resources/client.txt");
-    static final File token  = new File("src/test/java/resources/token.txt");
+    public static final File client = new File("src/test/java/resources/client.txt");
+    public static final File token  = new File("src/test/java/resources/token.txt");
 
     private static final boolean hasClient = client.exists();
     private static final boolean hasToken  = token.exists();
@@ -92,7 +93,7 @@ public abstract class TestProvider {
         }
 
         requireHuman(); // prevent CI from trying to authenticate
-        TestAuthorizationLocalServer.beforeAll(); // create token
+        TestLocalServerToken.beforeAll(); // create token
     }
 
     public static void requireHuman(){ // skip test on CI
@@ -114,7 +115,7 @@ public abstract class TestProvider {
 
     // java 9
 
-    static String readFile(final File file) throws IOException{
+    public static String readFile(final File file) throws IOException{
         final StringBuilder OUT = new StringBuilder();
         for(final String s : Files.readAllLines(file.toPath(), StandardCharsets.UTF_8))
             OUT.append(s);

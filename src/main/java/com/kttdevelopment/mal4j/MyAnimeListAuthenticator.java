@@ -363,9 +363,9 @@ public final class MyAnimeListAuthenticator {
         public LocalServerBuilder(final String client_id, final String client_secret, final int port){
             Objects.requireNonNull(client_id, "Client ID must not be null");
 
-            this.client_id = client_id;
+            this.client_id     = client_id;
             this.client_secret = client_secret;
-            this.port = port;
+            this.port          = port;
         }
 
         /**
