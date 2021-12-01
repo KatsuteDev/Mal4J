@@ -23,7 +23,6 @@ import com.sun.net.httpserver.*;
 
 import java.awt.*;
 import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
 import java.security.*;
@@ -115,9 +114,7 @@ public final class MyAnimeListAuthenticator {
      * @param client_secret client secret, null if application has none
      * @param authorization_code authorization code (<b>not</b> your authorization URL)
      * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
-     * @throws HttpException if request failed
      * @throws InvalidTokenException if token is invalid or expired
-     * @throws UncheckedIOException if client failed to execute request
      *
      * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(String, String, String, String, String)
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
@@ -139,9 +136,7 @@ public final class MyAnimeListAuthenticator {
      * @param authorization_code authorization code (<b>not</b> your authorization URL)
      * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
      * @param redirect_uri redirect URI, required if used to generate authorization_code
-     * @throws HttpException if request failed
      * @throws InvalidTokenException if token is invalid or expired
-     * @throws UncheckedIOException if client failed to execute request
      *
      * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(String, String, String, String)
      * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
@@ -158,9 +153,7 @@ public final class MyAnimeListAuthenticator {
      * Creates an authenticator.
      *
      * @param authorization authorization
-     * @throws HttpException if request failed
      * @throws InvalidTokenException if token is expired or invalid
-     * @throws UncheckedIOException if client failed to execute request
      *
      * @see Authorization
      * @see #MyAnimeListAuthenticator(Authorization)
@@ -175,9 +168,7 @@ public final class MyAnimeListAuthenticator {
      *
      * @param authorization authorization
      * @param token token (optional, use an existing access token)
-     * @throws HttpException if request failed
      * @throws InvalidTokenException if token is expired or invalid
-     * @throws UncheckedIOException if client failed to execute request
      *
      * @see Authorization
      * @see AccessToken
@@ -231,9 +222,6 @@ public final class MyAnimeListAuthenticator {
      * Refreshes the access token. This does not refresh the token inside the MyAnimeList object, you must use {@link MyAnimeList#refreshToken()} instead.
      *
      * @return updated access token
-     * @throws HttpException if request failed
-     * @throws InvalidTokenException if token is invalid or expired
-     * @throws UncheckedIOException if client failed to execute request
      *
      * @see AccessToken
      * @since 1.0.0
@@ -460,10 +448,7 @@ public final class MyAnimeListAuthenticator {
          * @return authenticator
          * @throws IllegalArgumentException if port was invalid, or client id or redirect URI was malformed
          * @throws BindException if port was blocked
-         * @throws IOException if server could not be started
-         * @throws UnauthorizedAccessException if request was intercepted by an unauthorized source
          * @throws NullPointerException if server was closed before the client could be authorized
-         * @throws HttpException if client request failed
          *
          * @see MyAnimeListAuthenticator
          * @since 1.1.0
