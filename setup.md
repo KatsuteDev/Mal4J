@@ -12,7 +12,7 @@ Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact
 
   - In order to use the MyAnimeList API you must retrieve your own client ID.
 
-    You can create a new Client ID at [https://myanimelist.net/apiconfig](https://myanimelist.net/apiconfig).
+    You can create a new Client ID at <https://myanimelist.net/apiconfig>.
 
     ![Create ID](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/assets/setup_1.png)
 
@@ -20,7 +20,7 @@ Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact
 
   - Fill in all required fields and **App Redirect URL**, this is what we use to retrieve the authorization code.
 
-    For users using local server authentication ([below](#authenticate-with-client-id-using-a-local-server)) set this to `http://localhost:5050` or whatever port you are using (port must be between `1` - `65535`).
+    For users using local server authentication ([below](#authenticate-using-a-local-server)) set this to `http://localhost:5050` or whatever port you are using.
 
     ![Register application](https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/assets/setup_2.png)
 
@@ -51,7 +51,7 @@ Four different ways to authenticate with MyAnimeList:
 
    This authentication method only grants access to public data and READ operations.
 
-   If you want to view users, or view or change anime/manga lists you must authenticate with a [token](#authenticate-using-token) or with [oauth 2.0](#authenticate-using-oauth-20)
+   If you want to view users, or view or change anime/manga lists you must authenticate with a [token](#authenticate-using-token) or with [OAuth 2.0](#authenticate-using-oauth-20)
 
 ### Authenticate using token
 
@@ -64,8 +64,6 @@ Four different ways to authenticate with MyAnimeList:
 ### Authenticate using OAuth 2.0
 
 The below method is massively simplified, for a more detailed explanation on OAuth2.0 works check this blog post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
-
-If you want to quickly generate a token you can use this [python script](https://gitlab.com/-/snippets/2039434).
 
 For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html) to generate an OAuth token from a client id and PKCE code challenge.
 
@@ -84,7 +82,8 @@ For developers using their own [authorization](https://myanimelist.net/apiconfig
     ```java
     String authorization_url = MyAnimeListAuthenticator.getAuthorizationURL("client_id", "PKCE_code_challenge");
 
-    MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
+    MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator(new Authorization("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
+    MyAnimeList mal = MyAnimeList.withOAuth2(authenticator);
     ```
 
     It is suggested that you save the OAuth token that is generated so you don't have to authenticate with MyAnimeList each time.
@@ -101,8 +100,12 @@ The above methods is massively simplified, for a more detailed guide on how OAut
 
   - When this method is run it will launch your web browser to authenticate with MyAnimeList and then return with the OAuth key.
 
-  - If [`openBrowser()`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.LocalServerBuilder.html#openBrowser()) is not supported then you can use [`setURLCallback(Consumer<String>)`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.LocalServerBuilder.html#setURLCallback(java.util.function.Consumer)) to handle the generated URL. Refer to [OAuth2.0 authentication](#authenticate-with-client-id-using-oauth-20) for steps on how to generate a token from the authorization URL.
+  - If [`openBrowser()`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.LocalServerBuilder.html#openBrowser()) is not supported then you can use [`setURLCallback(Consumer<String>)`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.LocalServerBuilder.html#setURLCallback(java.util.function.Consumer)) to handle the generated URL. Refer to [OAuth2.0 authentication](#authenticate-using-oauth-20) for steps on how to generate a token from the authorization URL.
 
     ```java
-    MyAnimeList mal = MyAnimeList.withAuthorization(new MyAnimeListAuthenticator.LocalServerBuilder("client_id", "client_secret", 5050).openBrowser().build());
+    MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator
+        .LocalServerBuilder("client_id", "client_secret", 5050)
+        .openBrowser()
+        .build();
+    MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);
     ```
