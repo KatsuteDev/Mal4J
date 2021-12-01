@@ -87,6 +87,7 @@ abstract class Logging {
 
     interface ThrowingSupplier<R> {
 
+        @SuppressWarnings("RedundantThrows")
         R get() throws Throwable;
 
     }

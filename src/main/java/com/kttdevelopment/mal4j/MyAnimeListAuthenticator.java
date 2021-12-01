@@ -126,7 +126,8 @@ public final class MyAnimeListAuthenticator {
     @SuppressWarnings("SpellCheckingInspection")
     @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge){
-        this(client_id, client_secret, authorization_code, PKCE_code_challenge, null);
+        this(new Authorization(client_id, client_secret, authorization_code, PKCE_code_challenge), null);
+        Logging.getLogger().warning("The use of this constuctor has been deprecated, please use `new MyAnimeListAuthenticator(new Authorization(...))`");
     }
 
     /**
@@ -150,6 +151,7 @@ public final class MyAnimeListAuthenticator {
     @Deprecated
     public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge, final String redirect_uri){
         this(new Authorization(client_id, client_secret, authorization_code, PKCE_code_challenge, redirect_uri), null);
+        Logging.getLogger().warning("The use of this constuctor has been deprecated, please use `new MyAnimeListAuthenticator(new Authorization(...))`");
     }
 
     /**

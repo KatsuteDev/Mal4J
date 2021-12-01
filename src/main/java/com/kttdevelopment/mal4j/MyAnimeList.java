@@ -117,6 +117,7 @@ public abstract class MyAnimeList {
      */
     @Deprecated
     public static MyAnimeList withOAuthToken(final String token){
+        Logging.getLogger().warning("The use of this method is deprecated, please use `MyAnimeList.withToken(...)");
         return withToken(token);
     }
 
@@ -136,6 +137,7 @@ public abstract class MyAnimeList {
      */
     @Deprecated
     public static MyAnimeList withAuthorization(final MyAnimeListAuthenticator authenticator){
+        Logging.getLogger().warning("The use of this method is deprecated, please use `MyAnimeList.withOAuth2(...)");
         return withOAuth2(authenticator);
     }
 

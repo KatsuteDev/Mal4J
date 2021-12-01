@@ -12,7 +12,7 @@ public class TestMangaListStatusUsername {
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll() throws Throwable{
+    public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
     
