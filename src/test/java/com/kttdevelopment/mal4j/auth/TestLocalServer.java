@@ -57,7 +57,7 @@ final class TestLocalServer {
     final class TestURLCallback {
 
         @Test
-        public final void testURLCallback(){
+        public final void testURLCallback() throws InterruptedException{
             final AtomicReference<String> callback = new AtomicReference<>();
             try{
                 new LocalServerBuilder("client_id", 80)
@@ -65,6 +65,8 @@ final class TestLocalServer {
                     .setTimeout(1)
                     .build();
             }catch(final Throwable ignored){ }
+
+            Thread.sleep(2000);
 
             final String url = callback.get();
 
