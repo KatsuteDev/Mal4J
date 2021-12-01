@@ -82,19 +82,16 @@ public final class AccessToken {
         final String token_type,
         final String access_token,
         final String refresh_token,
-        final Long expires_in
+        final Long expiry_in_seconds
     ){
-        this.token_type    = Objects.requireNonNull(token_type,"Token type can not be null");
-        this.access_token  = Objects.requireNonNull(access_token, "Access token can not be null");
-        this.refresh_token = refresh_token;
+        this.token_type        = Objects.requireNonNull(token_type,"Token type can not be null");
+        this.access_token      = Objects.requireNonNull(access_token, "Access token can not be null");
+        this.refresh_token     = refresh_token;
+        this.expiry_in_seconds = expiry_in_seconds;
 
         Logging.addMask(this.access_token);
         Logging.addMask(this.refresh_token);
 
-        this.expiry_in_seconds =
-            expires_in != null
-                ? (System.currentTimeMillis() / 1000) + expires_in // now in seconds + time until expiry in seconds
-                : null;
     }
 
     /**

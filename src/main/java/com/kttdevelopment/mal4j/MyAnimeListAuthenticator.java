@@ -566,7 +566,8 @@ public final class MyAnimeListAuthenticator {
                 body.getString("token_type"),
                 body.getString("access_token"),
                 body.getString("refresh_token"),
-                body.getLong("expires_in")
+                // now in seconds + how long until expires in seconds
+                (System.currentTimeMillis() / 1000) + body.getLong("expires_in")
             );
         else if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED)
             throw new InvalidTokenException("The OAuth token provided is either invalid or expired");
@@ -698,7 +699,6 @@ public final class MyAnimeListAuthenticator {
     }
 
 //
-
 
     @Override
     public final String toString(){
