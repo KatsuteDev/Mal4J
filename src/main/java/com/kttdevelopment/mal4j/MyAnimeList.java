@@ -40,8 +40,8 @@ import java.util.List;
  * The {@link MyAnimeList} class can be created by authenticating with either:
  * <ul>
  *     <li>A client ID using {@link #withClientID(String)}</li>
- *     <li>An OAuth token using {@link #withToken(String)}</li>
- *     <li>An authorization code and client id using {@link #withAuthorization(MyAnimeListAuthenticator)}.</li>
+ *     <li>A token using {@link #withToken(String)}</li>
+ *     <li>OAuth2 using {@link #withOAuth2(MyAnimeListAuthenticator)}.</li>
  * </ul>
  *
  * @since 1.0.0
@@ -63,7 +63,7 @@ public abstract class MyAnimeList {
         Logging.setDebug(debug);
     }
 
-//
+// authentication
 
     MyAnimeList(){ }
 
@@ -75,7 +75,7 @@ public abstract class MyAnimeList {
      * @throws NullPointerException if client ID is null
      *
      * @see #withToken(String)
-     * @see #withAuthorization(MyAnimeListAuthenticator)
+     * @see #withOAuth2(MyAnimeListAuthenticator)
      * @since 2.6.0
      */
     @SuppressWarnings("GrazieInspection")
@@ -93,7 +93,7 @@ public abstract class MyAnimeList {
      *
      *
      * @see #withClientID(String)
-     * @see #withAuthorization(MyAnimeListAuthenticator)
+     * @see #withOAuth2(MyAnimeListAuthenticator)
      * @since 2.6.0
      */
     public static MyAnimeList withToken(final String token){
@@ -123,6 +123,7 @@ public abstract class MyAnimeList {
     /**
      * Creates an interface with an authenticator.
      *
+     * @deprecated this method has been renamed to {@link #withOAuth2(MyAnimeListAuthenticator)} to reduce confusion with {@link Authorization}
      * @param authenticator authenticator
      * @return MyAnimeList
      * @throws NullPointerException if authenticator is null
@@ -133,12 +134,30 @@ public abstract class MyAnimeList {
      * @see MyAnimeListAuthenticator
      * @since 1.0.0
      */
+    @Deprecated
     public static MyAnimeList withAuthorization(final MyAnimeListAuthenticator authenticator){
+        return withOAuth2(authenticator);
+    }
+
+    /**
+     * Creates an interface using an authenticator.
+     *
+     * @param authenticator authenticator
+     * @return MyAnimeList
+     * @throws NullPointerException if authenticator is null
+     *
+     * @see #withClientID(String)
+     * @see #withToken(String)
+     * @see #refreshToken()
+     * @see MyAnimeListAuthenticator
+     * @since 2.7.0
+     */
+    public static MyAnimeList withOAuth2(final MyAnimeListAuthenticator authenticator){
         return new MyAnimeListImpl(authenticator);
     }
 
     /**
-     * Refreshes the OAuth token. Only works with {@link #withAuthorization(MyAnimeListAuthenticator)}.
+     * Refreshes the OAuth token. Only works with {@link #withOAuth2(MyAnimeListAuthenticator)}.
      *
      * @throws UnsupportedOperationException if this wasn't created with an authenticator
      *
@@ -158,7 +177,7 @@ public abstract class MyAnimeList {
     @Deprecated
     public abstract void refreshOAuthToken();
 
-    // experimental
+// experimental
 
     /**
      * Enables an experimental feature.
@@ -170,7 +189,7 @@ public abstract class MyAnimeList {
      */
     public abstract void enableExperimentalFeature(final ExperimentalFeature feature);
 
-    // anime
+// anime
 
     /**
      * Returns an Anime search query.
@@ -216,7 +235,7 @@ public abstract class MyAnimeList {
      */
     public abstract Anime getAnime(final long id, final String... fields);
 
-    // anime ranking
+// anime ranking
 
     /**
      * Returns an Anime ranking query.
@@ -233,7 +252,7 @@ public abstract class MyAnimeList {
      */
     public abstract AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType);
 
-    // anime season
+// anime season
 
     /**
      * Returns an Anime season query.
@@ -251,7 +270,7 @@ public abstract class MyAnimeList {
      */
     public abstract AnimeSeasonQuery getAnimeSeason(final int year, final Season season);
 
-    // anime suggestions
+// anime suggestions
 
     /**
      * Returns an Anime suggestions query.
@@ -265,7 +284,7 @@ public abstract class MyAnimeList {
      */
     public abstract AnimeSuggestionQuery getAnimeSuggestions();
 
-    // anime list
+// anime list
 
     /**
      * Returns an Anime listing updater.
@@ -327,7 +346,7 @@ public abstract class MyAnimeList {
      */
     public abstract UserAnimeListQuery getUserAnimeListing(final String username);
 
-    // forum
+// forum board
 
     /**
      * Returns the top level forum boards.
@@ -342,7 +361,7 @@ public abstract class MyAnimeList {
      */
     public abstract List<ForumCategory> getForumBoards();
 
-    //
+// forum topic
 
     /**
      * Returns a forum topic.
@@ -409,8 +428,6 @@ public abstract class MyAnimeList {
      */
     public abstract ForumTopicDetailPostQuery getForumTopicDetailPostQuery(final long id);
 
-    //
-
     /**
      * Returns a forum topic search query.
      *
@@ -422,7 +439,7 @@ public abstract class MyAnimeList {
      */
     public abstract ForumSearchQuery getForumTopics();
 
-    // manga
+// manga
 
     /**
      * Returns a Manga search query.
@@ -468,7 +485,7 @@ public abstract class MyAnimeList {
      */
     public abstract Manga getManga(final long id, final String... fields);
 
-    // manga ranking
+// manga ranking
 
     /**
      * Returns a Manga ranking query.
@@ -485,7 +502,7 @@ public abstract class MyAnimeList {
      */
     public abstract MangaRankingQuery getMangaRanking(final MangaRankingType rankingType);
 
-    // manga list
+// manga list
 
     /**
      * Returns a Manga listing updater.
@@ -547,7 +564,7 @@ public abstract class MyAnimeList {
      */
     public abstract UserMangaListQuery getUserMangaListing(final String username);
 
-    // user
+// user
 
     /**
      * Returns the authenticated user.

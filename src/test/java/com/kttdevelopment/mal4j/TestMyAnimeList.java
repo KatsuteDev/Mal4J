@@ -42,7 +42,7 @@ public class TestMyAnimeList {
 
     @Test
     public void testNullAuthenticator(){
-        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withAuthorization(null),
+        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withOAuth2(null),
                                 Workflow.errorSupplier("Expected MyAnimeList#withAuthorizaton with null authenticator to throw a NullPointerException"));
     }
 
