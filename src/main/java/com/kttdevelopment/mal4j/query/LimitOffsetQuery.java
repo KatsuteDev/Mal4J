@@ -18,9 +18,8 @@
 
 package com.kttdevelopment.mal4j.query;
 
-import com.kttdevelopment.mal4j.*;
+import com.kttdevelopment.mal4j.PaginatedIterator;
 
-import java.io.UncheckedIOException;
 import java.util.List;
 
 /**
@@ -71,9 +70,6 @@ public abstract class LimitOffsetQuery<T extends LimitOffsetQuery<T,R>,R> {
      * Runs the search query.
      *
      * @return search listings
-     * @throws HttpException if request failed
-     * @throws InvalidTokenException if token is invalid or expired
-     * @throws UncheckedIOException if client failed to execute request
      *
      * @since 1.0.0
      */
@@ -83,9 +79,6 @@ public abstract class LimitOffsetQuery<T extends LimitOffsetQuery<T,R>,R> {
      * Runs the search query and returns an iterable.
      *
      * @return search iterable
-     * @throws HttpException if request failed
-     * @throws InvalidTokenException if token is invalid or expired
-     * @throws UncheckedIOException if client failed to execute request
      *
      * @since 1.0.0
      */
