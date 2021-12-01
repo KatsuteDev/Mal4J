@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public final class TestLocalServer {
+final class TestLocalServer {
 
     @Nested
     final class TestConstructor {
