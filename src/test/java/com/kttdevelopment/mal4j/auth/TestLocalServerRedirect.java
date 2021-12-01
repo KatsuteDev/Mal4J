@@ -1,6 +1,7 @@
 package com.kttdevelopment.mal4j.auth;
 
 import com.kttdevelopment.mal4j.TestProvider;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -10,6 +11,11 @@ import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestLocalServerRedirect {
+
+    @BeforeAll
+    public static void beforeAll(){
+        TestProvider.requireHuman();
+    }
 
     @Test
     public final void testRedirectURI() throws IOException{
