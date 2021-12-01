@@ -55,7 +55,7 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
  */
 final class MyAnimeListImpl extends MyAnimeList {
 
-    private transient String token = null;
+    private transient String token     = null;
     private transient String client_id = null;
     private final boolean isTokenAuth;
 
@@ -78,10 +78,8 @@ final class MyAnimeListImpl extends MyAnimeList {
     MyAnimeListImpl(final MyAnimeListAuthenticator authenticator){
         Objects.requireNonNull(authenticator, "Authenticator cannot be null");
         this.authenticator = authenticator;
-        this.token = authenticator.getAccessToken().getToken();
-        this.isTokenAuth = true;
-        Logging.addMask(this.token);
-        Logging.addMask(authenticator.getAccessToken().getRefreshToken());
+        this.token         = authenticator.getAccessToken().getToken();
+        this.isTokenAuth   = true;
     }
 
     @Override
@@ -815,17 +813,18 @@ final class MyAnimeListImpl extends MyAnimeList {
     private static Response<?> handleResponseCodes(final ExceptionSupplier<Response<?>,IOException> supplier){
         try{
             final Response<?> response = supplier.get();
-
-            if(response.code() == HttpURLConnection.HTTP_OK)
-                return response;
-            else if(response.code() == HttpURLConnection.HTTP_UNAUTHORIZED)
-                throw new InvalidTokenException("The OAuth token provided is either invalid or expired");
-            else
-                try{
-                    throw new HttpException(response.URL(), response.code(), (((JsonObject) response.body()).getString("message") + ' ' + ((JsonObject) response.body()).getString("error")).trim());
-                }catch(final Throwable ignored){
-                    throw new HttpException(response.URL(), response.code(), response.raw());
-                }
+            switch(response.code()){
+                case HttpURLConnection.HTTP_OK:
+                    return response;
+                case HttpURLConnection.HTTP_UNAUTHORIZED:
+                    throw new InvalidTokenException("The OAuth token provided is either invalid or expired");
+                default:
+                    try{
+                        throw new HttpException(response.URL(), response.code(), (((JsonObject) response.body()).getString("message") + ' ' + ((JsonObject) response.body()).getString("error")).trim());
+                    }catch(final Throwable ignored){
+                        throw new HttpException(response.URL(), response.code(), response.raw());
+                    }
+            }
         }catch(final IOException e){ // client side failure
             throw new UncheckedIOException(e);
         }

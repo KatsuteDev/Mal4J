@@ -1,4 +1,4 @@
-<div align="center">
+<div id="top" align="center">
     <a href="https://github.com/KatsuteDev/Mal4J#readme">
         <img src="https://raw.githubusercontent.com/KatsuteDev/Mal4J/main/assets/banner.png" alt="Mal4J - MyAnimeList for Java">
     </a>
@@ -41,7 +41,7 @@ Mal4J is a modular wrapper for the MyAnimeList API written for Java 8+ and simpl
 - [License](#license)
 - [Disclaimer](#disclaimer)
 
-<p align="right">(<a href="#readme">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # Installation
 
@@ -53,7 +53,7 @@ Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact
 
 See [setup](https://github.com/KatsuteDev/Mal4J/blob/main/setup.md#readme) for steps to authenticate and actually use this library.
 
-<p align="right">(<a href="#readme">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 # Features
 
@@ -107,7 +107,7 @@ AnimeRecommendation[] recs = anime.getRecommendations();
 OpeningTheme[] op = anime.getOpeningThemes();
 ```
 
-<p align="right">(<a href="#readme">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## Contributing
 
@@ -133,7 +133,7 @@ Please note that the client ID being used for tests must not have a client secre
 
 Devs running remote tests may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
 
-<p align="right">(<a href="#readme">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ---
 
@@ -146,4 +146,4 @@ This library is released under the [GNU General Public License (GPL) v2.0](https
 - [@Katsute](https://github.com/Katsute) and [@KatsuteDev](https://github.com/KatsuteDev) are not affiliated with MyAnimeList.
 - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
 
-<p align="right">(<a href="#readme">back to top</a>)</p>
+<p align="right">(<a href="#top">back to top</a>)</p>
