@@ -17,7 +17,7 @@ public class TestAuthorizationLocalServer {
 
         final String clientId = TestProvider.readFile(TestProvider.client);
         authenticator = new MyAnimeListAuthenticator.LocalServerBuilder(clientId, 5050).openBrowser().build();
-        final MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);
+        final MyAnimeList mal = MyAnimeList.withOAuth2(authenticator);
 
         // test refresh token
         Assertions.assertNotNull(mal.getAnime().withQuery(TestProvider.AnimeQuery).search(),

@@ -41,6 +41,8 @@ public final class AccessToken {
      *
      * @param access_token access token
      *
+     * @see #AccessToken(String, String)
+     * @see #AccessToken(String, String, long)
      * @since 2.7.0
      */
     public AccessToken(final String access_token){
@@ -53,6 +55,8 @@ public final class AccessToken {
      * @param access_token access token
      * @param refresh_token refresh token
      *
+     * @see #AccessToken(String)
+     * @see #AccessToken(String, String, long)
      * @since 2.7.0
      */
     public AccessToken(final String access_token, final String refresh_token){
@@ -66,6 +70,8 @@ public final class AccessToken {
      * @param refresh_token refresh token
      * @param expiry_in_seconds when the token expires as seconds since EPOCH
      *
+     * @see #AccessToken(String)
+     * @see #AccessToken(String, String)
      * @since 2.7.0
      */
     public AccessToken(final String access_token, final String refresh_token, final long expiry_in_seconds){
@@ -78,9 +84,12 @@ public final class AccessToken {
         final String refresh_token,
         final Long expires_in
     ){
-        this.token_type        = Objects.requireNonNull(token_type,"Token type can not be null");
-        this.access_token      = Objects.requireNonNull(access_token, "Access token can not be null");
-        this.refresh_token     = refresh_token;
+        this.token_type    = Objects.requireNonNull(token_type,"Token type can not be null");
+        this.access_token  = Objects.requireNonNull(access_token, "Access token can not be null");
+        this.refresh_token = refresh_token;
+
+        Logging.addMask(this.access_token);
+        Logging.addMask(this.refresh_token);
 
         this.expiry_in_seconds =
             expires_in != null
@@ -117,11 +126,26 @@ public final class AccessToken {
      * @return expiry date
      * @throws NullPointerException if the expiry date is missing
      *
+     * @see #getExpiryEpochSeconds()
      * @see #getTimeUntilExpires()
      * @since 1.0.0
      */
     public final Date getExpiry(){
-        return new Date(Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date") * 1000);
+        return new Date(getExpiryEpochSeconds() * 1000);
+    }
+
+    /**
+     * Returns expiry date as seconds since epoch.
+     *
+     * @return expiry date
+     * @throws NullPointerException if the expiry date is missing
+     *
+     * @see #getExpiry()
+     * @see #getTimeUntilExpires()
+     * @since 2.7.0
+     */
+    public final long getExpiryEpochSeconds(){
+        return Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date");
     }
 
     /**
@@ -131,11 +155,12 @@ public final class AccessToken {
      * @throws NullPointerException if the expiry date is missing
      *
      * @see #getExpiry()
+     * @see #getExpiryEpochSeconds()
      * @see #isExpired()
      * @since 1.0.0
      */
     public final long getTimeUntilExpires(){
-        return Objects.requireNonNull(expiry_in_seconds, "Access token is missing expiry date") - (System.currentTimeMillis() / 1000); // when the token expires - now in seconds
+        return getExpiryEpochSeconds() - (System.currentTimeMillis() / 1000); // when the token expires - now in seconds
     }
 
     /**

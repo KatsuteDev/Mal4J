@@ -163,8 +163,6 @@ public final class Authorization {
         return redirect_uri;
     }
 
-    // toString
-
     @Override
     public final String toString(){
         return "Authorization{" +
