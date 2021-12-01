@@ -91,7 +91,7 @@ public final class MyAnimeListAuthenticator {
             redirect_URI
         );
 
-        this.authorization = new Authorization(client_id, client_secret, auth[0], auth[1]);
+        this.authorization = new Authorization(client_id, client_secret, auth[0], auth[1], redirect_URI);
 
         token = parseToken(authService
             .getToken(
