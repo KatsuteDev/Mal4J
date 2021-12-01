@@ -66,11 +66,16 @@ public class TestREADME {
     public void testOAuth2(){
         String authorization_url = MyAnimeListAuthenticator.getAuthorizationURL("client_id", "PKCE_code_challenge");
 
-        MyAnimeList mal = MyAnimeList.withOAuth2(new MyAnimeListAuthenticator("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
+        MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator(new Authorization("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
+        MyAnimeList mal = MyAnimeList.withOAuth2(authenticator);
     }
 
     public void testEZAuth() throws IOException{
-        MyAnimeList mal = MyAnimeList.withOAuth2(new MyAnimeListAuthenticator.LocalServerBuilder("client_id", "client_secret", 5050).openBrowser().build());
+        MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator
+            .LocalServerBuilder("client_id", "client_secret", 5050)
+            .openBrowser()
+            .build();
+        MyAnimeList mal = MyAnimeList.withOAuth2(authenticator);
     }
 
 }
