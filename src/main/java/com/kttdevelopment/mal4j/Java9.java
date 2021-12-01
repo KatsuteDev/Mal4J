@@ -107,6 +107,7 @@ abstract class Java9 {
          * @param replacer replacement function
          * @return replaced string
          */
+        @SuppressWarnings("StringBufferMayBeStringBuilder")
         static java.lang.String replaceAll(final java.lang.String str, final java.util.regex.Matcher matcher, final Function<MatchResult,java.lang.String> replacer) {
             Objects.requireNonNull(str);
             Objects.requireNonNull(matcher);

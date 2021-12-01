@@ -28,7 +28,7 @@ import com.kttdevelopment.mal4j.property.Statistics;
  * @version 1.0.0
  * @author Katsute
  */
-@SuppressWarnings("DeprecatedIsStillUsed")
+@SuppressWarnings({"DeprecatedIsStillUsed", "GrazieInspection"})
 @Deprecated
 public abstract class MangaStatistics extends Statistics {
 

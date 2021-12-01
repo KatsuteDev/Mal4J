@@ -107,5 +107,5 @@ The above methods is massively simplified, for a more detailed guide on how OAut
         .LocalServerBuilder("client_id", "client_secret", 5050)
         .openBrowser()
         .build();
-    MyAnimeList mal = MyAnimeList.withAuthorization(authenticator);
+    MyAnimeList mal = MyAnimeList.withOAuth2(authenticator);
     ```
