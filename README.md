@@ -111,7 +111,12 @@ OpeningTheme[] op = anime.getOpeningThemes();
 
 ## Contributing
 
-Code generated with GitHub Copilot is **strictly prohibited** on this repository. Do not bother sending pulls if you use this service.
+<!-- GitHub Copilot Disclaimer -->
+<table>
+    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/KatsuteDev/.github/main/profile/copilot-dark.png#gh-dark-mode-only" width="50"><img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/KatsuteDev/.github/main/profile/copilot-light.png#gh-light-mode-only" width="50">
+    <p>GitHub Copilot is <b>strictly prohibited</b> on this repository.<br>Pulls using this will be rejected.</p>
+</table>
+<!-- GitHub Copilot Disclaimer -->
 
 - Found a bug? Post it in [issues](https://github.com/KatsuteDev/Mal4J/issues).
 - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/KatsuteDev/Mal4J/discussions).
