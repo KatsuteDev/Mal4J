@@ -16,7 +16,6 @@ jobs:
         java: [8, 11, 17]
       fail-fast: false
       max-parallel: 1
-    environment: MyAnimeList CI
     steps:
       - name: 📤 Checkout Repository
         uses: actions/checkout@v2.4.0
