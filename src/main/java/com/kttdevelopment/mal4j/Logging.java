@@ -70,7 +70,8 @@ abstract class Logging {
     }
 
     static void debug(){
-        System.out.println();
+        if(debug)
+            System.out.println();
     }
     
     static void debug(final String message){
