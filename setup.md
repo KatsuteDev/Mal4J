@@ -51,7 +51,7 @@ Four different ways to authenticate with MyAnimeList:
 
    This authentication method only grants access to public data and READ operations.
 
-   If you want to view users, or view or change anime/manga lists you must authenticate with a [token](#authenticate-using-token) or with [OAuth 2.0](#authenticate-using-oauth-20)
+   If you want to view users, or change anime/manga lists you must authenticate with a [token](#authenticate-using-token) or with [OAuth 2.0](#authenticate-using-oauth-20)
 
 ### Authenticate using token
 
