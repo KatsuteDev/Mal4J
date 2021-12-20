@@ -254,20 +254,9 @@ class APICall {
                 if(methods != null){
                     Field modifiers = null;
 
-                    try{ // Standard Java implementation
+                    try{
                         modifiers = Field.class.getDeclaredField("modifiers");
-                    }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
-                        try{ // Android API 2-17 (1.1 - 4.2.2) & Android API 26+ (8.0+)
-                            //noinspection JavaReflectionMemberAccess
-                            modifiers = Field.class.getDeclaredField("accessFlags");
-                        }catch(final NoSuchFieldException ignored1){
-                            try{ // Android API 18-25 (4.3 - 7.1.2)
-                                modifiers = Class.forName("java.lang.reflect.ArtField").getDeclaredField("accessFlags");
-                            }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
-                                // Android API 1 (1.0) [NOT SUPPORTED]
-                            }
-                        }
-                    }
+                    }catch(final NoSuchFieldException ignored){ }
 
                     if(modifiers != null){
                         modifiers.setAccessible(true);
