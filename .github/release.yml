@@ -6,6 +6,9 @@ changelog:
     - title: ❌ Removed
       labels:
         - deprecated
+    - title: 🔐 Security
+      labels:
+        - security
     - title: ⭐ New Features
       labels:
         - enhancements
