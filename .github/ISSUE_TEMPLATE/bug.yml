@@ -16,7 +16,7 @@ body:
           required: true
         - label: I have checked [discussions](https://github.com/KatsuteDev/Mal4J/discussions).
           required: true
-        - label: I have checked the [documentation](https://mal4j.katsute.dev/).
+        - label: I have checked the [documentation](https://docs.katsute.dev/mal4j/javadoc).
           required: true
         - label: I have checked the [known issues](https://github.com/KatsuteDev/Mal4J/projects/10) for this library.
           required: true
