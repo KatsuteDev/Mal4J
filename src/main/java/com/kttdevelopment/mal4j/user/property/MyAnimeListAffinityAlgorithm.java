@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Ktt Development
+ * Copyright (C) 2021-2022 Katsute <https://github.com/Katsute>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +26,7 @@ package com.kttdevelopment.mal4j.user.property;
  * @see AffinityAlgorithm
  * @since 2.3.0
  * @version 2.4.0
- * @author Ktt Development
+ * @author Katsute
  */
 public final class MyAnimeListAffinityAlgorithm implements AffinityAlgorithm {
 

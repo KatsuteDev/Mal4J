@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 Katsute <https://github.com/Katsute>
+ * Copyright (C) 2021-2022 Katsute <https://github.com/Katsute>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -31,10 +31,10 @@ import java.util.regex.Pattern;
  * @author Katsute
  */
 public final class Authorization {
-    
+
     // [\w\-.~]*
     private static final Pattern allowedPKCE = Pattern.compile("[\\w\\-.~]*");
-    
+
     @SuppressWarnings("SpellCheckingInspection")
     private final String client_id, client_secret, authorization_code, pkce, redirect_uri;
 
@@ -97,14 +97,14 @@ public final class Authorization {
             else if(!allowedPKCE.matcher(PKCE).matches())
                 throw new IllegalArgumentException("PKCE code challenge contains illegal characters, only a-z , A-Z , 0-9 , _ , . , - , and ~ are allowed");
         }
-        
+
         this.client_id          = client_id;
         this.client_secret      = client_secret;
         this.authorization_code = authorization_code;
         this.pkce               = PKCE;
         this.redirect_uri       = redirect_uri;
     }
-    
+
     // retrieval methods
 
     /**
