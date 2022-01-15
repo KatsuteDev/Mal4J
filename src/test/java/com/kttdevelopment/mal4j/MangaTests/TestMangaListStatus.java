@@ -202,7 +202,7 @@ public class TestMangaListStatus {
         testUpdate();
         testUpdate();
     }
-    
+
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5)
     public void testEcchiNSFW(){
@@ -217,9 +217,10 @@ public class TestMangaListStatus {
                 .search();
 
         for(final MangaListStatus status : list)
-            for(final Genre genre : status.getMangaPreview().getGenres())
-                if(genre.getName().equalsIgnoreCase("ecchi"))
-                    return;
+            if(status.getMangaPreview().getGenres() != null)
+                for(final Genre genre : status.getMangaPreview().getGenres())
+                    if(genre.getName().equalsIgnoreCase("ecchi"))
+                        return;
 
         //noinspection ConstantConditions
         Assumptions.assumeTrue(false, Workflow.warningSupplier("Failed to find Manga with Ecchi genre (this is a data issue, disregard)"));
