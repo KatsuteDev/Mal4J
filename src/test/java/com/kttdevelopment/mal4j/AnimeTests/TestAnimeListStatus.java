@@ -215,9 +215,10 @@ public class TestAnimeListStatus {
                 .search();
 
         for(final AnimeListStatus status : list)
-            for(final Genre genre : status.getAnimePreview().getGenres())
-                if(genre.getName().equalsIgnoreCase("ecchi"))
-                    return;
+            if(status.getAnimePreview().getGenres() != null)
+                for(final Genre genre : status.getAnimePreview().getGenres())
+                    if(genre.getName().equalsIgnoreCase("ecchi"))
+                        return;
 
         Assertions.fail(Workflow.errorSupplier("Failed to find Anime with Ecchi genre"));
     }
