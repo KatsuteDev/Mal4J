@@ -380,7 +380,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                     () -> service.getUserAnimeListing(
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
-                        username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
@@ -404,7 +404,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                     offset -> service.getUserAnimeListing(
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
-                        username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
@@ -723,7 +723,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                     () -> service.getUserMangaListing(
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
-                        username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
@@ -747,7 +747,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                     offset -> service.getUserMangaListing(
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
-                        username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
+                        username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
                         status != null ? status.field() : null,
                         sort != null ? sort.field() : null,
                         limit,
@@ -796,18 +796,18 @@ final class MyAnimeListImpl extends MyAnimeList {
         handleResponse(
             () -> service.getUser(
                 Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
-                username.equals("@me") ? "@me" : Java9.URLEncoder.encode(username, StandardCharsets.UTF_8),
+                username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
                 convertFields(Fields.user, fields)
             )
         ));
     }
 
 // handle response
-    
+
     private static void handleVoidResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
         handleResponseCodes(supplier);
     }
-    
+
     private static JsonObject handleResponse(final ExceptionSupplier<Response<?>,IOException> supplier){
         final Response<?> response = handleResponseCodes(supplier);
         return response.code() == HttpURLConnection.HTTP_OK ? (JsonObject) response.body() : null;
@@ -916,7 +916,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
             final StringBuilder SB = new StringBuilder();
             for(final String field : fields)
-                if(!Java9.String.isBlank(field))
+                if(field.trim().length() > 0)
                     SB.append(field).append(',');
             return SB.toString().endsWith(",") ? SB.deleteCharAt(SB.length()-1).toString() : "";
         }
@@ -941,7 +941,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             return defaultFields;
         else if(fields.length == 0)
             return "";
-        
+
         boolean inverted = false;
         for(final String field : fields){
             if(field.equals(Fields.INVERTED)){
@@ -949,7 +949,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 break;
             }
         }
-        
+
         if(!inverted){
             return toCommaSeparatedString(fields);
         }else{

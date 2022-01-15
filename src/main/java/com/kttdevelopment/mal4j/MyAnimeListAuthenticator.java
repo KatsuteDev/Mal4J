@@ -301,7 +301,7 @@ public final class MyAnimeListAuthenticator {
         Objects.requireNonNull(PKCE_code_challenge, "PKCE must not be null");
         return
             String.format(authUrl, client_id, PKCE_code_challenge) +
-            (redirect_URI != null ? String.format(redirectURI, Java9.URLEncoder.encode(redirect_URI, StandardCharsets.UTF_8)) : "") +
+            (redirect_URI != null ? String.format(redirectURI, APICall.encodeUTF8(redirect_URI)) : "") +
             (state != null ? String.format(authState, state) : "");
     }
 
@@ -574,8 +574,8 @@ public final class MyAnimeListAuthenticator {
                 if(pair.contains("=")){
                     final String[] kv = pair.split("=");
                     OUT.put(
-                        Java9.URLDecoder.decode(kv[0], StandardCharsets.UTF_8),
-                        kv.length == 2 ? Java9.URLDecoder.decode(kv[1], StandardCharsets.UTF_8) : null
+                        APICall.decodeUTF8(kv[0]),
+                        kv.length == 2 ? APICall.decodeUTF8(kv[1]) : null
                     );
                 }
             }

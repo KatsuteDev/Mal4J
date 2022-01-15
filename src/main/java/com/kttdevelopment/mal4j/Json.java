@@ -124,7 +124,7 @@ class Json {
         while(splitMatcher.find()){ // while still contains line splitting symbol
             final int index = splitMatcher.end() - 1; // before the comma/split character
             final String after = flatJson.substring(index + 1);
-            final long count = Java9.Matcher.count(quotes.reset(after));
+            final long count = Regex9.count(quotes.reset(after));
             if(count %2 == 0){ // even means symbol is not within quotes
                 if(lastMatch != -1) // if not first (no content before this)
                     OUT.append(flatJson, lastMatch, index); // add content between last match and here
@@ -195,7 +195,7 @@ class Json {
                     list.add(openMap(reader, json));
             }else if(arrClose.matcher(ln).matches())
                 return list;
-            else if(!Java9.String.isBlank(ln))
+            else if(ln.trim().length() > 0)
                 throw new JsonSyntaxException("Unexpected array value syntax: '" + ln + '\'', json);
         }
         throw new JsonSyntaxException("Object was missing closing character: ']'", json);
@@ -233,7 +233,7 @@ class Json {
                     obj.set(key, openMap(reader, json));
             }else if(mapClose.matcher(ln).matches())
                 return obj;
-            else if(!Java9.String.isBlank(ln))
+            else if(ln.trim().length() > 0)
                 throw new JsonSyntaxException("Unexpected object value syntax: '" + ln + '\'', json);
         }
         throw new JsonSyntaxException("Object was missing closing character: '}'", json);
@@ -241,8 +241,8 @@ class Json {
 
     @SuppressWarnings("UnnecessaryLocalVariable")
     private String decodeString(final String raw){
-        final String unicodeEscape = Java9.Matcher.replaceAll(raw, unicodeMatcher.reset(raw), unicodeReplacer);
-        final String slashEscape   = Java9.Matcher.replaceAll(unicodeEscape, escapedMatcher.reset(unicodeEscape), escapedReplacer);
+        final String unicodeEscape = Regex9.replaceAll(raw, unicodeMatcher.reset(raw), unicodeReplacer);
+        final String slashEscape   = Regex9.replaceAll(unicodeEscape, escapedMatcher.reset(unicodeEscape), escapedReplacer);
         return slashEscape;
     }
 
