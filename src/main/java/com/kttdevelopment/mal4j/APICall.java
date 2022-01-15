@@ -128,7 +128,7 @@ class APICall {
         if(value == null)
             pathVars.remove(pathVar);
         else
-            pathVars.put(pathVar, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            pathVars.put(pathVar, encoded ? Objects.toString(value) : encodeUTF8(Objects.toString(value)));
         return this;
     }
 
@@ -140,7 +140,7 @@ class APICall {
         if(value == null)
             queries.remove(query);
         else
-            queries.put(query, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            queries.put(query, encoded ? Objects.toString(value) : encodeUTF8(Objects.toString(value)));
         return this;
     }
 
@@ -161,7 +161,7 @@ class APICall {
         if(value == null)
             fields.remove(field);
         else
-            fields.put(field, encoded ? Objects.toString(value) : Java9.URLEncoder.encode(Objects.toString(value), StandardCharsets.UTF_8));
+            fields.put(field, encoded ? Objects.toString(value) : encodeUTF8(Objects.toString(value)));
         return this;
     }
 
@@ -293,9 +293,9 @@ class APICall {
     @SuppressWarnings("RedundantThrows")
     private APIStruct.Response<String> call() throws IOException, InterruptedException{
         final String URL =
-            baseURL +
-            Java9.Matcher.replaceAll(path, pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
-            (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
+                baseURL +
+                Regex9.replaceAll(path, pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
+                (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
 
         final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
 
@@ -329,7 +329,7 @@ class APICall {
                 // request.uri(URI.create(blockedURI.matcher(URL).replaceAll(encoder)));
                 JDK11.HttpRequestBuilder_URI
                     .invoke(HttpRequestBuilder_Instance,
-                        URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL),encoder))
+                        URI.create(Regex9.replaceAll(URL, blockedURI.matcher(URL), encoder))
                     );
                 // request.method(method, HttpRequest.BodyPublishers.noBody());
                 JDK11.HttpRequestBuilder_Method
@@ -401,7 +401,7 @@ class APICall {
                 throw new ReflectedClassException("Failed to use reflected HttpClient, please report this to the maintainers of Mal4J", e);
             }
         else{
-            final HttpURLConnection conn = (HttpURLConnection) URI.create(Java9.Matcher.replaceAll(URL, blockedURI.matcher(URL), encoder)).toURL().openConnection();
+            final HttpURLConnection conn = (HttpURLConnection) URI.create(Regex9.replaceAll(URL, blockedURI.matcher(URL), encoder)).toURL().openConnection();
 
             for(final Map.Entry<String, String> entry : headers.entrySet())
                 conn.setRequestProperty(entry.getKey(), entry.getValue());
@@ -547,6 +547,30 @@ class APICall {
             }
         }
 
+    }
+
+    // encoder methods
+
+    private static final String UTF8 = StandardCharsets.UTF_8.name();
+
+    static String encodeUTF8(final String s){
+        try{
+            return URLEncoder.encode(s, UTF8);
+        }catch(final UnsupportedEncodingException e){
+            Logging.getLogger().severe("Failed to encode '" + s + "' to " + UTF8 + ", please report this to the maintainers of Mal4J");
+            e.printStackTrace(); // shouldn't occur for case UTF-8
+            return s;
+        }
+    }
+
+    static String decodeUTF8(final String s){
+        try{
+            return URLDecoder.decode(s, UTF8);
+        }catch(final UnsupportedEncodingException e){
+            Logging.getLogger().severe("Failed to decode '" + s + "' to " + UTF8 + ", please report this to the maintainers of Mal4J");
+            e.printStackTrace(); // shouldn't occur for case UTF-8
+            return s;
+        }
     }
 
 }
