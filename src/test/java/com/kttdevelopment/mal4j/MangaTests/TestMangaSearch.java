@@ -3,35 +3,36 @@ package com.kttdevelopment.mal4j.MangaTests;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.manga.MangaPreview;
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TestMangaSearch {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+final class TestMangaSearch {
 
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
 
     @Test
-    public void testSearch(){
+    final void testSearch(){
         final List<MangaPreview> search =
             mal.getManga()
                 .withQuery(TestProvider.AltMangaQuery)
                 .withNoFields()
                 .search();
-        Assertions.assertEquals(TestProvider.AltMangaID, search.get(0).getID(),
-                                Workflow.errorSupplier("Expected first search ID to match"));
-        Assertions.assertNotEquals(1, search.size(),
-                                   Workflow.errorSupplier("Expected search to return more than 1"));
+        annotateTest(() -> assertEquals(TestProvider.AltMangaID, search.get(0).getID()));
+        annotateTest(() -> assertNotEquals(1, search.size()));
     }
 
     @Test
-    public void testOffsetLimit(){
+    final void testOffsetLimit(){
         final List<MangaPreview> search =
             mal.getManga()
                 .withQuery(TestProvider.AltMangaQuery)
@@ -39,26 +40,23 @@ public class TestMangaSearch {
                 .withOffset(1)
                 .withNoFields()
                 .search();
-        Assertions.assertNotEquals(TestProvider.AltMangaID, search.get(0).getID(),
-                                   Workflow.errorSupplier("Expected first search ID to not match"));
-        Assertions.assertEquals(1, search.size(),
-                                Workflow.errorSupplier("Expected search to return only 1"));
+        annotateTest(() -> assertNotEquals(TestProvider.AltMangaID, search.get(0).getID()));
+        annotateTest(() -> assertEquals(1, search.size()));
     }
 
     @Test
-    public void testFields(){
+    final void testFields(){
         final List<MangaPreview> search =
             mal.getManga()
                 .withQuery(TestProvider.MangaQuery)
                 .withLimit(1)
                 .withNoFields()
                 .search();
-        Assertions.assertNull(search.get(0).getType(),
-                              Workflow.errorSupplier("Expected type to be null"));
+        annotateTest(() -> assertNull(search.get(0).getType()));
     }
 
     @Test
-    public void testNSFW(){
+    final void testNSFW(){
         {
             final List<MangaPreview> search =
                 mal.getManga()
@@ -66,8 +64,7 @@ public class TestMangaSearch {
                     .withLimit(1)
                     .withNoFields()
                     .search();
-            Assertions.assertEquals(0, search.size(),
-                                    Workflow.errorSupplier("Expected search to return 0"));
+            annotateTest(() -> assertEquals(0, search.size()));
         }
         {
             final List<MangaPreview> search =
@@ -77,8 +74,7 @@ public class TestMangaSearch {
                     .withNoFields()
                     .includeNSFW()
                     .search();
-            Assertions.assertEquals(TestProvider.NSFW_MangaID, search.get(0).getID(),
-                                    Workflow.errorSupplier("Expected Manga ID to match test ID"));
+            annotateTest(() -> assertEquals(TestProvider.NSFW_MangaID, search.get(0).getID()));
         }
     }
 

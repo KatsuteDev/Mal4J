@@ -3,8 +3,8 @@ package com.kttdevelopment.mal4j.ForumTests;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.forum.ForumCategory;
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,7 +12,10 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class TestForumCategories {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+final class TestForumCategories {
 
     @SuppressWarnings("FieldCanBeLocal")
     private static MyAnimeList mal;
@@ -20,16 +23,15 @@ public class TestForumCategories {
 
     @SuppressWarnings("ConstantConditions")
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
         category = mal.getForumBoards().get(0);
     }
 
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("categoryProvider")
-    public void testCategory(@SuppressWarnings("unused") final String method, final Function<ForumCategory,Object> function){
-        Assertions.assertNotNull(function.apply(category),
-                                 Workflow.errorSupplier("Expected ForumCategory#" + method + " to not be null"));
+    final void testCategory(@SuppressWarnings("unused") final String method, final Function<ForumCategory,Object> function){
+        annotateTest(() -> assertNotNull(function.apply(category), "Expected ForumCategory#" + method + " to not be null"));
     }
 
     @SuppressWarnings("unused")
@@ -49,15 +51,13 @@ public class TestForumCategories {
     }
 
     @Test
-    public void testForumCategoryReference(){
-        Assertions.assertSame(category, category.getForumBoards()[2].getCategory(),
-                              Workflow.errorSupplier("Expected ForumCategory#getForumBoards#getCategory to return self category reference"));
+    final void testForumCategoryReference(){
+        annotateTest(() -> assertSame(category, category.getForumBoards()[2].getCategory()));
     }
 
     @Test
-    public void testForumBoardReference(){
-        Assertions.assertSame(category.getForumBoards()[2] , category.getForumBoards()[2].getSubBoards()[2].getBoard(),
-                              Workflow.errorSupplier("Expected ForumCategory#ForumBoards#getSubBoards#GetBoard to return self board reference"));
+    final void testForumBoardReference(){
+        annotateTest(() -> assertSame(category.getForumBoards()[2] , category.getForumBoards()[2].getSubBoards()[2].getBoard()));
     }
 
 }

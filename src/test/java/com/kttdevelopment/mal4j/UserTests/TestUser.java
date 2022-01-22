@@ -4,8 +4,8 @@ import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.user.User;
 import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
 import com.kttdevelopment.mal4j.user.property.MangaAffinity;
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.ThrowingSupplier;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -16,7 +16,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class TestUser {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
+
+final class TestUser {
 
     @SuppressWarnings("FieldCanBeLocal")
     private static MyAnimeList mal;
@@ -24,7 +28,7 @@ public class TestUser {
 
     @SuppressWarnings("ConstantConditions")
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
         TestProvider.requireToken();
         user = mal.getAuthenticatedUser(Fields.user);
@@ -32,9 +36,8 @@ public class TestUser {
 
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("myselfProvider")
-    public void testMyself(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
-        Assertions.assertNotNull(function.apply(user),
-                                 Workflow.errorSupplier("Expected User#" + method + " to not be null"));
+    final void testMyself(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
+        annotateTest(() -> assertNotNull(function.apply(user), "Expected User#" + method + " to not be null"));
     }
 
     @SuppressWarnings("unused")
@@ -69,73 +72,70 @@ public class TestUser {
     }
 
     @Test // test does actually pass
-    public void testBirthday(){
-        Assumptions.assumeTrue(user.getBirthday() != null,
-                               Workflow.warningSupplier("Test skipped (user probably didn't set a birthday)"));
+    final void testBirthday(){
+        annotateTest(() -> assumeTrue(user.getBirthday() != null));
     }
 
     @Test
-    public void testAnimeListing(){
-        Assertions.assertDoesNotThrow(() -> user.getUserAnimeListing().withNoFields().withLimit(1).search(),
-                                      Workflow.errorSupplier("Expected User#getUserAnimeListing to not throw an exception"));
+    final void testAnimeListing(){
+        annotateTest(() -> assertDoesNotThrow(() -> user.getUserAnimeListing().withNoFields().withLimit(1).search()));
     }
 
     @Test
-    public void testMangaListing(){
-        Assertions.assertDoesNotThrow(() -> user.getUserMangaListing().withNoFields().withLimit(1).search(),
-                                      Workflow.errorSupplier("Expected User#getUserMangaListing to not throw an exception"));
+    final void testMangaListing(){
+        annotateTest(() -> assertDoesNotThrow(() -> user.getUserMangaListing().withNoFields().withLimit(1).search()));
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
-    public void testAnimeAffinity(){
+    final void testAnimeAffinity(){
         final AnimeAffinity affinity = user.getAnimeAffinity("Xinil");
-        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount(), Workflow.errorSupplier("Expected affinity shared count to match"));
-        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity, Workflow.errorSupplier("Expected affinity to throw an exception"));
+        annotateTest(() -> assertEquals(affinity.getShared().length, affinity.getSharedCount()));
+        annotateTest(() -> assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity));
     }
 
     @SuppressWarnings("BusyWait")
     @Test
-    public void testAnimeAffinityCallback(){
+    final void testAnimeAffinityCallback(){
         final AtomicBoolean passed = new AtomicBoolean(false);
         user.getAnimeAffinity((affinity) -> {
-            Assertions.assertNotNull(affinity, Workflow.errorSupplier("Expected self affinity to not be null"));
+            annotateTest(() -> assertNotNull(affinity));
             passed.set(true);
         });
 
-        Assertions.assertTimeout(Duration.ofMinutes(1), () -> {
+        annotateTest(() -> assertTimeout(Duration.ofMinutes(1), () -> {
             while(!passed.get())
                 Thread.sleep(5000);
-        }, Workflow.errorSupplier("Expected callback to return"));
+        }));
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
-    public void testMangaAffinity(){
+    final void testMangaAffinity(){
         final MangaAffinity affinity = user.getMangaAffinity("Xinil");
-        Assertions.assertEquals(affinity.getShared().length, affinity.getSharedCount(), Workflow.errorSupplier("Expected affinity shared count to match"));
-        Assertions.assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity, Workflow.errorSupplier("Expected affinity to throw an exception"));
+        annotateTest(() -> assertEquals(affinity.getShared().length, affinity.getSharedCount()));
+        annotateTest(() -> assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity));
     }
 
     @SuppressWarnings("BusyWait")
     @Test
-    public void testMangaAffinityCallback(){
+    final void testMangaAffinityCallback(){
         final AtomicBoolean passed = new AtomicBoolean(false);
         user.getMangaAffinity((affinity) -> {
-            Assertions.assertNotNull(affinity, Workflow.errorSupplier("Expected self affinity to not be null"));
+            annotateTest(() -> assertNotNull(affinity));
             passed.set(true);
         });
 
-        Assertions.assertTimeout(Duration.ofMinutes(1), () -> {
+        annotateTest(() -> assertTimeout(Duration.ofMinutes(1), () -> {
             while(!passed.get())
                 Thread.sleep(5000);
-        }, Workflow.errorSupplier("Expected callback to return"));
+        }));
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
     @MethodSource("nullAffinityProvider")
-    public void testNullAffinity(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
-        Assertions.assertThrows(NullPointerException.class, () -> function.apply(user), Workflow.errorSupplier("Expected " + method + " with null to throw NullPointerException"));
+    final void testNullAffinity(final String method, final Function<User,Object> function){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> function.apply(user),"Expected " + method + " with null to throw NullPointerException"));
     }
 
     @SuppressWarnings("unused")

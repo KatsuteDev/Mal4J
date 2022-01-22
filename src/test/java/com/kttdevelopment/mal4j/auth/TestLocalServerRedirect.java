@@ -13,20 +13,19 @@ import static org.junit.jupiter.api.Assertions.*;
 final class TestLocalServerRedirect {
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         TestProvider.requireHuman();
     }
 
     @Test
-    public final void testRedirectURI() throws IOException{
+    final void testRedirectURI() throws IOException{
         final String client_id = TestProvider.readFile(TestProvider.client);
-        assertDoesNotThrow(
-            () -> new LocalServerBuilder(client_id, 5050)
+        annotateTest(() -> assertDoesNotThrow(() ->
+            new LocalServerBuilder(client_id, 5050)
                 .setRedirectURI("http://localhost:5050")
                 .openBrowser()
-                .build(),
-            errorSupplier("Expected redirect URI to validate token")
-        );
+                .build()
+        ));
     }
 
 }

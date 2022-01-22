@@ -2,11 +2,11 @@ package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.mal4j.auth.TestLocalServerToken;
 import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.params.provider.Arguments;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
+
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class TestProvider {
 
@@ -96,7 +99,7 @@ public abstract class TestProvider {
     }
 
     public static void requireHuman(){ // skip test on CI
-        Assumptions.assumeFalse("true".equals(System.getenv("CI")), "Test requires a human, CI testing not supported");
+        Assumptions.assumeFalse(Workflow.isCI(), "Test requires a human, CI testing not supported");
     }
 
     public static MyAnimeList getMyAnimeList(){
@@ -104,10 +107,7 @@ public abstract class TestProvider {
             init();
             return mal;
         }catch(final IOException e){
-            final StringWriter sw = new StringWriter();
-            final PrintWriter pw = new PrintWriter(sw);
-            e.printStackTrace(pw);
-            Assertions.fail(Workflow.errorSupplier(sw.toString()));
+            annotateTest(() -> fail(e));
             return null;
         }
     }

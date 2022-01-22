@@ -2,22 +2,25 @@ package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TestAnimeListStatusUsername {
-    
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+final class TestAnimeListStatusUsername {
+
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
-    
+
     @Test
-    public void test(){
+    final void test(){
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing("KatsuteDev")
                 .withLimit(1)
@@ -25,7 +28,7 @@ public class TestAnimeListStatusUsername {
                 .includeNSFW()
                 .search();
 
-        Assertions.assertNotEquals(0, list.size(), Workflow.errorSupplier("User Anime list status not found"));
+        annotateTest(() -> assertNotEquals(0, list.size(), "User Anime list status not found"));
     }
-    
+
 }
