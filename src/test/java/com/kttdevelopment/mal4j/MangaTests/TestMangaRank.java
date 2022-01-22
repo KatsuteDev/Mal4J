@@ -12,17 +12,17 @@ import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
-public class TestMangaRank {
+final class TestMangaRank {
 
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
 
     @Test
-    public void testRanking(){
+    final void testRanking(){
         final List<MangaRanking> ranking =
             mal.getMangaRanking(MangaRankingType.Manga)
                 .withLimit(1)
@@ -37,7 +37,7 @@ public class TestMangaRank {
 
     @SuppressWarnings("EmptyMethod")
     @Test @Disabled
-    public void testNSFW(){
+    final void testNSFW(){
         // difficult to test since NSFW is unlikely to be in top ranking
     }
 

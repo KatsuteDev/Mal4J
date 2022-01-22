@@ -12,18 +12,18 @@ import java.util.List;
 import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestUserMangaListing {
+final class TestUserMangaListing {
 
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
         TestProvider.requireToken();
     }
 
     @Test
-    public void testStatus(){
+    final void testStatus(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
                 .withStatus(MangaStatus.PlanToRead)
@@ -34,7 +34,7 @@ public class TestUserMangaListing {
     }
 
     @Test
-    public void testSort(){
+    final void testSort(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
                 .sortBy(MangaSort.UpdatedAt)

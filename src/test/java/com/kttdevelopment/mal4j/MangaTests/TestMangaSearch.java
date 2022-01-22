@@ -11,17 +11,17 @@ import java.util.List;
 import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class TestMangaSearch {
+final class TestMangaSearch {
 
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
 
     @Test
-    public void testSearch(){
+    final void testSearch(){
         final List<MangaPreview> search =
             mal.getManga()
                 .withQuery(TestProvider.AltMangaQuery)
@@ -32,7 +32,7 @@ public class TestMangaSearch {
     }
 
     @Test
-    public void testOffsetLimit(){
+    final void testOffsetLimit(){
         final List<MangaPreview> search =
             mal.getManga()
                 .withQuery(TestProvider.AltMangaQuery)
@@ -45,7 +45,7 @@ public class TestMangaSearch {
     }
 
     @Test
-    public void testFields(){
+    final void testFields(){
         final List<MangaPreview> search =
             mal.getManga()
                 .withQuery(TestProvider.MangaQuery)
@@ -56,7 +56,7 @@ public class TestMangaSearch {
     }
 
     @Test
-    public void testNSFW(){
+    final void testNSFW(){
         {
             final List<MangaPreview> search =
                 mal.getManga()
