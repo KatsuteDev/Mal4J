@@ -3,8 +3,8 @@ package com.kttdevelopment.mal4j.ForumTests;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.forum.ForumTopicDetail;
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,22 +12,25 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class TestForumTopicDetail {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+final class TestForumTopicDetail {
 
     private static MyAnimeList mal;
     private static ForumTopicDetail topic;
 
     @SuppressWarnings("ConstantConditions")
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
         topic = mal.getForumTopicDetail(481);
     }
 
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("forumTopicProvider")
-    public void testForumTopic(@SuppressWarnings("unused") final String method, final Function<ForumTopicDetail,Object> function){
-        Assertions.assertNotNull(function.apply(topic), Workflow.errorSupplier("Expected ForumTopicDetail#" + method + " to not be null"));
+    void testForumTopic(@SuppressWarnings("unused") final String method, final Function<ForumTopicDetail,Object> function){
+        annotateTest(() -> assertNotNull(function.apply(topic), "Expected ForumTopicDetail#" + method + " to not be null"));
     }
 
     @SuppressWarnings("unused")
@@ -54,25 +57,20 @@ public class TestForumTopicDetail {
     }
 
     @Test
-    public void testPostsReference(){
-        Assertions.assertSame(topic, topic.getPosts()[0].getForumTopicDetail(),
-                              Workflow.errorSupplier("Expected ForumTopicDetail#getPosts#getForumTopicDetail to return self topic reference"));
+    final void testPostsReference(){
+        annotateTest(() -> assertSame(topic, topic.getPosts()[0].getForumTopicDetail()));
     }
 
     @Test
-    public void testPollReference(){
-        Assertions.assertSame(topic.getPoll(), topic.getPoll().getOptions()[0].getPoll(),
-                              Workflow.errorSupplier("Expected ForumTopicDetail#getPoll#GetOptions#getPoll to return self poll reference"));
-        Assertions.assertSame(topic, topic.getPoll().getForumTopicDetail(),
-                              Workflow.errorSupplier("Expected ForumTopicDetail#getPoll#getForumTopicDetail to return self topic reference"));
+    final void testPollReference(){
+        annotateTest(() -> assertSame(topic.getPoll(), topic.getPoll().getOptions()[0].getPoll()));
+        annotateTest(() -> assertSame(topic, topic.getPoll().getForumTopicDetail()));
     }
 
     @Test
-    public void testPostLimitOffset(){
-        Assertions.assertEquals(5, mal.getForumTopicDetail(481, 5).getPosts().length,
-                                Workflow.errorSupplier("Expected post count to match"));
-        Assertions.assertEquals(6, mal.getForumTopicDetail(481, 5, 5).getPosts()[0].getNumber(),
-                                Workflow.errorSupplier("Expected post number to match"));
+    final void testPostLimitOffset(){
+        annotateTest(() -> assertEquals(5, mal.getForumTopicDetail(481, 5).getPosts().length));
+        annotateTest(() -> assertEquals(6, mal.getForumTopicDetail(481, 5, 5).getPosts()[0].getNumber()));
     }
 
 }

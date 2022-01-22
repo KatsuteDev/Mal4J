@@ -3,7 +3,6 @@ package com.kttdevelopment.mal4j.MangaTests;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.RelatedAnime;
 import com.kttdevelopment.mal4j.manga.Manga;
-import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -12,27 +11,29 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public class TestManga {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
+
+final class TestManga {
 
     private static MyAnimeList mal;
     private static Manga manga;
 
     @SuppressWarnings("ConstantConditions")
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
         manga = mal.getManga(TestProvider.MangaID, Fields.manga);
     }
 
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("mangaProvider")
-    public void testManga(@SuppressWarnings("unused") final String method, final Function<Manga,Object> function){
+    final void testManga(@SuppressWarnings("unused") final String method, final Function<Manga,Object> function){
         if(!method.equals("Serialization#Role"))
-            Assertions.assertNotNull(function.apply(manga),
-                                     Workflow.errorSupplier("Expected Manga#" + method + " to not be null"));
+            annotateTest(() -> assertNotNull(function.apply(manga), "Expected Manga#" + method + " to not be null"));
         else
-            Assumptions.assumeTrue(function.apply(manga) != null,
-                                   Workflow.warningSupplier("Expected Manga#" + method + " to not be null (external issue)"));
+            annotateTest(() -> assumeTrue(function.apply(manga) != null, "Expected Manga#" + method + " to not be null (external issue)"));
     }
 
     @SuppressWarnings("unused")
@@ -98,53 +99,42 @@ public class TestManga {
     }
 
     @Test
-    public void testManga(){
-        Assertions.assertEquals(manga, manga.getManga(),
-                                Workflow.errorSupplier("Expected Manga#getManga() to return self reference"));
-        Assertions.assertEquals(TestProvider.MangaID, manga.getID(),
-                                Workflow.errorSupplier("Expected Manga#getID() to match test ID"));
+    final void testManga(){
+        annotateTest(() -> assertEquals(manga, manga.getManga()));
+        annotateTest(() -> assertEquals(TestProvider.MangaID, manga.getID()));
     }
 
     @Test
-    public void testJapaneseEncoding(){
-        Assertions.assertFalse(manga.getAlternativeTitles().getJapanese().startsWith("\\u"),
-                               Workflow.errorSupplier("Japanese characters should not be returned as a literal \\u unicode string"));
+    final void testJapaneseEncoding(){
+        annotateTest(() -> assertFalse(manga.getAlternativeTitles().getJapanese().startsWith("\\u")));
     }
 
     @Test
-    public void testFields(){
+    final void testFields(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes);
-        Assertions.assertNotNull(manga.getVolumes(),
-                                 Workflow.errorSupplier("Expected field to not be null"));
-        Assertions.assertNull(manga.getChapters(),
-                              Workflow.errorSupplier("Expected field to be null"));
+        annotateTest(() -> assertNotNull(manga.getVolumes()));
+        annotateTest(() -> assertNull(manga.getChapters()));
     }
 
     @Test
-    public void testInvertedFields(){
+    final void testInvertedFields(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes, Fields.INVERTED);
-        Assertions.assertNull(manga.getVolumes(),
-                              Workflow.errorSupplier("Expected field to be null"));
-        Assertions.assertNotNull(manga.getChapters(),
-                                 Workflow.errorSupplier("Expected field to not be null"));
+        annotateTest(() -> assertNull(manga.getVolumes()));
+        annotateTest(() -> assertNotNull(manga.getChapters()));
     }
 
     @Test
-    public void testInvertedFieldsOnly(){
+    final void testInvertedFieldsOnly(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.INVERTED);
-        Assertions.assertNotNull(manga.getVolumes(),
-                                 Workflow.errorSupplier("Expected field to be null"));
+        annotateTest(() -> assertNotNull(manga.getVolumes()));
     }
 
     @Test @DisplayName("Manga may not have related Anime") @Disabled
-    public void testRelatedAnime(){
+    final void testRelatedAnime(){
         final RelatedAnime relatedAnime = manga.getRelatedAnime()[0];
-        Assertions.assertNotNull(relatedAnime.getAnimePreview().getID(),
-                                 Workflow.errorSupplier("Expected Manga#getRelatedAnime#getID to not be null"));
-        Assertions.assertNotNull(relatedAnime.getRelationType(),
-                                 Workflow.errorSupplier("Expected Manga#getRelatedAnime#getRelationType to not be null"));
-        Assertions.assertNotNull(relatedAnime.getRelationTypeFormat(),
-                                 Workflow.errorSupplier("Expected Manga#getRelatedAnime#getRelationTypeFormat to not be null"));
+        annotateTest(() -> assertNotNull(relatedAnime.getAnimePreview().getID()));
+        annotateTest(() -> assertNotNull(relatedAnime.getRelationType()));
+        annotateTest(() -> assertNotNull(relatedAnime.getRelationTypeFormat()));
     }
 
 }

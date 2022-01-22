@@ -1,7 +1,6 @@
 package com.kttdevelopment.mal4j;
 
 import com.sun.net.httpserver.HttpServer;
-import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.io.*;
@@ -11,24 +10,26 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.kttdevelopment.mal4j.APIStruct.*;
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class TestAPICall {
+final class TestAPICall {
 
     private static HttpServer server;
 
     @BeforeAll
-    public static void beforeAll() throws IOException{
+    static void beforeAll() throws IOException{
         server = HttpServer.create(new InetSocketAddress(8080), 0);
     }
 
     @AfterAll
-    public static void afterAll(){
+    static void afterAll(){
         if(server != null)
             server.stop(0);
     }
 
     @Test
-    public void testCall(){
+    final void testCall(){
         final AtomicReference<String> method = new AtomicReference<>();
         final AtomicBoolean formENC = new AtomicBoolean();
         server.createContext("/", exchange -> {
@@ -54,29 +55,21 @@ public class TestAPICall {
 
         final Call call = Call.create();
 
-        Assertions.assertDoesNotThrow(call::GET,
-                                      Workflow.errorSupplier("Expected GET to not throw"));
-        Assertions.assertEquals("GET", method.get(),
-                                Workflow.errorSupplier("Expected GET method"));
+        annotateTest(() -> assertDoesNotThrow(call::GET));
+        annotateTest(() -> assertEquals("GET", method.get()));
 
         method.set(null);
-        Assertions.assertDoesNotThrow(() -> call.POST("test"),
-                                      Workflow.errorSupplier("Expected POST to not throw"));
-        Assertions.assertEquals("POST", method.get(),
-                                Workflow.errorSupplier("Expected POST method"));
-        Assertions.assertTrue(formENC.get(), Workflow.errorSupplier("Expected form to be encoded"));
+        annotateTest(() -> assertDoesNotThrow(() -> call.POST("test")));
+        annotateTest(() -> assertEquals("POST", method.get()));
+        annotateTest(() -> assertTrue(formENC.get()));
 
         method.set(null);
-        Assertions.assertDoesNotThrow(call::DELETE,
-                                      Workflow.errorSupplier("Expected DELETE to not throw"));
-        Assertions.assertEquals("DELETE", method.get(),
-                                Workflow.errorSupplier("Expected DELETE method"));
+        annotateTest(() -> assertDoesNotThrow(call::DELETE));
+        annotateTest(() -> assertEquals("DELETE", method.get()));
 
         method.set(null);
-        Assertions.assertDoesNotThrow(call::PATCH,
-                                      Workflow.errorSupplier("Expected PATCH to not throw"));
-        Assertions.assertEquals("PATCH", method.get(),
-                                Workflow.errorSupplier("Expected PATCH method"));
+        annotateTest(() -> assertDoesNotThrow(call::PATCH));
+        annotateTest(() -> assertEquals("PATCH", method.get()));
     }
 
     @SuppressWarnings("UnusedReturnValue")

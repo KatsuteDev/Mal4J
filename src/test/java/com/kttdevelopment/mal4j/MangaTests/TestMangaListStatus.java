@@ -6,7 +6,6 @@ import com.kttdevelopment.mal4j.manga.property.MangaStatus;
 import com.kttdevelopment.mal4j.manga.property.RereadValue;
 import com.kttdevelopment.mal4j.property.Genre;
 import com.kttdevelopment.mal4j.property.Priority;
-import dev.katsute.jcore.Workflow;
 import org.junit.jupiter.api.*;
 
 import java.io.File;
@@ -15,13 +14,17 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TestMangaListStatus {
+final class TestMangaListStatus {
 
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll() throws IOException{
+    static void beforeAll() throws IOException{
         mal = TestProvider.getMyAnimeList();
         TestProvider.requireToken();
 
@@ -31,7 +34,7 @@ public class TestMangaListStatus {
     }
 
     @AfterAll
-    public static void afterAll(){
+    static void afterAll(){
         if(mal == null) return;
         TestProvider.requireToken();
 
@@ -52,46 +55,33 @@ public class TestMangaListStatus {
             .comments("")
             .update();
 
-        Assertions.assertEquals(MangaStatus.PlanToRead, status.getStatus(),
-                                Workflow.errorSupplier("Expected status to match"));
-        Assertions.assertEquals(0, status.getScore(),
-                                Workflow.errorSupplier("Expected score to match"));
-        Assertions.assertEquals(0, status.getVolumesRead(),
-                                Workflow.errorSupplier("Expected volumes read to match"));
-        Assertions.assertEquals(0, status.getChaptersRead(),
-                                Workflow.errorSupplier("Expected chapters read to match"));
-        Assertions.assertFalse(status.isRereading(),
-                               Workflow.errorSupplier("Expected rereading to be false"));
-        Assertions.assertEquals(Priority.Low, status.getPriority(),
-                                Workflow.errorSupplier("Expected priority to match"));
-        Assertions.assertEquals(0, status.getTimesReread(),
-                                Workflow.errorSupplier("Expected times reread to match"));
-        Assertions.assertEquals(RereadValue.None, status.getRereadValue(),
-                                Workflow.errorSupplier("Expected reread value to match"));
-        Assertions.assertEquals(0, status.getTags().length,
-                                Workflow.errorSupplier("Expected tags to match"));
-        Assertions.assertEquals("", status.getComments(),
-                                Workflow.errorSupplier("Expected comments to match"));
+        annotateTest(() -> assertEquals(MangaStatus.PlanToRead, status.getStatus()));
+        annotateTest(() -> assertEquals(0, status.getScore()));
+        annotateTest(() -> assertEquals(0, status.getVolumesRead()));
+        annotateTest(() -> assertEquals(0, status.getChaptersRead()));
+        annotateTest(() -> assertFalse(status.isRereading()));
+        annotateTest(() -> assertEquals(Priority.Low, status.getPriority()));
+        annotateTest(() -> assertEquals(0, status.getTimesReread()));
+        annotateTest(() -> assertEquals(RereadValue.None, status.getRereadValue()));
+        annotateTest(() -> assertEquals(0, status.getTags().length));
+        annotateTest(() -> assertEquals("", status.getComments()));
     }
 
     @Test @Order(0)
-    public void testMinimalUpdate(){
-        Assertions.assertDoesNotThrow(() -> mal.updateMangaListing(TestProvider.MangaID).score(10).update(),
-                                      Workflow.errorSupplier("Updating a listing with only a score should not throw an exception"));
+    final void testMinimalUpdate(){
+        annotateTest(() -> assertDoesNotThrow(() -> mal.updateMangaListing(TestProvider.MangaID).score(10).update()));
     }
 
     @Test @Order(1)
-    public void testDelete(){
+    final void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
-        Assertions.assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID),
-                                      Workflow.errorSupplier("Deleting a deleted listing should not throw an exception"));
-        Assertions.assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis(),
-                              Workflow.errorSupplier("Expected a deleted listing to be null"));
+        annotateTest(() -> assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID)));
+        annotateTest(() -> assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis()));
     }
 
     private static boolean passedUpdate = false;
     @Test @Order(2)
-    public void testUpdate(){
+    final void testUpdate(){
         final Date now = new Date();
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
             .status(MangaStatus.Completed)
@@ -113,9 +103,8 @@ public class TestMangaListStatus {
     }
 
     @Test @Order(3)
-    public void testGet(){
-        Assertions.assertTrue(passedUpdate,
-                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
+    final void testGet(){
+        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
@@ -130,13 +119,12 @@ public class TestMangaListStatus {
                 testStatus(listStatus);
                 return;
             }
-        Assertions.fail(Workflow.errorSupplier("Manga list status not found"));
+        annotateTest(() -> fail("Manga list status not found"));
     }
 
     @Test @Order(3)
-    public void testGetUsername(){
-        Assertions.assertTrue(passedUpdate,
-                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
+    final void testGetUsername(){
+        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing("KatsuteDev")
@@ -151,53 +139,37 @@ public class TestMangaListStatus {
                 testStatus(listStatus);
                 return;
             }
-        Assertions.fail(Workflow.errorSupplier("User Manga list status not found"));
+        annotateTest(() -> fail("User Manga list status not found"));
     }
 
     @Test @Order(3)
-    public void testGetFromManga(){
-        Assertions.assertTrue(passedUpdate,
-                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
+    final void testGetFromManga(){
+        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
 
         final MangaListStatus status = mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus();
         testStatus(status);
     }
 
     private void testStatus(final MangaListStatus status){
-        Assertions.assertEquals(MangaStatus.Completed, status.getStatus(),
-                                Workflow.errorSupplier("Expected status to match"));
-        Assertions.assertEquals(10, status.getScore(),
-                                Workflow.errorSupplier("Expected score to match"));
-        Assertions.assertEquals(8, status.getVolumesRead(),
-                                Workflow.errorSupplier("Expected volumes read to match"));
-        Assertions.assertEquals(49, status.getChaptersRead(),
-                                Workflow.errorSupplier("Expected chapters read to match"));
-        Assertions.assertTrue(status.isRereading(),
-                              Workflow.errorSupplier("Expected rereading to be true"));
-        Assertions.assertNotNull(status.getStartDate(),
-                                 Workflow.errorSupplier("Expected start date to not be null"));
-        Assertions.assertNotNull(status.getFinishDate(),
-                                 Workflow.errorSupplier("Expected finish data to not be null"));
-        Assertions.assertEquals(Priority.High, status.getPriority(),
-                                Workflow.errorSupplier("Expected priority to match"));
-        Assertions.assertEquals(1, status.getTimesReread(),
-                                Workflow.errorSupplier("Expected times reread to match"));
-        Assertions.assertEquals(RereadValue.VeryHigh, status.getRereadValue(),
-                                Workflow.errorSupplier("Expected reread value to match"));
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]),
-                              Workflow.errorSupplier("Expected tags to match"));
-        Assertions.assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]),
-                              Workflow.errorSupplier("Expected tags to match"));
-        Assertions.assertEquals(TestProvider.testComment, status.getComments(),
-                                Workflow.errorSupplier("Expected comments to match"));
-        Assertions.assertNotNull(status.getUpdatedAt(),
-                                 Workflow.errorSupplier("Expected updated at to not be null"));
-        Assertions.assertNotNull(status.getUpdatedAtEpochMillis(),
-                                 Workflow.errorSupplier("Expected updated at millis to not be null"));
+        annotateTest(() -> assertEquals(MangaStatus.Completed, status.getStatus()));
+        annotateTest(() -> assertEquals(10, status.getScore()));
+        annotateTest(() -> assertEquals(8, status.getVolumesRead()));
+        annotateTest(() -> assertEquals(49, status.getChaptersRead()));
+        annotateTest(() -> assertTrue(status.isRereading()));
+        annotateTest(() -> assertNotNull(status.getStartDate()));
+        annotateTest(() -> assertNotNull(status.getFinishDate()));
+        annotateTest(() -> assertEquals(Priority.High, status.getPriority()));
+        annotateTest(() -> assertEquals(1, status.getTimesReread()));
+        annotateTest(() -> assertEquals(RereadValue.VeryHigh, status.getRereadValue()));
+        annotateTest(() -> assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0])));
+        annotateTest(() -> assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1])));
+        annotateTest(() -> assertEquals(TestProvider.testComment, status.getComments()));
+        annotateTest(() -> assertNotNull(status.getUpdatedAt()));
+        annotateTest(() -> assertNotNull(status.getUpdatedAtEpochMillis()));
     }
 
     @Test @Order(4)
-    public void testConsecutiveUpdates(){
+    final void testConsecutiveUpdates(){
         testDelete();
         testUpdate();
         testUpdate();
@@ -205,9 +177,8 @@ public class TestMangaListStatus {
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5)
-    public void testEcchiNSFW(){
-        Assertions.assertTrue(passedUpdate,
-                              Workflow.errorSupplier("Failed to start test (test requires update test to pass)"));
+    final void testEcchiNSFW(){
+        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
@@ -223,7 +194,7 @@ public class TestMangaListStatus {
                         return;
 
         //noinspection ConstantConditions
-        Assumptions.assumeTrue(false, Workflow.warningSupplier("Failed to find Manga with Ecchi genre (this is a data issue, disregard)"));
+        annotateTest(() -> assumeTrue(false, "Failed to find Manga with Ecchi genre (this is a data issue, disregard)"));
     }
 
 }

@@ -5,22 +5,25 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
 import com.kttdevelopment.mal4j.property.NSFW;
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TestAnimeSeason {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+final class TestAnimeSeason {
 
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
 
     @Test
-    public void testSeason(){
+    final void testSeason(){
         final int year = 2019;
         final List<AnimePreview> season =
             mal.getAnimeSeason(year, Season.Summer)
@@ -38,17 +41,21 @@ public class TestAnimeSeason {
             }else
                 otherYear++;
 
-        Assertions.assertTrue(thisYear > otherYear, Workflow.errorSupplier("Expected seasonal search to return mostly from selected year (search contained mostly results from other years)"));
+        final int finalThisYear  = thisYear;
+        final int finalOtherYear = otherYear;
+        annotateTest(() -> assertTrue(finalThisYear > finalOtherYear, "Expected seasonal search to return mostly from selected year (search contained mostly results from other years)"));
 
-        Assertions.assertNotNull(anime, Workflow.errorSupplier("Expected seasonal search to return an Anime from selected year"));
-        Assertions.assertTrue(
-            anime.getStartSeason().getSeason() == Season.Summer || anime.getStartSeason().getSeason() == Season.Spring,
-            Workflow.errorSupplier("Anime start season was supposed to be either Summer or Spring but was " + anime.getStartSeason().getSeason().name())
+        final AnimePreview finalAnime = anime;
+        annotateTest(() -> assertNotNull(finalAnime, "Expected seasonal search to return an Anime from selected year"));
+        //noinspection ConstantConditions
+        annotateTest(() -> assertTrue(
+            finalAnime.getStartSeason().getSeason() == Season.Summer || finalAnime.getStartSeason().getSeason() == Season.Spring,
+            "Anime start season was supposed to be either Summer or Spring but was " + finalAnime.getStartSeason().getSeason().name())
         );
     }
 
     @Test
-    public void testSort(){
+    final void testSort(){
         final List<AnimePreview> season =
             mal.getAnimeSeason(2020, Season.Winter)
                 .withLimit(2)
@@ -57,12 +64,11 @@ public class TestAnimeSeason {
                 .search();
         final AnimePreview first = season.get(0);
         final AnimePreview second = season.get(1);
-        Assertions.assertTrue(first.getUserScoringCount() > second.getUserScoringCount(),
-                              Workflow.errorSupplier("Expected season to be sorted"));
+        annotateTest(() -> assertTrue(first.getUserScoringCount() > second.getUserScoringCount(), "Expected season to be sorted"));
     }
 
     @Test
-    public void testNSFW(){
+    final void testNSFW(){
         final List<AnimePreview> season =
             mal.getAnimeSeason(2014, Season.Winter)
                 .includeNSFW(true)
@@ -77,8 +83,8 @@ public class TestAnimeSeason {
             }
         }
 
-        Assertions.assertTrue(hasNSFW,
-                              Workflow.errorSupplier("Failed to find NSFW seasonal Anime"));
+        final boolean finalHasNSFW = hasNSFW;
+        annotateTest(() -> assertTrue(finalHasNSFW, "Failed to find NSFW seasonal Anime"));
     }
 
 }

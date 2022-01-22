@@ -2,10 +2,13 @@ package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.forum.Post;
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-public class TestIterator {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+final class TestIterator {
 
     private static MyAnimeList mal;
 
@@ -15,36 +18,30 @@ public class TestIterator {
     }
 
     @Test
-    public void testIterator(){
+    final void testIterator(){
         final PaginatedIterator<AnimePreview> iterator = mal
             .getAnime()
             .withQuery(TestProvider.AnimeQuery)
             .withNoFields()
             .withLimit(100)
             .searchAll();
-        Assertions.assertNotEquals(0, iterator.toList().size(),
-                                   Workflow.errorSupplier("Expected iterator size to not be 0"));
-        Assertions.assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID(),
-                                Workflow.errorSupplier("Expected first iterator to match test ID"));
+        annotateTest(() -> assertNotEquals(0, iterator.toList().size()));
+        annotateTest(() -> assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID()));
 
         final AnimePreview first = iterator.next();
-        Assertions.assertEquals(TestProvider.AnimeID, first.getID());
-        iterator.forEachRemaining(animePreview -> Assertions.assertNotEquals(TestProvider.AnimeID, animePreview.getID(),
-                                                                             Workflow.errorSupplier("Expected subsequent iterator to not match test ID")));
+        annotateTest(() -> assertEquals(TestProvider.AnimeID, first.getID()));
+        iterator.forEachRemaining(animePreview -> annotateTest(() -> assertNotEquals(TestProvider.AnimeID, animePreview.getID())));
     }
 
     @Test
-    public void testPostIterator(){
+    final void testPostIterator(){
         final PaginatedIterator<Post> iterator = mal
             .getForumTopicDetailPostQuery(481)
             .searchAll();
-        Assertions.assertNotEquals(0, iterator.toList().size(),
-                                   Workflow.errorSupplier("Expected iterator size to not be 0"));
-        Assertions.assertEquals(481, iterator.toList().get(0).getForumTopicDetail().getID(),
-                                Workflow.errorSupplier("Expected first iterator to match topic ID"));
+        annotateTest(() -> assertNotEquals(0, iterator.toList().size()));
+        annotateTest(() -> assertEquals(481, iterator.toList().get(0).getForumTopicDetail().getID()));
 
-        iterator.forEachRemaining(post -> Assertions.assertEquals(481, post.getForumTopicDetail().getID(),
-                                                                  Workflow.errorSupplier("Expected subsequent iterator to match topic ID")));
+        iterator.forEachRemaining(post -> annotateTest(() -> assertEquals(481, post.getForumTopicDetail().getID())));
     }
 
 }
