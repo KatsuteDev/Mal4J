@@ -74,7 +74,6 @@ public abstract class TestProvider {
     // this value should be TRUE if you are committing this file
     private static final boolean preferTokenAuth = true; // preferred auth when both files exist
 
-    @SuppressWarnings("GrazieInspection")
     public static void init() throws IOException{
         if(
             (hasClient || hasToken) && // if has client or token file

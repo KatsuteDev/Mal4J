@@ -82,7 +82,6 @@ public abstract class LimitOffsetQuery<T extends LimitOffsetQuery<T,R>,R> {
      *
      * @since 1.0.0
      */
-    @SuppressWarnings("GrazieInspection")
     public abstract PaginatedIterator<R> searchAll();
 
 }
