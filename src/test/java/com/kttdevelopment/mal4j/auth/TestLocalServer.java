@@ -16,20 +16,13 @@ final class TestLocalServer {
     final class TestConstructor {
 
         @Test
-        public final void testValidBuilder(){
-            assertDoesNotThrow(
-                () -> new LocalServerBuilder("client_id", null, 80),
-                errorSupplier("Expected valid local server builder to not throw an exception")
-            );
+        final void testValidBuilder(){
+            annotateTest(() -> assertDoesNotThrow(() -> new LocalServerBuilder("client_id", null, 80)));
         }
 
         @Test
-        public final void testNullClientID(){
-            assertThrows(
-                NullPointerException.class,
-                () -> new LocalServerBuilder(null, null, 80),
-                errorSupplier("Expected null client id to throw an exception")
-            );
+        final void testNullClientID(){
+            annotateTest(() -> assertThrows(NullPointerException.class, () -> new LocalServerBuilder(null, null, 80)));
         }
 
     }
@@ -38,17 +31,14 @@ final class TestLocalServer {
     final class TestTimeout {
 
         @Test
-        public final void testTimeout(){
-            assertTimeoutPreemptively(Duration.ofSeconds(2),
-                () -> {
-                    try{
-                        new LocalServerBuilder("client_id", 80)
-                            .setTimeout(1)
-                            .build();
-                    }catch(final Throwable ignored){ }
-                },
-                errorSupplier("Expected timeout to work")
-            );
+        final void testTimeout(){
+            annotateTest(() -> assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {
+                try{
+                    new LocalServerBuilder("client_id", 80)
+                        .setTimeout(1)
+                        .build();
+                }catch(final Throwable ignored){ }
+            }));
         }
 
     }
@@ -57,7 +47,7 @@ final class TestLocalServer {
     final class TestURLCallback {
 
         @Test
-        public final void testURLCallback() throws InterruptedException{
+        final void testURLCallback() throws InterruptedException{
             final AtomicReference<String> callback = new AtomicReference<>();
             try{
                 new LocalServerBuilder("client_id", 80)
@@ -70,26 +60,11 @@ final class TestLocalServer {
 
             final String url = callback.get();
 
-            assertTrue(
-                url.startsWith("https://myanimelist.net/v1/oauth2/authorize?response_type=code"),
-                errorSupplier("Expected callback url to match url")
-            );
-            assertTrue(
-                url.contains("&client_id=client_id"),
-                errorSupplier("Expected client id to match url")
-            );
-            assertTrue(
-                url.contains("&code_challenge="),
-                errorSupplier("Expected code challenge to match url")
-            );
-            assertTrue(
-                url.contains("&code_challenge_method=plain"),
-                errorSupplier("Expected code challenge method to match url")
-            );
-            assertTrue(
-                url.contains("&state="),
-                errorSupplier("Expected state to match url")
-            );
+            annotateTest(() -> assertTrue(url.startsWith("https://myanimelist.net/v1/oauth2/authorize?response_type=code")));
+            annotateTest(() -> assertTrue(url.contains("&client_id=client_id")));
+            annotateTest(() -> assertTrue(url.contains("&code_challenge=")));
+            annotateTest(() -> assertTrue(url.contains("&code_challenge_method=plain")));
+            annotateTest(() -> assertTrue(url.contains("&state=")));
         }
 
     }

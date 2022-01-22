@@ -3,35 +3,36 @@ package com.kttdevelopment.mal4j.AnimeTests;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-public class TestAnimeSearch {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+final class TestAnimeSearch {
 
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
     }
 
     @Test
-    public void testSearch(){
+    final void testSearch(){
         final List<AnimePreview> search =
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
                 .withNoFields()
                 .search();
-        Assertions.assertEquals(TestProvider.AnimeID, search.get(0).getID(),
-                                Workflow.errorSupplier("Expected first search ID to match"));
-        Assertions.assertNotEquals(1, search.size(),
-                                   Workflow.errorSupplier("Expected search to return more than 1"));
+        annotateTest(() -> assertEquals(TestProvider.AnimeID, search.get(0).getID()));
+        annotateTest(() -> assertNotEquals(1, search.size()));
     }
 
     @Test
-    public void testOffsetLimit(){
+    final void testOffsetLimit(){
         final List<AnimePreview> search =
             mal.getAnime()
                 .withQuery(TestProvider.AltAnimeQuery)
@@ -39,26 +40,23 @@ public class TestAnimeSearch {
                 .withOffset(1)
                 .withNoFields()
                 .search();
-        Assertions.assertNotEquals(TestProvider.AnimeID, search.get(0).getID(),
-                                   Workflow.errorSupplier("Expected first search ID to not match"));
-        Assertions.assertEquals(1, search.size(),
-                                Workflow.errorSupplier("Expected search to return only 1"));
+        annotateTest(() -> assertNotEquals(TestProvider.AnimeID, search.get(0).getID()));
+        annotateTest(() -> assertEquals(1, search.size()));
     }
 
     @Test
-    public void testFields(){
+    final void testFields(){
         final List<AnimePreview> search =
             mal.getAnime()
                 .withQuery(TestProvider.AnimeQuery)
                 .withLimit(1)
                 .withNoFields()
                 .search();
-        Assertions.assertNull(search.get(0).getType(),
-                              Workflow.errorSupplier("Expected type to be null"));
+        annotateTest(() -> assertNull(search.get(0).getType()));
     }
 
     @Test
-    public void testNSFW(){
+    final void testNSFW(){
         {
             final List<AnimePreview> search =
                 mal.getAnime()
@@ -66,8 +64,7 @@ public class TestAnimeSearch {
                     .withLimit(1)
                     .withNoFields()
                     .search();
-            Assertions.assertEquals(0, search.size(),
-                                    Workflow.errorSupplier("Expected search to return 0"));
+            annotateTest(() -> assertEquals(0, search.size()));
         }
         {
             final List<AnimePreview> search =
@@ -77,10 +74,10 @@ public class TestAnimeSearch {
                    .withNoFields()
                    .includeNSFW()
                    .search();
-            Assertions.assertTrue(
+            annotateTest(() -> assertTrue(
                 search.get(0).getID() == TestProvider.NSFW_AnimeID || search.get(0).getID() == TestProvider.AltNSFW_AnimeID,
-                Workflow.errorSupplier("NSFW Anime ID was supposed to be either " + TestProvider.NSFW_AnimeID + " or " + TestProvider.AltNSFW_AnimeID + " but was " + search.get(0).getID())
-            );
+                "NSFW Anime ID was supposed to be either " + TestProvider.NSFW_AnimeID + " or " + TestProvider.AltNSFW_AnimeID + " but was " + search.get(0).getID()
+            ));
         }
     }
 

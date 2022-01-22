@@ -1,87 +1,79 @@
 package com.kttdevelopment.mal4j;
 
-import dev.katsute.jcore.Workflow;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-public class TestMyAnimeList {
+import static dev.katsute.jcore.Workflow.*;
+import static org.junit.jupiter.api.Assertions.*;
+
+final class TestMyAnimeList {
 
     private static MyAnimeList mal;
 
     @BeforeAll
-    public static void beforeAll(){
+    static void beforeAll(){
         mal = MyAnimeList.withToken("Bearer null");
     }
 
     // auth parameter tests
 
     @Test
-    public void testNullClientID(){
-        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withClientID(null),
-                                Workflow.errorSupplier("Expected MyAnimeList#withClientID with null client ID to throw a NullPointerException"));
+    final void testNullClientID(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> MyAnimeList.withClientID(null)));
     }
 
     @Test
-    public void testNullToken(){
-        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withToken(null),
-                                Workflow.errorSupplier("Expected MyAnimeList#withOAuthToken with null token to throw a NullPointerException"));
+    final void testNullToken(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> MyAnimeList.withToken(null)));
     }
 
     @Test
-    public void testNoBearerToken(){
-        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withToken("x"),
-                                Workflow.errorSupplier("Expected MyAnimeList#withOAuthToken with invalid token to throw an IllegalArgumentException"));
+    final void testNoBearerToken(){
+        annotateTest(() -> assertThrows(InvalidTokenException.class, () -> MyAnimeList.withToken("x")));
     }
 
     @Test
-    public void testInvalidToken(){
-        Assertions.assertThrows(InvalidTokenException.class, () -> MyAnimeList.withToken("Bearer invalid").getAnime(TestProvider.AnimeID),
-                                Workflow.errorSupplier("Expected invalid token to throw InvalidTokenException"));
+    final void testInvalidToken(){
+        annotateTest(() -> assertThrows(InvalidTokenException.class, () -> MyAnimeList.withToken("Bearer invalid").getAnime(TestProvider.AnimeID)));
     }
 
     @Test
-    public void testNullAuthenticator(){
-        Assertions.assertThrows(NullPointerException.class, () -> MyAnimeList.withOAuth2(null),
-                                Workflow.errorSupplier("Expected MyAnimeList#withAuthorizaton with null authenticator to throw a NullPointerException"));
+    final void testNullAuthenticator(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> MyAnimeList.withOAuth2(null)));
     }
 
     // null parameter tests
 
     @Test
-    public void testNullAnimeRanking(){
-        Assertions.assertThrows(NullPointerException.class, () -> mal.getAnimeRanking(null),
-                                Workflow.errorSupplier("Expected MyAnimeList#getAnimeRanking of null type to throw a NullPointerException"));
+    final void testNullAnimeRanking(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> mal.getAnimeRanking(null)));
     }
 
     @Test
-    public void testNullAnimeSeason(){
-        Assertions.assertThrows(NullPointerException.class, () -> mal.getAnimeSeason(2020, null),
-                                Workflow.errorSupplier("Expected MyAnimeList#getAnimeSeason of null season to throw a NullPointerException"));
+    final void testNullAnimeSeason(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> mal.getAnimeSeason(2020, null)));
     }
 
     @Test
-    public void testNullUserAnimeList(){
-        Assertions.assertThrows(NullPointerException.class, () -> mal.getUserAnimeListing(null),
-                                Workflow.errorSupplier("Expected MyAnimeList#getUserAnimeListing of null user to throw a NullPointerException"));
+    final void testNullUserAnimeList(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> mal.getUserAnimeListing(null)));
     }
 
     @Test
-    public void testNullMangaRanking(){
-        Assertions.assertThrows(NullPointerException.class, () -> mal.getMangaRanking(null),
-                                Workflow.errorSupplier("Expected MyAnimeList#getMangaRanking of null type to throw a NullPointerException"));
+    final void testNullMangaRanking(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> mal.getMangaRanking(null)));
     }
 
     @Test
-    public void testNullUserMangaList(){
-        Assertions.assertThrows(NullPointerException.class, () -> mal.getUserMangaListing(null),
-                                Workflow.errorSupplier("Expected MyAnimeList#getUserMangaListing of null user to throw a NullPointerException"));
+    final void testNullUserMangaList(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> mal.getUserMangaListing(null)));
     }
 
     @Test
-    public void testNullUser(){
-        Assertions.assertThrows(NullPointerException.class, () -> mal.getUser(null),
-                                Workflow.errorSupplier("Expected MyAnimeList#getUser of null user to throw a NullPointerException"));
+    final void testNullUser(){
+        annotateTest(() -> assertThrows(NullPointerException.class, () -> mal.getUser(null)));
     }
 
     // inverted field test
@@ -90,21 +82,14 @@ public class TestMyAnimeList {
 
     @ParameterizedTest
     @ValueSource(strings={"%s", "%s,%s", "a,%s", "a{%s}", "%s{a}", "a{%s}", "a{a,%s}", "a{%s,a}"})
-    public void testInvertedRegex(final String raw){
-        final String sf = "[%s]: '%s' should not have contained '%s' after inversion";
+    final void testInvertedRegex(final String raw){
         final String inv = raw.replaceAll(inverted, "");
-        Assertions.assertFalse(inv.contains("%s"),
-                               Workflow.errorSupplier(String.format(sf, raw, inv, "%s")));
-        Assertions.assertFalse(inv.contains("{}"),
-                               Workflow.errorSupplier(String.format(sf, raw, inv, "{}")));
-        Assertions.assertFalse(inv.contains("{,"),
-                               Workflow.errorSupplier(String.format(sf, raw, inv, "{,")));
-        Assertions.assertFalse(inv.contains(",}"),
-                               Workflow.errorSupplier(String.format(sf, raw, inv, ",}")));
-        Assertions.assertFalse(inv.startsWith(","),
-                               Workflow.errorSupplier(String.format(sf, raw, inv, ",$")));
-        Assertions.assertFalse(inv.endsWith(","),
-                               Workflow.errorSupplier(String.format(sf, raw, inv, "^,")));
+        annotateTest(() -> assertFalse(inv.contains("%s")));
+        annotateTest(() -> assertFalse(inv.contains("{}")));
+        annotateTest(() -> assertFalse(inv.contains("{,")));
+        annotateTest(() -> assertFalse(inv.contains(",}")));
+        annotateTest(() -> assertFalse(inv.startsWith(",")));
+        annotateTest(() -> assertFalse(inv.endsWith(",")));
     }
 
 }

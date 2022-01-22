@@ -29,17 +29,11 @@ public final class TestLocalServerToken {
 
         // test refresh token
         {
-            assertDoesNotThrow(
-                () -> Objects.requireNonNull(mal.getAnime(TestProvider.AnimeID, Fields.NO_FIELDS)),
-                errorSupplier("Expected request to not fail")
-            );
+            annotateTest(() -> assertDoesNotThrow(() -> Objects.requireNonNull(mal.getAnime(TestProvider.AnimeID, Fields.NO_FIELDS))));
 
             mal.refreshToken();
 
-            assertDoesNotThrow(
-                () -> Objects.requireNonNull(mal.getAnime(TestProvider.AnimeID, Fields.NO_FIELDS)),
-                errorSupplier("Expected request with refreshed token to not fail")
-            );
+            annotateTest(() -> assertDoesNotThrow(() -> Objects.requireNonNull(mal.getAnime(TestProvider.AnimeID, Fields.NO_FIELDS))));
         }
 
         // write token
@@ -52,25 +46,19 @@ public final class TestLocalServerToken {
         private AccessToken token;
 
         @BeforeEach
-        public final void beforeEach(){
+        final void beforeEach(){
             this.token = authenticator.getAccessToken();
         }
 
         @Test
-        public final void testExpiryTime(){
+        final void testExpiryTime(){
             final long expiry = token.getTimeUntilExpires();
-            assertTrue(
-                expiry < 2_764_800,
-                errorSupplier("Expected expiry to be less than 31 days but was " + expiry)
-            );
+            annotateTest(() -> assertTrue(expiry < 2_764_800));
         }
 
         @Test
-        public final void testExpired(){
-            assertFalse(
-                token.isExpired(),
-                errorSupplier("Expected new token to not be expired")
-            );
+        final void testExpired(){
+            annotateTest(() -> assertFalse(token.isExpired()));
         }
 
     }
