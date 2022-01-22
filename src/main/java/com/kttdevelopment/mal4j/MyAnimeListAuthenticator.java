@@ -48,7 +48,6 @@ import static com.kttdevelopment.mal4j.Json.*;
  * @version 2.7.0
  * @author Katsute
  */
-@SuppressWarnings("GrazieInspection")
 public final class MyAnimeListAuthenticator {
 
     // required fields

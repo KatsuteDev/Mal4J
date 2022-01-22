@@ -31,7 +31,6 @@ import com.kttdevelopment.mal4j.user.User;
  * @version 2.3.0
  * @author Katsute
  */
-@SuppressWarnings("GrazieInspection")
 public abstract class MangaAffinity {
 
     /**

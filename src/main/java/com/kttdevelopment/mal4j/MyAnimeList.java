@@ -77,7 +77,6 @@ public abstract class MyAnimeList {
      * @see #withOAuth2(MyAnimeListAuthenticator)
      * @since 2.6.0
      */
-    @SuppressWarnings("GrazieInspection")
     public static MyAnimeList withClientID(final String client_id){
         return new MyAnimeListImpl(client_id, false);
     }

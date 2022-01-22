@@ -41,14 +41,13 @@ public abstract class Fields {
      *
      * @since 2.2.0
      */
-    @SuppressWarnings("GrazieInspection")
     public static final String INVERTED = "%INVERTED_MODIFIER%"; // this field should never equal an existing MAL field
 
     // shared
 
     /**
      * Fields shared by {@link Anime} and {@link Manga}.
-     * 
+     *
      * @see Anime
      * @see Manga
      * @since 1.1.0
@@ -107,7 +106,7 @@ public abstract class Fields {
 
         /**
          * Fields shared by {@link Anime.ListStatus} and {@link Manga.ListStatus}.
-         * 
+         *
          * @see Anime.ListStatus
          * @see Anime.MyListStatus
          * @see Manga.ListStatus
@@ -226,10 +225,10 @@ public abstract class Fields {
 
         /**
          * Creates a my_list_status object from a set of fields. Ex: `list_status{start_date}`
-         * 
+         *
          * @param fields fields
          * @return list_status
-         * 
+         *
          * @see #list_status
          * @see ListStatus
          * @since 1.1.0
@@ -382,10 +381,10 @@ public abstract class Fields {
 
         /**
          * Creates a my_list_status object from a set of fields. Ex: `list_status{start_date}`
-         * 
+         *
          * @param fields fields
          * @return list_status
-         * 
+         *
          * @see #list_status
          * @see Manga.ListStatus
          * @since 1.1.0
@@ -421,7 +420,7 @@ public abstract class Fields {
 
         /**
          * All possible fields for an Author.
-         * 
+         *
          * @see #authors
          * @see #authors(String...)
          * @since 1.1.0
@@ -440,7 +439,7 @@ public abstract class Fields {
 
         /**
          * Returns all Author fields as an object. Ex: `authors{first_name,last_name}`
-         * 
+         *
          * @see #authors
          * @see Manga.Authors
          * @since 1.1.0
@@ -452,10 +451,10 @@ public abstract class Fields {
 
         /**
          * Creates an authors object from a set of fields. Ex: `authors{first_name}`
-         * 
+         *
          * @param fields fields
          * @return authors
-         * 
+         *
          * @see #authors
          * @see Manga.Authors
          * @since 1.1.0
@@ -468,7 +467,7 @@ public abstract class Fields {
 
         /**
          * All possible fields for serialization.
-         * 
+         *
          * @see #serialization
          * @see #serialization(String...)
          * @since 1.1.0
