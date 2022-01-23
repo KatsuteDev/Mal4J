@@ -15,6 +15,8 @@
 * Bump maven-compiler-plugin from 3.8.1 to 3.9.0 https://github.com/KatsuteDev/Mal4J/pull/287 (@dependabot)
 * Bump jcore from 1.3.0 to 2.0.0 https://github.com/KatsuteDev/Mal4J/pull/290 (@Katsute)
 
+**Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.7.1...2.7.2
+
 ## 2.7.1
 
 ### 🐞 Bug Fixes
