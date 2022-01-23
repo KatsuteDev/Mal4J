@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.7.2
+
+### 🧰 Internal
+
+* Removed unused code https://github.com/KatsuteDev/Mal4J/pull/284 (@Katsute)
+* Relocate and remove Java 9 methods https://github.com/KatsuteDev/Mal4J/pull/288 (@Katsute)
+
+### 📘 Dependencies
+
+* Bump actions/setup-java from 2.4.0 to 2.5.0 https://github.com/KatsuteDev/Mal4J/pull/280 (@dependabot)
+* Bump maven-jar-plugin from 3.2.0 to 3.2.1 https://github.com/KatsuteDev/Mal4J/pull/285 (@dependabot)
+* Bump maven-jar-plugin from 3.2.1 to 3.2.2 https://github.com/KatsuteDev/Mal4J/pull/286 (@dependabot)
+* Bump maven-compiler-plugin from 3.8.1 to 3.9.0 https://github.com/KatsuteDev/Mal4J/pull/287 (@dependabot)
+* Bump jcore from 1.3.0 to 2.0.0 https://github.com/KatsuteDev/Mal4J/pull/290 (@Katsute)
+
 ## 2.7.1
 
 ### 🐞 Bug Fixes
