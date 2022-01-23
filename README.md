@@ -4,7 +4,7 @@
     </a>
     <h3>Java wrapper for the official MyAnimeList API</h3>
     <div>
-        <a href="https://docs.katsute.dev/mal4j">Docs</a>
+        <a href="https://docs.katsute.dev/mal4j">Documentation</a>
         •
         <a href="https://myanimelist.net/apiconfig/references/api/v2">API Docs</a>
         •
