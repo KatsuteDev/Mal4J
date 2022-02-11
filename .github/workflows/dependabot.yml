@@ -1,9 +1,0 @@
-name: Dependabot[bot]
-on: pull_request
-
-jobs:
-  dependabot:
-    name: Dependabot[bot]
-    uses: Katsute/Workflows/.github/workflows/dependabot.yml@main
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
