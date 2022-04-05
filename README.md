@@ -47,9 +47,7 @@ Mal4J is a modular wrapper for the MyAnimeList API written for Java 8+ and simpl
 
 Mal4J requires at least Java 8. No additional dependencies/libraries are required.
 
-Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) and the [releases](https://github.com/KatsuteDev/Mal4J/releases) tab.
-
-[![Maven Central](https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j)](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j) [![Releases](https://img.shields.io/github/v/release/KatsuteDev/Mal4J)](https://github.com/KatsuteDev/Mal4J/releases)
+Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j), [GitHub Packages](https://github.com/KatsuteDev/Mal4J/packages/1104772), and the [releases](https://github.com/KatsuteDev/Mal4J/releases) tab.
 
 See [setup](https://github.com/KatsuteDev/Mal4J/blob/main/setup.md#readme) for steps to authenticate and actually use this library.
 
