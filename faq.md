@@ -1,4 +1,4 @@
-# General
+## General
 
 ### Does this library support Java # ?
 
@@ -6,13 +6,13 @@ This project supports Java 8+ and Java 9+ modules.
 
 ### WARNING: An illegal reflective access operation has occurred
 
-_(this warning does not affect the library in any way)_
+*(this warning does not affect the library in any way)*
 
-In order to make this library function on JDK 8-10, reflection is used in order to make PATCH requests work correctly.
+In order to make this library function on Java 8-10, reflection is used in order to make PATCH requests work correctly.
 
 If you don't want this warning then either:
-- Downgrade to JDK 8
-- Upgrade to JDK 11 or higher
+ - Downgrade to JDK 8
+ - Upgrade to JDK 11 or higher
 
 ### `UnsupportedClassVersionError`
 
@@ -23,15 +23,15 @@ This issue may occur due to Android incompatibilities (blame Google), please ope
 
 ### `InaccessibleObjectException` / `IllegalStateException: Reflect module is not accessible in JDK 9+`
 
-In order to make this library function on JDK 9-10, reflection is used in order to make PATCH requests work correctly.
+In order to make this library function on Java 9-10, reflection is used in order to make PATCH requests work correctly.
 
 To avoid this exception either:
-- Downgrade to JDK 8
-- Upgrade to JDK 11 or higher
+- Downgrade to Java 8
+- Upgrade to Java 11 or higher
 - Add `--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J` to VM options
 - Make the project not modular (remove `module-info.java`)
 
-# API
+## API
 
 ### Are their any rate limits?
 
@@ -39,16 +39,16 @@ The MyAnimeList API currently has no rate limit in place so requests must be sen
 
 ### What does this library offer in comparison to the Official API?
 
-This library offers ***ALL*** the features provided by the API and even some *undocumented* fields.
+This library offers ***ALL*** the features provided by the API.
 
 ### My client id / auth token doesn't work.
 
-- Make sure you are using the correct authentication method
-    - For client id use: [`#withClientID`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withClientID(java.lang.String))
-    - For token use: [`#withToken`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String))
-- Your token may be expired.
-- Your token is missing '`Bearer `'.
-- Your token may contain dangling whitespace.
+ - Make sure you are using the correct authentication method
+   - For client id use: [`#withClientID`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withClientID(java.lang.String))
+   - For token use: [`#withToken`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String))
+ - Your token may be expired.
+ - Your token is missing '`Bearer `'.
+ - Your token may contain dangling whitespace.
 
 ### Incorrect date is returned.
 
