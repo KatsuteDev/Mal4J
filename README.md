@@ -12,10 +12,6 @@
         •
         <a href="https://github.com/KatsuteDev/Mal4J/blob/main/faq.md#readme">FAQ</a>
         •
-        <a href="https://github.com/KatsuteDev/Mal4J/issues">Issues</a>
-        •
-        <a href="https://github.com/KatsuteDev/Mal4J/discussions">Discussions</a>
-        •
         <a href="https://myanimelist.net/forum/?topicid=1897569">Forum Post</a>
     </div>
 </div>
@@ -23,41 +19,53 @@
 <br>
 
 <div align="center">
-    <a href="https://github.com/KatsuteDev/Mal4J/actions/workflows/java_ci.yml"><img alt="Java CI" src="https://github.com/KatsuteDev/Mal4J/actions/workflows/java_ci.yml/badge.svg"></a>
-    <a href="https://github.com/KatsuteDev/Mal4J/actions/workflows/mal_ci.yml"><img alt="MyAnimeList CI" src="https://github.com/KatsuteDev/Mal4J/actions/workflows/mal_ci.yml/badge.svg"></a>
-    <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j"><img alt="Maven Central" src="https://img.shields.io/maven-central/v/com.kttdevelopment/mal4j"></a>
-    <a href="https://github.com/KatsuteDev/Mal4J/releases"><img alt="version" src="https://img.shields.io/github/v/release/KatsuteDev/Mal4J"></a>
-    <a href="https://github.com/KatsuteDev/Mal4J/blob/main/LICENSE"><img alt="license" src="https://img.shields.io/github/license/KatsuteDev/Mal4J"></a>
+    <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j">Maven Central</a>
+    •
+    <a href="https://github.com/KatsuteDev/Mal4J/packages/1104772">GitHub Packages</a>
+    •
+    <a href="https://github.com/KatsuteDev/Mal4J/releases">Releases</a>
 </div>
 
-# Overview
+<br>
 
-Mal4J is a modular wrapper for the MyAnimeList API written for Java 8+ and simplifies many complex operations into an easy to use library.
+Mal4J is a Java wrapper for the [MyAnimeList](https://myanimelist.net/) API. This library is compatible with Java 8+, Java 9+ modules, and Android.
 
-- [Overview](#overview)
-- [Installation](#installation)
-- [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
-- [Disclaimer](#disclaimer)
+This library supports read and write operations, including list updates.
+
+ - [📃 Installation](#📃-installation)
+ - [✨ Features](#✨-features)
+ - [👨‍💻 Contributing](#👨‍💻-contributing)
+ - [💼 License](#💼-license)
+ - [⚠ Disclaimer](#⚠-disclaimer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-# Installation
+## 📃 Installation
+
+| Version | Support | Java | Android |
+|:-:|---|:-:|:-:|
+|`v2^`|✔ Fully supported|Java 8+|✔*|
+|`v1^`|❌ No support|Java 9+|❌|
+
+<sub>* list modification not be supported on some distributions</sub>
 
 Mal4J requires at least Java 8. No additional dependencies/libraries are required.
 
-Compiled jars can be found on [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j), [GitHub Packages](https://github.com/KatsuteDev/Mal4J/packages/1104772), and the [releases](https://github.com/KatsuteDev/Mal4J/releases) tab.
+Compiled binaries can be installed from:
+
+ - [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j)
+ - [GitHub Packages](https://github.com/KatsuteDev/Mal4J/packages/1104772)
+ - [Releases](https://github.com/KatsuteDev/Mal4J/releases)
 
 See [setup](https://github.com/KatsuteDev/Mal4J/blob/main/setup.md#readme) for steps to authenticate and actually use this library.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-# Features
+## ✨ Features
 
-### 🔎 Search Queries
+#### 🔎 Search Queries
 
-Easily search through MyAnimeList with search, ranking, seasonal, and suggestion queries; returning only selected or all fields.
+Find Anime and Manga by search, ranking, season, and suggestions.
 
 ```java
 MyAnimeList mal = MyAnimeList.withClientID("");
@@ -70,9 +78,9 @@ List<AnimePreview> search =
         .search();
 ```
 
-### 📋 List Modification
+#### 📋 Anime and Manga Lists
 
-Easily update your Anime and Manga listings through update methods.
+Read and edit your Anime and Manga listings.
 
 ```java
 MyAnimeList mal = MyAnimeList.withToken("");
@@ -90,9 +98,9 @@ MangaListStatus status =
         .update();
 ```
 
-### 📦 Structured Objects
+#### 📦 Everything Else
 
-**All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, statistics, and even some *undocumented* fields are accessible in this library. Effortlessly retrieve any and all information you need.
+**All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, and statistics, are accessible in this library.
 
 ```java
 MyAnimeList mal = MyAnimeList.withClientID("");
@@ -107,7 +115,7 @@ OpeningTheme[] op = anime.getOpeningThemes();
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## Contributing
+## 👨‍💻 Contributing
 
 <!-- GitHub Copilot Disclaimer -->
 <table>
@@ -116,15 +124,19 @@ OpeningTheme[] op = anime.getOpeningThemes();
 </table>
 <!-- GitHub Copilot Disclaimer -->
 
-- Found a bug? Post it in [issues](https://github.com/KatsuteDev/Mal4J/issues).
-- Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/KatsuteDev/Mal4J/discussions).
-- Want to further expand our project or site? [Fork](https://github.com/KatsuteDev/Mal4J/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/Mal4J/pulls).
+ - Found a bug? Post it in [issues](https://github.com/KatsuteDev/Mal4J/issues).
+ - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/KatsuteDev/Mal4J/discussions).
+ - Want to further expand our project? [Fork](https://github.com/KatsuteDev/Mal4J/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/Mal4J/pulls).
 
-Tests will modify list status for <https://myanimelist.net/anime/13759> and <https://myanimelist.net/manga/28107>, make sure you fix your ratings after the test runs. The test cases will create a backup of your list in the 'anime-list.txt' and 'manga-list.txt' files.
+#### ⚠ Before you start
 
-Ignore test failures for these known issues: [**⚠ External Issues**](https://github.com/KatsuteDev/Mal4J/projects/10)
+For Anime/Manga list tests *Sakura-sou no Pet na Kanojo* ([Anime#13759](https://myanimelist.net/anime/13759) and [Manga#28107](https://myanimelist.net/manga/28107)) will be used.
 
-### Running Tests Locally
+The test cases will create a backup of your list in the `anime-list.txt` and `manga-list.txt` files. Make sure you fix your ratings and any other information that might be overwritten by this test.
+
+Ignore test failures for these known issues: [**⚠ External Issues**](https://github.com/KatsuteDev/Mal4J/projects/10).
+
+#### 💻 Running Tests Locally
 
 For local tests you can use Java 8+, however only methods in the Java 8 API may be used. The `src/main/java9` and `src/main/java11` folders should not be marked as a source root.
 
@@ -132,19 +144,19 @@ Run tests locally by adding a text file named `client.txt` that contains the cli
 
 Please note that the client ID being used for tests must not have a client secret and must have an app redirect url of `http://localhost:5050`.
 
-### Running Tests Remotely
+#### 🌐 Running Tests using GitHub Actions
 
-Devs running remote tests may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
+Devs running tests through GitHub Actions may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
----
+<hr>
 
-### License
+### 💼 License
 
 This library is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Mal4J/blob/main/LICENSE).
 
-### Disclaimer
+### ⚠ Disclaimer
 
 - [@Katsute](https://github.com/Katsute) and [@KatsuteDev](https://github.com/KatsuteDev) are not affiliated with MyAnimeList.
 - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
