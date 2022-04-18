@@ -32,11 +32,11 @@ Mal4J is a Java wrapper for the [MyAnimeList](https://myanimelist.net/) API. Thi
 
 This library supports read and write operations, including list updates.
 
- - [📃 Installation](#📃-installation)
- - [✨ Features](#✨-features)
- - [👨‍💻 Contributing](#👨‍💻-contributing)
- - [💼 License](#💼-license)
- - [⚠ Disclaimer](#⚠-disclaimer)
+ - [📃 Installation](#-installation)
+ - [✨ Features](#-features)
+ - [👨‍💻 Contributing](#-contributing)
+ - [💼 License](#-license)
+ - [⚠ Disclaimer](#-disclaimer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
