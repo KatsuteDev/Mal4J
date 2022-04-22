@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.7.3
+
+### 📘 Dependencies
+
+* Bump maven-javadoc-plugin from 3.3.1 to 3.3.2 https://github.com/KatsuteDev/Mal4J/pull/293 (@dependabot)
+* Bump maven-compiler-plugin from 3.9.0 to 3.10.0 https://github.com/KatsuteDev/Mal4J/pull/294 (@dependabot)
+* Bump actions/setup-java from 2.5.0 to 3 https://github.com/KatsuteDev/Mal4J/pull/298 (@dependabot)
+* Bump actions/checkout from 2.4.0 to 3 https://github.com/KatsuteDev/Mal4J/pull/299 (@dependabot)
+* Bump maven-compiler-plugin from 3.10.0 to 3.10.1 https://github.com/KatsuteDev/Mal4J/pull/300 (@dependabot)
+* Bump maven-surefire-plugin from 3.0.0-M5 to 3.0.0-M6 https://github.com/KatsuteDev/Mal4J/pull/301 (@dependabot)
+* Bump maven-javadoc-plugin from 3.3.2 to 3.4.0 https://github.com/KatsuteDev/Mal4J/pull/306 (@dependabot)
+* Bump nexus-staging-maven-plugin from 1.6.8 to 1.6.13 https://github.com/KatsuteDev/Mal4J/pull/307 (@dependabot)
+
+**Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.7.2...2.7.3
+
 ## 2.7.2
 
 ### 🧰 Internal
