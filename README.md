@@ -44,7 +44,7 @@ This library supports read and write operations, including list updates.
 
 | Version | Support | Java | Android |
 |:-:|---|:-:|:-:|
-|`v2^`|✔ Fully supported|Java 8+|✔|
+|`v2^`|✔️ Fully supported|Java 8+|✔️|
 |`v1^`|❌ No support|Java 9+|❌|
 
 Mal4J requires at least Java 8. No additional dependencies/libraries are required.
