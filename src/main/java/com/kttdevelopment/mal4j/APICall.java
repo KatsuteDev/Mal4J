@@ -170,7 +170,7 @@ class APICall {
     private static final boolean useNetHttp;
 
     @SuppressWarnings("FieldCanBeLocal")
-    private static class JDK11 {
+    private static class Java11 {
 
         private static Class<?> HttpRequest;
             private static Method HttpRequest_NewBuilder;
@@ -224,6 +224,8 @@ class APICall {
 
     }
 
+    private static Field HttpUrlConnection_Method = null; // HttpUrlConnection#method
+
     // try to initialize HTTPUrlConnection
     static {
         final String version = System.getProperty("java.version");
@@ -231,57 +233,15 @@ class APICall {
 
         if(!useNetHttp)
             try{
-                Field methods = null;
-                try{ // Standard Java implementation and Android API 23+ (6.0+)
-                    methods = HttpURLConnection.class.getDeclaredField("methods");
-                }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
-                    try{ // Android API 13-22 (3.2 - 5.1.1)
-                        //noinspection JavaReflectionMemberAccess
-                        methods = HttpURLConnection.class.getDeclaredField("PERMITTED_USER_METHODS");
-                    }catch(final NoSuchFieldException ignored1){
-                        try{ // Android API 9-12 (2.3 - 3.1)
-                            //noinspection SpellCheckingInspection
-                            methods = Class.forName("libcore.net.http.HttpURLConnectionImpl").getDeclaredField("PERMITTED_USER_METHODS");
-                        }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
-                            try{ // Android API 1-8 (1 - 2.2.3)
-                                //noinspection JavaReflectionMemberAccess
-                                methods = HttpURLConnection.class.getDeclaredField("methodTokens");
-                            }catch(final NoSuchFieldException ignored3){ }
-                        }
-                    }
-                }
-
-                if(methods != null){
-                    Field modifiers = null;
-
-                    try{
-                        modifiers = Field.class.getDeclaredField("modifiers");
-                    }catch(final NoSuchFieldException ignored){ }
-
-                    if(modifiers != null){
-                        modifiers.setAccessible(true);
-
-                        try{
-                            // remove FINAL from field
-                            modifiers.setInt(methods, methods.getModifiers() & ~Modifier.FINAL);
-                            methods.setAccessible(true);
-
-                            // add PATCH to methods array
-                            final String[] nativeMethods = (String[]) methods.get(null);
-                            final Set<String> newMethods = new HashSet<>(Arrays.asList(nativeMethods));
-                            newMethods.add("PATCH");
-                            methods.set(null, newMethods.toArray(new String[0]));
-
-                            // reset field to FINAL
-                            modifiers.setInt(methods, methods.getModifiers() | Modifier.FINAL);
-                            methods.setAccessible(false);
-                            modifiers.setAccessible(false);
-                        }catch(final IllegalAccessException ignored){ }
-                    }
+                try{
+                    HttpUrlConnection_Method = HttpURLConnection.class.getDeclaredField("method");
+                }catch(final NoSuchFieldException e){
+                    throw new StaticInitializerException("Failed to initialize HttpUrlConnection, please report this to the maintainers of Mal4J", e);
                 }
             }catch(final RuntimeException e){
+                // TODO: does this exception occur anymore?
                 if(e.getClass().getSimpleName().equals("InaccessibleObjectException"))
-                    throw new StaticInitializerException("Reflect module is not accessible in JDK 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in JDK 8 or JDK 11+", e);
+                    throw new StaticInitializerException("Reflect module is not accessible in Java 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in Java 8 or Java 11+", e);
             }
     }
 
@@ -324,37 +284,37 @@ class APICall {
         if(useNetHttp)
             try{
                 // final HttpRequest.Builder request = HttpRequest.newBuilder();
-                final Object HttpRequestBuilder_Instance = JDK11.HttpRequest_NewBuilder.invoke(null);
+                final Object HttpRequestBuilder_Instance = Java11.HttpRequest_NewBuilder.invoke(null);
 
                 // request.uri(URI.create(blockedURI.matcher(URL).replaceAll(encoder)));
-                JDK11.HttpRequestBuilder_URI
+                Java11.HttpRequestBuilder_URI
                     .invoke(HttpRequestBuilder_Instance,
                         URI.create(Regex9.replaceAll(URL, blockedURI.matcher(URL), encoder))
                     );
                 // request.method(method, HttpRequest.BodyPublishers.noBody());
-                JDK11.HttpRequestBuilder_Method
+                Java11.HttpRequestBuilder_Method
                     .invoke(HttpRequestBuilder_Instance,
                         method,
-                        JDK11.BodyPublishers_NoBody.invoke(null)
+                        Java11.BodyPublishers_NoBody.invoke(null)
                     );
 
                 for(final Map.Entry<String, String> entry : headers.entrySet())
                     // request.header(entry.getKey(), entry.getValue());
-                    JDK11.HttpRequestBuilder_Header
+                    Java11.HttpRequestBuilder_Header
                         .invoke(HttpRequestBuilder_Instance,
                             entry.getKey(),
                             entry.getValue()
                         );
 
                 // request.header("Cache-Control", "no-cache, no-store, must-revalidate");
-                JDK11.HttpRequestBuilder_Header
+                Java11.HttpRequestBuilder_Header
                     .invoke(HttpRequestBuilder_Instance,
                         "Cache-Control",
                         "no-cache, no-store, must-revalidate"
                     );
 
                 // request.header("Accept", "application/json; charset=UTF-8");
-                JDK11.HttpRequestBuilder_Header
+                Java11.HttpRequestBuilder_Header
                     .invoke(HttpRequestBuilder_Instance,
                         "Accept",
                         "application/json; charset=UTF-8"
@@ -362,41 +322,40 @@ class APICall {
 
                 if(formUrlEncoded){
                     // request.header("Content-Type", "application/x-www-form-urlencoded");
-                    JDK11.HttpRequestBuilder_Header
+                    Java11.HttpRequestBuilder_Header
                         .invoke(HttpRequestBuilder_Instance,
                             "Content-Type",
                             "application/x-www-form-urlencoded"
                         );
 
                     // request.method(method, HttpRequest.BodyPublishers.ofString(data));
-                    JDK11.HttpRequestBuilder_Method
+                    Java11.HttpRequestBuilder_Method
                         .invoke(HttpRequestBuilder_Instance,
                             method,
-                            JDK11.BodyPublishers_StringBody.invoke(null, data)
+                            Java11.BodyPublishers_StringBody.invoke(null, data)
                         );
                 }
 
                 // final HttpResponse<String> response = HttpClient
                 //      .newBuilder()
-                final Object HttpClientBuilder_Instance = JDK11.HttpClient_NewBuilder.invoke(null);
+                final Object HttpClientBuilder_Instance = Java11.HttpClient_NewBuilder.invoke(null);
                 // .connectTimeout(Duration.ofSeconds(10))
-                JDK11.HttpClientBuilder_ConnectTimeout
+                Java11.HttpClientBuilder_ConnectTimeout
                     .invoke(HttpClientBuilder_Instance, Duration.ofSeconds(10));
                 // .build()
-                final Object HttpClient_Instance = JDK11.HttpClientBuilder_Build
+                final Object HttpClient_Instance = Java11.HttpClientBuilder_Build
                     .invoke(HttpClientBuilder_Instance);
                 // .send(request.build(), HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
-                final Object HttpResponse_Instance = JDK11.HttpClient_Send
+                final Object HttpResponse_Instance = Java11.HttpClient_Send
                     .invoke(HttpClient_Instance,
-                        JDK11.HttpRequestBuilder_Build.invoke(HttpRequestBuilder_Instance),
-                        JDK11.BodyHandlers_StringBody.invoke(null, StandardCharsets.UTF_8)
+                        Java11.HttpRequestBuilder_Build.invoke(HttpRequestBuilder_Instance),
+                        Java11.BodyHandlers_StringBody.invoke(null, StandardCharsets.UTF_8)
                     );
 
                 // response.body()
-                body = (String) JDK11.HttpResponse_Body.invoke(HttpResponse_Instance);
+                body = (String) Java11.HttpResponse_Body.invoke(HttpResponse_Instance);
                 // response.responseCode()
-                code = (int) JDK11.HttpResponse_Code.invoke(HttpResponse_Instance);
-
+                code = (int) Java11.HttpResponse_Code.invoke(HttpResponse_Instance);
             }catch(final IllegalAccessException | InvocationTargetException | ClassCastException e){
                 throw new ReflectedClassException("Failed to use reflected HttpClient, please report this to the maintainers of Mal4J", e);
             }
@@ -415,9 +374,15 @@ class APICall {
             try{
                 conn.setRequestMethod(method);
             }catch(final ProtocolException ignored){
-                // MyAnimeList API supports `X-HTTP-Method-Override`
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+                try{ // forcefully set the method
+                    HttpUrlConnection_Method.setAccessible(true);
+                    HttpUrlConnection_Method.set(conn, method);
+                    HttpUrlConnection_Method.setAccessible(false);
+                }catch(final Throwable ignored2){
+                    // fallback to `X-HTTP-Method-Override`
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("X-HTTP-Method-Override", "PATCH");
+                }
             }
 
             if(formUrlEncoded){
