@@ -187,9 +187,7 @@ class APICall {
                         throw new StaticInitializerException("Failed to initialize HttpUrlConnection, please report this to the maintainers of Mal4J", e);
                     }
                 }catch(final RuntimeException e){
-                    // TODO: does this exception occur anymore?
-                    if(e.getClass().getSimpleName().equals("InaccessibleObjectException"))
-                        throw new StaticInitializerException("Reflect module is not accessible in Java 9+; add '--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J' to VM options, remove module-info.java, or compile the project in Java 8 or Java 11+", e);
+                    throw new StaticInitializerException("Failed to initialize HttpURLConnection, please report this to the maintainers of Mal4J", e);
                 }
         }
 
