@@ -176,17 +176,13 @@ class APICall {
 
     private static class HttpURLConn {
 
-        private static Field HttpUrlConnection_Method = null; // HttpUrlConnection#method
+        private static Field HttpUrlConnection_Method = null;
 
         static {
             if(!useNetHttp)
                 try{
-                    try{
-                        HttpUrlConnection_Method = HttpURLConnection.class.getDeclaredField("method");
-                    }catch(final Throwable e){
-                        throw new StaticInitializerException("Failed to initialize HttpUrlConnection, please report this to the maintainers of Mal4J", e);
-                    }
-                }catch(final RuntimeException e){
+                    HttpUrlConnection_Method = HttpURLConnection.class.getDeclaredField("method");
+                }catch(final Throwable e){
                     throw new StaticInitializerException("Failed to initialize HttpURLConnection, please report this to the maintainers of Mal4J", e);
                 }
         }
