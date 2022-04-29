@@ -43,7 +43,7 @@ final class TestAPICall {
                 }
                 formENC.set(SB.toString().equalsIgnoreCase("test=test"));
             }
-            method.set(exchange.getRequestMethod().toUpperCase());
+            method.set(exchange.getRequestHeaders().containsKey("X-HTTP-Method-Override") ? exchange.getRequestHeaders().getFirst("X-HTTP-Method-Override").toUpperCase() : exchange.getRequestMethod().toUpperCase());
 
             exchange.sendResponseHeaders(200, "{}".length());
             try(final OutputStream OUT = exchange.getResponseBody()){
