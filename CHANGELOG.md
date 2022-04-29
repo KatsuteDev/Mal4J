@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.7.4
+
+### 🐞 Bug Fixes
+
+* Fix modularity for Java 9-10 https://github.com/KatsuteDev/Mal4J/pull/310 (@Katsute)
+
+### 📘 Dependencies
+
+* Bump jcore from 2.0.0 to 2.0.1 https://github.com/KatsuteDev/Mal4J/pull/308 (@dependabot)
+
+**Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.7.3...2.7.4
+
 ## 2.7.3
 
 ### 📘 Dependencies
