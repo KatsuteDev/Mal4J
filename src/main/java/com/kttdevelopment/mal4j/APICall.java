@@ -18,7 +18,6 @@
 
 package com.kttdevelopment.mal4j;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -54,7 +53,7 @@ class APICall {
      * @param path path
      */
     APICall(final String method, final String baseURL, final String path){
-        this.method     = method.toUpperCase();
+        this.method     = method;
         this.baseURL    = baseURL;
         this.path       = path;
     }
@@ -73,7 +72,7 @@ class APICall {
 
         final Endpoint endpoint = method.getAnnotation(Endpoint.class);
         if(endpoint != null){
-            this.method = endpoint.method().toUpperCase();
+            this.method = endpoint.method();
             path = endpoint.value();
         }else{
             this.method = "GET";
@@ -175,18 +174,16 @@ class APICall {
         useNetHttp = (version != null ? Integer.parseInt(version.contains(".") ? version.substring(0, version.indexOf(".")) : version) : 0) >= 11;
     }
 
-    @SuppressWarnings("JavaReflectionMemberAccess")
-    private static class HttpsUrlConn {
+    private static class HttpURLConn {
 
-        private static Field HttpsUrlConnection_Method = null;
+        private static Field HttpUrlConnection_Method = null;
 
         static {
             if(!useNetHttp)
                 try{
-                    // for HTTPs automatically converts to ↓ , must use field from that class instead of HttpUrlConnection
-                    HttpsUrlConnection_Method = HttpsURLConnection.class.getField("method");
+                    HttpUrlConnection_Method = HttpURLConnection.class.getDeclaredField("method");
                 }catch(final Throwable e){
-                    throw new StaticInitializerException("Failed to initialize HttpsURLConnection, please report this to the maintainers of Mal4J", e);
+                    throw new StaticInitializerException("Failed to initialize HttpURLConnection, please report this to the maintainers of Mal4J", e);
                 }
         }
 
@@ -266,7 +263,7 @@ class APICall {
             Logging.debug("-- BEGIN CONNECTION ------------------------------");
             Logging.debug("▼ Request");
             Logging.debug('\t' + "URL: " + URL);
-            Logging.debug('\t' + "Method: " + method);
+            Logging.debug('\t' + "Method: " + method.toUpperCase());
 
             if(!headers.entrySet().isEmpty()){
                 Logging.debug('\t' + "▼ Headers");
@@ -377,9 +374,9 @@ class APICall {
                 conn.setRequestMethod(method);
             }catch(final ProtocolException ignored){
                 try{ // forcefully set the method
-                    HttpsUrlConn.HttpsUrlConnection_Method.setAccessible(true);
-                    HttpsUrlConn.HttpsUrlConnection_Method.set(conn, method);
-                    HttpsUrlConn.HttpsUrlConnection_Method.setAccessible(false);
+                    HttpURLConn.HttpUrlConnection_Method.setAccessible(true);
+                    HttpURLConn.HttpUrlConnection_Method.set(conn, method);
+                    HttpURLConn.HttpUrlConnection_Method.setAccessible(false);
                 }catch(final Throwable ignored2){
                     // fallback to `X-HTTP-Method-Override`
                     conn.setRequestMethod("POST");
