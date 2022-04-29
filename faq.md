@@ -6,6 +6,8 @@ This project supports Java 8+ and Java 9+ modules.
 
 ### WARNING: An illegal reflective access operation has occurred
 
+This warning is no longer present as of `2.7.5^`, consider updating this dependency.
+
 *(this warning does not affect the library in any way)*
 
 In order to make this library function on Java 8-10, reflection is used in order to make PATCH requests work correctly.
@@ -13,12 +15,14 @@ In order to make this library function on Java 8-10, reflection is used in order
 If you don't want this warning then either:
  - Downgrade to JDK 8
  - Upgrade to JDK 11 or higher
+ - Upgrade this library to `2.7.5^`
 
 ### `UnsupportedClassVersionError`
 
 This issue is caused by using an older, unsupported Java version; this library requires at least Java 8.
 
 ### `AndroidCompatibilityException` / `ClassNotFoundException` / `NoSuchMethodError`
+
 This issue may occur due to Android incompatibilities (blame Google), please open a new issue if this happens.
 
 ### `InaccessibleObjectException` / `IllegalStateException: Reflect module is not accessible in JDK 9+`
