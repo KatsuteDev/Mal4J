@@ -52,4 +52,4 @@ jobs:
       - name: ✔ Generate Report
         uses: ./.github/junit-report
         with:
-          path: ${{ inputs.SINON }}
+          path: .
