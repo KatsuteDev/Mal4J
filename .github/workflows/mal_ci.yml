@@ -43,7 +43,6 @@ jobs:
 
       - name: ✔ Generate Report
         uses: Katsute/Workflows/Actions/java/report@main
-        if: inputs.report
         with:
           token: ${{ secrets.SINON }}
           path: .
