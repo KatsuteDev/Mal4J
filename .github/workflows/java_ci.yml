@@ -10,3 +10,4 @@ jobs:
     uses: Katsute/Workflows/.github/workflows/java.ci.yml@main
     with:
       package: true
+      token: ${{ secrets.SINON }}
