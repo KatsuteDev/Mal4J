@@ -9,7 +9,7 @@ jobs:
   mal_ci:
     name: MyAnimeList CI [${{ matrix.auth }}] (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 10
     strategy:
       matrix:
         auth: ["Client", "Token"]
