@@ -43,10 +43,10 @@ final class TestAnimeSeason {
 
         final int finalThisYear  = thisYear;
         final int finalOtherYear = otherYear;
-        annotateTest(() -> assertTrue(finalThisYear > finalOtherYear, "Expected seasonal search to return mostly from selected year (search contained mostly results from other years)"));
+        assertTrue(finalThisYear > finalOtherYear, "Expected seasonal search to return mostly from selected year (search contained mostly results from other years)");
 
         final AnimePreview finalAnime = anime;
-        annotateTest(() -> assertNotNull(finalAnime, "Expected seasonal search to return an Anime from selected year"));
+        assertNotNull(finalAnime, "Expected seasonal search to return an Anime from selected year");
         //noinspection ConstantConditions
         annotateTest(() -> assertTrue(
             finalAnime.getStartSeason().getSeason() == Season.Summer || finalAnime.getStartSeason().getSeason() == Season.Spring,
@@ -64,7 +64,7 @@ final class TestAnimeSeason {
                 .search();
         final AnimePreview first = season.get(0);
         final AnimePreview second = season.get(1);
-        annotateTest(() -> assertTrue(first.getUserScoringCount() > second.getUserScoringCount(), "Expected season to be sorted"));
+        assertTrue(first.getUserScoringCount() > second.getUserScoringCount(), "Expected season to be sorted");
     }
 
     @Test
@@ -84,7 +84,7 @@ final class TestAnimeSeason {
         }
 
         final boolean finalHasNSFW = hasNSFW;
-        annotateTest(() -> assertTrue(finalHasNSFW, "Failed to find NSFW seasonal Anime"));
+        assertTrue(finalHasNSFW, "Failed to find NSFW seasonal Anime");
     }
 
 }

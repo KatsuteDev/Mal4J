@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestUserAnimeListing {
@@ -30,7 +29,7 @@ final class TestUserAnimeListing {
                 .withFields(Fields.Anime.list_status)
                 .withLimit(1)
                 .search();
-        annotateTest(() -> assertEquals(AnimeStatus.Dropped, list.get(0).getStatus()));
+        assertEquals(AnimeStatus.Dropped, list.get(0).getStatus());
     }
 
     @Test
@@ -41,7 +40,7 @@ final class TestUserAnimeListing {
                 .withFields(Fields.Anime.list_status)
                 .withLimit(2)
                 .search();
-        annotateTest(() -> assertTrue(list.get(0).getUpdatedAt().getTime() > list.get(1).getUpdatedAt().getTime()));
+        assertTrue(list.get(0).getUpdatedAt().getTime() > list.get(1).getUpdatedAt().getTime());
     }
 
 }

@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestAnimeListStatusUsername {
@@ -28,7 +27,7 @@ final class TestAnimeListStatusUsername {
                 .includeNSFW()
                 .search();
 
-        annotateTest(() -> assertNotEquals(0, list.size(), "User Anime list status not found"));
+        assertNotEquals(0, list.size(), "User Anime list status not found");
     }
 
 }

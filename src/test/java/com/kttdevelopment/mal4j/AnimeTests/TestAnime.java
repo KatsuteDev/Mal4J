@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestAnime {
@@ -29,7 +28,7 @@ final class TestAnime {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("animeProvider")
     final void testAnime(@SuppressWarnings("unused") final String method, final Function<Anime,Object> function){
-        annotateTest(() -> assertNotNull(function.apply(anime), "Expected Anime#" + method + " to not be null"));
+        assertNotNull(function.apply(anime), "Expected Anime#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")
@@ -112,47 +111,47 @@ final class TestAnime {
 
     @Test
     final void testAnime(){
-        annotateTest(() -> assertEquals(anime, anime.getAnime()));
-        annotateTest(() -> assertEquals(TestProvider.AltAnimeID, anime.getID()));
+        assertEquals(anime, anime.getAnime());
+        assertEquals(TestProvider.AltAnimeID, anime.getID());
     }
 
     @Test
     final void testOpEdReference(){
-        annotateTest(() -> assertSame(anime.getOpeningThemes()[0].getAnime(), anime));
-        annotateTest(() -> assertSame(anime.getEndingThemes()[0].getAnime(), anime));
+        assertSame(anime.getOpeningThemes()[0].getAnime(), anime);
+        assertSame(anime.getEndingThemes()[0].getAnime(), anime);
     }
 
     @Test
     final void testJapaneseEncoding(){
-        annotateTest(() -> assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u")));
+        assertFalse(anime.getAlternativeTitles().getJapanese().startsWith("\\u"));
     }
 
     @Test
     final void testFields(){
         final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes);
-        annotateTest(() -> assertNotNull(anime.getEpisodes()));
-        annotateTest(() -> assertNull(anime.getRating()));
+        assertNotNull(anime.getEpisodes());
+        assertNull(anime.getRating());
     }
 
     @Test
     final void testInvertedFields(){
         final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes, Fields.INVERTED);
-        annotateTest(() -> assertNull(anime.getEpisodes()));
-        annotateTest(() -> assertNotNull(anime.getRating()));
+        assertNull(anime.getEpisodes());
+        assertNotNull(anime.getRating());
     }
 
     @Test
     final void testInvertedFieldsOnly(){
         final Anime manga = mal.getAnime(TestProvider.AnimeID, Fields.INVERTED);
-        annotateTest(() -> assertNotNull(manga.getEpisodes()));
+        assertNotNull(manga.getEpisodes());
     }
 
     @Test @DisplayName("Anime may not have related Manga") @Disabled
     final void testRelatedManga(){
         final RelatedManga relatedManga = anime.getRelatedManga()[0];
-        annotateTest(() -> assertNotNull(relatedManga.getMangaPreview().getID()));
-        annotateTest(() -> assertNotNull(relatedManga.getRelationType()));
-        annotateTest(() -> assertNotNull(relatedManga.getRelationTypeFormat()));
+        assertNotNull(relatedManga.getMangaPreview().getID());
+        assertNotNull(relatedManga.getRelationType());
+        assertNotNull(relatedManga.getRelationTypeFormat());
     }
 
 }

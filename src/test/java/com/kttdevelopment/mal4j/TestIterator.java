@@ -5,7 +5,6 @@ import com.kttdevelopment.mal4j.forum.Post;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestIterator {
@@ -25,12 +24,12 @@ final class TestIterator {
             .withNoFields()
             .withLimit(100)
             .searchAll();
-        annotateTest(() -> assertNotEquals(0, iterator.toList().size()));
-        annotateTest(() -> assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID()));
+        assertNotEquals(0, iterator.toList().size());
+        assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID());
 
         final AnimePreview first = iterator.next();
-        annotateTest(() -> assertEquals(TestProvider.AnimeID, first.getID()));
-        iterator.forEachRemaining(animePreview -> annotateTest(() -> assertNotEquals(TestProvider.AnimeID, animePreview.getID())));
+        assertEquals(TestProvider.AnimeID, first.getID());
+        iterator.forEachRemaining(animePreview -> assertNotEquals(TestProvider.AnimeID, animePreview.getID()));
     }
 
     @Test
@@ -38,10 +37,10 @@ final class TestIterator {
         final PaginatedIterator<Post> iterator = mal
             .getForumTopicDetailPostQuery(481)
             .searchAll();
-        annotateTest(() -> assertNotEquals(0, iterator.toList().size()));
-        annotateTest(() -> assertEquals(481, iterator.toList().get(0).getForumTopicDetail().getID()));
+        assertNotEquals(0, iterator.toList().size());
+        assertEquals(481, iterator.toList().get(0).getForumTopicDetail().getID());
 
-        iterator.forEachRemaining(post -> annotateTest(() -> assertEquals(481, post.getForumTopicDetail().getID())));
+        iterator.forEachRemaining(post -> assertEquals(481, post.getForumTopicDetail().getID()));
     }
 
 }

@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 
 import static com.kttdevelopment.mal4j.APIStruct.*;
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestAPICall {
@@ -55,21 +54,21 @@ final class TestAPICall {
 
         final Call call = Call.create();
 
-        annotateTest(() -> assertDoesNotThrow(call::GET));
-        annotateTest(() -> assertEquals("GET", method.get()));
+        assertDoesNotThrow(call::GET);
+        assertEquals("GET", method.get());
 
         method.set(null);
-        annotateTest(() -> assertDoesNotThrow(() -> call.POST("test")));
-        annotateTest(() -> assertEquals("POST", method.get()));
-        annotateTest(() -> assertTrue(formENC.get()));
+        assertDoesNotThrow(() -> call.POST("test"));
+        assertEquals("POST", method.get());
+        assertTrue(formENC.get());
 
         method.set(null);
-        annotateTest(() -> assertDoesNotThrow(call::DELETE));
-        annotateTest(() -> assertEquals("DELETE", method.get()));
+        assertDoesNotThrow(call::DELETE);
+        assertEquals("DELETE", method.get());
 
         method.set(null);
-        annotateTest(() -> assertDoesNotThrow(call::PATCH));
-        annotateTest(() -> assertEquals("PATCH", method.get()));
+        assertDoesNotThrow(call::PATCH);
+        assertEquals("PATCH", method.get());
     }
 
     @SuppressWarnings("UnusedReturnValue")

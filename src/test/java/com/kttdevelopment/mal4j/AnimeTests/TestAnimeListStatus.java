@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -53,27 +52,27 @@ final class TestAnimeListStatus {
             .comments("")
             .update();
 
-        annotateTest(() -> assertEquals(AnimeStatus.Completed, status.getStatus()));
-        annotateTest(() -> assertEquals(10, status.getScore()));
-        annotateTest(() -> assertEquals(24, status.getWatchedEpisodes()));
-        annotateTest(() -> assertFalse(status.isRewatching()));
-        annotateTest(() -> assertEquals(Priority.Low, status.getPriority()));
-        annotateTest(() -> assertEquals(0, status.getTimesRewatched()));
-        annotateTest(() -> assertEquals(RewatchValue.None, status.getRewatchValue()));
-        annotateTest(() -> assertEquals(0, status.getTags().length));
-        annotateTest(() -> assertEquals("", status.getComments()));
+        assertEquals(AnimeStatus.Completed, status.getStatus());
+        assertEquals(10, status.getScore());
+        assertEquals(24, status.getWatchedEpisodes());
+        assertFalse(status.isRewatching());
+        assertEquals(Priority.Low, status.getPriority());
+        assertEquals(0, status.getTimesRewatched());
+        assertEquals(RewatchValue.None, status.getRewatchValue());
+        assertEquals(0, status.getTags().length);
+        assertEquals("", status.getComments());
     }
 
     @Test @Order(0)
     final void testMinimalUpdate(){
-        annotateTest(() -> assertDoesNotThrow(() -> mal.updateAnimeListing(TestProvider.AnimeID).score(10).update()));
+        assertDoesNotThrow(() -> mal.updateAnimeListing(TestProvider.AnimeID).score(10).update());
     }
 
     @Test @Order(1)
     final void testDelete(){
         mal.deleteAnimeListing(TestProvider.AnimeID);
-        annotateTest(() -> assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID)));
-        annotateTest(() -> assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status).getListStatus().getUpdatedAtEpochMillis()));
+        assertDoesNotThrow(() -> mal.deleteAnimeListing(TestProvider.AnimeID));
+        assertNull(mal.getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
     private static boolean passedUpdate = false;
@@ -100,7 +99,7 @@ final class TestAnimeListStatus {
 
     @Test @Order(3)
     final void testGet(){
-        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
+        assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
 
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
@@ -116,12 +115,12 @@ final class TestAnimeListStatus {
                 return;
             }
 
-        annotateTest(() -> fail("Anime list status not found"));
+        fail("Anime list status not found");
     }
 
     @Test @Order(3)
     final void testGetUsername(){
-        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
+        assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
 
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing("KatsuteDev")
@@ -136,12 +135,12 @@ final class TestAnimeListStatus {
                 testStatus(listStatus);
                 return;
             }
-        annotateTest(() -> fail("User Anime list status not found"));
+        fail("User Anime list status not found");
     }
 
     @Test @Order(3)
     final void testGetFromAnime(){
-        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
+        assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
 
         final AnimeListStatus status = mal
             .getAnime(TestProvider.AnimeID, Fields.Anime.my_list_status)
@@ -150,20 +149,20 @@ final class TestAnimeListStatus {
     }
 
     private void testStatus(final AnimeListStatus status){
-        annotateTest(() -> assertEquals(AnimeStatus.Completed, status.getStatus()));
-        annotateTest(() -> assertEquals(10, status.getScore()));
-        annotateTest(() -> assertEquals(24, status.getWatchedEpisodes()));
-        annotateTest(() -> assertTrue(status.isRewatching()));
-        annotateTest(() -> assertNotNull(status.getStartDate()));
-        annotateTest(() -> assertNotNull(status.getFinishDate()));
-        annotateTest(() -> assertEquals(Priority.High, status.getPriority()));
-        annotateTest(() -> assertEquals(1, status.getTimesRewatched()));
-        annotateTest(() -> assertEquals(RewatchValue.VeryHigh, status.getRewatchValue()));
-        annotateTest(() -> assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0])));
-        annotateTest(() -> assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1])));
-        annotateTest(() -> assertEquals(TestProvider.testComment, status.getComments()));
-        annotateTest(() -> assertNotNull(status.getUpdatedAt()));
-        annotateTest(() -> assertNotNull(status.getUpdatedAtEpochMillis()));
+        assertEquals(AnimeStatus.Completed, status.getStatus());
+        assertEquals(10, status.getScore());
+        assertEquals(24, status.getWatchedEpisodes());
+        assertTrue(status.isRewatching());
+        assertNotNull(status.getStartDate());
+        assertNotNull(status.getFinishDate());
+        assertEquals(Priority.High, status.getPriority());
+        assertEquals(1, status.getTimesRewatched());
+        assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
+        assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
+        assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
+        assertEquals(TestProvider.testComment, status.getComments());
+        assertNotNull(status.getUpdatedAt());
+        assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
     @Test @Order(4)
@@ -176,7 +175,7 @@ final class TestAnimeListStatus {
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5)
     final void testEcchiNSFW(){
-        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
+        assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
 
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
@@ -191,7 +190,7 @@ final class TestAnimeListStatus {
                     if(genre.getName().equalsIgnoreCase("ecchi"))
                         return;
 
-        annotateTest(() -> fail("Failed to find Anime with Ecchi genre"));
+        fail("Failed to find Anime with Ecchi genre");
     }
 
 }

@@ -35,7 +35,7 @@ private static JsonObject jsonObject;
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("mapProvider")
     final void testMap(final Object expected, final Object actual){
-        annotateTest(() -> assertEquals(expected, actual));
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -95,17 +95,17 @@ private static JsonObject jsonObject;
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("arrayProvider")
     final void testArray(final Object object){
-        annotateTest(() -> assertTrue(jsonArray.contains(object)));
+        assertTrue(jsonArray.contains(object));
     }
 
     @Test
     final void testArrayMap(){
-        annotateTest(() -> assertEquals("v", ((JsonObject) jsonArray.get(14)).getString("k")));
+        assertEquals("v", ((JsonObject) jsonArray.get(14)).getString("k"));
     }
 
     @Test
     final void testArrayEmptyMap(){
-        annotateTest(() -> assertEquals(0, ((JsonObject) jsonArray.get(15)).size()));
+        assertEquals(0, ((JsonObject) jsonArray.get(15)).size());
     }
 
     @SuppressWarnings("unused")
@@ -139,7 +139,7 @@ private static JsonObject jsonObject;
         try{
             parse(string);
         }catch(final JsonSyntaxException e){
-            annotateTest(() -> assertEquals(string, e.getRaw()));
+            assertEquals(string, e.getRaw());
             return;
         }
         annotateTest(fail("Expected JsonSyntaxException for: \"" + string + '"'));
@@ -149,7 +149,7 @@ private static JsonObject jsonObject;
 
     @Test
     final void testNewLine(){
-        annotateTest(() -> assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k")));
+        assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k"));
     }
 
 }

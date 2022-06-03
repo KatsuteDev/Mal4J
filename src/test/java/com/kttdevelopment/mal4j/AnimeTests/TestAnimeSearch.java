@@ -27,8 +27,8 @@ final class TestAnimeSearch {
                 .withQuery(TestProvider.AnimeQuery)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertEquals(TestProvider.AnimeID, search.get(0).getID()));
-        annotateTest(() -> assertNotEquals(1, search.size()));
+        assertEquals(TestProvider.AnimeID, search.get(0).getID());
+        assertNotEquals(1, search.size());
     }
 
     @Test
@@ -40,8 +40,8 @@ final class TestAnimeSearch {
                 .withOffset(1)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertNotEquals(TestProvider.AnimeID, search.get(0).getID()));
-        annotateTest(() -> assertEquals(1, search.size()));
+        assertNotEquals(TestProvider.AnimeID, search.get(0).getID());
+        assertEquals(1, search.size());
     }
 
     @Test
@@ -52,7 +52,7 @@ final class TestAnimeSearch {
                 .withLimit(1)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertNull(search.get(0).getType()));
+        assertNull(search.get(0).getType());
     }
 
     @Test
@@ -64,7 +64,7 @@ final class TestAnimeSearch {
                     .withLimit(1)
                     .withNoFields()
                     .search();
-            annotateTest(() -> assertEquals(0, search.size()));
+            assertEquals(0, search.size());
         }
         {
             final List<AnimePreview> search =

@@ -11,7 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -31,9 +30,9 @@ final class TestManga {
     @MethodSource("mangaProvider")
     final void testManga(@SuppressWarnings("unused") final String method, final Function<Manga,Object> function){
         if(!method.equals("Serialization#Role"))
-            annotateTest(() -> assertNotNull(function.apply(manga), "Expected Manga#" + method + " to not be null"));
+            assertNotNull(function.apply(manga), "Expected Manga#" + method + " to not be null");
         else
-            annotateTest(() -> assumeTrue(function.apply(manga) != null, "Expected Manga#" + method + " to not be null (external issue)"));
+            assumeTrue(function.apply(manga) != null, "Expected Manga#" + method + " to not be null (external issue)");
     }
 
     @SuppressWarnings("unused")
@@ -100,41 +99,41 @@ final class TestManga {
 
     @Test
     final void testManga(){
-        annotateTest(() -> assertEquals(manga, manga.getManga()));
-        annotateTest(() -> assertEquals(TestProvider.MangaID, manga.getID()));
+        assertEquals(manga, manga.getManga());
+        assertEquals(TestProvider.MangaID, manga.getID());
     }
 
     @Test
     final void testJapaneseEncoding(){
-        annotateTest(() -> assertFalse(manga.getAlternativeTitles().getJapanese().startsWith("\\u")));
+        assertFalse(manga.getAlternativeTitles().getJapanese().startsWith("\\u"));
     }
 
     @Test
     final void testFields(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes);
-        annotateTest(() -> assertNotNull(manga.getVolumes()));
-        annotateTest(() -> assertNull(manga.getChapters()));
+        assertNotNull(manga.getVolumes());
+        assertNull(manga.getChapters());
     }
 
     @Test
     final void testInvertedFields(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes, Fields.INVERTED);
-        annotateTest(() -> assertNull(manga.getVolumes()));
-        annotateTest(() -> assertNotNull(manga.getChapters()));
+        assertNull(manga.getVolumes());
+        assertNotNull(manga.getChapters());
     }
 
     @Test
     final void testInvertedFieldsOnly(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.INVERTED);
-        annotateTest(() -> assertNotNull(manga.getVolumes()));
+        assertNotNull(manga.getVolumes());
     }
 
     @Test @DisplayName("Manga may not have related Anime") @Disabled
     final void testRelatedAnime(){
         final RelatedAnime relatedAnime = manga.getRelatedAnime()[0];
-        annotateTest(() -> assertNotNull(relatedAnime.getAnimePreview().getID()));
-        annotateTest(() -> assertNotNull(relatedAnime.getRelationType()));
-        annotateTest(() -> assertNotNull(relatedAnime.getRelationTypeFormat()));
+        assertNotNull(relatedAnime.getAnimePreview().getID());
+        assertNotNull(relatedAnime.getRelationType());
+        assertNotNull(relatedAnime.getRelationTypeFormat());
     }
 
 }
