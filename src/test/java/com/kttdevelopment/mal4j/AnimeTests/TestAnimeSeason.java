@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestAnimeSeason {
@@ -47,10 +46,9 @@ final class TestAnimeSeason {
 
         final AnimePreview finalAnime = anime;
         assertNotNull(finalAnime, "Expected seasonal search to return an Anime from selected year");
-        //noinspection ConstantConditions
-        annotateTest(() -> assertTrue(
+        assertTrue(
             finalAnime.getStartSeason().getSeason() == Season.Summer || finalAnime.getStartSeason().getSeason() == Season.Spring,
-            "Anime start season was supposed to be either Summer or Spring but was " + finalAnime.getStartSeason().getSeason().name())
+            "Anime start season was supposed to be either Summer or Spring but was " + finalAnime.getStartSeason().getSeason().name()
         );
     }
 

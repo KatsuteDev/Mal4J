@@ -31,13 +31,13 @@ final class TestLocalServer {
 
         @Test
         final void testTimeout(){
-            assertTimeoutPreemptively(Duration.ofSeconds(2), ( -> {
+            assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {
                 try{
                     new LocalServerBuilder("client_id", 80)
                         .setTimeout(1)
                         .build();
                 }catch(final Throwable ignored){ }
-            }));
+            });
         }
 
     }

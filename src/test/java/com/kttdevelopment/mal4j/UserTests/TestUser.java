@@ -102,10 +102,10 @@ final class TestUser {
             passed.set(true);
         });
 
-        assertTimeout(Duration.ofMinutes(1), ( -> {
+        assertTimeout(Duration.ofMinutes(1), () -> {
             while(!passed.get())
                 Thread.sleep(5000);
-        }));
+        });
     }
 
     @SuppressWarnings("SpellCheckingInspection")
@@ -125,10 +125,10 @@ final class TestUser {
             passed.set(true);
         });
 
-        assertTimeout(Duration.ofMinutes(1), ( -> {
+        assertTimeout(Duration.ofMinutes(1), () -> {
             while(!passed.get())
                 Thread.sleep(5000);
-        }));
+        });
     }
 
     @ParameterizedTest(name = "[{index}] {0}")

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestAnimeSearch {
@@ -74,10 +73,10 @@ final class TestAnimeSearch {
                    .withNoFields()
                    .includeNSFW()
                    .search();
-            annotateTest(() -> assertTrue(
+            assertTrue(
                 search.get(0).getID() == TestProvider.NSFW_AnimeID || search.get(0).getID() == TestProvider.AltNSFW_AnimeID,
                 "NSFW Anime ID was supposed to be either " + TestProvider.NSFW_AnimeID + " or " + TestProvider.AltNSFW_AnimeID + " but was " + search.get(0).getID()
-            ));
+            );
         }
     }
 

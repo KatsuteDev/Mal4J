@@ -38,4 +38,18 @@ jobs:
           echo ${{ secrets.MAL_TOKEN }} > src/test/java/resources/token.txt
 
       - name: ✔ Test with Maven
+        continue-on-error: true
         run: mvn test -fae --no-transfer-progress
+
+      - name: 📤 Checkout Action
+        uses: actions/checkout@v3
+        with:
+          repository: Katsute/JUnit-Report
+          ref: 6990e1dd88a9c3826b600690b0ada9b544470e8a
+          path: ./.github/junit-report
+          token: ${{ secrets.SINON }}
+
+      - name: ✔ Generate Report
+        uses: ./.github/junit-report
+        with:
+          path: ${{ inputs.SINON }}

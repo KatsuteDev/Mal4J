@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestRegex9 {
@@ -54,10 +53,8 @@ final class TestRegex9 {
 
         @Test
         public final void testCount(){
-            annotateTest(() -> {
-                assertEquals(9, Regex9.count(Pattern.compile("\\d").matcher(" 123456789 ")));
-                assertEquals(1, Regex9.count(Pattern.compile("\\d+").matcher(" 123456789 ")));
-            });
+            assertEquals(9, Regex9.count(Pattern.compile("\\d").matcher(" 123456789 ")));
+            assertEquals(1, Regex9.count(Pattern.compile("\\d+").matcher(" 123456789 ")));
         }
 
     }

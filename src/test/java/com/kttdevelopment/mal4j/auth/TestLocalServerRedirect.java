@@ -19,12 +19,12 @@ final class TestLocalServerRedirect {
     @Test
     final void testRedirectURI() throws IOException{
         final String client_id = TestProvider.readFile(TestProvider.client);
-        assertDoesNotThrow(( ->
+        assertDoesNotThrow(() ->
             new LocalServerBuilder(client_id, 5050)
                 .setRedirectURI("http://localhost:5050")
                 .openBrowser()
                 .build()
-        ));
+        );
     }
 
 }
