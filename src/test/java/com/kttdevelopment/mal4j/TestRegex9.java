@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 final class TestRegex9 {
 
-@Nested
+    @Nested
     final class TestMatcher {
 
         final String raw = " 123456789 ";
