@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SuppressWarnings("SpellCheckingInspection")
 public class TestJson {
 
-private static JsonObject jsonObject;
+    private static JsonObject jsonObject;
     private static List<?> jsonArray;
 
     @BeforeAll
