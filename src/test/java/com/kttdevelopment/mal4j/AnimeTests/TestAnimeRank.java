@@ -8,7 +8,6 @@ import org.junit.jupiter.api.*;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -29,10 +28,10 @@ final class TestAnimeRank {
                 .withFields(Fields.Anime.rank, Fields.Anime.media_type)
                 .search();
         final AnimeRanking first = ranking.get(0);
-        annotateTest(() -> assertEquals(1, first.getRanking()));
-        annotateTest(() -> assertEquals(AnimeType.Movie, first.getAnimePreview().getType()));
-        // annotateTest(() -> assertNotNull(first.getPreviousRank()));
-        annotateTest(() -> assumeTrue(first.getPreviousRank() != null, "Failed to get previous rank for Anime (this is an external issue, ignore this)"));
+        assertEquals(1, first.getRanking());
+        assertEquals(AnimeType.Movie, first.getAnimePreview().getType());
+        // assertNotNull(first.getPreviousRank());
+        assumeTrue(first.getPreviousRank() != null, "Failed to get previous rank for Anime (this is an external issue, ignore this)");
     }
 
     @SuppressWarnings("EmptyMethod")

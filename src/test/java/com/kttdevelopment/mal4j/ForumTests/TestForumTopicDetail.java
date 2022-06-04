@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestForumTopicDetail {
@@ -30,7 +29,7 @@ final class TestForumTopicDetail {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("forumTopicProvider")
     void testForumTopic(@SuppressWarnings("unused") final String method, final Function<ForumTopicDetail,Object> function){
-        annotateTest(() -> assertNotNull(function.apply(topic), "Expected ForumTopicDetail#" + method + " to not be null"));
+        assertNotNull(function.apply(topic), "Expected ForumTopicDetail#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")
@@ -58,19 +57,19 @@ final class TestForumTopicDetail {
 
     @Test
     final void testPostsReference(){
-        annotateTest(() -> assertSame(topic, topic.getPosts()[0].getForumTopicDetail()));
+        assertSame(topic, topic.getPosts()[0].getForumTopicDetail());
     }
 
     @Test
     final void testPollReference(){
-        annotateTest(() -> assertSame(topic.getPoll(), topic.getPoll().getOptions()[0].getPoll()));
-        annotateTest(() -> assertSame(topic, topic.getPoll().getForumTopicDetail()));
+        assertSame(topic.getPoll(), topic.getPoll().getOptions()[0].getPoll());
+        assertSame(topic, topic.getPoll().getForumTopicDetail());
     }
 
     @Test
     final void testPostLimitOffset(){
-        annotateTest(() -> assertEquals(5, mal.getForumTopicDetail(481, 5).getPosts().length));
-        annotateTest(() -> assertEquals(6, mal.getForumTopicDetail(481, 5, 5).getPosts()[0].getNumber()));
+        assertEquals(5, mal.getForumTopicDetail(481, 5).getPosts().length);
+        assertEquals(6, mal.getForumTopicDetail(481, 5, 5).getPosts()[0].getNumber());
     }
 
 }

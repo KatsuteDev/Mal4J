@@ -6,12 +6,11 @@ import org.junit.jupiter.api.Test;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestRegex9 {
 
-@Nested
+    @Nested
     final class TestMatcher {
 
         final String raw = " 123456789 ";
@@ -19,27 +18,27 @@ final class TestRegex9 {
 
         @Test
         final void testNullString(){
-            annotateTest(() -> assertThrows(NullPointerException.class, () -> Regex9.replaceAll(null, null, null)));
+            assertThrows(NullPointerException.class, () -> Regex9.replaceAll(null, null, null));
         }
 
         @Test
         final void testNullMatcher(){
-            annotateTest(() -> assertThrows(NullPointerException.class, () -> Regex9.replaceAll(raw, null, null)));
+            assertThrows(NullPointerException.class, () -> Regex9.replaceAll(raw, null, null));
         }
 
         @Test
         final void testNullReplacer(){
-            annotateTest(() -> assertThrows(NullPointerException.class, () -> Regex9.replaceAll(raw, matcher, null)));
+            assertThrows(NullPointerException.class, () -> Regex9.replaceAll(raw, matcher, null));
         }
 
         @Test
         final void testSimpleReplaceAll(){
-            annotateTest(() -> assertEquals(matcher.replaceAll("0"), Regex9.replaceAll(raw, matcher, e -> "0")));
+            assertEquals(matcher.replaceAll("0"), Regex9.replaceAll(raw, matcher, e -> "0"));
         }
 
         @Test
         final void testFunctionReplaceAll(){
-            annotateTest(() -> assertEquals(" 012345678 ", Regex9.replaceAll(raw, matcher, e -> String.valueOf(Integer.parseInt(e.group(0)) - 1))));
+            assertEquals(" 012345678 ", Regex9.replaceAll(raw, matcher, e -> String.valueOf(Integer.parseInt(e.group(0)) - 1)));
         }
 
     }
@@ -49,18 +48,15 @@ final class TestRegex9 {
 
         @Test
         public final void testNullMatcher(){
-            annotateTest(() -> assertThrows(NullPointerException.class, () -> Regex9.count(null)));
+            assertThrows(NullPointerException.class, () -> Regex9.count(null));
         }
 
         @Test
         public final void testCount(){
-            annotateTest(() -> {
-                assertEquals(9, Regex9.count(Pattern.compile("\\d").matcher(" 123456789 ")));
-                assertEquals(1, Regex9.count(Pattern.compile("\\d+").matcher(" 123456789 ")));
-            });
+            assertEquals(9, Regex9.count(Pattern.compile("\\d").matcher(" 123456789 ")));
+            assertEquals(1, Regex9.count(Pattern.compile("\\d+").matcher(" 123456789 ")));
         }
 
     }
-
 
 }

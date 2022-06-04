@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestAffinityAlgorithm {
@@ -20,17 +19,17 @@ final class TestAffinityAlgorithm {
     @ParameterizedTest(name="[{index}] {0} & {1} = {2}")
     @MethodSource("testProvider")
     final void testAffinity(final int[] a_scores, final int[] b_scores, float expected){
-        annotateTest(() -> assertEquals(expected, round(algorithm.getAffinity(a_scores, b_scores), 3)));
+        assertEquals(expected, round(algorithm.getAffinity(a_scores, b_scores), 3));
     }
 
     @Test
     final void testEmptyAffinity(){
-        annotateTest(() -> assertEquals(0, algorithm.getAffinity(new int[0], new int[0])));
+        assertEquals(0, algorithm.getAffinity(new int[0], new int[0]));
     }
 
     @Test
     final void testMismatchAffinity(){
-        annotateTest(() -> assertThrows(IllegalArgumentException.class, () -> algorithm.getAffinity(new int[0], new int[1])));
+        assertThrows(IllegalArgumentException.class, () -> algorithm.getAffinity(new int[0], new int[1]));
     }
 
     @SuppressWarnings("unused")

@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -37,7 +36,7 @@ final class TestUser {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("myselfProvider")
     final void testMyself(@SuppressWarnings("unused") final String method, final Function<User,Object> function){
-        annotateTest(() -> assertNotNull(function.apply(user), "Expected User#" + method + " to not be null"));
+        assertNotNull(function.apply(user), "Expected User#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")
@@ -73,25 +72,25 @@ final class TestUser {
 
     @Test // test does actually pass
     final void testBirthday(){
-        annotateTest(() -> assumeTrue(user.getBirthday() != null));
+        assumeTrue(user.getBirthday() != null);
     }
 
     @Test
     final void testAnimeListing(){
-        annotateTest(() -> assertDoesNotThrow(() -> user.getUserAnimeListing().withNoFields().withLimit(1).search()));
+        assertDoesNotThrow(() -> user.getUserAnimeListing().withNoFields().withLimit(1).search());
     }
 
     @Test
     final void testMangaListing(){
-        annotateTest(() -> assertDoesNotThrow(() -> user.getUserMangaListing().withNoFields().withLimit(1).search()));
+        assertDoesNotThrow(() -> user.getUserMangaListing().withNoFields().withLimit(1).search());
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
     final void testAnimeAffinity(){
         final AnimeAffinity affinity = user.getAnimeAffinity("Xinil");
-        annotateTest(() -> assertEquals(affinity.getShared().length, affinity.getSharedCount()));
-        annotateTest(() -> assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity));
+        assertEquals(affinity.getShared().length, affinity.getSharedCount());
+        assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
     }
 
     @SuppressWarnings("BusyWait")
@@ -99,22 +98,22 @@ final class TestUser {
     final void testAnimeAffinityCallback(){
         final AtomicBoolean passed = new AtomicBoolean(false);
         user.getAnimeAffinity((affinity) -> {
-            annotateTest(() -> assertNotNull(affinity));
+            assertNotNull(affinity);
             passed.set(true);
         });
 
-        annotateTest(() -> assertTimeout(Duration.ofMinutes(1), () -> {
+        assertTimeout(Duration.ofMinutes(1), () -> {
             while(!passed.get())
                 Thread.sleep(5000);
-        }));
+        });
     }
 
     @SuppressWarnings("SpellCheckingInspection")
     @Test
     final void testMangaAffinity(){
         final MangaAffinity affinity = user.getMangaAffinity("Xinil");
-        annotateTest(() -> assertEquals(affinity.getShared().length, affinity.getSharedCount()));
-        annotateTest(() -> assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity));
+        assertEquals(affinity.getShared().length, affinity.getSharedCount());
+        assertDoesNotThrow((ThrowingSupplier<Float>) affinity::getAffinity);
     }
 
     @SuppressWarnings("BusyWait")
@@ -122,20 +121,20 @@ final class TestUser {
     final void testMangaAffinityCallback(){
         final AtomicBoolean passed = new AtomicBoolean(false);
         user.getMangaAffinity((affinity) -> {
-            annotateTest(() -> assertNotNull(affinity));
+            assertNotNull(affinity);
             passed.set(true);
         });
 
-        annotateTest(() -> assertTimeout(Duration.ofMinutes(1), () -> {
+        assertTimeout(Duration.ofMinutes(1), () -> {
             while(!passed.get())
                 Thread.sleep(5000);
-        }));
+        });
     }
 
     @ParameterizedTest(name = "[{index}] {0}")
     @MethodSource("nullAffinityProvider")
     final void testNullAffinity(final String method, final Function<User,Object> function){
-        annotateTest(() -> assertThrows(NullPointerException.class, () -> function.apply(user),"Expected " + method + " with null to throw NullPointerException"));
+        assertThrows(NullPointerException.class, () -> function.apply(user),"Expected " + method + " with null to throw NullPointerException");
     }
 
     @SuppressWarnings("unused")

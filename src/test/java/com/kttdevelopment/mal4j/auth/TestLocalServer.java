@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import java.time.Duration;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestLocalServer {
@@ -17,12 +16,12 @@ final class TestLocalServer {
 
         @Test
         final void testValidBuilder(){
-            annotateTest(() -> assertDoesNotThrow(() -> new LocalServerBuilder("client_id", null, 80)));
+            assertDoesNotThrow(() -> new LocalServerBuilder("client_id", null, 80));
         }
 
         @Test
         final void testNullClientID(){
-            annotateTest(() -> assertThrows(NullPointerException.class, () -> new LocalServerBuilder(null, null, 80)));
+            assertThrows(NullPointerException.class, () -> new LocalServerBuilder(null, null, 80));
         }
 
     }
@@ -32,13 +31,13 @@ final class TestLocalServer {
 
         @Test
         final void testTimeout(){
-            annotateTest(() -> assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {
+            assertTimeoutPreemptively(Duration.ofSeconds(2), () -> {
                 try{
                     new LocalServerBuilder("client_id", 80)
                         .setTimeout(1)
                         .build();
                 }catch(final Throwable ignored){ }
-            }));
+            });
         }
 
     }
@@ -60,11 +59,11 @@ final class TestLocalServer {
 
             final String url = callback.get();
 
-            annotateTest(() -> assertTrue(url.startsWith("https://myanimelist.net/v1/oauth2/authorize?response_type=code")));
-            annotateTest(() -> assertTrue(url.contains("&client_id=client_id")));
-            annotateTest(() -> assertTrue(url.contains("&code_challenge=")));
-            annotateTest(() -> assertTrue(url.contains("&code_challenge_method=plain")));
-            annotateTest(() -> assertTrue(url.contains("&state=")));
+            assertTrue(url.startsWith("https://myanimelist.net/v1/oauth2/authorize?response_type=code"));
+            assertTrue(url.contains("&client_id=client_id"));
+            assertTrue(url.contains("&code_challenge="));
+            assertTrue(url.contains("&code_challenge_method=plain"));
+            assertTrue(url.contains("&state="));
         }
 
     }

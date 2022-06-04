@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestAnimeSuggestions {
@@ -27,8 +26,8 @@ final class TestAnimeSuggestions {
             mal.getAnimeSuggestions()
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertNotNull(suggestions));
-        annotateTest(() -> assertNotEquals(0, suggestions.size()));
+        assertNotNull(suggestions);
+        assertNotEquals(0, suggestions.size());
     }
 
 }

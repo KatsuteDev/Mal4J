@@ -14,7 +14,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.*;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
 
@@ -55,28 +54,28 @@ final class TestMangaListStatus {
             .comments("")
             .update();
 
-        annotateTest(() -> assertEquals(MangaStatus.PlanToRead, status.getStatus()));
-        annotateTest(() -> assertEquals(0, status.getScore()));
-        annotateTest(() -> assertEquals(0, status.getVolumesRead()));
-        annotateTest(() -> assertEquals(0, status.getChaptersRead()));
-        annotateTest(() -> assertFalse(status.isRereading()));
-        annotateTest(() -> assertEquals(Priority.Low, status.getPriority()));
-        annotateTest(() -> assertEquals(0, status.getTimesReread()));
-        annotateTest(() -> assertEquals(RereadValue.None, status.getRereadValue()));
-        annotateTest(() -> assertEquals(0, status.getTags().length));
-        annotateTest(() -> assertEquals("", status.getComments()));
+        assertEquals(MangaStatus.PlanToRead, status.getStatus());
+        assertEquals(0, status.getScore());
+        assertEquals(0, status.getVolumesRead());
+        assertEquals(0, status.getChaptersRead());
+        assertFalse(status.isRereading());
+        assertEquals(Priority.Low, status.getPriority());
+        assertEquals(0, status.getTimesReread());
+        assertEquals(RereadValue.None, status.getRereadValue());
+        assertEquals(0, status.getTags().length);
+        assertEquals("", status.getComments());
     }
 
     @Test @Order(0)
     final void testMinimalUpdate(){
-        annotateTest(() -> assertDoesNotThrow(() -> mal.updateMangaListing(TestProvider.MangaID).score(10).update()));
+        assertDoesNotThrow(() -> mal.updateMangaListing(TestProvider.MangaID).score(10).update());
     }
 
     @Test @Order(1)
     final void testDelete(){
         mal.deleteMangaListing(TestProvider.MangaID);
-        annotateTest(() -> assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID)));
-        annotateTest(() -> assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis()));
+        assertDoesNotThrow(() -> mal.deleteMangaListing(TestProvider.MangaID));
+        assertNull(mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus().getUpdatedAtEpochMillis());
     }
 
     private static boolean passedUpdate = false;
@@ -104,7 +103,7 @@ final class TestMangaListStatus {
 
     @Test @Order(3)
     final void testGet(){
-        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
+        assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
@@ -119,12 +118,12 @@ final class TestMangaListStatus {
                 testStatus(listStatus);
                 return;
             }
-        annotateTest(() -> fail("Manga list status not found"));
+        fail("Manga list status not found");
     }
 
     @Test @Order(3)
     final void testGetUsername(){
-        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
+        assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing("KatsuteDev")
@@ -139,33 +138,33 @@ final class TestMangaListStatus {
                 testStatus(listStatus);
                 return;
             }
-        annotateTest(() -> fail("User Manga list status not found"));
+        fail("User Manga list status not found");
     }
 
     @Test @Order(3)
     final void testGetFromManga(){
-        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
+        assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
 
         final MangaListStatus status = mal.getManga(TestProvider.MangaID, Fields.Manga.my_list_status).getListStatus();
         testStatus(status);
     }
 
     private void testStatus(final MangaListStatus status){
-        annotateTest(() -> assertEquals(MangaStatus.Completed, status.getStatus()));
-        annotateTest(() -> assertEquals(10, status.getScore()));
-        annotateTest(() -> assertEquals(8, status.getVolumesRead()));
-        annotateTest(() -> assertEquals(49, status.getChaptersRead()));
-        annotateTest(() -> assertTrue(status.isRereading()));
-        annotateTest(() -> assertNotNull(status.getStartDate()));
-        annotateTest(() -> assertNotNull(status.getFinishDate()));
-        annotateTest(() -> assertEquals(Priority.High, status.getPriority()));
-        annotateTest(() -> assertEquals(1, status.getTimesReread()));
-        annotateTest(() -> assertEquals(RereadValue.VeryHigh, status.getRereadValue()));
-        annotateTest(() -> assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0])));
-        annotateTest(() -> assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1])));
-        annotateTest(() -> assertEquals(TestProvider.testComment, status.getComments()));
-        annotateTest(() -> assertNotNull(status.getUpdatedAt()));
-        annotateTest(() -> assertNotNull(status.getUpdatedAtEpochMillis()));
+        assertEquals(MangaStatus.Completed, status.getStatus());
+        assertEquals(10, status.getScore());
+        assertEquals(8, status.getVolumesRead());
+        assertEquals(49, status.getChaptersRead());
+        assertTrue(status.isRereading());
+        assertNotNull(status.getStartDate());
+        assertNotNull(status.getFinishDate());
+        assertEquals(Priority.High, status.getPriority());
+        assertEquals(1, status.getTimesReread());
+        assertEquals(RereadValue.VeryHigh, status.getRereadValue());
+        assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
+        assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
+        assertEquals(TestProvider.testComment, status.getComments());
+        assertNotNull(status.getUpdatedAt());
+        assertNotNull(status.getUpdatedAtEpochMillis());
     }
 
     @Test @Order(4)
@@ -178,7 +177,7 @@ final class TestMangaListStatus {
     @SuppressWarnings("SpellCheckingInspection")
     @Test @Order(5)
     final void testEcchiNSFW(){
-        annotateTest(() -> assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)"));
+        assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
 
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
@@ -194,7 +193,7 @@ final class TestMangaListStatus {
                         return;
 
         //noinspection ConstantConditions
-        annotateTest(() -> assumeTrue(false, "Failed to find Manga with Ecchi genre (this is a data issue, disregard)"));
+        assumeTrue(false, "Failed to find Manga with Ecchi genre (this is a data issue, disregard)");
     }
 
 }
