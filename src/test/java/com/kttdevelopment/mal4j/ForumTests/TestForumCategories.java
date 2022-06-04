@@ -12,7 +12,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestForumCategories {
@@ -31,7 +30,7 @@ final class TestForumCategories {
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("categoryProvider")
     final void testCategory(@SuppressWarnings("unused") final String method, final Function<ForumCategory,Object> function){
-        annotateTest(() -> assertNotNull(function.apply(category), "Expected ForumCategory#" + method + " to not be null"));
+        assertNotNull(function.apply(category), "Expected ForumCategory#" + method + " to not be null");
     }
 
     @SuppressWarnings("unused")
@@ -52,12 +51,12 @@ final class TestForumCategories {
 
     @Test
     final void testForumCategoryReference(){
-        annotateTest(() -> assertSame(category, category.getForumBoards()[2].getCategory()));
+        assertSame(category, category.getForumBoards()[2].getCategory());
     }
 
     @Test
     final void testForumBoardReference(){
-        annotateTest(() -> assertSame(category.getForumBoards()[2] , category.getForumBoards()[2].getSubBoards()[2].getBoard()));
+        assertSame(category.getForumBoards()[2] , category.getForumBoards()[2].getSubBoards()[2].getBoard());
     }
 
 }

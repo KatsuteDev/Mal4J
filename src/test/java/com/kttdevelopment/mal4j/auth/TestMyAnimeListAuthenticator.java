@@ -4,7 +4,6 @@ import com.kttdevelopment.mal4j.*;
 import org.junit.jupiter.api.*;
 
 import static com.kttdevelopment.mal4j.MyAnimeListAuthenticator.*;
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestMyAnimeListAuthenticator {
@@ -15,12 +14,12 @@ final class TestMyAnimeListAuthenticator {
         @SuppressWarnings("SpellCheckingInspection")
         @Test
         final void testValidAuthenticator(){
-            annotateTest(() -> assertDoesNotThrow(() -> new MyAnimeListAuthenticator(new Authorization("client_id", "client_secret", "authorization_code", "PKCExxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"), new AccessToken("token"))));
+            assertDoesNotThrow(() -> new MyAnimeListAuthenticator(new Authorization("client_id", "client_secret", "authorization_code", "PKCExxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"), new AccessToken("token")));
         }
 
         @Test
         final void testNullAuthorization(){
-            annotateTest(() -> assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator(null)));
+            assertThrows(NullPointerException.class, () -> new MyAnimeListAuthenticator(null));
         }
 
     }
@@ -32,7 +31,7 @@ final class TestMyAnimeListAuthenticator {
         @Test
         final void testAuthorization(){
             final Authorization authorization = new Authorization("client_id", "client_secret", "authorization_code", "PKCExxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
-            annotateTest(() -> assertSame(authorization, new MyAnimeListAuthenticator(authorization, new AccessToken("token")).getAuthorization()));
+            assertSame(authorization, new MyAnimeListAuthenticator(authorization, new AccessToken("token")).getAuthorization());
         }
 
     }
@@ -46,7 +45,7 @@ final class TestMyAnimeListAuthenticator {
             final Authorization authorization = new Authorization("client_id", "client_secret", "authorization_code", "PKCExxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
             final AccessToken token = new AccessToken("token");
 
-            annotateTest(() -> assertSame(token, new MyAnimeListAuthenticator(authorization, token).getAccessToken()));
+            assertSame(token, new MyAnimeListAuthenticator(authorization, token).getAccessToken());
         }
 
     }
@@ -62,22 +61,22 @@ final class TestMyAnimeListAuthenticator {
 
             @Test
             final void testClientID(){
-                annotateTest(() -> assertTrue(URL.contains("&client_id=client")));
+                assertTrue(URL.contains("&client_id=client"));
             }
 
             @Test
             final void testCodeChallenge(){
-                annotateTest(() -> assertTrue(URL.contains("&code_challenge=PKCE")));
+                assertTrue(URL.contains("&code_challenge=PKCE"));
             }
 
             @Test
             final void testRedirectURI(){
-                annotateTest(() -> assertFalse(URL.contains("&redirect_uri=")));
+                assertFalse(URL.contains("&redirect_uri="));
             }
 
             @Test
             final void testState(){
-                annotateTest(() -> assertFalse(URL.contains("&state=")));
+                assertFalse(URL.contains("&state="));
             }
 
         }
@@ -89,22 +88,22 @@ final class TestMyAnimeListAuthenticator {
 
             @Test
             final void testClientID(){
-                annotateTest(() -> assertTrue(URL.contains("&client_id=client")));
+                assertTrue(URL.contains("&client_id=client"));
             }
 
             @Test
             final void testCodeChallenge(){
-                annotateTest(() -> assertTrue(URL.contains("&code_challenge=PKCE")));
+                assertTrue(URL.contains("&code_challenge=PKCE"));
             }
 
             @Test
             final void testRedirectURI(){
-                annotateTest(() -> assertTrue(URL.contains("&redirect_uri=redirect")));
+                assertTrue(URL.contains("&redirect_uri=redirect"));
             }
 
             @Test
             final void testState(){
-                annotateTest(() -> assertFalse(URL.contains("&state=")));
+                assertFalse(URL.contains("&state="));
             }
 
         }
@@ -116,22 +115,22 @@ final class TestMyAnimeListAuthenticator {
 
             @Test
             final void testClientID(){
-                annotateTest(() -> assertTrue(URL.contains("&client_id=client")));
+                assertTrue(URL.contains("&client_id=client"));
             }
 
             @Test
             final void testCodeChallenge(){
-                annotateTest(() -> assertTrue(URL.contains("&code_challenge=PKCE")));
+                assertTrue(URL.contains("&code_challenge=PKCE"));
             }
 
             @Test
             final void testRedirectURI(){
-                annotateTest(() -> assertFalse(URL.contains("&redirect_uri=")));
+                assertFalse(URL.contains("&redirect_uri="));
             }
 
             @Test
             final void testState(){
-                annotateTest(() -> assertTrue(URL.contains("&state=state")));
+                assertTrue(URL.contains("&state=state"));
             }
 
         }
@@ -143,34 +142,34 @@ final class TestMyAnimeListAuthenticator {
 
             @Test
             final void testClientID(){
-                annotateTest(() -> assertTrue(URL.contains("&client_id=client")));
+                assertTrue(URL.contains("&client_id=client"));
             }
 
             @Test
             final void testCodeChallenge(){
-                annotateTest(() -> assertTrue(URL.contains("&code_challenge=PKCE")));
+                assertTrue(URL.contains("&code_challenge=PKCE"));
             }
 
             @Test
             final void testRedirectURI(){
-                annotateTest(() -> assertTrue(URL.contains("&redirect_uri=redirect")));
+                assertTrue(URL.contains("&redirect_uri=redirect"));
             }
 
             @Test
             final void testState(){
-                annotateTest(() -> assertTrue(URL.contains("&state=state")));
+                assertTrue(URL.contains("&state=state"));
             }
 
         }
 
         @Test
         final void testNullClient(){
-            annotateTest(() -> assertThrows(NullPointerException.class, () -> getAuthorizationURL(null, "PKCE")));
+            assertThrows(NullPointerException.class, () -> getAuthorizationURL(null, "PKCE"));
         }
 
         @Test
         final void testNullPKCE(){
-            annotateTest(() -> assertThrows(NullPointerException.class, () -> getAuthorizationURL("client", null)));
+            assertThrows(NullPointerException.class, () -> getAuthorizationURL("client", null));
         }
 
     }
@@ -180,22 +179,22 @@ final class TestMyAnimeListAuthenticator {
 
         @Test
         final void test0Length(){
-            annotateTest(() -> assertEquals(0, generatePKCE(0).length()));
+            assertEquals(0, generatePKCE(0).length());
         }
 
         @Test
         final void test1Length(){
-            annotateTest(() -> assertEquals(1, generatePKCE(1).length()));
+            assertEquals(1, generatePKCE(1).length());
         }
 
         @Test
         final void test100Length(){
-            annotateTest(() -> assertEquals(1, generatePKCE(1).length()));
+            assertEquals(1, generatePKCE(1).length());
         }
 
         @RepeatedTest(10)
         final void testValidPKCE(){
-            annotateTest(() -> assertDoesNotThrow(() -> new Authorization("client_id", null, "authorization_code", generatePKCE(128))));
+            assertDoesNotThrow(() -> new Authorization("client_id", null, "authorization_code", generatePKCE(128)));
         }
 
     }

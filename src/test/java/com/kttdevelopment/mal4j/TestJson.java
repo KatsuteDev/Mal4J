@@ -12,13 +12,12 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static com.kttdevelopment.mal4j.Json.*;
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("SpellCheckingInspection")
 public class TestJson {
 
-private static JsonObject jsonObject;
+    private static JsonObject jsonObject;
     private static List<?> jsonArray;
 
     @BeforeAll
@@ -35,41 +34,33 @@ private static JsonObject jsonObject;
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("mapProvider")
     final void testMap(final Object expected, final Object actual){
-        annotateTest(() -> assertEquals(expected, actual));
+        assertEquals(expected, actual);
     }
 
     @Test
     final void testMapNull(){
-        annotateTest(() -> {
-            assertNull(jsonObject.get("null"));
-            assertTrue(jsonObject.containsKey("null"));
-            assertNull(jsonObject.get("nulls"));
-            assertTrue(jsonObject.containsKey("nulls"));
-        });
+        assertNull(jsonObject.get("null"));
+        assertTrue(jsonObject.containsKey("null"));
+        assertNull(jsonObject.get("nulls"));
+        assertTrue(jsonObject.containsKey("nulls"));
     }
 
     @Test
     final void testMapBoolean(){
-        annotateTest(() -> {
-            assertTrue(jsonObject.getBoolean("bool"));
-            assertFalse(jsonObject.getBoolean("bools"));
-        });
+        assertTrue(jsonObject.getBoolean("bool"));
+        assertFalse(jsonObject.getBoolean("bools"));
     }
 
     @Test
     final void testMapMap(){
-        annotateTest(() -> {
-            assertEquals("v", jsonObject.getJsonObject("obj").getString("k"));
-            assertEquals(0, jsonObject.getJsonObject("cobj").size());
-        });
+        assertEquals("v", jsonObject.getJsonObject("obj").getString("k"));
+        assertEquals(0, jsonObject.getJsonObject("cobj").size());
     }
 
     @Test
     final void testMapArray(){
-        annotateTest(() -> {
-            assertEquals("str", jsonObject.getStringArray("arr")[0]);
-            assertEquals(0, jsonObject.getJsonArray("carr").length);
-        });
+        assertEquals("str", jsonObject.getStringArray("arr")[0]);
+        assertEquals(0, jsonObject.getJsonArray("carr").length);
     }
 
     @SuppressWarnings("unused")
@@ -95,17 +86,17 @@ private static JsonObject jsonObject;
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("arrayProvider")
     final void testArray(final Object object){
-        annotateTest(() -> assertTrue(jsonArray.contains(object)));
+        assertTrue(jsonArray.contains(object));
     }
 
     @Test
     final void testArrayMap(){
-        annotateTest(() -> assertEquals("v", ((JsonObject) jsonArray.get(14)).getString("k")));
+        assertEquals("v", ((JsonObject) jsonArray.get(14)).getString("k"));
     }
 
     @Test
     final void testArrayEmptyMap(){
-        annotateTest(() -> assertEquals(0, ((JsonObject) jsonArray.get(15)).size()));
+        assertEquals(0, ((JsonObject) jsonArray.get(15)).size());
     }
 
     @SuppressWarnings("unused")
@@ -139,17 +130,17 @@ private static JsonObject jsonObject;
         try{
             parse(string);
         }catch(final JsonSyntaxException e){
-            annotateTest(() -> assertEquals(string, e.getRaw()));
+            assertEquals(string, e.getRaw());
             return;
         }
-        annotateTest(fail("Expected JsonSyntaxException for: \"" + string + '"'));
+        fail("Expected JsonSyntaxException for: \"" + string + '"');
     }
 
     // newline
 
     @Test
     final void testNewLine(){
-        annotateTest(() -> assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k")));
+        assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k"));
     }
 
 }

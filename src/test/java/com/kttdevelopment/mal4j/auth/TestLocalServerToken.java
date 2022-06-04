@@ -9,7 +9,6 @@ import java.nio.file.Files;
 import java.util.Objects;
 
 import static com.kttdevelopment.mal4j.MyAnimeListAuthenticator.*;
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public final class TestLocalServerToken {
@@ -29,11 +28,11 @@ public final class TestLocalServerToken {
 
         // test refresh token
         {
-            annotateTest(() -> assertDoesNotThrow(() -> Objects.requireNonNull(mal.getAnime(TestProvider.AnimeID, Fields.NO_FIELDS))));
+            assertDoesNotThrow(() -> Objects.requireNonNull(mal.getAnime(TestProvider.AnimeID, Fields.NO_FIELDS)));
 
             mal.refreshToken();
 
-            annotateTest(() -> assertDoesNotThrow(() -> Objects.requireNonNull(mal.getAnime(TestProvider.AnimeID, Fields.NO_FIELDS))));
+            assertDoesNotThrow(() -> Objects.requireNonNull(mal.getAnime(TestProvider.AnimeID, Fields.NO_FIELDS)));
         }
 
         // write token
@@ -53,12 +52,12 @@ public final class TestLocalServerToken {
         @Test
         final void testExpiryTime(){
             final long expiry = token.getTimeUntilExpires();
-            annotateTest(() -> assertTrue(expiry < 2_764_800));
+            assertTrue(expiry < 2_764_800);
         }
 
         @Test
         final void testExpired(){
-            annotateTest(() -> assertFalse(token.isExpired()));
+            assertFalse(token.isExpired());
         }
 
     }

@@ -9,7 +9,7 @@ jobs:
   mal_ci:
     name: MyAnimeList CI [${{ matrix.auth }}] (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 10
     strategy:
       matrix:
         auth: ["Client", "Token"]
@@ -38,4 +38,11 @@ jobs:
           echo ${{ secrets.MAL_TOKEN }} > src/test/java/resources/token.txt
 
       - name: ✔ Test with Maven
+        continue-on-error: true
         run: mvn test -fae --no-transfer-progress
+
+      - name: ✔ Generate Report
+        uses: Katsute/Workflows/Actions/java/report@main
+        with:
+          token: ${{ secrets.SINON }}
+          path: .

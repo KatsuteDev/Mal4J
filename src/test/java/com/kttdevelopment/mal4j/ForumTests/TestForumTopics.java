@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestForumTopics {
@@ -36,7 +35,7 @@ final class TestForumTopics {
                 .withOffset(1)
                 .withQuery("MyAnimeList API")
                 .search();
-        annotateTest(() -> assertEquals(1, topics.size()));
+        assertEquals(1, topics.size());
     }
 
     @Test @DisplayName("Documentation is unclear what this filters") @Disabled
@@ -71,7 +70,7 @@ final class TestForumTopics {
         final ForumTopic topic = topics.get(0);
         testForumTopic(topic);
 
-        annotateTest(() -> assertEquals(5, topic.getBoardID()));
+        assertEquals(5, topic.getBoardID());
     }
 
     @Test
@@ -82,24 +81,24 @@ final class TestForumTopics {
             .search();
         final ForumTopic topic = topics.get(0);
         testForumTopic(topic);
-        annotateTest(() -> assertEquals(2, topic.getSubBoardID()));
+        assertEquals(2, topic.getSubBoardID());
     }
 
     private void testForumTopic(final ForumTopic topic){
-        annotateTest(() -> assertNotNull(topic.getID()));
-        annotateTest(() -> assertNotNull(topic.getTitle()));
-        annotateTest(() -> assertNotNull(topic.getCreatedAt()));
-        annotateTest(() -> assertNotNull(topic.getCreatedAtEpochMillis()));
-        annotateTest(() -> assertNotNull(topic.getCreatedBy().getID()));
-        // annotateTest(() -> assertEquals(topic.getCreatedBy().getID(), topic.getCreatedBy().getUser().getID())); // not yet implemented
-        annotateTest(() -> assertNotNull(topic.getCreatedBy().getName()));
-        annotateTest(() -> assertNotNull(topic.getPostsCount()));
-        annotateTest(() -> assertNotNull(topic.getLastPostCreatedAt()));
-        annotateTest(() -> assertNotNull(topic.getLastPostCreatedAtEpochMillis()));
-        annotateTest(() -> assertNotNull(topic.getLastPostCreatedBy().getID()));
-        // annotateTest(() -> assertEquals(topic.getLastPostCreatedBy().getID(), topic.getLastPostCreatedBy().getUser().getID())); // not yet implemented
-        annotateTest(() -> assertNotNull(topic.getLastPostCreatedBy().getName()));
-        annotateTest(() -> assertNotNull(topic.isLocked()));
+        assertNotNull(topic.getID());
+        assertNotNull(topic.getTitle());
+        assertNotNull(topic.getCreatedAt());
+        assertNotNull(topic.getCreatedAtEpochMillis());
+        assertNotNull(topic.getCreatedBy().getID());
+        // assertEquals(topic.getCreatedBy().getID(), topic.getCreatedBy().getUser().getID()); // not yet implemented
+        assertNotNull(topic.getCreatedBy().getName());
+        assertNotNull(topic.getPostsCount());
+        assertNotNull(topic.getLastPostCreatedAt());
+        assertNotNull(topic.getLastPostCreatedAtEpochMillis());
+        assertNotNull(topic.getLastPostCreatedBy().getID());
+        // assertEquals(topic.getLastPostCreatedBy().getID(), topic.getLastPostCreatedBy().getUser().getID()); // not yet implemented
+        assertNotNull(topic.getLastPostCreatedBy().getName());
+        assertNotNull(topic.isLocked());
     }
 
 }

@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestMangaSearch {
@@ -27,8 +26,8 @@ final class TestMangaSearch {
                 .withQuery(TestProvider.AltMangaQuery)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertEquals(TestProvider.AltMangaID, search.get(0).getID()));
-        annotateTest(() -> assertNotEquals(1, search.size()));
+        assertEquals(TestProvider.AltMangaID, search.get(0).getID());
+        assertNotEquals(1, search.size());
     }
 
     @Test
@@ -40,8 +39,8 @@ final class TestMangaSearch {
                 .withOffset(1)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertNotEquals(TestProvider.AltMangaID, search.get(0).getID()));
-        annotateTest(() -> assertEquals(1, search.size()));
+        assertNotEquals(TestProvider.AltMangaID, search.get(0).getID());
+        assertEquals(1, search.size());
     }
 
     @Test
@@ -52,7 +51,7 @@ final class TestMangaSearch {
                 .withLimit(1)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertNull(search.get(0).getType()));
+        assertNull(search.get(0).getType());
     }
 
     @Test
@@ -64,7 +63,7 @@ final class TestMangaSearch {
                     .withLimit(1)
                     .withNoFields()
                     .search();
-            annotateTest(() -> assertEquals(0, search.size()));
+            assertEquals(0, search.size());
         }
         {
             final List<MangaPreview> search =
@@ -74,7 +73,7 @@ final class TestMangaSearch {
                     .withNoFields()
                     .includeNSFW()
                     .search();
-            annotateTest(() -> assertEquals(TestProvider.NSFW_MangaID, search.get(0).getID()));
+            assertEquals(TestProvider.NSFW_MangaID, search.get(0).getID());
         }
     }
 

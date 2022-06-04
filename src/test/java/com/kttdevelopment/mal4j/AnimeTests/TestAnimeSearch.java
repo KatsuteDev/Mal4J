@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static dev.katsute.jcore.Workflow.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestAnimeSearch {
@@ -27,8 +26,8 @@ final class TestAnimeSearch {
                 .withQuery(TestProvider.AnimeQuery)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertEquals(TestProvider.AnimeID, search.get(0).getID()));
-        annotateTest(() -> assertNotEquals(1, search.size()));
+        assertEquals(TestProvider.AnimeID, search.get(0).getID());
+        assertNotEquals(1, search.size());
     }
 
     @Test
@@ -40,8 +39,8 @@ final class TestAnimeSearch {
                 .withOffset(1)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertNotEquals(TestProvider.AnimeID, search.get(0).getID()));
-        annotateTest(() -> assertEquals(1, search.size()));
+        assertNotEquals(TestProvider.AnimeID, search.get(0).getID());
+        assertEquals(1, search.size());
     }
 
     @Test
@@ -52,7 +51,7 @@ final class TestAnimeSearch {
                 .withLimit(1)
                 .withNoFields()
                 .search();
-        annotateTest(() -> assertNull(search.get(0).getType()));
+        assertNull(search.get(0).getType());
     }
 
     @Test
@@ -64,7 +63,7 @@ final class TestAnimeSearch {
                     .withLimit(1)
                     .withNoFields()
                     .search();
-            annotateTest(() -> assertEquals(0, search.size()));
+            assertEquals(0, search.size());
         }
         {
             final List<AnimePreview> search =
@@ -74,10 +73,10 @@ final class TestAnimeSearch {
                    .withNoFields()
                    .includeNSFW()
                    .search();
-            annotateTest(() -> assertTrue(
+            assertTrue(
                 search.get(0).getID() == TestProvider.NSFW_AnimeID || search.get(0).getID() == TestProvider.AltNSFW_AnimeID,
                 "NSFW Anime ID was supposed to be either " + TestProvider.NSFW_AnimeID + " or " + TestProvider.AltNSFW_AnimeID + " but was " + search.get(0).getID()
-            ));
+            );
         }
     }
 
