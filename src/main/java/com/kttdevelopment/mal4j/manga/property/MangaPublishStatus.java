@@ -26,7 +26,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  *
  * @see MediaItem#getStatus()
  * @since 1.0.0
- * @version 2.7.5
+ * @version 2.8.0
  * @author Katsute
  */
 public enum MangaPublishStatus {

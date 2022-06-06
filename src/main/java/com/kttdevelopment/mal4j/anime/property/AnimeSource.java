@@ -26,7 +26,7 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
  *
  * @see AnimePreview#getSource()
  * @since 1.0.0
- * @version 2.7.5
+ * @version 2.8.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
