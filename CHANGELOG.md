@@ -1,5 +1,20 @@
 # Changelog
 
+## 2.8.0
+
+### ⚠ Breaking Change
+
+* Rename Anime source Digital_Manga to DigitalManga https://github.com/KatsuteDev/Mal4J/pull/312 (@Katsute)
+* Rename Anime source Web_Manga to WebManga https://github.com/KatsuteDev/Mal4J/pull/312 (@Katsute)
+* All Anime/Manga enums now fallback to Unknown rather than _null_ when field is unknown https://github.com/KatsuteDev/Mal4J/pull/312 (@Katsute)
+
+### 🐞 Bug Fixes
+
+* Add missing Manga status Hiatus https://github.com/KatsuteDev/Mal4J/pull/312 (@Katsute)
+* Add missing Anime source Mixed Media & Web Novel https://github.com/KatsuteDev/Mal4J/pull/312 (@Katsute)
+
+**Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.7.4...2.8.0
+
 ## 2.7.4
 
 ### 🐞 Bug Fixes
