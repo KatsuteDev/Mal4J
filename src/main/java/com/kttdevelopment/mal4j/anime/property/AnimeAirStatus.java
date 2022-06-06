@@ -18,6 +18,7 @@
 
 package com.kttdevelopment.mal4j.anime.property;
 
+import com.kttdevelopment.mal4j.Logging;
 import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
@@ -25,10 +26,12 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  *
  * @see MediaItem#getStatus()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.8.0
  * @author Katsute
  */
 public enum AnimeAirStatus {
+
+    Unknown     ("unknown"),
 
     Airing      ("currently_airing"),
     NotYetAired ("not_yet_aired"),
@@ -64,7 +67,9 @@ public enum AnimeAirStatus {
         for(final AnimeAirStatus value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
-        return null;
+        if(string != null)
+            Logging.getLogger().warning(String.format("Unrecognized Anime air status '%s', please report this to the maintainers of Mal4J", string));
+        return Unknown;
     }
 
     @Override

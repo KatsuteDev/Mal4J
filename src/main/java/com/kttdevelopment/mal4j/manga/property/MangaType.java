@@ -18,18 +18,21 @@
 
 package com.kttdevelopment.mal4j.manga.property;
 
+import com.kttdevelopment.mal4j.Logging;
+
 /**
  * Represents the type of medium a Manga is.
  *
  * @see com.kttdevelopment.mal4j.manga.MangaPreview#getType()
  * @since 1.0.0
- * @version 1.1.0
+ * @version 2.8.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
 public enum MangaType {
 
     Unknown     ("unknown"),
+
     Manga       ("manga"),
     /**
      * @deprecated use {@link #LightNovel}
@@ -73,7 +76,9 @@ public enum MangaType {
         for(final MangaType value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
-        return null;
+        if(string != null)
+            Logging.getLogger().warning(String.format("Unrecognized Manga type '%s', please report this to the maintainers of Mal4J", string));
+        return Unknown;
     }
 
     @Override

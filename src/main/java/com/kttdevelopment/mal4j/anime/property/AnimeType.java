@@ -18,6 +18,7 @@
 
 package com.kttdevelopment.mal4j.anime.property;
 
+import com.kttdevelopment.mal4j.Logging;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 
 /**
@@ -25,18 +26,21 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
  *
  * @see AnimePreview#getType()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.8.0
  * @author Katsute
  */
 public enum AnimeType {
 
-    Unknown ("unknown"),
-    TV      ("tv"),
-    OVA     ("ova"),
-    Movie   ("movie"),
-    Special ("special"),
-    ONA     ("ona"),
-    Music   ("music");
+    Unknown     ("unknown"),
+
+    TV          ("tv"),
+    OVA         ("ova"),
+    Movie       ("movie"),
+    Special     ("special"),
+    ONA         ("ona"),
+    Music       ("music"),
+
+    MixedMedia  ("mixed_media");
 
     private final String field;
 
@@ -68,7 +72,9 @@ public enum AnimeType {
         for(final AnimeType value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
-        return null;
+        if(string != null)
+            Logging.getLogger().warning(String.format("Unrecognized Anime type '%s', please report this to the maintainers of Mal4J", string));
+        return Unknown;
     }
 
     @Override
