@@ -3,6 +3,7 @@ package com.kttdevelopment.mal4j.AnimeTests;
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.anime.property.AnimeType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +52,7 @@ final class TestAnimeSearch {
                 .withLimit(1)
                 .withNoFields()
                 .search();
-        assertNull(search.get(0).getType());
+        assertEquals(AnimeType.Unknown, search.get(0).getType());
     }
 
     @Test
