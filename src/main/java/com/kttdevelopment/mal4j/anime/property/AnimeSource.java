@@ -18,6 +18,7 @@
 
 package com.kttdevelopment.mal4j.anime.property;
 
+import com.kttdevelopment.mal4j.Logging;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
 
 /**
@@ -25,18 +26,30 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
  *
  * @see AnimePreview#getSource()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.7.5
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
 public enum AnimeSource {
 
+    Unknown         ("unknown"),
+
     Other           ("other"),
     Original        ("original"),
     Manga           ("manga"),
     FourKomaManga   ("4_koma_manga"),
+    /**
+     * @deprecated use {@link #WebManga}
+     */
+    @Deprecated
     Web_Manga       ("web_manga"),
-    Digital_Manga   ("digital_manga"),
+    WebManga        ("web_manga"),
+    /**
+     * @deprecated use {@link #DigitalManga}
+     */
+    @Deprecated
+    Digital_Manga    ("digital_manga"),
+    DigitalManga    ("digital_manga"),
     Novel           ("novel"),
     LightNovel      ("light_novel"),
     VisualNovel     ("visual_nodel"),
@@ -45,7 +58,10 @@ public enum AnimeSource {
     Book            ("book"),
     PictureBook     ("picture_book"),
     Radio           ("radio"),
-    Music           ("music");
+    Music           ("music"),
+
+    MixedMedia      ("mixed_media"),
+    WebNovel        ("web_novel");
 
     private final String field;
 
@@ -75,9 +91,11 @@ public enum AnimeSource {
      */
     public static AnimeSource asEnum(final String string){
         for(final AnimeSource value : values())
-            if(value.field.equalsIgnoreCase(string))
+            if(!value.name().contains("_") && value.field.equalsIgnoreCase(string))
                 return value;
-        return null;
+        if(string != null)
+            Logging.getLogger().warning(String.format("Unrecognized Anime source '%s', please report this to the maintainers of Mal4J", string));
+        return Unknown;
     }
 
     @Override

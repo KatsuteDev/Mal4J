@@ -3,6 +3,8 @@ package com.kttdevelopment.mal4j.MangaTests;
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.RelatedAnime;
 import com.kttdevelopment.mal4j.manga.Manga;
+import com.kttdevelopment.mal4j.manga.property.MangaPublishStatus;
+import com.kttdevelopment.mal4j.manga.property.MangaType;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -134,6 +136,13 @@ final class TestManga {
         assertNotNull(relatedAnime.getAnimePreview().getID());
         assertNotNull(relatedAnime.getRelationType());
         assertNotNull(relatedAnime.getRelationTypeFormat());
+    }
+
+    @Test
+    final void testEnum(){
+        assertEquals(MangaPublishStatus.OnHiatus, mal.getManga(2).getStatus());
+        assertEquals(MangaPublishStatus.Unknown, MangaPublishStatus.asEnum("?"));
+        assertEquals(MangaType.Unknown, MangaType.asEnum("?"));
     }
 
 }

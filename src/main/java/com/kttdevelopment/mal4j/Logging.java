@@ -24,7 +24,7 @@ import java.util.logging.*;
 /**
  * Used for logging operating.
  */
-abstract class Logging {
+public abstract class Logging {
 
     // dedicated logger
 
@@ -43,8 +43,11 @@ abstract class Logging {
         }});
     }
 
-    static Logger getLogger(){
-        return logger;
+    public static Logger getLogger(){
+        if(!new Exception().getStackTrace()[1].toString().startsWith("com.kttdevelopment.mal4j."))
+            throw new SecurityException("Logging not allowed for this class");
+        else
+            return logger;
     }
 
     // debug
@@ -57,7 +60,7 @@ abstract class Logging {
 
     // debug logging
 
-    private static final transient HashSet<String> secrets = new HashSet<>();
+    private static final HashSet<String> secrets = new HashSet<>();
 
     static void addMask(final String secret){
         if(secret != null)
@@ -73,10 +76,10 @@ abstract class Logging {
         if(debug)
             System.out.println();
     }
-    
+
     static void debug(final String message){
         if(message == null) return;
-        
+
         if(debug){
             String buffer = message;
             for(final String secret : secrets)

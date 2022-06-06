@@ -18,6 +18,7 @@
 
 package com.kttdevelopment.mal4j.manga.property;
 
+import com.kttdevelopment.mal4j.Logging;
 import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
@@ -25,14 +26,18 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  *
  * @see MediaItem#getStatus()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.7.5
  * @author Katsute
  */
 public enum MangaPublishStatus {
 
+    Unknown         ("unknown"),
+
     Publishing      ("currently_publishing"),
     NotYetPublished ("not_yet_published"),
-    Finished        ("finished");
+    Finished        ("finished"),
+
+    OnHiatus        ("on_hiatus");
 
     private final String field;
 
@@ -64,7 +69,9 @@ public enum MangaPublishStatus {
         for(final MangaPublishStatus value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
-        return null;
+        if(string != null)
+            Logging.getLogger().warning(String.format("Unrecognized Manga publish status '%s', please report this to the maintainers of Mal4J", string));
+        return Unknown;
     }
 
     @Override
