@@ -26,7 +26,7 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
  *
  * @see AnimePreview#getSource()
  * @since 1.0.0
- * @version 2.8.0
+ * @version 2.8.1
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
@@ -52,7 +52,7 @@ public enum AnimeSource {
     DigitalManga    ("digital_manga"),
     Novel           ("novel"),
     LightNovel      ("light_novel"),
-    VisualNovel     ("visual_nodel"),
+    VisualNovel     ("visual_novel"),
     Game            ("game"),
     CardGame        ("card_game"),
     Book            ("book"),
