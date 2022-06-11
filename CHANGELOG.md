@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.8.1
+
+### 🐞 Bug Fixes
+
+* Fix visual novel Anime source https://github.com/KatsuteDev/Mal4J/pull/315 (@Katsute)
+
+### 📘 Dependencies
+
+* Bump maven-surefire-plugin from 3.0.0-M6 to 3.0.0-M7 https://github.com/KatsuteDev/Mal4J/pull/313 (@dependabot)
+
+**Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.8.0...2.8.1
+
 ## 2.8.0
 
 ### ⚠ Breaking Change
