@@ -4,6 +4,7 @@
  - [ ] I have checked that no other similar pull request already exists.
  - [ ] My code follows the general code style as the rest of the code.
  - [ ] I have checked that no sensitive information is exposed.
+ - [ ] I have added relevant comments.
  - [ ] Build compiles.
  - [ ] Build passes test cases.
 
