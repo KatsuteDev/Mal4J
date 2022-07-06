@@ -63,7 +63,7 @@ body:
     attributes:
       label: Release Version
       description: |
-        Release version or branch commit where the issue occured. Do not write 'latest'.
+        Release version or branch commit where the issue occurred. Do not write 'latest'.
       placeholder: |
         ex: 2.2.0, 3cdf1c8
     validations:
