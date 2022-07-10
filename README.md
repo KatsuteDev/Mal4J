@@ -14,16 +14,14 @@
         •
         <a href="https://myanimelist.net/forum/?topicid=1897569">Forum Post</a>
     </div>
-</div>
-
-<br>
-
-<div align="center">
-    <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j">Maven Central</a>
-    •
-    <a href="https://github.com/KatsuteDev/Mal4J/packages/1104772">GitHub Packages</a>
-    •
-    <a href="https://github.com/KatsuteDev/Mal4J/releases">Releases</a>
+    <br>
+    <div>
+        <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j">Maven Central</a>
+        •
+        <a href="https://github.com/KatsuteDev/Mal4J/packages/1104772">GitHub Packages</a>
+        •
+        <a href="https://github.com/KatsuteDev/Mal4J/releases">Releases</a>
+    </div>
 </div>
 
 <br>

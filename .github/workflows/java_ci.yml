@@ -12,4 +12,4 @@ jobs:
       package: true
       report: true
     secrets:
-      token: ${{ secrets.SINON }}
+      token: ${{ secrets.BOT }}
