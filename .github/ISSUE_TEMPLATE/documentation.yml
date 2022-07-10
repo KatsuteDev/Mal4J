@@ -3,34 +3,28 @@ description: Report a documentation issue
 labels: [bug, documentation]
 assignees: []
 body:
-  - type: checkboxes
-    id: checks
+  - type: markdown
     attributes:
-      label: Prerequisites
-      description: |
-        *If **all** checks are not passed then the issue will be closed.*
-      options:
-        - label: I have checked that no other similar issue already exists.
-          required: true
-        - label: I have checked that this issue is actually a bug and not a feature.
-          required: true
+      value: |
+        Before opening a documentation report please check that your issue was not already discussed in the following:
+
+        * [Issues](https://github.com/KatsuteDev/Mal4J/issues?q=is%3Aissue+is%3Aopen+label%3Abug%2C%22critical+bug%22+label%3Adocumentation)
+
+        Please also check that:
+
+        * This is actually an issue and not intended behavior.
+        * The issue is from the latest documentation.
 
   - type: input
-    id: location
     attributes:
       label: Location
       description: |
-        Provide a link to the version or the name of the class that has the documentation issue.
-      placeholder: |
-        ex: MyAnimeList, https://mal4j.katsute.dev/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html
+        Link to the documentation issue or name of the class.
     validations:
       required: true
 
   - type: textarea
-    id: issue
     attributes:
       label: Issue
-      description: |
-        Explain your issue.
     validations:
       required: true

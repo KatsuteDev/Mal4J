@@ -11,14 +11,15 @@ This project supports Java 8+ and Java 9+ modules.
 In order to make this library function on Java 8-10, reflection is used in order to make PATCH requests work correctly.
 
 If you don't want this warning then either:
- - Downgrade to JDK 8
- - Upgrade to JDK 11 or higher
+ - Downgrade to Java 8
+ - Upgrade to Java 11 or higher
 
 ### `UnsupportedClassVersionError`
 
 This issue is caused by using an older, unsupported Java version; this library requires at least Java 8.
 
 ### `AndroidCompatibilityException` / `ClassNotFoundException` / `NoSuchMethodError`
+
 This issue may occur due to Android incompatibilities (blame Google), please open a new issue if this happens.
 
 ### `InaccessibleObjectException` / `IllegalStateException: Reflect module is not accessible in JDK 9+`
@@ -44,8 +45,8 @@ This library offers ***ALL*** the features provided by the API.
 ### My client id / auth token doesn't work.
 
  - Make sure you are using the correct authentication method
-   - For client id use: [`#withClientID`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withClientID(java.lang.String))
-   - For token use: [`#withToken`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String))
+   - For client id use: [`withClientID`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withClientID(java.lang.String))
+   - For token use: [`withToken`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String))
  - Your token may be expired.
  - Your token is missing '`Bearer `'.
  - Your token may contain dangling whitespace.
@@ -60,7 +61,7 @@ The seasons query returns Anime that are airing in the current season, this incl
 
 ### NSFW is not working.
 
-For search queries make sure you also run [`#includeNSFW()`](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/query/NSFW.html#includeNSFW()) in the query builder.
+For search queries make sure you also run [`includeNSFW()`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/query/NSFW.html#includeNSFW()) in the query builder.
 
 ### I can't get other users.
 
@@ -68,7 +69,7 @@ Currently the MyAnimeList API does not allow you to check users other than yours
 
 ### I can't modify my Anime/Manga lists.
 
-In order to change listings you must authenticate using a [token](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String)) or with an [authenticator](https://docs.katsute.dev/mal4j/javadoc/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withAuthorization(com.kttdevelopment.mal4j.MyAnimeListAuthenticator)).
+In order to change listings you must authenticate using a [token](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String)) or with an [authenticator](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withAuthorization(com.kttdevelopment.mal4j.MyAnimeListAuthenticator)).
 
 ### `list_status` / `my_list_status` field isn't working.
 
