@@ -1,14 +1,11 @@
 changelog:
   categories:
-    - title: ⚠ Breaking Change
+    - title: ⚠️ Breaking Change
       labels:
         - breaking change
-    - title: ⚠ Deprecated
-      labels:
-        - deprecated
     - title: ❌ Removed
       labels:
-        - removed
+        - deprecated
     - title: 🔐 Security
       labels:
         - security
