@@ -44,5 +44,5 @@ jobs:
       - name: ✔ Generate Report
         uses: Katsute/Workflows/Actions/java/report@main
         with:
-          token: ${{ secrets.SINON }}
+          token: ${{ secrets.BOT }}
           path: .
