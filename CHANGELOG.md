@@ -130,7 +130,7 @@
 
 ### 📘 Dependencies
 
-* Bump junit-jupiter from 5.8.1 to 5.8.2 https://github.com/KatsuteDev/Mal4J/pull/274 (@sinon-bot)
+* Bump junit-jupiter from 5.8.1 to 5.8.2 https://github.com/KatsuteDev/Mal4J/pull/274
 * Bump actions/setup-java from 2.3.1 to 2.4.0 https://github.com/KatsuteDev/Mal4J/pull/271 (@dependabot)
 
 **Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.6.0...2.7.0
