@@ -160,11 +160,13 @@ final class TestAnime {
 
     @Test
     final void testEnum(){
-        assertEquals(AnimeSource.WebNovel, mal.getAnime(37208).getSource());
-        assertEquals(AnimeSource.MixedMedia, mal.getAnime(34474).getSource());
         assertEquals(AnimeSource.Unknown, AnimeSource.asEnum("?"));
         assertEquals(AnimeType.Unknown, AnimeType.asEnum("?"));
         assertEquals(RelationType.Unknown, RelationType.asEnum("?"));
+
+        assertEquals(AnimeSource.WebNovel, mal.getAnime(37208).getSource());
+        assertEquals(AnimeSource.MixedMedia, mal.getAnime(34474).getSource());
+
         for(final RelatedAnime relatedAnime : mal.getAnime(16498).getRelatedAnime())
             assertNotEquals(RelationType.Unknown, relatedAnime.getRelationType());
     }
