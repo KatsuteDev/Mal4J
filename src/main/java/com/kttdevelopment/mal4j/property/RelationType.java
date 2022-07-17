@@ -18,15 +18,19 @@
 
 package com.kttdevelopment.mal4j.property;
 
+import com.kttdevelopment.mal4j.Logging;
+
 /**
  * Represents a relation type.
  *
  * @see RelatedMedia#getRelationType()
  * @since 1.0.0
- * @version 2.4.0
+ * @version 2.8.2
  * @author Katsute
  */
 public enum RelationType {
+
+    Unknown             ("unknown"),
 
     Other               ("other"),
     Sequel              ("sequel"),
@@ -36,7 +40,10 @@ public enum RelationType {
     SideStory           ("side_story"),
     ParentStory         ("parent_story"),
     Summary             ("summary"),
-    FullStory           ("full_story");
+    FullStory           ("full_story"),
+
+    SpinOff             ("spin_off"),
+    Character           ("character");
 
     private final String field;
 
@@ -68,7 +75,9 @@ public enum RelationType {
         for(final RelationType value : values())
             if(value.field.equalsIgnoreCase(string))
                 return value;
-        return null;
+        if(string != null)
+            Logging.getLogger().warning(String.format("Unrecognized Relation type '%s', please report this to the maintainers of Mal4J", string));
+        return Unknown;
     }
 
     @Override
