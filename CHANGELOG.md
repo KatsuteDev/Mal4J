@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.8.2
+
+### 🐞 Bug Fixes
+
+* Add missing relation types https://github.com/KatsuteDev/Mal4J/pull/320 (@Katsute)
+  * Add missing relation type Spin off
+  * Add missing relation type Character
+  * For unknown relation type return Unknown rather than null
+
+**Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.8.1...2.8.2
+
 ## 2.8.1
 
 ### 🐞 Bug Fixes
