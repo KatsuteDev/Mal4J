@@ -76,7 +76,7 @@ public enum RelationType {
             if(value.field.equalsIgnoreCase(string))
                 return value;
         if(string != null)
-            Logging.getLogger().warning(String.format("Unrecognized Relation type '%s', please report this to the maintainers of Mal4J", string));
+            Logging.getLogger().warning(String.format("Unrecognized relation type '%s', please report this to the maintainers of Mal4J", string));
         return Unknown;
     }
 
