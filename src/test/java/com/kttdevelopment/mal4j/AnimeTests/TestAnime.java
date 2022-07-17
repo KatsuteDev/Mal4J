@@ -2,9 +2,11 @@ package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.mal4j.*;
 import com.kttdevelopment.mal4j.anime.Anime;
+import com.kttdevelopment.mal4j.anime.RelatedAnime;
 import com.kttdevelopment.mal4j.anime.property.AnimeSource;
 import com.kttdevelopment.mal4j.anime.property.AnimeType;
 import com.kttdevelopment.mal4j.manga.RelatedManga;
+import com.kttdevelopment.mal4j.property.RelationType;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -162,6 +164,9 @@ final class TestAnime {
         assertEquals(AnimeSource.MixedMedia, mal.getAnime(34474).getSource());
         assertEquals(AnimeSource.Unknown, AnimeSource.asEnum("?"));
         assertEquals(AnimeType.Unknown, AnimeType.asEnum("?"));
+        assertEquals(RelationType.Unknown, RelationType.asEnum("?"));
+        for(final RelatedAnime relatedAnime : mal.getAnime(16498).getRelatedAnime())
+            assertNotEquals(RelationType.Unknown, relatedAnime.getRelationType());
     }
 
 }
