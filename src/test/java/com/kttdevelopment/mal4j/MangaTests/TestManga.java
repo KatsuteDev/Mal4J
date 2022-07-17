@@ -143,7 +143,7 @@ final class TestManga {
         assertEquals(MangaPublishStatus.Unknown, MangaPublishStatus.asEnum("?"));
         assertEquals(MangaType.Unknown, MangaType.asEnum("?"));
 
-        assumeTrue(MangaPublishStatus.OnHiatus == mal.getManga(2).getStatus(), "Hiatus status only sometimes works");
+        assumeTrue(MangaPublishStatus.OnHiatus == mal.getManga(2).getStatus(), "Test will fail when status is not hiatus");
     }
 
 }
