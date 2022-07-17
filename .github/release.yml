@@ -3,9 +3,12 @@ changelog:
     - title: ⚠️ Breaking Change
       labels:
         - breaking change
-    - title: ❌ Removed
+    - title: ⚠️ Deprecated
       labels:
         - deprecated
+    - title: ❌ Removed
+      labels:
+        - removed
     - title: 🔐 Security
       labels:
         - security
