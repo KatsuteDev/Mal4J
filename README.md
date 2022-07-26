@@ -32,7 +32,7 @@ This library supports read and write operations, including list updates.
  - [✨ Features](#-features)
  - [👨‍💻 Contributing](#-contributing)
  - [💼 License](#-license)
- - [⚠️️ Disclaimer](#%EF%B8%8F-disclaimer)
+ - [⚠️️ Disclaimer](#%EF%B8%8F%EF%B8%8F-disclaimer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
