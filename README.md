@@ -13,9 +13,7 @@
         <a href="https://github.com/KatsuteDev/Mal4J/blob/main/faq.md#readme">FAQ</a>
         •
         <a href="https://myanimelist.net/forum/?topicid=1897569">Forum Post</a>
-    </div>
     <br>
-    <div>
         <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j">Maven Central</a>
         •
         <a href="https://github.com/KatsuteDev/Mal4J/packages/1104772">GitHub Packages</a>
@@ -34,7 +32,7 @@ This library supports read and write operations, including list updates.
  - [✨ Features](#-features)
  - [👨‍💻 Contributing](#-contributing)
  - [💼 License](#-license)
- - [⚠ Disclaimer](#-disclaimer)
+ - [⚠️️ Disclaimer](#%EF%B8%8F-disclaimer)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -124,13 +122,13 @@ OpeningTheme[] op = anime.getOpeningThemes();
  - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/KatsuteDev/Mal4J/discussions).
  - Want to further expand our project? [Fork](https://github.com/KatsuteDev/Mal4J/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/Mal4J/pulls).
 
-#### ⚠ Before you start
+#### ⚠️️ Before you start
 
 For Anime/Manga list tests *Sakura-sou no Pet na Kanojo* ([Anime#13759](https://myanimelist.net/anime/13759) and [Manga#28107](https://myanimelist.net/manga/28107)) will be used.
 
 The test cases will create a backup of your list in the `anime-list.txt` and `manga-list.txt` files. Make sure you fix your ratings and any other information that might be overwritten by this test.
 
-Ignore test failures for these known issues: [**⚠ External Issues**](https://github.com/KatsuteDev/Mal4J/projects/10).
+Ignore test failures for these known issues: [**⚠️ External Issues**](https://github.com/KatsuteDev/Mal4J/projects/10).
 
 #### 💻 Running Tests Locally
 
@@ -152,7 +150,7 @@ Devs running tests through GitHub Actions may do so by running the `MyAnimeList 
 
 This library is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Mal4J/blob/main/LICENSE).
 
-### ⚠ Disclaimer
+### ⚠️️ Disclaimer
 
 - [@Katsute](https://github.com/Katsute) and [@KatsuteDev](https://github.com/KatsuteDev) are not affiliated with MyAnimeList.
 - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).

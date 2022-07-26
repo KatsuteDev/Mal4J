@@ -25,7 +25,7 @@
 
 ## 2.8.0
 
-### ⚠ Breaking Change
+### ⚠️ Breaking Change
 
 * Rename Anime source Digital_Manga to DigitalManga https://github.com/KatsuteDev/Mal4J/pull/312 (@Katsute)
 * Rename Anime source Web_Manga to WebManga https://github.com/KatsuteDev/Mal4J/pull/312 (@Katsute)
@@ -148,7 +148,7 @@
 
 ## 2.6.0
 
-### ⚠ Breaking Change
+### ⚠️ Breaking Change
 
 * Transfer repository to @KatsuteDev https://github.com/KatsuteDev/Mal4J/pull/258 (@Katsute)
 
@@ -212,7 +212,7 @@
 
 ## 2.4.0
 
-### ⚠ Breaking Change
+### ⚠️ Breaking Change
 **MyAnimeList has changed genres, see this forum post: https://myanimelist.net/forum/?topicid=1956762.**
 - Fix MyAnimeList genre changes → Genre has been changed from an enum to a class #236 (@Katsute)
 
