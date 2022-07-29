@@ -19,6 +19,7 @@
 package com.kttdevelopment.mal4j.anime.property;
 
 import com.kttdevelopment.mal4j.Logging;
+import com.kttdevelopment.mal4j.property.FieldEnum;
 import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
@@ -26,10 +27,10 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  *
  * @see MediaItem#getStatus()
  * @since 1.0.0
- * @version 2.8.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum AnimeAirStatus {
+public enum AnimeAirStatus implements FieldEnum {
 
     Unknown     ("unknown"),
 
@@ -43,13 +44,7 @@ public enum AnimeAirStatus {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }

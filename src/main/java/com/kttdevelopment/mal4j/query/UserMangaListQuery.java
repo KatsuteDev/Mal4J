@@ -19,8 +19,6 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.anime.property.AnimeSort;
-import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaSort;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;

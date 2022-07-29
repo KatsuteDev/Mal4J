@@ -19,16 +19,17 @@
 package com.kttdevelopment.mal4j.anime.property;
 
 import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.property.FieldEnum;
 
 /**
  * Represents the Anime's TV viewing rating (ex: pg13).
  *
  * @see AnimePreview#getRating()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum AnimeRating {
+public enum AnimeRating implements FieldEnum {
 
     G   ("g"),
     PG  ("pg"),
@@ -43,13 +44,7 @@ public enum AnimeRating {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }

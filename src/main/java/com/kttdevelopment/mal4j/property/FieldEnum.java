@@ -16,52 +16,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
+
 package com.kttdevelopment.mal4j.property;
 
 /**
- * Represents the general ranking sort types.
+ * Indicates that an enum contains field methods.
  *
- * @since 1.0.0
+ * @since 2.9.0
  * @version 2.9.0
  * @author Katsute
  */
-public enum RankingType implements FieldEnum {
-
-    All         ("all"),
-    @SuppressWarnings("SpellCheckingInspection")
-    Popularity  ("bypopularity"),
-    Favorite    ("favorite");
-
-    private final String field;
-
-    RankingType(final String field){
-        this.field = field;
-    }
-
-    @Override
-    public final String field(){
-        return field;
-    }
+public interface FieldEnum {
 
     /**
-     * Returns the field name as an enum.
+     * Returns the json field name.
      *
-     * @param string json field name
-     *
-     * @return enum
+     * @return json field name
      *
      * @since 1.0.0
      */
-    public static RankingType asEnum(final String string){
-        for(final RankingType value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
-        return null;
-    }
-
-    @Override
-    public final String toString(){
-        return name();
-    }
+    String field();
 
 }

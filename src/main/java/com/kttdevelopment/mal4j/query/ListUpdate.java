@@ -18,10 +18,7 @@
 
 package com.kttdevelopment.mal4j.query;
 
-import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
-import com.kttdevelopment.mal4j.manga.property.MangaStatus;
-import com.kttdevelopment.mal4j.property.ListStatus;
-import com.kttdevelopment.mal4j.property.Priority;
+import com.kttdevelopment.mal4j.property.*;
 
 import java.util.*;
 
@@ -37,7 +34,7 @@ import java.util.*;
  * @author Katsute
  */
 @SuppressWarnings("unchecked")
-public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S extends Enum<?>> {
+public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S extends FieldEnum> {
 
     protected final long id;
 
@@ -64,12 +61,7 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
      * @since 1.0.0
      */
     public final T status(final S status){
-        return status(
-            status instanceof AnimeStatus
-                ? ((AnimeStatus) status).field()
-                : status instanceof MangaStatus
-                    ? ((MangaStatus) status).field()
-                    : null);
+        return status(status.field());
     }
 
     /**
@@ -78,7 +70,7 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
      * @param status status
      * @return list status
      *
-     * @see #status(Enum)
+     * @see #status(FieldEnum)
      * @since 2.9.0
      */
     public final T status(final String status){

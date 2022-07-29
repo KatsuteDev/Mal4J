@@ -18,15 +18,17 @@
 
 package com.kttdevelopment.mal4j.manga.property;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
+
 /**
  * Represents a Manga's status on a users Manga list.
  *
  * @see com.kttdevelopment.mal4j.manga.MangaPreview#getStatus()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum MangaStatus {
+public enum MangaStatus implements FieldEnum {
 
     Reading     ("reading"),
     Completed   ("completed"),
@@ -40,13 +42,7 @@ public enum MangaStatus {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }

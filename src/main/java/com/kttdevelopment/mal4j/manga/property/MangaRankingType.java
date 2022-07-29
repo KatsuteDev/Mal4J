@@ -18,17 +18,18 @@
 
 package com.kttdevelopment.mal4j.manga.property;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
 import com.kttdevelopment.mal4j.property.RankingType;
 
 /**
  * Represents the Manga ranking type.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
-public enum MangaRankingType {
+public enum MangaRankingType implements FieldEnum {
 
     All     (RankingType.All.field()),
     Manga   ("manga"),
@@ -47,13 +48,7 @@ public enum MangaRankingType {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }

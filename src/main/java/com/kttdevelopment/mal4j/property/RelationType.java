@@ -25,10 +25,10 @@ import com.kttdevelopment.mal4j.Logging;
  *
  * @see RelatedMedia#getRelationType()
  * @since 1.0.0
- * @version 2.8.2
+ * @version 2.9.0
  * @author Katsute
  */
-public enum RelationType {
+public enum RelationType implements FieldEnum {
 
     Unknown             ("unknown"),
 
@@ -51,13 +51,7 @@ public enum RelationType {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }

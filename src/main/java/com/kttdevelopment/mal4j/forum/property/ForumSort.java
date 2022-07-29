@@ -18,14 +18,16 @@
 
 package com.kttdevelopment.mal4j.forum.property;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
+
 /**
  * Represents the forum sort type.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum ForumSort {
+public enum ForumSort implements FieldEnum {
 
     Recent("recent");
 
@@ -36,13 +38,7 @@ public enum ForumSort {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }

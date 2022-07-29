@@ -23,10 +23,10 @@ package com.kttdevelopment.mal4j.property;
  *
  * @see MediaItem#getNSFW()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum NSFW {
+public enum NSFW implements FieldEnum {
 
     White   ("white"),
     Gray    ("gray"),
@@ -38,13 +38,7 @@ public enum NSFW {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }

@@ -18,16 +18,17 @@
 
 package com.kttdevelopment.mal4j.anime.property;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
 import com.kttdevelopment.mal4j.property.RankingType;
 
 /**
  * Represents the Anime ranking type.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum AnimeRankingType {
+public enum AnimeRankingType implements FieldEnum {
 
     Airing  ("airing"),
     Upcoming("upcoming"),
@@ -47,13 +48,7 @@ public enum AnimeRankingType {
         this.field = type;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
