@@ -29,14 +29,14 @@ import com.kttdevelopment.mal4j.manga.property.RereadValue;
  * @see com.kttdevelopment.mal4j.MyAnimeList#updateMangaListing(long)
  * @see ListUpdate
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class MangaListUpdate extends ListUpdate<MangaListUpdate,MangaListStatus,MangaStatus> {
 
     protected Boolean rereading;
     protected Integer volumesRead, chaptersRead, timesReread;
-    protected RereadValue rereadValue;
+    protected Integer rereadValue;
 
     /**
      * Creates a Manga list update. Applications do not use this constructor.
@@ -108,10 +108,24 @@ public abstract class MangaListUpdate extends ListUpdate<MangaListUpdate,MangaLi
      * @param rereadValue reread value
      * @return list update
      *
+     * @see #rereadValue(Integer)
      * @see RereadValue
      * @since 1.0.0
      */
     public final MangaListUpdate rereadValue(final RereadValue rereadValue){
+        return rereadValue(rereadValue.value());
+    }
+
+    /**
+     * Sets the reread value.
+     *
+     * @param rereadValue reread value
+     * @return list update
+     *
+     * @see #rereadValue(RereadValue)
+     * @since 2.9.0
+     */
+    public final MangaListUpdate rereadValue(final Integer rereadValue){
         this.rereadValue = rereadValue;
         return this;
     }

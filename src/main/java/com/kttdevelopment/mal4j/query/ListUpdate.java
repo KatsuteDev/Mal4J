@@ -18,6 +18,8 @@
 
 package com.kttdevelopment.mal4j.query;
 
+import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
+import com.kttdevelopment.mal4j.manga.property.MangaStatus;
 import com.kttdevelopment.mal4j.property.ListStatus;
 import com.kttdevelopment.mal4j.property.Priority;
 
@@ -31,7 +33,7 @@ import java.util.*;
  * @param <S> status type
  *
  * @since 1.0.0
- * @version 1.1.0
+ * @version 2.9.0
  * @author Katsute
  */
 @SuppressWarnings("unchecked")
@@ -39,12 +41,12 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
 
     protected final long id;
 
-    protected S status;
+    protected String status;
     protected Integer score;
 
     protected Long startDate, finishDate;
 
-    protected Priority priority;
+    protected Integer priority;
     protected List<String> tags;
     protected String comments;
 
@@ -58,9 +60,28 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
      * @param status status
      * @return list update
      *
+     * @see #status(String)
      * @since 1.0.0
      */
     public final T status(final S status){
+        return status(
+            status instanceof AnimeStatus
+                ? ((AnimeStatus) status).field()
+                : status instanceof MangaStatus
+                    ? ((MangaStatus) status).field()
+                    : null);
+    }
+
+    /**
+     * Sets the status.
+     *
+     * @param status status
+     * @return list status
+     *
+     * @see #status(Enum)
+     * @since 2.9.0
+     */
+    public final T status(final String status){
         this.status = status;
         return (T) this;
     }
@@ -118,10 +139,24 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
      * @param priority priority
      * @return list update
      *
+     * @see #priority(Integer)
      * @see Priority
      * @since 1.0.0
      */
     public final T priority(final Priority priority){
+        return priority(priority.value());
+    }
+
+    /**
+     * Sets the priority.
+     *
+     * @param priority priority
+     * @return list update
+     *
+     * @see #priority(Priority)
+     * @since 2.9.0
+     */
+    public final T priority(final Integer priority){
         this.priority = priority;
         return (T) this;
     }

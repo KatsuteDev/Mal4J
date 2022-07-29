@@ -33,7 +33,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  * @see Anime
  * @see MediaItem
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeType,AnimeAirStatus,AnimeListStatus> {
@@ -50,7 +50,7 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract Integer getEpisodes();
 
     /**
-     * Returns the Anime start season.
+     * Returns the start season.
      *
      * @return start season
      *
@@ -60,7 +60,7 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract StartSeason getStartSeason();
 
     /**
-     * Returns the Anime's broadcast time.
+     * Returns the broadcast time.
      *
      * @return broadcast time
      *
@@ -70,14 +70,25 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract Broadcast getBroadcast();
 
     /**
-     * Returns the Anime's source material.
+     * Returns the source material.
      *
      * @return source material
      *
+     * @see #getRawSource()
      * @see AnimeSource
      * @since 1.0.0
      */
     public abstract AnimeSource getSource();
+
+    /**
+     * Returns the raw source material as returned to by the API.
+     *
+     * @return raw source material
+     *
+     * @see #getSource()
+     * @since 2.9.0
+     */
+    public abstract String getRawSource();
 
     /**
      * Returns the average episode length in seconds.
@@ -89,17 +100,28 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract Integer getAverageEpisodeLength();
 
     /**
-     * Returns the Anime's TV viewing rating (ex: pg13).
+     * Returns the TV viewing rating (ex: pg13).
      *
      * @return TV viewing rating
      *
+     * @see #getRawRating()
      * @see AnimeRating
      * @since 1.0.0
      */
     public abstract AnimeRating getRating();
 
     /**
-     * Returns the Anime's studios.
+     * Returns the rating as returned to by the API.
+     *
+     * @return raw TV viewing rating
+     *
+     * @see #getRating()
+     * @since 2.9.0
+     */
+    public abstract String getRawRating();
+
+    /**
+     * Returns the studios.
      *
      * @return studios
      *

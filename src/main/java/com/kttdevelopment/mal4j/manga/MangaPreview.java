@@ -56,7 +56,7 @@ public abstract class MangaPreview implements MangaRetrievable,MediaItem<MangaTy
     public abstract Integer getChapters();
 
     /**
-     * Returns the Manga's authors.
+     * Returns the authors.
      *
      * @return Manga authors
      *

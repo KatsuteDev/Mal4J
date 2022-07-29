@@ -19,6 +19,8 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
+import com.kttdevelopment.mal4j.anime.property.AnimeSort;
+import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaSort;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
@@ -31,14 +33,14 @@ import com.kttdevelopment.mal4j.manga.property.MangaStatus;
  * @see MyAnimeList#getUserMangaListing(String)
  * @see FieldQuery
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,MangaListStatus> implements NSFW<UserMangaListQuery> {
 
     protected final String username;
-    protected MangaSort sort;
-    protected MangaStatus status;
+    protected String sort;
+    protected String status;
     protected Boolean nsfw;
 
     /**
@@ -60,10 +62,24 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
      * @param sort sort
      * @return list query
      *
+     * @see #sortBy(String)
      * @see MangaSort
      * @since 1.0.0
      */
     public final UserMangaListQuery sortBy(final MangaSort sort){
+        return sortBy(sort.field());
+    }
+
+    /**
+     * Sets the sorting option.
+     *
+     * @param sort sort
+     * @return list query
+     *
+     * @see #sortBy(MangaSort)
+     * @since 2.9.0
+     */
+    public final UserMangaListQuery sortBy(final String sort){
         this.sort = sort;
         return this;
     }
@@ -74,9 +90,24 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
      * @param status status
      * @return list query
      *
+     * @see #withStatus(String)
+     * @see MangaStatus
      * @since 1.0.0
      */
     public final UserMangaListQuery withStatus(final MangaStatus status){
+        return withStatus(status.field());
+    }
+
+    /**
+     * Sets the status filter.
+     *
+     * @param status status
+     * @return list query
+     *
+     * @see #withStatus(MangaStatus)
+     * @since 2.9.0
+     */
+    public final UserMangaListQuery withStatus(final String status){
         this.status = status;
         return this;
     }

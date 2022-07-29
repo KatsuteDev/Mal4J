@@ -31,14 +31,14 @@ import com.kttdevelopment.mal4j.anime.property.AnimeStatus;
  * @see MyAnimeList#getUserAnimeListing(String)
  * @see FieldQuery
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,AnimeListStatus> implements NSFW<UserAnimeListQuery> {
 
     protected final String username;
-    protected AnimeSort sort;
-    protected AnimeStatus status;
+    protected String sort;
+    protected String status;
     protected Boolean nsfw;
 
     /**
@@ -60,10 +60,24 @@ public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,A
      * @param sort sort
      * @return list query
      *
+     * @see #sortBy(String)
      * @see AnimeSort
      * @since 1.0.0
      */
     public final UserAnimeListQuery sortBy(final AnimeSort sort){
+        return sortBy(sort.field());
+    }
+
+    /**
+     * Sets the sorting option.
+     *
+     * @param sort sort
+     * @return list query
+     *
+     * @see #sortBy(AnimeSort)
+     * @since 2.9.0
+     */
+    public final UserAnimeListQuery sortBy(final String sort){
         this.sort = sort;
         return this;
     }
@@ -74,9 +88,24 @@ public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,A
      * @param status status
      * @return list query
      *
+     * @see #withStatus(String)
+     * @see AnimeStatus
      * @since 1.0.0
      */
     public final UserAnimeListQuery withStatus(final AnimeStatus status){
+        return withStatus(status.field());
+    }
+
+    /**
+     * Sets the status filter.
+     *
+     * @param status status
+     * @return list query
+     *
+     * @see #withStatus(AnimeStatus)
+     * @since 2.9.0
+     */
+    public final UserAnimeListQuery withStatus(final String status){
         this.status = status;
         return this;
     }

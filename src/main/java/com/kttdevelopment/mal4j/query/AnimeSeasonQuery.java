@@ -30,14 +30,14 @@ import com.kttdevelopment.mal4j.anime.property.time.Season;
  * @see MyAnimeList#getAnimeSeason(int, Season)
  * @see FieldQuery
  * @since 1.0.0
- * @version 2.2.1
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,AnimePreview> implements NSFW<AnimeSeasonQuery> {
 
     protected final int year;
     protected final Season season;
-    protected AnimeSeasonSort sort;
+    protected String sort;
     protected Boolean nsfw;
 
     /**
@@ -61,10 +61,24 @@ public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime
      * @param sort sort
      * @return season query
      *
+     * @see #sortBy(String)
      * @see AnimeSeasonSort
      * @since 1.0.0
      */
     public final AnimeSeasonQuery sortBy(final AnimeSeasonSort sort){
+        return sortBy(sort.field());
+    }
+
+    /**
+     * Sets the sorting option.
+     *
+     * @param sort sort
+     * @return season query
+     *
+     * @see #sortBy(AnimeSeasonSort)
+     * @since 2.9.0
+     */
+    public final AnimeSeasonQuery sortBy(final String sort){
         this.sort = sort;
         return this;
     }

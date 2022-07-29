@@ -35,7 +35,7 @@ import com.kttdevelopment.mal4j.query.MangaListUpdate;
  * @see MyAnimeList#updateMangaListing(long)
  * @see ListStatus
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaRetrievable, MangaPreviewRetrievable, Editable<MangaListUpdate> {
@@ -83,10 +83,21 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaR
      *
      * @return reread value
      *
+     * @see #getRawRereadValue()
      * @see RereadValue
      * @since 1.0.0
      */
     public abstract RereadValue getRereadValue();
+
+    /**
+     * Returns the raw reread value as returned to by the API.
+     *
+     * @return raw reread value
+     *
+     * @see #getRereadValue()
+     * @since 2.9.0
+     */
+    public abstract Integer getRawRereadValue();
 
     // additional methods
 

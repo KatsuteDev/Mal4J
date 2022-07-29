@@ -26,7 +26,7 @@ import java.util.Date;
  * @param <Status> status state type
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public interface ListStatus<Status extends Enum<?>> {
@@ -36,11 +36,22 @@ public interface ListStatus<Status extends Enum<?>> {
      *
      * @return status
      *
+     * @see #getRawStatus()
      * @see com.kttdevelopment.mal4j.anime.property.AnimeStatus
      * @see com.kttdevelopment.mal4j.manga.property.MangaStatus
      * @since 1.0.0
      */
     Status getStatus();
+
+    /**
+     * Returns the raw status as returned to by the API.
+     *
+     * @return status
+     *
+     * @see #getStatus()
+     * @since 2.9.0
+     */
+    String getRawStatus();
 
     /**
      * Returns the score of the listing.
@@ -76,10 +87,21 @@ public interface ListStatus<Status extends Enum<?>> {
      *
      * @return priority
      *
+     * @see #getRawPriority()
      * @see Priority
      * @since 1.0.0
      */
     Priority getPriority();
+
+    /**
+     * Returns the raw priority as returned to by the API.
+     *
+     * @return priority
+     *
+     * @see #getPriority()
+     * @since 2.9.0
+     */
+    Integer getRawPriority();
 
     /**
      * Returns the tags for the listing.

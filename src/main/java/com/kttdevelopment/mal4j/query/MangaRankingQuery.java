@@ -28,12 +28,12 @@ import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
  * @see com.kttdevelopment.mal4j.MyAnimeList#getMangaRanking(MangaRankingType)
  * @see FieldQuery
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class MangaRankingQuery extends FieldQuery<MangaRankingQuery,MangaRanking> implements NSFW<MangaRankingQuery> {
 
-    protected final MangaRankingType rankingType;
+    protected final String rankingType;
     protected Boolean nsfw;
 
     /**
@@ -45,7 +45,7 @@ public abstract class MangaRankingQuery extends FieldQuery<MangaRankingQuery,Man
      * @see MangaRankingType
      * @since 1.0.0
      */
-    public MangaRankingQuery(final MangaRankingType rankingType) {
+    public MangaRankingQuery(final String rankingType) {
         this.rankingType = rankingType;
     }
 

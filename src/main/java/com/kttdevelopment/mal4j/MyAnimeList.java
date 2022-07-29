@@ -238,6 +238,7 @@ public abstract class MyAnimeList {
      * @return ranked Anime
      * @throws NullPointerException if ranking type is null
      *
+     * @see #getAnimeRanking(String)
      * @see AnimeRankingQuery
      * @see AnimeRankingQuery#search()
      * @see com.kttdevelopment.mal4j.anime.AnimeRanking
@@ -245,6 +246,21 @@ public abstract class MyAnimeList {
      * @since 1.0.0
      */
     public abstract AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType);
+
+    /**
+     * Returns an Anime ranking query.
+     *
+     * @param rankingType ranking type
+     * @return ranked Anime
+     * @throws NullPointerException if ranking type is null
+     *
+     * @see #getAnimeRanking(AnimeRankingType)
+     * @see AnimeRankingQuery
+     * @see AnimeRankingQuery#search()
+     * @see com.kttdevelopment.mal4j.anime.AnimeRanking
+     * @since 2.9.0
+     */
+    public abstract AnimeRankingQuery getAnimeRanking(final String rankingType);
 
 // anime season
 
@@ -467,6 +483,7 @@ public abstract class MyAnimeList {
      * @return ranked Manga
      * @throws NullPointerException if ranking type is null
      *
+     * @see #getMangaRanking(String)
      * @see MangaRankingQuery
      * @see MangaRankingQuery#search()
      * @see MangaRanking
@@ -474,6 +491,21 @@ public abstract class MyAnimeList {
      * @since 1.0.0
      */
     public abstract MangaRankingQuery getMangaRanking(final MangaRankingType rankingType);
+
+    /**
+     * Returns a Manga ranking query.
+     *
+     * @param rankingType ranking type
+     * @return ranked Manga
+     * @throws NullPointerException if ranking type is null
+     *
+     * @see #getMangaRanking(MangaRankingType)
+     * @see MangaRankingQuery
+     * @see MangaRankingQuery#search()
+     * @see MangaRanking
+     * @since 2.9.0
+     */
+    public abstract MangaRankingQuery getMangaRanking(final String rankingType);
 
 // manga list
 

@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @see FullMediaItem
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,ListStatus extends com.kttdevelopment.mal4j.property.ListStatus<?>> extends ID {
@@ -139,12 +139,23 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
     /**
      * Returns the NSFW rating.
      *
-     * @return nsfw
+     * @return NSFW
      *
+     * @see #getRawNSFW()
      * @see NSFW
      * @since 1.0.0
      */
     NSFW getNSFW();
+
+    /**
+     * Returns the raw NSFW rating as returned to by the API.
+     *
+     * @return raw NSFW
+     *
+     * @see #getNSFW()
+     * @since 2.9.0
+     */
+    String getRawNSFW();
 
     /**
      * Returns the genres.
@@ -208,6 +219,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @return media type
      *
+     * @see #getRawType()
      * @see com.kttdevelopment.mal4j.anime.property.AnimeType
      * @see com.kttdevelopment.mal4j.manga.property.MangaType
      * @since 1.0.0
@@ -215,14 +227,36 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
     MediaType getType();
 
     /**
+     * Returns the raw media type as returned to by the API.
+     *
+     * @return raw media type
+     *
+     * @see #getType()
+     * @since 2.9.0
+     */
+    String getRawType();
+
+    /**
      * Returns the status.
      *
      * @return status
      *
+     * @see #getRawStatus()
      * @see com.kttdevelopment.mal4j.anime.property.AnimeStatus
      * @see com.kttdevelopment.mal4j.manga.property.MangaStatus
+     * @since 1.0.0
      */
     Status getStatus();
+
+    /**
+     * Returns the raw status as returned to by the API.
+     *
+     * @return raw status
+     *
+     * @see #getStatus()
+     * @since 2.9.0
+     */
+    String getRawStatus();
 
     /**
      * Returns the user's list status.
