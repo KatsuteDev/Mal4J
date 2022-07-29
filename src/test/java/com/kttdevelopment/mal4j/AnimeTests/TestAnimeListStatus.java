@@ -150,14 +150,17 @@ final class TestAnimeListStatus {
 
     private void testStatus(final AnimeListStatus status){
         assertEquals(AnimeStatus.Completed, status.getStatus());
+        assertEquals(AnimeStatus.Completed.field(), status.getRawStatus());
         assertEquals(10, status.getScore());
         assertEquals(24, status.getWatchedEpisodes());
         assertTrue(status.isRewatching());
         assertNotNull(status.getStartDate());
         assertNotNull(status.getFinishDate());
         assertEquals(Priority.High, status.getPriority());
+        assertEquals(Priority.High.value(), status.getRawPriority());
         assertEquals(1, status.getTimesRewatched());
         assertEquals(RewatchValue.VeryHigh, status.getRewatchValue());
+        assertEquals(RewatchValue.VeryHigh.value(), status.getRawRewatchValue());
         assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
         assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
         assertEquals(TestProvider.testComment, status.getComments());

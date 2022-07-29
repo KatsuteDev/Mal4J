@@ -184,6 +184,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         ));
     }
 
+    @Override
     public final AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType){
         return getAnimeRanking(rankingType.field());
     }
