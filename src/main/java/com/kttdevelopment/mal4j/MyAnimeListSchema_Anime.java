@@ -271,11 +271,15 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
             private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
             private final String nsfw           = requireNonNull(() -> schema.getString("nsfw"));
+            private final NSFW e_nsfw           = NSFW.asEnum(nsfw);
             private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, true), Genre.class));
             private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
             private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
             private final String type           = requireNonNull(() -> schema.getString("media_type"));
+            private final AnimeType e_type      = AnimeType.asEnum(type);
             private final String status         = requireNonNull(() -> schema.getString("status"));
+            private final AnimeAirStatus e_status
+                                                = AnimeAirStatus.asEnum(status);
             private final AnimeListStatus listStatus
                                                 = requireNonNull(() -> asAnimeListStatus(mal, schema.getJsonObject("my_list_status"), id, this));
             private final Integer episodes      = requireNonNull(() -> schema.getInt("num_episodes"));
@@ -283,8 +287,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                                                 = requireNonNull(() -> asStartSeason(mal, schema.getJsonObject("start_season")));
             private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.getJsonObject("broadcast")));
             private final String source         = requireNonNull(() -> schema.getString("source"));
+            private final AnimeSource e_source  = AnimeSource.asEnum(source);
             private final Integer episodeLength = requireNonNull(() -> schema.getInt("average_episode_duration"));
             private final String rating         = requireNonNull(() -> schema.getString("rating"));
+            private final AnimeRating e_rating  = AnimeRating.asEnum(rating);
             private final Studio[] studios      = requireNonNull(() -> adaptList(schema.getJsonArray("studios"), s -> asStudio(mal, s), Studio.class));
             private final Picture[] pictures    = requireNonNull(() -> adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class));
             private final String background     = requireNonNull(() -> schema.getString("background"));
@@ -365,7 +371,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final NSFW getNSFW() {
-                return NSFW.asEnum(nsfw);
+                return e_nsfw;
             }
 
             @Override
@@ -400,7 +406,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeType getType() {
-                return AnimeType.asEnum(type);
+                return e_type;
             }
 
             @Override
@@ -410,7 +416,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeAirStatus getStatus() {
-                return AnimeAirStatus.asEnum(status);
+                return e_status;
             }
 
             @Override
@@ -440,7 +446,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeSource getSource() {
-                return AnimeSource.asEnum(source);
+                return e_source;
             }
 
             @Override
@@ -455,7 +461,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeRating getRating() {
-                return AnimeRating.asEnum(rating);
+                return e_rating;
             }
 
             @Override
@@ -573,10 +579,12 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             private final Long id                   = anime_id != null ? anime_id : anime_preview.getID();
 
             private final String status             = requireNonNull(() -> schema.getString("status"));
+            private final AnimeStatus e_status      = AnimeStatus.asEnum(status);
             private final Integer score             = requireNonNull(() -> schema.getInt("score"));
             private final Long startDate            = requireNonNull(() -> parseDate(schema.getString("start_date")));
             private final Long finishDate           = requireNonNull(() -> parseDate(schema.getString("finish_date")));
             private final Integer priority          = requireNonNull(() -> schema.getInt("priority"));
+            private final Priority e_priority       = Priority.asEnum(priority);
             private final String[] tags             = requireNonNull(() -> schema.getStringArray("tags"));
             private final String comments           = requireNonNull(() -> schema.getString("comments"));
             private final Long updatedAt            = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
@@ -584,12 +592,14 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             private final Boolean rewatching        = requireNonNull(() -> schema.getBoolean("is_rewatching"));
             private final Integer timesRewatched    = requireNonNull(() -> schema.getInt("num_times_rewatched"));
             private final Integer rewatchValue      = requireNonNull(() -> schema.getInt("rewatch_value"));
+            private final RewatchValue e_rewatchValue
+                                                    = RewatchValue.asEnum(rewatchValue);
 
             // API methods
 
             @Override
             public final AnimeStatus getStatus() {
-                return AnimeStatus.asEnum(status);
+                return e_status;
             }
 
             @Override
@@ -614,7 +624,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Priority getPriority() {
-                return Priority.asEnum(priority);
+                return e_priority;
             }
 
             @Override
@@ -659,7 +669,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final RewatchValue getRewatchValue() {
-                return RewatchValue.asEnum(rewatchValue);
+                return e_rewatchValue;
             }
 
             @Override
@@ -723,11 +733,15 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
             private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
             private final String nsfw           = requireNonNull(() -> schema.getString("nsfw"));
+            private final NSFW e_nsfw           = NSFW.asEnum(nsfw);
             private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, true), Genre.class));
             private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
             private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
             private final String type           = requireNonNull(() -> schema.getString("media_type"));
+            private AnimeType e_type            = AnimeType.asEnum(type);
             private final String status         = requireNonNull(() -> schema.getString("status"));
+            private final AnimeAirStatus e_status
+                                                = AnimeAirStatus.asEnum(status);
             private final AnimeListStatus listStatus
                                                 = requireNonNull(() -> asAnimeListStatus(mal, schema.getJsonObject("my_list_status"), id, this));
             private final Integer episodes      = requireNonNull(() -> schema.getInt("num_episodes"));
@@ -735,8 +749,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                                                 = requireNonNull(() -> asStartSeason(mal, schema.getJsonObject("start_season")));
             private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.getJsonObject("broadcast")));
             private final String source         = requireNonNull(() -> schema.getString("source"));
+            private final AnimeSource e_source  = AnimeSource.asEnum(source);
             private final Integer episodeLength = requireNonNull(() -> schema.getInt("average_episode_duration"));
             private final String rating         = requireNonNull(() -> schema.getString("rating"));
+            private final AnimeRating e_rating  = AnimeRating.asEnum(rating);
             private final Studio[] studios      = requireNonNull(() -> adaptList(schema.getJsonArray("studios"), s -> asStudio(mal, s), Studio.class));
 
             // API methods
@@ -803,7 +819,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final NSFW getNSFW() {
-                return NSFW.asEnum(nsfw);
+                return e_nsfw;
             }
 
             @Override
@@ -838,7 +854,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeType getType() {
-                return AnimeType.asEnum(type);
+                return e_type;
             }
 
             @Override
@@ -848,7 +864,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeAirStatus getStatus() {
-                return AnimeAirStatus.asEnum(status);
+                return e_status;
             }
 
             @Override
@@ -878,7 +894,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeSource getSource() {
-                return AnimeSource.asEnum(source);
+                return e_source;
             }
 
             @Override
@@ -893,7 +909,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeRating getRating() {
-                return AnimeRating.asEnum(rating);
+                return e_rating;
             }
 
             @Override
@@ -1032,6 +1048,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             private final AnimePreview anime            = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
             private final String relationType           = requireNonNull(() -> schema.getString("relation_type"));
+            private final RelationType e_relationType   = RelationType.asEnum(relationType);
             private final String relationTypeFormatted  = requireNonNull(() -> schema.getString("relation_type_formatted"));
 
             // API methods
@@ -1043,7 +1060,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final RelationType getRelationType() {
-                return RelationType.asEnum(relationType);
+                return e_relationType;
             }
 
             @Override
