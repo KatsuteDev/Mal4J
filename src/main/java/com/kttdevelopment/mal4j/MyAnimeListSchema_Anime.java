@@ -171,7 +171,6 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             // additional methods
 
-
             @Override
             public final String toString(){
                 return "Studio{" +

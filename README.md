@@ -146,7 +146,7 @@ Devs running tests through GitHub Actions may do so by running the `MyAnimeList 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-## &nbsp;
+<hr>
 
 ### 💼 License
 

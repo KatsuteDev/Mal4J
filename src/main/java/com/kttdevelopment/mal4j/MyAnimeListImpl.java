@@ -43,15 +43,6 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_Forum.*;
 import static com.kttdevelopment.mal4j.MyAnimeListSchema_Manga.*;
 import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
 
-/**
- * Implements the {@link MyAnimeList} interface with the {@link MyAnimeListService}.
- *
- * @see MyAnimeList
- * @see MyAnimeListService
- * @since 1.0.0
- * @version 2.9.0
- * @author Katsute
- */
 final class MyAnimeListImpl extends MyAnimeList {
 
     private transient String token     = null;
