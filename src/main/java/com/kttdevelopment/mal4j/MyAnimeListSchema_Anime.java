@@ -738,7 +738,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
             private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
             private final String type           = requireNonNull(() -> schema.getString("media_type"));
-            private AnimeType e_type            = AnimeType.asEnum(type);
+            private final AnimeType e_type      = AnimeType.asEnum(type);
             private final String status         = requireNonNull(() -> schema.getString("status"));
             private final AnimeAirStatus e_status
                                                 = AnimeAirStatus.asEnum(status);
