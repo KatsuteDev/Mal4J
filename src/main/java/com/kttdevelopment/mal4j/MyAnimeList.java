@@ -249,8 +249,11 @@ public abstract class MyAnimeList {
 
     /**
      * Returns an Anime ranking query.
+     * <br>
+     * It is recommended to use {@link #getAnimeRanking(AnimeRankingType)} rather than this method.
+     * This method should only be used if you are using a ranking type that is missing from {@link AnimeRankingType}.
      *
-     * @param rankingType ranking type
+     * @param rankingType ranking type API field
      * @return ranked Anime
      * @throws NullPointerException if ranking type is null
      *
@@ -494,8 +497,11 @@ public abstract class MyAnimeList {
 
     /**
      * Returns a Manga ranking query.
+     * <br>
+     * It is recommended to use {@link #getMangaRanking(MangaRankingType)} rather than this method.
+     * This method should only be used if you are using a ranking type that is missing from {@link MangaRankingType}.
      *
-     * @param rankingType ranking type
+     * @param rankingType ranking type API field
      * @return ranked Manga
      * @throws NullPointerException if ranking type is null
      *
