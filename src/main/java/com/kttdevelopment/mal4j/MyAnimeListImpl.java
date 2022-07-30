@@ -177,7 +177,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType){
-        return getAnimeRanking(Objects.requireNonNull(rankingType).field());
+        return getAnimeRanking(Objects.requireNonNull(rankingType, "Ranking type cannot be null").field());
     }
 
     @Override
@@ -613,7 +613,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final MangaRankingQuery getMangaRanking(final MangaRankingType rankingType){
-        return getMangaRanking(Objects.requireNonNull(rankingType).field());
+        return getMangaRanking(Objects.requireNonNull(rankingType, "Ranking type cannot be null").field());
     }
 
     @Override
