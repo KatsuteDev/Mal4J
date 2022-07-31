@@ -39,7 +39,9 @@ public abstract class MangaListUpdate extends ListUpdate<MangaListUpdate,MangaLi
     protected Integer rereadValue;
 
     /**
-     * Creates a Manga list update. Applications do not use this constructor.
+     * Creates a Manga list update.
+     * <br>
+     * This constructor should not be used, use {@link com.kttdevelopment.mal4j.MyAnimeList#updateMangaListing(long)} instead.
      *
      * @param id Manga id
      *
@@ -118,6 +120,9 @@ public abstract class MangaListUpdate extends ListUpdate<MangaListUpdate,MangaLi
 
     /**
      * Sets the reread value.
+     * <br>
+     * It is recommended to use {@link #rereadValue(RereadValue)} rather than this method.
+     * This method should only be used if the reread value is missing from {@link RereadValue}.
      *
      * @param rereadValue reread value
      * @return list update

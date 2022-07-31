@@ -37,7 +37,9 @@ public abstract class AnimeRankingQuery extends FieldQuery<AnimeRankingQuery,Ani
     protected Boolean nsfw;
 
     /**
-     * Creates an Anime ranking query. Applications do not use this constructor.
+     * Creates an Anime ranking query.
+     * <br>
+     * Do not use this constructor, use {@link com.kttdevelopment.mal4j.MyAnimeList#getAnimeRanking(AnimeRankingType)} instead.
      *
      * @param rankingType ranking type
      *

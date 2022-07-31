@@ -44,7 +44,10 @@ public interface ListStatus<Status extends Enum<?>> {
     Status getStatus();
 
     /**
-     * Returns the raw status as returned to by the API.
+     * Returns the raw status.
+     * <br>
+     * It is recommended to use {@link #getStatus()} rather than this method.
+     * This method should only be used if the status value is missing from {@link com.kttdevelopment.mal4j.anime.property.AnimeStatus} or {@link com.kttdevelopment.mal4j.manga.property.MangaStatus}.
      *
      * @return status
      *
@@ -94,7 +97,10 @@ public interface ListStatus<Status extends Enum<?>> {
     Priority getPriority();
 
     /**
-     * Returns the raw priority as returned to by the API.
+     * Returns the raw priority.
+     * <br>
+     * It is recommended to use {@link #getPriority()} and {@link Priority#value()} rather than this method.
+     * This method should only be used if the priority value is missing from {@link Priority}.
      *
      * @return priority
      *

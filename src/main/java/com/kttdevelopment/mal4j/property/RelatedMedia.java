@@ -41,7 +41,10 @@ public abstract class RelatedMedia {
     public abstract RelationType getRelationType();
 
     /**
-     * Returns the raw relation type as returned to by the API.
+     * Returns the raw relation type.
+     * <br>
+     * It is recommended to use {@link #getRelationType()} rather than this method.
+     * This method should only be used if the relation type is missing from {@link RelationType}.
      *
      * @return raw relation type
      *

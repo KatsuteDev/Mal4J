@@ -90,7 +90,10 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaR
     public abstract RereadValue getRereadValue();
 
     /**
-     * Returns the raw reread value as returned to by the API.
+     * Returns the raw reread value.
+     * <br>
+     * It is recommended to use {@link #getRereadValue()} and {@link RereadValue#value()} rather than this method.
+     * This method should only be used if the reread value is missing from {@link RereadValue}.
      *
      * @return raw reread value
      *

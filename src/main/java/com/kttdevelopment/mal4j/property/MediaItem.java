@@ -148,7 +148,10 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
     NSFW getNSFW();
 
     /**
-     * Returns the raw NSFW rating as returned to by the API.
+     * Returns the raw NSFW rating.
+     * <br>
+     * It is recommended to use {@link #getNSFW()} rather than this method.
+     * This method should only be used if the NSFW value is missing from {@link NSFW}.
      *
      * @return raw NSFW
      *
@@ -227,7 +230,10 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
     MediaType getType();
 
     /**
-     * Returns the raw media type as returned to by the API.
+     * Returns the raw media type.
+     * <br>
+     * It is recommended to use {@link #getType()} rather than this method.
+     * This method should only be used if the type value is missing from {@link com.kttdevelopment.mal4j.anime.property.AnimeType} or {@link com.kttdevelopment.mal4j.manga.property.MangaType}.
      *
      * @return raw media type
      *
@@ -242,14 +248,17 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      * @return status
      *
      * @see #getRawStatus()
-     * @see com.kttdevelopment.mal4j.anime.property.AnimeStatus
-     * @see com.kttdevelopment.mal4j.manga.property.MangaStatus
+     * @see com.kttdevelopment.mal4j.anime.property.AnimeAirStatus
+     * @see com.kttdevelopment.mal4j.manga.property.MangaPublishStatus
      * @since 1.0.0
      */
     Status getStatus();
 
     /**
-     * Returns the raw status as returned to by the API.
+     * Returns the raw status.
+     * <br>
+     * It is recommended to use {@link #getStatus()} rather than this method.
+     * This method should only be used if the status is missing from {@link com.kttdevelopment.mal4j.anime.property.AnimeAirStatus} or {@link com.kttdevelopment.mal4j.manga.property.MangaPublishStatus}.
      *
      * @return raw status
      *

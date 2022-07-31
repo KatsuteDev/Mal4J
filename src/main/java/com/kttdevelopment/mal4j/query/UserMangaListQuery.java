@@ -42,7 +42,9 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
     protected Boolean nsfw;
 
     /**
-     * Creates a user Manga search query. Applications do not use this constructor.
+     * Creates a user Manga search query.
+     * <br>
+     * Do not use this constructor, use {@link MyAnimeList#getUserMangaListing()} or {@link MyAnimeList#getUserMangaListing(String)} instead.
      *
      * @param username username
      *
@@ -70,8 +72,11 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
 
     /**
      * Sets the sorting option.
+     * <br>
+     * It is recommended to use {@link #sortBy(MangaSort)} instead of this method.
+     * This method should only be used if the sort is missing from {@link MangaSort}.
      *
-     * @param sort sort
+     * @param sort raw sort
      * @return list query
      *
      * @see #sortBy(MangaSort)
@@ -98,8 +103,11 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
 
     /**
      * Sets the status filter.
+     * <br>
+     * It is recommended to use {@link #withStatus(MangaStatus)} rather than this method.
+     * This method should only be used if the status is missing from {@link MangaStatus}.
      *
-     * @param status status
+     * @param status raw status
      * @return list query
      *
      * @see #withStatus(MangaStatus)

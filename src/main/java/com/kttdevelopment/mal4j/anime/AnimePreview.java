@@ -81,7 +81,10 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract AnimeSource getSource();
 
     /**
-     * Returns the raw source material as returned to by the API.
+     * Returns the raw source material.
+     * <br>
+     * It is recommended to use {@link #getSource()} rather than this method.
+     * This method should only be used if the source value is missing from {@link AnimeSource}.
      *
      * @return raw source material
      *
@@ -111,7 +114,10 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract AnimeRating getRating();
 
     /**
-     * Returns the rating as returned to by the API.
+     * Returns the raw rating.
+     * <br>
+     * It is recommended to use {@link #getRating()} rather than this method.
+     * This method should only be used if the rating value is missing from {@link AnimeRating}.
      *
      * @return raw TV viewing rating
      *

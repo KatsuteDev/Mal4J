@@ -34,8 +34,9 @@ import com.kttdevelopment.mal4j.manga.MangaPreview;
 public abstract class MangaSearchQuery extends NSFWSearchQuery<MangaSearchQuery,MangaPreview> {
 
     /**
-     * Creates a Manga search query. Applications do not use this constructor.
-     *
+     * Creates a Manga search query.
+     * <br>
+     * Do not use this constructor, use {@link MyAnimeList#getManga()} instead.
      *
      * @see MyAnimeList#getManga()
      * @since 1.0.0

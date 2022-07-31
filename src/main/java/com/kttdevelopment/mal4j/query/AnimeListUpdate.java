@@ -40,7 +40,9 @@ public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeLi
     protected Integer rewatchValue;
 
     /**
-     * Creates an Anime list update. Applications do not use this constructor.
+     * Creates an Anime list update.
+     * <br>
+     * Do not use this constructor, use {@link com.kttdevelopment.mal4j.MyAnimeList#updateAnimeListing(long)} instead.
      *
      * @param id Anime id
      *
@@ -106,8 +108,11 @@ public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeLi
 
     /**
      * Sets the rewatch value.
+     * <br>
+     * It is recommended to use {@link #rewatchValue(RewatchValue)} rather than this method.
+     * This method should only be used if the rewatch value is missing from {@link RewatchValue}.
      *
-     * @param rewatchValue rewatch value
+     * @param rewatchValue raw rewatch value
      * @return list update
      *
      * @see #rewatchValue(RewatchValue)

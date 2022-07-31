@@ -42,8 +42,9 @@ public abstract class ForumSearchQuery extends LimitOffsetQuery<ForumSearchQuery
     protected String topicUsername, username;
 
     /**
-     * Creates a forum search query. Applications do not use this constructor.
-     *
+     * Creates a forum search query.
+     * <br>
+     * Do not use this constructor, use {@link MyAnimeList#getForumTopics()} instead.
      *
      * @see MyAnimeList#getForumTopics()
      * @since 1.0.0

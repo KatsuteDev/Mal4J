@@ -41,7 +41,9 @@ public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime
     protected Boolean nsfw;
 
     /**
-     * Creates an Anime season query. Applications do not use this constructor.
+     * Creates an Anime season query.
+     * <br>
+     * Do not use this constructor, use {@link MyAnimeList#getAnimeSeason(int, Season)} instead.
      *
      * @param year year
      * @param season season
@@ -71,8 +73,11 @@ public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime
 
     /**
      * Sets the sorting option.
+     * <br>
+     * It is recommended to use {@link #sortBy(AnimeSeasonSort)} instead of this method.
+     * This method should only be used of the season sort is missing from {@link AnimeSeasonSort}.
      *
-     * @param sort sort
+     * @param sort raw sort
      * @return season query
      *
      * @see #sortBy(AnimeSeasonSort)

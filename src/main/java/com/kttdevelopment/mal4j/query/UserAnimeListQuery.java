@@ -42,7 +42,9 @@ public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,A
     protected Boolean nsfw;
 
     /**
-     * Creates a user Anime search query. Applications do not use this constructor.
+     * Creates a user Anime search query.
+     * <br>
+     * Do not use this constructor, use {@link MyAnimeList#getUserAnimeListing()} or {@link MyAnimeList#getUserAnimeListing(String)} instead.
      *
      * @param username username
      *
@@ -70,8 +72,11 @@ public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,A
 
     /**
      * Sets the sorting option.
+     * <br>
+     * It is recommended to use {@link #sortBy(AnimeSort)} instead of this method.
+     * This method should only be used if the sort is missing from {@link com.kttdevelopment.mal4j.anime.property.AnimeSort}.
      *
-     * @param sort sort
+     * @param sort raw sort
      * @return list query
      *
      * @see #sortBy(AnimeSort)
@@ -98,8 +103,11 @@ public abstract class UserAnimeListQuery extends FieldQuery<UserAnimeListQuery,A
 
     /**
      * Sets the status filter.
+     * <br>
+     * It is recommended to use {@link #withStatus(AnimeStatus)} rather than this method.
+     * This method should only be used if the status is missing from {@link AnimeStatus}.
      *
-     * @param status status
+     * @param status raw status
      * @return list query
      *
      * @see #withStatus(AnimeStatus)

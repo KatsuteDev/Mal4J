@@ -82,7 +82,10 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>, AnimeR
     public abstract RewatchValue getRewatchValue();
 
     /**
-     * Returns the raw rewatch value as returned by the API.
+     * Returns the raw rewatch value.
+     * <br>
+     * It is recommended to use {@link #getRewatchValue()} and {@link RewatchValue#value()} rather than this method.
+     * This method should only be used if the rewatch value is missing from {@link RewatchValue}.
      *
      * @return raw rewatch value
      *

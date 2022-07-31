@@ -58,6 +58,8 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
      * @return list update
      *
      * @see #status(String)
+     * @see com.kttdevelopment.mal4j.anime.property.AnimeStatus
+     * @see com.kttdevelopment.mal4j.manga.property.MangaStatus
      * @since 1.0.0
      */
     public final T status(final S status){
@@ -66,8 +68,11 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
 
     /**
      * Sets the status.
+     * <br>
+     * It is recommended to use {@link #status(FieldEnum)} rather than this method.
+     * This method should only be used if the status is missing from {@link com.kttdevelopment.mal4j.anime.property.AnimeStatus} or {@link com.kttdevelopment.mal4j.manga.property.MangaStatus}.
      *
-     * @param status status
+     * @param status raw status
      * @return list status
      *
      * @see #status(FieldEnum)
@@ -141,8 +146,11 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
 
     /**
      * Sets the priority.
+     * <br>
+     * It is recommended to use {@link #priority(Priority)} rather than this method.
+     * This method should only be used if the priority is missing from {@link Priority}.
      *
-     * @param priority priority
+     * @param priority raw priority
      * @return list update
      *
      * @see #priority(Priority)

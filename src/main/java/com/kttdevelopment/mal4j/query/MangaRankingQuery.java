@@ -37,7 +37,9 @@ public abstract class MangaRankingQuery extends FieldQuery<MangaRankingQuery,Man
     protected Boolean nsfw;
 
     /**
-     * Creates a Manga ranking query. Applications do not use this constructor.
+     * Creates a Manga ranking query.
+     * <br>
+     * Do not use this constructor, use {@link com.kttdevelopment.mal4j.MyAnimeList#getMangaRanking(MangaRankingType)} instead.
      *
      * @param rankingType ranking type
      *
