@@ -53,9 +53,10 @@ public enum ForumSort implements FieldEnum {
      * @since 1.0.0
      */
     public static ForumSort asEnum(final String string){
-        for(final ForumSort value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final ForumSort value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

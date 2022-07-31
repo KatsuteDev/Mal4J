@@ -68,11 +68,13 @@ public enum MangaType implements FieldEnum {
      * @since 1.0.0
      */
     public static MangaType asEnum(final String string){
-        for(final MangaType value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
-        if(string != null)
+        if(string != null){
+            for(final MangaType value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
             Logging.getLogger().warning(String.format("Unrecognized Manga type '%s', please report this to the maintainers of Mal4J", string));
+        }
+
         return Unknown;
     }
 

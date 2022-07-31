@@ -23,7 +23,7 @@ package com.kttdevelopment.mal4j.manga.property;
  *
  * @see com.kttdevelopment.mal4j.query.MangaListUpdate#rereadValue(RereadValue)
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public enum RereadValue {
@@ -62,9 +62,10 @@ public enum RereadValue {
      * @since 1.0.0
      */
     public static RereadValue asEnum(final Integer num){
-        for(final RereadValue value : values())
-            if(value.value == num)
-                return value;
+        if(num != null)
+            for(final RereadValue value : values())
+                if(value.value == num)
+                    return value;
         return null;
     }
 

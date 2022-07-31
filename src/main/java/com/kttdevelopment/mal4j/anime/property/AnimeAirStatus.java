@@ -59,11 +59,13 @@ public enum AnimeAirStatus implements FieldEnum {
      * @since 1.0.0
      */
     public static AnimeAirStatus asEnum(final String string){
-        for(final AnimeAirStatus value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
-        if(string != null)
+        if(string != null){
+            for(final AnimeAirStatus value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
             Logging.getLogger().warning(String.format("Unrecognized Anime air status '%s', please report this to the maintainers of Mal4J", string));
+        }
+
         return Unknown;
     }
 

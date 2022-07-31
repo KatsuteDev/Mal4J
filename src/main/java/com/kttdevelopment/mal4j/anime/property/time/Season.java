@@ -87,9 +87,10 @@ public enum Season implements FieldEnum {
      * @since 1.0.0
      */
     public static Season asEnum(final String string){
-        for(final Season value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final Season value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

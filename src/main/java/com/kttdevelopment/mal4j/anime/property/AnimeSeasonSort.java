@@ -53,9 +53,10 @@ public enum AnimeSeasonSort implements FieldEnum {
      * @since 1.0.0
      */
     public static AnimeSeasonSort asEnum(final String string){
-        for(final AnimeSeasonSort value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final AnimeSeasonSort value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

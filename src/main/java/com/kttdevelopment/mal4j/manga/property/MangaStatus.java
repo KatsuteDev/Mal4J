@@ -57,9 +57,10 @@ public enum MangaStatus implements FieldEnum {
      * @since 1.0.0
      */
     public static MangaStatus asEnum(final String string){
-        for(final MangaStatus value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final MangaStatus value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

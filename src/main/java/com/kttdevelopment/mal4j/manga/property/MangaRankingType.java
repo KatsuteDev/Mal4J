@@ -63,9 +63,10 @@ public enum MangaRankingType implements FieldEnum {
      * @since 1.0.0
      */
     public static MangaRankingType asEnum(final String string){
-        for(final MangaRankingType value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final MangaRankingType value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

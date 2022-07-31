@@ -56,9 +56,10 @@ public enum MangaSort implements FieldEnum {
      * @since 1.0.0
      */
     public static MangaSort asEnum(final String string){
-        for(final MangaSort value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final MangaSort value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

@@ -57,9 +57,10 @@ public enum AnimeStatus implements FieldEnum {
      * @since 1.0.0
      */
     public static AnimeStatus asEnum(final String string){
-        for(final AnimeStatus value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final AnimeStatus value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

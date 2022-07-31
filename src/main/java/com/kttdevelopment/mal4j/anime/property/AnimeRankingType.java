@@ -63,9 +63,10 @@ public enum AnimeRankingType implements FieldEnum {
      * @since 1.0.0
      */
     public static AnimeRankingType asEnum(final String string){
-        for(final AnimeRankingType value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final AnimeRankingType value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

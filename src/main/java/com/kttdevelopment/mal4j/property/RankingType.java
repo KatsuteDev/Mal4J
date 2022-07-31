@@ -53,9 +53,10 @@ public enum RankingType implements FieldEnum {
      * @since 1.0.0
      */
     public static RankingType asEnum(final String string){
-        for(final RankingType value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final RankingType value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

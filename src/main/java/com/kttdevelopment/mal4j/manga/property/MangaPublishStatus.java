@@ -61,11 +61,13 @@ public enum MangaPublishStatus implements FieldEnum {
      * @since 1.0.0
      */
     public static MangaPublishStatus asEnum(final String string){
-        for(final MangaPublishStatus value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
-        if(string != null)
+        if(string != null){
+            for(final MangaPublishStatus value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
             Logging.getLogger().warning(String.format("Unrecognized Manga publish status '%s', please report this to the maintainers of Mal4J", string));
+        }
+
         return Unknown;
     }
 

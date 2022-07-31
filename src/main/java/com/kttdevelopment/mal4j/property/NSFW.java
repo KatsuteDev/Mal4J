@@ -53,9 +53,10 @@ public enum NSFW implements FieldEnum {
      * @since 1.0.0
      */
     public static NSFW asEnum(final String string){
-        for(final NSFW value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final NSFW value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

@@ -20,16 +20,17 @@ package com.kttdevelopment.mal4j.anime.property;
 
 import com.kttdevelopment.mal4j.Logging;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.property.FieldEnum;
 
 /**
  * Represents the type of media that the Anime is.
  *
  * @see AnimePreview#getType()
  * @since 1.0.0
- * @version 2.8.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum AnimeType {
+public enum AnimeType implements FieldEnum {
 
     Unknown     ("unknown"),
 
@@ -48,13 +49,7 @@ public enum AnimeType {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -69,11 +64,13 @@ public enum AnimeType {
      * @since 1.0.0
      */
     public static AnimeType asEnum(final String string){
-        for(final AnimeType value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
-        if(string != null)
+        if(string != null){
+            for(final AnimeType value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
             Logging.getLogger().warning(String.format("Unrecognized Anime type '%s', please report this to the maintainers of Mal4J", string));
+        }
+
         return Unknown;
     }
 

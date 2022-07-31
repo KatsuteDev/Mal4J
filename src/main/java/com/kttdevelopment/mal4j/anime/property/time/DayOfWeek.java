@@ -60,9 +60,10 @@ public enum DayOfWeek implements FieldEnum {
      * @since 1.0.0
      */
     public static DayOfWeek asEnum(final String string){
-        for(final DayOfWeek value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final DayOfWeek value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 
