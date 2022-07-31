@@ -21,7 +21,7 @@ package com.kttdevelopment.mal4j.manga.property;
 import com.kttdevelopment.mal4j.property.Statistics;
 
 /**
- * Represents a Manga statistics.
+ * Represents Manga statistics.
  *
  * @deprecated Does not exist in the API currently
  * @since 1.0.0

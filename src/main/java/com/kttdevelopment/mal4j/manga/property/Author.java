@@ -22,7 +22,7 @@ import com.kttdevelopment.mal4j.manga.MangaPreview;
 import com.kttdevelopment.mal4j.property.ID;
 
 /**
- * Represents a author.
+ * Represents an author.
  *
  * @see MangaPreview#getAuthors()
  * @since 1.0.0
