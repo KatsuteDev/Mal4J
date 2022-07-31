@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.property.FieldEnum;
 import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
- * Represents a Manga's publishing status.
+ * Represents a publishing status.
  *
  * @see MediaItem#getStatus()
  * @since 1.0.0

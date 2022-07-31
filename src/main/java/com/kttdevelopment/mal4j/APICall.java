@@ -35,9 +35,6 @@ import java.util.stream.Collectors;
 
 import static com.kttdevelopment.mal4j.APIStruct.*;
 
-/**
- * Represents an API call.
- */
 @SuppressWarnings({"UnusedReturnValue", "SameParameterValue"})
 class APICall {
 

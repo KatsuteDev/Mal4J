@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.property.FullMediaItem;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get</a> <br>
- * Represents a Manga's full details.
+ * Represents a Manga.
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getManga(long)
  * @see com.kttdevelopment.mal4j.MyAnimeList#getManga(long, String...)
@@ -39,7 +39,7 @@ public abstract class Manga extends MangaPreview implements FullMediaItem<MangaT
     // API methods
 
     /**
-     * Returns the Manga's statistics.
+     * Returns the user statistics.
      *
      * @deprecated Does not exist in the API currently
      * @return Manga statistics

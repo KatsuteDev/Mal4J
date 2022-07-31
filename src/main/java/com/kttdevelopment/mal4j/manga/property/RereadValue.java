@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.manga.property;
 
 /**
- * Represents a Manga listing's reread value.
+ * Represents a reread value.
  *
  * @see com.kttdevelopment.mal4j.query.MangaListUpdate#rereadValue(RereadValue)
  * @since 1.0.0

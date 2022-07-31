@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.property;
 
 /**
- * Represents a Genre.
+ * Represents a genre.
  *
  * @since 2.4.0
  * @version 2.4.0

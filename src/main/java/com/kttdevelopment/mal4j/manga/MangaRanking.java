@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.property.Ranking;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_ranking_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_ranking_get</a> <br>
- * Represents an Anime's ranking.
+ * Represents a Manga ranking.
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getMangaRanking(MangaRankingType)
  * @see MangaPreview

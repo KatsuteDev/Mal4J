@@ -21,7 +21,7 @@ package com.kttdevelopment.mal4j.anime.property;
 import com.kttdevelopment.mal4j.property.FieldEnum;
 
 /**
- * Represents an Anime's status on a users Anime list.
+ * Represents an Anime status on a user's Anime list.
  *
  * @see com.kttdevelopment.mal4j.anime.AnimePreview#getStatus()
  * @since 1.0.0

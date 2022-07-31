@@ -27,7 +27,7 @@ import com.kttdevelopment.mal4j.query.MangaListUpdate;
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put</a> <br>
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get</a> <br>
- * Represents a user's Anime list status.
+ * Represents a user's Manga list status.
  *
  * @see Manga#getListStatus()
  * @see MyAnimeList#getUserMangaListing()

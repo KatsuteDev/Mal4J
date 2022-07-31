@@ -25,7 +25,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get</a> <br>
- * Represents an Anime's full details.
+ * Represents an Anime.
  *
  * @see MyAnimeList#getAnime()
  * @see MyAnimeList#getAnimeSeason(int, Season)

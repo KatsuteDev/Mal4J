@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get</a> <br>
- * Represents a Anime search query.
+ * Represents an Anime search query.
  *
  * @see MyAnimeList#getAnime()
  * @see SearchQuery

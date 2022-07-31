@@ -24,7 +24,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get</a> <br>
- * Represents a Manga's full details.
+ * Represents a Manga.
  *
  * @see MyAnimeList#getManga()
  * @see Manga

@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.property.FieldEnum;
 import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
- * Represents an Anime's airing status.
+ * Represents an airing status.
  *
  * @see MediaItem#getStatus()
  * @since 1.0.0

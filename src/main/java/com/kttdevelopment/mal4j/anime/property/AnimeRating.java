@@ -22,7 +22,7 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.property.FieldEnum;
 
 /**
- * Represents the Anime's TV viewing rating (ex: pg13).
+ * Represents a TV viewing rating (ex: pg13).
  *
  * @see AnimePreview#getRating()
  * @since 1.0.0

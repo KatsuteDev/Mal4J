@@ -22,7 +22,7 @@ import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.property.IDN;
 
 /**
- * Represents a Manga publisher.
+ * Represents a publisher.
  *
  * @see Manga#getSerialization()
  * @since 1.0.0

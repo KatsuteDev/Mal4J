@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.anime.property;
 
 /**
- * Represents an Anime listing's rewatch value.
+ * Represents a rewatch value.
  *
  * @see com.kttdevelopment.mal4j.query.AnimeListUpdate#rewatchValue(RewatchValue)
  * @since 1.0.0
