@@ -44,7 +44,7 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.7.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
@@ -238,6 +238,7 @@ public abstract class MyAnimeList {
      * @return ranked Anime
      * @throws NullPointerException if ranking type is null
      *
+     * @see #getAnimeRanking(String)
      * @see AnimeRankingQuery
      * @see AnimeRankingQuery#search()
      * @see com.kttdevelopment.mal4j.anime.AnimeRanking
@@ -245,6 +246,24 @@ public abstract class MyAnimeList {
      * @since 1.0.0
      */
     public abstract AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType);
+
+    /**
+     * Returns an Anime ranking query.
+     * <br>
+     * It is recommended to use {@link #getAnimeRanking(AnimeRankingType)} rather than this method.
+     * This method should only be used if you are using a ranking type that is missing from {@link AnimeRankingType}.
+     *
+     * @param rankingType ranking type API field
+     * @return ranked Anime
+     * @throws NullPointerException if ranking type is null
+     *
+     * @see #getAnimeRanking(AnimeRankingType)
+     * @see AnimeRankingQuery
+     * @see AnimeRankingQuery#search()
+     * @see com.kttdevelopment.mal4j.anime.AnimeRanking
+     * @since 2.9.0
+     */
+    public abstract AnimeRankingQuery getAnimeRanking(final String rankingType);
 
 // anime season
 
@@ -467,6 +486,7 @@ public abstract class MyAnimeList {
      * @return ranked Manga
      * @throws NullPointerException if ranking type is null
      *
+     * @see #getMangaRanking(String)
      * @see MangaRankingQuery
      * @see MangaRankingQuery#search()
      * @see MangaRanking
@@ -474,6 +494,24 @@ public abstract class MyAnimeList {
      * @since 1.0.0
      */
     public abstract MangaRankingQuery getMangaRanking(final MangaRankingType rankingType);
+
+    /**
+     * Returns a Manga ranking query.
+     * <br>
+     * It is recommended to use {@link #getMangaRanking(MangaRankingType)} rather than this method.
+     * This method should only be used if you are using a ranking type that is missing from {@link MangaRankingType}.
+     *
+     * @param rankingType ranking type API field
+     * @return ranked Manga
+     * @throws NullPointerException if ranking type is null
+     *
+     * @see #getMangaRanking(MangaRankingType)
+     * @see MangaRankingQuery
+     * @see MangaRankingQuery#search()
+     * @see MangaRanking
+     * @since 2.9.0
+     */
+    public abstract MangaRankingQuery getMangaRanking(final String rankingType);
 
 // manga list
 

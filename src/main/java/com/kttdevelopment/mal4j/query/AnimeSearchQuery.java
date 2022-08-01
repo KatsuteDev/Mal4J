@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get</a> <br>
- * Represents a Anime search query.
+ * Represents an Anime search query.
  *
  * @see MyAnimeList#getAnime()
  * @see SearchQuery
@@ -34,8 +34,9 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
 public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery,AnimePreview> {
 
     /**
-     * Creates an Anime search query. Applications do not use this constructor.
-     *
+     * Creates an Anime search query.
+     * <br>
+     * Do not use this constructor, use {@link MyAnimeList#getAnime()} instead.
      *
      * @see MyAnimeList#getAnime()
      * @since 1.0.0

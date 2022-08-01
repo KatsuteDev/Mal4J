@@ -40,6 +40,7 @@ This library supports read and write operations, including list updates.
 
 | Version | Support | Java | Android |
 |:-:|---|:-:|:-:|
+|`v3^`|⚠️ Unstable|Java 8+|✔️|
 |`v2^`|✔️ Fully supported|Java 8+|✔️|
 |`v1^`|❌ No support|Java 9+|❌|
 
@@ -153,7 +154,7 @@ This library is released under the [GNU General Public License (GPL) v2.0](https
 
 ### ⚠️️ Disclaimer
 
-- [@Katsute](https://github.com/Katsute) and [@KatsuteDev](https://github.com/KatsuteDev) are not affiliated with MyAnimeList.
-- By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
+ - [@Katsute](https://github.com/Katsute) and [@KatsuteDev](https://github.com/KatsuteDev) are not affiliated with MyAnimeList.
+ - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
 
 <p align="right">(<a href="#top">back to top</a>)</p>

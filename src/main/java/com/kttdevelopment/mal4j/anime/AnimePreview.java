@@ -25,7 +25,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get</a> <br>
- * Represents an Anime's full details.
+ * Represents an Anime.
  *
  * @see MyAnimeList#getAnime()
  * @see MyAnimeList#getAnimeSeason(int, Season)
@@ -33,7 +33,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  * @see Anime
  * @see MediaItem
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeType,AnimeAirStatus,AnimeListStatus> {
@@ -50,7 +50,7 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract Integer getEpisodes();
 
     /**
-     * Returns the Anime start season.
+     * Returns the start season.
      *
      * @return start season
      *
@@ -60,7 +60,7 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract StartSeason getStartSeason();
 
     /**
-     * Returns the Anime's broadcast time.
+     * Returns the broadcast time.
      *
      * @return broadcast time
      *
@@ -70,14 +70,28 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract Broadcast getBroadcast();
 
     /**
-     * Returns the Anime's source material.
+     * Returns the source material.
      *
      * @return source material
      *
+     * @see #getRawSource()
      * @see AnimeSource
      * @since 1.0.0
      */
     public abstract AnimeSource getSource();
+
+    /**
+     * Returns the raw source material.
+     * <br>
+     * It is recommended to use {@link #getSource()} rather than this method.
+     * This method should only be used if the source value is missing from {@link AnimeSource}.
+     *
+     * @return raw source material
+     *
+     * @see #getSource()
+     * @since 2.9.0
+     */
+    public abstract String getRawSource();
 
     /**
      * Returns the average episode length in seconds.
@@ -89,17 +103,31 @@ public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeTy
     public abstract Integer getAverageEpisodeLength();
 
     /**
-     * Returns the Anime's TV viewing rating (ex: pg13).
+     * Returns the TV viewing rating (ex: pg13).
      *
      * @return TV viewing rating
      *
+     * @see #getRawRating()
      * @see AnimeRating
      * @since 1.0.0
      */
     public abstract AnimeRating getRating();
 
     /**
-     * Returns the Anime's studios.
+     * Returns the raw rating.
+     * <br>
+     * It is recommended to use {@link #getRating()} rather than this method.
+     * This method should only be used if the rating value is missing from {@link AnimeRating}.
+     *
+     * @return raw TV viewing rating
+     *
+     * @see #getRating()
+     * @since 2.9.0
+     */
+    public abstract String getRawRating();
+
+    /**
+     * Returns the studios.
      *
      * @return studios
      *

@@ -19,50 +19,21 @@
 package com.kttdevelopment.mal4j.property;
 
 /**
- * Represents the NSFW status.
+ * Indicates that an enum contains field methods.
  *
- * @see MediaItem#getNSFW()
- * @since 1.0.0
+ * @since 2.9.0
  * @version 2.9.0
  * @author Katsute
  */
-public enum NSFW implements FieldEnum {
-
-    White   ("white"),
-    Gray    ("gray"),
-    Black   ("black");
-
-    private final String field;
-
-    NSFW(String field) {
-        this.field = field;
-    }
-
-    @Override
-    public final String field(){
-        return field;
-    }
+public interface FieldEnum {
 
     /**
-     * Returns the field name as an enum.
+     * Returns the json field name.
      *
-     * @param string json field name
-     *
-     * @return enum
+     * @return json field name
      *
      * @since 1.0.0
      */
-    public static NSFW asEnum(final String string){
-        if(string != null)
-            for(final NSFW value : values())
-                if(value.field.equalsIgnoreCase(string))
-                    return value;
-        return null;
-    }
-
-    @Override
-    public final String toString(){
-        return name();
-    }
+    String field();
 
 }

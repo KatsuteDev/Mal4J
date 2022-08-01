@@ -11,6 +11,7 @@ This project supports Java 8+ and Java 9+ modules.
 In order to make this library function on Java 8-10, reflection is used in order to make PATCH requests work correctly.
 
 If you don't want this warning then either:
+
  - Downgrade to Java 8
  - Upgrade to Java 11 or higher
 
@@ -27,10 +28,11 @@ This issue may occur due to Android incompatibilities (blame Google), please ope
 In order to make this library function on Java 9-10, reflection is used in order to make PATCH requests work correctly.
 
 To avoid this exception either:
-- Downgrade to Java 8
-- Upgrade to Java 11 or higher
-- Add `--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J` to VM options
-- Make the project not modular (remove `module-info.java`)
+
+ - Downgrade to Java 8
+ - Upgrade to Java 11 or higher
+ - Add `--add-opens java.base/java.lang.reflect=Mal4J --add-opens java.base/java.net=Mal4J` to VM options
+ - Make the project not modular (remove `module-info.java`)
 
 ## API
 

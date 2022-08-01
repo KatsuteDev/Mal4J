@@ -36,8 +36,9 @@ public abstract class AnimeSuggestionQuery extends FieldQuery<AnimeSuggestionQue
     protected Boolean nsfw;
 
     /**
-     * Creates an Anime suggestion query. Applications do not use this constructor.
-     *
+     * Creates an Anime suggestion query.
+     * <br>
+     * Do not use this constructor, use {@link MyAnimeList#getAnimeSuggestions()} instead.
      *
      * @see MyAnimeList#getAnimeSuggestions()
      * @since 1.0.0

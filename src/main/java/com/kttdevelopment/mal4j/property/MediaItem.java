@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @see FullMediaItem
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,ListStatus extends com.kttdevelopment.mal4j.property.ListStatus<?>> extends ID {
@@ -139,12 +139,26 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
     /**
      * Returns the NSFW rating.
      *
-     * @return nsfw
+     * @return NSFW
      *
+     * @see #getRawNSFW()
      * @see NSFW
      * @since 1.0.0
      */
     NSFW getNSFW();
+
+    /**
+     * Returns the raw NSFW rating.
+     * <br>
+     * It is recommended to use {@link #getNSFW()} rather than this method.
+     * This method should only be used if the NSFW value is missing from {@link NSFW}.
+     *
+     * @return raw NSFW
+     *
+     * @see #getNSFW()
+     * @since 2.9.0
+     */
+    String getRawNSFW();
 
     /**
      * Returns the genres.
@@ -208,6 +222,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @return media type
      *
+     * @see #getRawType()
      * @see com.kttdevelopment.mal4j.anime.property.AnimeType
      * @see com.kttdevelopment.mal4j.manga.property.MangaType
      * @since 1.0.0
@@ -215,14 +230,42 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
     MediaType getType();
 
     /**
+     * Returns the raw media type.
+     * <br>
+     * It is recommended to use {@link #getType()} rather than this method.
+     * This method should only be used if the type value is missing from {@link com.kttdevelopment.mal4j.anime.property.AnimeType} or {@link com.kttdevelopment.mal4j.manga.property.MangaType}.
+     *
+     * @return raw media type
+     *
+     * @see #getType()
+     * @since 2.9.0
+     */
+    String getRawType();
+
+    /**
      * Returns the status.
      *
      * @return status
      *
-     * @see com.kttdevelopment.mal4j.anime.property.AnimeStatus
-     * @see com.kttdevelopment.mal4j.manga.property.MangaStatus
+     * @see #getRawStatus()
+     * @see com.kttdevelopment.mal4j.anime.property.AnimeAirStatus
+     * @see com.kttdevelopment.mal4j.manga.property.MangaPublishStatus
+     * @since 1.0.0
      */
     Status getStatus();
+
+    /**
+     * Returns the raw status.
+     * <br>
+     * It is recommended to use {@link #getStatus()} rather than this method.
+     * This method should only be used if the status is missing from {@link com.kttdevelopment.mal4j.anime.property.AnimeAirStatus} or {@link com.kttdevelopment.mal4j.manga.property.MangaPublishStatus}.
+     *
+     * @return raw status
+     *
+     * @see #getStatus()
+     * @since 2.9.0
+     */
+    String getRawStatus();
 
     /**
      * Returns the user's list status.

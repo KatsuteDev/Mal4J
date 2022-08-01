@@ -18,6 +18,8 @@
 
 package com.kttdevelopment.mal4j.anime.property.time;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
+
 import java.util.Arrays;
 
 /**
@@ -25,10 +27,10 @@ import java.util.Arrays;
  *
  * @see com.kttdevelopment.mal4j.anime.property.StartSeason
  * @since 1.0.0
- * @version 2.2.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum Season {
+public enum Season implements FieldEnum {
 
     Winter  ("winter"   , new String[]{"January", "February", "March"}),
     Spring  ("spring"   , new String[]{"April", "May", "June"}),
@@ -70,13 +72,7 @@ public enum Season {
         return null;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -91,9 +87,10 @@ public enum Season {
      * @since 1.0.0
      */
     public static Season asEnum(final String string){
-        for(final Season value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final Season value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

@@ -24,7 +24,7 @@ package com.kttdevelopment.mal4j.property;
  * @see com.kttdevelopment.mal4j.anime.RelatedAnime
  * @see com.kttdevelopment.mal4j.manga.RelatedManga
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class RelatedMedia {
@@ -34,10 +34,24 @@ public abstract class RelatedMedia {
      *
      * @return relation type
      *
+     * @see #getRawRelationType()
      * @see RelationType
      * @since 1.0.0
      */
     public abstract RelationType getRelationType();
+
+    /**
+     * Returns the raw relation type.
+     * <br>
+     * It is recommended to use {@link #getRelationType()} rather than this method.
+     * This method should only be used if the relation type is missing from {@link RelationType}.
+     *
+     * @return raw relation type
+     *
+     * @see #getRelationType()
+     * @since 2.9.0
+     */
+    public abstract String getRawRelationType();
 
     /**
      * Returns how the media is related by its display name.

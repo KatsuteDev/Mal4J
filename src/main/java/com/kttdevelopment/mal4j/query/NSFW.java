@@ -51,5 +51,4 @@ public interface NSFW<T> {
      */
     T includeNSFW(final boolean nsfw);
 
-
 }

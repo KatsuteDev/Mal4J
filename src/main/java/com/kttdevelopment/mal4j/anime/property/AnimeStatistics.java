@@ -22,7 +22,7 @@ import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.property.Statistics;
 
 /**
- * Represents an Anime's statistics.
+ * Represents Anime statistics.
  *
  * @see Anime#getStatistics()
  * @since 1.0.0

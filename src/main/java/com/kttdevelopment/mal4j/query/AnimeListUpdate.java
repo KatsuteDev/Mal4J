@@ -29,7 +29,7 @@ import com.kttdevelopment.mal4j.anime.property.RewatchValue;
  * @see com.kttdevelopment.mal4j.MyAnimeList#updateAnimeListing(long)
  * @see ListUpdate
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
@@ -37,10 +37,12 @@ public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeLi
 
     protected Boolean rewatching;
     protected Integer watchedEpisodes, timesRewatched;
-    protected RewatchValue rewatchValue;
+    protected Integer rewatchValue;
 
     /**
-     * Creates an Anime list update. Applications do not use this constructor.
+     * Creates an Anime list update.
+     * <br>
+     * Do not use this constructor, use {@link com.kttdevelopment.mal4j.MyAnimeList#updateAnimeListing(long)} instead.
      *
      * @param id Anime id
      *
@@ -96,10 +98,27 @@ public abstract class AnimeListUpdate extends ListUpdate<AnimeListUpdate,AnimeLi
      * @param rewatchValue rewatch value
      * @return list update
      *
+     * @see #rewatchValue(Integer)
      * @see RewatchValue
      * @since 1.0.0
      */
     public final AnimeListUpdate rewatchValue(final RewatchValue rewatchValue){
+        return rewatchValue(rewatchValue.value());
+    }
+
+    /**
+     * Sets the rewatch value.
+     * <br>
+     * It is recommended to use {@link #rewatchValue(RewatchValue)} rather than this method.
+     * This method should only be used if the rewatch value is missing from {@link RewatchValue}.
+     *
+     * @param rewatchValue raw rewatch value
+     * @return list update
+     *
+     * @see #rewatchValue(RewatchValue)
+     * @since 2.9.0
+     */
+    public final AnimeListUpdate rewatchValue(final Integer rewatchValue){
         this.rewatchValue = rewatchValue;
         return this;
     }

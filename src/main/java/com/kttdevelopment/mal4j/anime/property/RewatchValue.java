@@ -19,11 +19,11 @@
 package com.kttdevelopment.mal4j.anime.property;
 
 /**
- * Represents an Anime listing's rewatch value.
+ * Represents a rewatch value.
  *
  * @see com.kttdevelopment.mal4j.query.AnimeListUpdate#rewatchValue(RewatchValue)
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
@@ -63,9 +63,10 @@ public enum RewatchValue {
      * @since 1.0.0
      */
     public static RewatchValue asEnum(final Integer num){
-        for(final RewatchValue value : values())
-            if(value.value == num)
-                return value;
+        if(num != null)
+            for(final RewatchValue value : values())
+                if(value.value == num)
+                    return value;
         return null;
     }
 

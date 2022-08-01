@@ -151,6 +151,7 @@ final class TestMangaListStatus {
 
     private void testStatus(final MangaListStatus status){
         assertEquals(MangaStatus.Completed, status.getStatus());
+        assertEquals(MangaStatus.Completed.field(), status.getRawStatus());
         assertEquals(10, status.getScore());
         assertEquals(8, status.getVolumesRead());
         assertEquals(49, status.getChaptersRead());
@@ -158,8 +159,10 @@ final class TestMangaListStatus {
         assertNotNull(status.getStartDate());
         assertNotNull(status.getFinishDate());
         assertEquals(Priority.High, status.getPriority());
+        assertEquals(Priority.High.value(), status.getRawPriority());
         assertEquals(1, status.getTimesReread());
         assertEquals(RereadValue.VeryHigh, status.getRereadValue());
+        assertEquals(RereadValue.VeryHigh.value(), status.getRawRereadValue());
         assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[0]));
         assertTrue(Arrays.asList(status.getTags()).contains(TestProvider.testTags()[1]));
         assertEquals(TestProvider.testComment, status.getComments());

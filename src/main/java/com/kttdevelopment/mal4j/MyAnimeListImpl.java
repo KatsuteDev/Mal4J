@@ -43,15 +43,6 @@ import static com.kttdevelopment.mal4j.MyAnimeListSchema_Forum.*;
 import static com.kttdevelopment.mal4j.MyAnimeListSchema_Manga.*;
 import static com.kttdevelopment.mal4j.MyAnimeListSchema_User.*;
 
-/**
- * Implements the {@link MyAnimeList} interface with the {@link MyAnimeListService}.
- *
- * @see MyAnimeList
- * @see MyAnimeListService
- * @since 1.0.0
- * @version 2.7.0
- * @author Katsute
- */
 final class MyAnimeListImpl extends MyAnimeList {
 
     private transient String token     = null;
@@ -186,6 +177,11 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType){
+        return getAnimeRanking(Objects.requireNonNull(rankingType, "Ranking type cannot be null").field());
+    }
+
+    @Override
+    public final AnimeRankingQuery getAnimeRanking(final String rankingType){
         return new AnimeRankingQuery(Objects.requireNonNull(rankingType, "Ranking type cannot be null")) {
 
             @Override
@@ -194,7 +190,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                     () -> service.getAnimeRanking(
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
-                        rankingType.field(),
+                        rankingType,
                         limit,
                         offset,
                         convertFields(Fields.anime, fields),
@@ -216,7 +212,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                     offset -> service.getAnimeRanking(
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
-                        rankingType.field(),
+                        rankingType,
                         limit,
                         offset,
                         convertFields(Fields.anime, fields),
@@ -240,7 +236,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         !isTokenAuth ? client_id : null,
                         year,
                         season.field(),
-                        sort != null ? sort.field() : null,
+                        sort,
                         limit,
                         offset,
                         convertFields(Fields.anime, fields),
@@ -264,7 +260,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         !isTokenAuth ? client_id : null,
                         year,
                         season.field(),
-                        sort != null ? sort.field() : null,
+                        sort,
                         limit,
                         offset,
                         convertFields(Fields.anime, fields),
@@ -328,15 +324,15 @@ final class MyAnimeListImpl extends MyAnimeList {
                     () -> service.updateAnimeListing(
                         Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         id,
-                        status != null ? status.field() : null,
+                        status,
                         rewatching,
                         score,
                         MyAnimeListSchema.asYMD(startDate),
                         MyAnimeListSchema.asYMD(finishDate),
                         watchedEpisodes,
-                        priority != null ? priority.value() : null,
+                        priority,
                         timesRewatched,
-                        rewatchValue != null ? rewatchValue.value() : null,
+                        rewatchValue,
                         toCommaSeparatedString(tags),
                         comments
                     )
@@ -380,8 +376,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
                         username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
-                        status != null ? status.field() : null,
-                        sort != null ? sort.field() : null,
+                        status,
+                        sort,
                         limit,
                         offset,
                         convertFields(Fields.anime, fields),
@@ -404,8 +400,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
                         username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
-                        status != null ? status.field() : null,
-                        sort != null ? sort.field() : null,
+                        status,
+                        sort,
                         limit,
                         offset,
                         convertFields(Fields.anime, fields),
@@ -617,6 +613,11 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final MangaRankingQuery getMangaRanking(final MangaRankingType rankingType){
+        return getMangaRanking(Objects.requireNonNull(rankingType, "Ranking type cannot be null").field());
+    }
+
+    @Override
+    public final MangaRankingQuery getMangaRanking(final String rankingType){
         return new MangaRankingQuery(Objects.requireNonNull(rankingType, "Ranking type cannot be null")) {
 
             @Override
@@ -625,7 +626,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                     () -> service.getMangaRanking(
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
-                        rankingType != null ? rankingType.field() : null,
+                        rankingType,
                         limit,
                         offset,
                         convertFields(Fields.manga, fields),
@@ -647,7 +648,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                     offset -> service.getMangaRanking(
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
-                        rankingType != null ? rankingType.field() : null,
+                        rankingType,
                         limit,
                         offset,
                         convertFields(Fields.manga, fields),
@@ -670,16 +671,16 @@ final class MyAnimeListImpl extends MyAnimeList {
                     () -> service.updateMangaListing(
                         Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                         id,
-                        status != null ? status.field() : null,
+                        status,
                         rereading,
                         score,
                         MyAnimeListSchema.asYMD(startDate),
                         MyAnimeListSchema.asYMD(finishDate),
                         volumesRead,
                         chaptersRead,
-                        priority != null ? priority.value() : null,
+                        priority,
                         timesReread,
-                        rereadValue != null ? rereadValue.value() : null,
+                        rereadValue,
                         toCommaSeparatedString(tags),
                         comments
                     )
@@ -723,8 +724,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
                         username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
-                        status != null ? status.field() : null,
-                        sort != null ? sort.field() : null,
+                        status,
+                        sort,
                         limit,
                         offset,
                         convertFields(Fields.manga, fields),
@@ -747,8 +748,8 @@ final class MyAnimeListImpl extends MyAnimeList {
                         isTokenAuth ? token : null,
                         !isTokenAuth ? client_id : null,
                         username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
-                        status != null ? status.field() : null,
-                        sort != null ? sort.field() : null,
+                        status,
+                        sort,
                         limit,
                         offset,
                         convertFields(Fields.manga, fields),

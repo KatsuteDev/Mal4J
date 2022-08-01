@@ -24,7 +24,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_get</a> <br>
- * Represents a Manga's full details.
+ * Represents a Manga.
  *
  * @see MyAnimeList#getManga()
  * @see Manga
@@ -56,7 +56,7 @@ public abstract class MangaPreview implements MangaRetrievable,MediaItem<MangaTy
     public abstract Integer getChapters();
 
     /**
-     * Returns the Manga's authors.
+     * Returns the authors.
      *
      * @return Manga authors
      *

@@ -18,14 +18,16 @@
 
 package com.kttdevelopment.mal4j.anime.property;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
+
 /**
  * Represents how to sort the Anime search query.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum AnimeSort {
+public enum AnimeSort implements FieldEnum {
 
     ID          ("anime_id"),
     Title       ("anime_title"),
@@ -39,13 +41,7 @@ public enum AnimeSort {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -60,9 +56,10 @@ public enum AnimeSort {
      * @since 1.0.0
      */
     public static AnimeSort asEnum(final String string){
-        for(final AnimeSort value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final AnimeSort value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

@@ -27,7 +27,7 @@ import com.kttdevelopment.mal4j.query.MangaListUpdate;
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put">https://myanimelist.net/apiconfig/references/api/v2#operation/manga_manga_id_my_list_status_put</a> <br>
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get">https://myanimelist.net/apiconfig/references/api/v2#operation/users_user_id_mangalist_get</a> <br>
- * Represents a user's Anime list status.
+ * Represents a user's Manga list status.
  *
  * @see Manga#getListStatus()
  * @see MyAnimeList#getUserMangaListing()
@@ -35,7 +35,7 @@ import com.kttdevelopment.mal4j.query.MangaListUpdate;
  * @see MyAnimeList#updateMangaListing(long)
  * @see ListStatus
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaRetrievable, MangaPreviewRetrievable, Editable<MangaListUpdate> {
@@ -83,10 +83,24 @@ public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaR
      *
      * @return reread value
      *
+     * @see #getRawRereadValue()
      * @see RereadValue
      * @since 1.0.0
      */
     public abstract RereadValue getRereadValue();
+
+    /**
+     * Returns the raw reread value.
+     * <br>
+     * It is recommended to use {@link #getRereadValue()} and {@link RereadValue#value()} rather than this method.
+     * This method should only be used if the reread value is missing from {@link RereadValue}.
+     *
+     * @return raw reread value
+     *
+     * @see #getRereadValue()
+     * @since 2.9.0
+     */
+    public abstract Integer getRawRereadValue();
 
     // additional methods
 

@@ -19,17 +19,18 @@
 package com.kttdevelopment.mal4j.manga.property;
 
 import com.kttdevelopment.mal4j.Logging;
+import com.kttdevelopment.mal4j.property.FieldEnum;
 import com.kttdevelopment.mal4j.property.MediaItem;
 
 /**
- * Represents a Manga's publishing status.
+ * Represents a publishing status.
  *
  * @see MediaItem#getStatus()
  * @since 1.0.0
- * @version 2.8.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum MangaPublishStatus {
+public enum MangaPublishStatus implements FieldEnum {
 
     Unknown         ("unknown"),
 
@@ -45,13 +46,7 @@ public enum MangaPublishStatus {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -66,11 +61,13 @@ public enum MangaPublishStatus {
      * @since 1.0.0
      */
     public static MangaPublishStatus asEnum(final String string){
-        for(final MangaPublishStatus value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
-        if(string != null)
+        if(string != null){
+            for(final MangaPublishStatus value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
             Logging.getLogger().warning(String.format("Unrecognized Manga publish status '%s', please report this to the maintainers of Mal4J", string));
+        }
+
         return Unknown;
     }
 

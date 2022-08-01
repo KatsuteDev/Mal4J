@@ -20,17 +20,18 @@ package com.kttdevelopment.mal4j.anime.property;
 
 import com.kttdevelopment.mal4j.Logging;
 import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.property.FieldEnum;
 
 /**
  * Represents the source material for an Anime.
  *
  * @see AnimePreview#getSource()
  * @since 1.0.0
- * @version 2.8.1
+ * @version 2.9.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
-public enum AnimeSource {
+public enum AnimeSource implements FieldEnum {
 
     Unknown         ("unknown"),
 
@@ -69,13 +70,7 @@ public enum AnimeSource {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -90,11 +85,13 @@ public enum AnimeSource {
      * @since 1.0.0
      */
     public static AnimeSource asEnum(final String string){
-        for(final AnimeSource value : values())
-            if(!value.name().contains("_") && value.field.equalsIgnoreCase(string))
-                return value;
-        if(string != null)
+        if(string != null){
+            for(final AnimeSource value : values())
+                if(!value.name().contains("_") && value.field.equalsIgnoreCase(string))
+                    return value;
             Logging.getLogger().warning(String.format("Unrecognized Anime source '%s', please report this to the maintainers of Mal4J", string));
+        }
+
         return Unknown;
     }
 

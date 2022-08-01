@@ -18,8 +18,7 @@
 
 package com.kttdevelopment.mal4j.query;
 
-import com.kttdevelopment.mal4j.property.ListStatus;
-import com.kttdevelopment.mal4j.property.Priority;
+import com.kttdevelopment.mal4j.property.*;
 
 import java.util.*;
 
@@ -31,20 +30,20 @@ import java.util.*;
  * @param <S> status type
  *
  * @since 1.0.0
- * @version 1.1.0
+ * @version 2.9.0
  * @author Katsute
  */
 @SuppressWarnings("unchecked")
-public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S extends Enum<?>> {
+public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatus<?>,S extends FieldEnum> {
 
     protected final long id;
 
-    protected S status;
+    protected String status;
     protected Integer score;
 
     protected Long startDate, finishDate;
 
-    protected Priority priority;
+    protected Integer priority;
     protected List<String> tags;
     protected String comments;
 
@@ -58,9 +57,28 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
      * @param status status
      * @return list update
      *
+     * @see #status(String)
+     * @see com.kttdevelopment.mal4j.anime.property.AnimeStatus
+     * @see com.kttdevelopment.mal4j.manga.property.MangaStatus
      * @since 1.0.0
      */
     public final T status(final S status){
+        return status(status.field());
+    }
+
+    /**
+     * Sets the status.
+     * <br>
+     * It is recommended to use {@link #status(FieldEnum)} rather than this method.
+     * This method should only be used if the status is missing from {@link com.kttdevelopment.mal4j.anime.property.AnimeStatus} or {@link com.kttdevelopment.mal4j.manga.property.MangaStatus}.
+     *
+     * @param status raw status
+     * @return list status
+     *
+     * @see #status(FieldEnum)
+     * @since 2.9.0
+     */
+    public final T status(final String status){
         this.status = status;
         return (T) this;
     }
@@ -118,10 +136,27 @@ public abstract class ListUpdate<T extends ListUpdate<T,R,S>,R extends ListStatu
      * @param priority priority
      * @return list update
      *
+     * @see #priority(Integer)
      * @see Priority
      * @since 1.0.0
      */
     public final T priority(final Priority priority){
+        return priority(priority.value());
+    }
+
+    /**
+     * Sets the priority.
+     * <br>
+     * It is recommended to use {@link #priority(Priority)} rather than this method.
+     * This method should only be used if the priority is missing from {@link Priority}.
+     *
+     * @param priority raw priority
+     * @return list update
+     *
+     * @see #priority(Priority)
+     * @since 2.9.0
+     */
+    public final T priority(final Integer priority){
         this.priority = priority;
         return (T) this;
     }

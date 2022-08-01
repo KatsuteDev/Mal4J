@@ -1,5 +1,7 @@
 package com.kttdevelopment.mal4j;
 
+import com.kttdevelopment.mal4j.anime.property.AnimeRankingType;
+import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -47,7 +49,8 @@ final class TestMyAnimeList {
 
     @Test
     final void testNullAnimeRanking(){
-        assertThrows(NullPointerException.class, () -> mal.getAnimeRanking(null));
+        assertThrows(NullPointerException.class, () -> mal.getAnimeRanking((AnimeRankingType) null));
+        assertThrows(NullPointerException.class, () -> mal.getAnimeRanking((String) null));
     }
 
     @Test
@@ -62,7 +65,8 @@ final class TestMyAnimeList {
 
     @Test
     final void testNullMangaRanking(){
-        assertThrows(NullPointerException.class, () -> mal.getMangaRanking(null));
+        assertThrows(NullPointerException.class, () -> mal.getMangaRanking((MangaRankingType) null));
+        assertThrows(NullPointerException.class, () -> mal.getMangaRanking((String) null));
     }
 
     @Test

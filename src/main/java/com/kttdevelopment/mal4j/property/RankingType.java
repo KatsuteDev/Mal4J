@@ -22,10 +22,10 @@ package com.kttdevelopment.mal4j.property;
  * Represents the general ranking sort types.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum RankingType {
+public enum RankingType implements FieldEnum {
 
     All         ("all"),
     @SuppressWarnings("SpellCheckingInspection")
@@ -38,13 +38,7 @@ public enum RankingType {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -59,9 +53,10 @@ public enum RankingType {
      * @since 1.0.0
      */
     public static RankingType asEnum(final String string){
-        for(final RankingType value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final RankingType value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

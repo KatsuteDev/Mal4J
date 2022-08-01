@@ -28,7 +28,7 @@ import java.util.*;
 
 @SuppressWarnings({"unused", "ConstantConditions"})
 abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
-    
+
     static Author asAuthor(final MyAnimeList mal, final JsonObject schema){
         return new Author() {
 
@@ -128,13 +128,16 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             private final Integer popularity    = requireNonNull(() -> schema.getInt("popularity"));
             private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
             private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
-            private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.getString("nsfw")));
+            private final String nsfw           = requireNonNull(() -> schema.getString("nsfw"));
+            private final NSFW e_nsfw           = NSFW.asEnum(nsfw);
             private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, false), Genre.class));
             private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
             private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
-            private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.getString("media_type")));
-            private final MangaPublishStatus status
-                                                = requireNonNull(() -> MangaPublishStatus.asEnum(schema.getString("status")));
+            private final String type           = requireNonNull(() -> schema.getString("media_type"));
+            private final MangaType e_type      = MangaType.asEnum(type);
+            private final String status         = requireNonNull(() -> schema.getString("status"));
+            private final MangaPublishStatus e_status
+                                                = MangaPublishStatus.asEnum(status);
             private final MangaListStatus listStatus
                                                 = requireNonNull(() -> asMangaListStatus(mal, schema.getJsonObject("my_list_status"), id,this));
             private final Integer volumes       = requireNonNull(() -> schema.getInt("num_volumes"));
@@ -188,7 +191,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final Float  getMeanRating() {
+            public final Float getMeanRating() {
                 return meanRating;
             }
 
@@ -214,6 +217,11 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final NSFW getNSFW() {
+                return e_nsfw;
+            }
+
+            @Override
+            public final String getRawNSFW(){
                 return nsfw;
             }
 
@@ -244,11 +252,21 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final MangaType getType() {
+                return e_type;
+            }
+
+            @Override
+            public final String getRawType(){
                 return type;
             }
 
             @Override
             public final MangaPublishStatus getStatus() {
+                return e_status;
+            }
+
+            @Override
+            public String getRawStatus(){
                 return status;
             }
 
@@ -357,11 +375,13 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             private final MangaPreview manga        = manga_preview;
             private final Long id                   = manga_id != null ? manga_id : manga_preview.getID();
 
-            private final MangaStatus status        = requireNonNull(() -> MangaStatus.asEnum(schema.getString("status")));
+            private final String status             = requireNonNull(() -> schema.getString("status"));
+            private final MangaStatus e_status      = MangaStatus.asEnum(status);
             private final Integer score             = requireNonNull(() -> schema.getInt("score"));
             private final Long startDate            = requireNonNull(() -> parseDate(schema.getString("start_date")));
             private final Long finishDate           = requireNonNull(() -> parseDate(schema.getString("finish_date")));
-            private final Priority priority         = requireNonNull(() -> Priority.asEnum(schema.getInt("priority")));
+            private final Integer priority          = requireNonNull(() -> schema.getInt("priority"));
+            private final Priority e_priority       = Priority.asEnum(priority);
             private final String[] tags             = requireNonNull(() -> schema.getStringArray("tags"));
             private final String comments           = requireNonNull(() -> schema.getString("comments"));
             private final Long updatedAt            = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
@@ -369,12 +389,18 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             private final Integer chaptersRead      = requireNonNull(() -> schema.getInt("num_chapters_read"));
             private final Boolean rereading         = requireNonNull(() -> schema.getBoolean("is_rereading"));
             private final Integer timesReread       = requireNonNull(() -> schema.getInt("num_times_reread"));
-            private final RereadValue rereadValue   = requireNonNull(() -> RereadValue.asEnum(schema.getInt("reread_value")));
+            private final Integer rereadValue       = requireNonNull(() -> schema.getInt("reread_value"));
+            private final RereadValue e_rereadValue = RereadValue.asEnum(rereadValue);
 
             // API methods
 
             @Override
             public final MangaStatus getStatus() {
+                return e_status;
+            }
+
+            @Override
+            public final String getRawStatus(){
                 return status;
             }
 
@@ -395,6 +421,11 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Priority getPriority() {
+                return e_priority;
+            }
+
+            @Override
+            public final Integer getRawPriority(){
                 return priority;
             }
 
@@ -440,6 +471,11 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final RereadValue getRereadValue() {
+                return e_rereadValue;
+            }
+
+            @Override
+            public final Integer getRawRereadValue(){
                 return rereadValue;
             }
 
@@ -499,13 +535,16 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             private final Integer popularity    = requireNonNull(() -> schema.getInt("popularity"));
             private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
             private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
-            private final NSFW nsfw             = requireNonNull(() -> NSFW.asEnum(schema.getString("nsfw")));
+            private final String nsfw           = requireNonNull(() -> schema.getString("nsfw"));
+            private final NSFW e_nsfw           = NSFW.asEnum(nsfw);
             private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, false), Genre.class));
             private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
             private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
-            private final MangaType type        = requireNonNull(() -> MangaType.asEnum(schema.getString("media_type")));
-            private final MangaPublishStatus status
-                                                = requireNonNull(() -> MangaPublishStatus.asEnum(schema.getString("status")));
+            private final String type           = requireNonNull(() -> schema.getString("media_type"));
+            private final MangaType e_type      = MangaType.asEnum(type);
+            private final String status         = requireNonNull(() -> schema.getString("status"));
+            private final MangaPublishStatus e_status
+                                                = MangaPublishStatus.asEnum(status);
             private final MangaListStatus listStatus
                                                 = requireNonNull(() -> asMangaListStatus(mal, schema.getJsonObject("my_list_status"), id, this));
             private final Integer volumes       = requireNonNull(() -> schema.getInt("num_volumes"));
@@ -576,6 +615,11 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final NSFW getNSFW() {
+                return e_nsfw;
+            }
+
+            @Override
+            public final String getRawNSFW(){
                 return nsfw;
             }
 
@@ -606,11 +650,21 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final MangaType getType() {
+                return e_type;
+            }
+
+            @Override
+            public final String getRawType(){
                 return type;
             }
 
             @Override
             public final MangaPublishStatus getStatus() {
+                return e_status;
+            }
+
+            @Override
+            public final String getRawStatus(){
                 return status;
             }
 
@@ -755,7 +809,8 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         return new RelatedManga() {
 
             private final MangaPreview manga            = requireNonNull(() -> asMangaPreview(mal, schema.getJsonObject("node")));
-            private final RelationType relationType     = requireNonNull(() -> RelationType.asEnum(schema.getString("relation_type")));
+            private final String relationType           = requireNonNull(() -> schema.getString("relation_type"));
+            private final RelationType e_relationType   = RelationType.asEnum(relationType);
             private final String relationTypeFormatted  = requireNonNull(() -> schema.getString("relation_type_formatted"));
 
             // API methods
@@ -767,6 +822,11 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final RelationType getRelationType() {
+                return e_relationType;
+            }
+
+            @Override
+            public final String getRawRelationType(){
                 return relationType;
             }
 
@@ -793,5 +853,5 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
         };
     }
-    
+
 }

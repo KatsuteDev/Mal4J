@@ -35,7 +35,7 @@ import com.kttdevelopment.mal4j.query.AnimeListUpdate;
  * @see MyAnimeList#updateAnimeListing(long)
  * @see ListStatus
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
@@ -75,10 +75,24 @@ public abstract class AnimeListStatus implements ListStatus<AnimeStatus>, AnimeR
      *
      * @return rewatch value
      *
+     * @see #getRawRewatchValue()
      * @see RewatchValue
      * @since 1.0.0
      */
     public abstract RewatchValue getRewatchValue();
+
+    /**
+     * Returns the raw rewatch value.
+     * <br>
+     * It is recommended to use {@link #getRewatchValue()} and {@link RewatchValue#value()} rather than this method.
+     * This method should only be used if the rewatch value is missing from {@link RewatchValue}.
+     *
+     * @return raw rewatch value
+     *
+     * @see #getRewatchValue()
+     * @since 2.9.0
+     */
+    public abstract Integer getRawRewatchValue();
 
     // additional methods
 

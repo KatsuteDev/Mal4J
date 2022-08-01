@@ -28,16 +28,18 @@ import com.kttdevelopment.mal4j.anime.property.AnimeRankingType;
  * @see com.kttdevelopment.mal4j.MyAnimeList#getAnimeRanking(AnimeRankingType)
  * @see FieldQuery
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public abstract class AnimeRankingQuery extends FieldQuery<AnimeRankingQuery,AnimeRanking> implements NSFW<AnimeRankingQuery> {
 
-    protected final AnimeRankingType rankingType;
+    protected final String rankingType;
     protected Boolean nsfw;
 
     /**
-     * Creates an Anime ranking query. Applications do not use this constructor.
+     * Creates an Anime ranking query.
+     * <br>
+     * Do not use this constructor, use {@link com.kttdevelopment.mal4j.MyAnimeList#getAnimeRanking(AnimeRankingType)} instead.
      *
      * @param rankingType ranking type
      *
@@ -45,7 +47,7 @@ public abstract class AnimeRankingQuery extends FieldQuery<AnimeRankingQuery,Ani
      * @see AnimeRankingType
      * @since 1.0.0
      */
-    public AnimeRankingQuery(final AnimeRankingType rankingType) {
+    public AnimeRankingQuery(final String rankingType) {
         this.rankingType = rankingType;
     }
 

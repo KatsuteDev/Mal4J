@@ -18,14 +18,16 @@
 
 package com.kttdevelopment.mal4j.manga.property;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
+
 /**
  * Represents how to sort the Manga search query.
  *
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum MangaSort {
+public enum MangaSort implements FieldEnum {
 
     ID          ("manga_id"),
     Title       ("manga_title"),
@@ -39,13 +41,7 @@ public enum MangaSort {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -60,9 +56,10 @@ public enum MangaSort {
      * @since 1.0.0
      */
     public static MangaSort asEnum(final String string){
-        for(final MangaSort value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final MangaSort value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

@@ -18,15 +18,17 @@
 
 package com.kttdevelopment.mal4j.anime.property.time;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
+
 /**
  * Represents a day of the week.
  *
  * @see com.kttdevelopment.mal4j.anime.property.Broadcast
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum DayOfWeek {
+public enum DayOfWeek implements FieldEnum {
 
     Sunday      ("sunday"),
     Monday      ("monday"),
@@ -43,13 +45,7 @@ public enum DayOfWeek {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -64,9 +60,10 @@ public enum DayOfWeek {
      * @since 1.0.0
      */
     public static DayOfWeek asEnum(final String string){
-        for(final DayOfWeek value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final DayOfWeek value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 

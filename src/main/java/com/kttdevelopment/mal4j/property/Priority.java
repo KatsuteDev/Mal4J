@@ -24,7 +24,7 @@ package com.kttdevelopment.mal4j.property;
  * @see com.kttdevelopment.mal4j.query.AnimeListUpdate#priority(Priority)
  * @see com.kttdevelopment.mal4j.query.MangaListUpdate#priority(Priority)
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
 public enum Priority {
@@ -60,9 +60,10 @@ public enum Priority {
      * @since 1.0.0
      */
     public static Priority asEnum(final Integer num){
-        for(final Priority value : values())
-            if(value.value == num)
-                return value;
+        if(num != null)
+            for(final Priority value : values())
+                if(value.value == num)
+                    return value;
         return null;
     }
 

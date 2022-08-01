@@ -18,15 +18,17 @@
 
 package com.kttdevelopment.mal4j.anime.property;
 
+import com.kttdevelopment.mal4j.property.FieldEnum;
+
 /**
- * Represents an Anime's status on a users Anime list.
+ * Represents an Anime status on a user's Anime list.
  *
  * @see com.kttdevelopment.mal4j.anime.AnimePreview#getStatus()
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.9.0
  * @author Katsute
  */
-public enum AnimeStatus {
+public enum AnimeStatus implements FieldEnum {
 
     Watching    ("watching"),
     Completed   ("completed"),
@@ -40,13 +42,7 @@ public enum AnimeStatus {
         this.field = field;
     }
 
-    /**
-     * Returns the json field name.
-     *
-     * @return json field name
-     *
-     * @since 1.0.0
-     */
+    @Override
     public final String field(){
         return field;
     }
@@ -61,9 +57,10 @@ public enum AnimeStatus {
      * @since 1.0.0
      */
     public static AnimeStatus asEnum(final String string){
-        for(final AnimeStatus value : values())
-            if(value.field.equalsIgnoreCase(string))
-                return value;
+        if(string != null)
+            for(final AnimeStatus value : values())
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
         return null;
     }
 
