@@ -1,5 +1,20 @@
 # Changelog
 
+## 🌈 Changes
+
+### ⭐ New Features
+
+* Enum changes and fixes https://github.com/KatsuteDev/Mal4J/pull/329 (@Katsute)
+  * Methods that have an enum parameter can now also accept string field parameters
+  * Methods that return enums can now also return as a string
+  * Fix asEnum throwing a NullPointerException
+
+### 📘 Dependencies
+
+* Bump junit-jupiter-params and junit-jupiter-api from 5.8.2 to 5.9.0 https://github.com/KatsuteDev/Mal4J/pull/328 (@mashiro-san)
+
+**Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.8.2...2.9.0
+
 ## 2.8.2
 
 ### 🐞 Bug Fixes
