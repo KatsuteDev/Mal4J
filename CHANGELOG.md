@@ -1,6 +1,6 @@
 # Changelog
 
-## 🌈 Changes
+## 2.9.0
 
 ### ⭐ New Features
 
