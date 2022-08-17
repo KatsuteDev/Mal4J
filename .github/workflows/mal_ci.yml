@@ -9,7 +9,7 @@ jobs:
   mal_ci:
     name: MyAnimeList CI [${{ matrix.auth }}] (Java ${{ matrix.java }})
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
     strategy:
       matrix:
         auth: ["Client", "Token"]
@@ -42,7 +42,7 @@ jobs:
         run: mvn test -fae --no-transfer-progress
 
       - name: ✔ Generate Report
-        uses: Katsute/Workflows/Actions/java/report@main
+        uses: Katsute/Workflows/actions/java/report@main
         with:
           token: ${{ secrets.BOT }}
           path: .
