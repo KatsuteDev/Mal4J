@@ -1,8 +1,10 @@
 name: Java CI
 on:
-  push: {}
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
+    types: [opened, reopened, synchronize]
 
 jobs:
   java_ci:
