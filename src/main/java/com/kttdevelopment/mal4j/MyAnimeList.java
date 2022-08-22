@@ -89,7 +89,6 @@ public abstract class MyAnimeList {
      * @throws NullPointerException if token is null
      * @throws InvalidTokenException if token doesn't start with 'Bearer'
      *
-     *
      * @see #withClientID(String)
      * @see #withOAuth2(MyAnimeListAuthenticator)
      * @since 2.6.0
@@ -106,7 +105,6 @@ public abstract class MyAnimeList {
      * @return MyAnimeList
      * @throws NullPointerException if token is null
      * @throws InvalidTokenException if token doesn't start with 'Bearer'
-     *
      *
      * @see #withClientID(String)
      * @see #withAuthorization(MyAnimeListAuthenticator)

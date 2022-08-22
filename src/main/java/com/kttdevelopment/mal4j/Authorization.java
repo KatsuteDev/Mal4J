@@ -35,7 +35,7 @@ public final class Authorization {
     // [\w\-.~]*
     private static final Pattern allowedPKCE = Pattern.compile("[\\w\\-.~]*");
 
-    @SuppressWarnings("SpellCheckingInspection")
+    @SuppressWarnings({"SpellCheckingInspection", "RedundantSuppression"})
     private final String client_id, client_secret, authorization_code, pkce, redirect_uri;
 
     /**

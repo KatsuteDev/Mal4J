@@ -493,7 +493,7 @@ public final class MyAnimeListAuthenticator {
     }
 
     @SuppressWarnings({"ResultOfMethodCallIgnored", "SpellCheckingInspection"})
-    private static String[/* [authorization, PKCE verify] */ ] authenticateWithLocalServer(
+    private static String[/* [authorization, PKCE verify] */] authenticateWithLocalServer(
         final String client_id,
         final int port,
         final AuthResponseHandler responseHandler,
@@ -515,7 +515,7 @@ public final class MyAnimeListAuthenticator {
         final ExecutorService exec = Executors.newSingleThreadExecutor();
         final CountDownLatch latch = new CountDownLatch(1);
 
-        final HttpServer server    = HttpServer.create(new InetSocketAddress(port), 0);
+        final HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
         server.setExecutor(exec);
         final AuthHandler handler = new AuthHandler(latch, responseHandler);
         server.createContext("/", handler);
