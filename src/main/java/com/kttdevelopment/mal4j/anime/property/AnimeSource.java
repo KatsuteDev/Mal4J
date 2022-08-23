@@ -49,7 +49,7 @@ public enum AnimeSource implements FieldEnum {
      * @deprecated use {@link #DigitalManga}
      */
     @Deprecated
-    Digital_Manga    ("digital_manga"),
+    Digital_Manga   ("digital_manga"),
     DigitalManga    ("digital_manga"),
     Novel           ("novel"),
     LightNovel      ("light_novel"),

@@ -27,7 +27,7 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  *
  * @see MediaItem#getStatus()
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.9.1
  * @author Katsute
  */
 public enum MangaPublishStatus implements FieldEnum {
@@ -38,7 +38,8 @@ public enum MangaPublishStatus implements FieldEnum {
     NotYetPublished ("not_yet_published"),
     Finished        ("finished"),
 
-    OnHiatus        ("on_hiatus");
+    OnHiatus        ("on_hiatus"),
+    Discontinued    ("discontinued");
 
     private final String field;
 
