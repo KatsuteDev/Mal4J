@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.9.1
+
+### 🐞 Bug Fixes
+
+* Add missing Manga publishing status `discontinued` https://github.com/KatsuteDev/Mal4J/pull/334 (@Katsute)
+
+### 📘 Dependencies
+
+* Bump maven-javadoc-plugin from 3.4.0 to 3.4.1 https://github.com/KatsuteDev/Mal4J/pull/330 (@dependabot)
+
+**Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.9.0...2.9.1
+
 ## 2.9.0
 
 ### ⭐ New Features
