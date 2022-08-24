@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
 
 /**
  * Thrown if an exception occurs in a static initializer.
@@ -27,12 +27,12 @@ package dev.katsute.mal4j;
  */
 public final class StaticInitializerException extends RuntimeException {
 
-    StaticInitializerException(){ }
+    public StaticInitializerException(){ }
 
-    StaticInitializerException(final String message){ super(message); }
+    public StaticInitializerException(final String message){ super(message); }
 
-    StaticInitializerException(final String message, final Throwable cause){ super(message, cause); }
+    public StaticInitializerException(final String message, final Throwable cause){ super(message, cause); }
 
-    StaticInitializerException(final Throwable cause){ super(cause); }
+    public StaticInitializerException(final Throwable cause){ super(cause); }
 
 }

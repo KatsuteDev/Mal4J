@@ -1,5 +1,6 @@
 package dev.katsute.mal4j;
 
+import dev.katsute.mal4j.exception.JsonSyntaxException;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

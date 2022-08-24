@@ -16,21 +16,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
 
 /**
- * Thrown if the state parameter was illegally modified.
+ * Thrown if the Json is malformed.
  *
- * @see MyAnimeListAuthenticator
  * @since 1.0.0
  * @version 2.2.1
  * @author Katsute
  */
-public final class UnauthorizedAccessException extends RuntimeException {
+public final class JsonSyntaxException extends RuntimeException {
 
-    @SuppressWarnings("SameParameterValue")
-    UnauthorizedAccessException(final String message){
+    private final String raw;
+
+    public JsonSyntaxException(final String message, final String raw){
         super(message);
+        this.raw = raw;
+    }
+
+    /**
+     * Returns the raw string.
+     *
+     * @return raw string
+     * @since 2.2.0
+     */
+    public final String getRaw(){
+        return raw;
     }
 
 }

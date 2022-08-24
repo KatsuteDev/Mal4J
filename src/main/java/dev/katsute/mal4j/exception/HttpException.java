@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
 
 /**
  * Thrown if the server does not return a 200 OK response.
@@ -30,7 +30,7 @@ public final class HttpException extends RuntimeException {
     private final String URL, message;
     private final int code;
 
-    HttpException(final String URL, final int code, final String message){
+    public HttpException(final String URL, final int code, final String message){
         super("Server returned code " + code + " from '" + URL + "': " + message);
         this.URL = URL;
         this.code = code;

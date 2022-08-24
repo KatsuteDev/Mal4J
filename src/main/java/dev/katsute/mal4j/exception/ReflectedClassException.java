@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
 
 /**
  * Thrown if a reflected class throws an exception.
@@ -28,12 +28,12 @@ package dev.katsute.mal4j;
 @SuppressWarnings("SameParameterValue")
 public final class ReflectedClassException extends RuntimeException {
 
-    ReflectedClassException(){ }
+    public ReflectedClassException(){ }
 
-    ReflectedClassException(final String message){ super(message); }
+    public ReflectedClassException(final String message){ super(message); }
 
-    ReflectedClassException(final String message, final Throwable cause){ super(message, cause); }
+    public ReflectedClassException(final String message, final Throwable cause){ super(message, cause); }
 
-    ReflectedClassException(final Throwable cause){ super(cause); }
+    public ReflectedClassException(final Throwable cause){ super(cause); }
 
 }

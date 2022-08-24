@@ -16,32 +16,20 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
 
 /**
- * Thrown if the Json is malformed.
+ * Thrown if the token is either invalid or expired.
  *
- * @since 1.0.0
- * @version 2.2.1
+ * @since 2.3.0
+ * @version 2.3.0
  * @author Katsute
  */
-public final class JsonSyntaxException extends RuntimeException {
+public final class InvalidTokenException extends RuntimeException {
 
-    private final String raw;
-
-    JsonSyntaxException(final String message, final String raw){
+    @SuppressWarnings("SameParameterValue")
+    public InvalidTokenException(final String message){
         super(message);
-        this.raw = raw;
-    }
-
-    /**
-     * Returns the raw string.
-     *
-     * @return raw string
-     * @since 2.2.0
-     */
-    public final String getRaw(){
-        return raw;
     }
 
 }
