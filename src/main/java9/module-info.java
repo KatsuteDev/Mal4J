@@ -47,17 +47,17 @@ module Mal4J {
     requires java.desktop;
     requires java.logging;
 
-    exports com.kttdevelopment.mal4j.anime;
-    exports com.kttdevelopment.mal4j.anime.property;
-    exports com.kttdevelopment.mal4j.anime.property.time;
-    exports com.kttdevelopment.mal4j.forum;
-    exports com.kttdevelopment.mal4j.forum.property;
-    exports com.kttdevelopment.mal4j.manga;
-    exports com.kttdevelopment.mal4j.manga.property;
-    exports com.kttdevelopment.mal4j.property;
-    exports com.kttdevelopment.mal4j.query;
-    exports com.kttdevelopment.mal4j.user;
-    exports com.kttdevelopment.mal4j.user.property;
-    exports com.kttdevelopment.mal4j;
+    exports dev.katsute.mal4j.anime;
+    exports dev.katsute.mal4j.anime.property;
+    exports dev.katsute.mal4j.anime.property.time;
+    exports dev.katsute.mal4j.forum;
+    exports dev.katsute.mal4j.forum.property;
+    exports dev.katsute.mal4j.manga;
+    exports dev.katsute.mal4j.manga.property;
+    exports dev.katsute.mal4j.property;
+    exports dev.katsute.mal4j.query;
+    exports dev.katsute.mal4j.user;
+    exports dev.katsute.mal4j.user.property;
+    exports dev.katsute.mal4j;
 
 }
