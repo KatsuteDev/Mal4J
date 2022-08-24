@@ -96,46 +96,6 @@ public abstract class MyAnimeList {
     }
 
     /**
-     * Creates an interface with an OAuth token. Note that this method does not support {@link #refreshToken()}.
-     *
-     * @deprecated this method has been renamed to {@link #withToken(String)} for simplicity
-     * @param token OAuth token, Ex: 'Bearer oauth2token'
-     * @return MyAnimeList
-     * @throws NullPointerException if token is null
-     * @throws InvalidTokenException if token doesn't start with 'Bearer'
-     *
-     * @see #withClientID(String)
-     * @see #withAuthorization(MyAnimeListAuthenticator)
-     * @see #withToken(String)
-     * @since 1.0.0
-     */
-    @Deprecated
-    public static MyAnimeList withOAuthToken(final String token){
-        Logging.getLogger().warning("The use of this method is deprecated, please use `MyAnimeList.withToken(...)");
-        return withToken(token);
-    }
-
-    /**
-     * Creates an interface with an authenticator.
-     *
-     * @deprecated this method has been renamed to {@link #withOAuth2(MyAnimeListAuthenticator)} to reduce confusion with {@link Authorization}
-     * @param authenticator authenticator
-     * @return MyAnimeList
-     * @throws NullPointerException if authenticator is null
-     *
-     * @see #withClientID(String)
-     * @see #withToken(String)
-     * @see #refreshToken()
-     * @see MyAnimeListAuthenticator
-     * @since 1.0.0
-     */
-    @Deprecated
-    public static MyAnimeList withAuthorization(final MyAnimeListAuthenticator authenticator){
-        Logging.getLogger().warning("The use of this method is deprecated, please use `MyAnimeList.withOAuth2(...)");
-        return withOAuth2(authenticator);
-    }
-
-    /**
      * Creates an interface using an authenticator.
      *
      * @param authenticator authenticator
@@ -160,18 +120,6 @@ public abstract class MyAnimeList {
      * @since 2.6.0
      */
     public abstract void refreshToken();
-
-    /**
-     * Refreshes the OAuth token. Only works with {@link #withAuthorization(MyAnimeListAuthenticator)}.
-     *
-     * @deprecated this method has been renamed to {@link #refreshToken()} for simplicity
-     * @throws UnsupportedOperationException if this wasn't created with an authenticator
-     *
-     * @since 1.0.0
-     * @see #refreshToken()
-     */
-    @Deprecated
-    public abstract void refreshOAuthToken();
 
 // experimental
 
@@ -593,34 +541,6 @@ public abstract class MyAnimeList {
      * @since 2.2.0
      */
     public abstract User getAuthenticatedUser(final String... fields);
-
-    /**
-     * Returns the authenticated user.
-     *
-     * @deprecated use {@link #getAuthenticatedUser()} instead
-     * @return user
-     *
-     * @see User
-     * @see #getMyself(String...)
-     * @since 1.0.0
-     */
-    @Deprecated
-    public abstract User getMyself();
-
-    /**
-     * Returns the authenticated user.
-     *
-     * @deprecated use {@link #getAuthenticatedUser(String...)} instead
-     * @param fields a string array of the fields that should be returned
-     * @return user
-     *
-     * @see User
-     * @see #getMyself()
-     * @see Fields#user
-     * @since 1.0.0
-     */
-    @Deprecated
-    public abstract User getMyself(final String... fields);
 
     /**
      * Returns a user given their username.

@@ -78,12 +78,6 @@ final class MyAnimeListImpl extends MyAnimeList {
         this.token = authenticator.refreshAccessToken().getToken();
     }
 
-    @Override @Deprecated
-    public synchronized final void refreshOAuthToken(){
-        Logging.getLogger().warning("The use of this method is deprecated, please use `refreshToken()");
-        refreshToken();
-    }
-
 // experimental features
 
     // features that are no longer experimental (make sure to deprecate)
@@ -768,18 +762,6 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final User getAuthenticatedUser(final String... fields){
-        return getUser("@me", fields);
-    }
-
-    @Override @Deprecated
-    public final User getMyself(){
-        Logging.getLogger().warning("The use of this method is deprecated, please use `getAuthenticatedUser()");
-        return getUser("@me", (String[]) null);
-    }
-
-    @Override @Deprecated
-    public final User getMyself(final String... fields){
-        Logging.getLogger().warning("The use of this method is deprecated, please use `getAuthenticatedUser(...)");
         return getUser("@me", fields);
     }
 

@@ -36,11 +36,6 @@ public enum MangaType implements FieldEnum {
     Unknown     ("unknown"),
 
     Manga       ("manga"),
-    /**
-     * @deprecated use {@link #LightNovel}
-     */
-    @Deprecated
-    Novel       ("novel"),
     LightNovel  ("light_novel"),
     OneShot     ("one_shot"),
     Doujin      ("doujinshi"),

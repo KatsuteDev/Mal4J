@@ -39,17 +39,7 @@ public enum AnimeSource implements FieldEnum {
     Original        ("original"),
     Manga           ("manga"),
     FourKomaManga   ("4_koma_manga"),
-    /**
-     * @deprecated use {@link #WebManga}
-     */
-    @Deprecated
-    Web_Manga       ("web_manga"),
     WebManga        ("web_manga"),
-    /**
-     * @deprecated use {@link #DigitalManga}
-     */
-    @Deprecated
-    Digital_Manga   ("digital_manga"),
     DigitalManga    ("digital_manga"),
     Novel           ("novel"),
     LightNovel      ("light_novel"),

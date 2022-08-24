@@ -45,7 +45,7 @@ public abstract class Logging {
 
     @SuppressWarnings("SpellCheckingInspection")
     public static Logger getLogger(){
-        if(!new Exception().getStackTrace()[1].toString().startsWith("com.kttdevelopment.mal4j."))
+        if(!new Exception().getStackTrace()[1].toString().startsWith("dev.katsute.mal4j."))
             throw new SecurityException("Logging not allowed for this class");
         else
             return logger;
