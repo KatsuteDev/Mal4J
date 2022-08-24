@@ -16,6 +16,7 @@
     - `MyAnimeList.getMyself` (use `MyAnimeList.getAuthenticatedUser`)
     - `MyAnimeListAuthenticator` `String` constructors (use `Authorization` constructors)
  - Moved exceptions from `dev.katsute.mal4j` to `dev.katsute.mal4j.exception`
+ - Using an experimental feature without explicitly enabling it using `MyAnimeList.enableExperimentalFeature` will now throw an exception (previously would only log a warning).
 
 ## ⭐ New Features
 

@@ -21,8 +21,7 @@ package dev.katsute.mal4j;
 import dev.katsute.mal4j.anime.*;
 import dev.katsute.mal4j.anime.property.AnimeRankingType;
 import dev.katsute.mal4j.anime.property.time.Season;
-import dev.katsute.mal4j.exception.HttpException;
-import dev.katsute.mal4j.exception.InvalidTokenException;
+import dev.katsute.mal4j.exception.*;
 import dev.katsute.mal4j.forum.*;
 import dev.katsute.mal4j.manga.*;
 import dev.katsute.mal4j.manga.property.MangaRankingType;
@@ -91,11 +90,8 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @SuppressWarnings("SameParameterValue")
     final void checkExperimentalFeatureEnabled(final ExperimentalFeature feature) {
-        if(nativeFeatures.contains(feature) || enabledFeatures.contains(feature))
-            return;
-
-        // in the future this should throw an exception
-        Logging.getLogger().warning("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
+        if(!nativeFeatures.contains(feature) && !enabledFeatures.contains(feature))
+            throw new DisabledFeatureException("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
     }
 
     @Override

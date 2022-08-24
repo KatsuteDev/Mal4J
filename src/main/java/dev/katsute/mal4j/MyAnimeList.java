@@ -66,7 +66,7 @@ public abstract class MyAnimeList {
     MyAnimeList(){ }
 
     /**
-     * Creates an interface with a client ID. Only public read operations are allowed, for write and user operations use {@link #withToken(String)} or {@link #withAuthorization(MyAnimeListAuthenticator)}. Client secret is not required if your application has one.
+     * Creates an interface with a client ID. Only public read operations are allowed, for write and user operations use {@link #withToken(String)} or {@link #withOAuth2(MyAnimeListAuthenticator)}. Client secret is not required if your application has one.
      *
      * @param client_id client id
      * @return MyAnimeList
