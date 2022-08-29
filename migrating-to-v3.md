@@ -31,6 +31,8 @@ Along with the group ID, any imports referencing to this library must also be up
 
 If you are using modules you must change `requires com.kttdevelopment.mal4j` to `requires dev.katsute.mal4j`.
 
+## &nbsp;
+
 ### ❌ Removed deprecated authentication methods from `MyAnimeList`
 
 The following authentication methods have been been deprecated since v2.7.0 in favor of clearer method names.
@@ -73,6 +75,8 @@ Previously using an experimental feature without enabling it would only print a 
 
 To enable an experimental feature use `MyAnimeList.enableExperimentalFeature`.
 
+## &nbsp;
+
 ### ⛔ Moved exceptions from `mal4j` to `mal4j.exceptions`
 
 All exceptions have been moved from the base package to a new `exceptions` package.
@@ -83,9 +87,13 @@ Any exception from this package must have its import updated manually.
 
 The `AndroidCompatibilityException` has been deprecated since v2.4.0 and is now removed.
 
+## &nbsp;
+
 ### ❌ Removed `Digital_Manga` and `Web_Manga` from `AnimeSource`
 
 The `Digital_Manga` and `Web_Manga` enums have been deprecated since v2.8.0 in favor of `DigitalManga` and `WebManga` enums. The old underscored enums have now been removed.
+
+## &nbsp;
 
 ### ❌ Removed `Novel` from `MangaType`
 
