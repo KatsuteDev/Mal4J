@@ -18,10 +18,12 @@
 package dev.katsute.mal4j;
 
 import dev.katsute.mal4j.anime.property.time.Time;
+import dev.katsute.mal4j.property.NullableDate;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.util.Date;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -47,15 +49,53 @@ abstract class MyAnimeListSchema {
     private static final String YM  = "yyyy-MM";
     private static final String Y   = "yyyy";
 
-    protected static Long parseDate(final String date){
+    protected static NullableDate parseDate(final String date){
         if(date == null) return null;
 
-        try{
-            final int len = date.length();
-            return new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y).parse(date).getTime();
-        }catch(final ParseException e){
-            return null;
-        }
+        final String[] parts = date.split("-");
+
+        final Integer year  = Integer.valueOf(parts[0]);
+        final Integer month = parts.length > 1 ? Integer.valueOf(parts[1]) : null;
+        final Integer day   = parts.length > 2 ? Integer.valueOf(parts[2]) : null;
+
+        return new NullableDate() {
+
+            final Integer year  = Integer.valueOf(parts[0]);
+            final Integer month = parts.length > 1 ? Integer.valueOf(parts[1]) : null;
+            final Integer day   = parts.length > 2 ? Integer.valueOf(parts[2]) : null;
+
+            @Override
+            public final Integer getYear(){
+                return year;
+            }
+
+            @Override
+            public final Month getMonth(){
+                return month == null ? null : Month.of(month);
+            }
+
+            @Override
+            public final Integer getMonthNum(){
+                return month;
+            }
+
+            @Override
+            public final Integer getDay(){
+                return day;
+            }
+
+            //
+
+            @Override
+            public final String toString(){
+                return "NullableDate{" +
+                       "year=" + year +
+                       ", month=" + month +
+                       ", day=" + day +
+                       '}';
+            }
+
+        };
     }
 
     static String asYMD(final Long millis){

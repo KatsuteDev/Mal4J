@@ -20,6 +20,7 @@ package dev.katsute.mal4j.user;
 
 import dev.katsute.mal4j.MyAnimeList;
 import dev.katsute.mal4j.property.IDN;
+import dev.katsute.mal4j.property.NullableDate;
 import dev.katsute.mal4j.query.UserAnimeListQuery;
 import dev.katsute.mal4j.query.UserMangaListQuery;
 import dev.katsute.mal4j.user.property.AnimeAffinity;
@@ -67,7 +68,7 @@ public abstract class User implements IDN {
      *
      * @since 1.0.0
      */
-    public abstract Date getBirthday();
+    public abstract NullableDate getBirthday();
 
     /**
      * Returns the user's location.

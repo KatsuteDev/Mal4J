@@ -91,7 +91,7 @@ final class MyAnimeListImpl extends MyAnimeList {
     @SuppressWarnings("SameParameterValue")
     final void checkExperimentalFeatureEnabled(final ExperimentalFeature feature) {
         if(!nativeFeatures.contains(feature) && !enabledFeatures.contains(feature))
-            throw new DisabledFeatureException("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
+            throw new DisabledFeatureException("The feature " + feature.name() + " is an experimental feature and must be enabled using the enableExperimentalFeature method.");
     }
 
     @Override

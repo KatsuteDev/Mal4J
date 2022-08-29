@@ -22,6 +22,7 @@ import dev.katsute.mal4j.anime.AnimePreview;
 import dev.katsute.mal4j.manga.MangaListStatus;
 import dev.katsute.mal4j.manga.MangaPreview;
 import dev.katsute.mal4j.property.ExperimentalFeature;
+import dev.katsute.mal4j.property.NullableDate;
 import dev.katsute.mal4j.query.UserAnimeListQuery;
 import dev.katsute.mal4j.query.UserMangaListQuery;
 import dev.katsute.mal4j.user.User;
@@ -41,7 +42,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
             private final String name       = requireNonNull(() -> schema.getString("name"));
             private final String picture    = requireNonNull(() -> schema.getString("picture"));
             private final String gender     = requireNonNull(() -> schema.getString("gender"));
-            private final Long birthday     = requireNonNull(() -> parseDate(schema.getString("birthday")));
+            private final NullableDate birthday = requireNonNull(() -> parseDate(schema.getString("birthday")));
             private final String location   = requireNonNull(() -> schema.getString("location"));
             private final Long joinedAt     = requireNonNull(() -> parseISO8601(schema.getString("joined_at")));
             private final UserAnimeStatistics animeStatistics
@@ -72,8 +73,8 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
             }
 
             @Override
-            public final Date getBirthday(){
-                return birthday == null ? null : new Date(birthday);
+            public final NullableDate getBirthday(){
+                return birthday;
             }
 
             @Override

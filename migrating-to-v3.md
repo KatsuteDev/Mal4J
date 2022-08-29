@@ -89,6 +89,25 @@ The `AndroidCompatibilityException` has been deprecated since v2.4.0 and is now 
 
 ## &nbsp;
 
+### ⛔ `Anime`, `AnimeListStatus`, `Manga`, and `MangaListStatus` now return `NullableDate` for the `getStartDate`, `getEndDate` and `getFinishDate` methods
+
+MyAnimeList does not always have a complete date for a Anime or Manga listing, as a consequence of using the `Date` object any listing that was missing a month or day would automatically resolve to January 1st when it should be null.
+
+These methods now return a `NullableDate` such that:
+
+```
+NullableDate{
+    getYear(): int | null
+    getMonth(): Month | null
+    getMonthNum(): int | null
+    getDay(): int | null
+}
+```
+
+Listings with a missing month or day now return null instead of Janurary 1st.
+
+## &nbsp;
+
 ### ❌ Removed `Digital_Manga` and `Web_Manga` from `AnimeSource`
 
 The `Digital_Manga` and `Web_Manga` enums have been deprecated since v2.8.0 in favor of `DigitalManga` and `WebManga` enums. The old underscored enums have now been removed.

@@ -73,20 +73,22 @@ public interface ListStatus<Status extends Enum<?>> {
      *
      * @return start date
      *
+     * @see NullableDate
      * @see #getFinishDate()
      * @since 1.0.0
      */
-    Date getStartDate();
+    NullableDate getStartDate();
 
     /**
      * Returns the finish date for the listing.
      *
      * @return finish date
      *
+     * @see NullableDate
      * @see #getStartDate()
      * @since 1.0.0
      */
-    Date getFinishDate();
+    NullableDate getFinishDate();
 
     /**
      * Returns the priority for the listing.
