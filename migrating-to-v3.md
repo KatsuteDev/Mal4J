@@ -91,7 +91,7 @@ The `AndroidCompatibilityException` has been deprecated since v2.4.0 and is now 
 
 ### ⛔ `Anime`, `AnimeListStatus`, `Manga`, and `MangaListStatus` now return `NullableDate` for the `getStartDate`, `getEndDate` and `getFinishDate` methods
 
-MyAnimeList does not always have a complete date for a Anime or Manga listing, as a consequence of using the `Date` object any listing that was missing a month or day would automatically resolve to January 1st when it should be null.
+MyAnimeList does not always have a complete date for a Anime or Manga listing, as a consequence of using the Date object, any listing that was missing a month or day would automatically resolve to January 1st when it should be null.
 
 These methods now return a `NullableDate` such that:
 
@@ -104,7 +104,7 @@ NullableDate{
 }
 ```
 
-Listings with a missing month or day now return null instead of Janurary 1st.
+Listings with a missing month or day should now return null instead of Janurary 1st.
 
 ## &nbsp;
 
