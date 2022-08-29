@@ -1,19 +1,17 @@
 # Migrating to v3
 
-## ⚠️ Breaking Changes
-
 Version 3 includes several breaking changes which are documented below.
 
-### 📋 Types of Breaking Changes
+## 📋 Types of Breaking Changes
 
  - **🆕 New:** A new addition to the library, class, method, or field.
  - **⛔ Breaking Change:** A major change to the library, class, method, or field.
  - **⚠️ Changed:** A minor behavioral change to a class or method.
  - **❌ Removed:** A class, method, or field that has been removed.
 
-### 📋 Changes
+## 📋 Changes
 
-#### ⛔ Package changed from `com.kttdevelopment.mal4j` to `dev.katsute.mal4j`
+### ⛔ Package changed from `com.kttdevelopment.mal4j` to `dev.katsute.mal4j`
 
 As part of the v3 migration, this package's group ID has been changed from `com.kttdevelopment` to `dev.katsute`. All future versions will be released under this new group ID; v2 will still use the old group ID.
 
@@ -31,7 +29,9 @@ When upgrading to v3 the dependency group ID must be changed in the dependencies
 
 Along with the group ID, any imports referencing to this library must also be updated. The easiest way to migrate from v2 to v3 is to replace all `import com.kttdevelopment.mal4j.` with `import dev.katsute.mal4j.`.
 
-#### ❌ Removed deprecated authentication methods from `MyAnimeList`
+If you are using modules you must change `requires com.kttdevelopment.mal4j` to `requires dev.katsute.mal4j`.
+
+### ❌ Removed deprecated authentication methods from `MyAnimeList`
 
 The following authentication methods have been been deprecated since v2.7.0 in favor of clearer method names.
 
@@ -39,7 +39,7 @@ The following authentication methods have been been deprecated since v2.7.0 in f
  - `refreshOAuthToken` is now `refreshToken`.
  - `withAuthorization` is now `withOAuth2`.
 
-#### ❌ Removed String parameters from `MyAnimeListAuthenticator`
+### ❌ Removed String parameters from `MyAnimeListAuthenticator`
 
 The old constructor has been marked as deprecated since v2.7.0 due to poor reusability with access tokens in favor of a new `Authorization` object as a parameter.
 
@@ -63,30 +63,30 @@ new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_tok
 new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_token", "refresh_token", 1640995200);
 ```
 
-#### ❌ Removed `getMyself` from `MyAnimeList`
+### ❌ Removed `getMyself` from `MyAnimeList`
 
 The `getMyself` method has been deprecated since v2.2.0 in favor of a more formal name `getAuthenticatedUser`. The old method has now been removed.
 
-#### ⚠️ Using experimental features without explicitly enabling them will now throw an exception
+### ⚠️ Using experimental features without explicitly enabling them will now throw an exception
 
 Previously using an experimental feature without enabling it would only print a warning, now using an experimental feature without enabling it will throw a `DisabledFeatureException` exception.
 
 To enable an experimental feature use `MyAnimeList.enableExperimentalFeature`.
 
-#### ⛔ Moved exceptions from `mal4j` to `mal4j.exceptions`
+### ⛔ Moved exceptions from `mal4j` to `mal4j.exceptions`
 
 All exceptions have been moved from the base package to a new `exceptions` package.
 
 Any exception from this package must have its import updated manually.
 
-#### ❌ Removed `AndroidCompatibilityException`
+### ❌ Removed `AndroidCompatibilityException`
 
 The `AndroidCompatibilityException` has been deprecated since v2.4.0 and is now removed.
 
-#### ❌ Removed `Digital_Manga` and `Web_Manga` from `AnimeSource`
+### ❌ Removed `Digital_Manga` and `Web_Manga` from `AnimeSource`
 
 The `Digital_Manga` and `Web_Manga` enums have been deprecated since v2.8.0 in favor of `DigitalManga` and `WebManga` enums. The old underscored enums have now been removed.
 
-#### ❌ Removed `Novel` from `MangaType`
+### ❌ Removed `Novel` from `MangaType`
 
 The `Novel` enum has been deprecated since v1.1.0 due to a bug and `LightNovel` was added as a replacement. This enum has been removed.
