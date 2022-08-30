@@ -11,7 +11,7 @@ Version 3 includes several breaking changes which are documented below.
 
 ## 📋 Changes
 
-### ⛔ Package changed from `com.kttdevelopment.mal4j` to `dev.katsute.mal4j`
+### ⛔ Changed package from `com.kttdevelopment.mal4j` to `dev.katsute.mal4j`
 
 As part of the v3 migration, this package's group ID has been changed from `com.kttdevelopment` to `dev.katsute`. All future versions will be released under this new group ID; v2 will still use the old group ID.
 
@@ -33,17 +33,17 @@ If you are using modules you must change `requires com.kttdevelopment.mal4j` to 
 
 ## &nbsp;
 
-### ❌ Removed deprecated authentication methods from `MyAnimeList`
+### ❌ Removed deprecated authentication methods
 
-The following authentication methods have been been deprecated since v2.7.0 in favor of clearer method names.
+The following deprecated authentication methods have been been removed:
 
  - `withOAuthToken` is now `withToken`.
  - `refreshOAuthToken` is now `refreshToken`.
  - `withAuthorization` is now `withOAuth2`.
 
-### ❌ Removed String parameters from `MyAnimeListAuthenticator`
+### ❌ Removed deprecated String parameters from `MyAnimeListAuthenticator`
 
-The old constructor has been marked as deprecated since v2.7.0 due to poor reusability with access tokens in favor of a new `Authorization` object as a parameter.
+The deprecated String parameter has been replaced with the `Authorization` parameter.
 
 Previously:
 
@@ -67,7 +67,7 @@ new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_tok
 
 ### ❌ Removed `getMyself` from `MyAnimeList`
 
-The `getMyself` method has been deprecated since v2.2.0 in favor of a more formal name `getAuthenticatedUser`. The old method has now been removed.
+The deprecated `getMyself` method has replaced with `getAuthenticatedUser`.
 
 ### ⚠️ Using experimental features without explicitly enabling them will now throw an exception
 
@@ -85,11 +85,11 @@ Any exception from this package must have its import updated manually.
 
 ### ❌ Removed `AndroidCompatibilityException`
 
-The `AndroidCompatibilityException` has been deprecated since v2.4.0 and is now removed.
+The `AndroidCompatibilityException` is no longer thrown and has been removed.
 
 ## &nbsp;
 
-### ⛔ `Anime`, `AnimeListStatus`, `Manga`, and `MangaListStatus` now return `NullableDate` for the `getStartDate`, `getEndDate` and `getFinishDate` methods
+### ⛔ `getStartDate`, `getEndDate` and `getFinishDate` methods now return a `NullableDate`
 
 MyAnimeList does not always have a complete date for a Anime or Manga listing, as a consequence of using the Date object, any listing that was missing a month or day would automatically resolve to January 1st when it should be null.
 
@@ -104,16 +104,14 @@ NullableDate{
 }
 ```
 
-Listings with a missing month or day should now return null instead of Janurary 1st.
-
 ## &nbsp;
 
 ### ❌ Removed `Digital_Manga` and `Web_Manga` from `AnimeSource`
 
-The `Digital_Manga` and `Web_Manga` enums have been deprecated since v2.8.0 in favor of `DigitalManga` and `WebManga` enums. The old underscored enums have now been removed.
+The `Digital_Manga` and `Web_Manga` enums have removed, instead use `DigitalManga` and `WebManga` enums.
 
 ## &nbsp;
 
 ### ❌ Removed `Novel` from `MangaType`
 
-The `Novel` enum has been deprecated since v1.1.0 due to a bug and `LightNovel` was added as a replacement. This enum has been removed.
+The `Novel` enum has been removed, instead use `LightNovel`.
