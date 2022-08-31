@@ -89,6 +89,12 @@ The `AndroidCompatibilityException` is no longer thrown and has been removed.
 
 ## &nbsp;
 
+### ⚠️ Make `PaginatedIterator` return a modifiable list
+
+`PaginatedIterator.toList()` and `PaginatedIterator.toSet()` now returns a new list instead of an unmodifiable list.
+
+## &nbsp;
+
 ### ⛔ `getStartDate`, `getEndDate` and `getFinishDate` methods now return a `NullableDate`
 
 MyAnimeList does not always have a complete date for a Anime or Manga listing, as a consequence of using the Date object, any listing that was missing a month or day would automatically resolve to January 1st when it should be null.

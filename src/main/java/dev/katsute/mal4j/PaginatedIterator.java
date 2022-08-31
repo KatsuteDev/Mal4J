@@ -31,6 +31,8 @@ import java.util.*;
  */
 public abstract class PaginatedIterator<T> implements Iterator<T> {
 
+    PaginatedIterator(){ }
+
     private int index = -1; // thread safe by methods
     List<T> list = new ArrayList<>();
     int size;
@@ -92,7 +94,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
      * @since 1.0.0
      */
     public final List<T> toList(){
-        return Collections.unmodifiableList(list);
+        return new ArrayList<>(list);
     }
 
     /**
@@ -103,7 +105,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
      * @since 1.0.0
      */
     public final Set<T> toSet(){
-        return Collections.unmodifiableSet(new LinkedHashSet<>(list));
+        return new HashSet<>(list);
     }
 
 }
