@@ -6,10 +6,10 @@ Version 3 includes several breaking changes which are documented below.
 
 If you are not using any deprecated methods you can ignore any changes marked as **`❌ Removed`**.
 
- - **🆕 New:** A new addition to the library, class, method, or field.
- - **⛔ Breaking Change:** A major change to the library, class, method, or field.
- - **⚠️ Changed:** A minor behavioral change to a class or method, no change is required on your part.
- - **❌ Removed:** A deprecated class, method, or field that has been removed.
+ - **`🆕 New`** A new addition to the library, class, method, or field.
+ - **`⛔ Breaking Change`** A major change to the library, class, method, or field.
+ - **`⚠️ Changed`** A minor behavioral change to a class or method, no change is required on your part.
+ - **`❌ Removed`** A deprecated class, method, or field that has been removed.
 
 ## 📋 Changes
 
