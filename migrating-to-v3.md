@@ -35,6 +35,12 @@ If you are using modules you must change `requires com.kttdevelopment.mal4j` to 
 
 ## &nbsp;
 
+### **`⚠️`** Using experimental features without explicitly enabling them will now throw an exception
+
+Previously using an experimental feature without enabling it would only print a warning, now using an experimental feature without enabling it will throw a `DisabledFeatureException` exception.
+
+To enable an experimental feature use `MyAnimeList.enableExperimentalFeature`.
+
 ### **`❌`** Removed deprecated authentication methods
 
 The following deprecated authentication methods have been been removed:
@@ -70,12 +76,6 @@ new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_tok
 ### **`❌`** Removed `getMyself` from `MyAnimeList`
 
 The deprecated `getMyself` method has replaced with `getAuthenticatedUser`.
-
-### **`⚠️`** Using experimental features without explicitly enabling them will now throw an exception
-
-Previously using an experimental feature without enabling it would only print a warning, now using an experimental feature without enabling it will throw a `DisabledFeatureException` exception.
-
-To enable an experimental feature use `MyAnimeList.enableExperimentalFeature`.
 
 ## &nbsp;
 
