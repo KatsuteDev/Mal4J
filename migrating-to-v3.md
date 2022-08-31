@@ -4,10 +4,12 @@ Version 3 includes several breaking changes which are documented below.
 
 ## 📋 Types of Breaking Changes
 
+If you are not using any deprecated methods you can ignore any changes marked as **`❌ Removed`**.
+
  - **🆕 New:** A new addition to the library, class, method, or field.
  - **⛔ Breaking Change:** A major change to the library, class, method, or field.
- - **⚠️ Changed:** A minor behavioral change to a class or method.
- - **❌ Removed:** A class, method, or field that has been removed.
+ - **⚠️ Changed:** A minor behavioral change to a class or method, no change is required on your part.
+ - **❌ Removed:** A deprecated class, method, or field that has been removed.
 
 ## 📋 Changes
 
@@ -89,7 +91,7 @@ The `AndroidCompatibilityException` is no longer thrown and has been removed.
 
 ## &nbsp;
 
-### ⚠️ Make `PaginatedIterator` return a modifiable list
+### ⚠️ `PaginatedIterator` now returns a modifiable list
 
 `PaginatedIterator.toList()` and `PaginatedIterator.toSet()` now returns a new list instead of an unmodifiable list.
 
