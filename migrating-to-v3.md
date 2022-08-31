@@ -13,7 +13,7 @@ If you are not using any deprecated methods you can ignore any changes marked as
 
 ## 📋 Changes
 
-### ⛔ Changed package from `com.kttdevelopment.mal4j` to `dev.katsute.mal4j`
+### **`⛔`** Changed package from `com.kttdevelopment.mal4j` to `dev.katsute.mal4j`
 
 As part of the v3 migration, this package's group ID has been changed from `com.kttdevelopment` to `dev.katsute`. All future versions will be released under this new group ID; v2 will still use the old group ID.
 
@@ -35,7 +35,7 @@ If you are using modules you must change `requires com.kttdevelopment.mal4j` to 
 
 ## &nbsp;
 
-### ❌ Removed deprecated authentication methods
+### **`❌`** Removed deprecated authentication methods
 
 The following deprecated authentication methods have been been removed:
 
@@ -43,7 +43,7 @@ The following deprecated authentication methods have been been removed:
  - `refreshOAuthToken` is now `refreshToken`.
  - `withAuthorization` is now `withOAuth2`.
 
-### ❌ Removed deprecated String parameters from `MyAnimeListAuthenticator`
+### **`❌`** Removed deprecated String parameters from `MyAnimeListAuthenticator`
 
 The deprecated String parameter has been replaced with the `Authorization` parameter.
 
@@ -67,11 +67,11 @@ new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_tok
 new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_token", "refresh_token", 1640995200);
 ```
 
-### ❌ Removed `getMyself` from `MyAnimeList`
+### **`❌`** Removed `getMyself` from `MyAnimeList`
 
 The deprecated `getMyself` method has replaced with `getAuthenticatedUser`.
 
-### ⚠️ Using experimental features without explicitly enabling them will now throw an exception
+### **`⚠️`** Using experimental features without explicitly enabling them will now throw an exception
 
 Previously using an experimental feature without enabling it would only print a warning, now using an experimental feature without enabling it will throw a `DisabledFeatureException` exception.
 
@@ -79,25 +79,25 @@ To enable an experimental feature use `MyAnimeList.enableExperimentalFeature`.
 
 ## &nbsp;
 
-### ⛔ Moved exceptions from `mal4j` to `mal4j.exceptions`
+### **`⛔`** Moved exceptions from `mal4j` to `mal4j.exceptions`
 
 All exceptions have been moved from the base package to a new `exceptions` package.
 
 Any exception from this package must have its import updated manually.
 
-### ❌ Removed `AndroidCompatibilityException`
+### **`❌`** Removed `AndroidCompatibilityException`
 
 The `AndroidCompatibilityException` is no longer thrown and has been removed.
 
 ## &nbsp;
 
-### ⚠️ `PaginatedIterator` now returns a modifiable list
+### **`⚠️`** `PaginatedIterator` now returns a modifiable list
 
 `PaginatedIterator.toList()` and `PaginatedIterator.toSet()` now returns a new list instead of an unmodifiable list.
 
 ## &nbsp;
 
-### ⛔ `getStartDate`, `getEndDate` and `getFinishDate` methods now return a `NullableDate`
+### **`⛔`** `getStartDate`, `getEndDate` and `getFinishDate` methods now return a `NullableDate`
 
 MyAnimeList does not always have a complete date for a Anime or Manga listing, as a consequence of using the Date object, any listing that was missing a month or day would automatically resolve to January 1st when it should be null.
 
@@ -114,12 +114,12 @@ NullableDate{
 
 ## &nbsp;
 
-### ❌ Removed `Digital_Manga` and `Web_Manga` from `AnimeSource`
+### **`❌`** Removed `Digital_Manga` and `Web_Manga` from `AnimeSource`
 
 The `Digital_Manga` and `Web_Manga` enums have removed, instead use `DigitalManga` and `WebManga` enums.
 
 ## &nbsp;
 
-### ❌ Removed `Novel` from `MangaType`
+### **`❌`** Removed `Novel` from `MangaType`
 
 The `Novel` enum has been removed, instead use `LightNovel`.
