@@ -26,7 +26,7 @@ import java.util.*;
  * @param <T> type
  *
  * @since 1.0.0
- * @version 1.1.1
+ * @version 2.10.0
  * @author Katsute
  */
 public abstract class PaginatedIterator<T> implements Iterator<T> {
@@ -58,7 +58,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
     /**
      * Returns if the response has a next page.
      *
-     * @return if next page
+     * @return if has next page
      *
      * @since 1.0.0
      */
@@ -92,7 +92,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
      * @since 1.0.0
      */
     public final List<T> toList(){
-        return Collections.unmodifiableList(list);
+        return new ArrayList<>(list);
     }
 
     /**
@@ -103,7 +103,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
      * @since 1.0.0
      */
     public final Set<T> toSet(){
-        return Collections.unmodifiableSet(new LinkedHashSet<>(list));
+        return new LinkedHashSet<>(list);
     }
 
 }
