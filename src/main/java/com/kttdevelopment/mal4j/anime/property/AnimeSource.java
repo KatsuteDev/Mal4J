@@ -27,7 +27,7 @@ import com.kttdevelopment.mal4j.property.FieldEnum;
  *
  * @see AnimePreview#getSource()
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.10.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
@@ -39,17 +39,7 @@ public enum AnimeSource implements FieldEnum {
     Original        ("original"),
     Manga           ("manga"),
     FourKomaManga   ("4_koma_manga"),
-    /**
-     * @deprecated use {@link #WebManga}
-     */
-    @Deprecated
-    Web_Manga       ("web_manga"),
     WebManga        ("web_manga"),
-    /**
-     * @deprecated use {@link #DigitalManga}
-     */
-    @Deprecated
-    Digital_Manga   ("digital_manga"),
     DigitalManga    ("digital_manga"),
     Novel           ("novel"),
     LightNovel      ("light_novel"),
@@ -87,8 +77,7 @@ public enum AnimeSource implements FieldEnum {
     public static AnimeSource asEnum(final String string){
         if(string != null){
             for(final AnimeSource value : values())
-                if(!value.name().contains("_") && value.field.equalsIgnoreCase(string))
-                    return value;
+                return value;
             Logging.getLogger().warning(String.format("Unrecognized Anime source '%s', please report this to the maintainers of Mal4J", string));
         }
 
