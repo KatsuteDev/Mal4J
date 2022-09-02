@@ -44,7 +44,7 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.10.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
@@ -595,34 +595,6 @@ public abstract class MyAnimeList {
      * @since 2.2.0
      */
     public abstract User getAuthenticatedUser(final String... fields);
-
-    /**
-     * Returns the authenticated user.
-     *
-     * @deprecated use {@link #getAuthenticatedUser()} instead
-     * @return user
-     *
-     * @see User
-     * @see #getMyself(String...)
-     * @since 1.0.0
-     */
-    @Deprecated
-    public abstract User getMyself();
-
-    /**
-     * Returns the authenticated user.
-     *
-     * @deprecated use {@link #getAuthenticatedUser(String...)} instead
-     * @param fields a string array of the fields that should be returned
-     * @return user
-     *
-     * @see User
-     * @see #getMyself()
-     * @see Fields#user
-     * @since 1.0.0
-     */
-    @Deprecated
-    public abstract User getMyself(final String... fields);
 
     /**
      * Returns a user given their username.

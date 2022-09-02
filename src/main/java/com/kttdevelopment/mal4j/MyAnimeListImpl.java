@@ -772,18 +772,6 @@ final class MyAnimeListImpl extends MyAnimeList {
         return getUser("@me", fields);
     }
 
-    @Override @Deprecated
-    public final User getMyself(){
-        Logging.getLogger().warning("The use of this method is deprecated, please use `getAuthenticatedUser()");
-        return getUser("@me", (String[]) null);
-    }
-
-    @Override @Deprecated
-    public final User getMyself(final String... fields){
-        Logging.getLogger().warning("The use of this method is deprecated, please use `getAuthenticatedUser(...)");
-        return getUser("@me", fields);
-    }
-
     @Override
     public final User getUser(final String username){
         return getUser(username, (String[]) null);
