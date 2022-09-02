@@ -77,7 +77,8 @@ public enum AnimeSource implements FieldEnum {
     public static AnimeSource asEnum(final String string){
         if(string != null){
             for(final AnimeSource value : values())
-                return value;
+                if(value.field.equalsIgnoreCase(string))
+                    return value;
             Logging.getLogger().warning(String.format("Unrecognized Anime source '%s', please report this to the maintainers of Mal4J", string));
         }
 
