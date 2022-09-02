@@ -27,7 +27,7 @@ import dev.katsute.mal4j.property.FieldEnum;
  *
  * @see MangaPreview#getType()
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.10.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")

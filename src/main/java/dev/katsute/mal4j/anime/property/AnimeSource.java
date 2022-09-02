@@ -27,7 +27,7 @@ import dev.katsute.mal4j.property.FieldEnum;
  *
  * @see AnimePreview#getSource()
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.10.0
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
@@ -77,7 +77,7 @@ public enum AnimeSource implements FieldEnum {
     public static AnimeSource asEnum(final String string){
         if(string != null){
             for(final AnimeSource value : values())
-                if(!value.name().contains("_") && value.field.equalsIgnoreCase(string))
+                if(value.field.equalsIgnoreCase(string))
                     return value;
             Logging.getLogger().warning(String.format("Unrecognized Anime source '%s', please report this to the maintainers of Mal4J", string));
         }

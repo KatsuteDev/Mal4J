@@ -175,11 +175,11 @@ final class TestAnime {
         assertEquals(AnimeType.Unknown, AnimeType.asEnum("?"));
         assertEquals(RelationType.Unknown, RelationType.asEnum("?"));
 
-        assertEquals(AnimeSource.WebNovel, mal.getAnime(37208).getSource());
-        assertEquals(AnimeSource.MixedMedia, mal.getAnime(34474).getSource());
+        assertEquals(AnimeSource.WebNovel, mal.getAnime(37208).getSource(), "Unknown type: " + mal.getAnime(37208).getRawSource());
+        assertEquals(AnimeSource.MixedMedia, mal.getAnime(34474).getSource(), "Unknown type: " + mal.getAnime(34474).getRawSource());
 
         for(final RelatedAnime relatedAnime : mal.getAnime(16498).getRelatedAnime())
-            assertNotEquals(RelationType.Unknown, relatedAnime.getRelationType());
+            assertNotEquals(RelationType.Unknown, relatedAnime.getRelationType(), "Unknown type: " + relatedAnime.getRawRelationType());
     }
 
 }

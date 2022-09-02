@@ -25,6 +25,7 @@ final class TestIterator {
             .withLimit(100)
             .searchAll();
         assertNotEquals(0, iterator.toList().size());
+        assertNotEquals(0, iterator.toSet().size());
         assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID());
 
         final AnimePreview first = iterator.next();
@@ -38,6 +39,7 @@ final class TestIterator {
             .getForumTopicDetailPostQuery(481)
             .searchAll();
         assertNotEquals(0, iterator.toList().size());
+        assertNotEquals(0, iterator.toSet().size());
         assertEquals(481, iterator.toList().get(0).getForumTopicDetail().getID());
 
         iterator.forEachRemaining(post -> assertEquals(481, post.getForumTopicDetail().getID()));

@@ -16,7 +16,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package com.kttdevelopment.mal4j;
 
 import java.util.*;
 
@@ -26,12 +26,10 @@ import java.util.*;
  * @param <T> type
  *
  * @since 1.0.0
- * @version 1.1.1
+ * @version 2.10.0
  * @author Katsute
  */
 public abstract class PaginatedIterator<T> implements Iterator<T> {
-
-    PaginatedIterator(){ }
 
     private int index = -1; // thread safe by methods
     List<T> list = new ArrayList<>();
@@ -60,7 +58,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
     /**
      * Returns if the response has a next page.
      *
-     * @return if next page
+     * @return if has next page
      *
      * @since 1.0.0
      */
@@ -105,7 +103,7 @@ public abstract class PaginatedIterator<T> implements Iterator<T> {
      * @since 1.0.0
      */
     public final Set<T> toSet(){
-        return new HashSet<>(list);
+        return new LinkedHashSet<>(list);
     }
 
 }

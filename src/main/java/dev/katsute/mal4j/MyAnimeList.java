@@ -43,7 +43,7 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.10.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
