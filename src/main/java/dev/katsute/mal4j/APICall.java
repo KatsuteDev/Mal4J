@@ -232,24 +232,9 @@ class APICall {
         if(!useNetHttp)
             try{
                 Field methods = null;
-                try{ // Standard Java implementation and Android API 23+ (6.0+)
+                try{
                     methods = HttpURLConnection.class.getDeclaredField("methods");
-                }catch(final NoSuchFieldException ignored){ // Android compatibility fixes below
-                    try{ // Android API 13-22 (3.2 - 5.1.1)
-                        //noinspection JavaReflectionMemberAccess
-                        methods = HttpURLConnection.class.getDeclaredField("PERMITTED_USER_METHODS");
-                    }catch(final NoSuchFieldException ignored1){
-                        try{ // Android API 9-12 (2.3 - 3.1)
-                            //noinspection SpellCheckingInspection
-                            methods = Class.forName("libcore.net.http.HttpURLConnectionImpl").getDeclaredField("PERMITTED_USER_METHODS");
-                        }catch(final ClassNotFoundException | NoSuchFieldException ignored2){
-                            try{ // Android API 1-8 (1 - 2.2.3)
-                                //noinspection JavaReflectionMemberAccess
-                                methods = HttpURLConnection.class.getDeclaredField("methodTokens");
-                            }catch(final NoSuchFieldException ignored3){ }
-                        }
-                    }
-                }
+                }catch(final NoSuchFieldException ignored){}
 
                 if(methods != null){
                     Field modifiers = null;
