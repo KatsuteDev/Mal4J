@@ -30,7 +30,7 @@ import com.kttdevelopment.mal4j.property.FullMediaItem;
  * @see AnimePreview
  * @see FullMediaItem
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.10.0
  * @author Katsute
  */
 public abstract class Anime extends AnimePreview implements FullMediaItem<AnimeType,AnimeAirStatus,AnimeListStatus,AnimeRecommendation,AnimeStatistics> {
@@ -54,6 +54,16 @@ public abstract class Anime extends AnimePreview implements FullMediaItem<AnimeT
      * @since 1.0.0
      */
     public abstract EndingTheme[] getEndingThemes();
+
+    /**
+     * Returns the PVs and trailers.
+     *
+     * @return promotional videos and trailers
+     *
+     * @see Video
+     * @since 2.10.0
+     */
+    public abstract Video[] getVideos();
 
     // additional methods
 

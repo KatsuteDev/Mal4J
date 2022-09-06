@@ -182,7 +182,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
         };
     }
 
-    static OpeningTheme asOpeningTheme(final MyAnimeList mal, final JsonObject schema, Anime anime){
+    static OpeningTheme asOpeningTheme(final MyAnimeList mal, final JsonObject schema, final Anime anime){
         return new OpeningTheme() {
 
             private final Long id       = requireNonNull(() -> schema.getLong("id"));
@@ -218,7 +218,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
         };
     }
 
-    static EndingTheme asEndingTheme(final MyAnimeList mal, final JsonObject schema, Anime anime){
+    static EndingTheme asEndingTheme(final MyAnimeList mal, final JsonObject schema, final Anime anime){
         return new EndingTheme() {
 
             private final Long id       = requireNonNull(() -> schema.getLong("id"));
@@ -251,6 +251,73 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                        '}';
             }
 
+        };
+    }
+
+    static Video asVideo(final MyAnimeList mal, final JsonObject schema){
+        return new Video(){
+
+            private final Long id          = requireNonNull(() -> schema.getLong("id"));
+            private final String title     = requireNonNull(() -> schema.getString("title"));
+            private final String url       = requireNonNull(() -> schema.getString("url"));
+            private final String thumbnail = requireNonNull(() -> schema.getString("thumbnail"));
+            private final Long createdAt   = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
+            private final Long updatedAt   = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
+
+            @Override
+            public final Long getID(){
+                return id;
+            }
+
+            @Override
+            public final String getTitle(){
+                return title;
+            }
+
+            @Override
+            public final String getURL(){
+                return url;
+            }
+
+            @Override
+            public final String getThumbnail(){
+                return thumbnail;
+            }
+
+            @Override
+            public final Date getCreatedAt() {
+                return createdAt == null ? null : new Date(createdAt);
+            }
+
+            @Override
+            public final Long getCreatedAtEpochMillis(){
+                return createdAt;
+            }
+
+            @Override
+            public final Date getUpdatedAt() {
+                return updatedAt == null ? null : new Date(updatedAt);
+            }
+
+            @Override
+            public final Long getUpdatedAtEpochMillis(){
+                return updatedAt;
+            }
+
+            //
+
+
+            @Override
+            public final String toString(){
+                return "Video{" +
+                       "id=" + id +
+                       ", title='" + title + '\'' +
+                       ", url='" + url + '\'' +
+                       ", thumbnail='" + thumbnail + '\'' +
+                       ", createdAt=" + createdAt +
+                       ", updatedAt=" + updatedAt +
+                       '}';
+            }
         };
     }
 
@@ -306,6 +373,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                                                 = requireNonNull(() -> adaptList(schema.getJsonArray("opening_themes"), o -> asOpeningTheme(mal, o, this), OpeningTheme.class));
             private final EndingTheme[] endingThemes
                                                 = requireNonNull(() -> adaptList(schema.getJsonArray("ending_themes"), o -> asEndingTheme(mal, o, this), EndingTheme.class));
+            private final Video[] videos        = requireNonNull(() -> adaptList(schema.getJsonArray("videos"), o -> asVideo(mal, o), Video.class));
 
             // API methods
 
@@ -516,6 +584,12 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                 return endingThemes != null ? Arrays.copyOf(endingThemes, endingThemes.length) : null;
             }
 
+            @Override
+            public final Video[] getVideos(){
+                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.VIDEOS);
+                return videos != null ? Arrays.copyOf(videos, videos.length) : null;
+            }
+
             // additional methods
 
             @Override
@@ -555,6 +629,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                        ", statistics=" + statistics +
                        ", openingThemes=" + Arrays.toString(openingThemes) +
                        ", endingThemes=" + Arrays.toString(endingThemes) +
+                       ", videos=" + Arrays.toString(videos) +
                        '}';
             }
 

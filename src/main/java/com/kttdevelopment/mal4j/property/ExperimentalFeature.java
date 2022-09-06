@@ -26,7 +26,7 @@ import com.kttdevelopment.mal4j.user.User;
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#enableExperimentalFeature(ExperimentalFeature)
  * @since 2.3.0
- * @version 2.3.0
+ * @version 2.10.0
  * @author Katsute
  */
 public enum ExperimentalFeature {
@@ -36,6 +36,11 @@ public enum ExperimentalFeature {
      * @see Anime#getEndingThemes()
      */
     OP_ED_THEMES,
+
+    /**
+     * @see Anime#getVideos()
+     */
+    VIDEOS,
 
     /**
      * @see User#getAnimeAffinity()
