@@ -21,9 +21,7 @@ This issue is caused by using an older, unsupported Java version; this library r
 
 ### `AndroidCompatibilityException` / `ClassNotFoundException` / `NoSuchMethodError`
 
-~~This issue may occur due to Android incompatibilities (blame Google), please open a new issue if this happens.~~
-
-These exceptions are no longer thrown, update to the latest version.
+This issue may occur due to Android incompatibilities (blame Google), please open a new issue if this happens.
 
 ### `InaccessibleObjectException` / `IllegalStateException: Reflect module is not accessible in JDK 9+`
 
