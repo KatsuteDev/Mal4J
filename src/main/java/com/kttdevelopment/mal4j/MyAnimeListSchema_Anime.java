@@ -261,8 +261,8 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             private final String title     = requireNonNull(() -> schema.getString("title"));
             private final String url       = requireNonNull(() -> schema.getString("url"));
             private final String thumbnail = requireNonNull(() -> schema.getString("thumbnail"));
-            private final Long createdAt   = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
-            private final Long updatedAt   = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
+            private final Long createdAt   = requireNonNull(() -> schema.getLong("created_at"));
+            private final Long updatedAt   = requireNonNull(() -> schema.getLong("updated_at"));
 
             @Override
             public final Long getID(){
@@ -306,7 +306,6 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             //
 
-
             @Override
             public final String toString(){
                 return "Video{" +
@@ -318,6 +317,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                        ", updatedAt=" + updatedAt +
                        '}';
             }
+
         };
     }
 

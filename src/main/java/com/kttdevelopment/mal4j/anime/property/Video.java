@@ -47,10 +47,19 @@ public abstract class Video implements ID {
      *
      * @return video URL
      *
+     * @see #getThumbnail()
      * @since 2.10.0
      */
     public abstract String getURL();
 
+    /**
+     * Returns the thumbnail URL.
+     *
+     * @return thumbnail URL
+     *
+     * @see #getURL()
+     * @since 2.10.0
+     */
     public abstract String getThumbnail();
 
     /**
