@@ -2,6 +2,7 @@ package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.mal4j.anime.*;
 import com.kttdevelopment.mal4j.anime.property.OpeningTheme;
+import com.kttdevelopment.mal4j.anime.property.Video;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
 import com.kttdevelopment.mal4j.manga.property.MangaStatus;
 import com.kttdevelopment.mal4j.manga.property.RereadValue;
@@ -51,6 +52,7 @@ public class TestREADME {
         RelatedAnime[] relatedAnime = anime.getRelatedAnime();
         AnimeRecommendation[] recs = anime.getRecommendations();
         OpeningTheme[] op = anime.getOpeningThemes();
+        Video[] PV = anime.getVideos();
     }
 
     // setup
