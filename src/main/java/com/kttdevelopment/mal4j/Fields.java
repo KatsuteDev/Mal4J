@@ -22,7 +22,7 @@ package com.kttdevelopment.mal4j;
  * The fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
  * @since 1.1.0
- * @version 2.2.1
+ * @version 2.10.0
  * @author Katsute
  */
 public abstract class Fields {
@@ -140,7 +140,7 @@ public abstract class Fields {
      *
      * @see #anime
      * @since 1.1.0
-     * @version 2.2.1
+     * @version 2.10.0
      * @author Katsute
      */
     public static class Anime extends Common {
@@ -166,6 +166,8 @@ public abstract class Fields {
         public static final String opening_themes = "opening_themes";
 
         public static final String ending_themes = "ending_themes";
+
+        public static final String videos = "videos";
 
         //
 
@@ -302,6 +304,7 @@ public abstract class Fields {
         Anime.statistics,
         Anime.opening_themes,
         Anime.ending_themes,
+        Anime.videos,
         Anime.list_status,
         Anime.my_list_status
     );

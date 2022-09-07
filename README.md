@@ -106,6 +106,7 @@ Genre[] genres = anime.getGenres();
 RelatedAnime[] relatedAnime = anime.getRelatedAnime();
 AnimeRecommendation[] recs = anime.getRecommendations();
 OpeningTheme[] op = anime.getOpeningThemes();
+Video[] PV = anime.getVideos();
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
