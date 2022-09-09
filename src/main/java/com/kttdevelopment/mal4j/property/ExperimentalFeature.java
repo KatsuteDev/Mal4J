@@ -32,6 +32,11 @@ import com.kttdevelopment.mal4j.user.User;
 public enum ExperimentalFeature {
 
     /**
+     * Enables all experimental features.
+     */
+    ALL,
+
+    /**
      * @see Anime#getOpeningThemes()
      * @see Anime#getEndingThemes()
      */
