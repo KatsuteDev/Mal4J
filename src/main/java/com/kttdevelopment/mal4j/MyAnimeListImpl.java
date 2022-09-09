@@ -96,7 +96,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @SuppressWarnings("SameParameterValue")
     final void checkExperimentalFeatureEnabled(final ExperimentalFeature feature) {
-        if(nativeFeatures.contains(feature) || enabledFeatures.contains(feature))
+        if(nativeFeatures.contains(feature) || enabledFeatures.contains(feature) || enabledFeatures.contains(ExperimentalFeature.ALL))
             return;
 
         // in the future this should throw an exception
