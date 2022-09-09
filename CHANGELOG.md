@@ -7,7 +7,7 @@ This update adds support for Anime promotional videos (PVs) and trailers. Use `A
 ### ❌ Removed
 
 * Removed deprecated enums https://github.com/KatsuteDev/Mal4J/pull/338 (@Katsute)
-  - Removed `AnimeSource.Web_Manga`, use `AnimeSource.WebManga`
+   - Removed `AnimeSource.Web_Manga`, use `AnimeSource.WebManga`
    - Removed `AnimeSource.Digital_Manga`, use `AnimeSource.DigitalManga`
    - Removed `MangaType.Novel`, use `MangaType.LightNovel`
 * Removed deprecated method `MyAnimeList.getMyself` https://github.com/KatsuteDev/Mal4J/pull/339 (@Katsute)
@@ -17,12 +17,12 @@ This update adds support for Anime promotional videos (PVs) and trailers. Use `A
 ### ⭐ New Features
 
 * Added Anime PV/Trailers https://github.com/KatsuteDev/Mal4J/pull/341 (@Katsute)
-  * Retrieve Anime PVs/Trailers using `Anime.getVideos()`, returns an array
+   * Retrieve Anime PVs/Trailers using `Anime.getVideos()`, returns an array
    * Added corresponding field variable `videos` or `Fields.Anime.videos`
    * Added corresponding experimental field `ExperimentalFeature.VIDEOS`
 * Paginated iterator now returns a modifiable list instead of an unmodifiable one https://github.com/KatsuteDev/Mal4J/pull/337 (@Katsute)
 * Added `All` option for experimental features https://github.com/KatsuteDev/Mal4J/pull/342 (@Katsute)
-  * Enable all experimental features using `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.ALL)`
+   * Enable all experimental features using `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.ALL)`
 
 **Full Changelog**: https://github.com/KatsuteDev/Mal4J/compare/2.9.1...2.10.0
 
