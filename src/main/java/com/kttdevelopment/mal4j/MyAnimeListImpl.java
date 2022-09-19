@@ -79,12 +79,6 @@ final class MyAnimeListImpl extends MyAnimeList {
         this.token = authenticator.refreshAccessToken().getToken();
     }
 
-    @Override @Deprecated
-    public synchronized final void refreshOAuthToken(){
-        Logging.getLogger().warning("The use of this method is deprecated, please use `refreshToken()");
-        refreshToken();
-    }
-
 // experimental features
 
     // features that are no longer experimental (make sure to deprecate)
