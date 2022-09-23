@@ -110,6 +110,10 @@ final class MyAnimeListImpl extends MyAnimeList {
             enabledFeatures.add(feature);
     }
 
+    final void clearExperimentalFeatures(){
+        enabledFeatures.clear();
+    }
+
 // provider
 
     @Override

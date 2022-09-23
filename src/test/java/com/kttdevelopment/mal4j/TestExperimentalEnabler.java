@@ -15,6 +15,7 @@ public class TestExperimentalEnabler {
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
+        ((MyAnimeListImpl) mal).clearExperimentalFeatures();
 
         anime = mal.getAnime(TestProvider.AnimeID);
     }
@@ -37,5 +38,7 @@ public class TestExperimentalEnabler {
 
         Assertions.assertDoesNotThrow(anime::getVideos);
     }
+
+    // todo: add test cases for when an experimental feature becomes native
 
 }
