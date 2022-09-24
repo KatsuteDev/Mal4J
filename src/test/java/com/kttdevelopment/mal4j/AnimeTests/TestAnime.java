@@ -6,6 +6,7 @@ import com.kttdevelopment.mal4j.anime.RelatedAnime;
 import com.kttdevelopment.mal4j.anime.property.AnimeSource;
 import com.kttdevelopment.mal4j.anime.property.AnimeType;
 import com.kttdevelopment.mal4j.manga.RelatedManga;
+import com.kttdevelopment.mal4j.property.ExperimentalFeature;
 import com.kttdevelopment.mal4j.property.RelationType;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,6 +27,9 @@ final class TestAnime {
     @BeforeAll
     static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
+
+        mal.enableExperimentalFeature(ExperimentalFeature.ALL);
+
         anime = mal.getAnime(TestProvider.AltAnimeID, Fields.anime);
     }
 

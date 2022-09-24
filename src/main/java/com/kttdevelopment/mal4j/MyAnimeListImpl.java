@@ -99,8 +99,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         if(nativeFeatures.contains(feature) || enabledFeatures.contains(feature) || enabledFeatures.contains(ExperimentalFeature.ALL))
             return;
 
-        // in the future this should throw an exception
-        Logging.getLogger().warning("The feature " + feature.name() + " is an experimental feature and should be enabled using the enableExperimentalFeature method. In the future an exception will be thrown if you use an experimental feature without enabling it");
+        throw new ExperimentalFeatureException("The feature " + feature.name() + " is an experimental feature and must be enabled using the enableExperimentalFeature method");
     }
 
     @Override
@@ -109,6 +108,10 @@ final class MyAnimeListImpl extends MyAnimeList {
             Logging.getLogger().warning("The feature " + feature.name() + " is no longer an experimental feature, you do not have to enable it anymore");
         else if(!enabledFeatures.contains(feature))
             enabledFeatures.add(feature);
+    }
+
+    final void clearExperimentalFeatures(){
+        enabledFeatures.clear();
     }
 
 // provider

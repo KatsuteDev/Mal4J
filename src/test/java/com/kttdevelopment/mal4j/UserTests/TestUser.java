@@ -1,6 +1,7 @@
 package com.kttdevelopment.mal4j.UserTests;
 
 import com.kttdevelopment.mal4j.*;
+import com.kttdevelopment.mal4j.property.ExperimentalFeature;
 import com.kttdevelopment.mal4j.user.User;
 import com.kttdevelopment.mal4j.user.property.AnimeAffinity;
 import com.kttdevelopment.mal4j.user.property.MangaAffinity;
@@ -30,6 +31,9 @@ final class TestUser {
     static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
         TestProvider.requireToken();
+
+        mal.enableExperimentalFeature(ExperimentalFeature.ALL);
+
         user = mal.getAuthenticatedUser(Fields.user);
     }
 
