@@ -45,7 +45,7 @@ import static com.kttdevelopment.mal4j.Json.*;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.7.0
+ * @version 2.11.0
  * @author Katsute
  */
 public final class MyAnimeListAuthenticator {
@@ -101,51 +101,6 @@ public final class MyAnimeListAuthenticator {
                 redirect_URI
             )
         );
-    }
-
-    /**
-     * Creates a MyAnimeListAuthenticator.
-     * <br>
-     * If you used a redirect URI to generate your authorization code you must use {@link #MyAnimeListAuthenticator(String, String, String, String, String)}.
-     *
-     * @deprecated use {@link #MyAnimeListAuthenticator(Authorization)}
-     * @param client_id client id
-     * @param client_secret client secret, null if application has none
-     * @param authorization_code authorization code (<b>not</b> your authorization URL)
-     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
-     * @throws InvalidTokenException if token is invalid or expired
-     *
-     * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(String, String, String, String, String)
-     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
-     * @since 1.0.0
-     */
-    @SuppressWarnings("SpellCheckingInspection")
-    @Deprecated
-    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge){
-        this(new Authorization(client_id, client_secret, authorization_code, PKCE_code_challenge), null);
-        Logging.getLogger().warning("The use of this constuctor has been deprecated, please use `new MyAnimeListAuthenticator(new Authorization(...))`");
-    }
-
-    /**
-     * Creates a MyAnimeListAuthenticator.
-     *
-     * @deprecated use {@link #MyAnimeListAuthenticator(Authorization)}
-     * @param client_id client id
-     * @param client_secret client secret, null if application has none
-     * @param authorization_code authorization code (<b>not</b> your authorization URL)
-     * @param PKCE_code_challenge PKCE code challenge used to obtain authorization code. Must be between 43 and 128 characters.
-     * @param redirect_uri redirect URI, required if used to generate authorization_code
-     * @throws InvalidTokenException if token is invalid or expired
-     *
-     * @see MyAnimeListAuthenticator#MyAnimeListAuthenticator(String, String, String, String)
-     * @see MyAnimeList#withAuthorization(MyAnimeListAuthenticator)
-     * @since 2.5.0
-     */
-    @SuppressWarnings("SpellCheckingInspection")
-    @Deprecated
-    public MyAnimeListAuthenticator(final String client_id, final String client_secret, final String authorization_code, final String PKCE_code_challenge, final String redirect_uri){
-        this(new Authorization(client_id, client_secret, authorization_code, PKCE_code_challenge, redirect_uri), null);
-        Logging.getLogger().warning("The use of this constuctor has been deprecated, please use `new MyAnimeListAuthenticator(new Authorization(...))`");
     }
 
     /**
