@@ -13,7 +13,7 @@ jobs:
     strategy:
       matrix:
         auth: ["Client", "Token"]
-        java: [8, 11, 17, 18]
+        java: [8, 11, 17]
       fail-fast: false
       max-parallel: 1
     steps:
@@ -37,11 +37,11 @@ jobs:
         run: |
           echo ${{ secrets.MAL_TOKEN }} > src/test/java/resources/token.txt
 
-      - name: ✔ Test with Maven
+      - name: ✔️ Test with Maven
         continue-on-error: true
         run: mvn test -fae --no-transfer-progress
 
-      - name: ✔ Generate Report
+      - name: ✔️ Generate Report
         uses: Katsute/Workflows/actions/java/report@main
         with:
           token: ${{ secrets.BOT }}
