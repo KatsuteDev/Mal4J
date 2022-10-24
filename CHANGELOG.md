@@ -1,5 +1,40 @@
 # Changelog
 
+## 2.11.0
+
+### ⚠️ Breaking Change
+
+* Using experimental features without enabling them will now throw an exception [#346](https://github.com/KatsuteDev/Mal4J/pull/346) ([@Katsute](https://github.com/Katsute))
+  * Using an experimental feature without enabling it will throw a `ExperimentalFeatureException`, previously would only print a warning
+
+### ❌ Removed
+
+* Remove deprecated authentication methods [#345](https://github.com/KatsuteDev/Mal4J/pull/345) ([@Katsute](https://github.com/Katsute))
+  * Removed `withOAuthToken`, use `withToken`
+  * Removed `refreshOAuthToken`, use `refreshToken`
+  * Removed `withAuthorization`, use `withOAuth2`
+  * The deprecated String parameter has been replaced with the Authorization parameter.
+    Previously:
+    ```java
+    new MyAnimeListAuthenticator("client_id", "client_secret", "authorization_code", "PKCE_code_challenge");
+    ```
+    Should be replaced with:
+     ```java
+     new MyAnimeListAuthenticator(new Authorization("client_id", "client_secret", "authorization_code", "PKCE_code_challenge"));
+     ```
+     If you were not already using this new object before, an access token can be passed to this method to use an existing token, rather than generating a new one:
+     ```java
+     new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_token");
+     new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_token", "refresh_token");
+     new MyAnimeListAuthenticator(new Authorization(...), new AccessToken("access_token", "refresh_token", 1640995200);
+     ```
+
+### 📘 Dependencies
+
+* Bump maven-jar-plugin from 3.2.2 to 3.3.0 [#344](https://github.com/KatsuteDev/Mal4J/pull/344) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`2.10.0...2.11.0`](https://github.com/KatsuteDev/Mal4J/compare/2.10.0...2.11.0)
+
 ## 2.10.0
 
 This update adds support for Anime promotional videos (PVs) and trailers. Use `Anime.getVideos()` to retrieve all PVs.
