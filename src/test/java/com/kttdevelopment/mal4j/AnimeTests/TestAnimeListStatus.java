@@ -110,7 +110,7 @@ final class TestAnimeListStatus {
                 .search();
 
         for(final AnimeListStatus listStatus : list)
-            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID){
+            if(listStatus.getAnime().getID() == TestProvider.AnimeID){
                 testStatus(listStatus);
                 return;
             }
@@ -131,7 +131,7 @@ final class TestAnimeListStatus {
                 .search();
 
         for(final AnimeListStatus listStatus : list)
-            if(listStatus.getAnimePreview().getID() == TestProvider.AnimeID){
+            if(listStatus.getAnime().getID() == TestProvider.AnimeID){
                 testStatus(listStatus);
                 return;
             }
@@ -188,8 +188,8 @@ final class TestAnimeListStatus {
                 .search();
 
         for(final AnimeListStatus status : list)
-            if(status.getAnimePreview().getGenres() != null)
-                for(final Genre genre : status.getAnimePreview().getGenres())
+            if(status.getAnime().getGenres() != null)
+                for(final Genre genre : status.getAnime().getGenres())
                     if(genre.getName().equalsIgnoreCase("ecchi"))
                         return;
 

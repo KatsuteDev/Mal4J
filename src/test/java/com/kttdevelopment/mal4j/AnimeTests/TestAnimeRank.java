@@ -29,7 +29,7 @@ final class TestAnimeRank {
                 .search();
         final AnimeRanking first = ranking.get(0);
         assertEquals(1, first.getRanking());
-        assertEquals(AnimeType.Movie, first.getAnimePreview().getType());
+        assertEquals(AnimeType.Movie, first.getAnime().getType());
         // assertNotNull(first.getPreviousRank());
         assumeTrue(first.getPreviousRank() != null, "Failed to get previous rank for Anime (this is an external issue, ignore this)");
     }

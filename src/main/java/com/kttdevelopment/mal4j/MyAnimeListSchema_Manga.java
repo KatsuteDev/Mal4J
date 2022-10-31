@@ -483,7 +483,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Manga getManga(){
-                return manga != null ? manga.getManga() : mal.getManga(id);
+                return (Manga) manga;
             }
 
             @Override
@@ -685,11 +685,6 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             // additional methods
-
-            @Override
-            public final Manga getManga() {
-                return mal.getManga(id);
-            }
 
             @Override
             public final String toString(){

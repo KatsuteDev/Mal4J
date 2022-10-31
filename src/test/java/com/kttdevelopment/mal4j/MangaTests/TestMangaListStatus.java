@@ -114,7 +114,7 @@ final class TestMangaListStatus {
                 .search();
 
         for(final MangaListStatus listStatus : list)
-            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID){
+            if(listStatus.getManga().getID() == TestProvider.MangaID){
                 testStatus(listStatus);
                 return;
             }
@@ -134,7 +134,7 @@ final class TestMangaListStatus {
                 .search();
 
         for(final MangaListStatus listStatus : list)
-            if(listStatus.getMangaPreview().getID() == TestProvider.MangaID){
+            if(listStatus.getManga().getID() == TestProvider.MangaID){
                 testStatus(listStatus);
                 return;
             }
@@ -190,8 +190,8 @@ final class TestMangaListStatus {
                 .search();
 
         for(final MangaListStatus status : list)
-            if(status.getMangaPreview().getGenres() != null)
-                for(final Genre genre : status.getMangaPreview().getGenres())
+            if(status.getManga().getGenres() != null)
+                for(final Genre genre : status.getManga().getGenres())
                     if(genre.getName().equalsIgnoreCase("ecchi"))
                         return;
 

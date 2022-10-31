@@ -29,7 +29,7 @@ final class TestMangaRank {
                 .search();
         final MangaRanking first = ranking.get(0);
         assertEquals(1, first.getRanking());
-        assertEquals(MangaType.Manga, first.getMangaPreview().getType());
+        assertEquals(MangaType.Manga, first.getManga().getType());
         // assertNotNull(first.getPreviousRank());
         assumeTrue(first.getPreviousRank() != null, "Failed to get previous rank for Manga (this is an external issue, ignore this)");
     }

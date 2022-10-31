@@ -65,19 +65,4 @@ public abstract class Anime extends AnimePreview implements FullMediaItem<AnimeT
      */
     public abstract Video[] getVideos();
 
-    // additional methods
-
-    /**
-     * Returns this.
-     *
-     * @return Anime
-     *
-     * @see Anime
-     * @since 1.0.0
-     */
-    @Override
-    public final Anime getAnime() {
-        return this;
-    }
-
 }

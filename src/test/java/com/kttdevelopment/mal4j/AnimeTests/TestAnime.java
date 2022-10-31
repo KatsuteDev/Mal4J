@@ -120,13 +120,13 @@ final class TestAnime {
             .add("Videos[0]#UpdatedAtEpochMillis", anime -> anime.getVideos()[0].getUpdatedAtEpochMillis())
             .add("RelatedAnime", Anime::getRelatedAnime)
             .add("RelatedAnime[0]", anime -> anime.getRelatedAnime()[0])
-            .add("RelatedAnime#AnimePreview", anime -> anime.getRelatedAnime()[0].getAnimePreview().getID())
+            .add("RelatedAnime#AnimePreview", anime -> anime.getRelatedAnime()[0].getAnime().getID())
             .add("RelatedAnime#RelationType", anime -> anime.getRelatedAnime()[0].getRelationType())
             .add("RelatedAnime#RawRelationType", anime -> anime.getRelatedAnime()[0].getRawRelationType())
             .add("RelatedAnime#RelationTypeFormat", anime -> anime.getRelatedAnime()[0].getRelationTypeFormat())
             .add("Recommendations", Anime::getRecommendations)
             .add("Recommendations[0]", anime -> anime.getRecommendations()[0])
-            .add("Recommendations#AnimePreview", anime -> anime.getRecommendations()[0].getAnimePreview().getID())
+            .add("Recommendations#AnimePreview", anime -> anime.getRecommendations()[0].getAnime().getID())
             .add("Recommendations#Recommendations", anime -> anime.getRecommendations()[0].getRecommendations())
             .add("Statistics", Anime::getStatistics)
             .add("Statistics#Completed", anime -> anime.getStatistics().getCompleted())
@@ -140,7 +140,6 @@ final class TestAnime {
 
     @Test
     final void testAnime(){
-        assertEquals(anime, anime.getAnime());
         assertEquals(TestProvider.AltAnimeID, anime.getID());
     }
 
@@ -178,7 +177,7 @@ final class TestAnime {
     @Test @DisplayName("Anime may not have related Manga") @Disabled
     final void testRelatedManga(){
         final RelatedManga relatedManga = anime.getRelatedManga()[0];
-        assertNotNull(relatedManga.getMangaPreview().getID());
+        assertNotNull(relatedManga.getManga().getID());
         assertNotNull(relatedManga.getRelationType());
         assertNotNull(relatedManga.getRelationTypeFormat());
     }

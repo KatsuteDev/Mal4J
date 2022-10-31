@@ -756,7 +756,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Anime getAnime(){
-                return anime != null ? anime.getAnime() : mal.getAnime(id);
+                return (Anime) anime;
             }
 
             @Override
@@ -994,11 +994,6 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             }
 
             // additional methods
-
-            @Override
-            public final Anime getAnime() {
-                return mal.getAnime(id);
-            }
 
             @Override
             public String toString(){
