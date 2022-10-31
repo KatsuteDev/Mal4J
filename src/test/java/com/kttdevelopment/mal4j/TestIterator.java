@@ -1,6 +1,6 @@
 package com.kttdevelopment.mal4j;
 
-import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.forum.Post;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ final class TestIterator {
 
     @Test
     final void testIterator(){
-        final PaginatedIterator<AnimePreview> iterator = mal
+        final PaginatedIterator<Anime> iterator = mal
             .getAnime()
             .withQuery(TestProvider.AnimeQuery)
             .withNoFields()
@@ -28,7 +28,7 @@ final class TestIterator {
         assertNotEquals(0, iterator.toSet().size());
         assertEquals(TestProvider.AnimeID, iterator.toList().get(0).getID());
 
-        final AnimePreview first = iterator.next();
+        final Anime first = iterator.next();
         assertEquals(TestProvider.AnimeID, first.getID());
         iterator.forEachRemaining(animePreview -> assertNotEquals(TestProvider.AnimeID, animePreview.getID()));
     }

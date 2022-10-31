@@ -25,7 +25,6 @@ import com.kttdevelopment.mal4j.property.Recommendation;
  * Represents an Anime recommendation.
  *
  * @see Anime#getRecommendations()
- * @see AnimePreview
  * @see Anime
  * @see Recommendation
  * @since 1.0.0

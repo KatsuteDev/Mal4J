@@ -1,7 +1,7 @@
 package com.kttdevelopment.mal4j.AnimeTests;
 
 import com.kttdevelopment.mal4j.*;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
 import com.kttdevelopment.mal4j.property.NSFW;
@@ -24,7 +24,7 @@ final class TestAnimeSeason {
     @Test
     final void testSeason(){
         final int year = 2019;
-        final List<AnimePreview> season =
+        final List<Anime> season =
             mal.getAnimeSeason(year, Season.Summer)
                 .withField(Fields.Anime.start_season)
                 .search();
@@ -32,8 +32,8 @@ final class TestAnimeSeason {
         int thisYear = 0;
         int otherYear = 0;
 
-        AnimePreview anime = null;
-        for(final AnimePreview iterator : season)
+        Anime anime = null;
+        for(final Anime iterator : season)
             if(iterator.getStartSeason().getYear() == year){
                 thisYear++;
                 anime = iterator;
@@ -44,7 +44,7 @@ final class TestAnimeSeason {
         final int finalOtherYear = otherYear;
         assertTrue(finalThisYear > finalOtherYear, "Expected seasonal search to return mostly from selected year (search contained mostly results from other years)");
 
-        final AnimePreview finalAnime = anime;
+        final Anime finalAnime = anime;
         assertNotNull(finalAnime, "Expected seasonal search to return an Anime from selected year");
         assertTrue(
             finalAnime.getStartSeason().getSeason() == Season.Summer || finalAnime.getStartSeason().getSeason() == Season.Spring,
@@ -54,27 +54,27 @@ final class TestAnimeSeason {
 
     @Test
     final void testSort(){
-        final List<AnimePreview> season =
+        final List<Anime> season =
             mal.getAnimeSeason(2020, Season.Winter)
                 .withLimit(2)
                 .sortBy(AnimeSeasonSort.Users)
                 .withFields(Fields.Anime.scoring_users)
                 .search();
-        final AnimePreview first = season.get(0);
-        final AnimePreview second = season.get(1);
+        final Anime first = season.get(0);
+        final Anime second = season.get(1);
         assertTrue(first.getUserScoringCount() > second.getUserScoringCount(), "Expected season to be sorted");
     }
 
     @Test
     final void testNSFW(){
-        final List<AnimePreview> season =
+        final List<Anime> season =
             mal.getAnimeSeason(2014, Season.Winter)
                 .includeNSFW(true)
                 .withFields(Fields.Anime.nsfw)
                 .withLimit(100)
                 .search();
         boolean hasNSFW = false;
-        for(final AnimePreview animePreview : season){
+        for(final Anime animePreview : season){
             if(animePreview.getNSFW() != NSFW.White){
                 hasNSFW = true;
                 break;

@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.anime.Anime;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_get</a> <br>
@@ -28,10 +28,10 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
  * @see MyAnimeList#getAnime()
  * @see SearchQuery
  * @since 1.0.0
- * @version 2.2.1
+ * @version 2.12.0
  * @author Katsute
  */
-public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery,AnimePreview> {
+public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery,Anime> {
 
     /**
      * Creates an Anime search query.

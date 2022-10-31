@@ -325,7 +325,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
         return asAnime(mal, schema, false);
     }
 
-    static Anime asAnime(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
+    private static Anime asAnime(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
         return new Anime() {
 
             private final Long id               = requireNonNull(() -> schema.getLong("id"));
@@ -677,18 +677,18 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
         return asAnimeListStatus(mal, schema, anime_id, null);
     }
 
-    static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final AnimePreview anime_preview){
-        return asAnimeListStatus(mal, schema, null, Objects.requireNonNull(anime_preview, "Anime preview must not be null"));
+    static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final Anime anime){
+        return asAnimeListStatus(mal, schema, null, Objects.requireNonNull(anime, "Anime must not be null"));
     }
 
     @SuppressWarnings("SpellCheckingInspection")
-    private static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final Long anime_id, final AnimePreview anime_preview) {
-        if(anime_id == null && anime_preview == null)
-            throw new NullPointerException("Anime id and anime preview must not both be null");
+    private static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final Long anime_id, final Anime anime_full) {
+        if(anime_id == null && anime_full == null)
+            throw new NullPointerException("Anime and ID must not both be null");
         return new AnimeListStatus() {
 
-            private final AnimePreview anime        = anime_preview;
-            private final Long id                   = anime_id != null ? anime_id : anime_preview.getID();
+            private Anime anime                     = anime_full;
+            private final Long id                   = anime_id != null ? anime_id : anime_full.getID();
 
             private final String status             = requireNonNull(() -> schema.getString("status"));
             private final AnimeStatus e_status      = AnimeStatus.asEnum(status);
@@ -793,7 +793,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Anime getAnime(){
-                return (Anime) anime;
+                return anime != null ? anime : (anime = mal.getAnime(id));
             }
 
             @Override
@@ -826,7 +826,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     static AnimeRanking asAnimeRanking(final MyAnimeList mal, final JsonObject schema){
         return new AnimeRanking() {
 
-            private final AnimePreview anime        = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
+            private final Anime anime               = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
             private final Integer ranking           = requireNonNull(() -> schema.getJsonObject("ranking").getInt("rank"));
             private final Integer previousRanking   = requireNonNull(() -> schema.getJsonObject("ranking").getInt("previous_rank"));
 
@@ -846,7 +846,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Anime getAnime(){
-                return mal.getAnime(anime.getID());
+                return anime;
             }
 
             @Override
@@ -864,7 +864,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     static AnimeRecommendation asAnimeRecommendation(final MyAnimeList mal, final JsonObject schema){
         return new AnimeRecommendation() {
 
-            private final AnimePreview anime        = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
+            private final Anime anime               = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
             private final Integer recommendations   = requireNonNull(() -> schema.getInt("num_recommendations"));
 
             // API methods
@@ -878,7 +878,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Anime getAnime() {
-                return mal.getAnime(anime.getID());
+                return anime;
             }
 
             @Override
@@ -895,7 +895,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     static RelatedAnime asRelatedAnime(final MyAnimeList mal, final JsonObject schema){
         return new RelatedAnime() {
 
-            private final AnimePreview anime            = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
+            private final Anime anime                   = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
             private final String relationType           = requireNonNull(() -> schema.getString("relation_type"));
             private final RelationType e_relationType   = RelationType.asEnum(relationType);
             private final String relationTypeFormatted  = requireNonNull(() -> schema.getString("relation_type_formatted"));
@@ -921,7 +921,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final Anime getAnime() {
-                return mal.getAnime(anime.getID());
+                return anime;
             }
 
             @Override

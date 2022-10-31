@@ -115,7 +115,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return new AnimeSearchQuery() {
 
             @Override
-            public final List<AnimePreview> search(){
+            public final List<Anime> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnime(
                         isTokenAuth ? token : null,
@@ -129,14 +129,14 @@ final class MyAnimeListImpl extends MyAnimeList {
                 );
                 if(response == null) return null;
 
-                final List<AnimePreview> anime = new ArrayList<>();
+                final List<Anime> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
                     anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<AnimePreview> searchAll(){
+            public final PaginatedIterator<Anime> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnime(
@@ -226,7 +226,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return new AnimeSeasonQuery(year, Objects.requireNonNull(season, "Season cannot be null")) {
 
             @Override
-            public final List<AnimePreview> search(){
+            public final List<Anime> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeSeason(
                         isTokenAuth ? token : null,
@@ -242,14 +242,14 @@ final class MyAnimeListImpl extends MyAnimeList {
                 );
                 if(response == null) return null;
 
-                final List<AnimePreview> anime = new ArrayList<>();
+                final List<Anime> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
                     anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<AnimePreview> searchAll(){
+            public final PaginatedIterator<Anime> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnimeSeason(
@@ -275,7 +275,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return new AnimeSuggestionQuery() {
 
             @Override
-            public final List<AnimePreview> search(){
+            public final List<Anime> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getAnimeSuggestions(
                         Objects.requireNonNull(token, "Client ID not supported for this endpoint, create a MyAnimeList object with either an Authenticator or Token"),
@@ -287,14 +287,14 @@ final class MyAnimeListImpl extends MyAnimeList {
                 );
                 if(response == null) return null;
 
-                final List<AnimePreview> anime = new ArrayList<>();
+                final List<Anime> anime = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
                     anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
             @Override
-            public final PaginatedIterator<AnimePreview> searchAll(){
+            public final PaginatedIterator<Anime> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getAnimeSuggestions(
@@ -550,7 +550,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return new MangaSearchQuery() {
 
             @Override
-            public final List<MangaPreview> search(){
+            public final List<Manga> search(){
                 final JsonObject response = handleResponse(
                     () -> service.getManga(
                         isTokenAuth ? token : null,
@@ -564,14 +564,14 @@ final class MyAnimeListImpl extends MyAnimeList {
                 );
                 if(response == null) return null;
 
-                final List<MangaPreview> manga = new ArrayList<>();
+                final List<Manga> manga = new ArrayList<>();
                 for(final JsonObject iterator : response.getJsonArray("data"))
                     manga.add(asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return manga;
             }
 
             @Override
-            public final PaginatedIterator<MangaPreview> searchAll(){
+            public final PaginatedIterator<Manga> searchAll(){
                 return new PagedIterator<>(
                     offset,
                     offset -> service.getManga(

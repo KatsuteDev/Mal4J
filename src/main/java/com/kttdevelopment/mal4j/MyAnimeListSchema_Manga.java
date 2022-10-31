@@ -116,7 +116,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         return asManga(mal, schema, false);
     }
 
-    static Manga asManga(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
+    private static Manga asManga(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
         return new Manga() {
 
             private final Long id               = requireNonNull(() -> schema.getLong("id"));
@@ -396,17 +396,17 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         return asMangaListStatus(mal, schema, manga_id, null);
     }
 
-    static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final MangaPreview mangaPreview){
-        return asMangaListStatus(mal, schema, null, Objects.requireNonNull(mangaPreview, "Manga preview must not be null"));
+    static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Manga manga){
+        return asMangaListStatus(mal, schema, null, Objects.requireNonNull(manga, "Manga must not be null"));
     }
 
-    private static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final MangaPreview manga_preview){
-        if(manga_id == null && manga_preview == null)
-            throw new NullPointerException("Manga id and manga preview must not be both null");
+    private static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final Manga manga_full){
+        if(manga_id == null && manga_full == null)
+            throw new NullPointerException("Manga and ID must not be both null");
         return new MangaListStatus() {
 
-            private final MangaPreview manga        = manga_preview;
-            private final Long id                   = manga_id != null ? manga_id : manga_preview.getID();
+            private Manga manga                     = manga_full;
+            private final Long id                   = manga_id != null ? manga_id : manga_full.getID();
 
             private final String status             = requireNonNull(() -> schema.getString("status"));
             private final MangaStatus e_status      = MangaStatus.asEnum(status);
@@ -516,7 +516,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Manga getManga(){
-                return (Manga) manga;
+                return manga != null ? manga : (manga = mal.getManga(id));
             }
 
             @Override
@@ -550,7 +550,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     static MangaRanking asMangaRanking(final MyAnimeList mal, final JsonObject schema){
         return new MangaRanking() {
 
-            private final MangaPreview manga        = requireNonNull(() -> asMangaPreview(mal, schema.getJsonObject("node")));
+            private final Manga manga               = requireNonNull(() -> asMangaPreview(mal, schema.getJsonObject("node")));
             private final Integer ranking           = requireNonNull(() -> schema.getJsonObject("ranking").getInt("rank"));
             private final Integer previousRanking   = requireNonNull(() -> schema.getJsonObject("ranking").getInt("previous_rank"));
 
@@ -588,7 +588,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     static MangaRecommendation asMangaRecommendation(final MyAnimeList mal, final JsonObject schema){
         return new MangaRecommendation() {
 
-            private final MangaPreview manga        = requireNonNull(() -> asMangaPreview(mal, schema.getJsonObject("node")));
+            private final Manga manga               = requireNonNull(() -> asMangaPreview(mal, schema.getJsonObject("node")));
             private final Integer recommendations   = requireNonNull(() -> schema.getInt("num_recommendations"));
 
             // API methods
@@ -619,7 +619,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     static RelatedManga asRelatedManga(final MyAnimeList mal, final JsonObject schema){
         return new RelatedManga() {
 
-            private final MangaPreview manga            = requireNonNull(() -> asMangaPreview(mal, schema.getJsonObject("node")));
+            private final Manga manga                   = requireNonNull(() -> asMangaPreview(mal, schema.getJsonObject("node")));
             private final String relationType           = requireNonNull(() -> schema.getString("relation_type"));
             private final RelationType e_relationType   = RelationType.asEnum(relationType);
             private final String relationTypeFormatted  = requireNonNull(() -> schema.getString("relation_type_formatted"));

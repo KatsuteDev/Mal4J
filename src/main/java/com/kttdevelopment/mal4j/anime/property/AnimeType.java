@@ -19,13 +19,12 @@
 package com.kttdevelopment.mal4j.anime.property;
 
 import com.kttdevelopment.mal4j.Logging;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.property.FieldEnum;
 
 /**
  * Represents the type of media that the Anime is.
  *
- * @see AnimePreview#getType()
+ * @see com.kttdevelopment.mal4j.anime.Anime#getType()
  * @since 1.0.0
  * @version 2.9.0
  * @author Katsute

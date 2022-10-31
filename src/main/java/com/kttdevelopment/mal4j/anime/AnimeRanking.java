@@ -27,7 +27,6 @@ import com.kttdevelopment.mal4j.property.Ranking;
  * Represents an Anime ranking.
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getAnimeRanking(AnimeRankingType)
- * @see AnimePreview
  * @see Anime
  * @see Ranking
  * @since 1.0.0

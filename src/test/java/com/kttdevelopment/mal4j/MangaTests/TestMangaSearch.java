@@ -2,7 +2,7 @@ package com.kttdevelopment.mal4j.MangaTests;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
 import com.kttdevelopment.mal4j.TestProvider;
-import com.kttdevelopment.mal4j.manga.MangaPreview;
+import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.property.MangaType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -22,7 +22,7 @@ final class TestMangaSearch {
 
     @Test
     final void testSearch(){
-        final List<MangaPreview> search =
+        final List<Manga> search =
             mal.getManga()
                 .withQuery(TestProvider.AltMangaQuery)
                 .withNoFields()
@@ -33,7 +33,7 @@ final class TestMangaSearch {
 
     @Test
     final void testOffsetLimit(){
-        final List<MangaPreview> search =
+        final List<Manga> search =
             mal.getManga()
                 .withQuery(TestProvider.AltMangaQuery)
                 .withLimit(1)
@@ -46,7 +46,7 @@ final class TestMangaSearch {
 
     @Test
     final void testFields(){
-        final List<MangaPreview> search =
+        final List<Manga> search =
             mal.getManga()
                 .withQuery(TestProvider.MangaQuery)
                 .withLimit(1)
@@ -58,7 +58,7 @@ final class TestMangaSearch {
     @Test
     final void testNSFW(){
         {
-            final List<MangaPreview> search =
+            final List<Manga> search =
                 mal.getManga()
                     .withQuery(TestProvider.NSFW_MangaQuery)
                     .withLimit(1)
@@ -67,7 +67,7 @@ final class TestMangaSearch {
             assertEquals(0, search.size());
         }
         {
-            final List<MangaPreview> search =
+            final List<Manga> search =
                 mal.getManga()
                     .withQuery(TestProvider.NSFW_MangaQuery)
                     .withLimit(1)

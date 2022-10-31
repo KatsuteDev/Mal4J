@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.anime.property.AnimeSeasonSort;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
 
@@ -30,10 +30,10 @@ import com.kttdevelopment.mal4j.anime.property.time.Season;
  * @see MyAnimeList#getAnimeSeason(int, Season)
  * @see FieldQuery
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.12.0
  * @author Katsute
  */
-public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,AnimePreview> implements NSFW<AnimeSeasonQuery> {
+public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime> implements NSFW<AnimeSeasonQuery> {
 
     protected final int year;
     protected final Season season;

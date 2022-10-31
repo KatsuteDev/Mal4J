@@ -19,7 +19,6 @@
 package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.mal4j.anime.Anime;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.anime.property.AnimeRankingType;
 import com.kttdevelopment.mal4j.anime.property.time.Season;
 import com.kttdevelopment.mal4j.forum.ForumCategory;
@@ -144,7 +143,7 @@ public abstract class MyAnimeList {
      *
      * @see AnimeSuggestionQuery
      * @see AnimeSuggestionQuery#search()
-     * @see AnimePreview
+     * @see Anime
      * @since 1.0.0
      */
     public abstract AnimeSearchQuery getAnime();
@@ -223,7 +222,7 @@ public abstract class MyAnimeList {
      *
      * @see AnimeSeasonQuery
      * @see AnimeSeasonQuery#search()
-     * @see AnimePreview
+     * @see Anime
      * @see Season
      * @since 1.0.0
      */
@@ -238,7 +237,7 @@ public abstract class MyAnimeList {
      *
      * @see AnimeSuggestionQuery
      * @see AnimeSuggestionQuery#search()
-     * @see AnimePreview
+     * @see Anime
      * @since 1.0.0
      */
     public abstract AnimeSuggestionQuery getAnimeSuggestions();
@@ -392,7 +391,7 @@ public abstract class MyAnimeList {
      *
      * @see MangaSearchQuery
      * @see MangaSearchQuery#search()
-     * @see com.kttdevelopment.mal4j.manga.MangaPreview
+     * @see com.kttdevelopment.mal4j.manga.Manga
      * @since 1.0.0
      */
     public abstract MangaSearchQuery getManga();

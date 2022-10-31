@@ -19,13 +19,12 @@
 package com.kttdevelopment.mal4j.anime.property;
 
 import com.kttdevelopment.mal4j.Logging;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
 import com.kttdevelopment.mal4j.property.FieldEnum;
 
 /**
  * Represents the source material for an Anime.
  *
- * @see AnimePreview#getSource()
+ * @see com.kttdevelopment.mal4j.anime.Anime#getSource()
  * @since 1.0.0
  * @version 2.10.0
  * @author Katsute

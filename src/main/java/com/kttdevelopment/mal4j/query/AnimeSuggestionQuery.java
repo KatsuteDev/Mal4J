@@ -19,7 +19,7 @@
 package com.kttdevelopment.mal4j.query;
 
 import com.kttdevelopment.mal4j.MyAnimeList;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.anime.Anime;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_suggestions_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_suggestions_get</a> <br>
@@ -28,10 +28,10 @@ import com.kttdevelopment.mal4j.anime.AnimePreview;
  * @see MyAnimeList#getAnimeSuggestions()
  * @see FieldQuery
  * @since 1.0.0
- * @version 2.2.1
+ * @version 2.12.0
  * @author Katsute
  */
-public abstract class AnimeSuggestionQuery extends FieldQuery<AnimeSuggestionQuery,AnimePreview> implements NSFW<AnimeSuggestionQuery> {
+public abstract class AnimeSuggestionQuery extends FieldQuery<AnimeSuggestionQuery,Anime> implements NSFW<AnimeSuggestionQuery> {
 
     protected Boolean nsfw;
 

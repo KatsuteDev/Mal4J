@@ -27,7 +27,6 @@ import com.kttdevelopment.mal4j.property.RelatedMedia;
  *
  * @see Anime#getRelatedManga()
  * @see Manga#getRelatedManga()
- * @see MangaPreview
  * @see Manga
  * @see RelatedMedia
  * @since 1.0.0

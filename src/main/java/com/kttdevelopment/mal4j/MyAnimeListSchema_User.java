@@ -18,10 +18,10 @@
 package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.mal4j.Json.JsonObject;
+import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
-import com.kttdevelopment.mal4j.manga.MangaPreview;
 import com.kttdevelopment.mal4j.property.ExperimentalFeature;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
@@ -172,7 +172,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     });
 
                 final int len = otherListings.size();
-                final AnimePreview[] shared = new AnimePreview[len];
+                final Anime[] shared        = new Anime[len];
                 final int[] selfScores      = new int[len];
                 final int[] otherScores     = new int[len];
 
@@ -188,12 +188,12 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                 return new AnimeAffinity() {
 
                     private final int sharedCount = len;
-                    private final AnimePreview[] sharedPreviews = shared;
+                    private final Anime[] sharedPreviews = shared;
                     private final int[] a_scores = selfScores;
                     private final int[] b_scores = otherScores;
 
                     @Override
-                    public final AnimePreview[] getShared(){
+                    public final Anime[] getShared(){
                         return Arrays.copyOf(sharedPreviews, sharedCount);
                     }
 
@@ -282,7 +282,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     });
 
                 final int len = otherListings.size();
-                final MangaPreview[] shared = new MangaPreview[len];
+                final Manga[] shared        = new Manga[len];
                 final int[] selfScores      = new int[len];
                 final int[] otherScores     = new int[len];
 
@@ -298,12 +298,12 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                 return new MangaAffinity() {
 
                     private final int sharedCount = len;
-                    private final MangaPreview[] sharedPreviews = shared;
+                    private final Manga[] sharedPreviews = shared;
                     private final int[] a_scores = selfScores;
                     private final int[] b_scores = otherScores;
 
                     @Override
-                    public final MangaPreview[] getShared(){
+                    public final Manga[] getShared(){
                         return Arrays.copyOf(sharedPreviews, sharedCount);
                     }
 

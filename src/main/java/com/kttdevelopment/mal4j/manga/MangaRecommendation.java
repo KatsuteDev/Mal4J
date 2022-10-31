@@ -25,7 +25,6 @@ import com.kttdevelopment.mal4j.property.Recommendation;
  * Represents a Manga recommendation.
  *
  * @see Manga#getRecommendations()
- * @see MangaPreview
  * @see Manga
  * @see Recommendation
  * @since 1.0.0

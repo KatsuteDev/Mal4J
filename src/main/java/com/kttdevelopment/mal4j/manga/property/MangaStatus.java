@@ -23,7 +23,7 @@ import com.kttdevelopment.mal4j.property.FieldEnum;
 /**
  * Represents a Manga's status on a users Manga list.
  *
- * @see com.kttdevelopment.mal4j.manga.MangaPreview#getStatus()
+ * @see com.kttdevelopment.mal4j.manga.Manga#getStatus()
  * @since 1.0.0
  * @version 2.9.0
  * @author Katsute

@@ -18,13 +18,12 @@
 
 package com.kttdevelopment.mal4j.manga.property;
 
-import com.kttdevelopment.mal4j.manga.MangaPreview;
 import com.kttdevelopment.mal4j.property.ID;
 
 /**
  * Represents an author.
  *
- * @see MangaPreview#getAuthors()
+ * @see com.kttdevelopment.mal4j.manga.Manga#getAuthors()
  * @since 1.0.0
  * @version 1.0.0
  * @author Katsute

@@ -18,7 +18,7 @@
 
 package com.kttdevelopment.mal4j.user.property;
 
-import com.kttdevelopment.mal4j.manga.MangaPreview;
+import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.user.User;
 
 /**
@@ -34,14 +34,14 @@ import com.kttdevelopment.mal4j.user.User;
 public abstract class MangaAffinity {
 
     /**
-     * Returns shared Manga. Use {@link MangaPreview#getManga()} to get all fields. Only include Manga that has a score.
+     * Returns shared Manga. Only include Manga that has a score.
      *
      * @return shared Manga
      *
-     * @see MangaPreview
+     * @see com.kttdevelopment.mal4j.manga.Manga
      * @since 2.3.0
      */
-    public abstract MangaPreview[] getShared();
+    public abstract Manga[] getShared();
 
     /**
      * Returns amount of Manga shared.
