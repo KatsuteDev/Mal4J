@@ -28,7 +28,6 @@ import com.kttdevelopment.mal4j.property.Ranking;
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getMangaRanking(MangaRankingType)
  * @see Manga
- * @see Manga
  * @see Ranking
  * @since 1.0.0
  * @version 2.12.0
