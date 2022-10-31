@@ -29,7 +29,7 @@ import com.kttdevelopment.mal4j.property.Recommendation;
  * @see Anime
  * @see Recommendation
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.12.0
  * @author Katsute
  */
 public abstract class AnimeRecommendation extends Recommendation implements AnimeRetrievable {

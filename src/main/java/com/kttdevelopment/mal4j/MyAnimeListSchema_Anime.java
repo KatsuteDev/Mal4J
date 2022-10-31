@@ -322,6 +322,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static Anime asAnime(final MyAnimeList mal, final JsonObject schema){
+        return asAnime(mal, schema, false);
+    }
+
+    static Anime asAnime(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
         return new Anime() {
 
             private final Long id               = requireNonNull(() -> schema.getLong("id"));
@@ -359,21 +363,39 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             private final String rating         = requireNonNull(() -> schema.getString("rating"));
             private final AnimeRating e_rating  = AnimeRating.asEnum(rating);
             private final Studio[] studios      = requireNonNull(() -> adaptList(schema.getJsonArray("studios"), s -> asStudio(mal, s), Studio.class));
-            private final Picture[] pictures    = requireNonNull(() -> adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class));
-            private final String background     = requireNonNull(() -> schema.getString("background"));
-            private final RelatedAnime[] relatedAnime
-                                                = requireNonNull(() -> adaptList(schema.getJsonArray("related_anime"), a -> asRelatedAnime(mal, a), RelatedAnime.class));
-            private final RelatedManga[] relatedManga
-                                                = requireNonNull(() -> adaptList(schema.getJsonArray("related_manga"), m -> MyAnimeListSchema_Manga.asRelatedManga(mal, m), RelatedManga.class));
-            private final AnimeRecommendation[] recommendations
+
+            // full only
+
+            private boolean isFull = !isPreview;
+            private void populate(){
+                if(!isFull){
+                    final Anime anime = mal.getAnime(id);
+
+                    pictures        = anime.getPictures();
+                    background      = anime.getBackground();
+                    relatedAnime    = anime.getRelatedAnime();
+                    relatedManga    = anime.getRelatedManga();
+                    recommendations = anime.getRecommendations();
+                    statistics      = anime.getStatistics();
+                    openingThemes   = anime.getOpeningThemes();
+                    endingThemes    = anime.getEndingThemes();
+                    videos          = anime.getVideos();
+
+                    isFull = true;
+                }
+            }
+
+            private Picture[] pictures          = requireNonNull(() -> adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class));
+            private String background           = requireNonNull(() -> schema.getString("background"));
+            private RelatedAnime[] relatedAnime = requireNonNull(() -> adaptList(schema.getJsonArray("related_anime"), a -> asRelatedAnime(mal, a), RelatedAnime.class));
+            private RelatedManga[] relatedManga = requireNonNull(() -> adaptList(schema.getJsonArray("related_manga"), m -> MyAnimeListSchema_Manga.asRelatedManga(mal, m), RelatedManga.class));
+            private AnimeRecommendation[] recommendations
                                                 = requireNonNull(() -> adaptList(schema.getJsonArray("recommendations"), r -> asAnimeRecommendation(mal, r), AnimeRecommendation.class));
-            private final AnimeStatistics statistics
-                                                = requireNonNull(() -> asAnimeStatistics(mal, schema.getJsonObject("statistics")));
-            private final OpeningTheme[] openingThemes
+            private AnimeStatistics statistics  = requireNonNull(() -> asAnimeStatistics(mal, schema.getJsonObject("statistics")));
+            private OpeningTheme[] openingThemes
                                                 = requireNonNull(() -> adaptList(schema.getJsonArray("opening_themes"), o -> asOpeningTheme(mal, o, this), OpeningTheme.class));
-            private final EndingTheme[] endingThemes
-                                                = requireNonNull(() -> adaptList(schema.getJsonArray("ending_themes"), o -> asEndingTheme(mal, o, this), EndingTheme.class));
-            private final Video[] videos        = requireNonNull(() -> adaptList(schema.getJsonArray("videos"), o -> asVideo(mal, o), Video.class));
+            private EndingTheme[] endingThemes  = requireNonNull(() -> adaptList(schema.getJsonArray("ending_themes"), o -> asEndingTheme(mal, o, this), EndingTheme.class));
+            private Video[] videos              = requireNonNull(() -> adaptList(schema.getJsonArray("videos"), o -> asVideo(mal, o), Video.class));
 
             // API methods
 
@@ -542,51 +564,62 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                 return studios != null ? Arrays.copyOf(studios, studios.length) : null;
             }
 
+            // full only
+
             @Override
             public final Picture[] getPictures() {
+                if(!isFull) populate();
                 return pictures != null ? Arrays.copyOf(pictures, pictures.length) : null;
             }
 
             @Override
             public final String getBackground() {
+                if(!isFull) populate();
                 return background;
             }
 
             @Override
             public final RelatedAnime[] getRelatedAnime() {
+                if(!isFull) populate();
                 return relatedAnime != null ? Arrays.copyOf(relatedAnime, relatedAnime.length) : null;
             }
 
             @Override
             public final RelatedManga[] getRelatedManga() {
+                if(!isFull) populate();
                 return relatedManga != null ? Arrays.copyOf(relatedManga, relatedManga.length) : null;
             }
 
             @Override
             public final AnimeRecommendation[] getRecommendations() {
+                if(!isFull) populate();
                 return recommendations != null ? Arrays.copyOf(recommendations, recommendations.length) : null;
             }
 
             @Override
             public final AnimeStatistics getStatistics() {
+                if(!isFull) populate();
                 return statistics;
             }
 
             @Override
             public final OpeningTheme[] getOpeningThemes(){
                 ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.OP_ED_THEMES);
+                if(!isFull) populate();
                 return openingThemes != null ? Arrays.copyOf(openingThemes, openingThemes.length) : null;
             }
 
             @Override
             public final EndingTheme[] getEndingThemes(){
                 ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.OP_ED_THEMES);
+                if(!isFull) populate();
                 return endingThemes != null ? Arrays.copyOf(endingThemes, endingThemes.length) : null;
             }
 
             @Override
             public final Video[] getVideos(){
                 ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.VIDEOS);
+                if(!isFull) populate();
                 return videos != null ? Arrays.copyOf(videos, videos.length) : null;
             }
 
@@ -634,6 +667,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             }
 
         };
+    }
+
+    static Anime asAnimePreview(final MyAnimeList mal, final JsonObject schema){
+        return asAnime(mal, schema, true);
     }
 
     static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final long anime_id){
@@ -780,250 +817,6 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                        ", rewatching=" + rewatching +
                        ", timesRewatched=" + timesRewatched +
                        ", rewatchValue=" + rewatchValue +
-                       '}';
-            }
-
-        };
-    }
-
-    @Deprecated
-    static AnimePreview asAnimePreview(final MyAnimeList mal, final JsonObject schema){
-        return new AnimePreview() {
-
-            private final Long id               = requireNonNull(() -> schema.getLong("id"));
-            private final String title          = requireNonNull(() -> schema.getString("title"));
-            private final Picture mainPicture   = requireNonNull(() -> MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture")));
-            private final AlternativeTitles alternativeTitles
-                                                = requireNonNull(() -> MyAnimeListSchema_Common.asAlternativeTitles(mal, schema.getJsonObject("alternative_titles")));
-            private final Long startDate        = requireNonNull(() -> parseDate(schema.getString("start_date")));
-            private final Long endDate          = requireNonNull(() -> parseDate(schema.getString("end_date")));
-            private final String synopsis       = requireNonNull(() -> schema.getString("synopsis"));
-            private final Float meanRating      = requireNonNull(() -> schema.getFloat("mean"));
-            private final Integer rank          = requireNonNull(() -> schema.getInt("rank"));
-            private final Integer popularity    = requireNonNull(() -> schema.getInt("popularity"));
-            private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
-            private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
-            private final String nsfw           = requireNonNull(() -> schema.getString("nsfw"));
-            private final NSFW e_nsfw           = NSFW.asEnum(nsfw);
-            private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, true), Genre.class));
-            private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
-            private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
-            private final String type           = requireNonNull(() -> schema.getString("media_type"));
-            private final AnimeType e_type      = AnimeType.asEnum(type);
-            private final String status         = requireNonNull(() -> schema.getString("status"));
-            private final AnimeAirStatus e_status
-                                                = AnimeAirStatus.asEnum(status);
-            private final AnimeListStatus listStatus
-                                                = requireNonNull(() -> asAnimeListStatus(mal, schema.getJsonObject("my_list_status"), id, this));
-            private final Integer episodes      = requireNonNull(() -> schema.getInt("num_episodes"));
-            private final StartSeason startSeason
-                                                = requireNonNull(() -> asStartSeason(mal, schema.getJsonObject("start_season")));
-            private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.getJsonObject("broadcast")));
-            private final String source         = requireNonNull(() -> schema.getString("source"));
-            private final AnimeSource e_source  = AnimeSource.asEnum(source);
-            private final Integer episodeLength = requireNonNull(() -> schema.getInt("average_episode_duration"));
-            private final String rating         = requireNonNull(() -> schema.getString("rating"));
-            private final AnimeRating e_rating  = AnimeRating.asEnum(rating);
-            private final Studio[] studios      = requireNonNull(() -> adaptList(schema.getJsonArray("studios"), s -> asStudio(mal, s), Studio.class));
-
-            // API methods
-
-            @Override
-            public final Long getID() {
-                return id;
-            }
-
-            @Override
-            public final String getTitle() {
-                return title;
-            }
-
-            @Override
-            public final Picture getMainPicture() {
-                return mainPicture;
-            }
-
-            @Override
-            public final AlternativeTitles getAlternativeTitles() {
-                return alternativeTitles;
-            }
-
-            @Override
-            public final Date getStartDate() {
-                return startDate == null ? null : new Date(startDate);
-            }
-
-            @Override
-            public final Date getEndDate() {
-                return endDate == null ? null : new Date(endDate);
-            }
-
-            @Override
-            public final String getSynopsis() {
-                return synopsis;
-            }
-
-            @Override
-            public final Float getMeanRating() {
-                return meanRating;
-            }
-
-            @Override
-            public final Integer getRank() {
-                return rank;
-            }
-
-            @Override
-            public final Integer getPopularity() {
-                return popularity;
-            }
-
-            @Override
-            public final Integer getUserListingCount() {
-                return usersListing;
-            }
-
-            @Override
-            public final Integer getUserScoringCount() {
-                return usersScoring;
-            }
-
-            @Override
-            public final NSFW getNSFW() {
-                return e_nsfw;
-            }
-
-            @Override
-            public final String getRawNSFW(){
-                return nsfw;
-            }
-
-            @Override
-            public final Genre[] getGenres() {
-                return genres != null ? Arrays.copyOf(genres, genres.length) : null;
-            }
-
-            @Override
-            public final Date getCreatedAt() {
-                return createdAt == null ? null : new Date(createdAt);
-            }
-
-            @Override
-            public final Long getCreatedAtEpochMillis(){
-                return createdAt;
-            }
-
-            @Override
-            public final Date getUpdatedAt() {
-                return updatedAt == null ? null : new Date(updatedAt);
-            }
-
-            @Override
-            public final Long getUpdatedAtEpochMillis(){
-                return updatedAt;
-            }
-
-            @Override
-            public final AnimeType getType() {
-                return e_type;
-            }
-
-            @Override
-            public final String getRawType(){
-                return type;
-            }
-
-            @Override
-            public final AnimeAirStatus getStatus() {
-                return e_status;
-            }
-
-            @Override
-            public final String getRawStatus(){
-                return status;
-            }
-
-            @Override
-            public final AnimeListStatus getListStatus() {
-                return listStatus;
-            }
-
-            @Override
-            public final Integer getEpisodes() {
-                return episodes;
-            }
-
-            @Override
-            public final StartSeason getStartSeason() {
-                return startSeason;
-            }
-
-            @Override
-            public final Broadcast getBroadcast() {
-                return broadcast;
-            }
-
-            @Override
-            public final AnimeSource getSource() {
-                return e_source;
-            }
-
-            @Override
-            public final String getRawSource(){
-                return source;
-            }
-
-            @Override
-            public final Integer getAverageEpisodeLength() {
-                return episodeLength;
-            }
-
-            @Override
-            public final AnimeRating getRating() {
-                return e_rating;
-            }
-
-            @Override
-            public final String getRawRating(){
-                return rating;
-            }
-
-            @Override
-            public final Studio[] getStudios() {
-                return studios != null ? Arrays.copyOf(studios, studios.length) : null;
-            }
-
-            // additional methods
-
-            @Override
-            public String toString(){
-                return "AnimePreview{" +
-                       "id=" + id +
-                       ", title='" + title + '\'' +
-                       ", mainPicture=" + mainPicture +
-                       ", alternativeTitles=" + alternativeTitles +
-                       ", startDate=" + startDate +
-                       ", endDate=" + endDate +
-                       ", synopsis='" + synopsis + '\'' +
-                       ", meanRating=" + meanRating +
-                       ", rank=" + rank +
-                       ", popularity=" + popularity +
-                       ", usersListing=" + usersListing +
-                       ", usersScoring=" + usersScoring +
-                       ", nsfw=" + nsfw +
-                       ", genres=" + Arrays.toString(genres) +
-                       ", createdAt=" + createdAt +
-                       ", updatedAt=" + updatedAt +
-                       ", type=" + type +
-                       ", status=" + status +
-                       ", listStatus=" + listStatus +
-                       ", episodes=" + episodes +
-                       ", startSeason=" + startSeason +
-                       ", broadcast=" + broadcast +
-                       ", source=" + source +
-                       ", episodeLength=" + episodeLength +
-                       ", rating=" + rating +
-                       ", studios=" + Arrays.toString(studios) +
                        '}';
             }
 

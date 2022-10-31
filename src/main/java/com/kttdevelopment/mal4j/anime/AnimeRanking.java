@@ -18,7 +18,8 @@
 
 package com.kttdevelopment.mal4j.anime;
 
-import com.kttdevelopment.mal4j.anime.property.*;
+import com.kttdevelopment.mal4j.anime.property.AnimeRankingType;
+import com.kttdevelopment.mal4j.anime.property.AnimeRetrievable;
 import com.kttdevelopment.mal4j.property.Ranking;
 
 /**
@@ -30,7 +31,7 @@ import com.kttdevelopment.mal4j.property.Ranking;
  * @see Anime
  * @see Ranking
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.12.0
  * @author Katsute
  */
 public abstract class AnimeRanking implements AnimeRetrievable, Ranking {

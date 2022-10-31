@@ -30,7 +30,7 @@ import com.kttdevelopment.mal4j.property.FullMediaItem;
  * @see MangaPreview
  * @see FullMediaItem
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.12.0
  * @author Katsute
  */
 @SuppressWarnings("deprecation")

@@ -30,7 +30,7 @@ import com.kttdevelopment.mal4j.property.FullMediaItem;
  * @see AnimePreview
  * @see FullMediaItem
  * @since 1.0.0
- * @version 2.10.0
+ * @version 2.12.0
  * @author Katsute
  */
 public abstract class Anime extends AnimePreview implements FullMediaItem<AnimeType,AnimeAirStatus,AnimeListStatus,AnimeRecommendation,AnimeStatistics> {
