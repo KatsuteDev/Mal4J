@@ -33,6 +33,6 @@ import com.kttdevelopment.mal4j.property.Ranking;
  * @version 1.0.0
  * @author Katsute
  */
-public abstract class MangaRanking implements MangaPreviewRetrievable, MangaRetrievable, Ranking {
+public abstract class MangaRanking implements MangaRetrievable, Ranking {
 
 }

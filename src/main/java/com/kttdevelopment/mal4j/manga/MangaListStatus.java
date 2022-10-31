@@ -38,7 +38,7 @@ import com.kttdevelopment.mal4j.query.MangaListUpdate;
  * @version 2.9.0
  * @author Katsute
  */
-public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaRetrievable, MangaPreviewRetrievable, Editable<MangaListUpdate> {
+public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaRetrievable, Editable<MangaListUpdate> {
 
     // API methods
 

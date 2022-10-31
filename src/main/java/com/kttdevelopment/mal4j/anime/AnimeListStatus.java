@@ -39,7 +39,7 @@ import com.kttdevelopment.mal4j.query.AnimeListUpdate;
  * @author Katsute
  */
 @SuppressWarnings("SpellCheckingInspection")
-public abstract class AnimeListStatus implements ListStatus<AnimeStatus>, AnimeRetrievable, AnimePreviewRetrievable, Editable<AnimeListUpdate> {
+public abstract class AnimeListStatus implements ListStatus<AnimeStatus>, AnimeRetrievable, Editable<AnimeListUpdate> {
 
     // API methods
 

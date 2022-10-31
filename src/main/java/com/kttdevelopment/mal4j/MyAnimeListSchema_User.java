@@ -34,7 +34,7 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
-    
+
     static User asUser(final MyAnimeList mal, final JsonObject schema){
         return new User() {
 
@@ -152,7 +152,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .searchAll()
                     .forEachRemaining(e -> {
                         if(e.getScore() != null && e.getScore() > 0) // if rated
-                            selfListings.put(e.getAnimePreview().getID(), e);
+                            selfListings.put(e.getAnime().getID(), e);
                     });
 
                 final Map<Long,AnimeListStatus> otherListings = new HashMap<>();
@@ -166,7 +166,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                         .withLimit(1000)
                         .searchAll()
                         .forEachRemaining(e -> {
-                        final Long id = e.getAnimePreview().getID();
+                        final Long id = e.getAnime().getID();
                         if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
                             otherListings.put(id, e);
                     });
@@ -179,7 +179,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                 int index = 0;
                 for(final Map.Entry<Long,AnimeListStatus> otherListing : otherListings.entrySet()){
                     final AnimeListStatus selfListing = selfListings.get(otherListing.getKey());
-                    shared[index]       = selfListing.getAnimePreview();
+                    shared[index]       = selfListing.getAnime();
                     selfScores[index]   = selfListing.getScore();
                     otherScores[index]  = otherListing.getValue().getScore();
                     index++;
@@ -262,7 +262,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .searchAll()
                     .forEachRemaining(e -> {
                         if(e.getScore() != null && e.getScore() > 0) // if rated
-                            selfListings.put(e.getMangaPreview().getID(), e);
+                            selfListings.put(e.getManga().getID(), e);
                     });
 
                 final Map<Long,MangaListStatus> otherListings = new HashMap<>();
@@ -276,7 +276,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                         .withLimit(1000)
                         .searchAll()
                         .forEachRemaining(e -> {
-                        final Long id = e.getMangaPreview().getID();
+                        final Long id = e.getManga().getID();
                         if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
                             otherListings.put(id, e);
                     });
@@ -289,7 +289,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                 int index = 0;
                 for(final Map.Entry<Long,MangaListStatus> otherListing : otherListings.entrySet()){
                     final MangaListStatus selfListing = selfListings.get(otherListing.getKey());
-                    shared[index]       = selfListing.getMangaPreview();
+                    shared[index]       = selfListing.getManga();
                     selfScores[index]   = selfListing.getScore();
                     otherScores[index]  = otherListing.getValue().getScore();
                     index++;
@@ -480,5 +480,5 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
         };
     }
-    
+
 }

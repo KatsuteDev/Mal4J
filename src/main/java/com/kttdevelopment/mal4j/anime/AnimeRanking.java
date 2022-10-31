@@ -33,6 +33,6 @@ import com.kttdevelopment.mal4j.property.Ranking;
  * @version 1.0.0
  * @author Katsute
  */
-public abstract class AnimeRanking implements AnimePreviewRetrievable, AnimeRetrievable, Ranking {
+public abstract class AnimeRanking implements AnimeRetrievable, Ranking {
 
 }

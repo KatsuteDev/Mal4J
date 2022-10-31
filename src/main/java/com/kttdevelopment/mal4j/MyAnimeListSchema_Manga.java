@@ -487,11 +487,6 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final MangaPreview getMangaPreview(){
-                return manga != null ? manga : mal.getManga(id);
-            }
-
-            @Override
             public final MangaListUpdate edit(){
                 return mal.updateMangaListing(id != null ? id : manga.getID());
             }
@@ -519,6 +514,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         };
     }
 
+    @Deprecated
     static MangaPreview asMangaPreview(final MyAnimeList mal, final JsonObject schema){
         return new MangaPreview() {
 
@@ -736,11 +732,6 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API method
 
             @Override
-            public final MangaPreview getMangaPreview() {
-                return manga;
-            }
-
-            @Override
             public final Integer getRanking() {
                 return ranking;
             }
@@ -778,11 +769,6 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final MangaPreview getMangaPreview() {
-                return manga;
-            }
-
-            @Override
             public final Integer getRecommendations() {
                 return recommendations;
             }
@@ -814,11 +800,6 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             private final String relationTypeFormatted  = requireNonNull(() -> schema.getString("relation_type_formatted"));
 
             // API methods
-
-            @Override
-            public final MangaPreview getMangaPreview() {
-                return manga;
-            }
 
             @Override
             public final RelationType getRelationType() {

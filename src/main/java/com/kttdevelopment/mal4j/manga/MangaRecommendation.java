@@ -18,7 +18,6 @@
 
 package com.kttdevelopment.mal4j.manga;
 
-import com.kttdevelopment.mal4j.manga.property.MangaPreviewRetrievable;
 import com.kttdevelopment.mal4j.manga.property.MangaRetrievable;
 import com.kttdevelopment.mal4j.property.Recommendation;
 
@@ -33,6 +32,6 @@ import com.kttdevelopment.mal4j.property.Recommendation;
  * @version 1.0.0
  * @author Katsute
  */
-public abstract class MangaRecommendation extends Recommendation implements MangaPreviewRetrievable, MangaRetrievable {
+public abstract class MangaRecommendation extends Recommendation implements MangaRetrievable {
 
 }

@@ -19,7 +19,6 @@
 package com.kttdevelopment.mal4j.manga;
 
 import com.kttdevelopment.mal4j.anime.Anime;
-import com.kttdevelopment.mal4j.manga.property.MangaPreviewRetrievable;
 import com.kttdevelopment.mal4j.manga.property.MangaRetrievable;
 import com.kttdevelopment.mal4j.property.RelatedMedia;
 
@@ -35,6 +34,6 @@ import com.kttdevelopment.mal4j.property.RelatedMedia;
  * @version 1.0.0
  * @author Katsute
  */
-public abstract class RelatedManga extends RelatedMedia implements MangaPreviewRetrievable, MangaRetrievable {
+public abstract class RelatedManga extends RelatedMedia implements MangaRetrievable {
 
 }
