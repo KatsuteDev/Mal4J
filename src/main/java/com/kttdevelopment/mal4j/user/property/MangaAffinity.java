@@ -28,7 +28,7 @@ import com.kttdevelopment.mal4j.user.User;
  * @see User#getMangaAffinity(String)
  * @see User#getMangaAffinity(User)
  * @since 2.3.0
- * @version 2.3.0
+ * @version 2.12.0
  * @author Katsute
  */
 public abstract class MangaAffinity {

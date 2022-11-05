@@ -570,7 +570,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Manga getManga() {
-                return mal.getManga(manga.getID());
+                return manga;
             }
 
             @Override
@@ -602,7 +602,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Manga getManga() {
-                return mal.getManga(manga.getID());
+                return manga;
             }
 
             @Override
@@ -645,7 +645,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Manga getManga() {
-                return mal.getManga(manga.getID());
+                return manga;
             }
 
             @Override
