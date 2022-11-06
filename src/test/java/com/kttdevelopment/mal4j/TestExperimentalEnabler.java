@@ -22,7 +22,8 @@ public class TestExperimentalEnabler {
 
     @AfterAll
     public static void afterAll(){
-        ((MyAnimeListImpl) mal).clearExperimentalFeatures();
+        if(mal != null)
+            ((MyAnimeListImpl) mal).clearExperimentalFeatures();
     }
 
     @Test @Order(0)
