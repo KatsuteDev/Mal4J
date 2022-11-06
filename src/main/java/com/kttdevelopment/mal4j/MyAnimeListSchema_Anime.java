@@ -385,6 +385,12 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                 }
             }
 
+            @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "SpellCheckingInspection"})
+            private boolean isPopulate(){
+                final String ln = new Exception().getStackTrace()[2].toString();
+                return ln.startsWith("com.kttdevelopment.mal4j.MyAnimeListSchema_Anime") && ln.substring(50).startsWith(".populate(MyAnimeListSchema_Anime.java:");
+            }
+
             private Picture[] pictures          = requireNonNull(() -> adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class));
             private String background           = requireNonNull(() -> schema.getString("background"));
             private RelatedAnime[] relatedAnime = requireNonNull(() -> adaptList(schema.getJsonArray("related_anime"), a -> asRelatedAnime(mal, a), RelatedAnime.class));
@@ -604,21 +610,24 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final OpeningTheme[] getOpeningThemes(){
-                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.OP_ED_THEMES);
+                if(!isPopulate())
+                    ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.OP_ED_THEMES);
                 if(!isFull) populate();
                 return openingThemes != null ? Arrays.copyOf(openingThemes, openingThemes.length) : null;
             }
 
             @Override
             public final EndingTheme[] getEndingThemes(){
-                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.OP_ED_THEMES);
+                if(!isPopulate())
+                    ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.OP_ED_THEMES);
                 if(!isFull) populate();
                 return endingThemes != null ? Arrays.copyOf(endingThemes, endingThemes.length) : null;
             }
 
             @Override
             public final Video[] getVideos(){
-                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.VIDEOS);
+                if(!isPopulate())
+                    ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.VIDEOS);
                 if(!isFull) populate();
                 return videos != null ? Arrays.copyOf(videos, videos.length) : null;
             }

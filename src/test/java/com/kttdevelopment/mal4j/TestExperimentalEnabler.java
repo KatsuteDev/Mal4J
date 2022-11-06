@@ -20,6 +20,11 @@ public class TestExperimentalEnabler {
         anime = mal.getAnime(TestProvider.AnimeID);
     }
 
+    @AfterAll
+    public static void afterAll(){
+        ((MyAnimeListImpl) mal).clearExperimentalFeatures();
+    }
+
     @Test @Order(0)
     public void testExperimental(){
         Assertions.assertThrows(ExperimentalFeatureException.class, anime::getOpeningThemes);

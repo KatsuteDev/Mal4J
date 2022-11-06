@@ -167,6 +167,12 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
                 }
             }
 
+            @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "SpellCheckingInspection"})
+            private boolean isPopulate(){
+                final String ln = new Exception().getStackTrace()[2].toString();
+                return ln.startsWith("com.kttdevelopment.mal4j.MyAnimeListSchema_Manga") && ln.substring(50).startsWith(".populate(MyAnimeListSchema_Manga.java:");
+            }
+
             private Picture[] pictures          = requireNonNull(() -> adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class));
             private String background           = requireNonNull(() -> schema.getString("background"));
             private RelatedAnime[] relatedAnime = requireNonNull(() -> adaptList(schema.getJsonArray("related_anime"), a -> MyAnimeListSchema_Anime.asRelatedAnime(mal, a), RelatedAnime.class));
