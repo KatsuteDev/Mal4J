@@ -33,10 +33,10 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  * @see Anime
  * @see MediaItem
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.12.0
  * @author Katsute
  */
-public abstract class AnimePreview implements AnimeRetrievable,MediaItem<AnimeType,AnimeAirStatus,AnimeListStatus> {
+public abstract class AnimePreview implements MediaItem<AnimeType,AnimeAirStatus,AnimeListStatus> {
 
     // API methods
 

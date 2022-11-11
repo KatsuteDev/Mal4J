@@ -18,7 +18,7 @@
 
 package com.kttdevelopment.mal4j.user.property;
 
-import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.user.User;
 
 /**
@@ -28,20 +28,20 @@ import com.kttdevelopment.mal4j.user.User;
  * @see User#getAnimeAffinity(String)
  * @see User#getAnimeAffinity(User)
  * @since 2.3.0
- * @version 2.3.0
+ * @version 2.12.0
  * @author Katsute
  */
 public abstract class AnimeAffinity {
 
     /**
-     * Returns shared Anime. Use {@link AnimePreview#getAnime()} to get all fields. Only includes Anime that have a score.
+     * Returns shared Anime. Only includes Anime that have a score.
      *
      * @return shared Anime
      *
-     * @see AnimePreview
+     * @see Anime
      * @since 2.3.0
      */
-    public abstract AnimePreview[] getShared();
+    public abstract Anime[] getShared();
 
     /**
      * Returns amount of Anime shared.

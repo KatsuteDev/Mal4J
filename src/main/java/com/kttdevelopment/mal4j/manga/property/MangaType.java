@@ -24,7 +24,7 @@ import com.kttdevelopment.mal4j.property.FieldEnum;
 /**
  * Represents the type of medium a Manga is.
  *
- * @see com.kttdevelopment.mal4j.manga.MangaPreview#getType()
+ * @see com.kttdevelopment.mal4j.manga.Manga#getType()
  * @since 1.0.0
  * @version 2.10.0
  * @author Katsute

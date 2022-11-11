@@ -18,7 +18,6 @@
 
 package com.kttdevelopment.mal4j.anime;
 
-import com.kttdevelopment.mal4j.anime.property.AnimePreviewRetrievable;
 import com.kttdevelopment.mal4j.anime.property.AnimeRetrievable;
 import com.kttdevelopment.mal4j.property.Recommendation;
 
@@ -26,13 +25,12 @@ import com.kttdevelopment.mal4j.property.Recommendation;
  * Represents an Anime recommendation.
  *
  * @see Anime#getRecommendations()
- * @see AnimePreview
  * @see Anime
  * @see Recommendation
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.12.0
  * @author Katsute
  */
-public abstract class AnimeRecommendation extends Recommendation implements AnimePreviewRetrievable, AnimeRetrievable {
+public abstract class AnimeRecommendation extends Recommendation implements AnimeRetrievable {
 
 }

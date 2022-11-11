@@ -64,7 +64,7 @@ Find Anime and Manga by search, ranking, season, and suggestions.
 
 ```java
 MyAnimeList mal = MyAnimeList.withClientID("");
-List<AnimePreview> search =
+List<Anime> search =
     mal.getAnime()
         .withQuery("さくら荘のペットな彼女")
         .withLimit(1)

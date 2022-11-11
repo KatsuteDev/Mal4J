@@ -30,10 +30,10 @@ import com.kttdevelopment.mal4j.property.MediaItem;
  * @see Manga
  * @see MediaItem
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.12.0
  * @author Katsute
  */
-public abstract class MangaPreview implements MangaRetrievable,MediaItem<MangaType,MangaPublishStatus,MangaListStatus> {
+public abstract class MangaPreview implements MediaItem<MangaType,MangaPublishStatus,MangaListStatus> {
 
     /**
      * Returns the total amount of volumes.

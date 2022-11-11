@@ -92,20 +92,19 @@ final class TestManga {
             .add("Serialization#Role", manga -> manga.getSerialization()[0].getRole())
             .add("RelatedManga", Manga::getRelatedManga)
             .add("RelatedManga[0]", manga -> manga.getRelatedManga()[0])
-            .add("RelatedManga#MangaPreview", manga -> manga.getRelatedManga()[0].getMangaPreview().getID())
+            .add("RelatedManga#MangaPreview", manga -> manga.getRelatedManga()[0].getManga().getID())
             .add("RelatedManga#RelationType", manga -> manga.getRelatedManga()[0].getRelationType())
             .add("RelatedManga#RawRelationType", manga -> manga.getRelatedManga()[0].getRawRelationType())
             .add("RelatedManga#RelationTypeFormat", manga -> manga.getRelatedManga()[0].getRelationTypeFormat())
             .add("Recommendations", Manga::getRecommendations)
             .add("Recommendations[0]", manga -> manga.getRecommendations()[0])
-            .add("Recommendations#MangaPreview", manga -> manga.getRecommendations()[0].getMangaPreview().getID())
+            .add("Recommendations#MangaPreview", manga -> manga.getRecommendations()[0].getManga().getID())
             .add("Recommendations#Recommendations", manga -> manga.getRecommendations()[0].getRecommendations())
             .stream();
     }
 
     @Test
     final void testManga(){
-        assertEquals(manga, manga.getManga());
         assertEquals(TestProvider.MangaID, manga.getID());
     }
 
@@ -137,7 +136,7 @@ final class TestManga {
     @Test @DisplayName("Manga may not have related Anime") @Disabled
     final void testRelatedAnime(){
         final RelatedAnime relatedAnime = manga.getRelatedAnime()[0];
-        assertNotNull(relatedAnime.getAnimePreview().getID());
+        assertNotNull(relatedAnime.getAnime().getID());
         assertNotNull(relatedAnime.getRelationType());
         assertNotNull(relatedAnime.getRelationTypeFormat());
     }

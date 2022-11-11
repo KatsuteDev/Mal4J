@@ -18,10 +18,10 @@
 package com.kttdevelopment.mal4j;
 
 import com.kttdevelopment.mal4j.Json.JsonObject;
+import com.kttdevelopment.mal4j.anime.Anime;
 import com.kttdevelopment.mal4j.anime.AnimeListStatus;
-import com.kttdevelopment.mal4j.anime.AnimePreview;
+import com.kttdevelopment.mal4j.manga.Manga;
 import com.kttdevelopment.mal4j.manga.MangaListStatus;
-import com.kttdevelopment.mal4j.manga.MangaPreview;
 import com.kttdevelopment.mal4j.property.ExperimentalFeature;
 import com.kttdevelopment.mal4j.query.UserAnimeListQuery;
 import com.kttdevelopment.mal4j.query.UserMangaListQuery;
@@ -34,7 +34,7 @@ import java.util.function.Consumer;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
-    
+
     static User asUser(final MyAnimeList mal, final JsonObject schema){
         return new User() {
 
@@ -152,7 +152,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .searchAll()
                     .forEachRemaining(e -> {
                         if(e.getScore() != null && e.getScore() > 0) // if rated
-                            selfListings.put(e.getAnimePreview().getID(), e);
+                            selfListings.put(e.getAnime().getID(), e);
                     });
 
                 final Map<Long,AnimeListStatus> otherListings = new HashMap<>();
@@ -166,20 +166,20 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                         .withLimit(1000)
                         .searchAll()
                         .forEachRemaining(e -> {
-                        final Long id = e.getAnimePreview().getID();
+                        final Long id = e.getAnime().getID();
                         if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
                             otherListings.put(id, e);
                     });
 
                 final int len = otherListings.size();
-                final AnimePreview[] shared = new AnimePreview[len];
+                final Anime[] shared        = new Anime[len];
                 final int[] selfScores      = new int[len];
                 final int[] otherScores     = new int[len];
 
                 int index = 0;
                 for(final Map.Entry<Long,AnimeListStatus> otherListing : otherListings.entrySet()){
                     final AnimeListStatus selfListing = selfListings.get(otherListing.getKey());
-                    shared[index]       = selfListing.getAnimePreview();
+                    shared[index]       = selfListing.getAnime();
                     selfScores[index]   = selfListing.getScore();
                     otherScores[index]  = otherListing.getValue().getScore();
                     index++;
@@ -188,12 +188,12 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                 return new AnimeAffinity() {
 
                     private final int sharedCount = len;
-                    private final AnimePreview[] sharedPreviews = shared;
+                    private final Anime[] sharedPreviews = shared;
                     private final int[] a_scores = selfScores;
                     private final int[] b_scores = otherScores;
 
                     @Override
-                    public final AnimePreview[] getShared(){
+                    public final Anime[] getShared(){
                         return Arrays.copyOf(sharedPreviews, sharedCount);
                     }
 
@@ -262,7 +262,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     .searchAll()
                     .forEachRemaining(e -> {
                         if(e.getScore() != null && e.getScore() > 0) // if rated
-                            selfListings.put(e.getMangaPreview().getID(), e);
+                            selfListings.put(e.getManga().getID(), e);
                     });
 
                 final Map<Long,MangaListStatus> otherListings = new HashMap<>();
@@ -276,20 +276,20 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                         .withLimit(1000)
                         .searchAll()
                         .forEachRemaining(e -> {
-                        final Long id = e.getMangaPreview().getID();
+                        final Long id = e.getManga().getID();
                         if(e.getScore() != null && e.getScore() > 0 && selfListings.containsKey(id)) // if rated & shared
                             otherListings.put(id, e);
                     });
 
                 final int len = otherListings.size();
-                final MangaPreview[] shared = new MangaPreview[len];
+                final Manga[] shared        = new Manga[len];
                 final int[] selfScores      = new int[len];
                 final int[] otherScores     = new int[len];
 
                 int index = 0;
                 for(final Map.Entry<Long,MangaListStatus> otherListing : otherListings.entrySet()){
                     final MangaListStatus selfListing = selfListings.get(otherListing.getKey());
-                    shared[index]       = selfListing.getMangaPreview();
+                    shared[index]       = selfListing.getManga();
                     selfScores[index]   = selfListing.getScore();
                     otherScores[index]  = otherListing.getValue().getScore();
                     index++;
@@ -298,12 +298,12 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                 return new MangaAffinity() {
 
                     private final int sharedCount = len;
-                    private final MangaPreview[] sharedPreviews = shared;
+                    private final Manga[] sharedPreviews = shared;
                     private final int[] a_scores = selfScores;
                     private final int[] b_scores = otherScores;
 
                     @Override
-                    public final MangaPreview[] getShared(){
+                    public final Manga[] getShared(){
                         return Arrays.copyOf(sharedPreviews, sharedCount);
                     }
 
@@ -480,5 +480,5 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
         };
     }
-    
+
 }

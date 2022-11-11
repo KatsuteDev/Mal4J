@@ -18,7 +18,8 @@
 
 package com.kttdevelopment.mal4j.manga;
 
-import com.kttdevelopment.mal4j.manga.property.*;
+import com.kttdevelopment.mal4j.manga.property.MangaRankingType;
+import com.kttdevelopment.mal4j.manga.property.MangaRetrievable;
 import com.kttdevelopment.mal4j.property.Ranking;
 
 /**
@@ -26,13 +27,12 @@ import com.kttdevelopment.mal4j.property.Ranking;
  * Represents a Manga ranking.
  *
  * @see com.kttdevelopment.mal4j.MyAnimeList#getMangaRanking(MangaRankingType)
- * @see MangaPreview
  * @see Manga
  * @see Ranking
  * @since 1.0.0
- * @version 1.0.0
+ * @version 2.12.0
  * @author Katsute
  */
-public abstract class MangaRanking implements MangaPreviewRetrievable, MangaRetrievable, Ranking {
+public abstract class MangaRanking implements MangaRetrievable, Ranking {
 
 }

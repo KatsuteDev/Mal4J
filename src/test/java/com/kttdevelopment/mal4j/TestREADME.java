@@ -18,7 +18,7 @@ public class TestREADME {
 
     public void testSearchQueries(){
         MyAnimeList mal = MyAnimeList.withClientID("");
-        List<AnimePreview> search =
+        List<Anime> search =
             mal.getAnime()
                 .withQuery("さくら荘のペットな彼女")
                 .withLimit(1)

@@ -35,10 +35,10 @@ import com.kttdevelopment.mal4j.query.MangaListUpdate;
  * @see MyAnimeList#updateMangaListing(long)
  * @see ListStatus
  * @since 1.0.0
- * @version 2.9.0
+ * @version 2.12.0
  * @author Katsute
  */
-public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaRetrievable, MangaPreviewRetrievable, Editable<MangaListUpdate> {
+public abstract class MangaListStatus implements ListStatus<MangaStatus>, MangaRetrievable, Editable<MangaListUpdate> {
 
     // API methods
 
