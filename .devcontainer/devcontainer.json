@@ -1,0 +1,15 @@
+{
+    "image": "maven:3-eclipse-temurin-17",
+    "postAttachCommand": "mvn compile",
+    "shutdownAction": "stopContainer",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "vscjava.vscode-java-dependency",
+                "vscjava.vscode-java-debug",
+                "vscjava.vscode-maven",
+                "redhat.java"
+            ]
+        }
+    }
+}
