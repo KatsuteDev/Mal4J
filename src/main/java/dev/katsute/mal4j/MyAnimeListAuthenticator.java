@@ -41,7 +41,7 @@ import static dev.katsute.mal4j.Json.*;
  * <br><br>
  * MyAnimeList can be authenticated by with either:
  * <ul>
- *     <li>An authorization code using {@link #MyAnimeListAuthenticator(String, String, String, String)}.</li>
+ *     <li>An authorization code using {@link MyAnimeListAuthenticator(String, String, String, String)}.</li>
  *     <li>A local server using {@link LocalServerBuilder}.</li>
  * </ul>
  *

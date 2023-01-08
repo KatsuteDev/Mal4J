@@ -27,7 +27,7 @@ import dev.katsute.mal4j.query.AnimeListUpdate;
 
 import java.util.*;
 
-@SuppressWarnings({"unused", "ConstantConditions"})
+@SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
     static AnimeStatistics asAnimeStatistics(final MyAnimeList mal, final JsonObject schema){
@@ -367,6 +367,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
             // full only
 
             private boolean isFull = !isPreview;
+            @SuppressWarnings("DataFlowIssue")
             private void populate(){
                 if(!isFull){
                     final Anime anime = mal.getAnime(id);

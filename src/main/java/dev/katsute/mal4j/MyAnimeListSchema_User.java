@@ -444,7 +444,6 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                 return episodesWatched;
             }
 
-            @SuppressWarnings("SpellCheckingInspection")
             @Override
             public final Integer getTimesRewatched(){
                 return timesRewatched;

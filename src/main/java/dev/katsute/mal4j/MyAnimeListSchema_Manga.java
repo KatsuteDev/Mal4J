@@ -26,7 +26,7 @@ import dev.katsute.mal4j.query.MangaListUpdate;
 
 import java.util.*;
 
-@SuppressWarnings({"unused", "ConstantConditions"})
+@SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
     static Author asAuthor(final MyAnimeList mal, final JsonObject schema){
@@ -152,6 +152,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             private boolean isFull = !isPreview;
 
+            @SuppressWarnings("DataFlowIssue")
             private void populate(){
                 if(!isFull){
                     final Manga manga = mal.getManga(id);
@@ -167,7 +168,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
                 }
             }
 
-            @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "SpellCheckingInspection"})
+            @SuppressWarnings("BooleanMethodIsAlwaysInverted")
             private boolean isPopulate(){
                 final String ln = new Exception().getStackTrace()[2].toString();
                 return ln.startsWith("dev.katsute.mal4j.MyAnimeListSchema_Manga") && ln.substring(50).startsWith(".populate(MyAnimeListSchema_Manga.java:");
