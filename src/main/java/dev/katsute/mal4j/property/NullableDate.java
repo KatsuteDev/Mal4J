@@ -31,7 +31,7 @@ import java.util.Date;
 public abstract class NullableDate {
 
     /**
-     * Returns the 4 digit year.
+     * Returns the 4 digit year (19XX-20XX). Null if the year is missing
      *
      * @return year
      *
@@ -40,7 +40,7 @@ public abstract class NullableDate {
     public abstract Integer getYear();
 
     /**
-     * Returns the numeric month with 1 being January. Null if month is missing.
+     * Returns the numeric month (1-12). Null if the month is missing.
      *
      * @return month
      *
@@ -49,7 +49,7 @@ public abstract class NullableDate {
     public abstract Integer getMonth();
 
     /**
-     * Returns the day with 1 being the 1st. Null if day is missing.
+     * Returns the day (1-31). Null if the day is missing.
      *
      * @return day
      *
