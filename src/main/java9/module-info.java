@@ -47,6 +47,7 @@ module Mal4J {
     requires java.desktop;
     requires java.logging;
 
+    exports dev.katsute.mal4j.exception;
     exports dev.katsute.mal4j.anime;
     exports dev.katsute.mal4j.anime.property;
     exports dev.katsute.mal4j.anime.property.time;

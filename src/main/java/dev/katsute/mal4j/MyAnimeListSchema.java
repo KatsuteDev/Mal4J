@@ -19,6 +19,7 @@ package dev.katsute.mal4j;
 
 import dev.katsute.mal4j.Json.JsonObject;
 import dev.katsute.mal4j.anime.property.time.Time;
+import dev.katsute.mal4j.property.NullableDate;
 
 import java.lang.reflect.Array;
 import java.text.ParseException;
@@ -57,6 +58,64 @@ abstract class MyAnimeListSchema {
         }catch(final ParseException e){
             return null;
         }
+    }
+
+    protected static NullableDate parseNullableDate(final String date){
+        if(date == null) return null;
+
+        final int len = date.length();
+        final String[] parts = date.split("-");
+        return new NullableDate() {
+
+            private final Long time = requireNonNull(() -> {
+                try{
+                    return new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y).parse(date).getTime();
+                }catch(ParseException e){
+                    return null;
+                }
+            });
+
+            private final Integer year = requireNonNull(() -> Integer.valueOf(parts[0]));
+            private final Integer month = requireNonNull(() -> Integer.valueOf(parts[1]));
+            private final Integer day = requireNonNull(() -> Integer.valueOf(parts[2]));
+
+            @Override
+            public final Integer getYear(){
+                return year;
+            }
+
+            @Override
+            public final Integer getMonth(){
+                return month;
+            }
+
+            @Override
+            public final Integer getDay(){
+                return day;
+            }
+
+            @Override
+            public final Long getMillis(){
+                return time;
+            }
+
+            @Override
+            public final Date getDate(){
+                return time != null ? new Date(time) : null;
+            }
+
+            //
+
+            @Override
+            public final String toString(){
+                return "NullableDate{" +
+                       "year=" + year +
+                       ", month=" + month +
+                       ", day=" + day +
+                       '}';
+            }
+
+        };
     }
 
     static String asYMD(final Long millis){
@@ -132,6 +191,7 @@ abstract class MyAnimeListSchema {
                        ", minute=" + minute +
                        '}';
             }
+
         };
     }
 

@@ -1,6 +1,7 @@
 package dev.katsute.mal4j.MangaTests;
 
 import dev.katsute.mal4j.*;
+import dev.katsute.mal4j.anime.Anime;
 import dev.katsute.mal4j.anime.RelatedAnime;
 import dev.katsute.mal4j.manga.Manga;
 import dev.katsute.mal4j.manga.property.MangaPublishStatus;
@@ -48,8 +49,17 @@ final class TestManga {
             .add("AlternativeTitles#English", manga -> manga.getAlternativeTitles().getEnglish())
             .add("AlternativeTitles#Japanese", manga -> manga.getAlternativeTitles().getJapanese())
             .add("AlternativeTitles#Synonyms", manga -> manga.getAlternativeTitles().getSynonyms())
-            .add("StartDate", Manga::getStartDate)
+            .add("StartDate#Year", manga -> manga.getStartDate().getYear())
+            .add("StartDate#Month", manga -> manga.getStartDate().getMonth())
+            .add("StartDate#Day", manga -> manga.getStartDate().getDay())
+            .add("StartDate#Millis", manga -> manga.getStartDate().getMillis())
+            .add("StartDate#Date", manga -> manga.getStartDate().getDate())
             .add("EndDate", Manga::getEndDate)
+            .add("EndDate#Year", manga -> manga.getEndDate().getYear())
+            .add("EndDate#Month", manga -> manga.getEndDate().getMonth())
+            .add("EndDate#Day", manga -> manga.getEndDate().getDay())
+            .add("EndDate#Millis", manga -> manga.getEndDate().getMillis())
+            .add("EndDate#Date", manga -> manga.getEndDate().getDate())
             .add("Synopsis", Manga::getSynopsis)
             .add("MeanRating", Manga::getMeanRating)
             .add("Rank", Manga::getRank)

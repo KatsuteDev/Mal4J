@@ -19,7 +19,7 @@
 package dev.katsute.mal4j.anime.property.time;
 
 /**
- * Represents the time.
+ * Represents the time. Does not convert around timezones, will return the time exactly how it is written on the website.
  *
  * @see dev.katsute.mal4j.anime.property.Broadcast
  * @since 1.0.0

@@ -124,8 +124,8 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             private final Picture mainPicture   = requireNonNull(() -> MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture")));
             private final AlternativeTitles alternativeTitles
                                                 = requireNonNull(() -> MyAnimeListSchema_Common.asAlternativeTitles(mal, schema.getJsonObject("alternative_titles")));
-            private final Long startDate        = requireNonNull(() -> parseDate(schema.getString("start_date")));
-            private final Long endDate          = requireNonNull(() -> parseDate(schema.getString("end_date")));
+            private final NullableDate startDate = requireNonNull(() -> parseNullableDate(schema.getString("start_date")));
+            private final NullableDate endDate  = requireNonNull(() -> parseNullableDate(schema.getString("end_date")));
             private final String synopsis       = requireNonNull(() -> schema.getString("synopsis"));
             private final Float meanRating      = requireNonNull(() -> schema.getFloat("mean"));
             private final Integer rank          = requireNonNull(() -> schema.getInt("rank"));
@@ -203,13 +203,13 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final Date getStartDate() {
-                return startDate == null ? null : new Date(startDate);
+            public final NullableDate getStartDate() {
+                return startDate;
             }
 
             @Override
-            public final Date getEndDate() {
-                return endDate == null ? null : new Date(endDate);
+            public final NullableDate getEndDate() {
+                return endDate;
             }
 
             @Override

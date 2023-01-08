@@ -70,7 +70,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @see #getEndDate()
      */
-    Date getStartDate();
+    NullableDate getStartDate();
 
     /**
      * Returns the end date.
@@ -80,7 +80,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      * @see #getStartDate()
      * @since 1.0.0
      */
-    Date getEndDate();
+    NullableDate getEndDate();
 
     /**
      * Returns the synopsis.
