@@ -21,6 +21,7 @@ package dev.katsute.mal4j;
 import dev.katsute.mal4j.anime.Anime;
 import dev.katsute.mal4j.anime.property.AnimeRankingType;
 import dev.katsute.mal4j.anime.property.time.Season;
+import dev.katsute.mal4j.exception.InvalidTokenException;
 import dev.katsute.mal4j.forum.ForumCategory;
 import dev.katsute.mal4j.forum.ForumTopicDetail;
 import dev.katsute.mal4j.manga.Manga;

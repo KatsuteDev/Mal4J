@@ -16,23 +16,24 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
 
 /**
- * Thrown if an exception occurs in a static initializer.
+ * Thrown if a reflected class throws an exception.
  *
  * @since 2.4.0
- * @version 2.4.0
+ * @version 3.0.0
  * @author Katsute
  */
-public final class StaticInitializerException extends RuntimeException {
+@SuppressWarnings("SameParameterValue")
+public final class ReflectedClassException extends RuntimeException {
 
-    StaticInitializerException(){ }
+    public ReflectedClassException(){ }
 
-    StaticInitializerException(final String message){ super(message); }
+    public ReflectedClassException(final String message){ super(message); }
 
-    StaticInitializerException(final String message, final Throwable cause){ super(message, cause); }
+    public ReflectedClassException(final String message, final Throwable cause){ super(message, cause); }
 
-    StaticInitializerException(final Throwable cause){ super(cause); }
+    public ReflectedClassException(final Throwable cause){ super(cause); }
 
 }

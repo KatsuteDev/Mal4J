@@ -16,24 +16,32 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
 
 /**
- * Thrown if a reflected class throws an exception.
+ * Thrown if the Json is malformed.
  *
- * @since 2.4.0
- * @version 2.4.0
+ * @since 1.0.0
+ * @version 3.0.0
  * @author Katsute
  */
-@SuppressWarnings("SameParameterValue")
-public final class ReflectedClassException extends RuntimeException {
+public final class JsonSyntaxException extends RuntimeException {
 
-    ReflectedClassException(){ }
+    private final String raw;
 
-    ReflectedClassException(final String message){ super(message); }
+    public JsonSyntaxException(final String message, final String raw){
+        super(message);
+        this.raw = raw;
+    }
 
-    ReflectedClassException(final String message, final Throwable cause){ super(message, cause); }
-
-    ReflectedClassException(final Throwable cause){ super(cause); }
+    /**
+     * Returns the raw string.
+     *
+     * @return raw string
+     * @since 2.2.0
+     */
+    public final String getRaw(){
+        return raw;
+    }
 
 }

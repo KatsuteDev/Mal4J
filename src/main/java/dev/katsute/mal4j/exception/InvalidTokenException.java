@@ -16,22 +16,19 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
-
-import dev.katsute.mal4j.property.ExperimentalFeature;
+package dev.katsute.mal4j.exception;
 
 /**
- * Thrown if an experimental feature is used without enabling it.
+ * Thrown if the token is either invalid or expired.
  *
- * @see ExperimentalFeature
- * @see MyAnimeList#enableExperimentalFeature(ExperimentalFeature)
- * @since 2.11.0
- * @version 2.11.0
+ * @since 2.3.0
+ * @version 3.0.0
  * @author Katsute
  */
-public final class ExperimentalFeatureException extends RuntimeException {
+public final class InvalidTokenException extends RuntimeException {
 
-    ExperimentalFeatureException(final String message){
+    @SuppressWarnings("SameParameterValue")
+    public InvalidTokenException(final String message){
         super(message);
     }
 

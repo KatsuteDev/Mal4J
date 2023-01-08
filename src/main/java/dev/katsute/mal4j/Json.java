@@ -18,6 +18,8 @@
 
 package dev.katsute.mal4j;
 
+import dev.katsute.mal4j.exception.JsonSyntaxException;
+
 import java.io.*;
 import java.util.*;
 import java.util.function.Function;

@@ -1,6 +1,7 @@
 package dev.katsute.mal4j;
 
 import dev.katsute.mal4j.anime.property.AnimeRankingType;
+import dev.katsute.mal4j.exception.InvalidTokenException;
 import dev.katsute.mal4j.manga.property.MangaRankingType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;

@@ -16,20 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
+
+import dev.katsute.mal4j.MyAnimeList;
+import dev.katsute.mal4j.property.ExperimentalFeature;
 
 /**
- * Thrown if the state parameter was illegally modified.
+ * Thrown if an experimental feature is used without enabling it.
  *
- * @see MyAnimeListAuthenticator
- * @since 1.0.0
- * @version 2.2.1
+ * @see ExperimentalFeature
+ * @see MyAnimeList#enableExperimentalFeature(ExperimentalFeature)
+ * @since 2.11.0
+ * @version 3.0.0
  * @author Katsute
  */
-public final class UnauthorizedAccessException extends RuntimeException {
+public final class ExperimentalFeatureException extends RuntimeException {
 
-    @SuppressWarnings("SameParameterValue")
-    UnauthorizedAccessException(final String message){
+    public ExperimentalFeatureException(final String message){
         super(message);
     }
 

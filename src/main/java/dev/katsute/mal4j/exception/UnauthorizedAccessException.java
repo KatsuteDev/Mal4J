@@ -16,19 +16,22 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
+
+import dev.katsute.mal4j.MyAnimeListAuthenticator;
 
 /**
- * Thrown if the token is either invalid or expired.
+ * Thrown if the state parameter was illegally modified.
  *
- * @since 2.3.0
- * @version 2.3.0
+ * @see MyAnimeListAuthenticator
+ * @since 1.0.0
+ * @version 3.0.0
  * @author Katsute
  */
-public final class InvalidTokenException extends RuntimeException {
+public final class UnauthorizedAccessException extends RuntimeException {
 
     @SuppressWarnings("SameParameterValue")
-    InvalidTokenException(final String message){
+    public UnauthorizedAccessException(final String message){
         super(message);
     }
 

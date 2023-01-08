@@ -18,8 +18,9 @@
 
 package dev.katsute.mal4j;
 
-import dev.katsute.mal4j.APIStruct.Response;
 import com.sun.net.httpserver.*;
+import dev.katsute.mal4j.APIStruct.Response;
+import dev.katsute.mal4j.exception.*;
 
 import java.awt.*;
 import java.io.IOException;

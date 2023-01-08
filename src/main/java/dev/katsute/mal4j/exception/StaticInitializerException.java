@@ -16,32 +16,23 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-package dev.katsute.mal4j;
+package dev.katsute.mal4j.exception;
 
 /**
- * Thrown if the Json is malformed.
+ * Thrown if an exception occurs in a static initializer.
  *
- * @since 1.0.0
- * @version 2.2.1
+ * @since 2.4.0
+ * @version 3.0.0
  * @author Katsute
  */
-public final class JsonSyntaxException extends RuntimeException {
+public final class StaticInitializerException extends RuntimeException {
 
-    private final String raw;
+    public StaticInitializerException(){ }
 
-    JsonSyntaxException(final String message, final String raw){
-        super(message);
-        this.raw = raw;
-    }
+    public StaticInitializerException(final String message){ super(message); }
 
-    /**
-     * Returns the raw string.
-     *
-     * @return raw string
-     * @since 2.2.0
-     */
-    public final String getRaw(){
-        return raw;
-    }
+    public StaticInitializerException(final String message, final Throwable cause){ super(message, cause); }
+
+    public StaticInitializerException(final Throwable cause){ super(cause); }
 
 }

@@ -22,6 +22,7 @@ import dev.katsute.mal4j.APIStruct.Response;
 import dev.katsute.mal4j.anime.*;
 import dev.katsute.mal4j.anime.property.AnimeRankingType;
 import dev.katsute.mal4j.anime.property.time.Season;
+import dev.katsute.mal4j.exception.*;
 import dev.katsute.mal4j.forum.*;
 import dev.katsute.mal4j.manga.*;
 import dev.katsute.mal4j.manga.property.MangaRankingType;

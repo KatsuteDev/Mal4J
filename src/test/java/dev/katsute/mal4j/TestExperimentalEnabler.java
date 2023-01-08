@@ -1,6 +1,7 @@
 package dev.katsute.mal4j;
 
 import dev.katsute.mal4j.anime.Anime;
+import dev.katsute.mal4j.exception.ExperimentalFeatureException;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import org.junit.jupiter.api.*;
 

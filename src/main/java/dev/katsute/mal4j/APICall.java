@@ -18,6 +18,9 @@
 
 package dev.katsute.mal4j;
 
+import dev.katsute.mal4j.exception.ReflectedClassException;
+import dev.katsute.mal4j.exception.StaticInitializerException;
+
 import java.io.*;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
