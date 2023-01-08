@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021-2022 Katsute <https://github.com/Katsute>
+ * Copyright (C) 2023 Katsute <https://github.com/Katsute>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -278,9 +278,9 @@ class APICall {
     @SuppressWarnings("RedundantThrows")
     private APIStruct.Response<String> call() throws IOException, InterruptedException{
         final String URL =
-                baseURL +
-                Regex9.replaceAll(path, pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
-                (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
+            baseURL +
+            Regex9.replaceAll(path, pathArg.matcher(path), result -> pathVars.get(result.group(1))) + // path args
+            (queries.isEmpty() ? "" : '?' + queries.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"))); // query
 
         final String data = fields.isEmpty() ? "" : fields.entrySet().stream().map(e -> e.getKey() + '=' + e.getValue()).collect(Collectors.joining("&"));
 
