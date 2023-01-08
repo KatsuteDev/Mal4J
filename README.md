@@ -14,7 +14,7 @@
         •
         <a href="https://myanimelist.net/forum/?topicid=1897569">Forum Post</a>
     <br>
-        <a href="https://mvnrepository.com/artifact/com.kttdevelopment/mal4j">Maven Central</a>
+        <a href="https://mvnrepository.com/artifact/dev.katsute/mal4j">Maven Central</a>
         •
         <a href="https://github.com/KatsuteDev/Mal4J/packages/1104772">GitHub Packages</a>
         •
@@ -48,7 +48,7 @@ Mal4J requires at least Java 8. No additional dependencies/libraries are require
 
 Compiled binaries can be installed from:
 
- - [Maven Central](https://mvnrepository.com/artifact/com.kttdevelopment/mal4j)
+ - [Maven Central](https://mvnrepository.com/artifact/dev.katsute/mal4j)
  - [GitHub Packages](https://github.com/KatsuteDev/Mal4J/packages/1104772)
  - [Releases](https://github.com/KatsuteDev/Mal4J/releases)
 
