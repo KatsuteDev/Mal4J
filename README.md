@@ -38,12 +38,6 @@ This library supports read and write operations, including list updates.
 
 ## 📃 Installation
 
-| Version | Support | Java | Android |
-|:-:|---|:-:|:-:|
-|`v3^`|⚠️ Unstable|Java 8+|✔️|
-|`v2^`|✔️ Fully supported|Java 8+|✔️|
-|`v1^`|❌ No support|Java 9+|❌|
-
 Mal4J requires at least Java 8. No additional dependencies/libraries are required.
 
 Compiled binaries can be installed from:
@@ -122,7 +116,6 @@ Video[] PV = anime.getVideos();
 <!-- GitHub Copilot Disclaimer -->
 
  - Found a bug? Post it in [issues](https://github.com/KatsuteDev/Mal4J/issues).
- - Have a suggestion or looking for inspiration? Check out our [discussions](https://github.com/KatsuteDev/Mal4J/discussions).
  - Want to further expand our project? [Fork](https://github.com/KatsuteDev/Mal4J/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/Mal4J/pulls).
 
 #### ⚠️️ Before you start
@@ -143,7 +136,7 @@ Please note that the client ID being used for tests must not have a client secre
 
 #### 🌐 Running Tests using GitHub Actions
 
-Devs running tests through GitHub Actions may do so by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
+Tests can be run using GitHub Actions by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

@@ -29,7 +29,7 @@ import java.util.Date;
  *
  * @see FullMediaItem
  * @since 1.0.0
- * @version 2.9.0
+ * @version 3.0.0
  * @author Katsute
  */
 public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,ListStatus extends dev.katsute.mal4j.property.ListStatus<?>> extends ID {
@@ -68,6 +68,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @return start date
      *
+     * @see NullableDate
      * @see #getEndDate()
      */
     NullableDate getStartDate();
@@ -77,6 +78,7 @@ public interface MediaItem<MediaType extends Enum<?>,Status extends Enum<?>,List
      *
      * @return end date
      *
+     * @see NullableDate
      * @see #getStartDate()
      * @since 1.0.0
      */
