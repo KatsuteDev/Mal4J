@@ -177,7 +177,7 @@ final class TestMangaListStatus {
         testUpdate();
     }
 
-    @SuppressWarnings("SpellCheckingInspection")
+    @SuppressWarnings({"SpellCheckingInspection", "DataFlowIssue"})
     @Test @Order(5)
     final void testEcchiNSFW(){
         assertTrue(passedUpdate, "Failed to start test (test requires update test to pass)");
@@ -195,7 +195,6 @@ final class TestMangaListStatus {
                     if(genre.getName().equalsIgnoreCase("ecchi"))
                         return;
 
-        //noinspection ConstantConditions
         assumeTrue(false, "Failed to find Manga with Ecchi genre (this is a data issue, disregard)");
     }
 

@@ -171,7 +171,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             @SuppressWarnings("BooleanMethodIsAlwaysInverted")
             private boolean isPopulate(){
                 final String ln = new Exception().getStackTrace()[2].toString();
-                return ln.startsWith("dev.katsute.mal4j.MyAnimeListSchema_Manga") && ln.substring(50).startsWith(".populate(MyAnimeListSchema_Manga.java:");
+                return ln.startsWith("dev.katsute.mal4j.MyAnimeListSchema_Manga") && ln.substring(43).startsWith(".populate(MyAnimeListSchema_Manga.java:");
             }
 
             private Picture[] pictures          = requireNonNull(() -> adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class));

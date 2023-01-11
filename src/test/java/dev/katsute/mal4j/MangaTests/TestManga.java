@@ -48,6 +48,7 @@ final class TestManga {
             .add("AlternativeTitles#English", manga -> manga.getAlternativeTitles().getEnglish())
             .add("AlternativeTitles#Japanese", manga -> manga.getAlternativeTitles().getJapanese())
             .add("AlternativeTitles#Synonyms", manga -> manga.getAlternativeTitles().getSynonyms())
+            .add("StartDate", Manga::getStartDate)
             .add("StartDate#Year", manga -> manga.getStartDate().getYear())
             .add("StartDate#Month", manga -> manga.getStartDate().getMonth())
             .add("StartDate#Day", manga -> manga.getStartDate().getDay())
