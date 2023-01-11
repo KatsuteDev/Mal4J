@@ -49,8 +49,8 @@ This library offers ***ALL*** the features provided by the API.
 ### My client id / auth token doesn't work.
 
  - Make sure you are using the correct authentication method
-   - For client id use: [`withClientID`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withClientID(java.lang.String))
-   - For token use: [`withToken`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String))
+   - For client id use: [`withClientID`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeList.html#withClientID(java.lang.String))
+   - For token use: [`withToken`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeList.html#withToken(java.lang.String))
  - Your token may be expired.
  - Your token is missing '`Bearer `'.
  - Your token may contain dangling whitespace.
@@ -65,7 +65,7 @@ The seasons query returns Anime that are airing in the current season, this incl
 
 ### NSFW is not working.
 
-For search queries make sure you also run [`includeNSFW()`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/query/NSFW.html#includeNSFW()) in the query builder.
+For search queries make sure you also run [`includeNSFW()`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/query/NSFW.html#includeNSFW()) in the query builder.
 
 ### I can't get other users.
 
@@ -73,7 +73,7 @@ Currently the MyAnimeList API does not allow you to check users other than yours
 
 ### I can't modify my Anime/Manga lists.
 
-In order to change listings you must authenticate using a [token](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String)) or with an [authenticator](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withAuthorization(dev.katsute.mal4j.MyAnimeListAuthenticator)).
+In order to change listings you must authenticate using a [token](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeList.html#withToken(java.lang.String)) or with an [authenticator](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeList.html#withAuthorization(dev.katsute.mal4j.MyAnimeListAuthenticator)).
 
 ### `list_status` / `my_list_status` field isn't working.
 

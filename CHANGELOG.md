@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.0.0
+
+### ⚠️ Breaking Change
+
+* Change groupid [#355](https://github.com/KatsuteDev/Mal4J/pull/355) ([@Katsute](https://github.com/Katsute))
+  <h3 align="center">🛑 This major update includes breaking changes 🛑</h3>
+
+   * Changed groupid from `com.kttdevelopment` to `dev.katsute`
+   * Changed package from `com.kttdevelopment` to `dev.katsute`
+   * Moved exceptions from `com.kttdevelopment.mal4j` to `dev.katsute.mal4j.exceptions`
+   * Anime/Manga start/end dates now return `NullableDate` instead of a `Date`
+
+  To bring your code up to date:
+
+   * Change the dependency groupid from `com.kttdevelopment` to `dev.katsute`
+   * Replace all `import com.kttdevelopment.mal4j` with `import dev.katsute.mal4j`
+   * Exceptions are now imported from `dev.katsute.mal4j.exceptions`, fix this import manually
+
+### 📘 Dependencies
+
+* Bump junit-jupiter from 5.9.1 to 5.9.2 [#358](https://github.com/KatsuteDev/Mal4J/pull/358) ([@mashiro-san](https://github.com/mashiro-san))
+
+**Full Changelog**: [`2.12.0...3.0.0`](https://github.com/KatsuteDev/Mal4J/compare/2.12.0...3.0.0)
+
 ## 2.12.0
 
 ### ⚠️ Breaking Change

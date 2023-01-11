@@ -67,9 +67,9 @@ Four different ways to authenticate with MyAnimeList:
 
 The below method is massively simplified, for a more detailed explanation on OAuth2.0 works check this forum post: [OAuth2.0 authorization for MAL](https://myanimelist.net/blog.php?eid=835707).
 
-For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html) to generate an OAuth token from a client id and PKCE code challenge.
+For developers using their own [authorization](https://myanimelist.net/apiconfig/references/authorization#step-1-generate-a-code-verifier-and-challenge) methods you can use the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeListAuthenticator.html) to generate an OAuth token from a client id and PKCE code challenge.
 
- - The URL to obtain the authorization code can be generated using [`MyAnimeListAuthenticator.getAuthorizationURL(String,String)`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html#getAuthorizationURL(java.lang.String,java.lang.String)).
+ - The URL to obtain the authorization code can be generated using [`MyAnimeListAuthenticator.getAuthorizationURL(String,String)`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeListAuthenticator.html#getAuthorizationURL(java.lang.String,java.lang.String)).
 
    The client secret will be `null` if your application does not have one.
 
@@ -94,7 +94,7 @@ The above methods is massively simplified, for a more detailed guide on how OAut
 
 #### Authenticate using a local server
 
- - For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.html).
+ - For developers without domain for the app redirect url (using *localhost*), authorization can be completed using the [`MyAnimeListAuthenticator`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeListAuthenticator.html).
 
    The app redirect url should be `http://localhost:5050` or whatever port you set it as in [step 2](#2-register-application).
 
@@ -102,7 +102,7 @@ The above methods is massively simplified, for a more detailed guide on how OAut
 
  - When this method is run it will launch your web browser to authenticate with MyAnimeList and then return with the OAuth key.
 
- - If [`openBrowser()`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.LocalServerBuilder.html#openBrowser()) is not supported then you can use [`setURLCallback(Consumer<String>)`](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeListAuthenticator.LocalServerBuilder.html#setURLCallback(java.util.function.Consumer)) to handle the generated URL. Refer to [OAuth2.0 authentication](#authenticate-using-oauth-20) for steps on how to generate a token from the authorization URL.
+ - If [`openBrowser()`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeListAuthenticator.LocalServerBuilder.html#openBrowser()) is not supported then you can use [`setURLCallback(Consumer<String>)`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeListAuthenticator.LocalServerBuilder.html#setURLCallback(java.util.function.Consumer)) to handle the generated URL. Refer to [OAuth2.0 authentication](#authenticate-using-oauth-20) for steps on how to generate a token from the authorization URL.
 
    ```java
    MyAnimeListAuthenticator authenticator = new MyAnimeListAuthenticator
