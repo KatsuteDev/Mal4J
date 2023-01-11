@@ -6,7 +6,7 @@
 
     <groupId>com.kttdevelopment</groupId>
     <artifactId>mal4j</artifactId>
-    <version>2.12.0</version>
+    <version>3.0.0</version>
 
     <profiles>
         <profile>
@@ -21,6 +21,9 @@
                     <id>ossrh</id>
                     <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
                 </repository>
+                <relocation>
+                    <groupId>dev.katsute</groupId>
+                </relocation>
             </distributionManagement>
 
             <build>
