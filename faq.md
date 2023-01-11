@@ -73,7 +73,7 @@ Currently the MyAnimeList API does not allow you to check users other than yours
 
 ### I can't modify my Anime/Manga lists.
 
-In order to change listings you must authenticate using a [token](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String)) or with an [authenticator](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withAuthorization(com.kttdevelopment.mal4j.MyAnimeListAuthenticator)).
+In order to change listings you must authenticate using a [token](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withToken(java.lang.String)) or with an [authenticator](https://docs.katsute.dev/mal4j/Mal4J/com/kttdevelopment/mal4j/MyAnimeList.html#withAuthorization(dev.katsute.mal4j.MyAnimeListAuthenticator)).
 
 ### `list_status` / `my_list_status` field isn't working.
 

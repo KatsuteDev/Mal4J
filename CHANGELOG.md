@@ -6,9 +6,9 @@
 
 * Drop use of 'Preview' classes [#353](https://github.com/KatsuteDev/Mal4J/pull/353) ([@Katsute](https://github.com/Katsute))
   Any methods that previously returned `AnimePreview` and `MangaPreview` now instead returns `Anime` and `Manga`. There is no need to call `getAnime` and `getManga` to get all details, all details are now returned by default.
-  
+
   Simply change any usage of `AnimePreview` to `Anime` and `MangaPreview` to `Manga`.
-  
+
   * Removed `getAnimePreview` and `getMangaPreview`
   * Removed redundant `getAnime` and `getManga` on certain classes
 
