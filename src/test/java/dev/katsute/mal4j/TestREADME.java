@@ -14,7 +14,7 @@ import java.util.List;
 
 // this tests only that code compiles
 @SuppressWarnings("unused")
-public class TestREADME {
+abstract class TestREADME {
 
     public void testSearchQueries(){
         MyAnimeList mal = MyAnimeList.withClientID("");

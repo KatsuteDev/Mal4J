@@ -16,7 +16,7 @@ import static dev.katsute.mal4j.Json.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class TestJson {
+final class TestJson {
 
     private static JsonObject jsonObject;
     private static List<?> jsonArray;
