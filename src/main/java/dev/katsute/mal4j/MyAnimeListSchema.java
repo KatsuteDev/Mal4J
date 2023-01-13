@@ -75,9 +75,9 @@ abstract class MyAnimeListSchema {
                 }
             });
 
-            private final Integer year = requireNonNull(() -> Integer.valueOf(parts[0]));
-            private final Integer month = requireNonNull(() -> Integer.valueOf(parts[1]));
-            private final Integer day = requireNonNull(() -> Integer.valueOf(parts[2]));
+            private final Integer year = requireNonNull(() -> parts.length < 1 ? null : Integer.valueOf(parts[0]));
+            private final Integer month = requireNonNull(() -> parts.length < 2 ? null : Integer.valueOf(parts[1]));
+            private final Integer day = requireNonNull(() -> parts.length < 3 ? null : Integer.valueOf(parts[2]));
 
             @Override
             public final Integer getYear(){

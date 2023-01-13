@@ -6,7 +6,7 @@ import dev.katsute.mal4j.property.ExperimentalFeature;
 import org.junit.jupiter.api.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class TestExperimentalEnabler {
+final class TestExperimentalEnabler {
 
     private static MyAnimeList mal;
 
