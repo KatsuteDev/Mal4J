@@ -48,8 +48,8 @@ final class TestJson {
 
     @Test
     final void testMapBoolean(){
-        assertTrue(jsonObject.getBoolean("bool"));
-        assertFalse(jsonObject.getBoolean("bools"));
+        assertEquals(true, jsonObject.getBoolean("bool"));
+        assertEquals(false, jsonObject.getBoolean("bools"));
     }
 
     @Test
@@ -142,6 +142,38 @@ final class TestJson {
     @Test
     final void testNewLine(){
         assertEquals("v", ((JsonObject) parse("{\"k\":\n\"v\"\n}")).getString("k"));
+    }
+
+    // null
+
+    @Test
+    final void testNull(){
+        assertDoesNotThrow(() -> ((JsonObject) parse("{}")).getJsonObject("null"));
+        assertNotNull(((JsonObject) parse("{}")).getJsonObject("null"));
+        assertDoesNotThrow(() -> ((JsonObject) parse("{}")).getJsonObject("null").getString("null"));
+        assertNull(((JsonObject) parse("{}")).getJsonObject("null").getString("null"));
+        assertDoesNotThrow(() -> ((JsonObject) parse("{}")).getJsonArray("null"));
+        assertNotNull(((JsonObject) parse("{}")).getJsonArray("null"));
+    }
+
+    // bool
+
+    @Test
+    final void testBool(){
+        assertEquals(true, ((JsonObject) parse("{\"k\":true}")).getBoolean("k"));
+        assertThrows(JsonSyntaxException.class, () -> ((JsonObject) parse("{\"k\":True}")).getBoolean("k"));
+        assertEquals(true, ((JsonObject) parse("{\"k\":\"true\"}")).getBoolean("k"));
+        assertEquals(true, ((JsonObject) parse("{\"k\":\"True\"}")).getBoolean("k"));
+        assertEquals(false, ((JsonObject) parse("{\"k\":false}")).getBoolean("k"));
+        assertThrows(JsonSyntaxException.class, () -> ((JsonObject) parse("{\"k\":False}")).getBoolean("k"));
+        assertEquals(false, ((JsonObject) parse("{\"k\":\"false\"}")).getBoolean("k"));
+        assertEquals(false, ((JsonObject) parse("{\"k\":\"False\"}")).getBoolean("k"));
+        assertNull(((JsonObject) parse("{\"k\":null}")).getBoolean("k"));
+        assertNull(((JsonObject) parse("{\"k\":\"null\"}")).getBoolean("k"));
+        assertNull(((JsonObject) parse("{\"k\":-1}")).getBoolean("k"));
+        assertNull(((JsonObject) parse("{\"k\":0}")).getBoolean("k"));
+        assertNull(((JsonObject) parse("{\"k\":1}")).getBoolean("k"));
+        assertNull(((JsonObject) parse("{}")).getBoolean("k"));
     }
 
 }
