@@ -351,19 +351,19 @@ class Json {
 
         public final String[] getStringArray(final String key){
             final List<?> list = (List<?>) map.get(key);
+            if(list == null) return null;
             final List<String> arr = new ArrayList<>();
-            if(list != null)
-                for(final Object o : list)
-                    arr.add(o == null ? null : o instanceof String ? (String) o : o.toString());
+            for(final Object o : list)
+                arr.add(o == null ? null : o instanceof String ? (String) o : o.toString());
             return arr.toArray(new String[0]);
         }
 
         public final JsonObject[] getJsonArray(final String key){
             final List<?> list = (List<?>) map.get(key);
+            if(list == null) return null;
             final List<JsonObject> arr = new ArrayList<>();
-            if(list != null)
-                for(final Object o : list)
-                    arr.add(o instanceof JsonObject ? (JsonObject) o : new JsonObject());
+            for(final Object o : list)
+                arr.add(o instanceof JsonObject ? (JsonObject) o : new JsonObject());
             return arr.toArray(new JsonObject[0]);
         }
 

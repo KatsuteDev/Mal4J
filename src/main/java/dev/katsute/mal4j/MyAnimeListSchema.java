@@ -26,7 +26,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema {
@@ -65,19 +64,22 @@ abstract class MyAnimeListSchema {
 
         final int len = date.length();
         final String[] parts = date.split("-");
+
+        Long raw;
+        try{
+            raw =  new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y).parse(date).getTime();
+        }catch(final ParseException ignored){
+            raw = null;
+        }
+        final Long finalRaw = raw;
+
         return new NullableDate() {
 
-            private final Long time = requireNonNull(() -> {
-                try{
-                    return new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y).parse(date).getTime();
-                }catch(ParseException e){
-                    return null;
-                }
-            });
+            private final Long time = finalRaw;
 
-            private final Integer year = requireNonNull(() -> parts.length < 1 ? null : Integer.valueOf(parts[0]));
-            private final Integer month = requireNonNull(() -> parts.length < 2 ? null : Integer.valueOf(parts[1]));
-            private final Integer day = requireNonNull(() -> parts.length < 3 ? null : Integer.valueOf(parts[2]));
+            private final Integer year = parts.length < 1 ? null : Integer.valueOf(parts[0]);
+            private final Integer month = parts.length < 2 ? null : Integer.valueOf(parts[1]);
+            private final Integer day = parts.length < 3 ? null : Integer.valueOf(parts[2]);
 
             @Override
             public final Integer getYear(){
@@ -193,16 +195,6 @@ abstract class MyAnimeListSchema {
             }
 
         };
-    }
-
-    //
-
-    protected static <T> T requireNonNull(final Supplier<T> supplier){
-        try{
-            return supplier.get();
-        }catch(final NullPointerException ignored){
-            return null;
-        }
     }
 
 }

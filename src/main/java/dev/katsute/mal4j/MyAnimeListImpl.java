@@ -131,7 +131,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<Anime> anime = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
@@ -198,7 +200,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<AnimeRanking> anime = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     anime.add(asAnimeRanking(MyAnimeListImpl.this, iterator));
                 return anime;
             }
@@ -244,7 +248,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<Anime> anime = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
@@ -289,7 +295,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<Anime> anime = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
@@ -385,7 +393,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<AnimeListStatus> anime = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
                 return anime;
             }
@@ -423,7 +433,9 @@ final class MyAnimeListImpl extends MyAnimeList {
         if(response == null) return null;
 
         final List<ForumCategory> categories = new ArrayList<>();
-        for(final JsonObject iterator : response.getJsonArray("categories"))
+        final JsonObject[] arr = response.getJsonArray("categories");
+        if(arr == null) return null;
+        for(final JsonObject iterator : arr)
             categories.add(asForumCategory(MyAnimeListImpl.this, iterator));
         return categories;
     }
@@ -472,7 +484,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<Post> posts = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonObject("data").getJsonArray("posts"))
+                final JsonObject[] arr = response.getJsonObject("data").getJsonArray("posts");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     posts.add(asPost(MyAnimeListImpl.this, iterator, id));
                 return posts;
             }
@@ -518,7 +532,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<ForumTopic> topics = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     topics.add(asForumTopicDetail(MyAnimeListImpl.this, iterator, boardId, subboardId));
                 return topics;
             }
@@ -566,7 +582,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<Manga> manga = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     manga.add(asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return manga;
             }
@@ -634,7 +652,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<MangaRanking> manga = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     manga.add(asMangaRanking(MyAnimeListImpl.this, iterator));
                 return manga;
             }
@@ -733,7 +753,9 @@ final class MyAnimeListImpl extends MyAnimeList {
                 if(response == null) return null;
 
                 final List<MangaListStatus> manga = new ArrayList<>();
-                for(final JsonObject iterator : response.getJsonArray("data"))
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
                     manga.add(asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
                 return manga;
             }
@@ -775,6 +797,7 @@ final class MyAnimeListImpl extends MyAnimeList {
         return getUser(username, (String[]) null);
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Override
     public final User getUser(final String username, final String... fields){
         Objects.requireNonNull(username, "Username cannot be null");
@@ -861,6 +884,7 @@ final class MyAnimeListImpl extends MyAnimeList {
             return nextOffset.get() != -1;
         }
 
+        @SuppressWarnings("DataFlowIssue")
         @Override
         synchronized final List<T> getNextPage(){
             final JsonObject response = handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));

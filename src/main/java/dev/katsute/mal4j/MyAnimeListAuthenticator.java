@@ -501,6 +501,7 @@ public final class MyAnimeListAuthenticator {
         return new String[]{handler.getAuth(), verify};
     }
 
+    @SuppressWarnings("DataFlowIssue")
     private AccessToken parseToken(final Response<JsonObject> response){
         final JsonObject body = response.body();
         if(response.code() == HttpURLConnection.HTTP_OK)
