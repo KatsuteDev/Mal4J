@@ -152,8 +152,10 @@ final class TestJson {
         assertNotNull(((JsonObject) parse("{}")).getJsonObject("null"));
         assertDoesNotThrow(() -> ((JsonObject) parse("{}")).getJsonObject("null").getString("null"));
         assertNull(((JsonObject) parse("{}")).getJsonObject("null").getString("null"));
+        assertDoesNotThrow(() -> ((JsonObject) parse("{}")).getStringArray("null"));
+        assertNull(((JsonObject) parse("{}")).getStringArray("null"));
         assertDoesNotThrow(() -> ((JsonObject) parse("{}")).getJsonArray("null"));
-        assertNotNull(((JsonObject) parse("{}")).getJsonArray("null"));
+        assertNull(((JsonObject) parse("{}")).getJsonArray("null"));
     }
 
     // bool
