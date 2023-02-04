@@ -65,21 +65,24 @@ abstract class MyAnimeListSchema {
         final int len = date.length();
         final String[] parts = date.split("-");
 
-        Long raw;
+        final long t;
+        final Integer y, m, d;
         try{
-            raw =  new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y).parse(date).getTime();
-        }catch(final ParseException ignored){
-            raw = null;
+            t = new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y).parse(date).getTime();
+            y = parts.length >= 1 ? Integer.valueOf(parts[0]) : null;
+            m = parts.length >= 2 ? Integer.valueOf(parts[1]) : null;
+            d = parts.length >= 3 ? Integer.valueOf(parts[2]) : null;
+        }catch(final NumberFormatException | ParseException ignored){
+            return null;
         }
-        final Long finalRaw = raw;
 
         return new NullableDate() {
 
-            private final Long time = finalRaw;
+            private final Long time = t;
 
-            private final Integer year = parts.length < 1 ? null : Integer.valueOf(parts[0]);
-            private final Integer month = parts.length < 2 ? null : Integer.valueOf(parts[1]);
-            private final Integer day = parts.length < 3 ? null : Integer.valueOf(parts[2]);
+            private final Integer year = y;
+            private final Integer month = m;
+            private final Integer day = d;
 
             @Override
             public final Integer getYear(){
@@ -103,7 +106,7 @@ abstract class MyAnimeListSchema {
 
             @Override
             public final Date getDate(){
-                return time != null ? new Date(time) : null;
+                return new Date(time);
             }
 
             //
