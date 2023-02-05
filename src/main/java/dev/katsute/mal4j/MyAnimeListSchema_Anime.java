@@ -31,7 +31,7 @@ import java.util.*;
 abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
     static AnimeStatistics asAnimeStatistics(final MyAnimeList mal, final JsonObject schema){
-        return new AnimeStatistics() {
+        return schema == null ? null : new AnimeStatistics() {
 
             private final Integer   watching    = schema.getJsonObject("status").getInt("watching"),
                                     completed   = schema.getJsonObject("status").getInt("completed"),
@@ -90,7 +90,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static Broadcast asBroadcast(final MyAnimeList mal, final JsonObject schema){
-        return new Broadcast() {
+        return schema == null ? null : new Broadcast() {
 
             private final DayOfWeek dayOfWeek   = DayOfWeek.asEnum(schema.getString("day_of_the_week"));
             private final Time time             = asTime(schema.getString("start_time"));
@@ -121,7 +121,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static StartSeason asStartSeason(final MyAnimeList mal, final JsonObject schema){
-        return new StartSeason() {
+        return schema == null ? null : new StartSeason() {
 
             private final Integer year  = schema.getInt("year");
             private final Season season = Season.asEnum(schema.getString("season"));
@@ -152,7 +152,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static Studio asStudio(final MyAnimeList mal, final JsonObject schema){
-        return new Studio() {
+        return schema == null ? null : new Studio() {
 
             private final Long id       = schema.getLong("id");
             private final String name   = schema.getString("name");
@@ -183,7 +183,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static OpeningTheme asOpeningTheme(final MyAnimeList mal, final JsonObject schema, final Anime anime){
-        return new OpeningTheme() {
+        return schema == null ? null : new OpeningTheme() {
 
             private final Long id       = schema.getLong("id");
             private final String text   = schema.getString("text");
@@ -219,7 +219,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static EndingTheme asEndingTheme(final MyAnimeList mal, final JsonObject schema, final Anime anime){
-        return new EndingTheme() {
+        return schema == null ? null : new EndingTheme() {
 
             private final Long id       = schema.getLong("id");
             private final String text   = schema.getString("text");
@@ -255,7 +255,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static Video asVideo(final MyAnimeList mal, final JsonObject schema){
-        return new Video(){
+        return schema == null ? null : new Video(){
 
             private final Long id          = schema.getLong("id");
             private final String title     = schema.getString("title");
@@ -326,7 +326,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     private static Anime asAnime(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
-        return new Anime() {
+        return schema == null ? null : new Anime() {
 
             private final Long id               = schema.getLong("id");
             private final String title          = schema.getString("title");
@@ -695,7 +695,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     private static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final Long anime_id, final Anime anime_full) {
         if(anime_id == null && anime_full == null)
             throw new NullPointerException("Anime and ID must not both be null");
-        return new AnimeListStatus() {
+        return schema == null ? null : new AnimeListStatus() {
 
             private Anime anime                     = anime_full;
             private final Long id                   = anime_id != null ? anime_id : anime_full.getID();
@@ -834,7 +834,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static AnimeRanking asAnimeRanking(final MyAnimeList mal, final JsonObject schema){
-        return new AnimeRanking() {
+        return schema == null ? null : new AnimeRanking() {
 
             private final Anime anime               = asAnimePreview(mal, schema.getJsonObject("node"));
             private final Integer ranking           = schema.getJsonObject("ranking").getInt("rank");
@@ -872,7 +872,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static AnimeRecommendation asAnimeRecommendation(final MyAnimeList mal, final JsonObject schema){
-        return new AnimeRecommendation() {
+        return schema == null ? null : new AnimeRecommendation() {
 
             private final Anime anime               = asAnimePreview(mal, schema.getJsonObject("node"));
             private final Integer recommendations   = schema.getInt("num_recommendations");
@@ -903,7 +903,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static RelatedAnime asRelatedAnime(final MyAnimeList mal, final JsonObject schema){
-        return new RelatedAnime() {
+        return schema == null ? null : new RelatedAnime() {
 
             private final Anime anime                   = asAnimePreview(mal, schema.getJsonObject("node"));
             private final String relationType           = schema.getString("relation_type");

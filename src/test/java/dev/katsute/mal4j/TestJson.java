@@ -58,6 +58,7 @@ final class TestJson {
         assertEquals(0, jsonObject.getJsonObject("cobj").size());
     }
 
+    @SuppressWarnings("DataFlowIssue")
     @Test
     final void testMapArray(){
         assertEquals("str", jsonObject.getStringArray("arr")[0]);

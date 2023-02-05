@@ -26,7 +26,7 @@ import java.util.Objects;
 abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
 
     static AlternativeTitles asAlternativeTitles(final MyAnimeList mal, final Json.JsonObject schema){
-        return new AlternativeTitles() {
+        return schema == null ? null : new AlternativeTitles() {
 
             private final String[] synonyms = schema.getStringArray("synonyms");
             private final String english    = schema.getString("en");
@@ -64,7 +64,7 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
     }
 
     static Picture asPicture(final MyAnimeList mal, final Json.JsonObject schema){
-        return new Picture() {
+        return schema == null ? null : new Picture() {
 
             private final String medium = schema.getString("medium");
             private final String large  = schema.getString("large");
@@ -95,7 +95,7 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
     }
 
     static Genre asGenre(final MyAnimeList mal, final Json.JsonObject schema, final boolean animeGenre){
-        return new Genre() {
+        return schema == null ? null : new Genre() {
 
             private final Integer id = schema.getInt("id");
             private final String name = schema.getString("name");

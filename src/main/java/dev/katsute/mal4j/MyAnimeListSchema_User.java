@@ -36,7 +36,7 @@ import java.util.function.Consumer;
 abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
     static User asUser(final MyAnimeList mal, final JsonObject schema){
-        return new User() {
+        return schema == null ? null : new User() {
 
             private final Long id           = schema.getLong("id");
             private final String name       = schema.getString("name");
@@ -359,7 +359,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
     }
 
     static UserAnimeStatistics asUserAnimeStatistics(final MyAnimeList mal, final JsonObject schema){
-        return new UserAnimeStatistics() {
+        return schema == null ? null : new UserAnimeStatistics() {
 
             private final Integer watching          = schema.getInt("num_items_watching");
             private final Integer completed         = schema.getInt("num_items_completed");

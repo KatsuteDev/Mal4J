@@ -29,7 +29,7 @@ import java.util.Date;
 abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     static ForumTopicCreator asForumTopicCreator(final MyAnimeList mal, final JsonObject schema){
-        return new ForumTopicCreator() {
+        return schema == null ? null : new ForumTopicCreator() {
 
             private final Long id       = schema.getLong("id");
             private final String name   = schema.getString("name");
@@ -66,7 +66,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static ForumTopic asForumTopicDetail(final MyAnimeList mal, final JsonObject schema, final Long boardid, final Long subboardid){
-        return new ForumTopic() {
+        return schema == null ? null : new ForumTopic() {
 
             private final Long boardID                  = boardid;
             private final Long subBoardID               = subboardid;
@@ -165,7 +165,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static Poll asPoll(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
-        return new Poll() {
+        return schema == null ? null : new Poll() {
 
             private final Long id               = schema.getLong("id");
             private final String question       = schema.getString("question");
@@ -215,7 +215,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static PollOption asPollOption(final MyAnimeList mal, final JsonObject schema, final Poll poll){
-        return new PollOption() {
+        return schema == null ? null : new PollOption() {
 
             private final Long id       = schema.getLong("id");
             private final String text   = schema.getString("text");
@@ -258,7 +258,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static PostAuthor asPostAuthor(final MyAnimeList mal, final JsonObject schema){
-        return new PostAuthor() {
+        return schema == null ? null : new PostAuthor() {
 
             private final Long id               = schema.getLong("id");
             private final String name           = schema.getString("name");
@@ -302,7 +302,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumBoard asForumBoard(final MyAnimeList mal, final JsonObject schema, final ForumCategory forumCategory){
-        return new ForumBoard() {
+        return schema == null ? null : new ForumBoard() {
 
             private final Long id                   = schema.getLong("id");
             private final String title              = schema.getString("title");
@@ -353,7 +353,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumCategory asForumCategory(final MyAnimeList mal, final JsonObject schema){
-        return new ForumCategory() {
+        return schema == null ? null : new ForumCategory() {
 
             private final String title              = schema.getString("title");
             private final ForumBoard[] forumBoards  = adaptList(schema.getJsonArray("boards"), b -> asForumBoard(mal, b, this), ForumBoard.class);
@@ -384,7 +384,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumSubBoard asForumSubBoard(final MyAnimeList mal, final JsonObject schema, final ForumBoard forumBoard){
-        return new ForumSubBoard() {
+        return schema == null ? null : new ForumSubBoard() {
 
             private final Long id       = schema.getLong("id");
             private final String title  = schema.getString("title");
@@ -421,7 +421,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static ForumTopicDetail asForumTopic(final MyAnimeList mal, final JsonObject schema, final long topicid){
-        return new ForumTopicDetail() {
+        return schema == null ? null : new ForumTopicDetail() {
 
             private final long id       = topicid;
             private final String title  = schema.getString("title");
@@ -466,7 +466,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     // make sure matches below
     static Post asPost(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
-        return new Post() {
+        return schema == null ? null : new Post() {
 
             private final Long id           = schema.getLong("id");
             private final Integer number    = schema.getInt("number");
@@ -536,7 +536,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static Post asPost(final MyAnimeList mal, final JsonObject schema, final long ftdid){
-        return new Post() {
+        return schema == null ? null : new Post() {
 
             private final Long id           = schema.getLong("id");
             private final Integer number    = schema.getInt("number");
