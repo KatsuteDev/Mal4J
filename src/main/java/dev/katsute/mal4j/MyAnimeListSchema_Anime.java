@@ -31,14 +31,14 @@ import java.util.*;
 abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
     static AnimeStatistics asAnimeStatistics(final MyAnimeList mal, final JsonObject schema){
-        return new AnimeStatistics() {
+        return schema == null ? null : new AnimeStatistics() {
 
-            private final Integer   watching    = requireNonNull(() -> schema.getJsonObject("status").getInt("watching")),
-                                    completed   = requireNonNull(() -> schema.getJsonObject("status").getInt("completed")),
-                                    onHold      = requireNonNull(() -> schema.getJsonObject("status").getInt("on_hold")),
-                                    dropped     = requireNonNull(() -> schema.getJsonObject("status").getInt("dropped")),
-                                    planToWatch = requireNonNull(() -> schema.getJsonObject("status").getInt("plan_to_watch")),
-                                    userCount   = requireNonNull(() -> schema.getInt("num_list_users"));
+            private final Integer   watching    = schema.getJsonObject("status").getInt("watching"),
+                                    completed   = schema.getJsonObject("status").getInt("completed"),
+                                    onHold      = schema.getJsonObject("status").getInt("on_hold"),
+                                    dropped     = schema.getJsonObject("status").getInt("dropped"),
+                                    planToWatch = schema.getJsonObject("status").getInt("plan_to_watch"),
+                                    userCount   = schema.getInt("num_list_users");
 
             // API methods
 
@@ -90,10 +90,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static Broadcast asBroadcast(final MyAnimeList mal, final JsonObject schema){
-        return new Broadcast() {
+        return schema == null ? null : new Broadcast() {
 
-            private final DayOfWeek dayOfWeek   = requireNonNull(() -> DayOfWeek.asEnum(schema.getString("day_of_the_week")));
-            private final Time time             = requireNonNull(() -> asTime(schema.getString("start_time")));
+            private final DayOfWeek dayOfWeek   = DayOfWeek.asEnum(schema.getString("day_of_the_week"));
+            private final Time time             = asTime(schema.getString("start_time"));
 
             // API methods
 
@@ -121,10 +121,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static StartSeason asStartSeason(final MyAnimeList mal, final JsonObject schema){
-        return new StartSeason() {
+        return schema == null ? null : new StartSeason() {
 
-            private final Integer year  = requireNonNull(() -> schema.getInt("year"));
-            private final Season season = requireNonNull(() -> Season.asEnum(schema.getString("season")));
+            private final Integer year  = schema.getInt("year");
+            private final Season season = Season.asEnum(schema.getString("season"));
 
             // API methods
 
@@ -152,10 +152,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static Studio asStudio(final MyAnimeList mal, final JsonObject schema){
-        return new Studio() {
+        return schema == null ? null : new Studio() {
 
-            private final Long id       = requireNonNull(() -> schema.getLong("id"));
-            private final String name   = requireNonNull(() -> schema.getString("name"));
+            private final Long id       = schema.getLong("id");
+            private final String name   = schema.getString("name");
 
             // API methods
 
@@ -183,10 +183,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static OpeningTheme asOpeningTheme(final MyAnimeList mal, final JsonObject schema, final Anime anime){
-        return new OpeningTheme() {
+        return schema == null ? null : new OpeningTheme() {
 
-            private final Long id       = requireNonNull(() -> schema.getLong("id"));
-            private final String text   = requireNonNull(() -> schema.getString("text"));
+            private final Long id       = schema.getLong("id");
+            private final String text   = schema.getString("text");
 
             // API methods
 
@@ -219,10 +219,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static EndingTheme asEndingTheme(final MyAnimeList mal, final JsonObject schema, final Anime anime){
-        return new EndingTheme() {
+        return schema == null ? null : new EndingTheme() {
 
-            private final Long id       = requireNonNull(() -> schema.getLong("id"));
-            private final String text   = requireNonNull(() -> schema.getString("text"));
+            private final Long id       = schema.getLong("id");
+            private final String text   = schema.getString("text");
 
             // API methods
 
@@ -255,14 +255,14 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static Video asVideo(final MyAnimeList mal, final JsonObject schema){
-        return new Video(){
+        return schema == null ? null : new Video(){
 
-            private final Long id          = requireNonNull(() -> schema.getLong("id"));
-            private final String title     = requireNonNull(() -> schema.getString("title"));
-            private final String url       = requireNonNull(() -> schema.getString("url"));
-            private final String thumbnail = requireNonNull(() -> schema.getString("thumbnail"));
-            private final Long createdAt   = requireNonNull(() -> schema.getLong("created_at"));
-            private final Long updatedAt   = requireNonNull(() -> schema.getLong("updated_at"));
+            private final Long id          = schema.getLong("id");
+            private final String title     = schema.getString("title");
+            private final String url       = schema.getString("url");
+            private final String thumbnail = schema.getString("thumbnail");
+            private final Long createdAt   = schema.getLong("created_at");
+            private final Long updatedAt   = schema.getLong("updated_at");
 
             @Override
             public final Long getID(){
@@ -326,43 +326,43 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     private static Anime asAnime(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
-        return new Anime() {
+        return schema == null ? null : new Anime() {
 
-            private final Long id               = requireNonNull(() -> schema.getLong("id"));
-            private final String title          = requireNonNull(() -> schema.getString("title"));
-            private final Picture mainPicture   = requireNonNull(() -> MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture")));
+            private final Long id               = schema.getLong("id");
+            private final String title          = schema.getString("title");
+            private final Picture mainPicture   = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
             private final AlternativeTitles alternativeTitles
-                                                = requireNonNull(() -> MyAnimeListSchema_Common.asAlternativeTitles(mal, schema.getJsonObject("alternative_titles")));
-            private final NullableDate startDate = requireNonNull(() -> parseNullableDate(schema.getString("start_date")));
-            private final NullableDate endDate  = requireNonNull(() -> parseNullableDate(schema.getString("end_date")));
-            private final String synopsis       = requireNonNull(() -> schema.getString("synopsis"));
-            private final Float meanRating      = requireNonNull(() -> schema.getFloat("mean"));
-            private final Integer rank          = requireNonNull(() -> schema.getInt("rank"));
-            private final Integer popularity    = requireNonNull(() -> schema.getInt("popularity"));
-            private final Integer usersListing  = requireNonNull(() -> schema.getInt("num_list_users"));
-            private final Integer usersScoring  = requireNonNull(() -> schema.getInt("num_scoring_users"));
-            private final String nsfw           = requireNonNull(() -> schema.getString("nsfw"));
+                                                = MyAnimeListSchema_Common.asAlternativeTitles(mal, schema.getJsonObject("alternative_titles"));
+            private final NullableDate startDate = parseNullableDate(schema.getString("start_date"));
+            private final NullableDate endDate  = parseNullableDate(schema.getString("end_date"));
+            private final String synopsis       = schema.getString("synopsis");
+            private final Float meanRating      = schema.getFloat("mean");
+            private final Integer rank          = schema.getInt("rank");
+            private final Integer popularity    = schema.getInt("popularity");
+            private final Integer usersListing  = schema.getInt("num_list_users");
+            private final Integer usersScoring  = schema.getInt("num_scoring_users");
+            private final String nsfw           = schema.getString("nsfw");
             private final NSFW e_nsfw           = NSFW.asEnum(nsfw);
-            private final Genre[] genres        = requireNonNull(() -> adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, true), Genre.class));
-            private final Long createdAt        = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
-            private final Long updatedAt        = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
-            private final String type           = requireNonNull(() -> schema.getString("media_type"));
+            private final Genre[] genres        = adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, true), Genre.class);
+            private final Long createdAt        = parseISO8601(schema.getString("created_at"));
+            private final Long updatedAt        = parseISO8601(schema.getString("updated_at"));
+            private final String type           = schema.getString("media_type");
             private final AnimeType e_type      = AnimeType.asEnum(type);
-            private final String status         = requireNonNull(() -> schema.getString("status"));
+            private final String status         = schema.getString("status");
             private final AnimeAirStatus e_status
                                                 = AnimeAirStatus.asEnum(status);
             private final AnimeListStatus listStatus
-                                                = requireNonNull(() -> asAnimeListStatus(mal, schema.getJsonObject("my_list_status"), id, this));
-            private final Integer episodes      = requireNonNull(() -> schema.getInt("num_episodes"));
+                                                = asAnimeListStatus(mal, schema.getJsonObject("my_list_status"), id, this);
+            private final Integer episodes      = schema.getInt("num_episodes");
             private final StartSeason startSeason
-                                                = requireNonNull(() -> asStartSeason(mal, schema.getJsonObject("start_season")));
-            private final Broadcast broadcast   = requireNonNull(() -> asBroadcast(mal, schema.getJsonObject("broadcast")));
-            private final String source         = requireNonNull(() -> schema.getString("source"));
+                                                = asStartSeason(mal, schema.getJsonObject("start_season"));
+            private final Broadcast broadcast   = asBroadcast(mal, schema.getJsonObject("broadcast"));
+            private final String source         = schema.getString("source");
             private final AnimeSource e_source  = AnimeSource.asEnum(source);
-            private final Integer episodeLength = requireNonNull(() -> schema.getInt("average_episode_duration"));
-            private final String rating         = requireNonNull(() -> schema.getString("rating"));
+            private final Integer episodeLength = schema.getInt("average_episode_duration");
+            private final String rating         = schema.getString("rating");
             private final AnimeRating e_rating  = AnimeRating.asEnum(rating);
-            private final Studio[] studios      = requireNonNull(() -> adaptList(schema.getJsonArray("studios"), s -> asStudio(mal, s), Studio.class));
+            private final Studio[] studios      = adaptList(schema.getJsonArray("studios"), s -> asStudio(mal, s), Studio.class);
 
             // full only
 
@@ -392,17 +392,17 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                 return ln.startsWith("dev.katsute.mal4j.MyAnimeListSchema_Anime") && ln.substring(43).startsWith(".populate(MyAnimeListSchema_Anime.java:");
             }
 
-            private Picture[] pictures          = requireNonNull(() -> adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class));
-            private String background           = requireNonNull(() -> schema.getString("background"));
-            private RelatedAnime[] relatedAnime = requireNonNull(() -> adaptList(schema.getJsonArray("related_anime"), a -> asRelatedAnime(mal, a), RelatedAnime.class));
-            private RelatedManga[] relatedManga = requireNonNull(() -> adaptList(schema.getJsonArray("related_manga"), m -> MyAnimeListSchema_Manga.asRelatedManga(mal, m), RelatedManga.class));
+            private Picture[] pictures          = adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class);
+            private String background           = schema.getString("background");
+            private RelatedAnime[] relatedAnime = adaptList(schema.getJsonArray("related_anime"), a -> asRelatedAnime(mal, a), RelatedAnime.class);
+            private RelatedManga[] relatedManga = adaptList(schema.getJsonArray("related_manga"), m -> MyAnimeListSchema_Manga.asRelatedManga(mal, m), RelatedManga.class);
             private AnimeRecommendation[] recommendations
-                                                = requireNonNull(() -> adaptList(schema.getJsonArray("recommendations"), r -> asAnimeRecommendation(mal, r), AnimeRecommendation.class));
-            private AnimeStatistics statistics  = requireNonNull(() -> asAnimeStatistics(mal, schema.getJsonObject("statistics")));
+                                                = adaptList(schema.getJsonArray("recommendations"), r -> asAnimeRecommendation(mal, r), AnimeRecommendation.class);
+            private AnimeStatistics statistics  = asAnimeStatistics(mal, schema.getJsonObject("statistics"));
             private OpeningTheme[] openingThemes
-                                                = requireNonNull(() -> adaptList(schema.getJsonArray("opening_themes"), o -> asOpeningTheme(mal, o, this), OpeningTheme.class));
-            private EndingTheme[] endingThemes  = requireNonNull(() -> adaptList(schema.getJsonArray("ending_themes"), o -> asEndingTheme(mal, o, this), EndingTheme.class));
-            private Video[] videos              = requireNonNull(() -> adaptList(schema.getJsonArray("videos"), o -> asVideo(mal, o), Video.class));
+                                                = adaptList(schema.getJsonArray("opening_themes"), o -> asOpeningTheme(mal, o, this), OpeningTheme.class);
+            private EndingTheme[] endingThemes  = adaptList(schema.getJsonArray("ending_themes"), o -> asEndingTheme(mal, o, this), EndingTheme.class);
+            private Video[] videos              = adaptList(schema.getJsonArray("videos"), o -> asVideo(mal, o), Video.class);
 
             // API methods
 
@@ -695,25 +695,25 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     private static AnimeListStatus asAnimeListStatus(final MyAnimeList mal, final JsonObject schema, final Long anime_id, final Anime anime_full) {
         if(anime_id == null && anime_full == null)
             throw new NullPointerException("Anime and ID must not both be null");
-        return new AnimeListStatus() {
+        return schema == null ? null : new AnimeListStatus() {
 
             private Anime anime                     = anime_full;
             private final Long id                   = anime_id != null ? anime_id : anime_full.getID();
 
-            private final String status             = requireNonNull(() -> schema.getString("status"));
+            private final String status             = schema.getString("status");
             private final AnimeStatus e_status      = AnimeStatus.asEnum(status);
-            private final Integer score             = requireNonNull(() -> schema.getInt("score"));
-            private final Long startDate            = requireNonNull(() -> parseDate(schema.getString("start_date")));
-            private final Long finishDate           = requireNonNull(() -> parseDate(schema.getString("finish_date")));
-            private final Integer priority          = requireNonNull(() -> schema.getInt("priority"));
+            private final Integer score             = schema.getInt("score");
+            private final Long startDate            = parseDate(schema.getString("start_date"));
+            private final Long finishDate           = parseDate(schema.getString("finish_date"));
+            private final Integer priority          = schema.getInt("priority");
             private final Priority e_priority       = Priority.asEnum(priority);
-            private final String[] tags             = requireNonNull(() -> schema.getStringArray("tags"));
-            private final String comments           = requireNonNull(() -> schema.getString("comments"));
-            private final Long updatedAt            = requireNonNull(() -> parseISO8601(schema.getString("updated_at")));
-            private final Integer watchedEpisodes   = requireNonNull(() -> schema.getInt("num_episodes_watched"));
-            private final Boolean rewatching        = requireNonNull(() -> schema.getBoolean("is_rewatching"));
-            private final Integer timesRewatched    = requireNonNull(() -> schema.getInt("num_times_rewatched"));
-            private final Integer rewatchValue      = requireNonNull(() -> schema.getInt("rewatch_value"));
+            private final String[] tags             = schema.getStringArray("tags");
+            private final String comments           = schema.getString("comments");
+            private final Long updatedAt            = parseISO8601(schema.getString("updated_at"));
+            private final Integer watchedEpisodes   = schema.getInt("num_episodes_watched");
+            private final Boolean rewatching        = schema.getBoolean("is_rewatching");
+            private final Integer timesRewatched    = schema.getInt("num_times_rewatched");
+            private final Integer rewatchValue      = schema.getInt("rewatch_value");
             private final RewatchValue e_rewatchValue
                                                     = RewatchValue.asEnum(rewatchValue);
 
@@ -834,11 +834,11 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static AnimeRanking asAnimeRanking(final MyAnimeList mal, final JsonObject schema){
-        return new AnimeRanking() {
+        return schema == null ? null : new AnimeRanking() {
 
-            private final Anime anime               = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
-            private final Integer ranking           = requireNonNull(() -> schema.getJsonObject("ranking").getInt("rank"));
-            private final Integer previousRanking   = requireNonNull(() -> schema.getJsonObject("ranking").getInt("previous_rank"));
+            private final Anime anime               = asAnimePreview(mal, schema.getJsonObject("node"));
+            private final Integer ranking           = schema.getJsonObject("ranking").getInt("rank");
+            private final Integer previousRanking   = schema.getJsonObject("ranking").getInt("previous_rank");
 
             // API methods
 
@@ -872,10 +872,10 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static AnimeRecommendation asAnimeRecommendation(final MyAnimeList mal, final JsonObject schema){
-        return new AnimeRecommendation() {
+        return schema == null ? null : new AnimeRecommendation() {
 
-            private final Anime anime               = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
-            private final Integer recommendations   = requireNonNull(() -> schema.getInt("num_recommendations"));
+            private final Anime anime               = asAnimePreview(mal, schema.getJsonObject("node"));
+            private final Integer recommendations   = schema.getInt("num_recommendations");
 
             // API methods
 
@@ -903,12 +903,12 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
     }
 
     static RelatedAnime asRelatedAnime(final MyAnimeList mal, final JsonObject schema){
-        return new RelatedAnime() {
+        return schema == null ? null : new RelatedAnime() {
 
-            private final Anime anime                   = requireNonNull(() -> asAnimePreview(mal, schema.getJsonObject("node")));
-            private final String relationType           = requireNonNull(() -> schema.getString("relation_type"));
+            private final Anime anime                   = asAnimePreview(mal, schema.getJsonObject("node"));
+            private final String relationType           = schema.getString("relation_type");
             private final RelationType e_relationType   = RelationType.asEnum(relationType);
-            private final String relationTypeFormatted  = requireNonNull(() -> schema.getString("relation_type_formatted"));
+            private final String relationTypeFormatted  = schema.getString("relation_type_formatted");
 
             // API methods
 

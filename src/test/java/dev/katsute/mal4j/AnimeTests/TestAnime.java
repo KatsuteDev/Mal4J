@@ -23,7 +23,7 @@ final class TestAnime {
     private static MyAnimeList mal;
     private static Anime anime;
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "RedundantSuppression"})
     @BeforeAll
     static void beforeAll(){
         mal = TestProvider.getMyAnimeList();

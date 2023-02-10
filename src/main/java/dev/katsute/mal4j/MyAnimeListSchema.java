@@ -26,7 +26,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.function.Function;
-import java.util.function.Supplier;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema {
@@ -65,19 +64,25 @@ abstract class MyAnimeListSchema {
 
         final int len = date.length();
         final String[] parts = date.split("-");
+
+        final long t;
+        final Integer y, m, d;
+        try{
+            t = new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y).parse(date).getTime();
+            y = parts.length >= 1 ? Integer.valueOf(parts[0]) : null;
+            m = parts.length >= 2 ? Integer.valueOf(parts[1]) : null;
+            d = parts.length >= 3 ? Integer.valueOf(parts[2]) : null;
+        }catch(final NumberFormatException | ParseException ignored){
+            return null;
+        }
+
         return new NullableDate() {
 
-            private final Long time = requireNonNull(() -> {
-                try{
-                    return new SimpleDateFormat(len == 10 ? YMD : len == 7 ? YM : Y).parse(date).getTime();
-                }catch(ParseException e){
-                    return null;
-                }
-            });
+            private final Long time = t;
 
-            private final Integer year = requireNonNull(() -> parts.length < 1 ? null : Integer.valueOf(parts[0]));
-            private final Integer month = requireNonNull(() -> parts.length < 2 ? null : Integer.valueOf(parts[1]));
-            private final Integer day = requireNonNull(() -> parts.length < 3 ? null : Integer.valueOf(parts[2]));
+            private final Integer year = y;
+            private final Integer month = m;
+            private final Integer day = d;
 
             @Override
             public final Integer getYear(){
@@ -101,7 +106,7 @@ abstract class MyAnimeListSchema {
 
             @Override
             public final Date getDate(){
-                return time != null ? new Date(time) : null;
+                return new Date(time);
             }
 
             //
@@ -193,16 +198,6 @@ abstract class MyAnimeListSchema {
             }
 
         };
-    }
-
-    //
-
-    protected static <T> T requireNonNull(final Supplier<T> supplier){
-        try{
-            return supplier.get();
-        }catch(final NullPointerException ignored){
-            return null;
-        }
     }
 
 }

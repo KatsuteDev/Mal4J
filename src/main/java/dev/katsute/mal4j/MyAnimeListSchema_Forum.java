@@ -29,10 +29,10 @@ import java.util.Date;
 abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     static ForumTopicCreator asForumTopicCreator(final MyAnimeList mal, final JsonObject schema){
-        return new ForumTopicCreator() {
+        return schema == null ? null : new ForumTopicCreator() {
 
-            private final Long id       = requireNonNull(() -> schema.getLong("id"));
-            private final String name   = requireNonNull(() -> schema.getString("name"));
+            private final Long id       = schema.getLong("id");
+            private final String name   = schema.getString("name");
 
             // API methods
 
@@ -66,20 +66,20 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static ForumTopic asForumTopicDetail(final MyAnimeList mal, final JsonObject schema, final Long boardid, final Long subboardid){
-        return new ForumTopic() {
+        return schema == null ? null : new ForumTopic() {
 
             private final Long boardID                  = boardid;
             private final Long subBoardID               = subboardid;
 
-            private final Long id                       = requireNonNull(() -> schema.getLong("id"));
-            private final String title                  = requireNonNull(() -> schema.getString("title"));
-            private final Long createdAt                = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
-            private final ForumTopicCreator createdBy   = requireNonNull(() -> asForumTopicCreator(mal, schema.getJsonObject("created_by")));
-            private final Integer posts                 = requireNonNull(() -> schema.getInt("number_of_posts"));
-            private final Long lastPostedAt             = requireNonNull(() -> parseISO8601(schema.getString("last_post_created_at")));
+            private final Long id                       = schema.getLong("id");
+            private final String title                  = schema.getString("title");
+            private final Long createdAt                = parseISO8601(schema.getString("created_at"));
+            private final ForumTopicCreator createdBy   = asForumTopicCreator(mal, schema.getJsonObject("created_by"));
+            private final Integer posts                 = schema.getInt("number_of_posts");
+            private final Long lastPostedAt             = parseISO8601(schema.getString("last_post_created_at"));
             private final ForumTopicCreator lastPostedBy
-                                                        = requireNonNull(() -> asForumTopicCreator(mal, schema.getJsonObject("last_post_created_by")));
-            private final Boolean locked                = requireNonNull(() -> schema.getBoolean("is_locked"));
+                                                        = asForumTopicCreator(mal, schema.getJsonObject("last_post_created_by"));
+            private final Boolean locked                = schema.getBoolean("is_locked");
 
             // API methods
 
@@ -165,12 +165,12 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static Poll asPoll(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
-        return new Poll() {
+        return schema == null ? null : new Poll() {
 
-            private final Long id               = requireNonNull(() -> schema.getLong("id"));
-            private final String question       = requireNonNull(() -> schema.getString("question"));
-            private final Boolean isClosed      = requireNonNull(() -> schema.getBoolean("closed"));
-            private final PollOption[] options  = requireNonNull(() -> adaptList(schema.getJsonArray("options"), o -> asPollOption(mal, o, this), PollOption.class));
+            private final Long id               = schema.getLong("id");
+            private final String question       = schema.getString("question");
+            private final Boolean isClosed      = schema.getBoolean("closed");
+            private final PollOption[] options  = adaptList(schema.getJsonArray("options"), o -> asPollOption(mal, o, this), PollOption.class);
 
             // API methods
 
@@ -215,11 +215,11 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static PollOption asPollOption(final MyAnimeList mal, final JsonObject schema, final Poll poll){
-        return new PollOption() {
+        return schema == null ? null : new PollOption() {
 
-            private final Long id       = requireNonNull(() -> schema.getLong("id"));
-            private final String text   = requireNonNull(() -> schema.getString("text"));
-            private final Integer votes = requireNonNull(() -> schema.getInt("votes"));
+            private final Long id       = schema.getLong("id");
+            private final String text   = schema.getString("text");
+            private final Integer votes = schema.getInt("votes");
 
             // API methods
 
@@ -258,12 +258,12 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static PostAuthor asPostAuthor(final MyAnimeList mal, final JsonObject schema){
-        return new PostAuthor() {
+        return schema == null ? null : new PostAuthor() {
 
-            private final Long id               = requireNonNull(() -> schema.getLong("id"));
-            private final String name           = requireNonNull(() -> schema.getString("name"));
+            private final Long id               = schema.getLong("id");
+            private final String name           = schema.getString("name");
             @SuppressWarnings("SpellCheckingInspection")
-            private final String forumAvatarURL = requireNonNull(() -> schema.getString("forum_avator"));
+            private final String forumAvatarURL = schema.getString("forum_avator");
 
             // API methods
 
@@ -302,11 +302,11 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumBoard asForumBoard(final MyAnimeList mal, final JsonObject schema, final ForumCategory forumCategory){
-        return new ForumBoard() {
+        return schema == null ? null : new ForumBoard() {
 
-            private final Long id                   = requireNonNull(() -> schema.getLong("id"));
-            private final String title              = requireNonNull(() -> schema.getString("title"));
-            private final String description        = requireNonNull(() -> schema.getString("description"));
+            private final Long id                   = schema.getLong("id");
+            private final String title              = schema.getString("title");
+            private final String description        = schema.getString("description");
             @SuppressWarnings("SpellCheckingInspection")
             private final ForumSubBoard[] subBoards = adaptList(schema.getJsonArray("subboards"), b -> asForumSubBoard(mal, b, this), ForumSubBoard.class);
 
@@ -353,9 +353,9 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumCategory asForumCategory(final MyAnimeList mal, final JsonObject schema){
-        return new ForumCategory() {
+        return schema == null ? null : new ForumCategory() {
 
-            private final String title              = requireNonNull(() -> schema.getString("title"));
+            private final String title              = schema.getString("title");
             private final ForumBoard[] forumBoards  = adaptList(schema.getJsonArray("boards"), b -> asForumBoard(mal, b, this), ForumBoard.class);
 
             // API methods
@@ -384,10 +384,10 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumSubBoard asForumSubBoard(final MyAnimeList mal, final JsonObject schema, final ForumBoard forumBoard){
-        return new ForumSubBoard() {
+        return schema == null ? null : new ForumSubBoard() {
 
-            private final Long id       = requireNonNull(() -> schema.getLong("id"));
-            private final String title  = requireNonNull(() -> schema.getString("title"));
+            private final Long id       = schema.getLong("id");
+            private final String title  = schema.getString("title");
 
             // API methods
 
@@ -421,12 +421,12 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static ForumTopicDetail asForumTopic(final MyAnimeList mal, final JsonObject schema, final long topicid){
-        return new ForumTopicDetail() {
+        return schema == null ? null : new ForumTopicDetail() {
 
             private final long id       = topicid;
-            private final String title  = requireNonNull(() -> schema.getString("title"));
-            private final Post[] posts  = requireNonNull(() -> adaptList(schema.getJsonArray("posts"), p -> asPost(mal, p, this), Post.class));
-            private final Poll poll     = requireNonNull(() -> asPoll(mal, schema.getJsonObject("poll"), this));
+            private final String title  = schema.getString("title");
+            private final Post[] posts  = adaptList(schema.getJsonArray("posts"), p -> asPost(mal, p, this), Post.class);
+            private final Poll poll     = asPoll(mal, schema.getJsonObject("poll"), this);
 
             // API methods
 
@@ -466,14 +466,14 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     // make sure matches below
     static Post asPost(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
-        return new Post() {
+        return schema == null ? null : new Post() {
 
-            private final Long id           = requireNonNull(() -> schema.getLong("id"));
-            private final Integer number    = requireNonNull(() -> schema.getInt("number"));
-            private final Long createdAt    = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
-            private final PostAuthor author = requireNonNull(() -> asPostAuthor(mal, schema.getJsonObject("created_by")));
-            private final String body       = requireNonNull(() -> schema.getString("body"));
-            private final String signature  = requireNonNull(() -> schema.getString("signature"));
+            private final Long id           = schema.getLong("id");
+            private final Integer number    = schema.getInt("number");
+            private final Long createdAt    = parseISO8601(schema.getString("created_at"));
+            private final PostAuthor author = asPostAuthor(mal, schema.getJsonObject("created_by"));
+            private final String body       = schema.getString("body");
+            private final String signature  = schema.getString("signature");
 
             // API methods
 
@@ -536,14 +536,14 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static Post asPost(final MyAnimeList mal, final JsonObject schema, final long ftdid){
-        return new Post() {
+        return schema == null ? null : new Post() {
 
-            private final Long id           = requireNonNull(() -> schema.getLong("id"));
-            private final Integer number    = requireNonNull(() -> schema.getInt("number"));
-            private final Long createdAt    = requireNonNull(() -> parseISO8601(schema.getString("created_at")));
-            private final PostAuthor author = requireNonNull(() -> asPostAuthor(mal, schema.getJsonObject("created_by")));
-            private final String body       = requireNonNull(() -> schema.getString("body"));
-            private final String signature  = requireNonNull(() -> schema.getString("signature"));
+            private final Long id           = schema.getLong("id");
+            private final Integer number    = schema.getInt("number");
+            private final Long createdAt    = parseISO8601(schema.getString("created_at"));
+            private final PostAuthor author = asPostAuthor(mal, schema.getJsonObject("created_by"));
+            private final String body       = schema.getString("body");
+            private final String signature  = schema.getString("signature");
 
             // API methods
 

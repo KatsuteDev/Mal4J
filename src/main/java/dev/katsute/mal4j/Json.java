@@ -265,45 +265,93 @@ class Json {
 
         public final String getString(final String key){
             final Object value = map.get(key);
-            return
-                value == null
-                ? null
-                : value instanceof String
-                    ? (String) value
-                    : value.toString();
+            return value == null ? null : value instanceof String ? (String) value : value.toString();
         }
 
-        public final int getInt(final String key){
+        public final Integer getInt(final String key){
             final Object value = map.get(key);
-            return value instanceof String ? Integer.parseInt((String) value) : ((Number) value).intValue();
+            if(value instanceof String)
+                try{
+                    return Integer.valueOf((String) value);
+                }catch(final NumberFormatException ignored){
+                    return null;
+                }
+            else if(value instanceof Number)
+                return ((Number) value).intValue();
+            else
+                return null;
         }
 
-        public final double getDouble(final String key){
+        public final Double getDouble(final String key){
             final Object value = map.get(key);
-            return value instanceof String ? Double.parseDouble((String) value) : ((Number) value).doubleValue();
+            if(value instanceof String)
+                try{
+                    return Double.valueOf((String) value);
+                }catch(final NumberFormatException ignored){
+                    return null;
+                }
+            else if(value instanceof Number)
+                return ((Number) value).doubleValue();
+            else
+                return null;
         }
 
-        public final float getFloat(final String key){
+        public final Float getFloat(final String key){
             final Object value = map.get(key);
-            return value instanceof String ? Float.parseFloat((String) value) : ((Number) value).floatValue();
+            if(value instanceof String)
+                try{
+                    return Float.valueOf((String) value);
+                }catch(final NumberFormatException ignored){
+                    return null;
+                }
+            else if(value instanceof Number)
+                return ((Number) value).floatValue();
+            else
+                return null;
         }
 
-        public final long getLong(final String key){
+        public final Long getLong(final String key){
             final Object value = map.get(key);
-            return value instanceof String ? Long.parseLong((String) value) : ((Number) value).longValue();
+            if(value instanceof String)
+                try{
+                    return Long.valueOf((String) value);
+                }catch(final NumberFormatException ignored){
+                    return null;
+                }
+            else if(value instanceof Number)
+                return ((Number) value).longValue();
+            else
+                return null;
         }
 
-        public final boolean getBoolean(final String key){
+        public final Boolean getBoolean(final String key){
             final Object value = map.get(key);
-            return value instanceof String ? Boolean.parseBoolean((String) value) : (boolean) value;
+            if(value instanceof String)
+                // manual equality check is required
+                // parseBoolean and valueOf always fallsback to false on invalid inputs (which is the WRONG value)
+                if(((String) value).equalsIgnoreCase("true"))
+                    return true;
+                else if(((String) value).equalsIgnoreCase("false"))
+                    return false;
+                else
+                    return null;
+            else if(value instanceof Boolean)
+                return (Boolean) value;
+            else
+                return null;
         }
 
         public final JsonObject getJsonObject(final String key){
-            return (JsonObject) map.get(key);
+            final Object value = map.get(key);
+            if(value instanceof JsonObject)
+                return (JsonObject) value;
+            else
+                return new JsonObject(); // never return null, this prevents chained NPE
         }
 
         public final String[] getStringArray(final String key){
             final List<?> list = (List<?>) map.get(key);
+            if(list == null) return null;
             final List<String> arr = new ArrayList<>();
             for(final Object o : list)
                 arr.add(o == null ? null : o instanceof String ? (String) o : o.toString());
@@ -312,9 +360,10 @@ class Json {
 
         public final JsonObject[] getJsonArray(final String key){
             final List<?> list = (List<?>) map.get(key);
+            if(list == null) return null;
             final List<JsonObject> arr = new ArrayList<>();
             for(final Object o : list)
-                arr.add((JsonObject) o);
+                arr.add(o instanceof JsonObject ? (JsonObject) o : new JsonObject());
             return arr.toArray(new JsonObject[0]);
         }
 
@@ -331,7 +380,7 @@ class Json {
         }
 
         @Override
-        public String toString(){
+        public final String toString(){
             return "JsonObject{" +
                    "map=" + map +
                    '}';

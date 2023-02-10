@@ -36,19 +36,19 @@ import java.util.function.Consumer;
 abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
     static User asUser(final MyAnimeList mal, final JsonObject schema){
-        return new User() {
+        return schema == null ? null : new User() {
 
-            private final Long id           = requireNonNull(() -> schema.getLong("id"));
-            private final String name       = requireNonNull(() -> schema.getString("name"));
-            private final String picture    = requireNonNull(() -> schema.getString("picture"));
-            private final String gender     = requireNonNull(() -> schema.getString("gender"));
-            private final Long birthday     = requireNonNull(() -> parseDate(schema.getString("birthday")));
-            private final String location   = requireNonNull(() -> schema.getString("location"));
-            private final Long joinedAt     = requireNonNull(() -> parseISO8601(schema.getString("joined_at")));
+            private final Long id           = schema.getLong("id");
+            private final String name       = schema.getString("name");
+            private final String picture    = schema.getString("picture");
+            private final String gender     = schema.getString("gender");
+            private final Long birthday     = parseDate(schema.getString("birthday"));
+            private final String location   = schema.getString("location");
+            private final Long joinedAt     = parseISO8601(schema.getString("joined_at"));
             private final UserAnimeStatistics animeStatistics
-                                            = requireNonNull(() -> asUserAnimeStatistics(mal, schema.getJsonObject("anime_statistics")));
-            private final String timezone   = requireNonNull(() -> schema.getString("time_zone"));
-            private final Boolean supporter = requireNonNull(() -> schema.getBoolean("is_supporter"));
+                                            = asUserAnimeStatistics(mal, schema.getJsonObject("anime_statistics"));
+            private final String timezone   = schema.getString("time_zone");
+            private final Boolean supporter = schema.getBoolean("is_supporter");
 
             // API methods
 
@@ -359,23 +359,23 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
     }
 
     static UserAnimeStatistics asUserAnimeStatistics(final MyAnimeList mal, final JsonObject schema){
-        return new UserAnimeStatistics() {
+        return schema == null ? null : new UserAnimeStatistics() {
 
-            private final Integer watching          = requireNonNull(() -> schema.getInt("num_items_watching"));
-            private final Integer completed         = requireNonNull(() -> schema.getInt("num_items_completed"));
-            private final Integer onHold            = requireNonNull(() -> schema.getInt("num_items_on_hold"));
-            private final Integer dropped           = requireNonNull(() -> schema.getInt("num_items_dropped"));
-            private final Integer planToWatch       = requireNonNull(() -> schema.getInt("num_items_plan_to_watch"));
-            private final Integer items             = requireNonNull(() -> schema.getInt("num_items"));
-            private final Float daysWatching        = requireNonNull(() -> schema.getFloat("num_days_watching"));
-            private final Float daysCompleted       = requireNonNull(() -> schema.getFloat("num_days_completed"));
-            private final Float daysOnHold          = requireNonNull(() -> schema.getFloat("num_days_on_hold"));
-            private final Float daysDropped         = requireNonNull(() -> schema.getFloat("num_days_dropped"));
-            private final Float days                = requireNonNull(() -> schema.getFloat("num_days"));
-            private final Integer episodesWatched   = requireNonNull(() -> schema.getInt("num_episodes"));
+            private final Integer watching          = schema.getInt("num_items_watching");
+            private final Integer completed         = schema.getInt("num_items_completed");
+            private final Integer onHold            = schema.getInt("num_items_on_hold");
+            private final Integer dropped           = schema.getInt("num_items_dropped");
+            private final Integer planToWatch       = schema.getInt("num_items_plan_to_watch");
+            private final Integer items             = schema.getInt("num_items");
+            private final Float daysWatching        = schema.getFloat("num_days_watching");
+            private final Float daysCompleted       = schema.getFloat("num_days_completed");
+            private final Float daysOnHold          = schema.getFloat("num_days_on_hold");
+            private final Float daysDropped         = schema.getFloat("num_days_dropped");
+            private final Float days                = schema.getFloat("num_days");
+            private final Integer episodesWatched   = schema.getInt("num_episodes");
             @SuppressWarnings("SpellCheckingInspection")
-            private final Integer timesRewatched    = requireNonNull(() -> schema.getInt("num_times_rewatched"));
-            private final Float meanScore           = requireNonNull(() -> schema.getFloat("mean_score"));
+            private final Integer timesRewatched    = schema.getInt("num_times_rewatched");
+            private final Float meanScore           = schema.getFloat("mean_score");
 
             // API methods
 

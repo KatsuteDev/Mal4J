@@ -26,11 +26,11 @@ import java.util.Objects;
 abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
 
     static AlternativeTitles asAlternativeTitles(final MyAnimeList mal, final Json.JsonObject schema){
-        return new AlternativeTitles() {
+        return schema == null ? null : new AlternativeTitles() {
 
-            private final String[] synonyms = requireNonNull(() -> schema.getStringArray("synonyms"));
-            private final String english    = requireNonNull(() -> schema.getString("en"));
-            private final String japanese   = requireNonNull(() -> schema.getString("ja"));
+            private final String[] synonyms = schema.getStringArray("synonyms");
+            private final String english    = schema.getString("en");
+            private final String japanese   = schema.getString("ja");
 
             // API methods
 
@@ -64,10 +64,10 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
     }
 
     static Picture asPicture(final MyAnimeList mal, final Json.JsonObject schema){
-        return new Picture() {
+        return schema == null ? null : new Picture() {
 
-            private final String medium = requireNonNull(() -> schema.getString("medium"));
-            private final String large  = requireNonNull(() -> schema.getString("large"));
+            private final String medium = schema.getString("medium");
+            private final String large  = schema.getString("large");
 
             // API methods
 
@@ -95,10 +95,10 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
     }
 
     static Genre asGenre(final MyAnimeList mal, final Json.JsonObject schema, final boolean animeGenre){
-        return new Genre() {
+        return schema == null ? null : new Genre() {
 
-            private final Integer id = requireNonNull(() -> schema.getInt("id"));
-            private final String name = requireNonNull(() -> schema.getString("name"));
+            private final Integer id = schema.getInt("id");
+            private final String name = schema.getString("name");
             private final boolean isAnimeGenre = animeGenre;
 
             // API methods

@@ -21,7 +21,7 @@ final class TestManga {
     private static MyAnimeList mal;
     private static Manga manga;
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "RedundantSuppression"})
     @BeforeAll
     static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
