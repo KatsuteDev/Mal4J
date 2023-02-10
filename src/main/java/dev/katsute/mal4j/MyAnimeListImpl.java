@@ -797,7 +797,6 @@ final class MyAnimeListImpl extends MyAnimeList {
         return getUser(username, (String[]) null);
     }
 
-    @SuppressWarnings("DataFlowIssue")
     @Override
     public final User getUser(final String username, final String... fields){
         Objects.requireNonNull(username, "Username cannot be null");

@@ -20,7 +20,7 @@ final class TestForumCategories {
     private static MyAnimeList mal;
     private static ForumCategory category;
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "RedundantSuppression"})
     @BeforeAll
     static void beforeAll(){
         mal = TestProvider.getMyAnimeList();

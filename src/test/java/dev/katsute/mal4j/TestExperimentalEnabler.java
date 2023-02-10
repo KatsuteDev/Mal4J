@@ -12,7 +12,7 @@ final class TestExperimentalEnabler {
 
     private static Anime anime;
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "RedundantSuppression"})
     @BeforeAll
     public static void beforeAll(){
         mal = TestProvider.getMyAnimeList();

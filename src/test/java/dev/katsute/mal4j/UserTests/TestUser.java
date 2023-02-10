@@ -26,7 +26,7 @@ final class TestUser {
     private static MyAnimeList mal;
     private static User user;
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions", "RedundantSuppression"})
     @BeforeAll
     static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
