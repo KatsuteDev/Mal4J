@@ -49,24 +49,24 @@ final class Json {
 
     enum Expect { // which token to expect next
 
-        START_OF_KEY,
-        KEY,
-        END_OF_KEY,
-        START_OF_VALUE,
-        END_OF_VALUE,
-        LITERAL,
-        NUMBER,
+        START_OF_KEY,   // "
+        KEY,            // any character except newline
+        END_OF_KEY,     // closing "
+        START_OF_VALUE, // any TYPE start ↓
+        END_OF_VALUE,   // , or } or ]
+        LITERAL,        // any TYPE continue ↓
+        NUMBER,         // number or decimal
 
     }
 
     enum Type { // expected key or value type
 
-        UNKNOWN,
-        NULL,
-        BOOLEAN,
-        INTEGER,
-        DOUBLE,
-        STRING
+        UNKNOWN,    // unknown / any type
+        NULL,       // null
+        BOOLEAN,    // true | false
+        INTEGER,    // number or decimal
+        DOUBLE,     // number only
+        STRING      // any character except newline
 
     }
 
@@ -156,16 +156,24 @@ final class Json {
                             E = NUMBER;
                             V = String.valueOf(ch);
                             continue;
+                        case '0': // number
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            T = INTEGER;
+                            E = LITERAL;
+                            V = String.valueOf(ch);
+                            continue;
                         case ']':
                             return list;
                         default:
-                            if(Character.isDigit(ch)){ // number
-                                T = INTEGER;
-                                E = LITERAL;
-                                V = String.valueOf(ch);
-                                continue;
-                            }else // unknown
-                                throw new JsonSyntaxException("Unexpected literal '" + ch + "'", json);
+                            throw new JsonSyntaxException("Unexpected literal '" + ch + "'", json);
                     }
                 case END_OF_VALUE: // expecting end of value
                     switch(ch){
@@ -240,18 +248,26 @@ final class Json {
                                     E = NUMBER;
                                     V += ch;
                                     continue;
+                                case '0': // number
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
+                                    V += ch;
+                                    continue;
                                 case ',': // end of value
                                 case ']':
                                     E = END_OF_VALUE;
                                     i--;
                                     continue;
                                 default:
-                                    if(Character.isDigit(ch)) // number
-                                        V += ch;
-                                    else // unknown
-                                        throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number or ','", json);
+                                    throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number or ','", json);
                             }
-                            continue;
                         case DOUBLE:
                             switch(ch){ // parse double
                                 case ' ': // whitespace
@@ -262,18 +278,26 @@ final class Json {
                                     continue;
                                 case '.': // extra decimal
                                     throw new JsonSyntaxException("Unexpected token '.'", json);
+                                case '0': // number
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
+                                    V += ch;
+                                    continue;
                                 case ',': // end of value
                                 case ']':
                                     E = END_OF_VALUE;
                                     i--;
                                     continue;
                                 default:
-                                    if(Character.isDigit(ch)) // number
-                                        V += ch;
-                                    else // unknown
-                                        throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                                    throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
                             }
-                            continue;
                         case STRING:
                             switch(ch){
                                 case '\r': // illegal whitespace
@@ -320,11 +344,23 @@ final class Json {
                         continue;
                     }
                 case NUMBER:
-                    if(Character.isDigit(ch)){
-                        E = LITERAL;
-                        V += ch;
-                    }else
-                        throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                    switch(ch){
+                        case '0': // number
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            E = LITERAL;
+                            V += ch;
+                            continue;
+                        default:
+                            throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                    }
             }
         }
         throw new JsonSyntaxException("Missing closing bracket ']'", json);
@@ -456,14 +492,22 @@ final class Json {
                             E = NUMBER;
                             V = String.valueOf(ch);
                             continue;
+                        case '0': // number
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            T = INTEGER;
+                            E = LITERAL;
+                            V = String.valueOf(ch);
+                            continue;
                         default:
-                            if(Character.isDigit(ch)){ // number
-                                T = INTEGER;
-                                E = LITERAL;
-                                V = String.valueOf(ch);
-                                continue;
-                            }else // unknown
-                                throw new JsonSyntaxException("Unexpected literal '" + ch + "'", json);
+                            throw new JsonSyntaxException("Unexpected literal '" + ch + "'", json);
                     }
                 case END_OF_VALUE: // expecting end of value
                     switch(ch){
@@ -537,18 +581,26 @@ final class Json {
                                     E = NUMBER;
                                     V += ch;
                                     continue;
+                                case '0': // number
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
+                                    V += ch;
+                                    continue;
                                 case ',': // end of value
                                 case '}':
                                     E = END_OF_VALUE;
                                     i--;
                                     continue;
                                 default:
-                                    if(Character.isDigit(ch)) // number
-                                        V += ch;
-                                    else // unknown
-                                        throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number or ','", json);
+                                    throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number or ','", json);
                             }
-                            continue;
                         case DOUBLE:
                             switch(ch){ // parse double
                                 case ' ': // whitespace
@@ -559,18 +611,26 @@ final class Json {
                                     continue;
                                 case '.': // extra decimal
                                     throw new JsonSyntaxException("Unexpected token '.'", json);
+                                case '0': // number
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
+                                    V += ch;
+                                    continue;
                                 case ',': // end of value
                                 case '}':
                                     E = END_OF_VALUE;
                                     i--;
                                     continue;
                                 default:
-                                    if(Character.isDigit(ch)) // number
-                                        V += ch;
-                                    else // unknown
-                                        throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                                    throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
                             }
-                            continue;
                         case STRING:
                             switch(ch){
                                 case '\r': // illegal whitespace
@@ -617,11 +677,23 @@ final class Json {
                     }
                     continue;
                 case NUMBER: // expecting number value
-                    if(Character.isDigit(ch)){
-                        E = LITERAL;
-                        V += ch;
-                    }else
-                        throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                    switch(ch){
+                        case '0': // number
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            E = LITERAL;
+                            V += ch;
+                            continue;
+                        default:
+                            throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                    }
             }
         }
         throw new JsonSyntaxException("Missing closing bracket '}'", json);
