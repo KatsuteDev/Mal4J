@@ -327,6 +327,9 @@ final class Json {
                                             case 't': // tab
                                                 V += '\t';
                                                 continue;
+                                            case 'r': // carriage return
+                                                V += '\r';
+                                                continue;
                                             case 'n': // new line
                                                 V += '\n';
                                                 continue;
@@ -425,6 +428,9 @@ final class Json {
                                 switch(ch){
                                     case 't': // tab
                                         K += '\t';
+                                        continue;
+                                    case 'r': // carriage return
+                                        V += '\r';
                                         continue;
                                     case 'n': // new line
                                         K += '\n';
@@ -660,6 +666,9 @@ final class Json {
                                             case 't': // tab
                                                 V += '\t';
                                                 continue;
+                                            case 'r': // carriage return
+                                                V += '\r';
+                                                continue;
                                             case 'n': // new line
                                                 V += '\n';
                                                 continue;
@@ -707,16 +716,8 @@ final class Json {
         int depth = 0;
         for(int i = start + 1; i < len; i++){
             final char ch = json.charAt(i);
-            if(ch == '\\') // escape
+            if(ch == '\\' || isEscaped) // escape
                 isEscaped = !isEscaped;
-            else if(isEscaped) // escaped
-                switch(ch){
-                    case 'r':
-                    case 'n':
-                    case 't':
-                    case '"':
-                        isEscaped = false;
-                }
             else if(ch == '"') // string
                 isString = !isString;
             else if(!isString) // token
