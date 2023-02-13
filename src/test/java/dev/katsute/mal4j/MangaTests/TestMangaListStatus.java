@@ -54,7 +54,7 @@ final class TestMangaListStatus {
             .comments("")
             .update();
 
-        assertEquals(MangaStatus.PlanToRead, status.getStatus());
+        assertEquals(MangaStatus.OnHold, status.getStatus());
         assertEquals(0, status.getScore());
         assertEquals(0, status.getVolumesRead());
         assertEquals(0, status.getChaptersRead());
