@@ -42,7 +42,7 @@ final class TestMangaListStatus {
         if(mal.getAuthenticatedUser().getID() != 8316239) return;
 
         final MangaListStatus status = mal.updateMangaListing(TestProvider.MangaID)
-            .status(MangaStatus.PlanToRead)
+            .status(MangaStatus.OnHold)
             .score(0)
             .volumesRead(0)
             .chaptersRead(0)
