@@ -20,232 +20,716 @@ package dev.katsute.mal4j;
 
 import dev.katsute.mal4j.exception.JsonSyntaxException;
 
-import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.regex.*;
+
+import static dev.katsute.mal4j.Json.Expect.*;
+import static dev.katsute.mal4j.Json.Type.*;
 
 /**
  * A massively simplified json parsing class. Supports the bare minimum read requirements for the REST API responses.
  */
 @SuppressWarnings("SpellCheckingInspection")
-class Json {
+final class Json {
 
-    /*
-     * Notable issues:
-     * - Allows dangling commas on last item in map and list
-     */
+    private final String json;
+    private final int len;
 
-    // [\{\}\[\],]
-    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
-    private static final Pattern split = Pattern.compile("[\\{\\}\\[\\],]");
+    private Json(final String json){
+        this.json = Objects.requireNonNull(json);
+        this.len = json.length();
+    }
 
-    // (?<!\\)(?:\\\\)*"
-    private static final Pattern nonEscQuote = Pattern.compile("(?<!\\\\)(?:\\\\\\\\)*\"");
+    static Object parse(final String json){
+        return new Json(json).parse();
+    }
+
+    // tokens
+
+    enum Expect { // which token to expect next
+
+        START_OF_KEY,   // "
+        KEY,            // any character except newline
+        END_OF_KEY,     // closing "
+        START_OF_VALUE, // any TYPE start ↓
+        END_OF_VALUE,   // , or } or ]
+        LITERAL,        // any TYPE continue ↓
+        NUMBER,         // number or decimal
+
+    }
+
+    enum Type { // expected key or value type
+
+        UNKNOWN,    // unknown / any type
+        NULL,       // null
+        BOOLEAN,    // true | false
+        INTEGER,    // number or decimal
+        DOUBLE,     // number only
+        STRING      // any character except newline
+
+    }
+
+    // unicode
 
     // (?<!\\)\\u([\da-f]{4})
-    private static final Pattern escUnicode =
-        Pattern.compile("(?<!\\\\)\\\\u([\\da-f]{4})");
+    private static final Pattern escUnicode = Pattern.compile("(?<!\\\\)\\\\u([\\da-f]{4})");
 
     private static final Function<MatchResult,String> unicodeReplacer = matchResult -> String.valueOf((char) Integer.parseInt(matchResult.group(1), 16));
 
-    // \\"|\\\/|\\\\
-    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
-    private static final Pattern escapedCharacters =
-        Pattern.compile("\\\\\"|\\\\\\/|\\\\\\\\");
-
-    private static final Function<MatchResult,String> escapedReplacer = matchResult -> {
-        final String chars = matchResult.group(0);
-        switch(chars){
-            case "\\\"":
-                return "\"";
-            case "\\/":
-                return "/";
-            case "\\\\":
-                return "\\\\"; // this needs to be \\ to return \ for some reason
-            default:
-                return chars;
-        }
-    };
-
-    // ^\s*(?<!\\)"(?<key>.+(?<!\\)(?:\\\\)*)": ?((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
-    private static final Pattern mapType =
-        Pattern.compile("^\\s*(?<!\\\\)\"(?<key>.+(?<!\\\\)(?:\\\\\\\\)*)\": ?((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*(?<!\\\\)(?:\\\\\\\\)*)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
-    // ^\s*} *,?\s*$
-    @SuppressWarnings("RegExpRedundantEscape") // android requires this syntax (#133)
-    private static final Pattern mapClose =
-        Pattern.compile("^\\s*\\} *,?\\s*$");
-
-    // ^\s*((?<double>-?\d+\.\d+) *,?|(?<int>-?\d+) *,?|(?<boolean>\Qtrue\E|\Qfalse\E) *,?|(?<null>\Qnull\E) *,?|(?<!\\)"(?<string>.*(?<!\\)(?:\\\\)*)" *,?|(?<array>\[)|(?<map>\{))\s*$
-    private static final Pattern arrType =
-        Pattern.compile("^\\s*((?<double>-?\\d+\\.\\d+) *,?|(?<int>-?\\d+) *,?|(?<boolean>\\Qtrue\\E|\\Qfalse\\E) *,?|(?<null>\\Qnull\\E) *,?|(?<!\\\\)\"(?<string>.*(?<!\\\\)(?:\\\\\\\\)*)\" *,?|(?<array>\\[)|(?<map>\\{))\\s*$");
-
-    // ^\s*] *,?\s*$
-    private static final Pattern arrClose =
-        Pattern.compile("^\\s*] *,?\\s*$");
-
-    // \r?\n
-    private static final Pattern newline =
-        Pattern.compile("\\r?\\n");
-
-    //
-
-    private final Matcher splitMatcher = split.matcher("");
-    private final Matcher nonEscQuoteMatcher = nonEscQuote.matcher("");
-
-    private final Matcher arrayMatcher = arrType.matcher("");
-    private final Matcher mapMatcher = mapType.matcher("");
-
     private final Matcher unicodeMatcher = escUnicode.matcher("");
-    private final Matcher escapedMatcher = escapedCharacters.matcher("");
 
-    private Json(){ }
-
-    // required for lambda
-    static Object parse(final String json){
-        return new Json().parseJson(json);
+    private String parseString(final String raw){ // replace unicode with unicode and escaped unicode with raw
+        return Regex9.replaceAll(raw, unicodeMatcher.reset(raw), unicodeReplacer).replace("\\\\u", "\\u");
     }
 
-    /**
-     * Returns json as a JsonObject or List. <b>Mutable</b>.
-     *
-     * @param json json string
-     * @return parsed json
-     *
-     * @see JsonObject
-     */
-    private synchronized Object parseJson(final String json){
-        Objects.requireNonNull(json);
-        final String flatJson = newline.matcher(json).replaceAll("");
+    // parse
 
-        // split by symbols {}[], except within non-escaped quotes
-        final StringBuilder OUT = new StringBuilder();
-        int lastMatch = -1; // the index after the previous match
-        splitMatcher.reset(flatJson);
-        final Matcher quotes = nonEscQuoteMatcher.reset();
-        while(splitMatcher.find()){ // while still contains line splitting symbol
-            final int index = splitMatcher.end() - 1; // before the comma/split character
-            final String after = flatJson.substring(index + 1);
-            final long count = Regex9.count(quotes.reset(after));
-            if(count %2 == 0){ // even means symbol is not within quotes
-                if(lastMatch != -1) // if not first (no content before this)
-                    OUT.append(flatJson, lastMatch, index); // add content between last match and here
-                lastMatch = index + 1;
-                final char ch = splitMatcher.group().charAt(0);
-                switch(ch){ // determine where to break line
-                    case '{':
-                    case '[':
-                    case ',':
-                        OUT.append(ch).append('\n');
-                        break;
-                    case '}':
-                    case ']':
-                        OUT.append('\n').append(ch);
-                        break;
-                }
+    // top level parse
+    private Object parse(){
+        if(len < 1)
+            throw new JsonSyntaxException("Json string was empty", json);
+
+        switch(json.charAt(0)){
+            case '{': // map type
+                if(json.charAt(len - 1) == '}')
+                    return parseObject(json, 0, len);
+                else
+                    throw new JsonSyntaxException("Missing closing bracket '}'", json);
+            case '[': // array type
+                if(json.charAt(len - 1) == ']')
+                    return parseArray(json, 0, len);
+                else
+                    throw new JsonSyntaxException("Missing closing bracket ']'", json);
+            default:
+                throw new JsonSyntaxException("Unexpected starting character: '" + json.charAt(0) + "', expected '{' or '['", json);
+        }
+    }
+
+    // start should include starting token
+    private List<Object> parseArray(final String json, final int start, final int end){
+        final List<Object> list = new ArrayList<>();
+
+        Expect E = START_OF_VALUE;
+        Type T   = UNKNOWN; // expected type
+
+        boolean isEscaped = false;
+
+        String V = null; // current value
+
+        for(int i = start + 1; i < end; i++){
+            final char ch = json.charAt(i);
+            switch(E){
+                case START_OF_VALUE: // expecting beginning of value
+                    switch(ch){
+                        case ' ': // whitespace
+                        case '\t':
+                        case '\r':
+                        case '\n':
+                            continue;
+                        case '[': // array
+                            list.add(parseArray(json, i, (i = findEndToken(json, i, '[', ']')) + 1));
+                            E = END_OF_VALUE;
+                            continue;
+                        case '{': // object
+                            list.add(parseObject(json, i, (i = findEndToken(json, i, '{', '}')) + 1));
+                            E = END_OF_VALUE;
+                            continue;
+                        case '"': // string
+                            T = STRING;
+                            E = LITERAL;
+                            V = "";
+                            continue;
+                        case 'f': // boolean
+                        case 't':
+                            T = BOOLEAN;
+                            E = LITERAL;
+                            V = String.valueOf(ch);
+                            continue;
+                        case 'n': // null
+                            T = NULL;
+                            E = LITERAL;
+                            V = String.valueOf(ch);
+                            continue;
+                        case '-': // negative
+                            T = INTEGER;
+                            E = NUMBER;
+                            V = String.valueOf(ch);
+                            continue;
+                        case '0': // number
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            T = INTEGER;
+                            E = LITERAL;
+                            V = String.valueOf(ch);
+                            continue;
+                        case ']':
+                            return list;
+                        default:
+                            throw new JsonSyntaxException("Unexpected literal '" + ch + "'", json);
+                    }
+                case END_OF_VALUE: // expecting end of value
+                    switch(ch){
+                        case ' ': // whitespace
+                        case '\t':
+                        case '\r':
+                        case '\n':
+                            continue;
+                        case ',': // next in array
+                        case ']': // end of array
+                            E = START_OF_VALUE; // prepare for next
+                            switch(T){ // push value
+                                case NULL:
+                                    list.add(null);
+                                    break;
+                                case BOOLEAN:
+                                    list.add(Boolean.parseBoolean(V));
+                                    break;
+                                case INTEGER:
+                                    try{
+                                        list.add(Integer.parseInt(V));
+                                    }catch(final NumberFormatException ignored){
+                                        list.add(Long.parseLong(V));
+                                    }
+                                    break;
+                                case DOUBLE:
+                                    try{
+                                        list.add(Double.parseDouble(V));
+                                    }catch(final NumberFormatException ignored){
+                                        list.add(Long.parseLong(V));
+                                    }
+                                    break;
+                                case STRING:
+                                    if(V != null)
+                                        list.add(parseString(V));
+                                    break;
+                                default:
+                                    break;
+                            }
+                            V = null;
+                            T = UNKNOWN;
+                            if(ch == ']') // end of array
+                                return list;
+                    }
+                    continue;
+                case LITERAL: // expecting literal value
+                    switch(T){
+                        case NULL: // parse null
+                            V += ch;
+                            if(!"null".startsWith(V)) // looks like null
+                                throw new JsonSyntaxException("Unexpected value '" + V + "', expected null", json);
+                            else if("null".equals(V)) // is null
+                                E = END_OF_VALUE;
+                            continue;
+                        case BOOLEAN: // parse boolean
+                            V += ch;
+                            if(!"false".startsWith(V) && !"true".startsWith(V)) // looks like a boolean
+                                throw new JsonSyntaxException("Unexpected value '" + V + "', expected a boolean", json);
+                            else if("false".equals(V) || "true".equals(V)) // is a boolean
+                                E = END_OF_VALUE;
+                            continue;
+                        case INTEGER:
+                            switch(ch){ // parse integer
+                                case ' ': // whitespace
+                                case '\t':
+                                case '\r':
+                                case '\n':
+                                    E = END_OF_VALUE;
+                                    continue;
+                                case '.': // convert to decimal
+                                    T = DOUBLE;
+                                    E = NUMBER;
+                                    V += ch;
+                                    continue;
+                                case '0': // number
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
+                                    V += ch;
+                                    continue;
+                                case ',': // end of value
+                                case ']':
+                                    E = END_OF_VALUE;
+                                    i--;
+                                    continue;
+                                default:
+                                    throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number or ','", json);
+                            }
+                        case DOUBLE:
+                            switch(ch){ // parse double
+                                case ' ': // whitespace
+                                case '\t':
+                                case '\r':
+                                case '\n':
+                                    E = END_OF_VALUE;
+                                    continue;
+                                case '.': // extra decimal
+                                    throw new JsonSyntaxException("Unexpected token '.'", json);
+                                case '0': // number
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
+                                    V += ch;
+                                    continue;
+                                case ',': // end of value
+                                case ']':
+                                    E = END_OF_VALUE;
+                                    i--;
+                                    continue;
+                                default:
+                                    throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                            }
+                        case STRING:
+                            switch(ch){
+                                case '\r': // illegal whitespace
+                                case '\n':
+                                   throw new JsonSyntaxException("Unexpected token '" + ch + "'", json);
+                                case '\\': // escaped
+                                    if(isEscaped)
+                                        V += ch;
+                                    isEscaped = !isEscaped;
+                                    continue;
+                                case '"': // quote
+                                    if(!isEscaped) // end of value
+                                        E = END_OF_VALUE;
+                                    else{ // escaped quote
+                                        V += ch;
+                                        isEscaped = false;
+                                    }
+                                    continue;
+                                default:
+                                    if(!isEscaped){ // literal
+                                        if(ch == 'u' && i > 0 && json.charAt(i - 1) == '\\') // unicode escape
+                                            V += '\\'; // add escape slash
+                                        V += ch;
+                                    }else{ // escaped
+                                        isEscaped = false;
+                                        switch(ch){
+                                            case 't': // tab
+                                                V += '\t';
+                                                continue;
+                                            case 'r': // carriage return
+                                                V += '\r';
+                                                continue;
+                                            case 'n': // new line
+                                                V += '\n';
+                                                continue;
+                                            case 'u': // unicode
+                                                V += "\\u";
+                                                continue;
+                                            case '/': // slash
+                                                V += '/';
+                                                continue;
+                                            default: // unknown
+                                                throw new JsonSyntaxException("Unknown escape character '\\" + ch + "'", json);
+                                        }
+                                    }
+                            }
+                        continue;
+                    }
+                case NUMBER:
+                    switch(ch){
+                        case '0': // number
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            E = LITERAL;
+                            V += ch;
+                            continue;
+                        default:
+                            throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                    }
             }
         }
-
-        // parse line by line
-        final String lines = lastMatch == 0 ? json : OUT.toString();
-
-        try(final BufferedReader IN = new BufferedReader(new StringReader(lines))){
-            final String line = IN.readLine();
-            if(line != null){
-                final String ln = line.trim();
-                if(ln.equals("{"))
-                    return openMap(IN, json);
-                else if(ln.equals("["))
-                    return openArray(IN, json);
-                else
-                    throw new JsonSyntaxException("Unexpected starting character: '" + ln + "' expected '{' or '['", json);
-            }else
-                throw new JsonSyntaxException("Json string was empty", json);
-        }catch(final IOException e){ // any exceptions caused by reader
-            throw new UncheckedIOException(e);
-        }
+        throw new JsonSyntaxException("Missing closing bracket ']'", json);
     }
 
-    private List<?> openArray(final BufferedReader reader, final String json) throws IOException{
-        final List<Object> list = new ArrayList<>();
-        String ln;
-        while((ln = reader.readLine()) != null){ // while not closing tag
-            ln = ln.trim();
-            if(arrayMatcher.reset(ln).matches()){
-                String raw;
-                if((raw = arrayMatcher.group("double")) != null)
-                    try{
-                        list.add(Double.parseDouble(raw));
-                    }catch(final NumberFormatException ignored){ // only occurs if too large
-                        list.add(Long.parseLong(raw));
-                    }
-                else if((raw = arrayMatcher.group("int")) != null)
-                    try{
-                        list.add(Integer.parseInt(raw));
-                    }catch(final NumberFormatException ignored){ // only occurs if too large
-                        list.add(Long.parseLong(raw));
-                    }
-                else if((raw = arrayMatcher.group("boolean")) != null)
-                    list.add(Boolean.parseBoolean(raw));
-                else if(arrayMatcher.group("null") != null)
-                    list.add(null);
-                else if((raw = arrayMatcher.group("string")) != null)
-                    list.add(decodeString(raw));
-                else if(arrayMatcher.group("array") != null) // open new array
-                    list.add(openArray(reader, json));
-                else if(arrayMatcher.group("map") != null) // open new map
-                    list.add(openMap(reader, json));
-            }else if(arrClose.matcher(ln).matches())
-                return list;
-            else if(ln.trim().length() > 0)
-                throw new JsonSyntaxException("Unexpected array value syntax: '" + ln + '\'', json);
-        }
-        throw new JsonSyntaxException("Object was missing closing character: ']'", json);
-    }
-
-    private JsonObject openMap(final BufferedReader reader, final String json) throws IOException{
+    // start should include starting token
+    private JsonObject parseObject(final String json, final int start, final int end){
         final JsonObject obj = new JsonObject();
-        String ln;
-        while((ln = reader.readLine()) != null){
-            ln = ln.trim();
-            if(mapMatcher.reset(ln).matches()){
-                final String key = decodeString(mapMatcher.group("key"));
-                String raw;
-                if((raw = mapMatcher.group("double")) != null)
-                    try{
-                        obj.set(key, Double.parseDouble(raw));
-                    }catch(final NumberFormatException ignored){ // only occurs if too large
-                        obj.set(key, Long.parseLong(raw));
+
+        Expect E = START_OF_KEY;
+        Type T   = UNKNOWN; // expected token type
+
+        boolean isEscaped = false;
+
+        String K = null; // current key
+        String V = null; // current value
+
+        for(int i = start + 1; i < end; i++){
+            final char ch = json.charAt(i);
+            switch(E){
+                case START_OF_KEY: // expecting beginning of key
+                    switch(ch){
+                        case ' ': // whitespace
+                        case '\t':
+                        case '\r':
+                        case '\n':
+                            continue;
+                        case '"': // string
+                            E = KEY;
+                            K = "";
+                            continue;
+                        case '}':
+                            return obj;
+                        default:
+                            throw new JsonSyntaxException("Unexpected literal '" + ch + "', expected '\"'", json);
                     }
-                else if((raw = mapMatcher.group("int")) != null)
-                    try{
-                        obj.set(key, Integer.parseInt(raw));
-                    }catch(final NumberFormatException ignored){ // only occurs if too large
-                        obj.set(key, Long.parseLong(raw));
+                case KEY: // expecting key value
+                    switch(ch){
+                        case '\r': // illegal whitespace
+                        case '\n':
+                            throw new JsonSyntaxException("Unexpected token '" + ch + "'", json);
+                        case '\\':
+                            if(isEscaped)
+                                K += ch;
+                            isEscaped = !isEscaped;
+                            continue;
+                        case '"': // quote
+                            if(!isEscaped) // end of key
+                                E = END_OF_KEY;
+                            else{ // escaped quote
+                                K += ch;
+                                isEscaped = false;
+                            }
+                            continue;
+                        default:
+                            if(!isEscaped){ // literal
+                                if(ch == 'u' && i > 0 && json.charAt(i - 1) == '\\') // unicode escape
+                                    K += '\\'; // add escape slash
+                                K += ch;
+                            }else{ // escaped
+                                isEscaped = false;
+                                switch(ch){
+                                    case 't': // tab
+                                        K += '\t';
+                                        continue;
+                                    case 'r': // carriage return
+                                        V += '\r';
+                                        continue;
+                                    case 'n': // new line
+                                        K += '\n';
+                                        continue;
+                                    case '/': // slash
+                                        K += '/';
+                                        continue;
+                                    case 'u': // unicode
+                                        K += "\\u";
+                                        continue;
+                                    default: // unknown
+                                        throw new JsonSyntaxException("Unknown escape character '\\" + ch + "'", json);
+                                }
+                            }
                     }
-                else if((raw = mapMatcher.group("boolean")) != null)
-                    obj.set(key, Boolean.parseBoolean(raw));
-                else if(mapMatcher.group("null") != null)
-                    obj.set(key, null);
-                else if((raw = mapMatcher.group("string")) != null)
-                    obj.set(key, decodeString(raw));
-                else if(mapMatcher.group("array") != null) // open new array
-                    obj.set(key, openArray(reader, json));
-                else if(mapMatcher.group("map") != null) // open new map
-                    obj.set(key, openMap(reader, json));
-            }else if(mapClose.matcher(ln).matches())
-                return obj;
-            else if(ln.trim().length() > 0)
-                throw new JsonSyntaxException("Unexpected object value syntax: '" + ln + '\'', json);
+                    continue;
+                case END_OF_KEY: // expecting end of key
+                    switch(ch){
+                        case ' ': // whitespace
+                        case '\t':
+                        case '\r':
+                        case '\n':
+                            continue;
+                        case ':':
+                            E = START_OF_VALUE;
+                            continue;
+                        default:
+                            throw new JsonSyntaxException("Unexpected character '" + ch + "', expected ':'", json);
+                    }
+                case START_OF_VALUE: // expecting beginning of value
+                    switch(ch){
+                        case ' ': // whitespace
+                        case '\t':
+                        case '\r':
+                        case '\n':
+                            continue;
+                        case '[': // array
+                            obj.set(K, parseArray(json, i, (i = findEndToken(json, i, '[', ']')) + 1));
+                            K = null;
+                            E = END_OF_VALUE;
+                            continue;
+                        case '{': // object
+                            obj.set(K, parseObject(json, i, (i = findEndToken(json, i, '{', '}')) + 1));
+                            K = null;
+                            E = END_OF_VALUE;
+                            continue;
+                        case '"': // string
+                            T = STRING;
+                            E = LITERAL;
+                            V = "";
+                            continue;
+                        case 'f': // boolean
+                        case 't':
+                            T = BOOLEAN;
+                            E = LITERAL;
+                            V = String.valueOf(ch);
+                            continue;
+                        case 'n': // null
+                            T = NULL;
+                            E = LITERAL;
+                            V = String.valueOf(ch);
+                            continue;
+                        case '-': // negative
+                            T = INTEGER;
+                            E = NUMBER;
+                            V = String.valueOf(ch);
+                            continue;
+                        case '0': // number
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            T = INTEGER;
+                            E = LITERAL;
+                            V = String.valueOf(ch);
+                            continue;
+                        default:
+                            throw new JsonSyntaxException("Unexpected literal '" + ch + "'", json);
+                    }
+                case END_OF_VALUE: // expecting end of value
+                    switch(ch){
+                        case ' ': // whitespace
+                        case '\t':
+                        case '\r':
+                        case '\n':
+                            continue;
+                        case ',': // next in object
+                        case '}': // end of object
+                            E = START_OF_KEY; // prepare for next
+                            switch(T){ // push value
+                                case NULL:
+                                    obj.set(K, null);
+                                    break;
+                                case BOOLEAN:
+                                    obj.set(K, Boolean.parseBoolean(V));
+                                    break;
+                                case INTEGER:
+                                    try{
+                                        obj.set(K, Integer.parseInt(V));
+                                    }catch(final NumberFormatException ignored){
+                                        obj.set(K, Long.parseLong(V));
+                                    }
+                                    break;
+                                case DOUBLE:
+                                    try{
+                                        obj.set(K, Double.parseDouble(V));
+                                    }catch(final NumberFormatException ignored){
+                                        obj.set(K, Long.parseLong(V));
+                                    }
+                                    break;
+                                case STRING:
+                                    if(K != null && V != null)
+                                        obj.set(parseString(K), parseString(V));
+                                    break;
+                            }
+                            K = null;
+                            V = null;
+                            T = UNKNOWN;
+                            if(ch == '}') // end of object
+                                return obj;
+                    }
+                    continue;
+                case LITERAL: // expecting literal value
+                    switch(T){
+                        case NULL: // parse null
+                            V += ch;
+                            if(!"null".startsWith(V)) // looks like null
+                                throw new JsonSyntaxException("Unexpected value '" + V + "', expected null", json);
+                            else if("null".equals(V)) // is null
+                                E = END_OF_VALUE;
+                            continue;
+                        case BOOLEAN: // parse boolean
+                            V += ch;
+                            if(!"false".startsWith(V) && !"true".startsWith(V)) // looks like a boolean
+                                throw new JsonSyntaxException("Unexpected value '" + V + "', expected a boolean", json);
+                            else if("false".equals(V) || "true".equals(V)) // is a boolean
+                                E = END_OF_VALUE;
+                            continue;
+                        case INTEGER:
+                            switch(ch){ // parse integer
+                                case ' ': // whitespace
+                                case '\t':
+                                case '\r':
+                                case '\n':
+                                    E = END_OF_VALUE;
+                                    continue;
+                                case '.': // convert to decimal
+                                    T = DOUBLE;
+                                    E = NUMBER;
+                                    V += ch;
+                                    continue;
+                                case '0': // number
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
+                                    V += ch;
+                                    continue;
+                                case ',': // end of value
+                                case '}':
+                                    E = END_OF_VALUE;
+                                    i--;
+                                    continue;
+                                default:
+                                    throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number or ','", json);
+                            }
+                        case DOUBLE:
+                            switch(ch){ // parse double
+                                case ' ': // whitespace
+                                case '\t':
+                                case '\r':
+                                case '\n':
+                                    E = END_OF_VALUE;
+                                    continue;
+                                case '.': // extra decimal
+                                    throw new JsonSyntaxException("Unexpected token '.'", json);
+                                case '0': // number
+                                case '1':
+                                case '2':
+                                case '3':
+                                case '4':
+                                case '5':
+                                case '6':
+                                case '7':
+                                case '8':
+                                case '9':
+                                    V += ch;
+                                    continue;
+                                case ',': // end of value
+                                case '}':
+                                    E = END_OF_VALUE;
+                                    i--;
+                                    continue;
+                                default:
+                                    throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                            }
+                        case STRING:
+                            switch(ch){
+                                case '\r': // illegal whitespace
+                                case '\n':
+                                   throw new JsonSyntaxException("Unexpected token '" + ch + "'", json);
+                                case '\\': // escaped
+                                    if(isEscaped)
+                                        V += ch;
+                                    isEscaped = !isEscaped;
+                                    continue;
+                                case '"': // quote
+                                    if(!isEscaped) // end of value
+                                        E = END_OF_VALUE;
+                                    else{ // escaped quote
+                                        V += ch;
+                                        isEscaped = false;
+                                    }
+                                    continue;
+                                default:
+                                    if(!isEscaped){ // literal
+                                        if(ch == 'u' && i > 0 && json.charAt(i - 1) == '\\') // unicode escape
+                                            V += '\\'; // add escape slash
+                                        V += ch;
+                                    }else{ // escaped
+                                        isEscaped = false;
+                                        switch(ch){
+                                            case 't': // tab
+                                                V += '\t';
+                                                continue;
+                                            case 'r': // carriage return
+                                                V += '\r';
+                                                continue;
+                                            case 'n': // new line
+                                                V += '\n';
+                                                continue;
+                                            case 'u': // unicode
+                                                V += "\\u";
+                                                continue;
+                                            case '/': // slash
+                                                V += '/';
+                                                continue;
+                                            default: // unknown
+                                                throw new JsonSyntaxException("Unknown escape character '\\" + ch + "'", json);
+                                        }
+                                    }
+                            }
+                    }
+                    continue;
+                case NUMBER: // expecting number value
+                    switch(ch){
+                        case '0': // number
+                        case '1':
+                        case '2':
+                        case '3':
+                        case '4':
+                        case '5':
+                        case '6':
+                        case '7':
+                        case '8':
+                        case '9':
+                            E = LITERAL;
+                            V += ch;
+                            continue;
+                        default:
+                            throw new JsonSyntaxException("Unexpected token '" + ch + "', expected a number", json);
+                    }
+            }
         }
-        throw new JsonSyntaxException("Object was missing closing character: '}'", json);
+        throw new JsonSyntaxException("Missing closing bracket '}'", json);
     }
 
-    @SuppressWarnings("UnnecessaryLocalVariable")
-    private String decodeString(final String raw){
-        final String unicodeEscape = Regex9.replaceAll(raw, unicodeMatcher.reset(raw), unicodeReplacer);
-        final String slashEscape   = Regex9.replaceAll(unicodeEscape, escapedMatcher.reset(unicodeEscape), escapedReplacer);
-        return slashEscape;
+    // start index should include opening token
+    private int findEndToken(final String json, final int start, final char open, final char close){
+        boolean isString  = false;
+        boolean isEscaped = false;
+
+        int depth = 0;
+        for(int i = start + 1; i < len; i++){
+            final char ch = json.charAt(i);
+            if(ch == '\\' || isEscaped) // escape
+                isEscaped = !isEscaped;
+            else if(ch == '"') // string
+                isString = !isString;
+            else if(!isString) // token
+                if(ch == open) // open
+                    depth++;
+                else if(ch == close) // close
+                    if(depth == 0) // matching depeth
+                        return i;
+                    else // exit depth
+                        depth--;
+        }
+        throw new JsonSyntaxException("Missing closing bracket '" + close + "'", json);
     }
 
     // objects
