@@ -1,5 +1,32 @@
 # Changelog
 
+## 3.0.2
+
+### 🔧 Optimizations
+
+* Schema parsing optimizations [#363](https://github.com/KatsuteDev/Mal4J/pull/363) ([@Katsute](https://github.com/Katsute))
+* JSON parsing optimizations [#364](https://github.com/KatsuteDev/Mal4J/pull/364) ([@Katsute](https://github.com/Katsute))
+  This library is now 70% faster after this change.
+
+### 📘 Dependencies
+
+* Bump maven-surefire-plugin from 3.0.0-M8 to 3.0.0-M9 [#365](https://github.com/KatsuteDev/Mal4J/pull/365) ([@dependabot](https://github.com/dependabot))
+* Bump maven-javadoc-plugin from 3.4.1 to 3.5.0 [#366](https://github.com/KatsuteDev/Mal4J/pull/366) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.0.1...3.0.2`](https://github.com/KatsuteDev/Mal4J/compare/3.0.1...3.0.2)
+
+## 3.0.1
+
+### 🐞 Bug Fixes
+
+* Fix NullableDate [#360](https://github.com/KatsuteDev/Mal4J/pull/360) ([@Katsute](https://github.com/Katsute))
+
+### 📘 Dependencies
+
+* Bump maven-surefire-plugin from 3.0.0-M7 to 3.0.0-M8 [#359](https://github.com/KatsuteDev/Mal4J/pull/359) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.0.0...3.0.1`](https://github.com/KatsuteDev/Mal4J/compare/3.0.0...3.0.1)
+
 ## 3.0.0
 
 ### ⚠️ Breaking Change
