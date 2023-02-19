@@ -20,6 +20,7 @@ package dev.katsute.mal4j.anime;
 
 import dev.katsute.mal4j.anime.property.AnimeRetrievable;
 import dev.katsute.mal4j.manga.Manga;
+import dev.katsute.mal4j.property.ID;
 import dev.katsute.mal4j.property.RelatedMedia;
 
 /**
@@ -33,6 +34,6 @@ import dev.katsute.mal4j.property.RelatedMedia;
  * @version 2.12.0
  * @author Katsute
  */
-public abstract class RelatedAnime extends RelatedMedia implements AnimeRetrievable {
+public abstract class RelatedAnime extends RelatedMedia implements AnimeRetrievable, ID {
 
 }

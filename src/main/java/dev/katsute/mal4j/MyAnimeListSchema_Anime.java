@@ -906,11 +906,15 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
         return schema == null ? null : new RelatedAnime() {
 
             private final Anime anime                   = asAnimePreview(mal, schema.getJsonObject("node"));
+            private final Long id						= anime.getID();
             private final String relationType           = schema.getString("relation_type");
             private final RelationType e_relationType   = RelationType.asEnum(relationType);
             private final String relationTypeFormatted  = schema.getString("relation_type_formatted");
 
             // API methods
+            public final Long getID(){
+                return id;
+            }
 
             @Override
             public final RelationType getRelationType() {
