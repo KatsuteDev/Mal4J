@@ -115,9 +115,6 @@ Video[] PV = anime.getVideos();
 </table>
 <!-- GitHub Copilot Disclaimer -->
 
- - Found a bug? Post it in [issues](https://github.com/KatsuteDev/Mal4J/issues).
- - Want to further expand our project? [Fork](https://github.com/KatsuteDev/Mal4J/fork) this repository and submit a [pull request](https://github.com/KatsuteDev/Mal4J/pulls).
-
 #### ⚠️️ Before you start
 
 For Anime/Manga list tests *Sakura-sou no Pet na Kanojo* ([Anime#13759](https://myanimelist.net/anime/13759) and [Manga#28107](https://myanimelist.net/manga/28107)) will be used.
