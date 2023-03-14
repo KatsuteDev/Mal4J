@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.0.3
+
+### 📘 Dependencies
+
+* Bump maven-compiler-plugin from 3.10.1 to 3.11.0 [#368](https://github.com/KatsuteDev/Mal4J/pull/368) ([@dependabot](https://github.com/dependabot))
+* Bump maven-surefire-plugin from 3.0.0-M9 to 3.0.0 [#370](https://github.com/KatsuteDev/Mal4J/pull/370) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.0.2...3.0.3`](https://github.com/KatsuteDev/Mal4J/compare/3.0.2...3.0.3)
+
 ## 3.0.2
 
 ### 🔧 Optimizations

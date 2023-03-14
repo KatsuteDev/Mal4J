@@ -41,8 +41,13 @@ jobs:
         continue-on-error: true
         run: mvn test -fae --no-transfer-progress
 
-      - name: ✔️ Generate Report
-        uses: Katsute/Workflows/actions/java/report@main
+      - name: 📤 Checkout JUnit Report
+        uses: actions/checkout@v3
         with:
+          repository: Katsute/JUnit-Report
+          ref: de7738388a346bf154c05cda387c31ae4fed0b00
+          path: ./.github/junit-report
           token: ${{ secrets.BOT }}
-          path: .
+
+      - name: ✔️ Generate Report
+        uses: ./.github/junit-report
