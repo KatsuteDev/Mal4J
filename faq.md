@@ -46,7 +46,7 @@ The MyAnimeList API currently has no rate limit in place so requests must be sen
 
 This library offers ***ALL*** the features provided by the API.
 
-### My client id / auth token doesn't work.
+### My client id / auth token doesn't work
 
  - Make sure you are using the correct authentication method
    - For client id use: [`withClientID`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeList.html#withClientID(java.lang.String))
@@ -55,37 +55,37 @@ This library offers ***ALL*** the features provided by the API.
  - Your token is missing '`Bearer `'.
  - Your token may contain dangling whitespace.
 
-### Incorrect date is returned.
+### Incorrect date is returned
 
 Java does not support null date fields; for Anime/Manga that is yet to start, an unknown month will be returned as January, and an unknown day will be returned as 1.
 
-### Seasons query is returning Anime from other seasons.
+### Seasons query is returning Anime from other seasons
 
 The seasons query returns Anime that are airing in the current season, this includes Anime that may have started the season before and are still airing this season.
 
-### NSFW is not working.
+### NSFW is not working
 
 For search queries make sure you also run [`includeNSFW()`](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/query/NSFW.html#includeNSFW()) in the query builder.
 
-### I can't get other users.
+### Unable to get other users
 
 Currently the MyAnimeList API does not allow you to check users other than yourself.
 
-### I can't modify my Anime/Manga lists.
+### Unable to modify my Anime/Manga lists
 
 In order to change listings you must authenticate using a [token](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeList.html#withToken(java.lang.String)) or with an [authenticator](https://docs.katsute.dev/mal4j/Mal4J/dev/katsute/mal4j/MyAnimeList.html#withAuthorization(dev.katsute.mal4j.MyAnimeListAuthenticator)).
 
-### `list_status` / `my_list_status` field isn't working.
+### `list_status` / `my_list_status` field isn't working
 
 For some requests `my_list_status` field may be required instead of `list_status` or vice-versa. Try using the other field if responses are null.
 
-### Affinity is not working correctly.
+### Affinity is not working correctly
 
 *This feature is experimental.*
 
 The affinity method requires that both users have their Anime/Manga list public.
 
-### Affinity is slow.
+### Affinity is slow
 
 *This feature is experimental*
 

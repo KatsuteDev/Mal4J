@@ -5,7 +5,7 @@ Mal4J requires at least Java 8. No additional dependencies/libraries are require
 Compiled binaries can be installed from:
 
  - [Maven Central](https://mvnrepository.com/artifact/dev.katsute/mal4j)
- - [GitHub Packages](https://github.com/KatsuteDev/Mal4J/packages/1104772)
+ - [GitHub Packages](https://github.com/KatsuteDev/Mal4J/packages/1769630)
  - [Releases](https://github.com/KatsuteDev/Mal4J/releases)
 
 ## API setup
