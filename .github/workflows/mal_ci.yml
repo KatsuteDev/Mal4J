@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           repository: Katsute/JUnit-Report
-          ref: de7738388a346bf154c05cda387c31ae4fed0b00
+          ref: f8c3faa29af146ae5945a2bfa2a8fc6b34c1c216
           path: ./.github/junit-report
           token: ${{ secrets.BOT }}
 
