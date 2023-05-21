@@ -480,8 +480,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 offset
             )
         );
-        if(response == null) return null;
-        return asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"), id);
+        return response != null ? asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"), id) : null;
     }
 
     @Override
@@ -817,8 +816,7 @@ final class MyAnimeListImpl extends MyAnimeList {
     @Override
     public final User getUser(final String username, final String... fields){
         Objects.requireNonNull(username, "Username cannot be null");
-        return asUser(this,
-        handleResponse(
+        return asUser(this, handleResponse(
             () -> service.getUser(
                 Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                 username.equals("@me") ? "@me" : APICall.encodeUTF8(username),
