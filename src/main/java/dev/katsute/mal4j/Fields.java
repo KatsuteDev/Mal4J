@@ -18,13 +18,11 @@
 
 package dev.katsute.mal4j;
 
-import javax.swing.text.AttributeSet;
-
 /**
  * The fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
  * @since 1.1.0
- * @version 2.10.0
+ * @version 3.1.0
  * @author Katsute
  */
 public abstract class Fields {
@@ -557,6 +555,14 @@ public abstract class Fields {
 
     // character
 
+    /**
+     * All possible fields for a character.
+     *
+     * @see #character
+     * @since 3.1.0
+     * @version 3.1.0
+     * @author Katsute
+     */
     public static class Character {
 
         private Character(){}
@@ -577,6 +583,12 @@ public abstract class Fields {
 
     }
 
+    /**
+     * Returns all Character fields as a comma separated string.
+     *
+     * @see Character
+     * @since 3.1.0
+     */
     public static String character = String.join(",",
         Character.id,
         Character.first_name,

@@ -21,18 +21,78 @@ package dev.katsute.mal4j.character;
 import dev.katsute.mal4j.property.ID;
 import dev.katsute.mal4j.property.Picture;
 
+/**
+ * Represents a character.
+ *
+ * @see dev.katsute.mal4j.MyAnimeList#getCharacter(long)
+ * @see dev.katsute.mal4j.MyAnimeList#getCharacter(long, String...)
+ * @see Character
+ * @since 3.1.0
+ * @version 3.1.0
+ * @author Katsute
+ */
 public abstract class Character implements ID {
 
+    /**
+     * Returns the first name.
+     *
+     * @return first name
+     *
+     * @see #getLastName()
+     * @see #getAlternativeNames()
+     * @since 3.1.0
+     */
     public abstract String getFirstName();
 
+    /**
+     * Returns the last name.
+     *
+     * @return last name
+     *
+     * @see #getFirstName()
+     * @see #getAlternativeNames()
+     * @since 3.1.0
+     */
     public abstract String getLastName();
 
+    /**
+     * Returns an array of aliases.
+     *
+     * @return alternative names
+     *
+     * @see #getFirstName()
+     * @see #getLastName()
+     * @since 3.1.0
+     */
     public abstract String[] getAlternativeNames();
 
+    /**
+     * Returns the main picture.
+     *
+     * @return main picture
+     *
+     * @see Picture
+     * @since 3.1.0
+     */
     public abstract Picture getMainPicture();
 
+    /**
+     * Returns the biography.
+     *
+     * @return biography
+     *
+     * @since 3.1.0
+     */
     public abstract String getBiography();
 
+    /**
+     * Returns a list of which Anime the character has appeared in.
+     *
+     * @return animeography
+     *
+     * @see Animeography
+     * @since 3.1.0
+     */
     public abstract Animeography[] getAnimeography();
 
 }

@@ -45,7 +45,7 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 2.11.0
+ * @version 3.1.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
@@ -171,6 +171,7 @@ public abstract class MyAnimeList {
      *
      * @see Anime
      * @see #getAnime()
+     * @see Fields.Anime
      * @see Fields#anime
      * @since 1.0.0
      */
@@ -305,8 +306,31 @@ public abstract class MyAnimeList {
 
 // character
 
+    /**
+     *  Returns a character.
+     *
+     * @param id character id
+     * @return character
+     *
+     * @see Character
+     * @see #getCharacter(long, String...)
+     * @since 3.1.0
+     */
     public abstract Character getCharacter(final long id);
 
+    /**
+     *  Returns a character.
+     *
+     * @param id character id
+     * @param fields a string array of the fields that should be returned
+     * @return character
+     *
+     * @see Character
+     * @see #getCharacter(long)
+     * @see Fields.Character
+     * @see Fields#character
+     * @since 3.1.0
+     */
     public abstract Character getCharacter(final long id, final String... fields);
 
 // forum board
@@ -399,7 +423,7 @@ public abstract class MyAnimeList {
      *
      * @see MangaSearchQuery
      * @see MangaSearchQuery#search()
-     * @see dev.katsute.mal4j.manga.Manga
+     * @see Manga
      * @since 1.0.0
      */
     public abstract MangaSearchQuery getManga();
@@ -425,6 +449,7 @@ public abstract class MyAnimeList {
      *
      * @see Manga
      * @see #getManga()
+     * @see Fields.Manga
      * @see Fields#manga
      * @since 1.0.0
      */
@@ -546,6 +571,7 @@ public abstract class MyAnimeList {
      *
      * @see User
      * @see #getAuthenticatedUser()
+     * @see Fields.User
      * @see Fields#user
      * @since 2.2.0
      */
@@ -574,6 +600,7 @@ public abstract class MyAnimeList {
      *
      * @see User
      * @see #getUser(String)
+     * @see Fields.User
      * @see Fields#user
      * @since 1.0.0
      */

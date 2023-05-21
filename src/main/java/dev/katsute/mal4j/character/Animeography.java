@@ -20,8 +20,23 @@ package dev.katsute.mal4j.character;
 
 import dev.katsute.mal4j.anime.property.AnimeRetrievable;
 
+/**
+ * Represents an animeography for a character.
+ *
+ * @see Character#getAnimeography()
+ * @since 3.1.0
+ * @version 3.1.0
+ * @author Katsute
+ */
 public abstract class Animeography implements AnimeRetrievable {
 
+    /**
+     * Returns the character's role.
+     *
+     * @return role
+     *
+     * @since 3.1.0
+     */
     public abstract String getRole();
 
 }
