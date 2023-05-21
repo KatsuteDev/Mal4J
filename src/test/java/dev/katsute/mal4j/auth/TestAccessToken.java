@@ -46,7 +46,6 @@ final class TestAccessToken {
             assertEquals("refresh_token", new AccessToken("token", "refresh_token", -1L).getRefreshToken());
         }
 
-        @SuppressWarnings("ResultOfMethodCallIgnored")
         @Test
         final void testNullRefreshToken(){
             assertThrows(NullPointerException.class, () -> new AccessToken("token").getRefreshToken());

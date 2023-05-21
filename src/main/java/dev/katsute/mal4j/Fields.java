@@ -567,7 +567,7 @@ public abstract class Fields {
 
         private Character(){}
 
-        public static String id = "id";
+        public static final String id = "id";
 
         public static final String first_name = "first_name";
 
@@ -589,7 +589,7 @@ public abstract class Fields {
      * @see Character
      * @since 3.1.0
      */
-    public static String character = String.join(",",
+    public static final String character = String.join(",",
         Character.id,
         Character.first_name,
         Character.last_name,
