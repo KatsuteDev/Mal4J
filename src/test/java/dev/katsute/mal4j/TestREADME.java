@@ -3,6 +3,7 @@ package dev.katsute.mal4j;
 import dev.katsute.mal4j.anime.*;
 import dev.katsute.mal4j.anime.property.OpeningTheme;
 import dev.katsute.mal4j.anime.property.Video;
+import dev.katsute.mal4j.character.Character;
 import dev.katsute.mal4j.manga.MangaListStatus;
 import dev.katsute.mal4j.manga.property.MangaStatus;
 import dev.katsute.mal4j.manga.property.RereadValue;
@@ -53,6 +54,8 @@ abstract class TestREADME {
         AnimeRecommendation[] recs = anime.getRecommendations();
         OpeningTheme[] op = anime.getOpeningThemes();
         Video[] PV = anime.getVideos();
+
+        Character character = mal.getCharacter(61371);
     }
 
     // setup

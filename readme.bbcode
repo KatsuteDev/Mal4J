@@ -42,7 +42,7 @@ MangaListStatus status =
 
 [size=150]📦 Everything Else[/size]
 
-[b]All[/b] information provided in the [url=https://myanimelist.net/apiconfig/references/api/v2]MyAnimeList API[/url] including Anime, Manga, forums, genres, pictures, and statistics, are accessible in this library.
+[b]All[/b] information provided in the [url=https://myanimelist.net/apiconfig/references/api/v2]MyAnimeList API[/url] including Anime, Manga, forums, genres, pictures, statistics, and characters, are accessible in this library.
 
 [code]
 MyAnimeList mal = MyAnimeList.withClientID("");
@@ -54,6 +54,8 @@ RelatedAnime[] relatedAnime = anime.getRelatedAnime();
 AnimeRecommendation[] recs = anime.getRecommendations();
 OpeningTheme[] op = anime.getOpeningThemes();
 Video[] PV = anime.getVideos();
+
+Character character = mal.getCharacter(61371);
 [/code]
 
 [center][size=200][url=https://github.com/KatsuteDev/Mal4J#readme]View on GitHub[/url][/size][/center]
