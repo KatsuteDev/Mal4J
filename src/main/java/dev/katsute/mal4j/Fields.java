@@ -18,6 +18,8 @@
 
 package dev.katsute.mal4j;
 
+import javax.swing.text.AttributeSet;
+
 /**
  * The fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
@@ -551,7 +553,39 @@ public abstract class Fields {
         Manga.my_list_status,
         Manga.authors,
         Manga.serialization
-   );
+    );
+
+    // character
+
+    public static class Character {
+
+        private Character(){}
+
+        public static String id = "id";
+
+        public static final String first_name = "first_name";
+
+        public static final String last_name = "last_name";
+
+        public static final String alternative_name = "alternative_name";
+
+        public static final String main_picture = "main_picture";
+
+        public static final String biography = "biography";
+
+        public static final String animeography = "animeography";
+
+    }
+
+    public static String character = String.join(",",
+        Character.id,
+        Character.first_name,
+        Character.last_name,
+        Character.alternative_name,
+        Character.main_picture,
+        Character.biography,
+        Character.animeography
+    );
 
     // user
 

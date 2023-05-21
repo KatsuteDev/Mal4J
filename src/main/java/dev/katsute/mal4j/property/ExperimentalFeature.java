@@ -55,6 +55,8 @@ public enum ExperimentalFeature {
      * @see User#getMangaAffinity(User)
      * @see User#getMangaAffinity(String)
      */
-    AFFINITY
+    AFFINITY,
+
+    CHARACTERS
 
 }

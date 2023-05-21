@@ -21,6 +21,7 @@ package dev.katsute.mal4j;
 import dev.katsute.mal4j.anime.Anime;
 import dev.katsute.mal4j.anime.property.AnimeRankingType;
 import dev.katsute.mal4j.anime.property.time.Season;
+import dev.katsute.mal4j.character.Character;
 import dev.katsute.mal4j.exception.InvalidTokenException;
 import dev.katsute.mal4j.forum.ForumCategory;
 import dev.katsute.mal4j.forum.ForumTopicDetail;
@@ -301,6 +302,12 @@ public abstract class MyAnimeList {
      * @since 1.0.0
      */
     public abstract UserAnimeListQuery getUserAnimeListing(final String username);
+
+// character
+
+    public abstract Character getCharacter(final long id);
+
+    public abstract Character getCharacter(final long id, final String... fields);
 
 // forum board
 
