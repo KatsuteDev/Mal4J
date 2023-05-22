@@ -28,11 +28,11 @@ jobs:
       - name: cURL
         if: env.url
         env:
-          url: env.url
+          url: ${{ env.url }}
           token: ${{ secrets.MAL_CLIENT }}
         run: |
           out=$(curl https://api.myanimelist.net/v2/$url -X GET -H "X-MAL-CLIENT-ID: $token")
-          echo "::set-env name=out::$out"
+          echo "out=$out" >> "$GITHUB_ENV"
 
       - name: Format JSON
         uses: actions/github-script@v6
