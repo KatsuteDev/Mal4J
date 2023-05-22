@@ -56,7 +56,7 @@ public abstract class Character implements ID {
     public abstract String getLastName();
 
     /**
-     * Returns an array of aliases.
+     * Returns a list of alternative names.
      *
      * @return alternative names
      *
