@@ -584,7 +584,7 @@ public abstract class Fields {
     }
 
     /**
-     * Returns all Character fields as a comma separated string.
+     * Returns all character fields as a comma separated string.
      *
      * @see Character
      * @since 3.1.0

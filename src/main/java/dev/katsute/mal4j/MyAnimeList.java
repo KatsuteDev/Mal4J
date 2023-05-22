@@ -307,7 +307,7 @@ public abstract class MyAnimeList {
 // character
 
     /**
-     *  Returns a character.
+     * Returns a character.
      *
      * @param id character id
      * @return character
@@ -319,7 +319,7 @@ public abstract class MyAnimeList {
     public abstract Character getCharacter(final long id);
 
     /**
-     *  Returns a character.
+     * Returns a character.
      *
      * @param id character id
      * @param fields a string array of the fields that should be returned

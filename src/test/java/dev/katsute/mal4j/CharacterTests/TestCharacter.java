@@ -41,6 +41,7 @@ final class TestCharacter {
             .add("FirstName", Character::getFirstName)
             .add("LastName", Character::getLastName)
             .add("AlternativeNames", Character::getAlternativeNames)
+            .add("AlternativeNames[0]", character -> character.getAlternativeNames()[0])
             .add("MainPicture", Character::getMainPicture)
             .add("MainPicture#MediumURL", character -> character.getMainPicture().getMediumURL())
             // .add("MainPicture#LargeURL", character -> character.getMainPicture().getLargeURL())
@@ -55,6 +56,11 @@ final class TestCharacter {
     @Test
     final void testCharacter(){
         assertEquals(TestProvider.CharacterID, character.getID());
+    }
+
+    @Test
+    final void testAlternativeNames(){
+        assertTrue(mal.getCharacter(TestProvider.AltCharacterID).getAlternativeNames().length > 1);
     }
 
 }
