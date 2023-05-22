@@ -6,7 +6,7 @@ jobs:
   mal:
     name: MyAnimeList API Request
     runs-on: ubuntu-latest
-    if: contains('OWNER, MEMBER, COLLABORATOR', github.event.comment.author_association)
+    if: contains('OWNER, MEMBER, COLLABORATOR', github.event.comment.author_association) && contains('mal ', github.event.comment.body)
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
