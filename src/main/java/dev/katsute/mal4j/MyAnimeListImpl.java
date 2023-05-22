@@ -22,6 +22,7 @@ import dev.katsute.mal4j.APIStruct.Response;
 import dev.katsute.mal4j.anime.*;
 import dev.katsute.mal4j.anime.property.AnimeRankingType;
 import dev.katsute.mal4j.anime.property.time.Season;
+import dev.katsute.mal4j.character.Character;
 import dev.katsute.mal4j.exception.*;
 import dev.katsute.mal4j.forum.*;
 import dev.katsute.mal4j.manga.*;
@@ -40,6 +41,7 @@ import java.util.regex.Pattern;
 
 import static dev.katsute.mal4j.Json.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Anime.*;
+import static dev.katsute.mal4j.MyAnimeListSchema_Character.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Forum.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Manga.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_User.*;
@@ -164,8 +166,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final Anime getAnime(final long id, final String... fields){
-        return asAnime(this,
-        handleResponse(
+        return asAnime(this, handleResponse(
             () -> service.getAnime(
                 isTokenAuth ? token : null,
                 !isTokenAuth ? client_id : null,
@@ -423,6 +424,24 @@ final class MyAnimeListImpl extends MyAnimeList {
     }
 
     @Override
+    public final Character getCharacter(final long id){
+        return getCharacter(id, (String[]) null);
+    }
+
+    @Override
+    public final Character getCharacter(final long id, final String... fields){
+        checkExperimentalFeatureEnabled(ExperimentalFeature.CHARACTERS);
+        return asCharacter(MyAnimeListImpl.this, handleResponse(
+            () -> service.getCharacter(
+                isTokenAuth ? token : null,
+                !isTokenAuth ? client_id : null,
+                id,
+                convertFields(Fields.character, fields)
+            )
+        ));
+    }
+
+    @Override
     public final List<ForumCategory> getForumBoards(){
         final JsonObject response = handleResponse(
             () -> service.getForumBoards(
@@ -461,9 +480,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 offset
             )
         );
-        if(response == null) return null;
-
-        return asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"), id);
+        return response != null ? asForumTopic(MyAnimeListImpl.this, response.getJsonObject("data"), id) : null;
     }
 
     @Override
@@ -616,8 +633,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final Manga getManga(final long id, final String... fields){
-        return asManga(this,
-        handleResponse(
+        return asManga(this, handleResponse(
             () -> service.getManga(
                 isTokenAuth ? token : null,
                 !isTokenAuth ? client_id : null,
@@ -800,8 +816,7 @@ final class MyAnimeListImpl extends MyAnimeList {
     @Override
     public final User getUser(final String username, final String... fields){
         Objects.requireNonNull(username, "Username cannot be null");
-        return asUser(this,
-        handleResponse(
+        return asUser(this, handleResponse(
             () -> service.getUser(
                 Objects.requireNonNull(token, "Client ID not supported for this endpoint, create MyAnimeList object with either an Authenticator or Token"),
                 username.equals("@me") ? "@me" : APICall.encodeUTF8(username),

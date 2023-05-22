@@ -89,7 +89,7 @@ MangaListStatus status =
 
 #### 📦 Everything Else
 
-**All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, and statistics, are accessible in this library.
+**All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, statistics, and characters, are accessible in this library.
 
 ```java
 MyAnimeList mal = MyAnimeList.withClientID("");
@@ -101,6 +101,8 @@ RelatedAnime[] relatedAnime = anime.getRelatedAnime();
 AnimeRecommendation[] recs = anime.getRecommendations();
 OpeningTheme[] op = anime.getOpeningThemes();
 Video[] PV = anime.getVideos();
+
+Character character = mal.getCharacter(61371);
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

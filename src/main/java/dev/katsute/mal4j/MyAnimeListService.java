@@ -130,6 +130,16 @@ interface MyAnimeListService {
         @Query("nsfw")                              final Boolean nsfw
     );
 
+    // character
+
+    @Endpoint(method="GET", value="characters/{character_id}")
+    Response<JsonObject> getCharacter(
+        @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
+        @Path(value = "character_id")               final Long character_id,
+        @Query(value = "fields", encoded = true)    final String fields
+    );
+
     // forum
 
     @Endpoint(method="GET", value="forum/boards")

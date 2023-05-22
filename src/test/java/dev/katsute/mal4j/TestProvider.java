@@ -47,7 +47,13 @@ public abstract class TestProvider {
         return new String[]{"test_tag", "何"};
     }
 
-    public static final String testComment = "if you see this then my test case has failed to run the cleanup method";
+    public static final String testComment = "if you see this then a test case has failed to run the cleanup method";
+
+    // Character
+
+    public static final long CharacterID = 61371;
+    public static final long AltCharacterID = 36828;
+    public static final long NSFW_CharacterID = 104119;
 
     //
 

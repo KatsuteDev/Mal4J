@@ -26,7 +26,7 @@ import dev.katsute.mal4j.user.User;
  *
  * @see dev.katsute.mal4j.MyAnimeList#enableExperimentalFeature(ExperimentalFeature)
  * @since 2.3.0
- * @version 2.10.0
+ * @version 3.1.0
  * @author Katsute
  */
 public enum ExperimentalFeature {
@@ -55,6 +55,12 @@ public enum ExperimentalFeature {
      * @see User#getMangaAffinity(User)
      * @see User#getMangaAffinity(String)
      */
-    AFFINITY
+    AFFINITY,
+
+    /**
+     * @see dev.katsute.mal4j.MyAnimeList#getCharacter(long)
+     * @see dev.katsute.mal4j.MyAnimeList#getCharacter(long, String...)
+     */
+    CHARACTERS
 
 }
