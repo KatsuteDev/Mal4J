@@ -42,7 +42,7 @@ jobs:
         with:
           github-token: ${{ secrets.BOT }}
           script: |
-            core.exportVariable("comment", "```json\n" + JSON.stringify(JSON.parse(process.env.out) + "\n```", null, 4));
+            core.exportVariable("comment", "```json\n" + JSON.stringify(JSON.parse(process.env.out), null, 4) + "\n```");
 
       - name: Print Response
         if: env.comment
