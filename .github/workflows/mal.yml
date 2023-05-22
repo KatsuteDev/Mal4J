@@ -1,0 +1,54 @@
+name: MyAnimeList API Request
+on:
+  issue_comment:
+    types: [created]
+jobs:
+  mal:
+    name: MyAnimeList API Request
+    runs-on: ubuntu-latest
+    if: contains('OWNER, MEMBER, COLLABORATOR', github.event.comment.author_association)
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.BOT }}
+
+      - name: Parse Comment
+        uses: actions/github-script@v6
+        env:
+          comment: ${{ github.event.comment.body }}
+        with:
+          github-token: ${{ secrets.BOT }}
+          script: |
+            const comment = process.env.comment.split(' ');
+
+            if(comment[0] == "mal")
+                core.exportVariable("url", comment[1]);
+
+      - name: cURL
+        if: env.url
+        env:
+          url: env.url
+          token: ${{ secrets.MAL_CLIENT }}
+        run: |
+          out=$(curl https://api.myanimelist.net/v2/$url -X GET -H "X-MAL-CLIENT-ID: $token")
+          echo "::set-env name=out::$out"
+
+      - name: Format JSON
+        uses: actions/github-script@v6
+        if: env.out
+        env:
+          out: ${{ env.out }}
+        with:
+          github-token: ${{ secrets.BOT }}
+          script: |
+            core.exportVariable("comment", "```json\n" + JSON.stringify(JSON.parse(process.env.out) + "\n```", null, 4));
+
+      - name: Print Response
+        if: env.comment
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT }}
+          comment: ${{ env.comment }}
+          number: ${{ github.event.issue.number }}
+        run: |
+          gh issue comment $number -b "$comment"
