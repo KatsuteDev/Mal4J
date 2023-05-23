@@ -330,7 +330,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
         return asAnime(mal, schema, false);
     }
 
-    private static Anime asAnime(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
+    static Anime asAnime(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
         return schema == null ? null : new Anime() {
 
             private final Long id               = schema.getLong("id");

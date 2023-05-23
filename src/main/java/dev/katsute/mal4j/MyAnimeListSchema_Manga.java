@@ -118,7 +118,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         return asManga(mal, schema, false);
     }
 
-    private static Manga asManga(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
+    static Manga asManga(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
         return schema == null ? null : new Manga() {
 
             private final Long id               = schema.getLong("id");
@@ -409,7 +409,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         return asMangaListStatus(mal, schema, null, Objects.requireNonNull(manga, "Manga must not be null"));
     }
 
-    private static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final Manga manga_full){
+    static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final Manga manga_full){
         if(manga_id == null && manga_full == null)
             throw new NullPointerException("Manga and ID must not be both null");
         return schema == null ? null : new MangaListStatus() {

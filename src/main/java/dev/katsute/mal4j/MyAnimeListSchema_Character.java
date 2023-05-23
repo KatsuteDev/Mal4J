@@ -31,13 +31,37 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
     static Character asCharacter(final MyAnimeList mal, final JsonObject schema){
         return schema == null ? null : new Character() {
 
-            private final Long id                 = schema.getLong("id");
-            private final String firstName        = schema.getString("first_name");
-            private final String lastName         = schema.getString("last_name");
-            private final String alternativeNames = schema.getString("alternative_name");
-            private final Picture mainPicture     = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
-            private final String biography        = schema.getString("biography");
-            private final Animeography[] animeography = adaptList(schema.getJsonArray("animeography"), s -> asAnimeography(mal, s), Animeography.class);
+            boolean draft = true; // if any field is null, try and fetch full values (only try once)
+
+            private final Long id = schema.getLong("id");
+
+            private String firstName, lastName, alternativeNames, biography;
+            private Picture mainPicture;
+            private Animeography[] animeography;
+
+            {
+                populate(schema);
+            }
+
+            @SuppressWarnings("DataFlowIssue")
+            private void populate(){
+                if(draft){
+                    draft = false;
+                    populate(((MyAnimeListImpl) mal).getCharacterSchema(id, ((String[]) null)));
+                }
+            }
+
+            private void populate(final JsonObject schema){
+                firstName        = schema.getString("first_name");
+                lastName         = schema.getString("last_name");
+                alternativeNames = schema.getString("alternative_name");
+                mainPicture      = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
+                biography        = schema.getString("biography");
+
+                animeography = adaptList(schema.getJsonArray("animeography"), s -> asAnimeography(mal, s), Animeography.class);
+            }
+
+            //
 
             @Override
             public final Long getID(){
@@ -46,31 +70,43 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
 
             @Override
             public final String getFirstName(){
+                if(firstName == null && draft)
+                    populate();
                 return firstName;
             }
 
             @Override
             public final String getLastName(){
+                if(lastName == null && draft)
+                    populate();
                 return lastName;
             }
 
             @Override
             public final String[] getAlternativeNames(){
+                if(alternativeNames == null && draft)
+                    populate();
                 return alternativeNames != null ? alternativeNames.split(", ") : null;
             }
 
             @Override
             public final Picture getMainPicture(){
+                if(mainPicture == null && draft)
+                    populate();
                 return mainPicture;
             }
 
             @Override
             public final String getBiography(){
+                if(biography == null && draft)
+                    populate();
                 return biography;
             }
 
             @Override
             public final Animeography[] getAnimeography(){
+                if(animeography == null && draft)
+                    populate();
                 return animeography != null ? Arrays.copyOf(animeography, animeography.length) : null;
             }
 

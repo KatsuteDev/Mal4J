@@ -489,14 +489,18 @@ final class MyAnimeListImpl extends MyAnimeList {
     @Override
     public final Character getCharacter(final long id, final String... fields){
         checkExperimentalFeatureEnabled(ExperimentalFeature.CHARACTERS);
-        return asCharacter(MyAnimeListImpl.this, handleResponse(
+        return asCharacter(MyAnimeListImpl.this, getCharacterSchema(id, fields));
+    }
+
+    final JsonObject getCharacterSchema(final long id, final String... fields){
+        return handleResponse(
             () -> service.getCharacter(
                 isTokenAuth ? token : null,
                 !isTokenAuth ? client_id : null,
                 id,
                 convertFields(Fields.character, fields)
             )
-        ));
+        );
     }
 
     @Override
