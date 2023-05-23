@@ -640,7 +640,7 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeRating getRating() {
-                if(rating == null && draft)
+                if(e_rating == null && draft)
                     populate();
                 return e_rating;
             }
@@ -727,13 +727,13 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
                 return videos != null ? Arrays.copyOf(videos, videos.length) : null;
             }
 
+            // additional methods
+
             @SuppressWarnings("DataFlowIssue")
             @Override
             public final AnimeCharacterQuery getCharacters(){
                 return mal.getAnimeCharacters(id);
             }
-
-            // additional methods
 
             @Override
             public final String toString(){
