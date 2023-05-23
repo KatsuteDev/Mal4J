@@ -20,13 +20,17 @@ package dev.katsute.mal4j;
 import dev.katsute.mal4j.Json.JsonObject;
 import dev.katsute.mal4j.anime.*;
 import dev.katsute.mal4j.anime.property.*;
-import dev.katsute.mal4j.anime.property.time.*;
+import dev.katsute.mal4j.anime.property.time.DayOfWeek;
+import dev.katsute.mal4j.anime.property.time.Season;
+import dev.katsute.mal4j.anime.property.time.Time;
 import dev.katsute.mal4j.manga.RelatedManga;
 import dev.katsute.mal4j.property.*;
 import dev.katsute.mal4j.query.AnimeCharacterQuery;
 import dev.katsute.mal4j.query.AnimeListUpdate;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Objects;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
@@ -636,7 +640,6 @@ abstract class MyAnimeListSchema_Anime extends MyAnimeListSchema {
 
             @Override
             public final AnimeCharacterQuery getCharacters(){
-                ((MyAnimeListImpl) mal).checkExperimentalFeatureEnabled(ExperimentalFeature.CHARACTERS);
                 return mal.getAnimeCharacters(id);
             }
 

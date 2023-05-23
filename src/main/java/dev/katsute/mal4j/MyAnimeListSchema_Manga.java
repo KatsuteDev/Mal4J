@@ -24,7 +24,9 @@ import dev.katsute.mal4j.manga.property.*;
 import dev.katsute.mal4j.property.*;
 import dev.katsute.mal4j.query.MangaListUpdate;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Objects;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {

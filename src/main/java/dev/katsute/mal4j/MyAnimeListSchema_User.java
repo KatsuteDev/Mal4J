@@ -27,7 +27,10 @@ import dev.katsute.mal4j.query.UserAnimeListQuery;
 import dev.katsute.mal4j.query.UserMangaListQuery;
 import dev.katsute.mal4j.user.User;
 import dev.katsute.mal4j.user.UserAnimeStatistics;
-import dev.katsute.mal4j.user.property.*;
+import dev.katsute.mal4j.user.property.AffinityAlgorithm;
+import dev.katsute.mal4j.user.property.AnimeAffinity;
+import dev.katsute.mal4j.user.property.MangaAffinity;
+import dev.katsute.mal4j.user.property.MyAnimeListAffinityAlgorithm;
 
 import java.util.*;
 import java.util.function.Consumer;

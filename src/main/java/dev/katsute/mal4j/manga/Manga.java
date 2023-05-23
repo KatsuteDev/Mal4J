@@ -18,7 +18,10 @@
 
 package dev.katsute.mal4j.manga;
 
-import dev.katsute.mal4j.manga.property.*;
+import dev.katsute.mal4j.manga.property.MangaPublishStatus;
+import dev.katsute.mal4j.manga.property.MangaStatistics;
+import dev.katsute.mal4j.manga.property.MangaType;
+import dev.katsute.mal4j.manga.property.Publisher;
 import dev.katsute.mal4j.property.FullMediaItem;
 
 /**

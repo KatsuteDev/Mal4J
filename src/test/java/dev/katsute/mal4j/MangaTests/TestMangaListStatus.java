@@ -1,6 +1,8 @@
 package dev.katsute.mal4j.MangaTests;
 
-import dev.katsute.mal4j.*;
+import dev.katsute.mal4j.Fields;
+import dev.katsute.mal4j.MyAnimeList;
+import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.manga.MangaListStatus;
 import dev.katsute.mal4j.manga.property.MangaStatus;
 import dev.katsute.mal4j.manga.property.RereadValue;
@@ -12,10 +14,12 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 final class TestMangaListStatus {

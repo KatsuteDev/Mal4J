@@ -184,6 +184,7 @@ public abstract class MyAnimeList {
      * @return Anime character query
      *
      * @see AnimeCharacterQuery
+     * @see Character
      * @since 3.1.0
      */
     public abstract AnimeCharacterQuery getAnimeCharacters(final long id);

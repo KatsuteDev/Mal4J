@@ -19,7 +19,9 @@
 package dev.katsute.mal4j.anime;
 
 import dev.katsute.mal4j.MyAnimeList;
-import dev.katsute.mal4j.anime.property.*;
+import dev.katsute.mal4j.anime.property.AnimeRetrievable;
+import dev.katsute.mal4j.anime.property.AnimeStatus;
+import dev.katsute.mal4j.anime.property.RewatchValue;
 import dev.katsute.mal4j.property.Editable;
 import dev.katsute.mal4j.property.ListStatus;
 import dev.katsute.mal4j.query.AnimeListUpdate;

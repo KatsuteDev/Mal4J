@@ -1,6 +1,8 @@
 package dev.katsute.mal4j.UserTests;
 
-import dev.katsute.mal4j.*;
+import dev.katsute.mal4j.Fields;
+import dev.katsute.mal4j.MyAnimeList;
+import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import dev.katsute.mal4j.user.User;
 import dev.katsute.mal4j.user.property.AnimeAffinity;
@@ -18,7 +20,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.*;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 final class TestUser {
 

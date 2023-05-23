@@ -17,7 +17,9 @@
  */
 package dev.katsute.mal4j;
 
-import dev.katsute.mal4j.property.*;
+import dev.katsute.mal4j.property.AlternativeTitles;
+import dev.katsute.mal4j.property.Genre;
+import dev.katsute.mal4j.property.Picture;
 
 import java.util.Arrays;
 import java.util.Objects;

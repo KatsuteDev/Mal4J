@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 
-import static dev.katsute.mal4j.MyAnimeListAuthenticator.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static dev.katsute.mal4j.MyAnimeListAuthenticator.LocalServerBuilder;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 final class TestLocalServerRedirect {
 

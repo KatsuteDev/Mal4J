@@ -19,7 +19,10 @@ package dev.katsute.mal4j;
 
 import dev.katsute.mal4j.Json.JsonObject;
 import dev.katsute.mal4j.forum.*;
-import dev.katsute.mal4j.forum.property.*;
+import dev.katsute.mal4j.forum.property.ForumTopicCreator;
+import dev.katsute.mal4j.forum.property.Poll;
+import dev.katsute.mal4j.forum.property.PollOption;
+import dev.katsute.mal4j.forum.property.PostAuthor;
 import dev.katsute.mal4j.user.User;
 
 import java.util.Arrays;

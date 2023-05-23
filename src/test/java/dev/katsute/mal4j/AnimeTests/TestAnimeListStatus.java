@@ -1,6 +1,8 @@
 package dev.katsute.mal4j.AnimeTests;
 
-import dev.katsute.mal4j.*;
+import dev.katsute.mal4j.Fields;
+import dev.katsute.mal4j.MyAnimeList;
+import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.anime.AnimeListStatus;
 import dev.katsute.mal4j.anime.property.AnimeStatus;
 import dev.katsute.mal4j.anime.property.RewatchValue;
@@ -12,7 +14,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

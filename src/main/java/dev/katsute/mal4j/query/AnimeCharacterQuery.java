@@ -24,19 +24,21 @@ import dev.katsute.mal4j.character.Character;
 /**
  * Represents a Anime character query.
  *
+ * @see dev.katsute.mal4j.MyAnimeList#getAnimeCharacters(long)
  * @see Anime#getCharacters()
  * @see LimitOffsetQuery
  * @since 3.1.0
  * @version 3.1.0
  * @author Katsute
  */
-public abstract class AnimeCharacterQuery extends LimitOffsetQuery<AnimeCharacterQuery,Character> {
+public abstract class AnimeCharacterQuery extends FieldQuery<AnimeCharacterQuery,Character> {
 
     /**
      * Creates an Anime character query.
      * <br>
-     * Do not use this constructor, use {@link Anime#getCharacters()}
+     * Do not use this constructor, use {@link dev.katsute.mal4j.MyAnimeList#getAnimeCharacters(long)} or {@link Anime#getCharacters()} instead.
      *
+     * @see dev.katsute.mal4j.MyAnimeList#getAnimeCharacters(long)
      * @see Anime#getCharacters()
      * @since 3.1.0
      */
