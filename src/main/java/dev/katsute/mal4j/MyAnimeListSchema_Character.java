@@ -35,8 +35,11 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
 
             private final Long id = schema.getLong("id");
 
-            private String firstName, lastName, alternativeNames, biography;
+            private String firstName;
+            private String lastName;
+            private String alternativeNames;
             private Picture mainPicture;
+            private String biography;
             private Animeography[] animeography;
 
             {
