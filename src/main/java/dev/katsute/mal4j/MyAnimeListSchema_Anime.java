@@ -21,7 +21,6 @@ import dev.katsute.mal4j.Json.JsonObject;
 import dev.katsute.mal4j.anime.*;
 import dev.katsute.mal4j.anime.property.*;
 import dev.katsute.mal4j.anime.property.time.*;
-import dev.katsute.mal4j.character.Character;
 import dev.katsute.mal4j.manga.RelatedManga;
 import dev.katsute.mal4j.property.*;
 import dev.katsute.mal4j.query.AnimeCharacterQuery;
