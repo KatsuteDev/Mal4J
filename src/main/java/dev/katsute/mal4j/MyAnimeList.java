@@ -177,6 +177,17 @@ public abstract class MyAnimeList {
      */
     public abstract Anime getAnime(final long id, final String... fields);
 
+    /**
+     * Returns characters for an Anime.
+     *
+     * @param id Anime id
+     * @return Anime character query
+     *
+     * @see AnimeCharacterQuery
+     * @since 3.1.0
+     */
+    public abstract AnimeCharacterQuery getAnimeCharacters(final long id);
+
 // anime ranking
 
     /**

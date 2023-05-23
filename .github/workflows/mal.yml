@@ -23,7 +23,7 @@ jobs:
             const comment = process.env.comment.split(' ');
 
             if(comment[0] == "mal")
-                core.exportVariable("url", comment[1]);
+              core.exportVariable("url", comment[1]);
 
       - name: cURL
         if: env.url
@@ -50,5 +50,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.BOT }}
           comment: ${{ env.comment }}
           number: ${{ github.event.issue.number }}
+          issue: ${{ github.event.issue && 'issue' || 'pr' }}
         run: |
-          gh issue comment $number -b "$comment"
+          gh $issue comment $number -b "$comment"

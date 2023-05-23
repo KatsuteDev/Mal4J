@@ -177,6 +177,52 @@ final class MyAnimeListImpl extends MyAnimeList {
     }
 
     @Override
+    public final AnimeCharacterQuery getAnimeCharacters(final long id){
+        checkExperimentalFeatureEnabled(ExperimentalFeature.CHARACTERS);
+        return new AnimeCharacterQuery() {
+
+            @Override
+            public final List<Character> search(){
+                final JsonObject response = handleResponse(
+                    () -> service.getAnimeCharacters(
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
+                        id,
+                        limit,
+                        offset,
+                        convertFields(Fields.character, (String[]) null)
+                    )
+                );
+                if(response == null) return null;
+
+                final List<Character> characters = new ArrayList<>();
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
+                    characters.add(MyAnimeListSchema_Character.asCharacter(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                return characters;
+            }
+
+            @Override
+            public final PaginatedIterator<Character> searchAll(){
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getAnimeCharacters(
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
+                        id,
+                        limit,
+                        offset,
+                        convertFields(Fields.character, (String[]) null)
+                    ),
+                    iterator -> MyAnimeListSchema_Character.asCharacter(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                );
+            }
+
+        };
+    }
+
+    @Override
     public final AnimeRankingQuery getAnimeRanking(final AnimeRankingType rankingType){
         return getAnimeRanking(Objects.requireNonNull(rankingType, "Ranking type cannot be null").field());
     }

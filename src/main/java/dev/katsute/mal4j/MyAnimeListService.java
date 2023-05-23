@@ -56,6 +56,16 @@ interface MyAnimeListService {
         @Query(value = "fields", encoded = true)    final String fields
     );
 
+    @Endpoint(method="GET", value="anime/{anime_id}/characters")
+    Response<JsonObject> getAnimeCharacters(
+        @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
+        @Path(value = "anime_id")                   final Long anime_id,
+        @Query("limit")                             final Integer limit,
+        @Query("offset")                            final Integer offset,
+        @Query(value = "fields", encoded = true)    final String fields
+    );
+
     @Endpoint(method="GET", value="anime/ranking")
     Response<JsonObject> getAnimeRanking(
         @Header("Authorization")                    final String token,
