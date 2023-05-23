@@ -63,4 +63,12 @@ final class TestCharacter {
         assertTrue(mal.getCharacter(TestProvider.AltCharacterID).getAlternativeNames().length > 1);
     }
 
+    @Test
+    final void testPartial(){
+        final Character character = mal.getAnimeCharacters(TestProvider.AnimeID).search().get(0);
+        final int was = character.toString().length();
+        character.getAnimeography();
+        assertTrue(character.toString().length() > was);
+    }
+
 }

@@ -151,4 +151,20 @@ final class TestManga {
         assumeTrue(MangaPublishStatus.OnHiatus == mal.getManga(2).getStatus(), "Test will fail when status is not hiatus");
     }
 
+    @Test
+    final void testPartialRecommendation(){
+        final Manga recommendation = manga.getRecommendations()[0].getManga();
+        final int was = recommendation.toString().length();
+        recommendation.getBackground();
+        assertTrue(recommendation.toString().length() > was);
+    }
+
+    @Test
+    final void testPartialRelated(){
+        final Manga related = manga.getRelatedManga()[0].getManga();
+        final int was = related.toString().length();
+        related.getBackground();
+        assertTrue(related.toString().length() > was);
+    }
+
 }

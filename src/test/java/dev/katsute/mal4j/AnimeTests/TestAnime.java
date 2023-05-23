@@ -197,4 +197,20 @@ final class TestAnime {
             assertNotEquals(RelationType.Unknown, relatedAnime.getRelationType(), "Unknown type: " + relatedAnime.getRawRelationType());
     }
 
+    @Test
+    final void testPartialRecommendation(){
+        final Anime recommendation = anime.getRecommendations()[0].getAnime();
+        final int was = recommendation.toString().length();
+        recommendation.getBackground();
+        assertTrue(recommendation.toString().length() > was);
+    }
+
+    @Test
+    final void testPartialRelated(){
+        final Anime related = anime.getRelatedAnime()[0].getAnime();
+        final int was = related.toString().length();
+        related.getBackground();
+        assertTrue(related.toString().length() > was);
+    }
+
 }
