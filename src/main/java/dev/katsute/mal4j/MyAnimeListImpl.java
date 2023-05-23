@@ -148,7 +148,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -165,7 +165,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
         };
@@ -314,7 +314,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -333,7 +333,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
 
@@ -361,7 +361,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -376,7 +376,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
 
@@ -459,7 +459,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
+                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
                 return anime;
             }
 
@@ -478,7 +478,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
+                    iterator -> asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")))
                 );
             }
 

@@ -64,7 +64,7 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
                 animeography = adaptList(schema.getJsonArray("animeography"), s -> asAnimeography(mal, s), Animeography.class);
             }
 
-            //
+            // API methods
 
             @Override
             public final Long getID(){
@@ -134,7 +134,7 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
     static Animeography asAnimeography(final MyAnimeList mal, final JsonObject schema){
         return schema == null ? null : new Animeography() {
 
-            private final Anime anime = MyAnimeListSchema_Anime.asAnimePreview(mal, schema.getJsonObject("node"));
+            private final Anime anime = MyAnimeListSchema_Anime.asAnime(mal, schema.getJsonObject("node"));
             private final String role = schema.getString("role");
 
             @Override
