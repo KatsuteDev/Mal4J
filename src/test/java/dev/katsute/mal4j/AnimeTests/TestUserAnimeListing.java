@@ -1,6 +1,8 @@
 package dev.katsute.mal4j.AnimeTests;
 
-import dev.katsute.mal4j.*;
+import dev.katsute.mal4j.Fields;
+import dev.katsute.mal4j.MyAnimeList;
+import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.anime.AnimeListStatus;
 import dev.katsute.mal4j.anime.property.AnimeSort;
 import dev.katsute.mal4j.anime.property.AnimeStatus;
@@ -9,7 +11,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 final class TestUserAnimeListing {
 

@@ -19,7 +19,9 @@
 package dev.katsute.mal4j.anime;
 
 import dev.katsute.mal4j.anime.property.*;
+import dev.katsute.mal4j.character.Character;
 import dev.katsute.mal4j.property.FullMediaItem;
+import dev.katsute.mal4j.query.AnimeCharacterQuery;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_get">https://myanimelist.net/apiconfig/references/api/v2#operation/anime_anime_id_get</a> <br>
@@ -64,5 +66,16 @@ public abstract class Anime extends AnimePreview implements FullMediaItem<AnimeT
      * @since 2.10.0
      */
     public abstract Video[] getVideos();
+
+    /**
+     * Returns characters.
+     *
+     * @return characters
+     *
+     * @see Character
+     * @see AnimeCharacterQuery
+     * @since 3.1.0
+     */
+    public abstract AnimeCharacterQuery getCharacters();
 
 }

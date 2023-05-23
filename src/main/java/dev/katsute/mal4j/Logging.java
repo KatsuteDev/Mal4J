@@ -19,7 +19,10 @@
 package dev.katsute.mal4j;
 
 import java.util.HashSet;
-import java.util.logging.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Formatter;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 /**
  * Used for logging operating.

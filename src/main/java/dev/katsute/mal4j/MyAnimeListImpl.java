@@ -19,13 +19,22 @@
 package dev.katsute.mal4j;
 
 import dev.katsute.mal4j.APIStruct.Response;
-import dev.katsute.mal4j.anime.*;
+import dev.katsute.mal4j.anime.Anime;
+import dev.katsute.mal4j.anime.AnimeListStatus;
+import dev.katsute.mal4j.anime.AnimeRanking;
 import dev.katsute.mal4j.anime.property.AnimeRankingType;
 import dev.katsute.mal4j.anime.property.time.Season;
 import dev.katsute.mal4j.character.Character;
-import dev.katsute.mal4j.exception.*;
-import dev.katsute.mal4j.forum.*;
-import dev.katsute.mal4j.manga.*;
+import dev.katsute.mal4j.exception.ExperimentalFeatureException;
+import dev.katsute.mal4j.exception.HttpException;
+import dev.katsute.mal4j.exception.InvalidTokenException;
+import dev.katsute.mal4j.forum.ForumCategory;
+import dev.katsute.mal4j.forum.ForumTopic;
+import dev.katsute.mal4j.forum.ForumTopicDetail;
+import dev.katsute.mal4j.forum.Post;
+import dev.katsute.mal4j.manga.Manga;
+import dev.katsute.mal4j.manga.MangaListStatus;
+import dev.katsute.mal4j.manga.MangaRanking;
 import dev.katsute.mal4j.manga.property.MangaRankingType;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import dev.katsute.mal4j.query.*;
@@ -34,17 +43,20 @@ import dev.katsute.mal4j.user.User;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.HttpURLConnection;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-import static dev.katsute.mal4j.Json.*;
+import static dev.katsute.mal4j.Json.JsonObject;
 import static dev.katsute.mal4j.MyAnimeListSchema_Anime.*;
-import static dev.katsute.mal4j.MyAnimeListSchema_Character.*;
+import static dev.katsute.mal4j.MyAnimeListSchema_Character.asCharacter;
 import static dev.katsute.mal4j.MyAnimeListSchema_Forum.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Manga.*;
-import static dev.katsute.mal4j.MyAnimeListSchema_User.*;
+import static dev.katsute.mal4j.MyAnimeListSchema_User.asUser;
 
 final class MyAnimeListImpl extends MyAnimeList {
 
@@ -174,6 +186,52 @@ final class MyAnimeListImpl extends MyAnimeList {
                 convertFields(Fields.anime, fields)
             )
         ));
+    }
+
+    @Override
+    public final AnimeCharacterQuery getAnimeCharacters(final long id){
+        checkExperimentalFeatureEnabled(ExperimentalFeature.CHARACTERS);
+        return new AnimeCharacterQuery() {
+
+            @Override
+            public final List<Character> search(){
+                final JsonObject response = handleResponse(
+                    () -> service.getAnimeCharacters(
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
+                        id,
+                        limit,
+                        offset,
+                        convertFields(Fields.character, fields)
+                    )
+                );
+                if(response == null) return null;
+
+                final List<Character> characters = new ArrayList<>();
+                final JsonObject[] arr = response.getJsonArray("data");
+                if(arr == null) return null;
+                for(final JsonObject iterator : arr)
+                    characters.add(MyAnimeListSchema_Character.asCharacter(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                return characters;
+            }
+
+            @Override
+            public final PaginatedIterator<Character> searchAll(){
+                return new PagedIterator<>(
+                    offset,
+                    offset -> service.getAnimeCharacters(
+                        isTokenAuth ? token : null,
+                        !isTokenAuth ? client_id : null,
+                        id,
+                        limit,
+                        offset,
+                        convertFields(Fields.character, fields)
+                    ),
+                    iterator -> MyAnimeListSchema_Character.asCharacter(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                );
+            }
+
+        };
     }
 
     @Override

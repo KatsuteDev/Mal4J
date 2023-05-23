@@ -1,9 +1,14 @@
 package dev.katsute.mal4j.auth;
 
-import dev.katsute.mal4j.*;
-import org.junit.jupiter.api.*;
+import dev.katsute.mal4j.AccessToken;
+import dev.katsute.mal4j.Authorization;
+import dev.katsute.mal4j.MyAnimeListAuthenticator;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 
-import static dev.katsute.mal4j.MyAnimeListAuthenticator.*;
+import static dev.katsute.mal4j.MyAnimeListAuthenticator.generatePKCE;
+import static dev.katsute.mal4j.MyAnimeListAuthenticator.getAuthorizationURL;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestMyAnimeListAuthenticator {

@@ -1,6 +1,8 @@
 package dev.katsute.mal4j;
 
-import dev.katsute.mal4j.anime.*;
+import dev.katsute.mal4j.anime.Anime;
+import dev.katsute.mal4j.anime.AnimeRecommendation;
+import dev.katsute.mal4j.anime.RelatedAnime;
 import dev.katsute.mal4j.anime.property.OpeningTheme;
 import dev.katsute.mal4j.anime.property.Video;
 import dev.katsute.mal4j.character.Character;

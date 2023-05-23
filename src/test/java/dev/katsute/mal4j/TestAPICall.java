@@ -1,7 +1,9 @@
 package dev.katsute.mal4j;
 
 import com.sun.net.httpserver.HttpServer;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.io.*;
 import java.net.InetSocketAddress;

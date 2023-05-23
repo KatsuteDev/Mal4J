@@ -19,7 +19,7 @@
 package dev.katsute.mal4j;
 
 import static dev.katsute.mal4j.APIStruct.*;
-import static dev.katsute.mal4j.Json.*;
+import static dev.katsute.mal4j.Json.JsonObject;
 
 /**
  * Represents the HTTP requests for MyAnimeList.
@@ -53,6 +53,16 @@ interface MyAnimeListService {
         @Header("Authorization")                    final String token,
         @Header("X-MAL-CLIENT-ID")                  final String client_id,
         @Path(value = "anime_id")                   final Long anime_id,
+        @Query(value = "fields", encoded = true)    final String fields
+    );
+
+    @Endpoint(method="GET", value="anime/{anime_id}/characters")
+    Response<JsonObject> getAnimeCharacters(
+        @Header("Authorization")                    final String token,
+        @Header("X-MAL-CLIENT-ID")                  final String client_id,
+        @Path(value = "anime_id")                   final Long anime_id,
+        @Query("limit")                             final Integer limit,
+        @Query("offset")                            final Integer offset,
         @Query(value = "fields", encoded = true)    final String fields
     );
 

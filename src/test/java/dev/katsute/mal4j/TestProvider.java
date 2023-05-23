@@ -14,7 +14,7 @@ import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public abstract class TestProvider {
 
@@ -52,7 +52,7 @@ public abstract class TestProvider {
     // Character
 
     public static final long CharacterID = 61371;
-    public static final long AltCharacterID = 36828;
+    public static final long AltCharacterID = 36828; // for tests that require additional fields
     public static final long NSFW_CharacterID = 104119;
 
     //

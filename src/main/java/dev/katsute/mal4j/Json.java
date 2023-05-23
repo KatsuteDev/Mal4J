@@ -22,7 +22,9 @@ import dev.katsute.mal4j.exception.JsonSyntaxException;
 
 import java.util.*;
 import java.util.function.Function;
-import java.util.regex.*;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static dev.katsute.mal4j.Json.Expect.*;
 import static dev.katsute.mal4j.Json.Type.*;

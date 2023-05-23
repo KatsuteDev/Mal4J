@@ -18,22 +18,34 @@
 
 package dev.katsute.mal4j;
 
-import com.sun.net.httpserver.*;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 import dev.katsute.mal4j.APIStruct.Response;
-import dev.katsute.mal4j.exception.*;
+import dev.katsute.mal4j.exception.HttpException;
+import dev.katsute.mal4j.exception.InvalidTokenException;
+import dev.katsute.mal4j.exception.UnauthorizedAccessException;
 
 import java.awt.*;
 import java.io.IOException;
 import java.net.*;
 import java.nio.charset.StandardCharsets;
-import java.security.*;
-import java.util.*;
-import java.util.concurrent.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.zip.GZIPOutputStream;
 
-import static dev.katsute.mal4j.Json.*;
+import static dev.katsute.mal4j.Json.JsonObject;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/authorization">https://myanimelist.net/apiconfig/references/authorization</a> <br>
