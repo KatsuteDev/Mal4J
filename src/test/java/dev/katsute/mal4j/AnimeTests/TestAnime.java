@@ -1,18 +1,13 @@
 package dev.katsute.mal4j.AnimeTests;
 
-import dev.katsute.mal4j.Fields;
-import dev.katsute.mal4j.MyAnimeList;
-import dev.katsute.mal4j.TestProvider;
+import dev.katsute.mal4j.*;
 import dev.katsute.mal4j.anime.Anime;
 import dev.katsute.mal4j.anime.RelatedAnime;
 import dev.katsute.mal4j.anime.property.AnimeSource;
 import dev.katsute.mal4j.anime.property.AnimeType;
-import dev.katsute.mal4j.manga.RelatedManga;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import dev.katsute.mal4j.property.RelationType;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -187,14 +182,6 @@ final class TestAnime {
     final void testInvertedFieldsOnly(){
         final Anime manga = mal.getAnime(TestProvider.AnimeID, Fields.INVERTED);
         assertNotNull(manga.getEpisodes());
-    }
-
-    @Test @DisplayName("Anime may not have related Manga") @Disabled
-    final void testRelatedManga(){
-        final RelatedManga relatedManga = anime.getRelatedManga()[0];
-        assertNotNull(relatedManga.getManga().getID());
-        assertNotNull(relatedManga.getRelationType());
-        assertNotNull(relatedManga.getRelationTypeFormat());
     }
 
     @Test
