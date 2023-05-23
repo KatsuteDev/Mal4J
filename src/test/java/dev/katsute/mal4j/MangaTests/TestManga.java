@@ -142,7 +142,7 @@ final class TestManga {
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.INVERTED);
         assertNotNull(manga.getVolumes());
     }
-    
+
     @Test
     final void testEnum(){
         assertEquals(MangaPublishStatus.Unknown, MangaPublishStatus.asEnum("?"));
