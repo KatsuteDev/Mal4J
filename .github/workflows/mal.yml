@@ -38,11 +38,12 @@ jobs:
         uses: actions/github-script@v6
         if: env.out
         env:
+          url: ${{ env.url }}
           out: ${{ env.out }}
         with:
           github-token: ${{ secrets.BOT }}
           script: |
-            core.exportVariable("comment", "```json\n" + JSON.stringify(JSON.parse(process.env.out), null, 4) + "\n```");
+            core.exportVariable("comment", "`https://api.myanimelist.net/v2/" + process.env.url + "`\n\n" + "```json\n" + JSON.stringify(JSON.parse(process.env.out), null, 4) + "\n```");
 
       - name: Print Response
         if: env.comment
