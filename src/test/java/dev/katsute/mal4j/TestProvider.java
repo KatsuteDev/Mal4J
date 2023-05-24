@@ -55,6 +55,11 @@ public abstract class TestProvider {
     public static final long AltCharacterID = 36828; // for tests that require additional fields
     public static final long NSFW_CharacterID = 104119;
 
+    // People
+
+    public static final long PersonID = 10765;
+    public static final long AltPersonID = 34785; // for tests that require additional fields
+
     //
 
     private static MyAnimeList mal;

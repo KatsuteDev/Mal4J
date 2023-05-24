@@ -22,7 +22,7 @@ package dev.katsute.mal4j;
  * The fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
  * @since 1.1.0
- * @version 3.1.0
+ * @version 3.2.0
  * @author Katsute
  */
 public abstract class Fields {
@@ -600,6 +600,41 @@ public abstract class Fields {
         Character.animeography
     );
 
+    // person
+
+    /**
+     * All possible fields for a person.
+     *
+     * @see #people
+     * @since 3.2.0
+     */
+    public static class People {
+
+        private People(){}
+
+        public static final String first_name = "first_name";
+
+        public static final String last_name = "last_name";
+
+        public static final String birthday = "birthday";
+
+        public static final String main_picture = "main_picture";
+
+    }
+
+    /**
+     * Returns all people fields as a comma separated string.
+     *
+     * @see People
+     * @since 3.2.0
+     */
+    public static final String people = String.join(",",
+        People.first_name,
+        People.last_name,
+        People.birthday,
+        People.main_picture
+    );
+
     // user
 
     /**
@@ -625,7 +660,7 @@ public abstract class Fields {
     }
 
     /**
-     * Returns all User fields as a comma separated string.
+     * Returns all user fields as a comma separated string.
      *
      * @see User
      * @since 1.1.0

@@ -54,8 +54,10 @@ RelatedAnime[] relatedAnime = anime.getRelatedAnime();
 AnimeRecommendation[] recs = anime.getRecommendations();
 OpeningTheme[] op = anime.getOpeningThemes();
 Video[] PV = anime.getVideos();
+List<Character> characters = anime.getCharacters().search();
 
 Character character = mal.getCharacter(61371);
+Person person = mal.getPerson(10765);
 [/code]
 
 [center][size=200][url=https://github.com/KatsuteDev/Mal4J#readme]View on GitHub[/url][/size][/center]

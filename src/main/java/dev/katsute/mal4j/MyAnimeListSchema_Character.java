@@ -25,7 +25,7 @@ import dev.katsute.mal4j.property.Picture;
 
 import java.util.Arrays;
 
-@SuppressWarnings({"unused", "SpellCheckingInspection"})
+@SuppressWarnings("SpellCheckingInspection")
 abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
 
     static Character asCharacter(final MyAnimeList mal, final JsonObject schema){

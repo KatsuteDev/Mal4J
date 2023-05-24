@@ -101,8 +101,10 @@ RelatedAnime[] relatedAnime = anime.getRelatedAnime();
 AnimeRecommendation[] recs = anime.getRecommendations();
 OpeningTheme[] op = anime.getOpeningThemes();
 Video[] PV = anime.getVideos();
+List<Character> characters = anime.getCharacters().search();
 
 Character character = mal.getCharacter(61371);
+Person person = mal.getPerson(10765);
 ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

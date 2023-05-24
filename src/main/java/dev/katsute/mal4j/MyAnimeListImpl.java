@@ -36,6 +36,7 @@ import dev.katsute.mal4j.manga.Manga;
 import dev.katsute.mal4j.manga.MangaListStatus;
 import dev.katsute.mal4j.manga.MangaRanking;
 import dev.katsute.mal4j.manga.property.MangaRankingType;
+import dev.katsute.mal4j.people.Person;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import dev.katsute.mal4j.query.*;
 import dev.katsute.mal4j.user.User;
@@ -56,6 +57,7 @@ import static dev.katsute.mal4j.MyAnimeListSchema_Anime.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Character.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Forum.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Manga.*;
+import static dev.katsute.mal4j.MyAnimeListSchema_People.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_User.*;
 
 final class MyAnimeListImpl extends MyAnimeList {
@@ -866,6 +868,24 @@ final class MyAnimeListImpl extends MyAnimeList {
             }
 
         };
+    }
+
+    @Override
+    public final Person getPerson(final long id){
+        return getPerson(id, (String[]) null);
+    }
+
+    @Override
+    public final Person getPerson(final long id, final String... fields){
+        checkExperimentalFeatureEnabled(ExperimentalFeature.PEOPLE);
+        return asPerson(this, handleResponse(
+            () -> service.getPerson(
+                isTokenAuth ? token : null,
+                !isTokenAuth ? client_id : null,
+                id,
+                convertFields(Fields.people, fields)
+            )
+        ));
     }
 
     @Override

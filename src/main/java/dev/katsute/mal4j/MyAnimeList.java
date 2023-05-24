@@ -28,6 +28,7 @@ import dev.katsute.mal4j.forum.ForumTopicDetail;
 import dev.katsute.mal4j.manga.Manga;
 import dev.katsute.mal4j.manga.MangaRanking;
 import dev.katsute.mal4j.manga.property.MangaRankingType;
+import dev.katsute.mal4j.people.Person;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import dev.katsute.mal4j.query.*;
 import dev.katsute.mal4j.user.User;
@@ -45,7 +46,7 @@ import java.util.List;
  * </ul>
  *
  * @since 1.0.0
- * @version 3.1.0
+ * @version 3.2.0
  * @author Katsute
  */
 public abstract class MyAnimeList {
@@ -344,6 +345,33 @@ public abstract class MyAnimeList {
      * @since 3.1.0
      */
     public abstract Character getCharacter(final long id, final String... fields);
+
+// person
+
+    /**
+     * Returns a person.
+     *
+     * @param id person id
+     * @return person
+     *
+     * @see Person
+     * @see #getPerson(long, String...)
+     * @since 3.2.0
+     */
+    public abstract Person getPerson(final long id);
+
+    /**
+     * Returns a person.
+     *
+     * @param id person id
+     * @param fields a string array of the fields that should be returned
+     * @return person
+     *
+     * @see Person
+     * @see #getPerson(long)
+     * @since 3.2.0
+     */
+    public abstract Person getPerson(final long id, final String... fields);
 
 // forum board
 
