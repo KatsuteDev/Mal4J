@@ -76,7 +76,7 @@ abstract class MyAnimeListSchema {
             return null;
         }
 
-        return new NullableDate() {
+        return new NullableDate(){
 
             private final Long time = t;
 
@@ -153,7 +153,7 @@ abstract class MyAnimeListSchema {
         final int h         = Integer.parseInt(hhmm[0]);
         final int m         = Integer.parseInt(hhmm[1]);
 
-        return new Time() {
+        return new Time(){
 
             private final Integer hour      = h;
             private final Integer hour12    = h > 12 ? h - 12 : h == 0 ? 12 : h;
@@ -161,27 +161,27 @@ abstract class MyAnimeListSchema {
             private final Integer minute    = m;
 
             @Override
-            public final Integer getHour() {
+            public final Integer getHour(){
                 return hour;
             }
 
             @Override
-            public final Integer get12Hour() {
+            public final Integer get12Hour(){
                 return hour12;
             }
 
             @Override
-            public final Boolean isAM() {
+            public final Boolean isAM(){
                 return am;
             }
 
             @Override
-            public final Boolean isPM() {
+            public final Boolean isPM(){
                 return !am;
             }
 
             @Override
-            public final Integer getMinute() {
+            public final Integer getMinute(){
                 return minute;
             }
 

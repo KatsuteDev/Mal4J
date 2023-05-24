@@ -52,7 +52,7 @@ public abstract class UserMangaListQuery extends FieldQuery<UserMangaListQuery,M
      * @see MyAnimeList#getUserMangaListing(String)
      * @since 1.0.0
      */
-    public UserMangaListQuery(final String username) {
+    public UserMangaListQuery(final String username){
         this.username = username;
     }
 

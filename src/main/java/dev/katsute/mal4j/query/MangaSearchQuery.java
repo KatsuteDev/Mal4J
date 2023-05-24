@@ -41,7 +41,7 @@ public abstract class MangaSearchQuery extends NSFWSearchQuery<MangaSearchQuery,
      * @see MyAnimeList#getManga()
      * @since 1.0.0
      */
-    public MangaSearchQuery() {
+    public MangaSearchQuery(){
     }
 
 }

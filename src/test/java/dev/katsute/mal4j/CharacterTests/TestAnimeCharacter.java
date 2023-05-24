@@ -1,6 +1,8 @@
 package dev.katsute.mal4j.CharacterTests;
 
-import dev.katsute.mal4j.*;
+import dev.katsute.mal4j.Fields;
+import dev.katsute.mal4j.MyAnimeList;
+import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.character.Character;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import org.junit.jupiter.api.BeforeAll;

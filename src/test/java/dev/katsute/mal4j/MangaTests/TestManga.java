@@ -1,6 +1,8 @@
 package dev.katsute.mal4j.MangaTests;
 
-import dev.katsute.mal4j.*;
+import dev.katsute.mal4j.Fields;
+import dev.katsute.mal4j.MyAnimeList;
+import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.manga.Manga;
 import dev.katsute.mal4j.manga.property.MangaPublishStatus;
 import dev.katsute.mal4j.manga.property.MangaType;

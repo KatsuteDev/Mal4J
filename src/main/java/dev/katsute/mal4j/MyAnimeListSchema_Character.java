@@ -25,11 +25,11 @@ import dev.katsute.mal4j.property.Picture;
 
 import java.util.Arrays;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "SpellCheckingInspection"})
 abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
 
     static Character asCharacter(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new Character() {
+        return schema == null ? null : new Character(){
 
             boolean draft = true; // if any field is null, try and fetch full values (only try once)
 
@@ -132,7 +132,7 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
     }
 
     static Animeography asAnimeography(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new Animeography() {
+        return schema == null ? null : new Animeography(){
 
             private final Anime anime = MyAnimeListSchema_Anime.asAnime(mal, schema.getJsonObject("node"));
             private final String role = schema.getString("role");

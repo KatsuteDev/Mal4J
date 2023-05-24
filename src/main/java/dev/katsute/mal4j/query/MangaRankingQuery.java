@@ -47,7 +47,7 @@ public abstract class MangaRankingQuery extends FieldQuery<MangaRankingQuery,Man
      * @see MangaRankingType
      * @since 1.0.0
      */
-    public MangaRankingQuery(final String rankingType) {
+    public MangaRankingQuery(final String rankingType){
         this.rankingType = rankingType;
     }
 

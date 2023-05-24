@@ -43,7 +43,7 @@ public abstract class AnimeSuggestionQuery extends FieldQuery<AnimeSuggestionQue
      * @see MyAnimeList#getAnimeSuggestions()
      * @since 1.0.0
      */
-    public AnimeSuggestionQuery() { }
+    public AnimeSuggestionQuery(){ }
 
     @Override
     public final AnimeSuggestionQuery includeNSFW(){

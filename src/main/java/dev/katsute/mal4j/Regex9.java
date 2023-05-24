@@ -37,13 +37,13 @@ abstract class Regex9 {
      * @return replaced string
      */
     @SuppressWarnings("StringBufferMayBeStringBuilder")
-    static String replaceAll(final String str, final Matcher matcher, final Function<MatchResult,java.lang.String> replacer) {
+    static String replaceAll(final String str, final Matcher matcher, final Function<MatchResult,java.lang.String> replacer){
         Objects.requireNonNull(str);
         Objects.requireNonNull(matcher);
         Objects.requireNonNull(replacer);
         matcher.reset();
         boolean result = matcher.find();
-        if (result) {
+        if (result){
             final StringBuffer sb = new StringBuffer();
             do{
                 java.lang.String replacement = replacer.apply(matcher);

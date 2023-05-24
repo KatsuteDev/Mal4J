@@ -1,5 +1,49 @@
 # Changelog
 
+## 3.1.0
+
+### New Features
+
+* Add character support [#381](https://github.com/KatsuteDev/Mal4J/pull/381) ([@Katsute](https://github.com/Katsute))
+  This is an undocumented feature, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.CHARACTERS)` to enable it.
+  
+  Retrieve characters using `MyAnimeList.getCharacter(id)`.
+  
+  Character information currently includes:
+  
+   * Name
+   * Alternative names
+   * Picture
+   * Biography
+   * Animeography
+* Add ability to retrieve characters from Anime [#385](https://github.com/KatsuteDev/Mal4J/pull/385) ([@Katsute](https://github.com/Katsute))
+  This is an undocumented feature, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.CHARACTERS)` to enable it.
+  
+  Retrieve characters using `MyAnimeList.getAnimeCharacters(anime id)` or `Anime.getCharacters()`.
+  
+  Character information currently includes:
+  
+   * Name
+   * Alternative names
+   * Picture
+   * Biography
+   * Animeography
+
+### Fixes
+
+* Fix incomplete Anime/Manga listings [#386](https://github.com/KatsuteDev/Mal4J/pull/386) ([@Katsute](https://github.com/Katsute))
+  * Anime/Manga recommendation
+   * Related Anime/Manga
+
+### Dependencies
+
+* Bump junit-jupiter from 5.9.2 to 5.9.3 [#377](https://github.com/KatsuteDev/Mal4J/pull/377) ([@mashiro-san](https://github.com/mashiro-san))
+* Bump maven-surefire-plugin from 3.0.0 to 3.1.0 [#378](https://github.com/KatsuteDev/Mal4J/pull/378) ([@dependabot](https://github.com/dependabot))
+* Bump maven-gpg-plugin from 3.0.1 to 3.1.0 [#379](https://github.com/KatsuteDev/Mal4J/pull/379) ([@dependabot](https://github.com/dependabot))
+* Bump maven-source-plugin from 3.2.1 to 3.3.0 [#383](https://github.com/KatsuteDev/Mal4J/pull/383) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.0.3...3.1.0`](https://github.com/KatsuteDev/Mal4J/compare/3.0.3...3.1.0)
+
 ## 3.0.3
 
 ### 📘 Dependencies

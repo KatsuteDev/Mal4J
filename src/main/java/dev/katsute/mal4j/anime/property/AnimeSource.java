@@ -55,7 +55,7 @@ public enum AnimeSource implements FieldEnum {
 
     private final String field;
 
-    AnimeSource(String field) {
+    AnimeSource(String field){
         this.field = field;
     }
 

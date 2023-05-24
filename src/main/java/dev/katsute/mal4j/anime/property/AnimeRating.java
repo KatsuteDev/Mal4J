@@ -39,7 +39,7 @@ public enum AnimeRating implements FieldEnum {
 
     private final String field;
 
-    AnimeRating(String field) {
+    AnimeRating(String field){
         this.field = field;
     }
 

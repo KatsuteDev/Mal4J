@@ -47,7 +47,7 @@ public enum RelationType implements FieldEnum {
 
     private final String field;
 
-    RelationType(String field) {
+    RelationType(String field){
         this.field = field;
     }
 
@@ -77,7 +77,7 @@ public enum RelationType implements FieldEnum {
     }
 
     @Override
-    public final String toString() {
+    public final String toString(){
         return name();
     }
 

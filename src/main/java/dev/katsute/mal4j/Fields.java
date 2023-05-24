@@ -579,6 +579,7 @@ public abstract class Fields {
 
         public static final String biography = "biography";
 
+        @SuppressWarnings("SpellCheckingInspection")
         public static final String animeography = "animeography";
 
     }

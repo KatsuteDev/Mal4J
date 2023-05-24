@@ -41,6 +41,6 @@ public abstract class AnimeSearchQuery extends NSFWSearchQuery<AnimeSearchQuery,
      * @see MyAnimeList#getAnime()
      * @since 1.0.0
      */
-    public AnimeSearchQuery() { }
+    public AnimeSearchQuery(){ }
 
 }

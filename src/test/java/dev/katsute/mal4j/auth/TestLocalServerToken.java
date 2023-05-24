@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Objects;
 
-import static dev.katsute.mal4j.MyAnimeListAuthenticator.LocalServerBuilder;
+import static dev.katsute.mal4j.MyAnimeListAuthenticator.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public final class TestLocalServerToken {

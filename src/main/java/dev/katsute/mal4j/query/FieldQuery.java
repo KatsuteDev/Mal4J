@@ -41,7 +41,7 @@ public abstract class FieldQuery<T extends FieldQuery<T,R>,R> extends LimitOffse
 
     protected List<String> fields = null;
 
-    FieldQuery() { }
+    FieldQuery(){ }
 
     /**
      * Adds a field to return.

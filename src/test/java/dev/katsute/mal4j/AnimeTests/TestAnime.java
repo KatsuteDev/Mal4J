@@ -1,6 +1,8 @@
 package dev.katsute.mal4j.AnimeTests;
 
-import dev.katsute.mal4j.*;
+import dev.katsute.mal4j.Fields;
+import dev.katsute.mal4j.MyAnimeList;
+import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.anime.Anime;
 import dev.katsute.mal4j.anime.RelatedAnime;
 import dev.katsute.mal4j.anime.property.AnimeSource;

@@ -52,7 +52,7 @@ public abstract class Manga extends MangaPreview implements FullMediaItem<MangaT
      */
     // API doesn't return this
     @Override @Deprecated
-    public final MangaStatistics getStatistics() {
+    public final MangaStatistics getStatistics(){
         return null;
     }
 

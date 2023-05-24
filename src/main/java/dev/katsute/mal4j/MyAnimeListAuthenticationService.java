@@ -19,7 +19,7 @@
 package dev.katsute.mal4j;
 
 import static dev.katsute.mal4j.APIStruct.*;
-import static dev.katsute.mal4j.Json.JsonObject;
+import static dev.katsute.mal4j.Json.*;
 
 /**
  * Represents the HTTP requests for authentication.

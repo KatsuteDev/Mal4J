@@ -32,7 +32,7 @@ import java.util.Date;
 abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     static ForumTopicCreator asForumTopicCreator(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new ForumTopicCreator() {
+        return schema == null ? null : new ForumTopicCreator(){
 
             private final Long id       = schema.getLong("id");
             private final String name   = schema.getString("name");
@@ -40,12 +40,12 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getName() {
+            public final String getName(){
                 return name;
             }
 
@@ -69,7 +69,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static ForumTopic asForumTopicDetail(final MyAnimeList mal, final JsonObject schema, final Long boardid, final Long subboardid){
-        return schema == null ? null : new ForumTopic() {
+        return schema == null ? null : new ForumTopic(){
 
             private final Long boardID                  = boardid;
             private final Long subBoardID               = subboardid;
@@ -87,12 +87,12 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getTitle() {
+            public final String getTitle(){
                 return title;
             }
 
@@ -102,17 +102,17 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             }
 
             @Override
-            public final Long getCreatedAtEpochMillis() {
+            public final Long getCreatedAtEpochMillis(){
                 return createdAt;
             }
 
             @Override
-            public final ForumTopicCreator getCreatedBy() {
+            public final ForumTopicCreator getCreatedBy(){
                 return createdBy;
             }
 
             @Override
-            public final Integer getPostsCount() {
+            public final Integer getPostsCount(){
                 return posts;
             }
 
@@ -122,17 +122,17 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             }
 
             @Override
-            public final Long getLastPostCreatedAtEpochMillis() {
+            public final Long getLastPostCreatedAtEpochMillis(){
                 return lastPostedAt;
             }
 
             @Override
-            public final ForumTopicCreator getLastPostCreatedBy() {
+            public final ForumTopicCreator getLastPostCreatedBy(){
                 return lastPostedBy;
             }
 
             @Override
-            public final Boolean isLocked() {
+            public final Boolean isLocked(){
                 return locked;
             }
 
@@ -168,7 +168,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static Poll asPoll(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
-        return schema == null ? null : new Poll() {
+        return schema == null ? null : new Poll(){
 
             private final Long id               = schema.getLong("id");
             private final String question       = schema.getString("question");
@@ -178,29 +178,29 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getQuestion() {
+            public final String getQuestion(){
                 return question;
             }
 
             @Override
-            public final Boolean isClosed() {
+            public final Boolean isClosed(){
                 return isClosed;
             }
 
             @Override
-            public final PollOption[] getOptions() {
+            public final PollOption[] getOptions(){
                 return options != null ? Arrays.copyOf(options, options.length) : null;
             }
 
             // additional methods
 
             @Override
-            public final ForumTopicDetail getForumTopicDetail() {
+            public final ForumTopicDetail getForumTopicDetail(){
                 return forumTopic;
             }
 
@@ -218,7 +218,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static PollOption asPollOption(final MyAnimeList mal, final JsonObject schema, final Poll poll){
-        return schema == null ? null : new PollOption() {
+        return schema == null ? null : new PollOption(){
 
             private final Long id       = schema.getLong("id");
             private final String text   = schema.getString("text");
@@ -227,24 +227,24 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getText() {
+            public final String getText(){
                 return text;
             }
 
             @Override
-            public final Integer getVotes() {
+            public final Integer getVotes(){
                 return votes;
             }
 
             // additional methods
 
             @Override
-            public final Poll getPoll() {
+            public final Poll getPoll(){
                 return poll;
             }
 
@@ -261,7 +261,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static PostAuthor asPostAuthor(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new PostAuthor() {
+        return schema == null ? null : new PostAuthor(){
 
             private final Long id               = schema.getLong("id");
             private final String name           = schema.getString("name");
@@ -271,24 +271,24 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getName() {
+            public final String getName(){
                 return name;
             }
 
             @Override
-            public final String getForumAvatarURL() {
+            public final String getForumAvatarURL(){
                 return forumAvatarURL;
             }
 
             // additional methods
 
             @Override
-            public final User getUser() {
+            public final User getUser(){
                 return mal.getUser(name);
             }
 
@@ -305,7 +305,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumBoard asForumBoard(final MyAnimeList mal, final JsonObject schema, final ForumCategory forumCategory){
-        return schema == null ? null : new ForumBoard() {
+        return schema == null ? null : new ForumBoard(){
 
             private final Long id                   = schema.getLong("id");
             private final String title              = schema.getString("title");
@@ -316,29 +316,29 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getTitle() {
+            public final String getTitle(){
                 return title;
             }
 
             @Override
-            public final String getDescription() {
+            public final String getDescription(){
                 return description;
             }
 
             @Override
-            public final ForumSubBoard[] getSubBoards() {
+            public final ForumSubBoard[] getSubBoards(){
                 return subBoards != null ? Arrays.copyOf(subBoards, subBoards.length) : null;
             }
 
             // additional methods
 
             @Override
-            public final ForumCategory getCategory() {
+            public final ForumCategory getCategory(){
                 return forumCategory;
             }
 
@@ -356,7 +356,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumCategory asForumCategory(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new ForumCategory() {
+        return schema == null ? null : new ForumCategory(){
 
             private final String title              = schema.getString("title");
             private final ForumBoard[] forumBoards  = adaptList(schema.getJsonArray("boards"), b -> asForumBoard(mal, b, this), ForumBoard.class);
@@ -364,12 +364,12 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final String getTitle() {
+            public final String getTitle(){
                 return title;
             }
 
             @Override
-            public final ForumBoard[] getForumBoards() {
+            public final ForumBoard[] getForumBoards(){
                 return forumBoards != null ? Arrays.copyOf(forumBoards, forumBoards.length) : null;
             }
 
@@ -387,7 +387,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
     }
 
     static ForumSubBoard asForumSubBoard(final MyAnimeList mal, final JsonObject schema, final ForumBoard forumBoard){
-        return schema == null ? null : new ForumSubBoard() {
+        return schema == null ? null : new ForumSubBoard(){
 
             private final Long id       = schema.getLong("id");
             private final String title  = schema.getString("title");
@@ -395,19 +395,19 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getTitle() {
+            public final String getTitle(){
                 return title;
             }
 
             // additional methods
 
             @Override
-            public final ForumBoard getBoard() {
+            public final ForumBoard getBoard(){
                 return forumBoard;
             }
 
@@ -424,7 +424,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static ForumTopicDetail asForumTopic(final MyAnimeList mal, final JsonObject schema, final long topicid){
-        return schema == null ? null : new ForumTopicDetail() {
+        return schema == null ? null : new ForumTopicDetail(){
 
             private final long id       = topicid;
             private final String title  = schema.getString("title");
@@ -434,17 +434,17 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final String getTitle() {
+            public final String getTitle(){
                 return title;
             }
 
             @Override
-            public final Post[] getPosts() {
+            public final Post[] getPosts(){
                 return posts != null ? Arrays.copyOf(posts, posts.length) : null;
             }
 
             @Override
-            public final Poll getPoll() {
+            public final Poll getPoll(){
                 return poll;
             }
 
@@ -469,7 +469,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     // make sure matches below
     static Post asPost(final MyAnimeList mal, final JsonObject schema, final ForumTopicDetail forumTopic){
-        return schema == null ? null : new Post() {
+        return schema == null ? null : new Post(){
 
             private final Long id           = schema.getLong("id");
             private final Integer number    = schema.getInt("number");
@@ -481,12 +481,12 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final Integer getNumber() {
+            public final Integer getNumber(){
                 return number;
             }
 
@@ -496,29 +496,29 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             }
 
             @Override
-            public final Long getCreatedAtEpochMillis() {
+            public final Long getCreatedAtEpochMillis(){
                 return createdAt;
             }
 
             @Override
-            public final PostAuthor getAuthor() {
+            public final PostAuthor getAuthor(){
                 return author;
             }
 
             @Override
-            public final String getBody() {
+            public final String getBody(){
                 return body;
             }
 
             @Override
-            public final String getSignature() {
+            public final String getSignature(){
                 return signature;
             }
 
             // additional methods
 
             @Override
-            public final ForumTopicDetail getForumTopicDetail() {
+            public final ForumTopicDetail getForumTopicDetail(){
                 return forumTopic;
             }
 
@@ -539,7 +539,7 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
 
     @SuppressWarnings("SpellCheckingInspection")
     static Post asPost(final MyAnimeList mal, final JsonObject schema, final long ftdid){
-        return schema == null ? null : new Post() {
+        return schema == null ? null : new Post(){
 
             private final Long id           = schema.getLong("id");
             private final Integer number    = schema.getInt("number");
@@ -551,12 +551,12 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final Integer getNumber() {
+            public final Integer getNumber(){
                 return number;
             }
 
@@ -566,29 +566,29 @@ abstract class MyAnimeListSchema_Forum extends MyAnimeListSchema {
             }
 
             @Override
-            public final Long getCreatedAtEpochMillis() {
+            public final Long getCreatedAtEpochMillis(){
                 return createdAt;
             }
 
             @Override
-            public final PostAuthor getAuthor() {
+            public final PostAuthor getAuthor(){
                 return author;
             }
 
             @Override
-            public final String getBody() {
+            public final String getBody(){
                 return body;
             }
 
             @Override
-            public final String getSignature() {
+            public final String getSignature(){
                 return signature;
             }
 
             // additional methods
 
             @Override
-            public final ForumTopicDetail getForumTopicDetail() {
+            public final ForumTopicDetail getForumTopicDetail(){
                 return mal.getForumTopicDetail(ftdid);
             }
 

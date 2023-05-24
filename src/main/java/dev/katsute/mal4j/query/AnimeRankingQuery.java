@@ -47,7 +47,7 @@ public abstract class AnimeRankingQuery extends FieldQuery<AnimeRankingQuery,Ani
      * @see AnimeRankingType
      * @since 1.0.0
      */
-    public AnimeRankingQuery(final String rankingType) {
+    public AnimeRankingQuery(final String rankingType){
         this.rankingType = rankingType;
     }
 

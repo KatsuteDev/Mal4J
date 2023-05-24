@@ -41,6 +41,6 @@ public abstract class ForumTopicDetailPostQuery extends LimitOffsetQuery<ForumTo
      * @see MyAnimeList#getForumTopicDetailPostQuery(long)
      * @since 2.0.0
      */
-    public ForumTopicDetailPostQuery() { }
+    public ForumTopicDetailPostQuery(){ }
 
 }

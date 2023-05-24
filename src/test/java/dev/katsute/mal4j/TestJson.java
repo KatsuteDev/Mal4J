@@ -14,8 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import static dev.katsute.mal4j.Json.JsonObject;
-import static dev.katsute.mal4j.Json.parse;
+import static dev.katsute.mal4j.Json.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("SpellCheckingInspection")

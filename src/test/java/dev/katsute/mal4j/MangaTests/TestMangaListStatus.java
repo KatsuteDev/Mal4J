@@ -19,7 +19,7 @@ import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
+import static org.junit.jupiter.api.Assumptions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 final class TestMangaListStatus {

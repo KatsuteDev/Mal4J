@@ -45,7 +45,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.zip.GZIPOutputStream;
 
-import static dev.katsute.mal4j.Json.JsonObject;
+import static dev.katsute.mal4j.Json.*;
 
 /**
  * <b>Documentation:</b> <a href="https://myanimelist.net/apiconfig/references/authorization">https://myanimelist.net/apiconfig/references/authorization</a> <br>

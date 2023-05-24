@@ -38,7 +38,7 @@ public abstract class LimitOffsetQuery<T extends LimitOffsetQuery<T,R>,R> {
     protected Integer limit;
     protected Integer offset;
 
-    LimitOffsetQuery() { }
+    LimitOffsetQuery(){ }
 
     /**
      * Sets maximum amount of listings to return.

@@ -33,7 +33,7 @@ public abstract class SearchQuery<T extends SearchQuery<T,R>,R> extends FieldQue
 
     protected String query;
 
-    SearchQuery() { }
+    SearchQuery(){ }
 
     /**
      * Sets the search query.

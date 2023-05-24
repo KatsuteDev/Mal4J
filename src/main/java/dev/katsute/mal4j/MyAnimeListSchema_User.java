@@ -39,7 +39,7 @@ import java.util.function.Consumer;
 abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
 
     static User asUser(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new User() {
+        return schema == null ? null : new User(){
 
             private final Long id           = schema.getLong("id");
             private final String name       = schema.getString("name");
@@ -188,7 +188,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     index++;
                 }
 
-                return new AnimeAffinity() {
+                return new AnimeAffinity(){
 
                     private final int sharedCount = len;
                     private final Anime[] sharedPreviews = shared;
@@ -298,7 +298,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
                     index++;
                 }
 
-                return new MangaAffinity() {
+                return new MangaAffinity(){
 
                     private final int sharedCount = len;
                     private final Manga[] sharedPreviews = shared;
@@ -362,7 +362,7 @@ abstract class MyAnimeListSchema_User extends MyAnimeListSchema {
     }
 
     static UserAnimeStatistics asUserAnimeStatistics(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new UserAnimeStatistics() {
+        return schema == null ? null : new UserAnimeStatistics(){
 
             private final Integer watching          = schema.getInt("num_items_watching");
             private final Integer completed         = schema.getInt("num_items_completed");

@@ -52,7 +52,7 @@ public abstract class AnimeSeasonQuery extends FieldQuery<AnimeSeasonQuery,Anime
      * @see Season
      * @since 1.0.0
      */
-    public AnimeSeasonQuery(final int year, final Season season) {
+    public AnimeSeasonQuery(final int year, final Season season){
         this.year = year;
         this.season = season;
     }

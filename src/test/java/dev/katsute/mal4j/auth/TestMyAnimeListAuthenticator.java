@@ -7,8 +7,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
-import static dev.katsute.mal4j.MyAnimeListAuthenticator.generatePKCE;
-import static dev.katsute.mal4j.MyAnimeListAuthenticator.getAuthorizationURL;
+import static dev.katsute.mal4j.MyAnimeListAuthenticator.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 final class TestMyAnimeListAuthenticator {

@@ -28,6 +28,7 @@ import dev.katsute.mal4j.anime.property.AnimeRetrievable;
  * @version 3.1.0
  * @author Katsute
  */
+@SuppressWarnings("SpellCheckingInspection")
 public abstract class Animeography implements AnimeRetrievable {
 
     /**

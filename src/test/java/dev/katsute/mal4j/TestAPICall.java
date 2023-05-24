@@ -37,7 +37,7 @@ final class TestAPICall {
             if(exchange.getRequestMethod().equalsIgnoreCase("POST")){
                 final StringBuilder SB = new StringBuilder();
                 try (Reader reader = new BufferedReader(new InputStreamReader
-                  (exchange.getRequestBody(), StandardCharsets.UTF_8))) {
+                  (exchange.getRequestBody(), StandardCharsets.UTF_8))){
                     int c;
                     while ((c = reader.read()) != -1)
                         SB.append((char) c);

@@ -51,12 +51,12 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
 import java.util.regex.Pattern;
 
-import static dev.katsute.mal4j.Json.JsonObject;
+import static dev.katsute.mal4j.Json.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Anime.*;
-import static dev.katsute.mal4j.MyAnimeListSchema_Character.asCharacter;
+import static dev.katsute.mal4j.MyAnimeListSchema_Character.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Forum.*;
 import static dev.katsute.mal4j.MyAnimeListSchema_Manga.*;
-import static dev.katsute.mal4j.MyAnimeListSchema_User.asUser;
+import static dev.katsute.mal4j.MyAnimeListSchema_User.*;
 
 final class MyAnimeListImpl extends MyAnimeList {
 
@@ -104,7 +104,7 @@ final class MyAnimeListImpl extends MyAnimeList {
     private final List<ExperimentalFeature> enabledFeatures = new ArrayList<>();
 
     @SuppressWarnings("SameParameterValue")
-    final void checkExperimentalFeatureEnabled(final ExperimentalFeature feature) {
+    final void checkExperimentalFeatureEnabled(final ExperimentalFeature feature){
         if(nativeFeatures.contains(feature) || enabledFeatures.contains(feature) || enabledFeatures.contains(ExperimentalFeature.ALL))
             return;
 
@@ -127,7 +127,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final AnimeSearchQuery getAnime(){
-        return new AnimeSearchQuery() {
+        return new AnimeSearchQuery(){
 
             @Override
             public final List<Anime> search(){
@@ -195,7 +195,7 @@ final class MyAnimeListImpl extends MyAnimeList {
     @Override
     public final AnimeCharacterQuery getAnimeCharacters(final long id){
         checkExperimentalFeatureEnabled(ExperimentalFeature.CHARACTERS);
-        return new AnimeCharacterQuery() {
+        return new AnimeCharacterQuery(){
 
             @Override
             public final List<Character> search(){
@@ -245,7 +245,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final AnimeRankingQuery getAnimeRanking(final String rankingType){
-        return new AnimeRankingQuery(Objects.requireNonNull(rankingType, "Ranking type cannot be null")) {
+        return new AnimeRankingQuery(Objects.requireNonNull(rankingType, "Ranking type cannot be null")){
 
             @Override
             public final List<AnimeRanking> search(){
@@ -291,7 +291,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final AnimeSeasonQuery getAnimeSeason(final int year, final Season season){
-        return new AnimeSeasonQuery(year, Objects.requireNonNull(season, "Season cannot be null")) {
+        return new AnimeSeasonQuery(year, Objects.requireNonNull(season, "Season cannot be null")){
 
             @Override
             public final List<Anime> search(){
@@ -342,7 +342,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final AnimeSuggestionQuery getAnimeSuggestions(){
-        return new AnimeSuggestionQuery() {
+        return new AnimeSuggestionQuery(){
 
             @Override
             public final List<Anime> search(){
@@ -385,7 +385,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final AnimeListUpdate updateAnimeListing(final long id){
-        return new AnimeListUpdate(id) {
+        return new AnimeListUpdate(id){
 
             @Override
             public synchronized final AnimeListStatus update(){
@@ -436,7 +436,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final UserAnimeListQuery getUserAnimeListing(final String username){
-        return new UserAnimeListQuery(Objects.requireNonNull(username, "Username cannot be null" )) {
+        return new UserAnimeListQuery(Objects.requireNonNull(username, "Username cannot be null" )){
 
             @Override
             public final List<AnimeListStatus> search(){
@@ -551,7 +551,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final ForumTopicDetailPostQuery getForumTopicDetailPostQuery(final long id){
-        return new ForumTopicDetailPostQuery() {
+        return new ForumTopicDetailPostQuery(){
 
             @Override
             public final List<Post> search(){
@@ -594,7 +594,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final ForumSearchQuery getForumTopics(){
-        return new ForumSearchQuery() {
+        return new ForumSearchQuery(){
 
             @Override
             public final List<ForumTopic> search(){
@@ -647,7 +647,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final MangaSearchQuery getManga(){
-        return new MangaSearchQuery() {
+        return new MangaSearchQuery(){
 
             @Override
             public final List<Manga> search(){
@@ -720,7 +720,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final MangaRankingQuery getMangaRanking(final String rankingType){
-        return new MangaRankingQuery(Objects.requireNonNull(rankingType, "Ranking type cannot be null")) {
+        return new MangaRankingQuery(Objects.requireNonNull(rankingType, "Ranking type cannot be null")){
 
             @Override
             public final List<MangaRanking> search(){
@@ -767,7 +767,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final MangaListUpdate updateMangaListing(final long id){
-        return new MangaListUpdate(id) {
+        return new MangaListUpdate(id){
 
             @Override
             public synchronized final MangaListStatus update(){
@@ -819,7 +819,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final UserMangaListQuery getUserMangaListing(final String username){
-        return new UserMangaListQuery(Objects.requireNonNull(username, "Username cannot be null")) {
+        return new UserMangaListQuery(Objects.requireNonNull(username, "Username cannot be null")){
 
             @Override
             public final List<MangaListStatus> search(){

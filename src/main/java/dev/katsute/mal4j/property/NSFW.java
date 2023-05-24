@@ -34,7 +34,7 @@ public enum NSFW implements FieldEnum {
 
     private final String field;
 
-    NSFW(String field) {
+    NSFW(String field){
         this.field = field;
     }
 

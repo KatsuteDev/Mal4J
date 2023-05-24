@@ -32,7 +32,7 @@ import java.util.Objects;
 abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
     static Author asAuthor(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new Author() {
+        return schema == null ? null : new Author(){
 
             private final Long id           = schema.getJsonObject("node").getLong("id");
             private final String firstName  = schema.getJsonObject("node").getString("first_name");
@@ -42,22 +42,22 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getFirstName() {
+            public final String getFirstName(){
                 return firstName;
             }
 
             @Override
-            public final String getLastName() {
+            public final String getLastName(){
                 return lastName;
             }
 
             @Override
-            public final String getRole() {
+            public final String getRole(){
                 return role;
             }
 
@@ -77,7 +77,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     }
 
     static Publisher asPublisher(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new Publisher() {
+        return schema == null ? null : new Publisher(){
 
             private final Long id       = schema.getJsonObject("node").getLong("id");
             private final String name   = schema.getJsonObject("node").getString("name");
@@ -86,17 +86,17 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
            @Override
-            public final String getName() {
+            public final String getName(){
                 return name;
             }
 
             @Override
-            public final String getRole() {
+            public final String getRole(){
                 return role;
             }
 
@@ -115,7 +115,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     }
 
     static Manga asManga(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new Manga() {
+        return schema == null ? null : new Manga(){
 
             boolean draft = true; // if any field is null, try and fetch full values (only try once)
 
@@ -202,89 +202,89 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Long getID() {
+            public final Long getID(){
                 return id;
             }
 
             @Override
-            public final String getTitle() {
+            public final String getTitle(){
                 if(title == null && draft)
                     populate();
                 return title;
             }
 
             @Override
-            public final Picture getMainPicture() {
+            public final Picture getMainPicture(){
                 if(mainPicture == null && draft)
                     populate();
                 return mainPicture;
             }
 
             @Override
-            public final AlternativeTitles getAlternativeTitles() {
+            public final AlternativeTitles getAlternativeTitles(){
                 if(alternativeTitles == null && draft)
                     populate();
                 return alternativeTitles;
             }
 
             @Override
-            public final NullableDate getStartDate() {
+            public final NullableDate getStartDate(){
                 if(startDate == null && draft)
                     populate();
                 return startDate;
             }
 
             @Override
-            public final NullableDate getEndDate() {
+            public final NullableDate getEndDate(){
                 if(endDate == null && draft)
                     populate();
                 return endDate;
             }
 
             @Override
-            public final String getSynopsis() {
+            public final String getSynopsis(){
                 if(synopsis == null && draft)
                     populate();
                 return synopsis;
             }
 
             @Override
-            public final Float getMeanRating() {
+            public final Float getMeanRating(){
                 if(meanRating == null && draft)
                     populate();
                 return meanRating;
             }
 
             @Override
-            public final Integer getRank() {
+            public final Integer getRank(){
                 if(rank == null && draft)
                     populate();
                 return rank;
             }
 
             @Override
-            public final Integer getPopularity() {
+            public final Integer getPopularity(){
                 if(popularity == null && draft)
                     populate();
                 return popularity;
             }
 
             @Override
-            public final Integer getUserListingCount() {
+            public final Integer getUserListingCount(){
                 if(usersListing == null && draft)
                     populate();
                 return usersListing;
             }
 
             @Override
-            public final Integer getUserScoringCount() {
+            public final Integer getUserScoringCount(){
                 if(usersScoring == null && draft)
                     populate();
                 return usersScoring;
             }
 
             @Override
-            public final NSFW getNSFW() {
+            public final NSFW getNSFW(){
                 if(e_nsfw == null && draft)
                     populate();
                 return e_nsfw;
@@ -298,14 +298,14 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final Genre[] getGenres() {
+            public final Genre[] getGenres(){
                 if(genres == null && draft)
                     populate();
                 return genres != null ? Arrays.copyOf(genres, genres.length) : null;
             }
 
             @Override
-            public final Date getCreatedAt() {
+            public final Date getCreatedAt(){
                 if(createdAt == null && draft)
                     populate();
                 return createdAt == null ? null : new Date(createdAt);
@@ -319,7 +319,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final Date getUpdatedAt() {
+            public final Date getUpdatedAt(){
                 if(updatedAt == null && draft)
                     populate();
                 return updatedAt == null ? null : new Date(updatedAt);
@@ -333,7 +333,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final MangaType getType() {
+            public final MangaType getType(){
                 if(e_type == MangaType.Unknown && draft)
                     populate();
                 return e_type;
@@ -347,7 +347,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final MangaPublishStatus getStatus() {
+            public final MangaPublishStatus getStatus(){
                 if(e_status == MangaPublishStatus.Unknown && draft)
                     populate();
                 return e_status;
@@ -361,28 +361,28 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final MangaListStatus getListStatus() {
+            public final MangaListStatus getListStatus(){
                 if(listStatus == null && draft)
                     populate();
                 return listStatus;
             }
 
             @Override
-            public final Integer getVolumes() {
+            public final Integer getVolumes(){
                 if(volumes == null && draft)
                     populate();
                 return volumes;
             }
 
             @Override
-            public final Integer getChapters() {
+            public final Integer getChapters(){
                 if(chapters == null && draft)
                     populate();
                 return chapters;
             }
 
             @Override
-            public final Author[] getAuthors() {
+            public final Author[] getAuthors(){
                 if(authors == null && draft)
                     populate();
                 return authors != null ? Arrays.copyOf(authors, authors.length) : null;
@@ -391,42 +391,42 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // full only
 
             @Override
-            public final Picture[] getPictures() {
+            public final Picture[] getPictures(){
                 if(pictures == null && draft)
                     populate();
                 return pictures != null ? Arrays.copyOf(pictures, pictures.length) : null;
             }
 
             @Override
-            public final String getBackground() {
+            public final String getBackground(){
                 if(background == null && draft)
                     populate();
                 return background;
             }
 
             @Override
-            public final RelatedAnime[] getRelatedAnime() {
+            public final RelatedAnime[] getRelatedAnime(){
                 if(relatedAnime == null && draft)
                     populate();
                 return relatedAnime != null ? Arrays.copyOf(relatedAnime, relatedAnime.length) : null;
             }
 
             @Override
-            public final RelatedManga[] getRelatedManga() {
+            public final RelatedManga[] getRelatedManga(){
                 if(relatedManga == null && draft)
                     populate();
                 return relatedManga != null ? Arrays.copyOf(relatedManga, relatedManga.length) : null;
             }
 
             @Override
-            public final MangaRecommendation[] getRecommendations() {
+            public final MangaRecommendation[] getRecommendations(){
                 if(recommendations == null && draft)
                     populate();
                 return recommendations != null ? Arrays.copyOf(recommendations, recommendations.length) : null;
             }
 
             @Override
-            public final Publisher[] getSerialization() {
+            public final Publisher[] getSerialization(){
                 if(serialization == null && draft)
                     populate();
                 return serialization != null ? Arrays.copyOf(serialization, serialization.length) : null;
@@ -482,7 +482,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final Manga manga_full){
         if(manga_id == null && manga_full == null)
             throw new NullPointerException("Manga and ID must not be both null");
-        return schema == null ? null : new MangaListStatus() {
+        return schema == null ? null : new MangaListStatus(){
 
             private Manga manga                     = manga_full;
             private final Long id                   = manga_id != null ? manga_id : manga_full.getID();
@@ -507,7 +507,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final MangaStatus getStatus() {
+            public final MangaStatus getStatus(){
                 return e_status;
             }
 
@@ -517,22 +517,22 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final Integer getScore() {
+            public final Integer getScore(){
                 return score;
             }
 
             @Override
-            public final Date getStartDate() {
+            public final Date getStartDate(){
                 return startDate == null ? null : new Date(startDate);
             }
 
             @Override
-            public final Date getFinishDate() {
+            public final Date getFinishDate(){
                 return finishDate == null ? null : new Date(finishDate);
             }
 
             @Override
-            public final Priority getPriority() {
+            public final Priority getPriority(){
                 return e_priority;
             }
 
@@ -542,17 +542,17 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final String[] getTags() {
+            public final String[] getTags(){
                 return tags != null ? Arrays.copyOf(tags, tags.length) : null;
             }
 
             @Override
-            public final String getComments() {
+            public final String getComments(){
                 return comments;
             }
 
             @Override
-            public final Date getUpdatedAt() {
+            public final Date getUpdatedAt(){
                 return updatedAt == null ? null : new Date(updatedAt);
             }
 
@@ -562,27 +562,27 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final Integer getVolumesRead() {
+            public final Integer getVolumesRead(){
                 return volumesRead;
             }
 
             @Override
-            public final Integer getChaptersRead() {
+            public final Integer getChaptersRead(){
                 return chaptersRead;
             }
 
             @Override
-            public final Boolean isRereading() {
+            public final Boolean isRereading(){
                 return rereading;
             }
 
             @Override
-            public final Integer getTimesReread() {
+            public final Integer getTimesReread(){
                 return timesReread;
             }
 
             @Override
-            public final RereadValue getRereadValue() {
+            public final RereadValue getRereadValue(){
                 return e_rereadValue;
             }
 
@@ -627,7 +627,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     }
 
     static MangaRanking asMangaRanking(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new MangaRanking() {
+        return schema == null ? null : new MangaRanking(){
 
             private final Manga manga               = asManga(mal, schema.getJsonObject("node"));
             private final Integer ranking           = schema.getJsonObject("ranking").getInt("rank");
@@ -636,19 +636,19 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API method
 
             @Override
-            public final Integer getRanking() {
+            public final Integer getRanking(){
                 return ranking;
             }
 
             @Override
-            public final Integer getPreviousRank() {
+            public final Integer getPreviousRank(){
                 return previousRanking;
             }
 
             // API methods
 
             @Override
-            public final Manga getManga() {
+            public final Manga getManga(){
                 return manga;
             }
 
@@ -665,7 +665,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     }
 
     static MangaRecommendation asMangaRecommendation(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new MangaRecommendation() {
+        return schema == null ? null : new MangaRecommendation(){
 
             private final Manga manga               = asManga(mal, schema.getJsonObject("node"));
             private final Integer recommendations   = schema.getInt("num_recommendations");
@@ -673,14 +673,14 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final Integer getRecommendations() {
+            public final Integer getRecommendations(){
                 return recommendations;
             }
 
             // additional methods
 
             @Override
-            public final Manga getManga() {
+            public final Manga getManga(){
                 return manga;
             }
 
@@ -696,7 +696,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     }
 
     static RelatedManga asRelatedManga(final MyAnimeList mal, final JsonObject schema){
-        return schema == null ? null : new RelatedManga() {
+        return schema == null ? null : new RelatedManga(){
 
             private final Manga manga                   = asManga(mal, schema.getJsonObject("node"));
             private final String relationType           = schema.getString("relation_type");
@@ -706,7 +706,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             // API methods
 
             @Override
-            public final RelationType getRelationType() {
+            public final RelationType getRelationType(){
                 return e_relationType;
             }
 
@@ -716,14 +716,14 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
             }
 
             @Override
-            public final String getRelationTypeFormat() {
+            public final String getRelationTypeFormat(){
                 return relationTypeFormatted;
             }
 
             // API methods
 
             @Override
-            public final Manga getManga() {
+            public final Manga getManga(){
                 return manga;
             }
 

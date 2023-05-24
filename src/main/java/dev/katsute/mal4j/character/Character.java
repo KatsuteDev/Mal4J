@@ -93,6 +93,7 @@ public abstract class Character implements ID {
      * @see Animeography
      * @since 3.1.0
      */
+    @SuppressWarnings("SpellCheckingInspection")
     public abstract Animeography[] getAnimeography();
 
 }
