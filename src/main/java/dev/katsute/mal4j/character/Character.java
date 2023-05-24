@@ -27,7 +27,6 @@ import dev.katsute.mal4j.property.Picture;
  * @see dev.katsute.mal4j.MyAnimeList#getAnimeCharacters(long)
  * @see dev.katsute.mal4j.MyAnimeList#getCharacter(long)
  * @see dev.katsute.mal4j.MyAnimeList#getCharacter(long, String...)
- * @see Character
  * @since 3.1.0
  * @version 3.1.0
  * @author Katsute

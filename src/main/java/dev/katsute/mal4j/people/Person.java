@@ -26,6 +26,8 @@ import java.util.Date;
 /**
  * Represents a person.
  *
+ * @see dev.katsute.mal4j.MyAnimeList#getPerson(long)
+ * @see dev.katsute.mal4j.MyAnimeList#getPerson(long, String...)
  * @since 3.2.0
  * @version 3.2.0
  * @author Katsute

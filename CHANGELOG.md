@@ -1,10 +1,29 @@
 # Changelog
 
+## 3.2.0
+
+### New Features
+
+* Add people support [#389](https://github.com/KatsuteDev/Mal4J/pull/389) ([@Katsute](https://github.com/Katsute))
+
+  This is an undocumented feature, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.PEOPLE)` to enable it.
+
+  Retrieve people using `MyAnimeList.getPerson(id)`.
+
+  Person information currently includes:
+
+   * Name
+   * Birthday
+   * Picture
+
+**Full Changelog**: [`3.1.0...3.2.0`](https://github.com/KatsuteDev/Mal4J/compare/3.1.0...3.2.0)
+
 ## 3.1.0
 
 ### New Features
 
 * Add character support [#381](https://github.com/KatsuteDev/Mal4J/pull/381) ([@Katsute](https://github.com/Katsute))
+
   This is an undocumented feature, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.CHARACTERS)` to enable it.
 
   Retrieve characters using `MyAnimeList.getCharacter(id)`.
@@ -17,6 +36,7 @@
    * Biography
    * Animeography
 * Add ability to retrieve characters from Anime [#385](https://github.com/KatsuteDev/Mal4J/pull/385) ([@Katsute](https://github.com/Katsute))
+
   This is an undocumented feature, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.CHARACTERS)` to enable it.
 
   Retrieve characters using `MyAnimeList.getAnimeCharacters(anime id)` or `Anime.getCharacters()`.
@@ -32,7 +52,7 @@
 ### Fixes
 
 * Fix incomplete Anime/Manga listings [#386](https://github.com/KatsuteDev/Mal4J/pull/386) ([@Katsute](https://github.com/Katsute))
-  * Anime/Manga recommendation
+   * Anime/Manga recommendation
    * Related Anime/Manga
 
 ### Dependencies
@@ -59,6 +79,7 @@
 
 * Schema parsing optimizations [#363](https://github.com/KatsuteDev/Mal4J/pull/363) ([@Katsute](https://github.com/Katsute))
 * JSON parsing optimizations [#364](https://github.com/KatsuteDev/Mal4J/pull/364) ([@Katsute](https://github.com/Katsute))
+
   This library is now 70% faster after this change.
 
 ### 📘 Dependencies
