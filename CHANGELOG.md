@@ -6,11 +6,11 @@
 
 * Add character support [#381](https://github.com/KatsuteDev/Mal4J/pull/381) ([@Katsute](https://github.com/Katsute))
   This is an undocumented feature, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.CHARACTERS)` to enable it.
-  
+
   Retrieve characters using `MyAnimeList.getCharacter(id)`.
-  
+
   Character information currently includes:
-  
+
    * Name
    * Alternative names
    * Picture
@@ -18,11 +18,11 @@
    * Animeography
 * Add ability to retrieve characters from Anime [#385](https://github.com/KatsuteDev/Mal4J/pull/385) ([@Katsute](https://github.com/Katsute))
   This is an undocumented feature, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.CHARACTERS)` to enable it.
-  
+
   Retrieve characters using `MyAnimeList.getAnimeCharacters(anime id)` or `Anime.getCharacters()`.
-  
+
   Character information currently includes:
-  
+
    * Name
    * Alternative names
    * Picture
