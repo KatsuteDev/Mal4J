@@ -59,7 +59,7 @@ module Mal4J {
     exports dev.katsute.mal4j.forum.property;
     exports dev.katsute.mal4j.manga;
     exports dev.katsute.mal4j.manga.property;
-    exports dev.katsute.mal4j.person;
+    exports dev.katsute.mal4j.people;
     exports dev.katsute.mal4j.property;
     exports dev.katsute.mal4j.query;
     exports dev.katsute.mal4j.user;

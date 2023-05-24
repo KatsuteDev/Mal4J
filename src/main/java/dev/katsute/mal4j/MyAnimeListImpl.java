@@ -877,6 +877,7 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final Person getPerson(final long id, final String... fields){
+        checkExperimentalFeatureEnabled(ExperimentalFeature.PEOPLE);
         return asPerson(this, handleResponse(
             () -> service.getPerson(
                 isTokenAuth ? token : null,

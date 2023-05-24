@@ -25,7 +25,7 @@ final class TestPeople {
     static void beforeAll(){
         mal = TestProvider.getMyAnimeList();
 
-        mal.enableExperimentalFeature(ExperimentalFeature.CHARACTERS);
+        mal.enableExperimentalFeature(ExperimentalFeature.PEOPLE);
         person = mal.getPerson(TestProvider.PersonID);
     }
 
