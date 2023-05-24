@@ -1,7 +1,6 @@
 package dev.katsute.mal4j.CharacterTests;
 
-import dev.katsute.mal4j.MyAnimeList;
-import dev.katsute.mal4j.TestProvider;
+import dev.katsute.mal4j.*;
 import dev.katsute.mal4j.character.Character;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import org.junit.jupiter.api.BeforeAll;
@@ -41,8 +40,8 @@ final class TestAnimeCharacter {
 
     @Test
     final void testFields(){
-        assertNull(mal.getAnimeCharacters(TestProvider.AnimeID).withNoFields().search().get(0).getFirstName());
-        assertNotNull(mal.getAnimeCharacters(TestProvider.AnimeID).withAllFields().search().get(0).getFirstName());
+        assertTrue(mal.getAnimeCharacters(TestProvider.AnimeID).withNoFields().search().get(0).toString().contains(", firstName='null'"));
+        assertFalse(mal.getAnimeCharacters(TestProvider.AnimeID).withField(Fields.Character.first_name).search().get(0).toString().contains(", firstName='null'"));
     }
 
 }

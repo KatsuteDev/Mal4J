@@ -126,21 +126,15 @@ final class TestManga {
     @Test
     final void testFields(){
         final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes);
-        assertNotNull(manga.getVolumes());
-        assertNull(manga.getChapters());
+        assertFalse(manga.toString().contains(", volumes=null,"));
+        assertTrue(manga.toString().contains(", chapters=null,"));
     }
 
     @Test
     final void testInvertedFields(){
-        final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes, Fields.INVERTED);
-        assertNull(manga.getVolumes());
-        assertNotNull(manga.getChapters());
-    }
-
-    @Test
-    final void testInvertedFieldsOnly(){
-        final Manga manga = mal.getManga(TestProvider.MangaID, Fields.INVERTED);
-        assertNotNull(manga.getVolumes());
+        final Manga manga = mal.getManga(TestProvider.MangaID, Fields.Manga.volumes, Fields.Manga.list_status, Fields.Manga.related_manga, Fields.Manga.recommendations, Fields.INVERTED);
+        assertTrue(manga.toString().contains(", volumes=null,"));
+        assertFalse(manga.toString().contains(", chapters=null,"));
     }
 
     @Test

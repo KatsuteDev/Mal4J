@@ -167,21 +167,16 @@ final class TestAnime {
     @Test
     final void testFields(){
         final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes);
-        assertNotNull(anime.getEpisodes());
-        assertNull(anime.getRating());
+        assertFalse(anime.toString().contains(", episodes=null,"));
+        assertTrue(anime.toString().contains(", episodeLength=null,"));
     }
 
     @Test
     final void testInvertedFields(){
-        final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes, Fields.INVERTED);
-        assertNull(anime.getEpisodes());
-        assertNotNull(anime.getRating());
-    }
-
-    @Test
-    final void testInvertedFieldsOnly(){
-        final Anime manga = mal.getAnime(TestProvider.AnimeID, Fields.INVERTED);
-        assertNotNull(manga.getEpisodes());
+        final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes, Fields.Anime.list_status, Fields.Anime.related_anime, Fields.Anime.recommendations, Fields.INVERTED);
+        System.out.println(anime.toString());
+        assertTrue(anime.toString().contains(", episodes=null,"));
+        assertFalse(anime.toString().contains(", episodeLength=null,"));
     }
 
     @Test
