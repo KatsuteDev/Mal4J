@@ -24,6 +24,7 @@
  *         </ul>
  *     </li>
  *     <li>{@link dev.katsute.mal4j.character.Character}</li>
+ *     <li>{@link dev.katsute.mal4j.people.Person}</li>
  *     <li>{@link dev.katsute.mal4j.user.User}</li>
  *     <li>
  *         {@link dev.katsute.mal4j.forum.ForumTopicDetail}
@@ -58,6 +59,7 @@ module Mal4J {
     exports dev.katsute.mal4j.forum.property;
     exports dev.katsute.mal4j.manga;
     exports dev.katsute.mal4j.manga.property;
+    exports dev.katsute.mal4j.person;
     exports dev.katsute.mal4j.property;
     exports dev.katsute.mal4j.query;
     exports dev.katsute.mal4j.user;
