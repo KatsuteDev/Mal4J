@@ -148,7 +148,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -165,7 +165,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
         };
@@ -178,14 +178,18 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final Anime getAnime(final long id, final String... fields){
-        return asAnime(this, handleResponse(
+        return asAnime(this, getAnimeSchema(id, fields));
+    }
+
+    final JsonObject getAnimeSchema(final long id, final String... fields){
+        return handleResponse(
             () -> service.getAnime(
                 isTokenAuth ? token : null,
                 !isTokenAuth ? client_id : null,
                 id,
                 convertFields(Fields.anime, fields)
             )
-        ));
+        );
     }
 
     @Override
@@ -310,7 +314,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -329,7 +333,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
 
@@ -357,7 +361,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    anime.add(asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    anime.add(asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return anime;
             }
 
@@ -372,7 +376,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
 
@@ -455,7 +459,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
+                    anime.add(asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
                 return anime;
             }
 
@@ -474,7 +478,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.anime, fields),
                         nsfw
                     ),
-                    iterator -> asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnimePreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
+                    iterator -> asAnimeListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asAnime(MyAnimeListImpl.this, iterator.getJsonObject("node")))
                 );
             }
 
@@ -489,14 +493,18 @@ final class MyAnimeListImpl extends MyAnimeList {
     @Override
     public final Character getCharacter(final long id, final String... fields){
         checkExperimentalFeatureEnabled(ExperimentalFeature.CHARACTERS);
-        return asCharacter(MyAnimeListImpl.this, handleResponse(
+        return asCharacter(MyAnimeListImpl.this, getCharacterSchema(id, fields));
+    }
+
+    final JsonObject getCharacterSchema(final long id, final String... fields){
+        return handleResponse(
             () -> service.getCharacter(
                 isTokenAuth ? token : null,
                 !isTokenAuth ? client_id : null,
                 id,
                 convertFields(Fields.character, fields)
             )
-        ));
+        );
     }
 
     @Override
@@ -660,7 +668,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    manga.add(asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")));
+                    manga.add(asManga(MyAnimeListImpl.this, iterator.getJsonObject("node")));
                 return manga;
             }
 
@@ -677,7 +685,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.manga, fields),
                         nsfw
                     ),
-                    iterator -> asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))
+                    iterator -> asManga(MyAnimeListImpl.this, iterator.getJsonObject("node"))
                 );
             }
 
@@ -691,14 +699,18 @@ final class MyAnimeListImpl extends MyAnimeList {
 
     @Override
     public final Manga getManga(final long id, final String... fields){
-        return asManga(this, handleResponse(
+        return asManga(this, getMangaSchema(id, fields));
+    }
+
+    final JsonObject getMangaSchema(final long id, final String... fields){
+        return handleResponse(
             () -> service.getManga(
                 isTokenAuth ? token : null,
                 !isTokenAuth ? client_id : null,
                 id,
                 convertFields(Fields.manga, fields)
             )
-        ));
+        );
     }
 
     @Override
@@ -830,7 +842,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                 final JsonObject[] arr = response.getJsonArray("data");
                 if(arr == null) return null;
                 for(final JsonObject iterator : arr)
-                    manga.add(asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
+                    manga.add(asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asManga(MyAnimeListImpl.this, iterator.getJsonObject("node"))));
                 return manga;
             }
 
@@ -849,7 +861,7 @@ final class MyAnimeListImpl extends MyAnimeList {
                         convertFields(Fields.manga, fields),
                         nsfw
                     ),
-                    iterator -> asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asMangaPreview(MyAnimeListImpl.this, iterator.getJsonObject("node")))
+                    iterator -> asMangaListStatus(MyAnimeListImpl.this, iterator.getJsonObject("list_status"), asManga(MyAnimeListImpl.this, iterator.getJsonObject("node")))
                 );
             }
 

@@ -1,18 +1,13 @@
 package dev.katsute.mal4j.AnimeTests;
 
-import dev.katsute.mal4j.Fields;
-import dev.katsute.mal4j.MyAnimeList;
-import dev.katsute.mal4j.TestProvider;
+import dev.katsute.mal4j.*;
 import dev.katsute.mal4j.anime.Anime;
 import dev.katsute.mal4j.anime.RelatedAnime;
 import dev.katsute.mal4j.anime.property.AnimeSource;
 import dev.katsute.mal4j.anime.property.AnimeType;
-import dev.katsute.mal4j.manga.RelatedManga;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import dev.katsute.mal4j.property.RelationType;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -172,29 +167,16 @@ final class TestAnime {
     @Test
     final void testFields(){
         final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes);
-        assertNotNull(anime.getEpisodes());
-        assertNull(anime.getRating());
+        assertFalse(anime.toString().contains(", episodes=null,"));
+        assertTrue(anime.toString().contains(", episodeLength=null,"));
     }
 
     @Test
     final void testInvertedFields(){
-        final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes, Fields.INVERTED);
-        assertNull(anime.getEpisodes());
-        assertNotNull(anime.getRating());
-    }
-
-    @Test
-    final void testInvertedFieldsOnly(){
-        final Anime manga = mal.getAnime(TestProvider.AnimeID, Fields.INVERTED);
-        assertNotNull(manga.getEpisodes());
-    }
-
-    @Test @DisplayName("Anime may not have related Manga") @Disabled
-    final void testRelatedManga(){
-        final RelatedManga relatedManga = anime.getRelatedManga()[0];
-        assertNotNull(relatedManga.getManga().getID());
-        assertNotNull(relatedManga.getRelationType());
-        assertNotNull(relatedManga.getRelationTypeFormat());
+        final Anime anime = mal.getAnime(TestProvider.AnimeID, Fields.Anime.episodes, Fields.Anime.list_status, Fields.Anime.related_anime, Fields.Anime.recommendations, Fields.INVERTED);
+        System.out.println(anime.toString());
+        assertTrue(anime.toString().contains(", episodes=null,"));
+        assertFalse(anime.toString().contains(", episodeLength=null,"));
     }
 
     @Test
@@ -208,6 +190,22 @@ final class TestAnime {
 
         for(final RelatedAnime relatedAnime : mal.getAnime(16498).getRelatedAnime())
             assertNotEquals(RelationType.Unknown, relatedAnime.getRelationType(), "Unknown type: " + relatedAnime.getRawRelationType());
+    }
+
+    @Test
+    final void testPartialRecommendation(){
+        final Anime recommendation = anime.getRecommendations()[0].getAnime();
+        final int was = recommendation.toString().length();
+        recommendation.getBackground();
+        assertTrue(recommendation.toString().length() > was);
+    }
+
+    @Test
+    final void testPartialRelated(){
+        final Anime related = anime.getRelatedAnime()[0].getAnime();
+        final int was = related.toString().length();
+        related.getBackground();
+        assertTrue(related.toString().length() > was);
     }
 
 }

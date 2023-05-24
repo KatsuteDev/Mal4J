@@ -115,73 +115,89 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     }
 
     static Manga asManga(final MyAnimeList mal, final JsonObject schema){
-        return asManga(mal, schema, false);
-    }
-
-    private static Manga asManga(final MyAnimeList mal, final JsonObject schema, final boolean isPreview){
         return schema == null ? null : new Manga() {
 
-            private final Long id               = schema.getLong("id");
-            private final String title          = schema.getString("title");
-            private final Picture mainPicture   = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
-            private final AlternativeTitles alternativeTitles
-                                                = MyAnimeListSchema_Common.asAlternativeTitles(mal, schema.getJsonObject("alternative_titles"));
-            private final NullableDate startDate = parseNullableDate(schema.getString("start_date"));
-            private final NullableDate endDate  = parseNullableDate(schema.getString("end_date"));
-            private final String synopsis       = schema.getString("synopsis");
-            private final Float meanRating      = schema.getFloat("mean");
-            private final Integer rank          = schema.getInt("rank");
-            private final Integer popularity    = schema.getInt("popularity");
-            private final Integer usersListing  = schema.getInt("num_list_users");
-            private final Integer usersScoring  = schema.getInt("num_scoring_users");
-            private final String nsfw           = schema.getString("nsfw");
-            private final NSFW e_nsfw           = NSFW.asEnum(nsfw);
-            private final Genre[] genres        = adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, false), Genre.class);
-            private final Long createdAt        = parseISO8601(schema.getString("created_at"));
-            private final Long updatedAt        = parseISO8601(schema.getString("updated_at"));
-            private final String type           = schema.getString("media_type");
-            private final MangaType e_type      = MangaType.asEnum(type);
-            private final String status         = schema.getString("status");
-            private final MangaPublishStatus e_status
-                                                = MangaPublishStatus.asEnum(status);
-            private final MangaListStatus listStatus
-                                                = asMangaListStatus(mal, schema.getJsonObject("my_list_status"), id,this);
-            private final Integer volumes       = schema.getInt("num_volumes");
-            private final Integer chapters      = schema.getInt("num_chapters");
-            private final Author[] authors      = adaptList(schema.getJsonArray("authors"), a -> asAuthor(mal, a), Author.class);
+            boolean draft = true; // if any field is null, try and fetch full values (only try once)
 
-            // full only
+            private final Long id = schema.getLong("id");
 
-            private boolean isFull = !isPreview;
+            private String title;
+            private Picture mainPicture;
+            private AlternativeTitles alternativeTitles;
+            private NullableDate startDate;
+            private NullableDate endDate;
+            private String synopsis;
+            private Float meanRating;
+            private Integer rank;
+            private Integer popularity;
+            private Integer usersListing;
+            private Integer usersScoring;
+            private String nsfw;
+            private NSFW e_nsfw;
+            private Genre[] genres;
+            private Long createdAt;
+            private Long updatedAt;
+            private String type;
+            private MangaType e_type;
+            private String status;
+            private MangaPublishStatus e_status;
+            private MangaListStatus listStatus;
+            private Integer volumes;
+            private Integer chapters;
+            private Author[] authors;
+
+            private Picture[] pictures;
+            private String background;
+            private RelatedAnime[] relatedAnime;
+            private RelatedManga[] relatedManga;
+            private MangaRecommendation[] recommendations;
+            private Publisher[] serialization;
+
+            {
+                populate(schema);
+            }
 
             @SuppressWarnings("DataFlowIssue")
             private void populate(){
-                if(!isFull){
-                    final Manga manga = mal.getManga(id);
-
-                    pictures        = manga.getPictures();
-                    background      = manga.getBackground();
-                    relatedAnime    = manga.getRelatedAnime();
-                    relatedManga    = manga.getRelatedManga();
-                    recommendations = manga.getRecommendations();
-                    serialization   = manga.getSerialization();
-
-                    isFull = true;
+                if(draft){
+                    draft = false;
+                    populate(((MyAnimeListImpl) mal).getMangaSchema(id, ((String[]) null)));
                 }
             }
 
-            @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-            private boolean isPopulate(){
-                final String ln = new Exception().getStackTrace()[2].toString();
-                return ln.startsWith("dev.katsute.mal4j.MyAnimeListSchema_Manga") && ln.substring(43).startsWith(".populate(MyAnimeListSchema_Manga.java:");
-            }
+            private void populate(final JsonObject schema){
+                title             = schema.getString("title");
+                mainPicture       = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
+                alternativeTitles = MyAnimeListSchema_Common.asAlternativeTitles(mal, schema.getJsonObject("alternative_titles"));
+                startDate         = parseNullableDate(schema.getString("start_date"));
+                endDate           = parseNullableDate(schema.getString("end_date"));
+                synopsis          = schema.getString("synopsis");
+                meanRating        = schema.getFloat("mean");
+                rank              = schema.getInt("rank");
+                popularity        = schema.getInt("popularity");
+                usersListing      = schema.getInt("num_list_users");
+                usersScoring      = schema.getInt("num_scoring_users");
+                nsfw              = schema.getString("nsfw");
+                e_nsfw            = NSFW.asEnum(nsfw);
+                genres            = adaptList(schema.getJsonArray("genres"), g -> MyAnimeListSchema_Common.asGenre(mal, g, false), Genre.class);
+                createdAt         = parseISO8601(schema.getString("created_at"));
+                updatedAt         = parseISO8601(schema.getString("updated_at"));
+                type              = schema.getString("media_type");
+                e_type            = MangaType.asEnum(type);
+                status            = schema.getString("status");
+                e_status          = MangaPublishStatus.asEnum(status);
+                listStatus        = asMangaListStatus(mal, schema.getJsonObject("my_list_status"), id,this);
+                volumes           = schema.getInt("num_volumes");
+                chapters          = schema.getInt("num_chapters");
+                authors           = adaptList(schema.getJsonArray("authors"), a -> asAuthor(mal, a), Author.class);
 
-            private Picture[] pictures          = adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class);
-            private String background           = schema.getString("background");
-            private RelatedAnime[] relatedAnime = adaptList(schema.getJsonArray("related_anime"), a -> MyAnimeListSchema_Anime.asRelatedAnime(mal, a), RelatedAnime.class);
-            private RelatedManga[] relatedManga = adaptList(schema.getJsonArray("related_manga"), m -> asRelatedManga(mal, m), RelatedManga.class);
-            private MangaRecommendation[] recommendations = adaptList(schema.getJsonArray("recommendations"), r -> asMangaRecommendation(mal, r), MangaRecommendation.class);
-            private Publisher[] serialization   = adaptList(schema.getJsonArray("serialization"), s -> asPublisher(mal, s), Publisher.class);
+                pictures          = adaptList(schema.getJsonArray("pictures"), p -> MyAnimeListSchema_Common.asPicture(mal, p), Picture.class);
+                background        = schema.getString("background");
+                relatedAnime      = adaptList(schema.getJsonArray("related_anime"), a -> MyAnimeListSchema_Anime.asRelatedAnime(mal, a), RelatedAnime.class);
+                relatedManga      = adaptList(schema.getJsonArray("related_manga"), m -> asRelatedManga(mal, m), RelatedManga.class);
+                recommendations   = adaptList(schema.getJsonArray("recommendations"), r -> asMangaRecommendation(mal, r), MangaRecommendation.class);
+                serialization     = adaptList(schema.getJsonArray("serialization"), s -> asPublisher(mal, s), Publisher.class);
+            }
 
             // API methods
 
@@ -192,131 +208,183 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final String getTitle() {
+                if(title == null && draft)
+                    populate();
                 return title;
             }
 
             @Override
             public final Picture getMainPicture() {
+                if(mainPicture == null && draft)
+                    populate();
                 return mainPicture;
             }
 
             @Override
             public final AlternativeTitles getAlternativeTitles() {
+                if(alternativeTitles == null && draft)
+                    populate();
                 return alternativeTitles;
             }
 
             @Override
             public final NullableDate getStartDate() {
+                if(startDate == null && draft)
+                    populate();
                 return startDate;
             }
 
             @Override
             public final NullableDate getEndDate() {
+                if(endDate == null && draft)
+                    populate();
                 return endDate;
             }
 
             @Override
             public final String getSynopsis() {
+                if(synopsis == null && draft)
+                    populate();
                 return synopsis;
             }
 
             @Override
             public final Float getMeanRating() {
+                if(meanRating == null && draft)
+                    populate();
                 return meanRating;
             }
 
             @Override
             public final Integer getRank() {
+                if(rank == null && draft)
+                    populate();
                 return rank;
             }
 
             @Override
             public final Integer getPopularity() {
+                if(popularity == null && draft)
+                    populate();
                 return popularity;
             }
 
             @Override
             public final Integer getUserListingCount() {
+                if(usersListing == null && draft)
+                    populate();
                 return usersListing;
             }
 
             @Override
             public final Integer getUserScoringCount() {
+                if(usersScoring == null && draft)
+                    populate();
                 return usersScoring;
             }
 
             @Override
             public final NSFW getNSFW() {
+                if(e_nsfw == null && draft)
+                    populate();
                 return e_nsfw;
             }
 
             @Override
             public final String getRawNSFW(){
+                if(nsfw == null && draft)
+                    populate();
                 return nsfw;
             }
 
             @Override
             public final Genre[] getGenres() {
+                if(genres == null && draft)
+                    populate();
                 return genres != null ? Arrays.copyOf(genres, genres.length) : null;
             }
 
             @Override
             public final Date getCreatedAt() {
+                if(createdAt == null && draft)
+                    populate();
                 return createdAt == null ? null : new Date(createdAt);
             }
 
             @Override
             public final Long getCreatedAtEpochMillis(){
+                if(createdAt == null && draft)
+                    populate();
                 return createdAt;
             }
 
             @Override
             public final Date getUpdatedAt() {
+                if(updatedAt == null && draft)
+                    populate();
                 return updatedAt == null ? null : new Date(updatedAt);
             }
 
             @Override
             public final Long getUpdatedAtEpochMillis(){
+                if(updatedAt == null && draft)
+                    populate();
                 return updatedAt;
             }
 
             @Override
             public final MangaType getType() {
+                if(e_type == MangaType.Unknown && draft)
+                    populate();
                 return e_type;
             }
 
             @Override
             public final String getRawType(){
+                if(type == null && draft)
+                    populate();
                 return type;
             }
 
             @Override
             public final MangaPublishStatus getStatus() {
+                if(e_status == MangaPublishStatus.Unknown && draft)
+                    populate();
                 return e_status;
             }
 
             @Override
             public String getRawStatus(){
+                if(status == null && draft)
+                    populate();
                 return status;
             }
 
             @Override
             public final MangaListStatus getListStatus() {
+                if(listStatus == null && draft)
+                    populate();
                 return listStatus;
             }
 
             @Override
             public final Integer getVolumes() {
+                if(volumes == null && draft)
+                    populate();
                 return volumes;
             }
 
             @Override
             public final Integer getChapters() {
+                if(chapters == null && draft)
+                    populate();
                 return chapters;
             }
 
             @Override
             public final Author[] getAuthors() {
+                if(authors == null && draft)
+                    populate();
                 return authors != null ? Arrays.copyOf(authors, authors.length) : null;
             }
 
@@ -324,37 +392,43 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
 
             @Override
             public final Picture[] getPictures() {
-                if(!isFull) populate();
+                if(pictures == null && draft)
+                    populate();
                 return pictures != null ? Arrays.copyOf(pictures, pictures.length) : null;
             }
 
             @Override
             public final String getBackground() {
-                if(!isFull) populate();
+                if(background == null && draft)
+                    populate();
                 return background;
             }
 
             @Override
             public final RelatedAnime[] getRelatedAnime() {
-                if(!isFull) populate();
+                if(relatedAnime == null && draft)
+                    populate();
                 return relatedAnime != null ? Arrays.copyOf(relatedAnime, relatedAnime.length) : null;
             }
 
             @Override
             public final RelatedManga[] getRelatedManga() {
-                if(!isFull) populate();
+                if(relatedManga == null && draft)
+                    populate();
                 return relatedManga != null ? Arrays.copyOf(relatedManga, relatedManga.length) : null;
             }
 
             @Override
             public final MangaRecommendation[] getRecommendations() {
-                if(!isFull) populate();
+                if(recommendations == null && draft)
+                    populate();
                 return recommendations != null ? Arrays.copyOf(recommendations, recommendations.length) : null;
             }
 
             @Override
             public final Publisher[] getSerialization() {
-                if(!isFull) populate();
+                if(serialization == null && draft)
+                    populate();
                 return serialization != null ? Arrays.copyOf(serialization, serialization.length) : null;
             }
 
@@ -397,10 +471,6 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         };
     }
 
-    static Manga asMangaPreview(final MyAnimeList mal, final JsonObject schema){
-        return asManga(mal, schema, true);
-    }
-
     static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final long manga_id){
         return asMangaListStatus(mal, schema, manga_id, null);
     }
@@ -409,7 +479,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
         return asMangaListStatus(mal, schema, null, Objects.requireNonNull(manga, "Manga must not be null"));
     }
 
-    private static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final Manga manga_full){
+    static MangaListStatus asMangaListStatus(final MyAnimeList mal, final JsonObject schema, final Long manga_id, final Manga manga_full){
         if(manga_id == null && manga_full == null)
             throw new NullPointerException("Manga and ID must not be both null");
         return schema == null ? null : new MangaListStatus() {
@@ -559,7 +629,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     static MangaRanking asMangaRanking(final MyAnimeList mal, final JsonObject schema){
         return schema == null ? null : new MangaRanking() {
 
-            private final Manga manga               = asMangaPreview(mal, schema.getJsonObject("node"));
+            private final Manga manga               = asManga(mal, schema.getJsonObject("node"));
             private final Integer ranking           = schema.getJsonObject("ranking").getInt("rank");
             private final Integer previousRanking   = schema.getJsonObject("ranking").getInt("previous_rank");
 
@@ -597,7 +667,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     static MangaRecommendation asMangaRecommendation(final MyAnimeList mal, final JsonObject schema){
         return schema == null ? null : new MangaRecommendation() {
 
-            private final Manga manga               = asMangaPreview(mal, schema.getJsonObject("node"));
+            private final Manga manga               = asManga(mal, schema.getJsonObject("node"));
             private final Integer recommendations   = schema.getInt("num_recommendations");
 
             // API methods
@@ -628,7 +698,7 @@ abstract class MyAnimeListSchema_Manga extends MyAnimeListSchema {
     static RelatedManga asRelatedManga(final MyAnimeList mal, final JsonObject schema){
         return schema == null ? null : new RelatedManga() {
 
-            private final Manga manga                   = asMangaPreview(mal, schema.getJsonObject("node"));
+            private final Manga manga                   = asManga(mal, schema.getJsonObject("node"));
             private final String relationType           = schema.getString("relation_type");
             private final RelationType e_relationType   = RelationType.asEnum(relationType);
             private final String relationTypeFormatted  = schema.getString("relation_type_formatted");
