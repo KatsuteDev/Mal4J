@@ -22,7 +22,7 @@ package dev.katsute.mal4j;
  * The fields class holds all possible fields for a request. Usable in any methods that ask for fields.
  *
  * @since 1.1.0
- * @version 3.2.0
+ * @version 3.3.0
  * @author Katsute
  */
 public abstract class Fields {
@@ -560,7 +560,7 @@ public abstract class Fields {
      *
      * @see #character
      * @since 3.1.0
-     * @version 3.1.0
+     * @version 3.3.0
      * @author Katsute
      */
     public static class Character {
@@ -576,6 +576,7 @@ public abstract class Fields {
         public static final String alternative_name = "alternative_name";
 
         public static final String main_picture = "main_picture";
+        public static final String pictures = "pictures";
 
         public static final String biography = "biography";
 
@@ -596,6 +597,7 @@ public abstract class Fields {
         Character.last_name,
         Character.alternative_name,
         Character.main_picture,
+        Character.pictures,
         Character.biography,
         Character.animeography
     );

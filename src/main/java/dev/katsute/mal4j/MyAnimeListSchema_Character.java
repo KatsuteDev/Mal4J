@@ -39,6 +39,7 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
             private String lastName;
             private String alternativeNames;
             private Picture mainPicture;
+            private Picture[] pictures;
             private String biography;
             private Animeography[] animeography;
 
@@ -59,6 +60,7 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
                 lastName         = schema.getString("last_name");
                 alternativeNames = schema.getString("alternative_name");
                 mainPicture      = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
+                pictures         = adaptList(schema.getJsonArray("pictures"), s -> MyAnimeListSchema_Common.asPicture(mal, s), Picture.class);
                 biography        = schema.getString("biography");
 
                 animeography = adaptList(schema.getJsonArray("animeography"), s -> asAnimeography(mal, s), Animeography.class);
@@ -100,6 +102,13 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
             }
 
             @Override
+            public final Picture[] getPictures(){
+                if(pictures == null && draft)
+                    populate();
+                return pictures != null ? Arrays.copyOf(pictures, pictures.length) : null;
+            }
+
+            @Override
             public final String getBiography(){
                 if(biography == null && draft)
                     populate();
@@ -122,9 +131,10 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
                        ", firstName='" + firstName + '\'' +
                        ", lastName='" + lastName + '\'' +
                        ", alternativeNames='" + alternativeNames + '\'' +
-                       ", mainPicture=" + mainPicture + '\'' +
+                       ", mainPicture=" + mainPicture +
+                       ", pictures=" + Arrays.toString(pictures) +
                        ", biography='" + biography + '\'' +
-                       ", animeography'" + Arrays.toString(animeography) + '\'' +
+                       ", animeography=" + Arrays.toString(animeography) +
                        '}';
             }
 

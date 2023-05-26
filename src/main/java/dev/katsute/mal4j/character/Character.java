@@ -28,7 +28,7 @@ import dev.katsute.mal4j.property.Picture;
  * @see dev.katsute.mal4j.MyAnimeList#getCharacter(long)
  * @see dev.katsute.mal4j.MyAnimeList#getCharacter(long, String...)
  * @since 3.1.0
- * @version 3.1.0
+ * @version 3.3.0
  * @author Katsute
  */
 public abstract class Character implements ID {
@@ -72,9 +72,21 @@ public abstract class Character implements ID {
      * @return main picture
      *
      * @see Picture
+     * @see #getPictures()
      * @since 3.1.0
      */
     public abstract Picture getMainPicture();
+
+    /**
+     * Returns the pictures for the character.
+     *
+     * @return pictures
+     *
+     * @see Picture
+     * @see #getMainPicture()
+     * @since 3.3.0
+     */
+    public abstract Picture[] getPictures();
 
     /**
      * Returns the biography.
