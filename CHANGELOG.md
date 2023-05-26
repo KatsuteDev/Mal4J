@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.3.0
+
+### New Features
+
+* Add character pictures [#391](https://github.com/KatsuteDev/Mal4J/pull/391) ([@Katsute](https://github.com/Katsute))
+
+  This is an undocumented feature, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.CHARACTERS)` to enable it.
+
+**Full Changelog**: [`3.2.0...3.3.0`](https://github.com/KatsuteDev/Mal4J/compare/3.2.0...3.3.0)
+
 ## 3.2.0
 
 ### New Features
