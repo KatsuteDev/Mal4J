@@ -40,7 +40,7 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
             private final Integer favorites          = schema.getInt("num_favorites");
             private final Picture mainPicture        = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
             private final String more                = schema.getString("more");
-            private final Map<String,String> moreMap = more == null ? null : new HashMap<>(){{
+            private final Map<String,String> moreMap = more == null ? null : new HashMap<String,String>(){{
                 System.out.println(more);
             }};
 
