@@ -21,7 +21,10 @@ import dev.katsute.mal4j.Json.JsonObject;
 import dev.katsute.mal4j.people.Person;
 import dev.katsute.mal4j.property.Picture;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
 
@@ -30,10 +33,16 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
 
             private final Long id = schema.getLong("id");
 
-            private final String firstName    = schema.getString("first_name");
-            private final String lastName     = schema.getString("last_name");
-            private final Long birthday       = parseDate(schema.getString("birthday"));
-            private final Picture mainPicture = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
+            private final String firstName           = schema.getString("first_name");
+            private final String lastName            = schema.getString("last_name");
+            private final Long birthday              = parseDate(schema.getString("birthday"));
+            private final String[] alternative_names = schema.getStringArray("alternative_names");
+            private final Integer favorites          = schema.getInt("num_favorites");
+            private final Picture mainPicture        = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
+            private final String more                = schema.getString("more");
+            private final Map<String,String> moreMap = more == null ? null : new HashMap<>(){{
+                System.out.println(more);
+            }};
 
             @Override
             public final Long getID(){
@@ -56,8 +65,28 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
             }
 
             @Override
+            public final String[] getAlternativeNames(){
+                return alternative_names == null ? null : Arrays.copyOf(alternative_names, alternative_names.length);
+            }
+
+            @Override
             public final Picture getMainPicture(){
                 return mainPicture;
+            }
+
+            @Override
+            public final Integer getFavorites(){
+                return favorites;
+            }
+
+            @Override
+            public final Map<String,String> getMore(){
+                return more == null ? null : new HashMap<>(moreMap);
+            }
+
+            @Override
+            public final String getRawMore(){
+                return more;
             }
 
             // additional methods
@@ -69,7 +98,11 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
                        ", firstName='" + firstName + '\'' +
                        ", lastName='" + lastName + '\'' +
                        ", birthday=" + birthday +
+                       ", alternative_names=" + Arrays.toString(alternative_names) +
+                       ", favorites=" + favorites +
                        ", mainPicture=" + mainPicture +
+                       ", more='" + more + '\'' +
+                       ", moreMap=" + moreMap +
                        '}';
             }
 

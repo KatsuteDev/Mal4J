@@ -5,6 +5,7 @@ import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.people.Person;
 import dev.katsute.mal4j.property.ExperimentalFeature;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -26,12 +27,12 @@ final class TestPeople {
         mal = TestProvider.getMyAnimeList();
 
         mal.enableExperimentalFeature(ExperimentalFeature.PEOPLE);
-        person = mal.getPerson(TestProvider.PersonID);
+        person = mal.getPerson(TestProvider.AltPersonID);
     }
 
     @ParameterizedTest(name="[{index}] {0}")
     @MethodSource("personProvider")
-    final void testCharacter(final String method, final Function<Person,Object> function){
+    final void testPerson(final String method, final Function<Person,Object> function){
         assertNotNull(function.apply(person), "Expected Person#" + method + " to not be null");
     }
 
@@ -39,11 +40,21 @@ final class TestPeople {
         return new TestProvider.MethodStream<Person>()
             .add("FirstName", Person::getFirstName)
             .add("LastName", Person::getLastName)
+            .add("Birthday", Person::getBirthday)
+            .add("AlternativeNames", Person::getAlternativeNames)
+            .add("AlternativeNames[0]", person -> person.getAlternativeNames()[0])
             .add("MainPicture", Person::getMainPicture)
             .add("MainPicture#MediumURL", person -> person.getMainPicture().getMediumURL())
             // .add("MainPicture#LargeURL", person -> person.getMainPicture().getLargeURL())
-            .add("Birthday", Person::getBirthday)
+            .add("Favorites", Person::getFavorites)
+            .add("More", Person::getMore)
+            .add("RawMore", Person::getRawMore)
             .stream();
+    }
+
+    @Test
+    final void testMore(){
+
     }
 
 }

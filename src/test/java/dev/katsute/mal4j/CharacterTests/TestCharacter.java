@@ -45,11 +45,13 @@ final class TestCharacter {
             .add("MainPicture", Character::getMainPicture)
             .add("MainPicture#MediumURL", character -> character.getMainPicture().getMediumURL())
             // .add("MainPicture#LargeURL", character -> character.getMainPicture().getLargeURL())
+            .add("Favorites", Character::getFavorites)
             .add("Pictures", Character::getPictures)
             .add("Pictures[0]", character -> character.getPictures()[0])
             .add("Pictures#MediumURL", character -> character.getPictures()[0].getMediumURL())
             // .add("Pictures#LargeURL", character -> character.getPictures()[0].getLargeURL())
             .add("Biography", Character::getBiography)
+            .add("BiographyDetails", Character::getBiographyDetails)
             .add("Animeography", Character::getAnimeography)
             .add("Animeography[0]", character -> character.getAnimeography()[0])
             .add("Animeography[0]#AnimePreview", character -> character.getAnimeography()[0].getAnime().getID())
@@ -73,6 +75,11 @@ final class TestCharacter {
         final int was = character.toString().length();
         character.getAnimeography();
         assertTrue(character.toString().length() > was);
+    }
+
+    @Test
+    final void testBiographyDetails(){
+
     }
 
 }
