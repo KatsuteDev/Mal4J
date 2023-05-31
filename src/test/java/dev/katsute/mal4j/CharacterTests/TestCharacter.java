@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -27,7 +28,7 @@ final class TestCharacter {
         mal = TestProvider.getMyAnimeList();
 
         mal.enableExperimentalFeature(ExperimentalFeature.CHARACTERS);
-        character = mal.getCharacter(TestProvider.CharacterID);
+        character = mal.getCharacter(TestProvider.AltCharacterID);
     }
 
     @ParameterizedTest(name="[{index}] {0}")
@@ -45,21 +46,18 @@ final class TestCharacter {
             .add("MainPicture", Character::getMainPicture)
             .add("MainPicture#MediumURL", character -> character.getMainPicture().getMediumURL())
             // .add("MainPicture#LargeURL", character -> character.getMainPicture().getLargeURL())
+            .add("Favorites", Character::getFavorites)
             .add("Pictures", Character::getPictures)
             .add("Pictures[0]", character -> character.getPictures()[0])
             .add("Pictures#MediumURL", character -> character.getPictures()[0].getMediumURL())
             // .add("Pictures#LargeURL", character -> character.getPictures()[0].getLargeURL())
             .add("Biography", Character::getBiography)
+            .add("BiographyDetails", Character::getBiographyDetails)
             .add("Animeography", Character::getAnimeography)
             .add("Animeography[0]", character -> character.getAnimeography()[0])
             .add("Animeography[0]#AnimePreview", character -> character.getAnimeography()[0].getAnime().getID())
             .add("Animeography[0]#Role", character -> character.getAnimeography()[0].getRole())
             .stream();
-    }
-
-    @Test
-    final void testCharacter(){
-        assertEquals(TestProvider.CharacterID, character.getID());
     }
 
     @Test
@@ -73,6 +71,17 @@ final class TestCharacter {
         final int was = character.toString().length();
         character.getAnimeography();
         assertTrue(character.toString().length() > was);
+    }
+
+    @Test
+    final void testBiographyDetails(){
+        for(final Map.Entry<String,String> e : character.getBiographyDetails().entrySet()){
+            assertNotNull(e.getKey());
+            assertFalse(e.getKey().isEmpty());
+            assertNotNull(e.getValue());
+            assertFalse(e.getValue().isEmpty());
+        }
+        assertNotSame(character.getBiographyDetails(), character.getBiographyDetails());
     }
 
 }

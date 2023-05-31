@@ -22,6 +22,7 @@ import dev.katsute.mal4j.property.ID;
 import dev.katsute.mal4j.property.Picture;
 
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Represents a person.
@@ -29,7 +30,7 @@ import java.util.Date;
  * @see dev.katsute.mal4j.MyAnimeList#getPerson(long)
  * @see dev.katsute.mal4j.MyAnimeList#getPerson(long, String...)
  * @since 3.2.0
- * @version 3.2.0
+ * @version 3.4.0
  * @author Katsute
  */
 public abstract class Person implements ID {
@@ -40,6 +41,7 @@ public abstract class Person implements ID {
      * @return first name
      *
      * @see #getLastName()
+     * @see #getAlternativeNames()
      * @since 3.2.0
      */
     public abstract String getFirstName();
@@ -50,9 +52,21 @@ public abstract class Person implements ID {
      * @return last name
      *
      * @see #getFirstName()
+     * @see #getAlternativeNames()
      * @since 3.2.0
      */
     public abstract String getLastName();
+
+    /**
+     * Returns a list of alternative names.
+     *
+     * @return alternative names
+     *
+     * @see #getFirstName()
+     * @see #getLastName()
+     * @since 3.4.0
+     */
+    public abstract String[] getAlternativeNames();
 
     /**
      * Returns the birthday.
@@ -72,5 +86,34 @@ public abstract class Person implements ID {
      * @since 3.2.0
      */
     public abstract Picture getMainPicture();
+
+    /**
+     * Returns the number of favorites.
+     *
+     * @return favorites
+     *
+     * @since 3.4.0
+     */
+    public abstract Integer getFavorites();
+
+    /**
+     * Returns the more field.
+     *
+     * @return more fields
+     *
+     * @see #getMoreDetails()
+     * @since 3.4.0
+     */
+    public abstract String getMore();
+
+    /**
+     * Returns more details as a map. Sorted in the same order as {@link #getMore()}, more content is saved under the <code>*</code> key.
+     *
+     * @return more fields
+     *
+     * @see #getMore()
+     * @since 3.4.0
+     */
+    public abstract Map<String,String> getMoreDetails();
 
 }

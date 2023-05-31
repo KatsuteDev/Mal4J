@@ -24,6 +24,8 @@ import dev.katsute.mal4j.character.Character;
 import dev.katsute.mal4j.property.Picture;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("SpellCheckingInspection")
 abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
@@ -39,8 +41,10 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
             private String lastName;
             private String alternativeNames;
             private Picture mainPicture;
+            private Integer favorites;
             private Picture[] pictures;
             private String biography;
+            private Map<String,String> biographyDetails;
             private Animeography[] animeography;
 
             {
@@ -60,9 +64,10 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
                 lastName         = schema.getString("last_name");
                 alternativeNames = schema.getString("alternative_name");
                 mainPicture      = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
+                favorites        = schema.getInt("num_favorites");
                 pictures         = adaptList(schema.getJsonArray("pictures"), s -> MyAnimeListSchema_Common.asPicture(mal, s), Picture.class);
                 biography        = schema.getString("biography");
-
+                biographyDetails = biography == null ? null : MyAnimeListSchema_Common.asMap(biography);
                 animeography = adaptList(schema.getJsonArray("animeography"), s -> asAnimeography(mal, s), Animeography.class);
             }
 
@@ -102,6 +107,13 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
             }
 
             @Override
+            public final Integer getFavorites(){
+                if(favorites == null && draft)
+                    populate();
+                return favorites;
+            }
+
+            @Override
             public final Picture[] getPictures(){
                 if(pictures == null && draft)
                     populate();
@@ -113,6 +125,13 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
                 if(biography == null && draft)
                     populate();
                 return biography;
+            }
+
+            @Override
+            public final Map<String,String> getBiographyDetails(){
+                if(biographyDetails == null && draft)
+                    populate();
+                return biographyDetails == null ? null : new HashMap<>(biographyDetails);
             }
 
             @Override
@@ -132,8 +151,10 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
                        ", lastName='" + lastName + '\'' +
                        ", alternativeNames='" + alternativeNames + '\'' +
                        ", mainPicture=" + mainPicture +
+                       ", favorites=" + favorites +
                        ", pictures=" + Arrays.toString(pictures) +
                        ", biography='" + biography + '\'' +
+                       ", biographyDetails=" + biographyDetails +
                        ", animeography=" + Arrays.toString(animeography) +
                        '}';
             }
