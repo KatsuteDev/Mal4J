@@ -100,7 +100,7 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
                        ", favorites=" + favorites +
                        ", mainPicture=" + mainPicture +
                        ", more='" + more + '\'' +
-                       ", moreMap=" + moreDetails +
+                       ", moreDetails=" + moreDetails +
                        '}';
             }
 

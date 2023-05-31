@@ -154,6 +154,7 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
                        ", favorites=" + favorites +
                        ", pictures=" + Arrays.toString(pictures) +
                        ", biography='" + biography + '\'' +
+                       ", biographyDetails=" + biographyDetails +
                        ", animeography=" + Arrays.toString(animeography) +
                        '}';
             }
