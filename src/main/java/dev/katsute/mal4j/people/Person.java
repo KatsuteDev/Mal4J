@@ -97,7 +97,7 @@ public abstract class Person implements ID {
     public abstract Integer getFavorites();
 
     /**
-     * Returns the raw more field.
+     * Returns the more field.
      *
      * @return more fields
      *

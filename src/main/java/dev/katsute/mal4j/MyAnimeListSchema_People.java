@@ -84,7 +84,7 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
 
             @Override
             public final Map<String,String> getMoreDetails(){
-                return more == null ? null : new HashMap<>(moreDetails);
+                return moreDetails == null ? null : new HashMap<>(moreDetails);
             }
 
             // additional methods
