@@ -22,7 +22,10 @@ import dev.katsute.mal4j.property.Genre;
 import dev.katsute.mal4j.property.Picture;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
@@ -151,6 +154,27 @@ abstract class MyAnimeListSchema_Common extends MyAnimeListSchema {
             }
 
         };
+    }
+
+    // <br( ?\/?)?>
+    @SuppressWarnings("RegExpRedundantEscape")
+    private static final Pattern br = Pattern.compile("<br( ?\\/?)?>");
+
+    // (\r?\n)+
+    private static final Pattern rn = Pattern.compile("(\\r?\\n)+");
+
+    static Map<String,String> asMap(final String s){
+        final HashMap<String,String> map = new HashMap<>();
+        for(final String ln : rn.split(br.matcher(s).replaceAll(""))){
+            int cn = ln.indexOf(':');
+            if(cn > 0)
+                map.put(ln.substring(0, cn).trim(), ln.substring(cn + 1).trim());
+            else if(map.containsKey("*"))
+                map.put("*", (map.get("*") + '\n' + ln).trim());
+            else
+                map.put("*", ln.trim());
+        }
+        return map;
     }
 
 }

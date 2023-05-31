@@ -40,9 +40,7 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
             private final Integer favorites          = schema.getInt("num_favorites");
             private final Picture mainPicture        = MyAnimeListSchema_Common.asPicture(mal, schema.getJsonObject("main_picture"));
             private final String more                = schema.getString("more");
-            private final Map<String,String> moreMap = more == null ? null : new HashMap<String,String>(){{
-                System.out.println(more);
-            }};
+            private final Map<String,String> moreDetails = more == null ? null : MyAnimeListSchema_Common.asMap(more);
 
             @Override
             public final Long getID(){
@@ -80,13 +78,13 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
             }
 
             @Override
-            public final Map<String,String> getMore(){
-                return more == null ? null : new HashMap<>(moreMap);
+            public final String getMore(){
+                return more;
             }
 
             @Override
-            public final String getRawMore(){
-                return more;
+            public final Map<String,String> getMoreDetails(){
+                return more == null ? null : new HashMap<>(moreDetails);
             }
 
             // additional methods
@@ -102,7 +100,7 @@ abstract class MyAnimeListSchema_People extends MyAnimeListSchema {
                        ", favorites=" + favorites +
                        ", mainPicture=" + mainPicture +
                        ", more='" + more + '\'' +
-                       ", moreMap=" + moreMap +
+                       ", moreMap=" + moreDetails +
                        '}';
             }
 

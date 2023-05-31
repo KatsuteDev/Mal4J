@@ -44,7 +44,7 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
             private Integer favorites;
             private Picture[] pictures;
             private String biography;
-            private Map<String,String> details;
+            private Map<String,String> biographyDetails;
             private Animeography[] animeography;
 
             {
@@ -67,9 +67,7 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
                 favorites        = schema.getInt("num_favorites");
                 pictures         = adaptList(schema.getJsonArray("pictures"), s -> MyAnimeListSchema_Common.asPicture(mal, s), Picture.class);
                 biography        = schema.getString("biography");
-                details          = biography == null ? null : new HashMap<String,String>(){{
-                    System.out.println(biography);
-                }};
+                biographyDetails = biography == null ? null : MyAnimeListSchema_Common.asMap(biography);
                 animeography = adaptList(schema.getJsonArray("animeography"), s -> asAnimeography(mal, s), Animeography.class);
             }
 
@@ -131,9 +129,9 @@ abstract class MyAnimeListSchema_Character extends MyAnimeListSchema {
 
             @Override
             public final Map<String,String> getBiographyDetails(){
-                if(details == null && draft)
+                if(biographyDetails == null && draft)
                     populate();
-                return details == null ? null : new HashMap<>(details);
+                return biographyDetails == null ? null : new HashMap<>(biographyDetails);
             }
 
             @Override

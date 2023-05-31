@@ -110,7 +110,7 @@ public abstract class Character implements ID {
     public abstract String getBiography();
 
     /**
-     * Returns biography details as a map.
+     * Returns biography details as a map. Sorted in the same order as {@link #getBiography()}, biography content is saved under the <code>*</code> key.
      *
      * @return details
      *

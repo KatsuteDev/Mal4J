@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -27,7 +28,7 @@ final class TestCharacter {
         mal = TestProvider.getMyAnimeList();
 
         mal.enableExperimentalFeature(ExperimentalFeature.CHARACTERS);
-        character = mal.getCharacter(TestProvider.CharacterID);
+        character = mal.getCharacter(TestProvider.AltCharacterID);
     }
 
     @ParameterizedTest(name="[{index}] {0}")
@@ -61,7 +62,7 @@ final class TestCharacter {
 
     @Test
     final void testCharacter(){
-        assertEquals(TestProvider.CharacterID, character.getID());
+        assertEquals(TestProvider.AltCharacterID, character.getID());
     }
 
     @Test
@@ -79,7 +80,13 @@ final class TestCharacter {
 
     @Test
     final void testBiographyDetails(){
-
+        for(final Map.Entry<String,String> e : character.getBiographyDetails().entrySet()){
+            assertNotNull(e.getKey());
+            assertFalse(e.getKey().isEmpty());
+            assertNotNull(e.getValue());
+            assertFalse(e.getValue().isEmpty());
+        }
+        assertNotSame(character.getBiographyDetails(), character.getBiographyDetails());
     }
 
 }

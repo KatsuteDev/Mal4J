@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -48,13 +49,19 @@ final class TestPeople {
             // .add("MainPicture#LargeURL", person -> person.getMainPicture().getLargeURL())
             .add("Favorites", Person::getFavorites)
             .add("More", Person::getMore)
-            .add("RawMore", Person::getRawMore)
+            .add("MoreDetails", Person::getMoreDetails)
             .stream();
     }
 
     @Test
     final void testMore(){
-
+        for(final Map.Entry<String,String> e : person.getMoreDetails().entrySet()){
+            assertNotNull(e.getKey());
+            assertFalse(e.getKey().isEmpty());
+            assertNotNull(e.getValue());
+            assertFalse(e.getValue().isEmpty());
+        }
+        assertNotSame(person.getMoreDetails(), person.getMoreDetails());
     }
 
 }

@@ -97,23 +97,23 @@ public abstract class Person implements ID {
     public abstract Integer getFavorites();
 
     /**
-     * Returns a map of more values.
+     * Returns the raw more field.
      *
      * @return more fields
      *
-     * @see #getRawMore()
+     * @see #getMoreDetails()
      * @since 3.4.0
      */
-    public abstract Map<String,String> getMore();
+    public abstract String getMore();
 
     /**
-     * Returns the raw more field. It is recommended to use {@link #getMore()} instead of this method.
+     * Returns more details as a map. Sorted in the same order as {@link #getMore()}, more content is saved under the <code>*</code> key.
      *
      * @return more fields
      *
      * @see #getMore()
      * @since 3.4.0
      */
-    public abstract String getRawMore();
+    public abstract Map<String,String> getMoreDetails();
 
 }
