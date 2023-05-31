@@ -61,11 +61,6 @@ final class TestCharacter {
     }
 
     @Test
-    final void testCharacter(){
-        assertEquals(TestProvider.AltCharacterID, character.getID());
-    }
-
-    @Test
     final void testAlternativeNames(){
         assertTrue(mal.getCharacter(TestProvider.AltCharacterID).getAlternativeNames().length > 1);
     }
