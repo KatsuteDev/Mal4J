@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.4.0
+
+### New Features
+
+* Add missing character and people fields [#393](https://github.com/KatsuteDev/Mal4J/pull/393) ([@Katsute](https://github.com/Katsute))
+
+  These are from undocumented features, you must use `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.CHARACTERS)` and `MyAnimeList.enableExperimentalFeature(ExperimentalFeature.PEOPLE)` to enable them.
+
+  * Add favorites count to character and people
+  * Add alternative names and 'more' field to people
+  * Add method to retrieve character biography details as a map
+
+**Full Changelog**: [`3.3.0...3.4.0`](https://github.com/KatsuteDev/Mal4J/compare/3.3.0...3.4.0)
+
 ## 3.3.0
 
 ### New Features

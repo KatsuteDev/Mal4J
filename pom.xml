@@ -6,7 +6,7 @@
 
     <groupId>dev.katsute</groupId>
     <artifactId>mal4j</artifactId>
-    <version>3.4.0-SNAPSHOT</version>
+    <version>3.4.0</version>
 
     <profiles>
         <profile>
