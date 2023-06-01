@@ -62,7 +62,14 @@ final class TestCharacter {
 
     @Test
     final void testAlternativeNames(){
-        assertTrue(mal.getCharacter(TestProvider.AltCharacterID).getAlternativeNames().length > 1);
+        final String[] names = mal.getCharacter(TestProvider.AltCharacterID).getAlternativeNames();
+        assertTrue(names.length > 1);
+        for(final String n : names){
+            assertFalse(n.isBlank());
+            assertFalse(n.isEmpty());
+            assertFalse(n.contains(","));
+            assertEquals(n.trim().length(), n.length());
+        }
     }
 
     @Test
@@ -76,10 +83,18 @@ final class TestCharacter {
     @Test
     final void testBiographyDetails(){
         for(final Map.Entry<String,String> e : character.getBiographyDetails().entrySet()){
-            assertNotNull(e.getKey());
-            assertFalse(e.getKey().isEmpty());
-            assertNotNull(e.getValue());
-            assertFalse(e.getValue().isEmpty());
+            final String k = e.getKey();
+            assertNotNull(k);
+            assertFalse(k.isBlank());
+            assertFalse(k.isEmpty());
+            assertEquals(k.trim().length(), k.length());
+            assertFalse(k.endsWith(":"));
+            final String v = e.getValue();
+            assertNotNull(v);
+            assertFalse(v.isBlank());
+            assertFalse(v.isEmpty());
+            assertEquals(v.trim().length(), v.length());
+            assertFalse(v.startsWith(":"));
         }
         assertNotSame(character.getBiographyDetails(), character.getBiographyDetails());
     }
