@@ -65,7 +65,6 @@ final class TestCharacter {
         final String[] names = mal.getCharacter(TestProvider.AltCharacterID).getAlternativeNames();
         assertTrue(names.length > 1);
         for(final String n : names){
-            assertFalse(n.isBlank());
             assertFalse(n.isEmpty());
             assertFalse(n.contains(","));
             assertEquals(n.trim().length(), n.length());
@@ -85,13 +84,11 @@ final class TestCharacter {
         for(final Map.Entry<String,String> e : character.getBiographyDetails().entrySet()){
             final String k = e.getKey();
             assertNotNull(k);
-            assertFalse(k.isBlank());
             assertFalse(k.isEmpty());
             assertEquals(k.trim().length(), k.length());
             assertFalse(k.endsWith(":"));
             final String v = e.getValue();
             assertNotNull(v);
-            assertFalse(v.isBlank());
             assertFalse(v.isEmpty());
             assertEquals(v.trim().length(), v.length());
             assertFalse(v.startsWith(":"));

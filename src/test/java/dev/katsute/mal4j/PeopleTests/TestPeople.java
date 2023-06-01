@@ -58,13 +58,11 @@ final class TestPeople {
         for(final Map.Entry<String,String> e : person.getMoreDetails().entrySet()){
             final String k = e.getKey();
             assertNotNull(k);
-            assertFalse(k.isBlank());
             assertFalse(k.isEmpty());
             assertEquals(k.trim().length(), k.length());
             assertFalse(k.endsWith(":"));
             final String v = e.getValue();
             assertNotNull(v);
-            assertFalse(v.isBlank());
             assertFalse(v.isEmpty());
             assertEquals(v.trim().length(), v.length());
             assertFalse(v.startsWith(":"));
