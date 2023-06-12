@@ -34,7 +34,7 @@ This library supports read and write operations, including list updates.
  - [💼 License](#-license)
  - [⚠️️ Disclaimer](#%EF%B8%8F%EF%B8%8F-disclaimer)
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<div align="right"><a href="#top"><code>▲</code></a></div>
 
 ## 📃 Installation
 
@@ -48,7 +48,7 @@ Compiled binaries can be installed from:
 
 See [setup](https://github.com/KatsuteDev/Mal4J/blob/main/setup.md#readme) for steps to authenticate and actually use this library.
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<div align="right"><a href="#top"><code>▲</code></a></div>
 
 ## ✨ Features
 
@@ -107,7 +107,7 @@ Character character = mal.getCharacter(61371);
 Person person = mal.getPerson(10765);
 ```
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<div align="right"><a href="#top"><code>▲</code></a></div>
 
 ## 👨‍💻 Contributing
 
@@ -141,7 +141,7 @@ Please note that the client ID being used for tests must not have a client secre
 
 Tests can be run using GitHub Actions by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<div align="right"><a href="#top"><code>▲</code></a></div>
 
 <hr>
 
@@ -154,4 +154,4 @@ This library is released under the [GNU General Public License (GPL) v2.0](https
  - [@Katsute](https://github.com/Katsute) and [@KatsuteDev](https://github.com/KatsuteDev) are not affiliated with MyAnimeList.
  - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
 
-<p align="right">(<a href="#top">back to top</a>)</p>
+<div align="right"><a href="#top"><code>▲</code></a></div>
