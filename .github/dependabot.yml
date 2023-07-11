@@ -22,4 +22,4 @@ updates:
     open-pull-requests-limit: 10
     groups:
       junit:
-        patterns: [junit-jupiter-*]
+        patterns: [org.junit.jupiter:*]
