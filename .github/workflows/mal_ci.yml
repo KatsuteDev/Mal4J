@@ -3,7 +3,9 @@ on: [workflow_dispatch]
 
 permissions: read-all
 
-concurrency: mal-test
+concurrency:
+  group: mal-test
+  cancel-in-progress: true
 
 jobs:
   mal_ci:
@@ -17,31 +19,31 @@ jobs:
       fail-fast: false
       max-parallel: 1
     steps:
-      - name: 📤 Checkout Repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
 
-      - name: ☕ Install Java
+      - name: Install Java
         uses: actions/setup-java@v3
         with:
           architecture: x64
           distribution: temurin
           java-version: ${{ matrix.java }}
 
-      - name: 🔐 Load Client ID
+      - name: Load Client ID
         if: matrix.auth == 'Client'
         run: |
           echo ${{ secrets.MAL_CLIENT }} > src/test/java/resources/client.txt
 
-      - name: 🔐 Load OAuth Token
+      - name: Load OAuth Token
         if: matrix.auth == 'Token'
         run: |
           echo ${{ secrets.MAL_TOKEN }} > src/test/java/resources/token.txt
 
-      - name: ✔️ Test with Maven
+      - name: Test with Maven
         continue-on-error: true
         run: mvn test -fae --no-transfer-progress
 
-      - name: 📤 Checkout JUnit Report
+      - name: Checkout JUnit Report
         uses: actions/checkout@v3
         with:
           repository: Katsute/JUnit-Report
@@ -49,5 +51,5 @@ jobs:
           path: ./.github/junit-report
           token: ${{ secrets.BOT }}
 
-      - name: ✔️ Generate Report
+      - name: Generate Report
         uses: ./.github/junit-report
