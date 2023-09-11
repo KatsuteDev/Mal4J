@@ -20,7 +20,7 @@ jobs:
       max-parallel: 1
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Java
         uses: actions/setup-java@v3
@@ -44,7 +44,7 @@ jobs:
         run: mvn test -fae --no-transfer-progress
 
       - name: Checkout JUnit Report
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: Katsute/JUnit-Report
           ref: f8c3faa29af146ae5945a2bfa2a8fc6b34c1c216
