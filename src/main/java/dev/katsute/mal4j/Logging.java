@@ -54,7 +54,7 @@ public abstract class Logging {
 
     // debug
 
-    private static boolean debug = false;
+    private static boolean debug = false; // do not edit this flag for tests, change in TestProvider
 
     static void setDebug(final boolean debug){
         Logging.debug = debug;
