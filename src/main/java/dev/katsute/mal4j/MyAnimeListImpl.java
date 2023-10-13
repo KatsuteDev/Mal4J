@@ -969,6 +969,8 @@ final class MyAnimeListImpl extends MyAnimeList {
 
         private final AtomicReference<Integer> nextOffset = new AtomicReference<>();
 
+        private JsonObject nextPage = null; // pre-fetch next page #404
+
         PagedIterator(
             final Integer offset,
             final Function<Integer,Response<JsonObject>> fullPageSupplier,
@@ -991,13 +993,15 @@ final class MyAnimeListImpl extends MyAnimeList {
         @SuppressWarnings("DataFlowIssue")
         @Override
         synchronized final List<T> getNextPage(){
-            final JsonObject response = handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));
+            // use pre-fetched next page or fetch the first page
+            final JsonObject response = nextPage != null ? nextPage : handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));
 
             if(response == null){
                 nextOffset.set(-1);
                 return null;
             }
 
+            // convert response to list
             final List<T> list = new ArrayList<>();
             for(final JsonObject data :
                 response.get("data") instanceof JsonObject && response.getJsonObject("data").containsKey("posts") // post iterator support
@@ -1006,11 +1010,25 @@ final class MyAnimeListImpl extends MyAnimeList {
             )
                 list.add(listAdapter.apply(data));
 
+            // handle next offset
             if(response.getJsonObject("paging").containsKey("next")){
                 final Integer b4 = nextOffset.get();
                 nextOffset.set((b4 == null ? 0 : b4) + list.size());
-                return list;
+
+                // peek into next page #404
+                nextPage = handleResponse(() -> fullPageSupplier.apply(nextOffset.get()));
+
+                if( // check if next page actually has any content
+                    (nextPage.get("data") instanceof JsonObject && nextPage.getJsonObject("data").containsKey("posts") // post iterator support
+                    ? nextPage.getJsonObject("data").getJsonArray("posts")
+                    : nextPage.getJsonArray("data"))
+                    .length > 0
+                )
+                    return list;
             }
+
+            // last page
+            nextPage = null;
             nextOffset.set(-1);
 
             return list;
