@@ -27,11 +27,11 @@ final class TestUserAnimeListing {
     final void testStatus(){
         final List<AnimeListStatus> list =
             mal.getUserAnimeListing()
-                .withStatus(AnimeStatus.Dropped)
+                .withStatus(AnimeStatus.Completed)
                 .withFields(Fields.Anime.list_status)
                 .withLimit(1)
                 .search();
-        assertEquals(AnimeStatus.Dropped, list.get(0).getStatus());
+        assertEquals(AnimeStatus.Completed, list.get(0).getStatus());
     }
 
     @Test
