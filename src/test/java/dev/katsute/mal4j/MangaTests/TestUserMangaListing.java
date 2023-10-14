@@ -27,11 +27,11 @@ final class TestUserMangaListing {
     final void testStatus(){
         final List<MangaListStatus> list =
             mal.getUserMangaListing()
-                .withStatus(MangaStatus.PlanToRead)
+                .withStatus(MangaStatus.Completed)
                 .withLimit(1)
                 .withFields(Fields.Manga.list_status)
                 .search();
-        assertEquals(MangaStatus.PlanToRead, list.get(0).getStatus());
+        assertEquals(MangaStatus.Completed, list.get(0).getStatus());
     }
 
     @Test
