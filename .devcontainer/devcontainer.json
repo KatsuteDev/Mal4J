@@ -1,5 +1,5 @@
 {
-    "image": "maven:3-eclipse-temurin-17",
+    "image": "maven:3-eclipse-temurin-21",
     "postAttachCommand": "mvn compile",
     "shutdownAction": "stopContainer",
     "customizations": {
