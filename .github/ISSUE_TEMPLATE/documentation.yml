@@ -8,7 +8,7 @@ body:
       value: |
         Before opening a documentation report please check that your issue was not already discussed in the following:
 
-        * [Issues](https://github.com/KatsuteDev/Mal4J/issues?q=is%3Aissue+is%3Aopen+label%3Abug%2C%22critical+bug%22+label%3Adocumentation)
+        * [Issues](https://github.com/KatsuteDev/Mal4J/issues?q=is%3Aissue+is%3Aopen+label%3Abug%2C%22critical+issue%22+label%3Adocumentation)
 
         Please also check that:
 

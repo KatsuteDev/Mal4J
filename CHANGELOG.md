@@ -12,7 +12,7 @@
 * Bump the junit group with 2 updates [#396](https://github.com/KatsuteDev/Mal4J/pull/396) ([@dependabot](https://github.com/dependabot))
 * Bump actions/checkout from 3 to 4 [#400](https://github.com/KatsuteDev/Mal4J/pull/400) ([@dependabot](https://github.com/dependabot))
 * Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.5.0 to 3.6.0 [#401](https://github.com/KatsuteDev/Mal4J/pull/401) ([@dependabot](https://github.com/dependabot))
-* [[DEV-1]](https://issues.katsute.dev/issue/DEV-1) Upgrade to Java 21 [#402](https://github.com/KatsuteDev/Mal4J/pull/402) ([@Katsute](https://github.com/Katsute))
+* Upgrade to Java 21 [#402](https://github.com/KatsuteDev/Mal4J/pull/402) ([@Katsute](https://github.com/Katsute))
 
 **Full Changelog**: [`3.4.0...3.4.1`](https://github.com/KatsuteDev/Mal4J/compare/3.4.0...3.4.1)
 
