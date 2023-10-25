@@ -28,15 +28,9 @@ Mal4J is a Java wrapper for the [MyAnimeList](https://myanimelist.net/) API. Thi
 
 This library supports read and write operations, including list updates.
 
- - [📃 Installation](#-installation)
- - [✨ Features](#-features)
- - [👨‍💻 Contributing](#-contributing)
- - [💼 License](#-license)
- - [⚠️️ Disclaimer](#%EF%B8%8F%EF%B8%8F-disclaimer)
-
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
-## 📃 Installation
+## Installation
 
 Mal4J requires at least Java 8. No additional dependencies/libraries are required.
 
@@ -50,9 +44,9 @@ See [setup](https://github.com/KatsuteDev/Mal4J/blob/main/setup.md#readme) for s
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
-## ✨ Features
+## Features
 
-#### 🔎 Search Queries
+#### Search Queries
 
 Find Anime and Manga by search, ranking, season, and suggestions.
 
@@ -67,7 +61,7 @@ List<Anime> search =
         .search();
 ```
 
-#### 📋 Anime and Manga Lists
+#### Anime and Manga Lists
 
 Read and edit your Anime and Manga listings.
 
@@ -87,7 +81,7 @@ MangaListStatus status =
         .update();
 ```
 
-#### 📦 Everything Else
+#### Everything Else
 
 **All** information provided in the [MyAnimeList API](https://myanimelist.net/apiconfig/references/api/v2) including Anime, Manga, forums, genres, pictures, statistics, and characters, are accessible in this library.
 
@@ -109,7 +103,7 @@ Person person = mal.getPerson(10765);
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
-## 👨‍💻 Contributing
+## Contributing
 
 <!-- Copilot -->
 <table>
@@ -121,7 +115,7 @@ Person person = mal.getPerson(10765);
 </table>
 <!-- Copilot -->
 
-#### ⚠️️ Before you start
+#### Before you start
 
 For Anime/Manga list tests *Sakura-sou no Pet na Kanojo* ([Anime#13759](https://myanimelist.net/anime/13759) and [Manga#28107](https://myanimelist.net/manga/28107)) will be used.
 
@@ -129,7 +123,7 @@ The test cases will create a backup of your list in the `anime-list.txt` and `ma
 
 Ignore test failures for these known issues: [**⚠️ External Issues**](https://github.com/KatsuteDev/Mal4J/projects/10).
 
-#### 💻 Running Tests Locally
+#### Running Tests Locally
 
 For local tests you can use Java 8+, however only methods in the Java 8 API may be used. The `src/main/java9` and `src/main/java11` folders should not be marked as a source root.
 
@@ -137,21 +131,15 @@ Run tests locally by adding a text file named `client.txt` that contains the cli
 
 Please note that the client ID being used for tests must not have a client secret and must have an app redirect url of `http://localhost:5050`.
 
-#### 🌐 Running Tests using GitHub Actions
+#### Running Tests using GitHub Actions
 
 Tests can be run using GitHub Actions by running the `MyAnimeList CI` workflow manually in the actions tab of your fork. Note that this requires two secrets, a `MAL_CLIENT` which contains the client ID, and a `MAL_TOKEN` which contains the OAuth token (ex: `Bearer <oauth token>`).
 
 <div align="right"><a href="#top"><code>▲</code></a></div>
 
-<hr>
-
-### 💼 License
+## &nbsp;
 
 This library is released under the [GNU General Public License (GPL) v2.0](https://github.com/KatsuteDev/Mal4J/blob/main/LICENSE).
 
-### ⚠️️ Disclaimer
-
- - [@Katsute](https://github.com/Katsute) and [@KatsuteDev](https://github.com/KatsuteDev) are not affiliated with MyAnimeList.
- - By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
-
-<div align="right"><a href="#top"><code>▲</code></a></div>
+ * [@Katsute](https://github.com/Katsute) and [@KatsuteDev](https://github.com/KatsuteDev) are not affiliated with MyAnimeList.
+ * By using the MyAnimeList API you are subject to their [Terms Of Service](https://myanimelist.net/static/apiagreement.html).
