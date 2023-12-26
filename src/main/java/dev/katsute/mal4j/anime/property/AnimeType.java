@@ -26,21 +26,25 @@ import dev.katsute.mal4j.property.FieldEnum;
  *
  * @see dev.katsute.mal4j.anime.Anime#getType()
  * @since 1.0.0
- * @version 2.9.0
+ * @version 3.4.2
  * @author Katsute
  */
 public enum AnimeType implements FieldEnum {
 
-    Unknown     ("unknown"),
+    Unknown          ("unknown"),
 
-    TV          ("tv"),
-    OVA         ("ova"),
-    Movie       ("movie"),
-    Special     ("special"),
-    ONA         ("ona"),
-    Music       ("music"),
+    TV               ("tv"),
+    OVA              ("ova"),
+    Movie            ("movie"),
+    Special          ("special"),
+    ONA              ("ona"),
+    Music            ("music"),
 
-    MixedMedia  ("mixed_media");
+    Commercial       ("cm"),
+    PromotionalVideo ("pv"),
+    TVSpecial        ("tv_special"),
+
+    MixedMedia       ("mixed_media");
 
     private final String field;
 
