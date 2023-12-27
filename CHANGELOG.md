@@ -1,5 +1,29 @@
 # Changelog
 
+## 3.4.2
+
+### Fixes
+
+* Add new Anime media types [#421](https://github.com/KatsuteDev/Mal4J/pull/421) ([@Katsute](https://github.com/Katsute))
+
+   * `Commercial`
+   * `PromotionalVideo`
+   * `TVSpecial`
+
+### Dependencies
+
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.1.2 to 3.2.1 [#407](https://github.com/KatsuteDev/Mal4J/pull/407) ([@dependabot](https://github.com/dependabot))
+* Bump the junit group with 2 updates [#409](https://github.com/KatsuteDev/Mal4J/pull/409) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.2.1 to 3.2.2 [#411](https://github.com/KatsuteDev/Mal4J/pull/411) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.6.0 to 3.6.2 [#410](https://github.com/KatsuteDev/Mal4J/pull/410) ([@dependabot](https://github.com/dependabot))
+* Bump actions/github-script from 6 to 7 [#414](https://github.com/KatsuteDev/Mal4J/pull/414) ([@dependabot](https://github.com/dependabot))
+* Bump actions/setup-java from 3 to 4 [#416](https://github.com/KatsuteDev/Mal4J/pull/416) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.6.2 to 3.6.3 [#417](https://github.com/KatsuteDev/Mal4J/pull/417) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.2.2 to 3.2.3 [#418](https://github.com/KatsuteDev/Mal4J/pull/418) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-compiler-plugin from 3.11.0 to 3.12.1 [#419](https://github.com/KatsuteDev/Mal4J/pull/419) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.4.1...3.4.2`](https://github.com/KatsuteDev/Mal4J/compare/3.4.1...3.4.2)
+
 ## 3.4.1
 
 ### Fixes
