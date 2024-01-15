@@ -19,7 +19,7 @@ jobs:
           comment: ${{ github.event.comment.body }}
         with:
           github-token: ${{ secrets.BOT }}
-          script: |
+          script: |-
             const comment = process.env.comment.split(' ');
 
             if(comment[0] == "mal")
@@ -30,7 +30,7 @@ jobs:
         env:
           url: ${{ env.url }}
           token: ${{ secrets.MAL_CLIENT }}
-        run: |
+        run: |-
           out=$(curl https://api.myanimelist.net/v2/$url -X GET -H "X-MAL-CLIENT-ID: $token")
           echo "out=$out" >> "$GITHUB_ENV"
 
@@ -42,7 +42,7 @@ jobs:
           out: ${{ env.out }}
         with:
           github-token: ${{ secrets.BOT }}
-          script: |
+          script: |-
             core.exportVariable("comment", "`https://api.myanimelist.net/v2/" + process.env.url + "`\n\n" + "```json\n" + JSON.stringify(JSON.parse(process.env.out), null, 4) + "\n```");
 
       - name: Print Response
@@ -52,5 +52,5 @@ jobs:
           comment: ${{ env.comment }}
           number: ${{ github.event.issue.number }}
           issue: ${{ github.event.issue && 'issue' || 'pr' }}
-        run: |
+        run: |-
           gh $issue comment $number -b "$comment"
