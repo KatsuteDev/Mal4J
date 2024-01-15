@@ -7,12 +7,7 @@ on:
 jobs:
   deploy:
     name: Deploy
-    uses: Katsute/Workflows/.github/workflows/java.deploy.yml@main
+    uses: KatsuteDev/Workflows/.github/workflows/java.deploy.maven.yml@main
     with:
       environment: Maven Central
-    secrets:
-      token: ${{ secrets.GITHUB_TOKEN }}
-      maven-username: ${{ secrets.OSSRH_USERNAME }}
-      maven-password: ${{ secrets.OSSRH_TOKEN }}
-      gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
-      gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
+    secrets: inherit
