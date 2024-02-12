@@ -43,13 +43,31 @@ jobs:
         continue-on-error: true
         run: mvn test -fae --no-transfer-progress
 
+      - name: Check Token
+        run: |-
+          if [ "${{ secrets.KDEVBOT_PRIVATE_KEY }}" != '' ]
+          then
+            echo "authenticated=true" >> $GITHUB_ENV;
+          fi
+
+      - name: Authenticate
+        id: auth
+        if: ${{ env.authenticated }}
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ secrets.KDEVBOT_APP_ID }}
+          private-key: ${{ secrets.KDEVBOT_PRIVATE_KEY }}
+          owner: KatsuteDev
+
       - name: Checkout JUnit Report
+        if: ${{ env.authenticated }}
         uses: actions/checkout@v4
         with:
-          repository: Katsute/JUnit-Report
-          ref: 862f2f943b2274619fe0ed4ef9d8bbe965607a1f
-          path: ./.github/junit-report
-          token: ${{ secrets.JUNIT_PAT }}
+          repository: KatsuteDev/junit-report
+          ref: 44c5af553b1458a48d1d6612ae211e5032b603aa
+          path: ./.junit-report
+          token: ${{ steps.auth.outputs.token }}
 
       - name: Generate Report
-        uses: ./.github/junit-report
+        if: ${{ env.authenticated }}
+        uses: ./.junit-report
