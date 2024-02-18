@@ -64,10 +64,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: KatsuteDev/junit-report
-          ref: d65382e567cac7998d3ab99bdc2332b8e3580afd
+          ref: ba5501a32c3eb6d0a6edf6088bb4e8ced5d09921
           path: ./.junit-report
           token: ${{ steps.auth.outputs.token }}
 
       - name: Generate Report
         if: ${{ env.authenticated }}
         uses: ./.junit-report
+        with:
+          job: MyAnimeList CI [${{ matrix.auth }}] (Java ${{ matrix.java }})
+          token: ${{ steps.auth.outputs.token }}
