@@ -105,16 +105,6 @@ Person person = mal.getPerson(10765);
 
 ## Contributing
 
-<!-- Copilot -->
-<table>
-    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/KatsuteDev/kdevbot/main/assets/copilot-dark.png#gh-dark-mode-only" width="50">
-    <img alt="Open AI" align="left" src="https://raw.githubusercontent.com/KatsuteDev/kdevbot/main/assets/openai-dark.png#gh-dark-mode-only" width="50">
-    <img alt="GitHub Copilot" align="left" src="https://raw.githubusercontent.com/KatsuteDev/kdevbot/main/assets/copilot-light.png#gh-light-mode-only" width="50">
-    <img alt="Open AI" align="left" src="https://raw.githubusercontent.com/KatsuteDev/kdevbot/main/assets/openai-light.png#gh-light-mode-only" width="50">
-    <p>AI generated code is <b>strictly prohibited</b> on this repository.</p>
-</table>
-<!-- Copilot -->
-
 #### Before you start
 
 For Anime/Manga list tests *Sakura-sou no Pet na Kanojo* ([Anime#13759](https://myanimelist.net/anime/13759) and [Manga#28107](https://myanimelist.net/manga/28107)) will be used.
