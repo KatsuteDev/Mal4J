@@ -64,7 +64,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: KatsuteDev/junit-report
-          ref: ba5501a32c3eb6d0a6edf6088bb4e8ced5d09921
+          ref: 154990716214c5d45d19ccfb810e8fd6c387d485
           path: ./.junit-report
           token: ${{ steps.auth.outputs.token }}
 
