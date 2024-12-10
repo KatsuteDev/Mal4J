@@ -25,7 +25,7 @@ import dev.katsute.mal4j.Logging;
  *
  * @see RelatedMedia#getRelationType()
  * @since 1.0.0
- * @version 2.9.0
+ * @version 3.4.3
  * @author Katsute
  */
 public enum RelationType implements FieldEnum {
@@ -35,6 +35,7 @@ public enum RelationType implements FieldEnum {
     Other               ("other"),
     Sequel              ("sequel"),
     Prequel             ("prequel"),
+    Adaptation          ("adaptation"),
     AlternativeSetting  ("alternative_setting"),
     AlternativeVersion  ("alternative_version"),
     SideStory           ("side_story"),

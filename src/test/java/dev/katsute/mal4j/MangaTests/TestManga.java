@@ -4,8 +4,10 @@ import dev.katsute.mal4j.Fields;
 import dev.katsute.mal4j.MyAnimeList;
 import dev.katsute.mal4j.TestProvider;
 import dev.katsute.mal4j.manga.Manga;
+import dev.katsute.mal4j.manga.RelatedManga;
 import dev.katsute.mal4j.manga.property.MangaPublishStatus;
 import dev.katsute.mal4j.manga.property.MangaType;
+import dev.katsute.mal4j.property.RelationType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -143,6 +145,9 @@ final class TestManga {
     final void testEnum(){
         assertEquals(MangaPublishStatus.Unknown, MangaPublishStatus.asEnum("?"));
         assertEquals(MangaType.Unknown, MangaType.asEnum("?"));
+
+        for(final RelatedManga relatedManga : mal.getManga(112589).getRelatedManga())
+            assertNotEquals(RelationType.Unknown, relatedManga.getRelationType(), "Unknown type: " + relatedManga.getRawRelationType());
 
         assumeTrue(MangaPublishStatus.OnHiatus == mal.getManga(2).getStatus(), "Test will fail when status is not hiatus");
     }
