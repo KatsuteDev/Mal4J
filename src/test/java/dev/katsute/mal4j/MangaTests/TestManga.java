@@ -7,6 +7,7 @@ import dev.katsute.mal4j.manga.Manga;
 import dev.katsute.mal4j.manga.RelatedManga;
 import dev.katsute.mal4j.manga.property.MangaPublishStatus;
 import dev.katsute.mal4j.manga.property.MangaType;
+import dev.katsute.mal4j.property.RelationType;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -148,7 +149,7 @@ final class TestManga {
         assumeTrue(MangaPublishStatus.OnHiatus == mal.getManga(2).getStatus(), "Test will fail when status is not hiatus");
 
         for(final RelatedManga relatedManga : mal.getManga(112589).getRelatedManga())
-            assertNotEquals(RelationType.Unknown, relatedAnime.getRelationType(), "Unknown type: " + relatedManga.getRawRelationType());
+            assertNotEquals(RelationType.Unknown, relatedManga.getRelationType(), "Unknown type: " + relatedManga.getRawRelationType());
     }
 
     @Test
