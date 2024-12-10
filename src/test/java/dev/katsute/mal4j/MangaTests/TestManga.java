@@ -146,10 +146,10 @@ final class TestManga {
         assertEquals(MangaPublishStatus.Unknown, MangaPublishStatus.asEnum("?"));
         assertEquals(MangaType.Unknown, MangaType.asEnum("?"));
 
-        assumeTrue(MangaPublishStatus.OnHiatus == mal.getManga(2).getStatus(), "Test will fail when status is not hiatus");
-
         for(final RelatedManga relatedManga : mal.getManga(112589).getRelatedManga())
             assertNotEquals(RelationType.Unknown, relatedManga.getRelationType(), "Unknown type: " + relatedManga.getRawRelationType());
+
+        assumeTrue(MangaPublishStatus.OnHiatus == mal.getManga(2).getStatus(), "Test will fail when status is not hiatus");
     }
 
     @Test
