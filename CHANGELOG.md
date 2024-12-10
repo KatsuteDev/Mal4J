@@ -1,5 +1,49 @@
 # Changelog
 
+## 3.4.3
+
+### Fixes
+
+* Add missing `RelationType` `Adaptation` [#464](https://github.com/KatsuteDev/Mal4J/pull/464) ([@Katsute](https://github.com/Katsute))
+
+### Dependencies
+
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.2.3 to 3.2.5 [#424](https://github.com/KatsuteDev/Mal4J/pull/424) ([@dependabot](https://github.com/dependabot))
+* Bump the junit group with 2 updates [#426](https://github.com/KatsuteDev/Mal4J/pull/426) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-gpg-plugin from 3.1.0 to 3.2.0 [#430](https://github.com/KatsuteDev/Mal4J/pull/430) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-gpg-plugin from 3.2.0 to 3.2.1 [#431](https://github.com/KatsuteDev/Mal4J/pull/431) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-compiler-plugin from 3.12.1 to 3.13.0 [#432](https://github.com/KatsuteDev/Mal4J/pull/432) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-gpg-plugin from 3.2.1 to 3.2.2 [#433](https://github.com/KatsuteDev/Mal4J/pull/433) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-source-plugin from 3.3.0 to 3.3.1 [#434](https://github.com/KatsuteDev/Mal4J/pull/434) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-jar-plugin from 3.3.0 to 3.4.0 [#435](https://github.com/KatsuteDev/Mal4J/pull/435) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-gpg-plugin from 3.2.2 to 3.2.3 [#436](https://github.com/KatsuteDev/Mal4J/pull/436) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-jar-plugin from 3.4.0 to 3.4.1 [#438](https://github.com/KatsuteDev/Mal4J/pull/438) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-gpg-plugin from 3.2.3 to 3.2.4 [#437](https://github.com/KatsuteDev/Mal4J/pull/437) ([@dependabot](https://github.com/dependabot))
+* Bump org.sonatype.plugins:nexus-staging-maven-plugin from 1.6.13 to 1.7.0 [#439](https://github.com/KatsuteDev/Mal4J/pull/439) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.6.3 to 3.7.0 [#440](https://github.com/KatsuteDev/Mal4J/pull/440) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.2.5 to 3.3.0 [#442](https://github.com/KatsuteDev/Mal4J/pull/442) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-jar-plugin from 3.4.1 to 3.4.2 [#444](https://github.com/KatsuteDev/Mal4J/pull/444) ([@dependabot](https://github.com/dependabot))
+* Bump the junit group with 2 updates [#445](https://github.com/KatsuteDev/Mal4J/pull/445) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.3.0 to 3.3.1 [#446](https://github.com/KatsuteDev/Mal4J/pull/446) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.7.0 to 3.8.0 [#447](https://github.com/KatsuteDev/Mal4J/pull/447) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-gpg-plugin from 3.2.4 to 3.2.5 [#448](https://github.com/KatsuteDev/Mal4J/pull/448) ([@dependabot](https://github.com/dependabot))
+* Bump the junit group with 2 updates [#449](https://github.com/KatsuteDev/Mal4J/pull/449) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.3.1 to 3.4.0 [#450](https://github.com/KatsuteDev/Mal4J/pull/450) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.8.0 to 3.10.0 [#451](https://github.com/KatsuteDev/Mal4J/pull/451) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.4.0 to 3.5.0 [#452](https://github.com/KatsuteDev/Mal4J/pull/452) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-gpg-plugin from 3.2.5 to 3.2.6 [#453](https://github.com/KatsuteDev/Mal4J/pull/453) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-gpg-plugin from 3.2.6 to 3.2.7 [#455](https://github.com/KatsuteDev/Mal4J/pull/455) ([@dependabot](https://github.com/dependabot))
+* Bump the junit group with 2 updates [#454](https://github.com/KatsuteDev/Mal4J/pull/454) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.5.0 to 3.5.1 [#458](https://github.com/KatsuteDev/Mal4J/pull/458) ([@dependabot](https://github.com/dependabot))
+* Bump the junit group with 2 updates [#456](https://github.com/KatsuteDev/Mal4J/pull/456) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.10.0 to 3.10.1 [#457](https://github.com/KatsuteDev/Mal4J/pull/457) ([@dependabot](https://github.com/dependabot))
+* Bump the junit group with 2 updates [#459](https://github.com/KatsuteDev/Mal4J/pull/459) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.10.1 to 3.11.1 [#460](https://github.com/KatsuteDev/Mal4J/pull/460) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-surefire-plugin from 3.5.1 to 3.5.2 [#461](https://github.com/KatsuteDev/Mal4J/pull/461) ([@dependabot](https://github.com/dependabot))
+* Bump org.apache.maven.plugins:maven-javadoc-plugin from 3.11.1 to 3.11.2 [#463](https://github.com/KatsuteDev/Mal4J/pull/463) ([@dependabot](https://github.com/dependabot))
+
+**Full Changelog**: [`3.4.2...3.4.3`](https://github.com/KatsuteDev/Mal4J/compare/3.4.2...3.4.3)
+
 ## 3.4.2
 
 ### Fixes
