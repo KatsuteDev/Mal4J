@@ -40,37 +40,4 @@ jobs:
           echo ${{ secrets.MAL_TOKEN }} > src/test/java/resources/token.txt
 
       - name: Test with Maven
-        continue-on-error: true
         run: mvn test -fae --no-transfer-progress
-
-      - name: Check Token
-        run: |-
-          if [ "${{ secrets.KDEVBOT_PRIVATE_KEY }}" != '' ]
-          then
-            echo "authenticated=true" >> $GITHUB_ENV;
-          fi
-
-      - name: Authenticate
-        id: auth
-        if: ${{ env.authenticated }}
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: ${{ secrets.KDEVBOT_APP_ID }}
-          private-key: ${{ secrets.KDEVBOT_PRIVATE_KEY }}
-          owner: KatsuteDev
-
-      - name: Checkout JUnit Report
-        if: ${{ env.authenticated }}
-        uses: actions/checkout@v4
-        with:
-          repository: KatsuteDev/junit-report
-          ref: bc106f1790b25d6fe951a9baab3816fec37ac33d
-          path: ./.junit-report
-          token: ${{ steps.auth.outputs.token }}
-
-      - name: Generate Report
-        if: ${{ env.authenticated }}
-        uses: ./.junit-report
-        with:
-          job: MyAnimeList CI [${{ matrix.auth }}] (Java ${{ matrix.java }})
-          token: ${{ steps.auth.outputs.token }}
