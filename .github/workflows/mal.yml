@@ -21,7 +21,7 @@ jobs:
           token: ${{ steps.auth.outputs.token }}
 
       - name: Parse Comment
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         env:
           comment: ${{ github.event.comment.body }}
         with:
@@ -42,7 +42,7 @@ jobs:
           echo "out=$out" >> "$GITHUB_ENV"
 
       - name: Format JSON
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         if: env.out
         env:
           url: ${{ env.url }}
