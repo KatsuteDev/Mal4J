@@ -111,8 +111,6 @@ For Anime/Manga list tests *Sakura-sou no Pet na Kanojo* ([Anime#13759](https://
 
 The test cases will create a backup of your list in the `anime-list.txt` and `manga-list.txt` files. Make sure you fix your ratings and any other information that might be overwritten by this test.
 
-Ignore test failures for these known issues: [**⚠️ External Issues**](https://github.com/KatsuteDev/Mal4J/projects/10).
-
 #### Running Tests Locally
 
 For local tests you can use Java 8+, however only methods in the Java 8 API may be used. The `src/main/java9` and `src/main/java11` folders should not be marked as a source root.
